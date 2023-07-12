@@ -1,0 +1,49 @@
+{
+  "name": "nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@alan-ai/alan-sdk-web": "^1.8.47",
+    "@clerk/nextjs": "^4.21.14",
+    "@clerk/themes": "^1.7.5",
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^1.0.6",
+    "@huggingface/inference": "^1.8.0",
+    "@prisma/client": "^4.16.2",
+    "@vercel/analytics": "^1.0.1",
+    "ai": "^2.1.15",
+    "dotenv": "^16.3.1",
+    "eslint": "8.37.0",
+    "eslint-config-next": "^12.0.4",
+    "langchain": "^0.0.81",
+    "next": "^13.4.9",
+    "openai-edge": "^1.2.0",
+    "pdf-parse": "^1.1.1",
+    "pgvector": "^0.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "superagentai-js": "^0.0.13",
+    "svelte": "^4.0.5",
+    "svix": "^1.6.0",
+    "swr": "^2.2.0",
+    "typewriter-effect": "^2.20.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.35",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.25",
+    "prisma": "^4.16.2",
+    "replicate": "^0.9.3",
+    "tailwindcss": "^3.3.2",
+    "typescript": "5.1.6"
+  }
+}

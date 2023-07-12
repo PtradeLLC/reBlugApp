@@ -1,0 +1,14 @@
+.aider.chat.history.md
+.env
+.aider.input.history.md
+a/.aider.input.history
+b/.aider.input.history
+.BC.*
+tmp*
+*~
+OLD*
+*.pyc
+.DS_Store
+.env
+.venv
+.aider.*

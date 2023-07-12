@@ -1,0 +1,122 @@
+Project Specification: AI-Powered Email Conversation Tool in ReactJS
+
+Description:
+Email Conversational Tool is an AI-powered email marketing tool, a machine learning-based chatbot that helps brands and marketers add product and marketing information to their transactional emails, newsletters, and other brand-customer communications. The tool also serves as a knowledge base for brands and marketers, and it uses AI to improve brand-customer communications.
+
+API Requirements:
+All required API keys are located in the "../../frontend/.env" file.
+- Stripe_API_Key: [STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY]
+- Square_API_Key: [SQUARE_ACCESS_TOKEN, SQUARE_APPLICATION_ID]
+- Clerk: [NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY]
+- OpenAI_API_Key: OPENAI_API_KEY
+- SERP_API_KEY: SERPAPI_API_KEY
+- Make: MAKE
+- Serper: SERPER_API_KEY
+- Zapier: ZAPIER_DEPLOY_KEY
+- Shopify_API_KEY: [SHOPIFY_API_KEY, SHOPIFY_SECRET_KEY]
+- Help_Scout_API: HELP_SCOUT_API
+- SEND_GRID_API_KEY: SEND_GRID_API_KEY
+
+Database:
+All required information to connect to the Database are located in the "../../frontend/.env" file.
+- NEON_API_KEY: NEON_API_KEY
+- DATABASE_URL: DATABASE_URL
+- DIRECT_URL: DIRECT_URL
+
+1. Base Template:
+Use the design from the "../../frontend/components/Session_Email" and "../../frontend/components/Email_Tool" components as the base template for the AI-powered Email Conversation Tool.
+
+Core Requirements:
+The tool should provide the following functionalities and integrations:
+
+2. API Integrations:
+   - Clerk: Use Clerk as the authentication service to allow users to authenticate into the app. Refer to the CLERK_DOC documentation from "./env" for reference.
+   - Make: Integrate with Make to allow users to connect and import their contact email addresses. Users can choose to import one or many email addresses.
+   - Prisma: Use Prisma as an ORM to connect with the database. The Prisma schema is located at "../../frontend/prisma/schema.prisma". Refer to the PRISMA_DOC documentation located at "./env" for reference.
+
+Functionality:
+
+"User" refers to the sender of the email.
+
+1. User Input:
+   - Email: Allow users to input their email address.
+   - Recipients Email: Support one or multiple email addresses for sending transactional and marketing email messages. Users can enter one email address or upload batch email addresses through the Make connection.
+   - Integration with Email Provider: Allow users to integrate with their email provider by connecting via Make.
+   - Subject Line: Enable users to add a subject line.
+   - Document Uploads: Allow users to upload documents containing information about products, services, and the company for the conversational chatbot to learn from.
+   - Message Line: Enable users to add content that goes in the body of the email.
+   - Product Image: Allow users to attach an image for display in the email.
+   - Product Description: Allow users to enter product information.
+   - Product URL: Enable users to input a link to the product.
+
+2. Email Sending:
+   - On form submit, send an email to the recipients using the SendGrid email API.
+   - Build the email from the template located at "../../frontend/pages/email" with the following components: 
+     - id: `content` for the email body
+     - id: `chatbot` for the chatbot template
+
+Machine Learning-based Chatbot:
+A machine learning-based chatbot is designed to interact with users in a conversational manner using natural language processing (NLP) techniques. It leverages machine learning algorithms and models to understand and generate human-like responses.
+
+Integrate the machine learning-based chatbot using the template located at "../../frontend/pages/email".
+
+The chatbot should perform the following functionalities:
+
+- NLU Techniques: Utilize NLU techniques such as tokenization, part-of-speech tagging, named entity recognition, and syntactic parsing to extract the meaning and structure of the user's message.
+- Intent Recognition: Identify the intent behind a user's message to understand what the user is trying to accomplish or the purpose of their query.
+- Entity Recognition: Identify relevant entities or key information from the user's input.
+- Context Management: Maintain the context of the conversation to ensure a coherent and meaningful exchange.
+- Response Generation: Employ various machine learning models to generate responses based on rule-based systems, generative models, or retrieval-based models.
+- Personalization: Learn from user interactions to personalize responses and improve performance.
+- Backend Integration: Access backend systems or external APIs to retrieve data or perform specific tasks.
+- Multi-Platform Deployment: Deploy the chatbot on various platforms and channels such as websites, messaging apps, voice assistants, social media platforms, and browser extensions.
+
+Integrate data from the User Input into the chatbot using the following components:
+- Document Upload: Use as the knowledge base for the chatbot.
+- Product Image: Use as the product the user wants to market.
+- Profile Image: Use as the profile image of the user.
+- Subject Line: Use as the email's subject line.
+- Product Description: Use as the description of the product.
+- Recipients Email: Use as the email of one or multiple recipients.
+- Message Line: Use as the content that goes in the body of the email.
+
+Maintenance and Analysis:
+Regularly monitor and maintain the entire codebase, chatbot's performance, and user interactions. Analyze chatbot logs and user feedback to identify areas for improvement. Update and maintain the chatbot over time to keep it relevant and effective.
+
+
+The following is the Tools Objectives. Use as a reference or starting point to build upon:
+
+The scope of the project is to build and deploy an AI-powered Email Conversational Tool using ReactJS. The tool will 
+serve as a machine learning-based chatbot that helps brands and marketers add product and marketing information 
+to their transactional emails, newsletters, and other brand-customer communications. The tool will also function as
+a knowledge base for brands and marketers, using AI to improve brand-customer communications.
+Objectives:
+1. Develop a ReactJS-based AI-powered Email Conversational Tool that integrates with various APIs and services.
+2. Implement the base template of the tool using the design from the "Session_Email" and "Email_Tool" components 
+located at "../../frontend/components/".
+3. Integrate Clerk API as the authentication service to allow users to authenticate into the app.
+4. Integrate Make API to enable users to connect and import their contact email addresses.
+5. Utilize Prisma as an ORM to connect with the database, following the schema located at "../../frontend/prisma/schema.prisma".
+6. Provide user input functionalities, including:
+ - Email input field for users to input their email address.
+ - Recipients Email field to support one or multiple email addresses for sending emails.
+ - Integration with Email Provider to allow users to connect their email provider via Make.
+ - Subject Line input field for users to add a subject line to their emails.
+ - Document Upload functionality for users to upload documents containing information for the chatbot to learn from.
+ - Message Line input field for users to add email content.
+ - Product Image attachment functionality for users to attach an image for display in the email.
+ - Product Description input field for users to enter product information.
+ - Product URL input field for users to input a link to the product.
+7. On form submission, send emails to the recipients using the SendGrid email API.
+8. Build the email template using the components located at "../../frontend/pages/email", including the "content" and 
+"chatbot" components.
+9. Integrate a machine learning-based chatbot using the template located at "../../frontend/pages/email".
+10. Implement NLU techniques, such as tokenization, part-of-speech tagging, named entity recognition, and syntactic 
+parsing, to extract meaning and structure from user messages.
+11. Develop intent recognition capabilities to identify the purpose or intent behind a user's message.
+12. Implement entity recognition to identify relevant entities or key information from user inputs.
+13. Maintain context
+
+Technology Stack:
+- Front-end: Next.js - A ReactJS Framework (https://nextjs.org/docs)
+- APIs: Stripe, Square, Facebook, Twitter, TikTok, OpenAI, SendGrid

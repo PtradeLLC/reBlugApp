@@ -1,0 +1,9 @@
+[submodule "AIForgedBase"]
+	path = AIForgedBase
+	url = https://github.com/PublicTrades/nextjs-openai-doc-search-starter.git
+[submodule "chroma"]
+	path = chroma
+	url = https://github.com/chroma-core/chroma.git
+[submodule "pages/api/langchainjs"]
+	path = pages/api/langchainjs
+	url = https://github.com/PublicTrades/langchainjs.git

@@ -1,0 +1,97 @@
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+  extensions        = [vector]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+// Define the ClerkUser model
+model User {
+  id         Int         @id @default(autoincrement())
+  externalId String      @unique
+  attributes Json
+  Username   String
+  Email      String
+  emailtool  EmailTool[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model EmailTool {
+  id                  String     @unique @default(uuid())
+  email               String
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+  document            Document[]
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  User                User?      @relation(fields: [userId], references: [id])
+  userId              Int?
+}
+
+model Document {
+  id          Int                       @id @default(autoincrement())
+  embedding   Unsupported("vector(3)")?
+  EmailTool   EmailTool?                @relation(fields: [emailToolId], references: [id])
+  emailToolId String?
+}
+
+model ForgedAI {
+  id                  String                         @unique @default(uuid())
+  product             String?
+  useCaseTwo          String
+  useCase             String
+  createdAt           DateTime                       @default(now())
+  updatedAt           DateTime                       @updatedAt
+  embedding           Unsupported("vector(3)")?
+  trends              Trends_Document[]
+  marketingPlan       Marketing_Plan_Document[]
+  marketing_Creatives Marketing_Creatives_Document[]
+}
+
+model Trends_Document {
+  id        String                    @unique @default(uuid())
+  content   String
+  url       String?
+  aiTools   ForgedAI                  @relation(fields: [iaId], references: [id])
+  iaId      String
+  embedding Unsupported("vector(3)")?
+  createdAt DateTime                  @default(now())
+  updatedAt DateTime                  @updatedAt
+}
+
+model Marketing_Plan_Document {
+  id            String                    @unique @default(uuid())
+  content       String
+  url           String?
+  marketingPlan ForgedAI                  @relation(fields: [planId], references: [id])
+  planId        String
+  embedding     Unsupported("vector(3)")?
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+}
+
+model Marketing_Creatives_Document {
+  id          String                    @unique @default(uuid())
+  content     String
+  url         String?
+  embedding   Unsupported("vector(3)")?
+  creatives   ForgedAI                  @relation(fields: [creativesId], references: [id])
+  creativesId String
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
