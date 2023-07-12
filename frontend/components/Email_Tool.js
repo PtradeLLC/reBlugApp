@@ -2,11 +2,23 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from 'axios';
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function EmailConvTool({ openModal, setOpenModal }) {
+  const handleClickToSend = async () => {
+    try {
+      const response = await axios.get('/api/database');
+      const data = response.data;
+      // Send email to user with the fetched data
+      // You'll need to replace this with your actual email sending logic
+      console.log(`Email sent to ${emailForm.email} with data: ${data}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const [open, setOpen] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [emailForm, setEmailForm] = useState({
@@ -34,9 +46,14 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(emailForm);
+    try {
+      const response = await axios.post('/api/database', emailForm);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -128,7 +145,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                             <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
                               <button
                                 type="button"
-                                onClick={handleSubmit}
+                                onClick={handleClickToSend}
                                 className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                               >
                                 Click to Send
