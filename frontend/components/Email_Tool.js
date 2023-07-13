@@ -2,8 +2,6 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
-import { useClerk } from "@clerk/nextjs";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -12,25 +10,18 @@ function classNames(...classes) {
 export default function EmailConvTool({ openModal, setOpenModal }) {
   const [open, setOpen] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [emailForm, setEmailForm] = useState({
+  const [beforeClick, setBeforeClick] = useState(
+    "Complete the form field below"
+  );
+  const initialEmailForm = {
     email: "",
-    recipients: "",
-    subject: "",
-    htmlContent: "",
-    fileUpload: null,
-    productDescription: "",
-    productLink: "",
-    imageUrl: `${selectedImage}`,
-  });
+  };
+  const [emailForm, setEmailForm] = useState(initialEmailForm);
+  const [isClicked, setIsClicked] = useState(false); // Added state to track button click
+  const [beforeButton, setBeforeButton] = useState("Click to Send");
+  const [isEmailEmpty, setIsEmailEmpty] = useState(false); // Added state to track empty email
 
   const url = "/api/email/test-email";
-
-  // To Dos
-  // On click:
-  // Sends a request to Brevo 'contact' endpoint to create an email (prospect).
-  //Then:
-  // --> Triggers an email to be sent to prospect's email address:
-  // ------->
 
   //modal ops
   const handleClose = () => {
@@ -48,44 +39,44 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    Object.keys(emailForm).forEach((key) => {
-      formData.append(key, emailForm[key]);
-    });
-    formData.append("imageUrl", selectedImage);
+    if (emailForm.email === "") {
+      setIsEmailEmpty(true);
+      return;
+    }
+
+    console.log("submitted");
+
     try {
-      const response = await axios.post(url, formData, {
+      const response = await fetch(url, {
+        method: "POST",
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailForm.email }), // Send the email as an object property
       });
-      const data = response.data;
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-      //      Send email to user with the fetched data
-      //     const testProspect = await axios.post(url, emailForm);
-      //     const emailData = testProspect.data;
-      //     console.log(emailData);
+      const data = await response.json();
+      if (data) {
+        setIsEmailEmpty(false); // Update state to indicate email is not empty
+      }
 
-      //     You'll need to replace this with your actual email sending logic
-      //     console.log(`Email sent to ${emailForm.email} with data: ${emailData}`);
-
-      // const response = await axios.post(url, emailForm);
-      // console.log(response.data);
+      console.log("submittedInTry");
+      console.log("FE:", data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { authenticated } = useClerk();
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    console.log("submittedOnClick");
+    setEmailForm(initialEmailForm);
+    // setBeforeClick("Please check your email");
+    // setIsClicked(true);
+    // setBeforeButton("Close");
+  };
 
   return (
     <Transition.Root show={openModal} as={Fragment}>
@@ -146,8 +137,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                             <div>
                               <div className="flex items-center">
                                 <h3 className="text-xl  font-bold text-gray-900 sm:text-2xl">
-                                  {emailForm.productLink ||
-                                    `Complete form below`}
+                                  {emailForm.productLink || `${beforeClick}`}
                                 </h3>
                                 <span
                                   className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${
@@ -160,29 +150,8 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                 </span>
                               </div>
                               <p className="text-sm text-gray-500">
-                                {emailForm.email || `Enter your email to begin`}
+                                {emailForm.email || `${beforeClick}`}
                               </p>
-                              {emailForm.fileUpload && (
-                                <p className="text-sm">
-                                  {emailForm.fileUpload.name}
-                                </p>
-                              )}
-                            </div>
-                            <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
-                              <button
-                                type="button"
-                                onClick={handleSubmit}
-                                className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
-                              >
-                                Click to Send
-                              </button>
-                              <button
-                                type="button"
-                                onClick={handleClose}
-                                className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                              >
-                                Cancel
-                              </button>
                             </div>
                           </div>
                         </div>
@@ -196,196 +165,42 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   htmlFor="email"
                                   className="block text-sm font-medium text-gray-900"
                                 >
-                                  Enter your email
+                                  Email
                                 </label>
                                 <input
                                   type="email"
                                   name="email"
                                   id="email"
+                                  disabled={isClicked} // Disable the input field based on button click state
                                   placeholder="Enter your email"
                                   className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  required
                                   value={emailForm.email}
                                   onChange={handleChange}
                                 />
+                                {isEmailEmpty && (
+                                  <p className="text-red-500 text-xs mt-1">
+                                    Please enter your email address
+                                  </p>
+                                )}
                               </div>
 
-                              <div className="space-y-2">
-                                <label
-                                  htmlFor="recipients"
-                                  className="block text-sm font-medium text-gray-900"
+                              <div className="mt-5 flex w-[200px] m-auto flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
+                                <button
+                                  id="send"
+                                  type="submit"
+                                  onClick={handleClick}
+                                  // disabled={isClicked}
+                                  className="inline-flex flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                                 >
-                                  Recipients email
-                                </label>
-                                <input
-                                  type="email"
-                                  name="recipients"
-                                  id="recipients"
-                                  placeholder="Enter recipient's email.(Field has been disabled while testing as a recipient)"
-                                  className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled={!authenticated}
-                                  value={emailForm.recipients}
-                                  onChange={handleChange}
-                                />
-                                <span className="text-xs">
-                                  <Link href="#">
-                                    or connect to upload multiple
-                                  </Link>
-                                </span>
-                              </div>
-
-                              <div className="space-y-2">
-                                <label
-                                  htmlFor="subject"
-                                  className="block text-sm font-medium text-gray-900"
+                                  {beforeButton}
+                                </button>
+                                {/* <button
+                                  type="button"
+                                  onClick={handleClose}
+                                  className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 >
-                                  Subject Line
-                                </label>
-                                <input
-                                  type="text"
-                                  name="subject"
-                                  id="subject"
-                                  placeholder="Enter subject.(Field has been disabled while testing as a recipient)"
-                                  className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled={!authenticated}
-                                  value={emailForm.subject}
-                                  onChange={handleChange}
-                                />
-                              </div>
-
-                              <div className="space-y-2">
-                                <label
-                                  htmlFor="fileUpload"
-                                  className="block text-sm font-medium text-gray-900"
-                                >
-                                  Brand Document
-                                  <span className="text-xs block">
-                                    Info about your brand
-                                  </span>
-                                </label>
-                                <div className="flex items-center space-x-2">
-                                  <label
-                                    htmlFor="fileUpload"
-                                    className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2"
-                                  >
-                                    <span>Upload a file</span>
-
-                                    <input
-                                      id="fileUpload"
-                                      name="fileUpload"
-                                      type="file"
-                                      disabled={!authenticated}
-                                      accept=".txt,.pdf"
-                                      className="sr-only"
-                                      onChange={handleChange}
-                                    />
-                                  </label>
-                                  <p className="text-xs">(.txt or .pdf):</p>
-                                  {emailForm.fileUpload && (
-                                    <p className="text-sm">
-                                      {emailForm.fileUpload.name}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-
-                              <div className="space-y-2">
-                                <label
-                                  htmlFor="emailBody"
-                                  className="block text-sm font-medium text-gray-900"
-                                >
-                                  Enter email message
-                                </label>
-                                <textarea
-                                  id="htmlContent"
-                                  name="htmlContent"
-                                  rows={3}
-                                  className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled={!authenticated}
-                                  value={emailForm.htmlContent}
-                                  onChange={handleChange}
-                                  placeholder="Type your message here.(Field has been disabled while testing as a recipient)"
-                                />
-                              </div>
-
-                              <div className="space-y-2">
-                                <h3 className="text-sm font-medium text-gray-900">
-                                  Add product image here
-                                </h3>
-                                <div className="flex space-x-2">
-                                  <img
-                                    id="file-upload"
-                                    name="imageUrl"
-                                    className="inline-block w-32 h-32 rounded"
-                                    src={
-                                      selectedImage
-                                        ? URL.createObjectURL(selectedImage)
-                                        : "/images/OtherVar.png"
-                                    }
-                                    alt={"imageUploaded"}
-                                  />
-                                  <label
-                                    htmlFor="upload"
-                                    className="inline-flex w-32 h-32 flex-shrink-0 items-center justify-center rounded border-2 border-dashed border-gray-200 bg-white text-gray-400 hover:border-gray-300 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                                  >
-                                    <input
-                                      type="file"
-                                      id="upload"
-                                      disabled={!authenticated}
-                                      accept="image/*"
-                                      className="hidden"
-                                      onChange={handleImageChange}
-                                    />
-                                    <span>+</span>
-                                    <span className="sr-only">
-                                      Add product image
-                                    </span>
-                                  </label>
-                                </div>
-                                <div className="space-y-2">
-                                  <label
-                                    htmlFor="productDescription"
-                                    className="block text-sm font-medium text-gray-900"
-                                  >
-                                    Product description
-                                  </label>
-                                  <textarea
-                                    id="productDescription"
-                                    name="productDescription"
-                                    rows={4}
-                                    className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                    disabled={!authenticated}
-                                    value={emailForm.productDescription}
-                                    onChange={handleChange}
-                                    placeholder="Add product description here.(Field has been disabled while testing as a recipient)"
-                                  />
-                                </div>
-                                <div className="space-y-2">
-                                  <label
-                                    htmlFor="productLink"
-                                    className="block text-sm font-medium text-gray-900"
-                                  >
-                                    Product URL
-                                  </label>
-                                  <input
-                                    type="text"
-                                    name="productLink"
-                                    id="productLink"
-                                    className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                    disabled={!authenticated}
-                                    value={emailForm.productLink}
-                                    onChange={handleChange}
-                                    placeholder="https://www.my-product.com/product. (Field has been disabled while testing as a recipient)"
-                                  />
-                                </div>
-                              </div>
-                              <div className="flex w-64 justify-center mx-auto mt-3 mb-3">
-                                <Link
-                                  className="inline-flex w-64 flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
-                                  href={"#review"}
-                                >
-                                  Review
-                                </Link>
+                                  Cancel
+                                </button> */}
                               </div>
                             </div>
                           </div>

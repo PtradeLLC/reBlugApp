@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useClerk } from "@clerk/nextjs";
 import EmailTool from "../components/Email_Tool";
 import EmailConvTool from "../components/Session_Email";
 
@@ -30,8 +29,6 @@ export default function Tools() {
   const handleClick = () => {
     setOpenModal(true);
   };
-
-  const { authenticated } = useClerk();
 
   return (
     <div className="overflow-hidden bg-white py-24 sm:py-32">
@@ -74,12 +71,7 @@ export default function Tools() {
         </div>
       </div>
       <span className="mt-3">
-        {authenticated && openModal ? (
-          <EmailConvTool openModal={openModal} setOpenModal={setOpenModal} />
-        ) : !authenticated || openModal ? (
-          <EmailTool openModal={openModal} setOpenModal={setOpenModal} />
-        ) : // <EmailConvTool openModal={openModal} setOpenModal={setOpenModal} />
-        null}
+        {<EmailTool openModal={openModal} setOpenModal={setOpenModal} />}
       </span>
     </div>
   );
