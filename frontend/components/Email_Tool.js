@@ -51,15 +51,25 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    Object.keys(emailForm).forEach((key) => {
+      formData.append(key, emailForm[key]);
+    });
+    formData.append("imageUrl", selectedImage);
     try {
-      const response = await axios.post(url, emailForm);
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       const data = response.data;
       console.log(data);
-
+    } catch (error) {
+      console.error(error);
+    }
+  };
       //      Send email to user with the fetched data
       //     const testProspect = await axios.post(url, emailForm);
       //     const emailData = testProspect.data;
