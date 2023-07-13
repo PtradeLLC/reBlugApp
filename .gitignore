@@ -12,3 +12,12 @@ OLD*
 .env
 .venv
 .aider.*
+.BC.*
+tmp*
+*~
+OLD*
+*.pyc
+.DS_Store
+.env
+.venv
+.aider.*

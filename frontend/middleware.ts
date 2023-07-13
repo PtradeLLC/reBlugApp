@@ -7,7 +7,7 @@ export default authMiddleware({
     "/freetrials",
     "/contact",
     "/agency",
-    "/influencers",
+    "/influenzas",
     "/marketplace",
     "/api/chat_bot",
     "/api/trendToolsAI",
@@ -16,6 +16,7 @@ export default authMiddleware({
     "/api/chat/route",
     "/tools",
     "/email",
+    "/api/email/test-email",
   ],
 });
 

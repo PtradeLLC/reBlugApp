@@ -2,40 +2,42 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
-import axios from 'axios';
+import axios from "axios";
+import { useClerk } from "@clerk/nextjs";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function EmailConvTool({ openModal, setOpenModal }) {
-  const handleClickToSend = async () => {
-    try {
-      const response = await axios.get('/api/database');
-      const data = response.data;
-      // Send email to user with the fetched data
-      // You'll need to replace this with your actual email sending logic
-      console.log(`Email sent to ${emailForm.email} with data: ${data}`);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const [open, setOpen] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [emailForm, setEmailForm] = useState({
     email: "",
     recipients: "",
-    subjectLine: "",
-    emailBody: "",
+    subject: "",
+    htmlContent: "",
     fileUpload: null,
     productDescription: "",
     productLink: "",
     imageUrl: `${selectedImage}`,
   });
 
+  const url = "/api/email/test-email";
+
+  // To Dos
+  // On click:
+  // Sends a request to Brevo 'contact' endpoint to create an email (prospect).
+  //Then:
+  // --> Triggers an email to be sent to prospect's email address:
+  // ------->
+
+  //modal ops
   const handleClose = () => {
     setOpenModal(false);
   };
 
+  //Page form Inputs
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value, files } = e.target;
@@ -46,20 +48,34 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/database', emailForm);
-      console.log(response.data);
+      const response = await axios.post(url, emailForm);
+      const data = response.data;
+      console.log(data);
+
+      //      Send email to user with the fetched data
+      //     const testProspect = await axios.post(url, emailForm);
+      //     const emailData = testProspect.data;
+      //     console.log(emailData);
+
+      //     You'll need to replace this with your actual email sending logic
+      //     console.log(`Email sent to ${emailForm.email} with data: ${emailData}`);
+
+      // const response = await axios.post(url, emailForm);
+      // console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-  };
+  const { authenticated } = useClerk();
 
   return (
     <Transition.Root show={openModal} as={Fragment}>
@@ -145,7 +161,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                             <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
                               <button
                                 type="button"
-                                onClick={handleClickToSend}
+                                onClick={handleSubmit}
                                 className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                               >
                                 Click to Send
@@ -197,7 +213,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   id="recipients"
                                   placeholder="Enter recipient's email.(Field has been disabled while testing as a recipient)"
                                   className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled
+                                  disabled={!authenticated}
                                   value={emailForm.recipients}
                                   onChange={handleChange}
                                 />
@@ -210,19 +226,19 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
                               <div className="space-y-2">
                                 <label
-                                  htmlFor="subjectLine"
+                                  htmlFor="subject"
                                   className="block text-sm font-medium text-gray-900"
                                 >
                                   Subject Line
                                 </label>
                                 <input
                                   type="text"
-                                  name="subjectLine"
-                                  id="subjectLine"
+                                  name="subject"
+                                  id="subject"
                                   placeholder="Enter subject.(Field has been disabled while testing as a recipient)"
                                   className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled
-                                  value={emailForm.subjectLine}
+                                  disabled={!authenticated}
+                                  value={emailForm.subject}
                                   onChange={handleChange}
                                 />
                               </div>
@@ -248,7 +264,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                       id="fileUpload"
                                       name="fileUpload"
                                       type="file"
-                                      disabled
+                                      disabled={!authenticated}
                                       accept=".txt,.pdf"
                                       className="sr-only"
                                       onChange={handleChange}
@@ -271,12 +287,12 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   Enter email message
                                 </label>
                                 <textarea
-                                  id="emailBody"
-                                  name="emailBody"
+                                  id="htmlContent"
+                                  name="htmlContent"
                                   rows={3}
                                   className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled
-                                  value={emailForm.emailBody}
+                                  disabled={!authenticated}
+                                  value={emailForm.htmlContent}
                                   onChange={handleChange}
                                   placeholder="Type your message here.(Field has been disabled while testing as a recipient)"
                                 />
@@ -305,7 +321,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                     <input
                                       type="file"
                                       id="upload"
-                                      disabled
+                                      disabled={!authenticated}
                                       accept="image/*"
                                       className="hidden"
                                       onChange={handleImageChange}
@@ -328,7 +344,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                     name="productDescription"
                                     rows={4}
                                     className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                    disabled
+                                    disabled={!authenticated}
                                     value={emailForm.productDescription}
                                     onChange={handleChange}
                                     placeholder="Add product description here.(Field has been disabled while testing as a recipient)"
@@ -346,7 +362,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                     name="productLink"
                                     id="productLink"
                                     className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                    disabled
+                                    disabled={!authenticated}
                                     value={emailForm.productLink}
                                     onChange={handleChange}
                                     placeholder="https://www.my-product.com/product. (Field has been disabled while testing as a recipient)"
