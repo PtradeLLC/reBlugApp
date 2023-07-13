@@ -63,19 +63,15 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
       console.log("submittedInTry");
       console.log("FE:", data);
+
+      // Reset form and update states after form data has been processed
+      setEmailForm(initialEmailForm);
+      setBeforeClick("Please check your email");
+      setIsClicked(true);
+      setBeforeButton("Close");
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-
-    console.log("submittedOnClick");
-    setEmailForm(initialEmailForm);
-    // setBeforeClick("Please check your email");
-    // setIsClicked(true);
-    // setBeforeButton("Close");
   };
 
   return (
@@ -136,7 +132,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                           <div className="mt-6 sm:ml-6 sm:flex-1">
                             <div>
                               <div className="flex items-center">
-                                <h3 className="text-xl  font-bold text-gray-900 sm:text-2xl">
+                                <h3
+                                  id="messageTitle"
+                                  className="text-xl  font-bold text-gray-900 sm:text-2xl"
+                                >
                                   {emailForm.productLink || `${beforeClick}`}
                                 </h3>
                                 <span
@@ -156,7 +155,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                           </div>
                         </div>
                       </div>
-                      <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                      <div
+                        className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform  
+ bg-white shadow-xl rounded-xl"
+                      >
                         <form onSubmit={handleSubmit}>
                           <div className="space-y-6">
                             <div className="space-y-6">
@@ -173,7 +175,8 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   id="email"
                                   disabled={isClicked} // Disable the input field based on button click state
                                   placeholder="Enter your email"
-                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
+ ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                                   value={emailForm.email}
                                   onChange={handleChange}
                                 />
@@ -188,19 +191,12 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                 <button
                                   id="send"
                                   type="submit"
-                                  onClick={handleClick}
-                                  // disabled={isClicked}
-                                  className="inline-flex flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
+                                  className="inline-flex flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2  
+ text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2                           
+ focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                                 >
                                   {beforeButton}
                                 </button>
-                                {/* <button
-                                  type="button"
-                                  onClick={handleClose}
-                                  className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                >
-                                  Cancel
-                                </button> */}
                               </div>
                             </div>
                           </div>
