@@ -41,8 +41,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsClicked(true);
     if (emailForm.email === "") {
       setIsEmailEmpty(true);
+      setBeforeClick("Enter your email in the form below");
       return;
     }
 
@@ -61,12 +63,9 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         setIsEmailEmpty(false); // Update state to indicate email is not empty
       }
 
-      console.log("submittedInTry");
-      console.log("FE:", data);
-
       // Reset form and update states after form data has been processed
       setEmailForm(initialEmailForm);
-      setBeforeClick("Please check your email");
+      setBeforeClick("We have sent you an email, please check your email.");
       setIsClicked(true);
       setBeforeButton("Close");
     } catch (error) {
@@ -136,7 +135,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   id="messageTitle"
                                   className="text-xl  font-bold text-gray-900 sm:text-2xl"
                                 >
-                                  {emailForm.productLink || `${beforeClick}`}
+                                  {beforeClick}
                                 </h3>
                                 <span
                                   className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${
@@ -180,7 +179,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   value={emailForm.email}
                                   onChange={handleChange}
                                 />
-                                {isEmailEmpty && (
+                                {isEmailEmpty && isClicked && (
                                   <p className="text-red-500 text-xs mt-1">
                                     Please enter your email address
                                   </p>
