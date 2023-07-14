@@ -69,27 +69,25 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       smsBlacklisted,
     } = emailForm;
 
-    console.log(email, FNAME, LNAME, listIds, emailBlacklisted, smsBlacklisted); //Prints this successfully to the console
-
-    const url = "https://api.brevo.com/v3/contacts";
-    const options = {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        "api-key": `${process.env.BREVO_FORGEDMART_API_KEY}`,
-      },
-      body: JSON.stringify({
-        email,
-        attributes: { FNAME, LNAME },
-        listIds,
-        emailBlacklisted,
-        smsBlacklisted,
-      }),
-    };
+    console.log(email, FNAME, LNAME, listIds, emailBlacklisted, smsBlacklisted);
 
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          attributes: {
+            FNAME,
+            LNAME,
+          },
+          listIds,
+          emailBlacklisted,
+          smsBlacklisted,
+        }), // Send the email as an object property
+      });
       const data = await response.json();
       if (data) {
         setIsEmailEmpty(false); // Update state to indicate email is not empty
@@ -97,11 +95,13 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
       // Reset form and update states after form data has been processed
       setEmailForm(initialEmailForm);
-      setBeforeClick("We have sent you an email, please check your email.");
+      setBeforeClick(
+        "We have sent you an email, please check your inbox (or spam)."
+      );
       setIsClicked(true);
       setBeforeButton("Close");
     } catch (error) {
-      console.error("error:", error);
+      console.error(error);
     }
   };
 
