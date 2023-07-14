@@ -37,42 +37,42 @@ const moods = [
   {
     name: "Excited",
     value: "excited",
-    icon: FireIcon,
+    // icon: FireIcon,
     iconColor: "text-white",
     bgColor: "bg-red-500",
   },
   {
     name: "Loved",
     value: "loved",
-    icon: HeartIcon,
+    // icon: HeartIcon,
     iconColor: "text-white",
     bgColor: "bg-pink-400",
   },
   {
     name: "Happy",
     value: "happy",
-    icon: FaceSmileIcon,
+    // icon: FaceSmileIcon,
     iconColor: "text-white",
     bgColor: "bg-green-400",
   },
   {
     name: "Sad",
     value: "sad",
-    icon: FaceFrownIcon,
+    // icon: FaceFrownIcon,
     iconColor: "text-white",
     bgColor: "bg-yellow-400",
   },
   {
     name: "Thumbsy",
     value: "thumbsy",
-    icon: HandThumbUpIcon,
+    // icon: HandThumbUpIcon,
     iconColor: "text-white",
     bgColor: "bg-blue-500",
   },
   {
     name: "I feel nothing",
     value: null,
-    icon: XMarkIconMini,
+    // icon: XMarkIconMini,
     iconColor: "text-gray-400",
     bgColor: "bg-transparent",
   },
@@ -158,7 +158,7 @@ export default function Trial() {
                   <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                     <dt className="flex-none">
                       <span className="sr-only">Data Visualization</span>
-                      <ChartBarIcon
+                      <div
                         className="h-6 w-5 text-gray-400"
                         aria-hidden="true"
                       />
@@ -341,7 +341,7 @@ export default function Trial() {
                       <>
                         <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
                           {activityItem.type === "paid" ? (
-                            <CheckCircleIcon
+                            <div
                               className="h-6 w-6 text-red-600"
                               aria-hidden="true"
                             />
