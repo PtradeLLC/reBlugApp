@@ -6,7 +6,7 @@ export default function Email() {
   const [conversations, setConversations] = useState(null);
 
   useEffect(() => {
-    const sendEmail = async () => {
+    const sendEmailFunction = async () => {
       try {
         // Fetch the email template
         const templateResponse = await fetchEmailTemplate();
@@ -52,7 +52,7 @@ export default function Email() {
         };
 
         // Send the email with the merged payload
-        await sendEmail(finalPayload);
+        await sendEmailRequest(finalPayload);
 
         // Set the template and conversations states
         setTemplate(template);
@@ -62,7 +62,7 @@ export default function Email() {
       }
     };
 
-    sendEmail();
+    sendEmailFunction();
   }, []);
 
   const fetchEmailTemplate = async () => {
@@ -129,7 +129,7 @@ export default function Email() {
     return conversationsPayload;
   };
 
-  const sendEmail = async (payload) => {
+    const sendEmailRequest = async (payload) => {
     // Replace this URL with the correct endpoint to send the email
     const requestOptions = {
       method: "POST",
