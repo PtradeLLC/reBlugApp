@@ -24,7 +24,8 @@ export default function Email() {
           params: {
             title: "This is my default greeting",
             headline: "This is my default headline",
-            chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the email
+            chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in t
+            email,
           },
           messageVersions: [
             {
@@ -84,7 +85,8 @@ export default function Email() {
       params: {
         title: "This is my default greeting",
         headline: "This is my default headline",
-        chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the email
+        chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the
+        email,
       },
       messageVersions: [
         {
@@ -129,7 +131,7 @@ export default function Email() {
     return conversationsPayload;
   };
 
-    const sendEmailRequest = async (payload) => {
+  const sendEmailRequest = async (payload) => {
     // Replace this URL with the correct endpoint to send the email
     const requestOptions = {
       method: "POST",
