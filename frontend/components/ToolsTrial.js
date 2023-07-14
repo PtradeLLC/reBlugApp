@@ -1,14 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
-import {
-  ChartBarIcon,
-  FaceFrownIcon,
-  FaceSmileIcon,
-  FireIcon,
-  HandThumbUpIcon,
-  HeartIcon,
-  XMarkIcon as XMarkIconMini,
-} from "@heroicons/react/20/solid";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
