@@ -7,25 +7,16 @@ export const config = {
   },
 };
 
-// const secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
-const webhookSecret = process.env.WEBHOOK_SECRET || "";
+const secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
 
 export default async function handler(req, res) {
   const payload = (await buffer(req)).toString();
   const headers = req.headers;
 
-  const wh = new Webhook(webhookSecret);
+  const wh = new Webhook(secret);
   let msg;
-  const heads = {
-    "svix-id": "msg_p5jXN8AQM9LWM0D4loKWxJek",
-    "svix-timestamp": "1614265330",
-    "svix-signature": "v1,g0hM9SsE+OTPJTGt/tmIKtSyZlE3uFJELVlNIOLJ1OE=",
-  };
-
   try {
-    msg = wh.verify(payload, heads);
-
-    console.log(msg);
+    msg = wh.verify(payload, headers);
   } catch (err) {
     res.status(400).json({});
   }
