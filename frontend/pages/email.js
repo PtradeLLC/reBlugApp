@@ -24,7 +24,7 @@ export default function Email() {
           params: {
             title: "This is my default greeting",
             headline: "This is my default headline",
-            chatWidget: `<div>${BrevoConversations()}</div>`, // Include the chat widget in the email template
+            chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the email
           },
           messageVersions: [
             {
@@ -84,7 +84,7 @@ export default function Email() {
       params: {
         title: "This is my default greeting",
         headline: "This is my default headline",
-        chatWidget: `<div>${BrevoConversations()}</div>`, // Include the chat widget in the email template
+        chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the email
       },
       messageVersions: [
         {
