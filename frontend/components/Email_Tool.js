@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Link from "next/link";
 import Image from "next/image";
 
 function classNames(...classes) {
@@ -15,6 +14,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   );
   const initialEmailForm = {
     email: "",
+    attributes: { FNAME: "", LNAME: "" },
+    listIds: [4],
+    emailBlacklisted: false,
+    smsBlacklisted: false,
   };
   const [emailForm, setEmailForm] = useState(initialEmailForm);
   const [isClicked, setIsClicked] = useState(false); // Added state to track button click
@@ -28,15 +31,25 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     setOpenModal(false);
   };
 
-  //Page form Inputs
+  // Page form Inputs
   const handleChange = (e) => {
     e.preventDefault();
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
-    setEmailForm((prevState) => ({
-      ...prevState,
-      [name]: name === "fileUpload" ? files[0] : value,
-    }));
+    if (name === "email") {
+      setEmailForm((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    } else {
+      setEmailForm((prevState) => ({
+        ...prevState,
+        attributes: {
+          ...prevState.attributes,
+          [name]: value,
+        },
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -48,16 +61,35 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       return;
     }
 
-    console.log("submitted");
+    const {
+      email,
+      attributes: { FNAME, LNAME },
+      listIds,
+      emailBlacklisted,
+      smsBlacklisted,
+    } = emailForm;
+
+    console.log(email, FNAME, LNAME, listIds, emailBlacklisted, smsBlacklisted); //Prints this successfully to the console
+
+    const url = "https://api.brevo.com/v3/contacts";
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        "api-key": `${process.env.BREVO_FORGEDMART_API_KEY}`,
+      },
+      body: JSON.stringify({
+        email,
+        attributes: { FNAME, LNAME },
+        listIds,
+        emailBlacklisted,
+        smsBlacklisted,
+      }),
+    };
 
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: emailForm.email }), // Send the email as an object property
-      });
+      const response = await fetch(url, options);
       const data = await response.json();
       if (data) {
         setIsEmailEmpty(false); // Update state to indicate email is not empty
@@ -69,7 +101,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       setIsClicked(true);
       setBeforeButton("Close");
     } catch (error) {
-      console.error(error);
+      console.error("error:", error);
     }
   };
 
@@ -182,6 +214,54 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                 {isEmailEmpty && isClicked && (
                                   <p className="text-red-500 text-xs mt-1">
                                     Please enter your email address
+                                  </p>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                <label
+                                  htmlFor="FNAME"
+                                  className="block text-sm font-medium text-gray-900"
+                                >
+                                  First Name
+                                </label>
+                                <input
+                                  type="text"
+                                  name="FNAME"
+                                  id="FNAME"
+                                  disabled={isClicked} // Disable the input field based on button click state
+                                  placeholder="Enter your first name"
+                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
+ ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                  value={emailForm.attributes.FNAME}
+                                  onChange={handleChange}
+                                />
+                                {isEmailEmpty && isClicked && (
+                                  <p className="text-red-500 text-xs mt-1">
+                                    Please enter your first name
+                                  </p>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                <label
+                                  htmlFor="LNAME"
+                                  className="block text-sm font-medium text-gray-900"
+                                >
+                                  Last Name
+                                </label>
+                                <input
+                                  type="text"
+                                  name="LNAME"
+                                  id="LNAME"
+                                  disabled={isClicked} // Disable the input field based on button click state
+                                  placeholder="Enter your last name"
+                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
+ ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                  value={emailForm.attributes.LNAME}
+                                  onChange={handleChange}
+                                />
+                                {isEmailEmpty && isClicked && (
+                                  <p className="text-red-500 text-xs mt-1">
+                                    Please enter your last name
                                   </p>
                                 )}
                               </div>
