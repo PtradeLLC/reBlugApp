@@ -24,8 +24,7 @@ export default function Email() {
           params: {
             title: "This is my default greeting",
             headline: "This is my default headline",
-            chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in t
-            email,
+            chatWidget: <a href="#brevoConversationsExpanded">Open Chat</a>, // Include a link to the chat in t
           },
           messageVersions: [
             {
@@ -70,10 +69,7 @@ export default function Email() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
-    myHeaders.append(
-      "api-key",
-      "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"
-    );
+    myHeaders.append("api-key", `${process.env.BREVO_FORGEDMART_API_KEY}`);
 
     const raw = JSON.stringify({
       sender: {
@@ -85,7 +81,7 @@ export default function Email() {
       params: {
         title: "This is my default greeting",
         headline: "This is my default headline",
-    chatWidget: `<a href="https://yourwebsite.com/chat">Open Chat</a>`, // Include a link to the chat in the email
+        chatWidget: <a href="#brevoConversationsExpanded">Open Chat</a>, // Include a link to the chat in the email
       },
       messageVersions: [
         {
