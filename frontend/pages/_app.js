@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Layout from "../components/Layout";
 import Script from "next/script";
+import BrevoConversations from "../components/chatWdiget";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }) {
     >
       <Layout>
         <Component {...pageProps} />
+        <BrevoConversations />
       </Layout>
     </ClerkProvider>
   );

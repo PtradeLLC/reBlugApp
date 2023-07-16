@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import EmailTool from "../components/Email_Tool";
-import EmailConvTool from "../components/Session_Email";
 
 const features = [
   {

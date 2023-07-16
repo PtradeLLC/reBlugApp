@@ -69,8 +69,6 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       smsBlacklisted,
     } = emailForm;
 
-    console.log(email, FNAME, LNAME, listIds, emailBlacklisted, smsBlacklisted);
-
     try {
       const response = await fetch(url, {
         method: "POST",
