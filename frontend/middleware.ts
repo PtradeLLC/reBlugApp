@@ -18,6 +18,8 @@ export default authMiddleware({
     "/email",
     "/api/email/test-email",
     "/api/email/email-template",
+    "/api/email/prospectTemplate",
+    "/api/email/emailLogic",
     "/emailTest",
   ],
 });
