@@ -18,6 +18,7 @@ export default authMiddleware({
     "/email",
     "/api/email/test-email",
     "/api/email/email-template",
+    "/emailTest",
   ],
 });
 

@@ -29,7 +29,11 @@ const handler = async (req, res) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ handler: "handler", data: result }),
+          body: JSON.stringify({
+            handler: "handler",
+            data: result,
+            widget: "<Widget />", // Include the widget component as a string
+          }),
         });
       }
       console.log(result);
