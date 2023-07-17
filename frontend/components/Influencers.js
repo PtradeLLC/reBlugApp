@@ -57,7 +57,7 @@ export default function Influencer() {
                 </div>
                 <div className="flex w-96 flex-auto justify-end lg:w-auto lg:flex-none">
                   <Image
-                    src="/images/store-one.png"
+                    src="/images/fashion.png"
                     alt=""
                     width={400}
                     height={400}
@@ -66,7 +66,7 @@ export default function Influencer() {
                 </div>
                 <div className="hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none">
                   <Image
-                    src="/images/poolgirl.png"
+                    src="/images/vidgirl.png"
                     alt=""
                     width={400}
                     height={400}

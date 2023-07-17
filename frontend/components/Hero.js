@@ -108,7 +108,7 @@ export default function Hero() {
                     </div>
                     <div className="relative">
                       <Image
-                        src="/images/bulb2.png"
+                        src="/images/prodone.png"
                         alt="influencer-image"
                         width={100}
                         height={24}
@@ -121,7 +121,7 @@ export default function Hero() {
                   <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                     <div className="relative">
                       <Image
-                        src="/images/store-two.png"
+                        src="/images/prodtwo.png"
                         alt="social-media"
                         width={100}
                         height={24}
