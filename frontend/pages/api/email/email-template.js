@@ -1,4 +1,4 @@
-import Widget from "../../../components/widgets/Widget";
+import Widget from "../../../components/chatWdiget";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
