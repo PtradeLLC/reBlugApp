@@ -3,6 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
+    config.module.rules.push({
+      test: /\.html$/,
+      use: "raw-loader",
+    });
     return config;
   },
   // experimental: {
