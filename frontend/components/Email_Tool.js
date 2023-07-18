@@ -44,10 +44,9 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     } else {
       setEmailForm((prevState) => ({
         ...prevState,
-        attributes: {
-          ...prevState.attributes,
-          [name]: value,
-        },
+        firstName,
+        lastName,
+        email,
       }));
     }
   };
