@@ -12,14 +12,14 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, firstName, lastName } = req.body;
     try {
-      const trialUsers = await prisma.trialprospect.create({
+      const trialAccount = await trialprospect.create({
         data: {
           email,
           firstName,
           lastName,
         },
       });
-      console.log(trialUsers);
+      console.log(trialAccount);
 
       const filePath = path.resolve(
         process.cwd(),
