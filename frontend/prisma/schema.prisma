@@ -45,6 +45,22 @@ model Document {
   emailToolId String?
 }
 
+model TrialProspect {
+  id        Int     @id @default(autoincrement())
+  emai      String
+  firstName String
+  lastName  String
+  chatBot   String?
+}
+
+model TrialProspectTwo {
+  id        Int    @id @default(autoincrement())
+  emai      String
+  firstName String
+  lastName  String
+  chatBot   String
+}
+
 model ForgedAI {
   id                  String                         @unique @default(uuid())
   product             String?

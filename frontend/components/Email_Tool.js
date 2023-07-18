@@ -12,19 +12,19 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [beforeClick, setBeforeClick] = useState(
     "Complete the form field below"
   );
+
   const initialEmailForm = {
     email: "",
-    attributes: { FNAME: "", LNAME: "" },
-    listIds: [4],
-    emailBlacklisted: false,
-    smsBlacklisted: false,
+    firstName,
+    lastName,
   };
+
   const [emailForm, setEmailForm] = useState(initialEmailForm);
   const [isClicked, setIsClicked] = useState(false); // Added state to track button click
   const [beforeButton, setBeforeButton] = useState("Click to Send");
   const [isEmailEmpty, setIsEmailEmpty] = useState(false); // Added state to track empty email
 
-  const url = "/api/email/test-email";
+  const url = "/api/email/emailLogic";
 
   //modal ops
   const handleClose = () => {
@@ -61,13 +61,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       return;
     }
 
-    const {
-      email,
-      attributes: { FNAME, LNAME },
-      listIds,
-      emailBlacklisted,
-      smsBlacklisted,
-    } = emailForm;
+    const { email, firstName, lastName } = emailForm;
 
     try {
       const response = await fetch(url, {
@@ -77,13 +71,8 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         },
         body: JSON.stringify({
           email,
-          attributes: {
-            FNAME,
-            LNAME,
-          },
-          listIds,
-          emailBlacklisted,
-          smsBlacklisted,
+          firstName,
+          lastName,
         }), // Send the email as an object property
       });
       const data = await response.json();
@@ -217,20 +206,20 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                               </div>
                               <div className="space-y-2">
                                 <label
-                                  htmlFor="FNAME"
+                                  htmlFor="firstName"
                                   className="block text-sm font-medium text-gray-900"
                                 >
                                   First Name
                                 </label>
                                 <input
                                   type="text"
-                                  name="FNAME"
-                                  id="FNAME"
+                                  name="firstName"
+                                  id="firstName"
                                   disabled={isClicked} // Disable the input field based on button click state
                                   placeholder="Enter your first name"
                                   className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  value={emailForm.attributes.FNAME}
+                                  value={emailForm.firstName}
                                   onChange={handleChange}
                                 />
                                 {isEmailEmpty && isClicked && (
@@ -241,20 +230,20 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                               </div>
                               <div className="space-y-2">
                                 <label
-                                  htmlFor="LNAME"
+                                  htmlFor="lastName"
                                   className="block text-sm font-medium text-gray-900"
                                 >
                                   Last Name
                                 </label>
                                 <input
                                   type="text"
-                                  name="LNAME"
-                                  id="LNAME"
+                                  name="lastName"
+                                  id="lastName"
                                   disabled={isClicked} // Disable the input field based on button click state
                                   placeholder="Enter your last name"
                                   className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  value={emailForm.attributes.LNAME}
+                                  value={emailForm.lastName}
                                   onChange={handleChange}
                                 />
                                 {isEmailEmpty && isClicked && (
