@@ -50,17 +50,17 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }
 
     try {
+      const { email, firstName, lastName } = emailForm; // Destructure the required properties
+      const requestBody = { email, firstName, lastName }; // Create a new object with only the required properties
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
-        }),
+        body: JSON.stringify(requestBody), // Use the new object in JSON.stringify()
       });
+
       const data = await response.json();
       if (data) {
         setIsEmailEmpty(false);

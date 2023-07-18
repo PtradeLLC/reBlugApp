@@ -14,8 +14,6 @@ export default async function handler(req, res) {
     const { email, firstName, lastName } = req.body;
 
     try {
-      const cld = new Cloudinary({ cloud: { cloudName: "publictrades" } });
-
       const trialAccount = await prisma.TrialProspect.create({
         data: {
           email,
@@ -23,18 +21,6 @@ export default async function handler(req, res) {
           lastName,
         },
       });
-      console.log(trialAccount);
-
-      const folderPath = path.resolve(
-        process.cwd(),
-        "pages/api/emailfiles/img"
-      );
-
-      // Create the folder if it doesn't exist
-      if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath, { recursive: true });
-      }
-
       const filePath = path.resolve(
         process.cwd(),
         "pages/api/emailfiles/index.html"
