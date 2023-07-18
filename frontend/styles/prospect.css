@@ -44,3 +44,8 @@
   font-family: "Helvetica", sans-serif;
   color: #c0ccda;
 }
+
+.body {
+  width: 90%;
+  background-color: #000;
+}

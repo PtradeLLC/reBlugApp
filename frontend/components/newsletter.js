@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 const profile = {
   name: "Ricardo Cooper",
   email: "ricardo.cooper@example.com",
@@ -72,6 +74,7 @@ export default function EmailLetter() {
           </h1>
         </div>
       </div>
+      <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     </div>
   );
 }
