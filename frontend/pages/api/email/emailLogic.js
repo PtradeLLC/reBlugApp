@@ -10,7 +10,17 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
+    const { email, firstName, lastName } = req.body;
     try {
+      const trialUsers = await prisma.trialprospect.create({
+        data: {
+          email,
+          firstName,
+          lastName,
+        },
+      });
+      console.log(trialUsers);
+
       const filePath = path.resolve(
         process.cwd(),
         "pages/api/emailfiles/index.html"
@@ -20,7 +30,7 @@ export default async function handler(req, res) {
       res.status(200).json({ message: "Success" });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: "Error sending email" });
+      res.status(500).json({ error: `Error sending email ${error}` });
     }
   }
 }
