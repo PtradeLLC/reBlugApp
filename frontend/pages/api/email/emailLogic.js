@@ -2,6 +2,7 @@ import { sendEmail } from "./prospectTemplate";
 import fs from "fs";
 import path from "path";
 import { PrismaClient } from "@prisma/client";
+import { Cloudinary } from "@cloudinary/url-gen";
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
@@ -11,8 +12,10 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const { email, firstName, lastName } = req.body;
-    console.log(email, firstName, lastName, req.body);
+
     try {
+      const cld = new Cloudinary({ cloud: { cloudName: "publictrades" } });
+
       const trialAccount = await prisma.TrialProspect.create({
         data: {
           email,
@@ -21,6 +24,16 @@ export default async function handler(req, res) {
         },
       });
       console.log(trialAccount);
+
+      const folderPath = path.resolve(
+        process.cwd(),
+        "pages/api/emailfiles/img"
+      );
+
+      // Create the folder if it doesn't exist
+      if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath, { recursive: true });
+      }
 
       const filePath = path.resolve(
         process.cwd(),

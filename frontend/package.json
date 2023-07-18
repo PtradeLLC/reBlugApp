@@ -15,6 +15,7 @@
     "@alan-ai/alan-sdk-web": "^1.8.47",
     "@clerk/nextjs": "^4.21.14",
     "@clerk/themes": "^1.7.5",
+    "@cloudinary/url-gen": "^1.10.2",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^1.0.6",
     "@huggingface/inference": "^1.8.0",
