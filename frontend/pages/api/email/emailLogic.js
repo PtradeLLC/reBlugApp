@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, firstName, lastName } = req.body;
     try {
-      const trialAccount = await trialprospect.create({
+      const trialAccount = await prisma.trialprospect.create({
         data: {
           email,
           firstName,
