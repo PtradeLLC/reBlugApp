@@ -15,8 +15,8 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
   const initialEmailForm = {
     email: "",
-    firstName,
-    lastName,
+    firstName: "",
+    lastName: "",
   };
 
   const [emailForm, setEmailForm] = useState(initialEmailForm);

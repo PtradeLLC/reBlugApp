@@ -1,6 +1,8 @@
 import { sendEmail } from "./prospectTemplate";
 import fs from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
