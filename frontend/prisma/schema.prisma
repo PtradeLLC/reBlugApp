@@ -47,7 +47,7 @@ model Document {
 
 model TrialProspect {
   id        Int     @id @default(autoincrement())
-  emai      String
+  email     String
   firstName String
   lastName  String
   chatBot   String?
