@@ -22,6 +22,7 @@ export default authMiddleware({
     "/api/email/emailLogic",
     "/api/emailfiles/index.html",
     "/emailTest",
+    "/images/",
   ],
 });
 
