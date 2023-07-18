@@ -51,14 +51,16 @@ model TrialProspect {
   firstName String
   lastName  String
   chatBot   String?
+  image     String?
 }
 
 model TrialProspectTwo {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   emai      String
   firstName String
   lastName  String
-  chatBot   String
+  chatBot   String?
+  image     String?
 }
 
 model ForgedAI {

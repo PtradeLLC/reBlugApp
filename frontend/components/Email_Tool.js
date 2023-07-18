@@ -49,8 +49,6 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       return;
     }
 
-    const { email, firstName, lastName } = emailForm;
-
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -206,8 +204,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   id="firstName"
                                   disabled={isClicked}
                                   placeholder="Enter your first name"
-                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
- ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                                   value={emailForm.firstName}
                                   onChange={handleChange}
                                 />
