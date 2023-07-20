@@ -12,6 +12,7 @@ export default authMiddleware({
     "/api/chat_bot",
     "/api/trendToolsAI",
     "/api/aiTools",
+    "/api/email-parser",
     "/testTrial",
     "/api/chat/route",
     "/tools",
