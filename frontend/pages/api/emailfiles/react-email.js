@@ -1,0 +1,47 @@
+import * as React from "react";
+import { Html } from "@react-email/html";
+import { Button } from "@react-email/button";
+import { Container } from "@react-email/container";
+import { Body } from "@react-email/body";
+import { Section } from "@react-email/section";
+import { Row } from "@react-email/row";
+import { Column } from "@react-email/column";
+import { Head } from "@react-email/head";
+import { Heading } from "@react-email/heading";
+import { Text } from "@react-email/text";
+import { Hr } from "@react-email/hr";
+
+export function Email(props) {
+  const { url } = props;
+
+  return (
+    <Html lang="en">
+      <Head>
+        <title>My email title</title>
+      </Head>
+      <Body style={{ backgroundColor: "#000" }} className="bg-slate-900">
+        <Container>
+          <Section>
+            <Row>
+              <Column style={{ width: "100%" }}>
+                <Heading as="h1">Heading goes here</Heading>
+              </Column>
+            </Row>
+          </Section>
+          <Section>
+            <Row>
+              <Column style={{ width: "50%" }}>
+                Lets try this
+                <Text>Lorem ipsum</Text>
+              </Column>
+              <Column style={{ width: "50%" }}>
+                This is the second section
+                <Hr />
+              </Column>
+            </Row>
+          </Section>
+        </Container>
+      </Body>
+    </Html>
+  );
+}
