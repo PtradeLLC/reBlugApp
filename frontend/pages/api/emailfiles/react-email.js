@@ -10,6 +10,7 @@ import { Head } from "@react-email/head";
 import { Heading } from "@react-email/heading";
 import { Text } from "@react-email/text";
 import { Hr } from "@react-email/hr";
+import { Chat } from "../../../../forgedMartchatbot/components/Chat";
 
 export function Email(props) {
   const { url } = props;
@@ -19,7 +20,7 @@ export function Email(props) {
       <Head>
         <title>My email title</title>
       </Head>
-      <Body style={{ backgroundColor: "#000" }} className="bg-slate-900">
+      <Body style={{ backgroundColor: "#fff" }}>
         <Container>
           <Section>
             <Row>
@@ -35,7 +36,7 @@ export function Email(props) {
                 <Text>Lorem ipsum</Text>
               </Column>
               <Column style={{ width: "50%" }}>
-                This is the second section
+                <Chat />
                 <Hr />
               </Column>
             </Row>
