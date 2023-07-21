@@ -19,14 +19,14 @@ export function Email(props) {
   return (
     <Html lang="en">
       <Head>
-        <title>My email title</title>
+        <title>My eml title</title>
       </Head>
       <Body style={{ backgroundColor: "#fff" }}>
         <Container>
           <Section>
             <Row>
               <Column style={{ width: "100%" }}>
-                <Heading as="h1">Heading goes here</Heading>
+                <Heading as="h1">Heading go here</Heading>
               </Column>
             </Row>
           </Section>
