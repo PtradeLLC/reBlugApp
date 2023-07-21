@@ -24,6 +24,7 @@ export default authMiddleware({
     "/api/emailfiles/index.html",
     "/emailTest",
     "/images/",
+    "/api/webhooks/user/chatbot-opened",
   ],
 });
 
