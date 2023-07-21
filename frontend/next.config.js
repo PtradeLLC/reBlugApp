@@ -4,9 +4,12 @@ const nextConfig = {
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     config.module.rules.push({
-      test: /\.html$/,
-      use: "raw-loader",
+      test: /\.tsx?$/,
+      loader: "ts-loader",
     });
+
+    config.resolve.extensions.push(".ts", ".tsx");
+
     return config;
   },
   // experimental: {
@@ -24,6 +27,9 @@ const nextConfig = {
         hostname: "replicate.delivery",
       },
     ],
+  },
+  babel: {
+    presets: ["next/babel"],
   },
 };
 
