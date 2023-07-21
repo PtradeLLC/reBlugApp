@@ -10,8 +10,6 @@ import { Head } from "@react-email/head";
 import { Heading } from "@react-email/heading";
 import { Text } from "@react-email/text";
 import { Hr } from "@react-email/hr";
-import Chat from "../../forgedMartchatbot/components/Chat";
-import OpenAIStream from "../../forgedMartchatbot/utils/OpenAIStream";
 
 export function Email(props) {
   const { url } = props;
