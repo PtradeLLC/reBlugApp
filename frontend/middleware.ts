@@ -17,15 +17,14 @@ export default authMiddleware({
     "/testTrial",
     "/api/chat/route",
     "/tools",
-    "/email",
     "/api/email/test-email",
     "/api/email/email-template",
     "/api/email/prospectTemplate",
     "/api/email/emailLogic",
-    "/api/emailfiles/index.html",
+    "/api/emailfiles",
     "/emailTest",
     "/images/",
-    "/api/webhooks/user/chatbot-opened",
+    "/api/chatbot-opened",
   ],
 });
 
