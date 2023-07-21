@@ -1,4 +1,5 @@
 import { authMiddleware } from "@clerk/nextjs";
+
 export default authMiddleware({
   publicRoutes: [
     "/",
@@ -25,7 +26,6 @@ export default authMiddleware({
     "/emailTest",
     "/images/",
     "/api/webhooks/user/chatbot-opened",
-    "../../../forgedMartchatbot/utils/OpenAIStream",
   ],
 });
 
