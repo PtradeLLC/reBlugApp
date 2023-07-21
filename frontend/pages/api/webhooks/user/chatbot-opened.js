@@ -1,4 +1,4 @@
-import OpenAIStream from "../../forgedMartchatbot/utils/OpenAIStream"; // Import the OpenAIStream utility used in Chat.ts
+import OpenAIStream from "../../../../../forgedMartchatbot/utils/OpenAIStream"; // Import the OpenAIStream utility used in Chat.ts
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
