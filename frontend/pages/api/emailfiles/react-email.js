@@ -36,7 +36,7 @@ export function Email(props) {
                 <Text>Lorem ipsum</Text>
               </Column>
               <Column style={{ width: "50%" }}>
-                <Chat />
+                <Chat role="user" content="Hello" />
                 <Hr />
               </Column>
             </Row>
