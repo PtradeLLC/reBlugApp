@@ -1,6 +1,4 @@
 import { sendEmail } from "./prospectTemplate";
-import fs from "fs";
-import path from "path";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
@@ -20,11 +18,6 @@ export default async function handler(req, res) {
           lastName,
         },
       });
-      // const filePath = path.resolve(
-      //   process.cwd(),
-      //   "pages/api/emailfiles/index.html"
-      // );
-      // const emailTemplate = fs.readFileSync(filePath, "utf8");
       await sendEmail();
       res.status(200).json({ message: "Success" });
     } catch (error) {

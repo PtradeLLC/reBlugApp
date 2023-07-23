@@ -5,7 +5,7 @@ import { render } from "@react-email/render";
 export async function sendEmail() {
   sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
-  const emailHtml = render(Email({ url: "www.forgedmart.com" }));
+  const emailHtml = render(Email());
 
   const msg = {
     to: "chrisbitoy@gmail.com", // Change to your recipient

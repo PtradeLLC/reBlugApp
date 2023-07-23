@@ -2,19 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   webpack(config) {
-    config.experiments = { ...config.experiments, topLevelAwait: true };
     config.module.rules.push({
-      test: /\.tsx?$/,
-      loader: "ts-loader",
+      test: /\.ts$/,
+      use: "ts-loader",
+      exclude: /node_modules/,
     });
-
     config.resolve.extensions.push(".ts", ".tsx");
 
     return config;
   },
-  // experimental: {
-  //   forceSwcTransforms: true,
-  // },
+
   images: {
     domains: ["images.unsplash.com"],
     remotePatterns: [
@@ -27,9 +24,6 @@ const nextConfig = {
         hostname: "replicate.delivery",
       },
     ],
-  },
-  babel: {
-    presets: ["next/babel"],
   },
 };
 

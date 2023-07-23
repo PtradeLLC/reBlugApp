@@ -7,6 +7,7 @@ export default authMiddleware({
     "/sign-up",
     "/freetrials",
     "/contact",
+    "/email",
     "/agency",
     "/influenzas",
     "/marketplace",
@@ -23,8 +24,8 @@ export default authMiddleware({
     "/api/email/emailLogic",
     "/api/emailfiles",
     "/emailTest",
-    "/images/",
     "/api/chatbot-opened",
+    "/api/chat",
   ],
 });
 
