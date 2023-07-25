@@ -40,7 +40,6 @@ export function Email(props) {
           </Section>
           <Section
             style={{
-              display: "flex",
               justifyContent: "space-between",
               width: "100%",
             }}
