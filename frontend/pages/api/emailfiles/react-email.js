@@ -10,43 +10,63 @@ import { Head } from "@react-email/head";
 import { Heading } from "@react-email/heading";
 import { Text } from "@react-email/text";
 import { Hr } from "@react-email/hr";
+import { Img } from "@react-email/img";
 import { Chat } from "../../../components/Chat";
 
 export function Email(props) {
-  const { url } = props;
+  const { messages, input, setInput, sendMessage, loading } = props; // Destructure the necessary props here
 
   return (
     <Html lang="en">
-      <Head>
-        <title>My eml title</title>
-      </Head>
-      <Body style={{ backgroundColor: "#fff" }}>
-        <Container>
+      <Body
+        style={{
+          width: "100%",
+          backgroundColor: "#F8FAFC",
+        }}
+      >
+        <Container
+          style={{
+            backgroundColor: "#fff",
+            padding: "10px",
+          }}
+        >
           <Section>
             <Row>
               <Column style={{ width: "100%" }}>
-                <Heading as="h1">Heading go here</Heading>
+                <Img src="banner.jpg" alt="Cat" width="600" height="300" />
+                <Heading as="h1">Heading goes here</Heading>
               </Column>
             </Row>
           </Section>
-          <Section>
-            <Row>
+          <Section
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Row style={{ justifyContent: "space-between" }}>
               <Column style={{ width: "50%" }}>
                 Hello Name,
-                <br />
-                Hope this email find you well. Please use the chatbot to ask any
-                question you have about our brand, product, anything you'd like
-                to know about us. If I cannot provide an answer I can pass you
-                over to my human counterpart who can answer your questions.
-                Thanks for your interest. <br />
-                Sincerely,
-                <br />
-                Chris Bitoye. <br />
-                Founder,CEO <br />
-                ForgedMart <br />A subsidiary of PublicTrades,LLC
+                {/* ... */}
               </Column>
-              <Column style={{ width: "50%" }}>
-                <Chat />
+              <Column
+                style={{
+                  width: "30%",
+                  border: "2px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  boxShadow: "10px 10px 10px 10px #000000",
+                }}
+              >
+                {/* Pass the required props to the Chat component */}
+                <Chat
+                  messages={messages}
+                  input={input}
+                  setInput={setInput}
+                  sendMessage={sendMessage}
+                  loading={loading}
+                />
               </Column>
             </Row>
           </Section>

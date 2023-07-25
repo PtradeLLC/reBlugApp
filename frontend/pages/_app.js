@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
       }}
       {...pageProps}
     >
-      <Layout>
+      <Layout className="overflow-hidden bg-white py-24 sm:py-32">
         <Component {...pageProps} />
         <BrevoConversations />
       </Layout>

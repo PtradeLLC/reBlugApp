@@ -9,6 +9,7 @@ export default authMiddleware({
     "/contact",
     "/email",
     "/agency",
+    "/testdynamo",
     "/influenzas",
     "/marketplace",
     "/api/chat_bot",

@@ -68,7 +68,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
       setEmailForm(initialEmailForm);
       setBeforeClick(
-        "We have sent you an email, please check your inbox (or Junk)."
+        "We have sent you an email, please check your inbox (or junk)."
       );
       setIsClicked(true);
       setBeforeButton("Close");

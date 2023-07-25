@@ -1,11 +1,20 @@
 import sgMail from "@sendgrid/mail";
 import { Email } from "../emailfiles/react-email";
 import { render } from "@react-email/render";
+import { Chat } from "../../../components/Chat"; // Update the import path to the correct location
 
-export async function sendEmail() {
+export async function sendEmail(messages, input, loading) {
   sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
-  const emailHtml = render(Email());
+  // Render the Email component with ChatComponent prop set to the Chat component
+  const emailHtml = render(
+    <Email
+      messages={messages}
+      input={input}
+      loading={loading}
+      ChatComponent={Chat}
+    />
+  );
 
   const msg = {
     to: "chrisbitoy@gmail.com", // Change to your recipient

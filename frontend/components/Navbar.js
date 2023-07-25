@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-// import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { XMarkIcon } from "@heroicons/react/24/outline";
-// import { PlusIcon, PaperClipIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
+import { UserButton, useAuth } from "@clerk/nextjs";
 
 const navigation = [
   { name: "Influencers", href: "#" },
@@ -15,6 +13,7 @@ const navigation = [
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
   return (
     <div>
       <header className="inset-x-0 top-0 z-10 backdrop-blur-md fixed">
@@ -40,7 +39,6 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
-              {/* <Bars3Icon className="h-6 w-6" aria-hidden="true" /> */}
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
@@ -55,12 +53,16 @@ const Navbar = () => {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a
-              href="sign-in"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {!userId ? (
+              <a
+                href="sign-in"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </a>
+            ) : (
+              <UserButton afterSignOutUrl="/" />
+            )}
           </div>
         </nav>
         <Dialog
@@ -87,7 +89,6 @@ const Navbar = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>
-                {/* <XMarkIcon className="h-6 w-6" aria-hidden="true" /> */}
               </button>
             </div>
             <div className="mt-6 flow-root">
@@ -104,12 +105,17 @@ const Navbar = () => {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
+                  <UserButton afterSignOutUrl="/" />
+                  {!userId ? (
+                    <a
+                      href="sign-in"
+                      className="text-sm font-semibold leading-6 text-gray-900"
+                    >
+                      Log in <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  ) : (
+                    <UserButton afterSignOutUrl="/" />
+                  )}
                 </div>
               </div>
             </div>

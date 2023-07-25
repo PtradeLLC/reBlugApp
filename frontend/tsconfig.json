@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": false, // Set this to false
+    "incremental": false, // Set this to false (REMOVE THIS COMMENT LINE)
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types", "./types"],
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -23,9 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "../forgedMartchatbot/utils/OpenAIStream.ts",
-    "./middleware.ts"
+    "./middleware.ts",
+    "./types/*.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
