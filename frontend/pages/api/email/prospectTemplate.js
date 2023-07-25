@@ -17,7 +17,7 @@ export async function sendEmail(messages, input, loading) {
   );
 
   const msg = {
-    to: "chrisbitoy@gmail.com", // Change to your recipient
+    to: "ins-qnc1xlog@isnotspam.com", // Change to your recipient
     from: "support@forgedmart.com", // Change to your verified sender
     subject: "Sending with SendGrid is Fun",
     text: "and easy to do anywhere, even with Node.js",
