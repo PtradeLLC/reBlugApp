@@ -6,21 +6,21 @@ const features = [
     id: 1,
     name: "Knowledge Base",
     description:
-      "Your email recipients can chat with an AI chatbot in the email body to get answers about your brand, products, and services. The chatbot is trained based on your documents to provide information about your company, uploaded products and services. Recipients can get the information and help they need without having to contact your customer support team if they choose not to.",
+      "With Conversational Email Agent your email recipients can chat with an AI chatbot in the email body to get answers about your brand, products, and services. The chatbot is trained based on documents to provide information about your company, uploaded products and services. Recipients can get the information and the help they need without having to contact your customer support team if they choose not to or reach out to human counterparts if needed.",
     // icon: BookOpenIcon,
   },
   {
     id: 2,
     name: "Products and Services.",
     description:
-      "Upload your product info, and let AI chatbot close sales on your behalf. Customers can get instant answers to product inquiries in your email campaigns and if need be, they can connect with a human representative if they need more help or want to learn more about your products and services.",
+      "Upload your product info, and let AI chatbot close sales on your behalf with our conversational AI commerce technology.",
     // icon: BuildingStorefrontIcon,
   },
   {
     id: 3,
     name: "Connect more tools",
     description:
-      "You can integrate with your existing customer engagement and sales software, such as Zendesk, Salesforce, and Talkdesk. There is no need to rip and replace your existing software.",
+      "Integrate and connect with your existing apps and tools you know and love.",
     // icon: LinkIcon,
   },
 ];
