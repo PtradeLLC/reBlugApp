@@ -58,12 +58,12 @@ export default function Hero() {
                     broader audience and boost sales through social media.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    <span className="font-extrabold">Tool Spotlight:</span>{" "}
-                    Email Conversational Agent is an AI powered marketing tool
-                    that enhances communication between brand Marketers and
-                    Sales professionals with their clients/customers by
-                    injecting conversational AI into the body of an email and/or
-                    newsletter.
+                    <span className="font-extrabold">Just Launched:</span> Email
+                    Conversational Agent is an AI powered marketing tool that
+                    enhances communication between brand Marketers, Sales
+                    professionals and their clients/customers by injecting
+                    'conversational AI commerce' into the body of an email
+                    and/or newsletter.
                   </p>
                   <div className="mt-10 flex items-center gap-x-6">
                     <Link
@@ -74,7 +74,7 @@ export default function Hero() {
                     </Link>
                     <Link
                       href="/tools"
-                      className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                      className="rounded-md bg-red-600 px-3.5 text-center w-[280px] h-[52px] py-2.5 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                     >
                       Email Conversational Agent
                     </Link>

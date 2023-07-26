@@ -10,6 +10,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       trialUrl: "#",
       telephone: "+1-202-555-0170",
       imageUrl: "/images/trends.png",
+      waitingList: "",
     },
     {
       name: "Develop Marketing Plan",
@@ -18,6 +19,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       trialUrl: "##",
       telephone: "+1-202-555-0170",
       imageUrl: "/images/plan.jpg",
+      waitingList: "",
     },
     {
       name: "AI Influencer Marketing",
@@ -26,6 +28,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       trialUrl: "###",
       telephone: "+1-202-555-0170",
       imageUrl: "/images/influencer-image.png",
+      waitingList: "Join waiting list",
     },
   ];
 
@@ -71,7 +74,7 @@ const Tools = ({ openModal, setOpenModal }) => {
                     }}
                     className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                   >
-                    Join waiting list
+                    {person.waitingList}
                   </button>
                 </div>
               </div>
