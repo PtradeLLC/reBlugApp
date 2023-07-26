@@ -2,7 +2,7 @@
 import Image from "next/image";
 
 const benefits = [
-  "Earn money quickly",
+  "Immediate payout",
   "Recurring revenue",
   "Set your own hours",
   "Free to Join",

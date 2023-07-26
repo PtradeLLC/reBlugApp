@@ -13,21 +13,24 @@ export default function Influencer({ openModal, setOpenModal }) {
               </h2>
               <p className="mt-6 text-xl leading-8 text-gray-600"></p>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                Ever wondered creating and delivering your contents to your
-                followers, growing & monetizing followers and contents, but not
-                on any social media platform? Escape the constraints of platform
-                algorithms and connect with your audience on a local level
-                through text messages. Manage audience growth, content
-                monetization while maintaining fruitful relationships with
-                brands through text messages on your mobile phone.
+                Ever wondered creating and delivering contents to your
+                followers, growing & monetizing contents, but not on any social
+                media platform?
+                <br /> Escape the constraints of platform algorithms and connect
+                with your audience on a local level through text messaging.
+                Manage audience growth, content monetization while maintaining
+                fruitful relationships with audience and brand sponsors.
               </p>
-              <p className="mt-6 leading-7 text-xl font-bold">
-                Problems this tool is addressing
+              <p className="mt-3 leading-7 text-xl font-bold">
+                Messaging as a Platform
               </p>
-              <ul className="mt-6 text-base leading-7 text-gray-600 list-disc ml-3">
-                <li>The pressure of keeping an image</li>
-                <li>Online hate and abuse</li>
-                <li>Burnout</li>
+              <ul className="mt-3 text-base leading-7 text-gray-600 list-disc ml-3">
+                <li>Take complete control of your platform</li>
+                <li>Monetize content on your own terms</li>
+                <li>Never again ask for likes or subscriptions</li>
+                <li>
+                  Comes with curated affiliate products from leading brands
+                </li>
               </ul>
             </div>
             <div className="flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents">

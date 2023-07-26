@@ -5,17 +5,17 @@ const testimonials = [
     [
       {
         body: `Tired of spending countless hours creating and scheduling
-        content for your social media accounts?`,
+        content for your audience?`,
         author: {
           name: "Making AI useful",
-          handle: "We have a tool for that",
+          handle: "We have a tool that does that",
           imageUrl: "/images/Beauty.png",
         },
       },
     ],
     [
       {
-        body: `Use our AI-powered tools to automate content creation and posting on social media.`,
+        body: `Automate content creation and posting to audience on your platforms.`,
         author: {
           name: "Accept donations for content well done",
           handle: "Generosity via text",
@@ -25,7 +25,7 @@ const testimonials = [
     ],
     [
       {
-        body: "With our tool, you can easily generate high-quality content customized for your platform audience",
+        body: "With our tool, you can easily generate high-quality content customized for your platform audience.",
         author: {
           name: "Partnership based on trust",
           handle: "Brand Sponsorship",

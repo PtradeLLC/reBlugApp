@@ -11,8 +11,6 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
-  console.log("openIndex", openModal);
-
   return (
     <>
       <Head>

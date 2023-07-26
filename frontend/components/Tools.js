@@ -11,6 +11,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       telephone: "+1-202-555-0170",
       imageUrl: "/images/trends.png",
       waitingList: "Use as standalone",
+      bgColor: "",
     },
     {
       name: "Develop Marketing Plan",
@@ -20,6 +21,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       telephone: "+1-202-555-0170",
       imageUrl: "/images/plan.jpg",
       waitingList: "Use as a bundle",
+      bgColor: "",
     },
     {
       name: "AI Influencer Marketing",
@@ -29,6 +31,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       telephone: "+1-202-555-0170",
       imageUrl: "/images/influencer-image.png",
       waitingList: "Join waiting list",
+      bgColor: "",
     },
   ];
 
