@@ -39,6 +39,7 @@
     "@sendgrid/mail": "^7.7.0",
     "@types/connect": "^3.4.35",
     "@vercel/analytics": "^1.0.1",
+    "@zohocrm/nodejs-sdk-2.0": "^6.1.0",
     "ai": "^2.1.15",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MobilePlatform from "./MobilePlatform";
 
-export default function Influencer() {
+export default function Influencer({ openModal, setOpenModal }) {
   return (
     <>
       <div className="overflow-hidden bg-white py-16">
@@ -11,20 +11,15 @@ export default function Influencer() {
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 Influencers and Creators
               </h2>
-              <p className="mt-6 text-xl leading-8 text-gray-600">
-                Tired of spending countless hours creating and scheduling
-                content for your social media accounts?
-              </p>
+              <p className="mt-6 text-xl leading-8 text-gray-600"></p>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                Look no further than our AI-powered tool to automate content
-                creation and posting on social media. With our tool, you can
-                easily generate high-quality content that&apos;s tailored to
-                your audience, and schedule it to be posted at the optimal times
-                for maximum engagement. You can train it to create and post
-                content exactly how you would say it to your audience based on
-                your previous posts, schedule it, and take a break. Try our tool
-                today and experience the power of AI automation for yourself on
-                social media.
+                Ever wondered creating and delivering your contents to your
+                followers, growing & monetizing followers and contents, but not
+                on any social media platform? Escape the constraints of platform
+                algorithms and connect with your audience on a local level
+                through text messages. Manage audience growth, content
+                monetization while maintaining fruitful relationships with
+                brands through text messages on your mobile phone.
               </p>
               <p className="mt-6 leading-7 text-xl font-bold">
                 Problems this tool is addressing
@@ -81,12 +76,14 @@ export default function Influencer() {
           <MobilePlatform />
         </div>
         <div className="mt-2 flex justify-center text-center">
-          <a
-            href="#"
-            className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          <button
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
           >
             Try this tool<span aria-hidden="true">&rarr;</span>
-          </a>
+          </button>
         </div>
       </div>
     </>

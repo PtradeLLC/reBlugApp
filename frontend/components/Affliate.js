@@ -10,7 +10,7 @@ const benefits = [
   "No Tier Limit",
 ];
 
-export default function Affiliate() {
+export default function Affiliate({ openModal, setOpenModal }) {
   return (
     <div className="bg-slate-50 sm:py-16">
       <div className="relative isolate">
@@ -41,21 +41,19 @@ export default function Affiliate() {
               >
                 {benefits.map((benefit) => (
                   <li key={benefit} className="flex gap-x-3">
-                    {/* <CheckCircleIcon
-                      className="h-7 w-5 flex-none"
-                      aria-hidden="true"
-                    /> */}
                     {benefit}
                   </li>
                 ))}
               </ul>
               <div className="mt-10 flex">
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-black"
+                <button
+                  onClick={() => {
+                    setOpenModal(true);
+                  }}
+                  className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                 >
-                  Join us Today <span aria-hidden="true">&rarr;</span>
-                </a>
+                  Try this tool<span aria-hidden="true">&rarr;</span>
+                </button>
               </div>
             </div>
           </div>

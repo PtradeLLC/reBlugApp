@@ -4,7 +4,8 @@ const testimonials = [
   [
     [
       {
-        body: `Ever wondered creating and delivering your contents to your followers, growing & monetizing followers and contents, but not on any social media platform?`,
+        body: `Tired of spending countless hours creating and scheduling
+        content for your social media accounts?`,
         author: {
           name: "Making AI useful",
           handle: "We have a tool for that",
@@ -14,7 +15,7 @@ const testimonials = [
     ],
     [
       {
-        body: `Escape the constraints of platform algorithms and connect with your audience on a local level through text messages.`,
+        body: `Use our AI-powered tools to automate content creation and posting on social media.`,
         author: {
           name: "Accept donations for content well done",
           handle: "Generosity via text",
@@ -24,7 +25,7 @@ const testimonials = [
     ],
     [
       {
-        body: "Manage audience growth, content monetization while maintaining fruitful relationships with brands through text messages on your mobile phone.",
+        body: "With our tool, you can easily generate high-quality content customized for your platform audience",
         author: {
           name: "Partnership based on trust",
           handle: "Brand Sponsorship",

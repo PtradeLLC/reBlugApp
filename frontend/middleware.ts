@@ -27,6 +27,7 @@ export default authMiddleware({
     "/emailTest",
     "/api/chatbot-opened",
     "/api/chat",
+    "/component/waitingList",
   ],
 });
 
