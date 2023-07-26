@@ -27,6 +27,7 @@ export default function Influencer({ openModal, setOpenModal }) {
               <ul className="mt-3 text-base leading-7 text-gray-600 list-disc ml-3">
                 <li>Take complete control of your platform</li>
                 <li>Monetize content on your own terms</li>
+                <li>Represent brands through subtle advertisement</li>
                 <li>Never again ask for likes or subscriptions</li>
                 <li>
                   Comes with curated affiliate products from leading brands
