@@ -6,14 +6,14 @@ const features = [
     id: 1,
     name: "Knowledge Base",
     description:
-      "With Conversational Email Agent your email recipients can chat with an AI chatbot in the email body to get answers about your brand, products, and services. The chatbot is trained based on documents to provide information about your company, uploaded products and services. Recipients can get the information and the help they need without having to contact your customer support team if they choose not to or reach out to human counterparts if needed.",
+      "With Conversational Email Agent your email recipients can chat with an AI chatbot within the body of your email messages to get answers about your brand, products, and services. The chatbot is trained based on documents to provide information about your company, uploaded products and services. Recipients can get the information and the help they need without having to contact your customer support team if they choose not to or reach out to human counterparts if needed.",
     // icon: BookOpenIcon,
   },
   {
     id: 2,
     name: "Products and Services.",
     description:
-      "Upload your product info, and let AI chatbot close sales on your behalf with our conversational AI commerce technology.",
+      "Upload your product information, and let AI chatbot close sales and subscriptions on your behalf with our conversational AI commerce technology.",
     // icon: BuildingStorefrontIcon,
   },
   {

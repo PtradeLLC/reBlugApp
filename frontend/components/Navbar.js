@@ -5,9 +5,8 @@ import Link from "next/link";
 import { UserButton, useAuth } from "@clerk/nextjs";
 
 const navigation = [
-  { name: "Influencers", href: "#" },
+  { name: "Creators", href: "/creators" },
   { name: "Agencies", href: "#" },
-  { name: "Marketplace", href: "#" },
   { name: "Contact Us", href: "#" },
 ];
 

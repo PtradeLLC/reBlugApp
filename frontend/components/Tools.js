@@ -4,6 +4,7 @@ import Image from "next/image";
 const Tools = ({ openModal, setOpenModal }) => {
   const people = [
     {
+      id: 1,
       name: "Analyze buying Trends",
       title: "AI powered: yes",
       desc: "In today's ever-changing marketplace, it's more important than ever for brands to stay ahead of the curve. One way to do this is by using artificial intelligence (AI) to analyze buying trends on the web, and predict outcomes.",
@@ -14,6 +15,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       bgColor: "",
     },
     {
+      id: 2,
       name: "Develop Marketing Plan",
       title: "AI powered: yes",
       desc: "Our AI tool first understand your target audience's needs, preferences, and behaviors. This includes analyzing the data collected on shopping trends, Identifying new trends, Sales data, Tracking trends, and finally predicting outcomes.",
@@ -24,6 +26,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       bgColor: "",
     },
     {
+      id: 3,
       name: "AI Influencer Marketing",
       title: "AI powered: yes",
       desc: "Automate influencer marketing with our AI tool. Set this tool to generate contents automatically, schedule posting and manage responses on your behalf. Reach customers at the right time with precision posting.",
@@ -43,7 +46,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ml-12 mr-12">
         {people.map((person) => (
           <li
-            key={person.trialUrl}
+            key={person.id}
             className="sm:w-full col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
           >
             <div className="flex flex-1 flex-col">

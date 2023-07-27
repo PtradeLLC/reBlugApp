@@ -1,17 +1,38 @@
 import React, { useState, useRef, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Image from "next/image";
 
 const WaitingList = ({ setOpenModal }) => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [formInput, setFormInput] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleChange = () => {
-    console.log("Changed");
+  const handleChange = (e) => {
+    setFormInput(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch("/api/waitingList", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formInput }), // Sending the formInput value as data
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      if (response.ok) {
+        setFormInput("");
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -35,7 +56,14 @@ const WaitingList = ({ setOpenModal }) => {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100"></div>
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100">
+                    <Image
+                      src={"/images/Marttwainxyz.png"}
+                      alt="logo"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title
                       as="h3"
@@ -44,11 +72,16 @@ const WaitingList = ({ setOpenModal }) => {
                       Soon to launch
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        We are working very hard to launch these tools. Use this
-                        form to join our waiting list. We promise you'd be the
-                        first to try them.
-                      </p>
+                      {success ? (
+                        <p>Great! We will update you as soon as possible</p>
+                      ) : (
+                        <p className="text-sm text-gray-500">
+                          Thanks for your interest. As we work hard to bring
+                          these tools to you, please use this form to join our
+                          waiting list while we race to deploy the tools. We
+                          promise you'd be the first to try them.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -58,31 +91,28 @@ const WaitingList = ({ setOpenModal }) => {
                       <label htmlFor="email-address" className="sr-only">
                         Email address
                       </label>
-                      <input
-                        id="email-address"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        className="relative mt-4 block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Email address"
-                      />
+                      {!success ? (
+                        <input
+                          id="email-address"
+                          name="email"
+                          type="email"
+                          onChange={handleChange}
+                          autoComplete="email"
+                          value={formInput}
+                          required
+                          className="relative px-1 mt-4 block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                          placeholder="Email address"
+                        />
+                      ) : null}
                       <div className="flex mt-5">
-                        <button
-                          type="button"
-                          className="inline-flex mx-4 w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                          onClick={() => setOpenModal(false)}
-                        >
-                          Submit
-                        </button>
-                        <button
-                          type="button"
-                          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                          onClick={() => setOpenModal(false)}
-                          ref={cancelButtonRef}
-                        >
-                          Cancel
-                        </button>
+                        {!success ? (
+                          <button
+                            type="submit"
+                            className="inline-flex mx-4 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
+                          >
+                            Submit
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                   </form>

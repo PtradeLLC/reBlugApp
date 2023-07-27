@@ -54,6 +54,11 @@ model TrialProspect {
   image     String?
 }
 
+model emailList {
+  id    Int    @id @default(autoincrement())
+  email String
+}
+
 model TrialProspectTwo {
   id        Int     @id @default(autoincrement())
   emai      String
