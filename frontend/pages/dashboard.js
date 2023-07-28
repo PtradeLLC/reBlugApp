@@ -25,7 +25,7 @@ const userNavigation = [
 const cards = [
   { name: "Email", href: "#", amount: "Conversation Tool", id: 1 },
   { name: "Marketing", href: "#", amount: "Automation", id: 2 },
-  { name: "Creators", href: "#", amount: "Messaging as a Platform", id: 3 },
+  { name: "Creators", href: "#", amount: "Messaging Platform", id: 3 },
 ];
 
 const stats = [
