@@ -14,7 +14,7 @@ const userNavigation = [
 ];
 
 const cards = [
-  { name: "Email", href: "#", amount: "Conversation Tool", id: 1 },
+  { name: "Email", href: "#", amount: "Conversational Tool", id: 1 },
   { name: "Marketing", href: "#", amount: "Automation", id: 2 },
   { name: "Creators", href: "#", amount: "Messaging Platform", id: 3 },
 ];
@@ -82,7 +82,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const actions = [{ name: "Jaja" }];
+const actions = [{ name: "Jaja" }, { name: "Kkaa" }, { name: "Lalaja" }];
 
 export default function Example() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -330,7 +330,7 @@ export default function Example() {
 
                 {/* Actions panel */}
                 <section aria-labelledby="quick-links-title">
-                  <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+                  <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 sm:gap-px sm:divide-y-0">
                     <h2 className="sr-only" id="quick-links-title">
                       Quick links
                     </h2>
