@@ -23,9 +23,9 @@ const userNavigation = [
 ];
 
 const cards = [
-  { name: "Account balance", href: "#", amount: "$30,659.45", id: 1 },
-  { name: "Account balance", href: "#", amount: "$30,659.45", id: 2 },
-  { name: "Account balance", href: "#", amount: "$30,659.45", id: 3 },
+  { name: "Email", href: "#", amount: "Conversation Tool", id: 1 },
+  { name: "Marketing", href: "#", amount: "Automation", id: 2 },
+  { name: "Creators", href: "#", amount: "Messaging as a Platform", id: 3 },
 ];
 
 const stats = [
@@ -458,7 +458,7 @@ export default function Example() {
                           href="#"
                           className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                         >
-                          View all
+                          Click to Visit
                         </a>
                       </div>
                     </div>
