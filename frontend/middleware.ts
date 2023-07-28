@@ -14,6 +14,7 @@ export default authMiddleware({
     "/influenzas",
     "/marketplace",
     "/api/chat_bot",
+    "/api/contact",
     "/api/trendToolsAI",
     "/api/aiTools",
     "/api/email-parser",

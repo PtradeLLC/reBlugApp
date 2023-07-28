@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Contact() {
-  const [agreed, setAgreed] = useState(false);
+  // const [agreed, setAgreed] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +50,6 @@ export default function Contact() {
       company,
       email,
       message,
-      agreed,
     };
 
     try {
@@ -64,7 +65,6 @@ export default function Contact() {
           company: formData.company,
           email: formData.email,
           message: formData.message,
-          agreed: formData.agreed,
         }),
       });
 
@@ -75,7 +75,14 @@ export default function Contact() {
         setCompany("");
         setEmail("");
         setMessage("");
-        setAgreed(false);
+        setSuccess(
+          "Thanks! Your inquiry is successfully submitted, and we'll get back to you as soon as possible."
+        );
+
+        // Reset the success message after a few seconds (optional)
+        setTimeout(() => {
+          setSuccess("");
+        }, 7000); // Reset the success message after 5 seconds
       } else {
         throw new Error("Network response was not ok");
       }
@@ -119,6 +126,7 @@ export default function Contact() {
               <input
                 type="text"
                 name="first-name"
+                onChange={handleChange}
                 value={firstName}
                 required
                 id="first-name"
@@ -139,6 +147,7 @@ export default function Contact() {
                 type="text"
                 name="last-name"
                 value={lastName}
+                onChange={handleChange}
                 required
                 id="last-name"
                 autoComplete="family-name"
@@ -157,6 +166,7 @@ export default function Contact() {
               <input
                 type="text"
                 name="company"
+                onChange={handleChange}
                 value={company}
                 required
                 id="company"
@@ -177,6 +187,7 @@ export default function Contact() {
                 type="email"
                 name="email"
                 value={email}
+                onChange={handleChange}
                 required
                 id="email"
                 autoComplete="email"
@@ -195,6 +206,7 @@ export default function Contact() {
               <textarea
                 name="message"
                 id="message"
+                onChange={handleChange}
                 required
                 rows={4}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
@@ -202,36 +214,9 @@ export default function Contact() {
               />
             </div>
           </div>
-          <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
-            <div className="flex h-6 items-center">
-              <Switch
-                checked={agreed}
-                onChange={setAgreed}
-                className={classNames(
-                  agreed ? "bg-red-600" : "bg-gray-200",
-                  "flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                )}
-              >
-                <span className="sr-only">Agree to policies</span>
-                <span
-                  aria-hidden="true"
-                  className={classNames(
-                    agreed ? "translate-x-3.5" : "translate-x-0",
-                    "h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"
-                  )}
-                />
-              </Switch>
-            </div>
-            <Switch.Label className="text-sm leading-6 text-gray-600">
-              By selecting this, you agree to our{" "}
-              <a href="/policy" className="font-semibold text-red-600">
-                privacy&nbsp;policy
-              </a>
-              .
-            </Switch.Label>
-          </Switch.Group>
         </div>
         <div className="mt-10">
+          {success}
           <button
             type="submit"
             className="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"

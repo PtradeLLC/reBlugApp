@@ -2,6 +2,8 @@ import "../styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Layout from "../components/Layout";
 import BrevoConversations from "../components/chatWdiget";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -23,6 +25,7 @@ export default function App({ Component, pageProps }) {
       <Layout className="overflow-hidden bg-white py-24 sm:py-32">
         <Component {...pageProps} />
         <BrevoConversations />
+        <ToastContainer />
       </Layout>
     </ClerkProvider>
   );
