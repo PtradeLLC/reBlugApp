@@ -2,19 +2,10 @@ import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { useUser } from "@clerk/nextjs";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelsea.hagon@example.com",
-  role: "Human Resources Manager",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Profile", href: "#", current: false },
   { name: "Resources", href: "#", current: false },
-  { name: "Company Directory", href: "#", current: false },
-  { name: "Openings", href: "#", current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -133,7 +124,7 @@ export default function Example() {
                           <div className="relative text-gray-400 focus-within:text-gray-600">
                             <input
                               id="search"
-                              className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-gray-600 placeholder:text-gray-600 focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-gray-600 placeholder:text-gray-600 focus:bg-white focus:text-gray-900 ring-1 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
                               placeholder="Search"
                               type="search"
                               name="search"
@@ -360,20 +351,6 @@ export default function Example() {
                           "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                         )}
                       >
-                        <div>
-                          {/* <span
-                            className={classNames(
-                              action.iconBackground,
-                              action.iconForeground,
-                              "inline-flex rounded-lg p-3 ring-4 ring-white"
-                            )}
-                          >
-                            <action.icon
-                              className="h-6 w-6"
-                              aria-hidden="true"
-                            />
-                          </span> */}
-                        </div>
                         <div className="mt-8">
                           <h3 className="text-lg font-medium">
                             <a
