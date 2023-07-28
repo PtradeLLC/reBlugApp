@@ -179,7 +179,7 @@ export default function Example() {
                             <div>
                               <img
                                 className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=600"
+                                src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=600"
                                 alt="Your Company"
                               />
                             </div>
@@ -215,7 +215,7 @@ export default function Example() {
                             </div>
                             <button
                               type="button"
-                              className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                              className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                             >
                               <span className="sr-only">
                                 View notifications
@@ -321,10 +321,10 @@ export default function Example() {
                               </div>
                             </div>
                             <div className="bg-gray-50 px-5 py-3">
-                              <div className="text-sm">
+                              <div className="text-sm text-center">
                                 <a
                                   href={card.href}
-                                  className="font-medium text-cyan-700 hover:text-cyan-900"
+                                  className="font-medium text-gray-700 hover:text-gray-900"
                                 >
                                   Click
                                 </a>
@@ -357,7 +357,7 @@ export default function Example() {
                           actionIdx === actions.length - 1
                             ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                             : "",
-                          "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500"
+                          "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                         )}
                       >
                         <div>
@@ -431,7 +431,7 @@ export default function Example() {
                         >
                           {announcements.map((announcement) => (
                             <li key={announcement.id} className="py-5">
-                              <div className="relative focus-within:ring-2 focus-within:ring-cyan-500">
+                              <div className="relative focus-within:ring-2 focus-within:ring-gray-500">
                                 <h3 className="text-sm font-semibold text-gray-800">
                                   <a
                                     href={announcement.href}
