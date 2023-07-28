@@ -82,9 +82,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const actions = [{ name: "Jaja" }, { name: "Kkaa" }, { name: "Lalaja" }];
+const actions = [
+  { id: 1, name: "KPI-ONE" },
+  { id: 2, name: "KPI-TWO" },
+  { id: 3, name: "KPI-THREE" },
+];
 
-export default function Example() {
+export default function Dashboard() {
   const { isLoaded, isSignedIn, user } = useUser();
   return (
     <>
@@ -336,7 +340,7 @@ export default function Example() {
                     </h2>
                     {actions.map((action, actionIdx) => (
                       <div
-                        key={action.name}
+                        key={action.id}
                         className={classNames(
                           actionIdx === 0
                             ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none"
