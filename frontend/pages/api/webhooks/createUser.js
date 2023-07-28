@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
-export const createUserEntry = async (email, firstName, lastName) => {
+import { UserButton, useAuth } from "@clerk/nextjs";
+
+export const createUserEntry = async () => {
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
   try {
     await prisma.user.create({
       data: {

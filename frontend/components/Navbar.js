@@ -55,7 +55,7 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    {!userId ? (
+                    {/* {!userId ? (
                       <a
                         href="sign-in"
                         className="text-sm font-semibold leading-6 text-gray-900"
@@ -64,7 +64,7 @@ export default function Navbar() {
                       </a>
                     ) : (
                       <UserButton afterSignOutUrl="/" />
-                    )}
+                    )} */}
                   </div>
                 </Menu>
               </div>
@@ -104,7 +104,7 @@ export default function Navbar() {
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
                 <div>
-                  {!userId ? (
+                  {/* {!userId ? (
                     <a
                       href="sign-in"
                       className="text-sm font-semibold leading-6 text-gray-900"
@@ -113,7 +113,7 @@ export default function Navbar() {
                     </a>
                   ) : (
                     <UserButton afterSignOutUrl="/" />
-                  )}
+                  )} */}
                 </div>
               </Disclosure.Button>
             </div>
