@@ -7,7 +7,7 @@ import { UserButton, useAuth } from "@clerk/nextjs";
 const navigation = [
   { name: "Creators", href: "/creators" },
   // { name: "Agencies", href: "#" },
-  { name: "Contact Us", href: "#" },
+  { name: "Contact Us", href: "/contact" },
 ];
 
 const Navbar = () => {

@@ -81,6 +81,16 @@ model ForgedAI {
   marketing_Creatives Marketing_Creatives_Document[]
 }
 
+model Contact {
+  id        String @unique @default(uuid())
+  firstName String
+  lastName  String
+  company   String
+  email     String
+  message   String
+  agreed    String
+}
+
 model Trends_Document {
   id        String                    @unique @default(uuid())
   content   String
