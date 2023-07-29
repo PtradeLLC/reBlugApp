@@ -14,8 +14,9 @@ generator client {
 // Define the ClerkUser model
 model User {
   id         Int         @id @default(autoincrement())
-  externalId String      @unique
+  userId     String      @unique
   attributes Json
+  externalId String
   Username   String
   firstName  String
   lastName   String

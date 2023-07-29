@@ -54,27 +54,26 @@ const recentHires = [
     href: "#",
   },
 ];
-const announcements = [
+const quicklinks = [
   {
     id: 1,
-    title: "Office closed on July 2nd",
+    title: "Email Conversational Tool",
     href: "#",
     preview:
-      "Cum qui rem deleniti. Suscipit in dolor veritatis sequi aut. Vero ut earum quis deleniti. Ut a sunt eum cum ut repudiandae possimus. Nihil ex tempora neque cum consectetur dolores.",
+      "Turn chats into sales with our conversational AI commerce. Let chatbot provide answers to your customers and handle sales on your behalf in a personalized shopping environment. Connect with clients in real time to promote new initiatives, update customers on key happenings all within the email.",
   },
   {
     id: 2,
-    title: "New password policy",
+    title: "Marketing Automation",
     href: "#",
     preview:
-      "Alias inventore ut autem optio voluptas et repellendus. Facere totam quaerat quam quo laudantium cumque eaque excepturi vel. Accusamus maxime ipsam reprehenderit rerum id repellendus rerum. Culpa cum vel natus. Est sit autem mollitia.",
+      "Let this Ai powered tool analyze trends, plan, and launch your campaign...",
   },
   {
     id: 3,
-    title: "Office closed on July 2nd",
+    title: "Messaging as a Platform",
     href: "#",
-    preview:
-      "Tenetur libero voluptatem rerum occaecati qui est molestiae exercitationem. Voluptate quisquam iure assumenda consequatur ex et recusandae. Alias consectetur voluptatibus. Accusamus a ab dicta et. Consequatur quis dignissimos voluptatem nisi.",
+    preview: "Creators can ....",
   },
 ];
 
@@ -395,27 +394,27 @@ export default function Dashboard() {
 
               {/* Right column */}
               <div className="grid grid-cols-1 gap-4">
-                {/* Announcements */}
-                <section aria-labelledby="announcements-title">
+                {/* quicklinks */}
+                <section aria-labelledby="quicklinks-title">
                   <div className="overflow-hidden rounded-lg bg-white shadow">
                     <div className="p-6">
                       <h2
                         className="text-base font-medium text-gray-900"
-                        id="announcements-title"
+                        id="quicklinks-title"
                       >
-                        Announcements
+                        Quick Links
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul
                           role="list"
                           className="-my-5 divide-y divide-gray-200"
                         >
-                          {announcements.map((announcement) => (
-                            <li key={announcement.id} className="py-5">
+                          {quicklinks.map((quicklink) => (
+                            <li key={quicklink.id} className="py-5">
                               <div className="relative focus-within:ring-2 focus-within:ring-gray-500">
                                 <h3 className="text-sm font-semibold text-gray-800">
                                   <a
-                                    href={announcement.href}
+                                    href={quicklink.href}
                                     className="hover:underline focus:outline-none"
                                   >
                                     {/* Extend touch target to entire panel */}
@@ -423,11 +422,11 @@ export default function Dashboard() {
                                       className="absolute inset-0"
                                       aria-hidden="true"
                                     />
-                                    {announcement.title}
+                                    {quicklink.title}
                                   </a>
                                 </h3>
-                                <p className="mt-1 line-clamp-2 text-sm text-gray-600">
-                                  {announcement.preview}
+                                <p className="mt-1  text-sm text-gray-600">
+                                  {quicklink.preview}
                                 </p>
                               </div>
                             </li>

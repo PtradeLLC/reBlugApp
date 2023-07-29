@@ -3,6 +3,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { UserButton, useAuth } from "@clerk/nextjs";
+import { useState } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,6 +11,32 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const [clicked, setClicked] = useState();
+
+  //HandlClick function
+  const handleClick = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    const baseUrl = "/api/webhooks/createUser";
+
+    // Fetch the necessary user information
+    const { user } = useAuth();
+
+    try {
+      const response = await axios.post(baseUrl, {
+        userId: user.id,
+        email: user.primaryEmailAddress.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
+
+      console.log(response.data);
+      // Handle successful response if needed
+    } catch (error) {
+      console.error("Error creating user entry:", error);
+      // Handle error if needed
+    }
+  };
+
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
       {({ open }) => (
