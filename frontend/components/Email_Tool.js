@@ -92,7 +92,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
           // Make the second POST request to /api/email/emailLogic using gptdata
           sendToEmailLogic(gptdata);
         } else {
-          console.log("Error occurred while fetching data:", error);
+          console.log("Error occurred whle fetching data:", error);
           //This line runs
         }
       } catch (jsonError) {
