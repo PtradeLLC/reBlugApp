@@ -17,42 +17,11 @@ import { Tailwind } from "@react-email/tailwind";
 export function Email(props) {
   const { email, firstName, lastName, brand_url, logo, email_body, data } =
     props; // Destructure the necessary props here
-  const [chatbot, setChatbot] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
 
-  useEffect(() => {
-    // Initialize chat history with messages from the 'data' array (chatbot logic)
-    setChatHistory(
-      data.map((item) => ({ sender: "chatbot", message: item.message }))
-    );
-  }, [data]);
-
-  const handleChange = (e) => {
-    setChatbot(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (chatbot.trim() === "") {
-      return; // Don't send empty messages
-    }
-
-    // Update the chat history with the user's message
-    setChatHistory((prevChatHistory) => [
-      ...prevChatHistory,
-      { sender: "user", message: chatbot },
-    ]);
-
-    // Simulate the chatbot response (replace this with actual chatbot logic)
-    const chatbotResponse = "This is a sample chatbot response.";
-    setChatHistory((prevChatHistory) => [
-      ...prevChatHistory,
-      { sender: "chatbot", message: chatbotResponse },
-    ]);
-
-    // Clear the input field after sending the message
-    setChatbot("");
-  };
+  const chatHistory = data.map((item) => ({
+    sender: "chatbot",
+    message: item.message,
+  }));
 
   return (
     <Tailwind
@@ -66,64 +35,79 @@ export function Email(props) {
         },
       }}
     >
-      <Html lang="en">
-        <Body className="bg-white">
-          <Container className="bg-white px-2.5">
-            <Section>
-              <Row>
-                <Column style={{ width: "100%" }}>
-                  <Img src="banner.jpg" alt="Cat" width="600" height="300" />
-                  <Heading as="h1">Heading goes here</Heading>
-                </Column>
-              </Row>
-            </Section>
-            <Section
-              style={{
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <Row style={{ justifyContent: "space-between" }}>
-                <Column style={{ width: "50%" }}>
-                  Hello {firstName},<br />
-                  {email_body}
-                </Column>
-                <Column
-                  style={{
-                    width: "30%",
-                    border: "2px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    boxShadow: "10px 10px 10px 10px #000000",
-                  }}
-                >
-                  <div>
-                    {/* Display the chat history */}
-                    {chatHistory.map((chat, index) => (
-                      <p
-                        key={index}
-                        style={{
-                          color: chat.sender === "chatbot" ? "blue" : "black",
-                        }}
-                      >
-                        {chat.message}
-                      </p>
-                    ))}
-                    <form onSubmit={handleSubmit}>
-                      <label>Enter your message</label>
-                      <input
-                        id=""
-                        type="text"
-                        onChange={handleChange}
-                        value={chatbot}
-                      />
-                      <Button type="submit">Send message</Button>
-                    </form>
-                  </div>
-                </Column>
-              </Row>
-            </Section>
-          </Container>
+      <Html>
+        <Body>
+          <table
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            style={{
+              borderCollapse: "collapse",
+              width: "100%",
+              maxWidth: "600px",
+              margin: "0 auto",
+            }}
+          >
+            <tr>
+              <td
+                style={{
+                  background: "#f7f7f7",
+                  padding: "20px",
+                }}
+              >
+                <img src={logo} alt="Logo" width="100" />
+                <p>Hello {firstName},</p>
+                <p>{email_body}</p>
+              </td>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  background: "#ffffff",
+                  border: "2px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  boxShadow: "10px 10px 10px 10px #000000",
+                }}
+              >
+                {chatHistory.map((chat, index) => (
+                  <p
+                    key={index}
+                    style={{
+                      color: chat.sender === "chatbot" ? "blue" : "black",
+                    }}
+                  >
+                    {chat.message}
+                  </p>
+                ))}
+                <form>
+                  <label htmlFor="chatbotInput">Enter your message</label>
+                  <input
+                    type="text"
+                    id="chatbotInput"
+                    name="chatbotInput"
+                    style={{
+                      width: "100%",
+                      padding: "5px",
+                      marginBottom: "10px",
+                    }}
+                  />
+                  <input
+                    type="submit"
+                    value="Send message"
+                    style={{
+                      background: "#007291",
+                      color: "#fff",
+                      padding: "8px 15px",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  />
+                </form>
+              </td>
+            </tr>
+          </table>
         </Body>
       </Html>
     </Tailwind>
