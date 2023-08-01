@@ -101,13 +101,13 @@ export function Email(props) {
                     {/* Display the chat history */}
                     {chatHistory.map((chat, index) => (
                       <p
+                        className="h-16"
                         key={index}
                         style={{
                           color: chat.sender === "chatbot" ? "blue" : "black",
                         }}
                       >
-                        {/* {chat.message} */}
-                        {console.log(chat.message)}
+                        {chat.message}
                       </p>
                     ))}
                     <form onSubmit={handleSubmit}>
