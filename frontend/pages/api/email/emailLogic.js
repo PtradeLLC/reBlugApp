@@ -21,18 +21,18 @@ export default async function handler(req, res) {
         apiKey: process.env.MAILERSEND_API_KEY,
       });
 
-      const emailHtml = render(
-        <Email
-          email={email}
-          firstName={firstName}
-          lastName={lastName}
-          logo={logo}
-          brand_url={brand_url}
-          email_body={email_body}
-          data={data}
-        />,
-        { pretty: true }
-      );
+      // const emailHtml = render(
+      //   <Email
+      //     email={email}
+      //     firstName={firstName}
+      //     lastName={lastName}
+      //     logo={logo}
+      //     brand_url={brand_url}
+      //     email_body={email_body}
+      //     data={data}
+      //   />,
+      //   { pretty: true }
+      // );
 
       const sentFrom = new Sender("support@forgedmart.com", "John Wayne");
       const recipients = [new Recipient(email, `${firstName} ${lastName}`)];
@@ -41,8 +41,8 @@ export default async function handler(req, res) {
         .setFrom(sentFrom)
         .setTo(recipients)
         .setReplyTo(sentFrom)
-        .setSubject("This is a Subject")
-        .setHtml(emailHtml);
+        .setSubject("This is a Subject");
+      // .setHtml(emailHtml);
 
       await mailerSend.email.send(emailParams);
 

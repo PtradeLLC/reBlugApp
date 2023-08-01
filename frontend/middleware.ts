@@ -16,6 +16,7 @@ export default authMiddleware({
     "/marketplace",
     "/api/chat_bot",
     "/api/contact",
+    "/api/emailfiles/react-email",
     "/api/trendToolsAI",
     "/api/aiTools",
     "/api/email-parser",

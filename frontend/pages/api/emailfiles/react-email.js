@@ -14,11 +14,11 @@ import { Hr } from "@react-email/hr";
 import { Img } from "@react-email/img";
 import { Tailwind } from "@react-email/tailwind";
 
-export function Email(props) {
+export default function Email(props) {
   const { email, firstName, lastName, brand_url, logo, email_body, data } =
-    props; // Destructure the necessary props here
+    props;
 
-  const chatHistory = data.map((item) => ({
+  const chatHistory = data?.map((item) => ({
     sender: "chatbot",
     message: item.message,
   }));
@@ -42,7 +42,7 @@ export function Email(props) {
             <tr>
               <td>
                 {/* Display the chat history */}
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                   <p
                     key={index}
                     style={{

@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
-import { sendEmail } from "../pages/api/email/prospectTemplate";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -48,6 +47,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsClicked(true);
+
     if (emailForm.email === "") {
       setIsEmailEmpty(true);
       setBeforeClick("Enter your email in the form below");
@@ -73,72 +73,17 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         }),
       });
 
-      if (!response.ok) {
-        // Handle the server response with an unsuccessful status code here
-        console.log(
-          "Server responded with an error:",
-          response.status,
-          response.statusText
-        );
-        return;
-      }
-
       try {
         const gptdata = await response.json();
 
         if (gptdata) {
           setIsEmailEmpty(false);
-
-          // Make the second POST request to /api/email/emailLogic using gptdata
-          sendToEmailLogic(gptdata);
         } else {
           console.log("Error occurred whle fetching data:", error);
-          //This line runs
         }
       } catch (jsonError) {
         console.error("Error parsing response JSON:", jsonError);
       }
-    } catch (error) {
-      console.error(error);
-      setError(
-        "An error occurred while sending the email. Please try again or contact us for support."
-      );
-    }
-  };
-
-  const sendToEmailLogic = async (gptdata) => {
-    const { email, firstName, lastName, brand_url, logo, email_body } =
-      emailForm;
-    try {
-      const apiUrl = "/api/email/emailLogic";
-      const sendResponse = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
-          brand_url,
-          logo,
-          email_body,
-          data: gptdata,
-        }),
-      });
-
-      // Read the response data as text
-      const responseData = await sendResponse.text();
-
-      // Parse the response data manually as JSON
-      const data = JSON.parse(responseData);
-
-      setEmailForm(initialEmailForm);
-      setBeforeClick(
-        "We have sent you an email, please check your inbox (or junk)."
-      );
-      setIsClicked(true);
-      setBeforeButton("Close");
     } catch (error) {
       console.error(error);
       setError(
