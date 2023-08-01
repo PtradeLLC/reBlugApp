@@ -37,74 +37,21 @@ export function Email(props) {
     >
       <Html>
         <Body>
-          <table
-            border="0"
-            cellpadding="0"
-            cellspacing="0"
-            style={{
-              borderCollapse: "collapse",
-              width: "100%",
-              maxWidth: "600px",
-              margin: "0 auto",
-            }}
-          >
+          {/* ... (other email content) */}
+          <table>
             <tr>
-              <td
-                style={{
-                  background: "#f7f7f7",
-                  padding: "20px",
-                }}
-              >
-                <img src={logo} alt="Logo" width="100" />
-                <p>Hello {firstName},</p>
-                <p>{email_body}</p>
-              </td>
-            </tr>
-            <tr>
-              <td
-                style={{
-                  background: "#ffffff",
-                  border: "2px solid #ccc",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  boxShadow: "10px 10px 10px 10px #000000",
-                }}
-              >
-                {chatHistory.map((chat, index) => (
+              <td>
+                {/* Display the chat history */}
+                {data.map((item, index) => (
                   <p
                     key={index}
                     style={{
-                      color: chat.sender === "chatbot" ? "blue" : "black",
+                      color: item.sender === "chatbot" ? "blue" : "black",
                     }}
                   >
-                    {chat.message}
+                    {item.message}
                   </p>
                 ))}
-                <form>
-                  <label htmlFor="chatbotInput">Enter your message</label>
-                  <input
-                    type="text"
-                    id="chatbotInput"
-                    name="chatbotInput"
-                    style={{
-                      width: "100%",
-                      padding: "5px",
-                      marginBottom: "10px",
-                    }}
-                  />
-                  <input
-                    type="submit"
-                    value="Send message"
-                    style={{
-                      background: "#007291",
-                      color: "#fff",
-                      padding: "8px 15px",
-                      borderRadius: "5px",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  />
-                </form>
               </td>
             </tr>
           </table>
