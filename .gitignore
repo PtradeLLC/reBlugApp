@@ -19,5 +19,6 @@ OLD*
 *.pyc
 .DS_Store
 .env
+specs.txt
 .venv
 .aider.*
