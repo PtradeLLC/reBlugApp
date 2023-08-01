@@ -83,16 +83,20 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         return;
       }
 
-      const gptdata = await response.json();
+      try {
+        const gptdata = await response.json();
 
-      if (gptdata) {
-        setIsEmailEmpty(false);
+        if (gptdata) {
+          setIsEmailEmpty(false);
 
-        // Make the second POST request to /api/email/emailLogic using gptdata
-        sendToEmailLogic(gptdata);
-      } else {
-        console.log("Error occurred while fetching data:", error);
-        //This line runs
+          // Make the second POST request to /api/email/emailLogic using gptdata
+          sendToEmailLogic(gptdata);
+        } else {
+          console.log("Error occurred while fetching data:", error);
+          //This line runs
+        }
+      } catch (jsonError) {
+        console.error("Error parsing response JSON:", jsonError);
       }
     } catch (error) {
       console.error(error);
