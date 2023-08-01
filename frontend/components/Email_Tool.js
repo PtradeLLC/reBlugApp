@@ -73,6 +73,16 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         }),
       });
 
+      if (!response.ok) {
+        // Handle the server response with an unsuccessful status code here
+        console.log(
+          "Server responded with an error:",
+          response.status,
+          response.statusText
+        );
+        return;
+      }
+
       const gptdata = await response.json();
 
       if (gptdata) {
@@ -81,7 +91,8 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         // Make the second POST request to /api/email/emailLogic using gptdata
         sendToEmailLogic(gptdata);
       } else {
-        console.log("data is NOT OK"); //This line runs
+        console.log("Error occurred while fetching data:", error);
+        //This line runs
       }
     } catch (error) {
       console.error(error);
