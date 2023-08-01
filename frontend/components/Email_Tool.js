@@ -1,14 +1,16 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
+import { sendEmail } from "../pages/api/email/prospectTemplate";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function EmailConvTool({ openModal, setOpenModal }) {
-  const [open, setOpen] = useState(false); // Updated state initialization
+  const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [error, setError] = useState("");
   const [beforeClick, setBeforeClick] = useState(
     "Complete the form field below"
   );
@@ -17,6 +19,9 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     email: "",
     firstName: "",
     lastName: "",
+    brand_url: "https://forgedmart.com/",
+    logo: "/images/Marttwainxyz.png",
+    email_body: "This is a test message",
   };
 
   const [emailForm, setEmailForm] = useState(initialEmailForm);
@@ -24,7 +29,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [beforeButton, setBeforeButton] = useState("Click to Send");
   const [isEmailEmpty, setIsEmailEmpty] = useState(false);
 
-  const url = "/api/email/emailLogic";
+  const url = `${process.env.NEXT_PUBLIC_WEBHOOK_URL}`;
 
   const handleClose = () => {
     setOpenModal(false);
@@ -50,21 +55,68 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }
 
     try {
-      const { email, firstName, lastName } = emailForm; // Destructure the required properties
-      const requestBody = { email, firstName, lastName }; // Create a new object with only the required properties
+      const { email, firstName, lastName, brand_url, logo, email_body } =
+        emailForm;
 
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody), // Use the new object in JSON.stringify()
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          brand_url,
+          logo,
+          email_body,
+        }),
       });
 
-      const data = await response.json();
-      if (data) {
+      const gptdata = await response.json();
+
+      if (gptdata) {
         setIsEmailEmpty(false);
+
+        // Make the second POST request to /api/email/emailLogic using gptdata
+        sendToEmailLogic(gptdata);
+      } else {
+        console.log("data is NOT OK"); //This line runs
       }
+    } catch (error) {
+      console.error(error);
+      setError(
+        "An error occurred while sending the email. Please try again or contact us for support."
+      );
+    }
+  };
+
+  const sendToEmailLogic = async (gptdata) => {
+    const { email, firstName, lastName, brand_url, logo, email_body } =
+      emailForm;
+    try {
+      const apiUrl = "/api/email/emailLogic";
+      const sendResponse = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          brand_url,
+          logo,
+          email_body,
+          data: gptdata,
+        }),
+      });
+
+      // Read the response data as text
+      const responseData = await sendResponse.text();
+
+      // Parse the response data manually as JSON
+      const data = JSON.parse(responseData);
 
       setEmailForm(initialEmailForm);
       setBeforeClick(
@@ -74,6 +126,9 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       setBeforeButton("Close");
     } catch (error) {
       console.error(error);
+      setError(
+        "An error occurred while sending the email. Please try again or contact us for support."
+      );
     }
   };
 
@@ -251,7 +306,11 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
  text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2                           
  focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                                 >
-                                  {beforeButton}
+                                  {error ? (
+                                    <p>{error}</p>
+                                  ) : (
+                                    <p>{beforeButton}</p>
+                                  )}
                                 </button>
                               </div>
                             </div>
