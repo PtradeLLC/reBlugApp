@@ -33,6 +33,10 @@ export default authMiddleware({
     "/api/chatbot-opened",
     "/api/chat",
     "/component/waitingList",
+    "/component/EmailTemplate.html",
+    "/component/Cart.html",
+    "/component/SideEmail.html",
+    "/component/SideElem",
   ],
 });
 
