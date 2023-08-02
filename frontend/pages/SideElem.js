@@ -11,13 +11,13 @@ export default function SideElem() {
   const [open, setOpen] = useState(true)
 
   return (
+    <div className="side-elem-container">
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={(e => setOpen(true))}>
         <div className="fixed inset-0" />
-
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+            <div className=" fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -37,8 +37,8 @@ export default function SideElem() {
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500"
-                            onClick={() => setOpen(false)}
+                            className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-red-500"
+                            // onClick={() => setOpen(true)}
                           >
                             <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close panel</span>
@@ -48,7 +48,7 @@ export default function SideElem() {
                       </div>
                     </div>
                     {/* Main */}
-                    <div>
+                    <div id="mainDiv" >
                       <div className="pb-1 sm:pb-6">
                         <div>
                           <div className="relative h-40 sm:h-56">
@@ -72,7 +72,7 @@ export default function SideElem() {
                               <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
                                 <button
                                   type="button"
-                                  className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1"
+                                  className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
                                 >
                                   Message
                                 </button>
@@ -173,5 +173,6 @@ export default function SideElem() {
         </div>
       </Dialog>
     </Transition.Root>
+    </div>
   )
 }
