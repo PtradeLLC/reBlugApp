@@ -35,8 +35,8 @@ export default authMiddleware({
     "/component/waitingList",
     "/component/EmailTemplate.html",
     "/component/Cart.html",
-    "/component/SideEmail.html",
-    "/component/SideElem",
+    "/SideEmail.html",
+    "/SideElem",
   ],
 });
 
