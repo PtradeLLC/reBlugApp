@@ -1,5 +1,5 @@
 import sgMail from "@sendgrid/mail";
-import { Email } from "../emailfiles/react-email";
+import  Email  from "../emailfiles/react-email";
 import { render } from "@react-email/render";
 
 export async function sendEmail(messages, input, loading) {
