@@ -1,4 +1,4 @@
-function displayWebpage(url) {
+export default function DisplayWebpage(url) {
   const screenWidth = window.screen.width;
   const halfScreenWidth = screenWidth / 2;
   return (
