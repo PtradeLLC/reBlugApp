@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendMessage } from './chat-api';
+// import { sendMessage } from './chat-api';
 
 const App = () => {
   const [spaceName, setSpaceName] = useState('my_space');
