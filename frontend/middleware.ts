@@ -39,7 +39,9 @@ export default authMiddleware({
     "/SideEmail.html",
     "/SideElem",
     "/sign-up/sso-callback",
-    "/sign-in/sso-callback"
+    "/sign-in/sso-callback",
+    "/sign-up/continue",
+    "/sign-in/continue"
   ],
 });
 
