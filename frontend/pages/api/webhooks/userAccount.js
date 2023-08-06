@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 //   }
 
   const { data } = req.body;
-  console.log(data)
+ 
 
 // Ensure the necessary properties exist in the request body
 //   if (!data || !data.id || !data.external_id || !data.username || !data.first_name || !data.last_name || !data.image_url || !data.email_addresses) {

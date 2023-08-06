@@ -82,7 +82,7 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    {/* {!userId ? (
+                    {!userId ? (
                       <a
                         href="sign-in"
                         className="text-sm font-semibold leading-6 text-gray-900"
@@ -91,7 +91,7 @@ export default function Navbar() {
                       </a>
                     ) : (
                       <UserButton afterSignOutUrl="/" />
-                    )} */}
+                    )}
                   </div>
                 </Menu>
               </div>
