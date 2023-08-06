@@ -8,7 +8,7 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    sendMessage(spaceName, message);
+    // sendMessage(spaceName, message);
   };
 
   return (
