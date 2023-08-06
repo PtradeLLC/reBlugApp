@@ -13,6 +13,7 @@ export default authMiddleware({
     "/agency",
     "/testdynamo",
     "/influenzas",
+    "/api/webhooks/userAccount",
     "/marketplace",
     "/api/chat_bot",
     "/api/contact",
