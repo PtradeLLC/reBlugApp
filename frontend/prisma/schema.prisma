@@ -16,7 +16,7 @@ model User {
   id           Int         @id @default(autoincrement())
   userId       String      @unique
   // attributes Json 
-  externalId   String
+  externalId   String?
   Username     String?
   firstName    String?
   profileImage String?

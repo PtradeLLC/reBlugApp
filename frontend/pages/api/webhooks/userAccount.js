@@ -1,17 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
 export default async function handler(req, res) {
-//   if (req.method !== "POST") {
-//     return res.status(405).json({ message: "Method not allowed" });
-//   }
-
   const { data } = req.body;
- 
 
-// Ensure the necessary properties exist in the request body
-//   if (!data || !data.id || !data.external_id || !data.username || !data.first_name || !data.last_name || !data.image_url || !data.email_addresses) {
-//     return res.status(400).json({ message: "Invalid request body" });
-//   }
+  console.log(data);
 
   const { email_addresses } = data;
   let emailObj = email_addresses.map((email) => {
