@@ -73,16 +73,19 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         }),
       });
 
-      try {
-        const gptdata = await response.json();
+      const textResponse = await response.text(); // Get the raw text response
 
-        if (gptdata) {
-          setIsEmailEmpty(false);
-        } else {
-          console.log("Error occurred whle fetching data:", error);
-        }
-      } catch (jsonError) {
-        console.error("Error parsing response JSON:", jsonError);
+      // Extract the message part from the response
+      const messageStartIndex = textResponse.indexOf("---") + 3;
+      const extractedMessage = textResponse.slice(messageStartIndex).trim();
+      console.log(extractedMessage);
+
+      if (extractedMessage) {
+        setIsEmailEmpty(false);
+        // Now you can use the extracted message as needed
+        console.log("Extracted Message:", extractedMessage);
+      } else {
+        console.log("Error occurred while fetching data:", error);
       }
     } catch (error) {
       console.error(error);
@@ -91,6 +94,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       );
     }
   };
+
 
   return (
     <Transition.Root show={openModal} as={Fragment}>
@@ -157,11 +161,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   {beforeClick}
                                 </h3>
                                 <span
-                                  className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${
-                                    emailForm.email
-                                      ? "bg-green-400"
-                                      : "bg-red-400"
-                                  }`}
+                                  className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${emailForm.email
+                                    ? "bg-green-400"
+                                    : "bg-red-400"
+                                    }`}
                                 >
                                   <span className="sr-only">Online</span>
                                 </span>

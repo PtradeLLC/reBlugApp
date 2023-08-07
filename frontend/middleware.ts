@@ -14,6 +14,7 @@ export default authMiddleware({
     "/testdynamo",
     "/influenzas",
     "/api/webhooks/userAccount",
+    "/api/webhooks/sendMessage",
     "/marketplace",
     "/api/chat_bot",
     "/api/contact",
