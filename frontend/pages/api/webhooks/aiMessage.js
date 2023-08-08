@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from '../emailfiles/react-email.js';
-import { MailerSend, EmailParams, Sender, Recipient, Inbound, InboundFilterType } from "mailersend";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 import ReactDOMServer from "react-dom/server";
 
 const aiMessage = `From now on you will role play as Forged AI. 
@@ -122,38 +122,9 @@ export default async function handler(req, res) {
                     .setHtml(emailContent) // Use the generated email content
                     .setText(responseContent);
 
-                try {
-                    const emailResponse = await mailerSend.email.send(emailParams);
-
-                    if (emailResponse && (emailResponse.status === 200 || emailResponse.statusText === "OK")) {
-                        // Email sent successfully
-                        const inbound = new Inbound()
-                            .setDomainId('v69oxl519qz4785k')
-                            .setName('inboundAiForgedMart')
-                            .setDomainEnabled(true)
-                            .setMatchFilter({
-                                type: InboundFilterType.MATCH_ALL,
-                            })
-                            .setForwards([
-                                {
-                                    type: "webhook",
-                                    value: "https://events.hookdeck.com/e/src_QXs3CljjEO3K"
-                                }
-                            ]);
-
-                        try {
-                            const inboundResponse = await mailerSend.email.inbound.create(inbound);
-                            console.log("Inbound Configuration Created:", inboundResponse.body);
-                        } catch (inboundError) {
-                            console.log("Error creating inbound configuration:", inboundError.body);
-                        }
-                    } else {
-                        console.log("Email was not sent successfully.");
-                    }
-                } catch (emailError) {
-                    console.log("Error sending email:", emailError.body);
-                }
+                await mailerSend.email.send(emailParams);
             }
+
             res.status(200).json({ message: "success" })
         } catch (error) {
             console.error("An error occurred:", error);
