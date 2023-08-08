@@ -15,6 +15,7 @@ export default authMiddleware({
     "/influenzas",
     "/api/webhooks/userAccount",
     "/api/webhooks/sendMessage",
+    "/api/webhooks/aiMessage",
     "/marketplace",
     "/api/chat_bot",
     "/api/contact",

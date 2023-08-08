@@ -19,7 +19,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     lastName: "",
     brand_url: "https://forgedmart.com/",
     logo: "/images/Marttwainxyz.png",
-    email_body: "",
+    input: "",
   };
 
   const [emailForm, setEmailForm] = useState(initialEmailForm);
@@ -27,7 +27,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [beforeButton, setBeforeButton] = useState("Click to Send");
   const [isEmailEmpty, setIsEmailEmpty] = useState(false);
 
-  const url = "/api/webhooks/sendMessage";
+  const url = "/api/webhooks/aiMessage";
 
   const handleClose = () => {
     setOpenModal(false);
@@ -54,7 +54,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
     }
 
     try {
-      const { email, firstName, lastName, brand_url, logo, email_body } =
+      const { email, firstName, input, brand_url, logo, lastName } =
         emailForm;
 
       const response = await fetch(url, {
@@ -68,14 +68,11 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
           lastName,
           brand_url,
           logo,
-          email_body,
+          input,
         }),
       });
 
-      console.log("Server Response:", response);
-
       const data = await response.json(); // Parse the response as JSON
-      console.log("Parsed data", data);
     } catch (error) {
       console.error(error);
       setError(
@@ -245,6 +242,32 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                   isClicked && (
                                     <p className="text-red-500 text-xs mt-1">
                                       Please enter your last name
+                                    </p>
+                                  )}
+                              </div>
+                              <div className="space-y-2">
+                                <label
+                                  htmlFor="input"
+                                  className="block text-sm font-medium text-gray-900"
+                                >
+                                  Enter a question
+                                </label>
+                                <input
+                                  type="text"
+                                  name="input"
+                                  id="input"
+                                  disabled={isClicked}
+                                  placeholder="Enter a question"
+                                  className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
+ ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                  value={emailForm.input}
+                                  onChange={handleChange}
+                                />
+                                {isEmailEmpty &&
+                                  !emailForm.input &&
+                                  isClicked && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                      Enter any question for our tool
                                     </p>
                                   )}
                               </div>
