@@ -19,7 +19,7 @@ const handleClick = () => {
 
 const InputMessage = ({ input, setInput, sendMessage }: any) => (
   <div className="mt-6 flex clear-both">
-    <input
+    {/* <input
       type="text"
       aria-label="chat input"
       required
@@ -47,7 +47,7 @@ const InputMessage = ({ input, setInput, sendMessage }: any) => (
       }}
     >
       Ask Question
-    </Button>
+    </Button> */}
   </div>
 );
 
@@ -66,59 +66,59 @@ export function Chat() {
   }, [cookie, setCookie]);
 
   // send message to API /api/chat endpoint
-  const sendMessage = async (message: string) => {
-    setLoading(true);
-    const newMessages = [
-      ...messages,
-      { role: "user", content: message } as ChatGPTMessage,
-    ];
-    setMessages(newMessages);
-    const last10messages = newMessages.slice(-10); // remember last 10 messages
+  // const sendMessage = async (message: string) => {
+  //   setLoading(true);
+  //   const newMessages = [
+  //     ...messages,
+  //     { role: "user", content: message } as ChatGPTMessage,
+  //   ];
+  //   setMessages(newMessages);
+  //   const last10messages = newMessages.slice(-10); // remember last 10 messages
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: last10messages,
-        user: cookie[COOKIE_NAME],
-      }),
-    });
+  //   const response = await fetch("/api/chat", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       messages: last10messages,
+  //       user: cookie[COOKIE_NAME],
+  //     }),
+  //   });
 
-    console.log("Edge function returned.");
+  //   console.log("Edge function returned.");
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+  //   if (!response.ok) {
+  //     throw new Error(response.statusText);
+  //   }
 
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
+  //   // This data is a ReadableStream
+  //   const data = response.body;
+  //   if (!data) {
+  //     return;
+  //   }
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
+  //   const reader = data.getReader();
+  //   const decoder = new TextDecoder();
+  //   let done = false;
 
-    let lastMessage = "";
+  //   let lastMessage = "";
 
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
+  //   while (!done) {
+  //     const { value, done: doneReading } = await reader.read();
+  //     done = doneReading;
+  //     const chunkValue = decoder.decode(value);
 
-      lastMessage = lastMessage + chunkValue;
+  //     lastMessage = lastMessage + chunkValue;
 
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: lastMessage } as ChatGPTMessage,
-      ]);
+  //     // setMessages([
+  //     //   ...newMessages,
+  //     //   { role: "assistant", content: lastMessage } as ChatGPTMessage,
+  //     // ]);
 
-      setLoading(false);
-    }
-  };
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="rounded-2xl border-zinc-100  lg:border lg:p-6">
@@ -136,7 +136,7 @@ export function Chat() {
       <InputMessage
         input={input}
         setInput={setInput}
-        sendMessage={sendMessage}
+        // sendMessage={sendMessage}
         // sendMessage={""}
         // setInput={""}
       />

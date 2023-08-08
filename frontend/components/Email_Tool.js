@@ -13,14 +13,13 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [beforeClick, setBeforeClick] = useState(
     "Complete the form field below"
   );
-
   const initialEmailForm = {
     email: "",
     firstName: "",
     lastName: "",
     brand_url: "https://forgedmart.com/",
     logo: "/images/Marttwainxyz.png",
-    email_body: "This is a test message",
+    email_body: "",
   };
 
   const [emailForm, setEmailForm] = useState(initialEmailForm);
@@ -28,7 +27,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [beforeButton, setBeforeButton] = useState("Click to Send");
   const [isEmailEmpty, setIsEmailEmpty] = useState(false);
 
-  const url = `${process.env.NEXT_PUBLIC_WEBHOOK_URL}`;
+  const url = "/api/webhooks/sendMessage";
 
   const handleClose = () => {
     setOpenModal(false);
@@ -73,20 +72,10 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
         }),
       });
 
-      const textResponse = await response.text(); // Get the raw text response
+      console.log("Server Response:", response);
 
-      // Extract the message part from the response
-      const messageStartIndex = textResponse.indexOf("---") + 3;
-      const extractedMessage = textResponse.slice(messageStartIndex).trim();
-      console.log(extractedMessage);
-
-      if (extractedMessage) {
-        setIsEmailEmpty(false);
-        // Now you can use the extracted message as needed
-        console.log("Extracted Message:", extractedMessage);
-      } else {
-        console.log("Error occurred while fetching data:", error);
-      }
+      const data = await response.json(); // Parse the response as JSON
+      console.log("Parsed data", data);
     } catch (error) {
       console.error(error);
       setError(
@@ -94,7 +83,6 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
       );
     }
   };
-
 
   return (
     <Transition.Root show={openModal} as={Fragment}>
