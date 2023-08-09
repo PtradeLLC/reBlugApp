@@ -7,9 +7,14 @@ import TwitterProvider from "next-auth/providers/twitter";
 import TwitchProvider from "next-auth/providers/twitch";
 import InstagramProvider from "next-auth/providers/instagram";
 import SalesforceProvider from "next-auth/providers/salesforce";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 
-export const authOptions = {
+const prisma = new PrismaClient();
+
+export default NextAuth = {
     // Configure one or more authentication providers
+    adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -53,5 +58,3 @@ export const authOptions = {
     },
     secret: process.env.JWT_SECRET,
 }
-
-export default NextAuth(authOptions)
