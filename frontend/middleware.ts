@@ -1,52 +1,17 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default authMiddleware({
-  publicRoutes: [
-    "/",
-    "/sign-in",
-    "/sign-up",
-    "/freetrials",
-    "/creators",
-    "/contact",
-    "/email",
-    "/dashboard",
-    "/agency",
-    "/testdynamo",
-    "/influenzas",
-    "/api/webhooks/userAccount",
-    "/api/webhooks/sendMessage",
-    "/api/webhooks/aiMessage",
-    "/marketplace",
-    "/api/chat_bot",
-    "/api/contact",
-    "/api/emailfiles/react-email",
-    "/api/trendToolsAI",
-    "/api/aiTools",
-    "/api/email-parser",
-    "/testTrial",
-    "/api/chat/route",
-    "/tools",
-    "/api/email/test-email",
-    "/api/email/email-template",
-    "/api/email/prospectTemplate",
-    "/api/email/emailLogic",
-    "/api/emailfiles",
-    "/api/waitingList",
-    "/emailTest",
-    "/api/chatbot-opened",
-    "/api/chat",
-    "/component/waitingList",
-    "/component/EmailTemplate.html",
-    "/component/Cart.html",
-    "/SideEmail.html",
-    "/SideElem",
-    "/sign-up/sso-callback",
-    "/sign-in/sso-callback",
-    "/sign-up/continue",
-    "/sign-in/continue"
-  ],
-});
+// This function can be marked `async` if using `await` inside
+export async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+  const session = !!req.cookies.get("next-auth.session-token");
+
+  if (!session) {
+    return NextResponse.redirect(new URL(`/login`, req.url));
+  }
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: "/dashboard/:path*",
 };

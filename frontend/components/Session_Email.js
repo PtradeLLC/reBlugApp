@@ -2,7 +2,8 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
-import { useClerk } from "@clerk/nextjs";
+import { useSession, signIn, signOut, getSession } from "next-auth/react"
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,15 +22,9 @@ export default function Session_Email({ openModal, setOpenModal }) {
     productLink: "",
     imageUrl: `${selectedImage}`,
   });
+  const { data: session, status } = useSession({ required: true })
 
   const url = "/api/email/test-email";
-
-  // To Dos
-  // On click:
-  // Sends a request to Brevo 'contact' endpoint to create an email (prospect).
-  //Then:
-  // --> Triggers an email to be sent to prospect's email address:
-  // ------->
 
   //modal ops
   const handleClose = () => {
@@ -84,7 +79,7 @@ export default function Session_Email({ openModal, setOpenModal }) {
     }
   };
 
-  const { authenticated } = useClerk();
+
 
   return (
     <Transition.Root show={openModal} as={Fragment}>
@@ -149,11 +144,10 @@ export default function Session_Email({ openModal, setOpenModal }) {
                                     `Complete form below`}
                                 </h3>
                                 <span
-                                  className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${
-                                    emailForm.email
-                                      ? "bg-green-400"
-                                      : "bg-red-400"
-                                  }`}
+                                  className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${emailForm.email
+                                    ? "bg-green-400"
+                                    : "bg-red-400"
+                                    }`}
                                 >
                                   <span className="sr-only">Online</span>
                                 </span>
@@ -222,7 +216,7 @@ export default function Session_Email({ openModal, setOpenModal }) {
                                   id="recipients"
                                   placeholder="Enter recipient's email.(Field has been disabled while testing as a recipient)"
                                   className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled={!authenticated}
+                                  disabled={!status.authenticated}
                                   value={emailForm.recipients}
                                   onChange={handleChange}
                                 />
@@ -246,7 +240,7 @@ export default function Session_Email({ openModal, setOpenModal }) {
                                   id="subject"
                                   placeholder="Enter subject.(Field has been disabled while testing as a recipient)"
                                   className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                  disabled={!authenticated}
+                                  disabled={!status.authenticated}
                                   value={emailForm.subject}
                                   onChange={handleChange}
                                 />
@@ -273,7 +267,7 @@ export default function Session_Email({ openModal, setOpenModal }) {
                                       id="fileUpload"
                                       name="fileUpload"
                                       type="file"
-                                      disabled={!authenticated}
+                                      disabled={!status.authenticated}
                                       accept=".txt,.pdf"
                                       className="sr-only"
                                       onChange={handleChange}

@@ -1,41 +1,15 @@
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Image from "next/image";
-import { UserButton, useAuth } from "@clerk/nextjs";
-import { useState } from "react";
+import Image from "next/image";;
+import { useSession } from "next-auth/react"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
-  const [clicked, setClicked] = useState();
-
-  //HandlClick function
-  const handleClick = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    const baseUrl = "/api/webhooks/createUser";
-
-    // Fetch the necessary user information
-    const { user } = useAuth();
-
-    try {
-      const response = await axios.post(baseUrl, {
-        userId: user.id,
-        email: user.primaryEmailAddress.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      });
-
-      console.log(response.data);
-      // Handle successful response if needed
-    } catch (error) {
-      console.error("Error creating user entry:", error);
-      // Handle error if needed
-    }
-  };
+  const { data: session } = useSession()
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -81,18 +55,9 @@ export default function Navbar() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
-                  <div>
-                    {!userId ? (
-                      <a
-                        href="sign-in"
-                        className="text-sm font-semibold leading-6 text-gray-900"
-                      >
-                        Login <span aria-hidden="true">&rarr;</span>
-                      </a>
-                    ) : (
-                      <UserButton afterSignOutUrl="/" />
-                    )}
-                  </div>
+                  <Link href={'/login'}>
+                    Sign In
+                  </Link>
                 </Menu>
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
@@ -131,16 +96,9 @@ export default function Navbar() {
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
                 <div>
-                  {/* {!userId ? (
-                    <a
-                      href="sign-in"
-                      className="text-sm font-semibold leading-6 text-gray-900"
-                    >
-                      Login <span aria-hidden="true">&rarr;</span>
-                    </a>
-                  ) : (
-                    <UserButton afterSignOutUrl="/" />
-                  )} */}
+                  <Link href={'/login'}>
+                    Sign In
+                  </Link>
                 </div>
               </Disclosure.Button>
             </div>

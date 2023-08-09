@@ -123,6 +123,21 @@ export default async function handler(req, res) {
                     .setText(responseContent);
 
                 await mailerSend.email.send(emailParams);
+                // try {
+                //     const emailResponse = await mailerSend.email.send(emailParams);
+                //     if (emailResponse && (emailResponse.status === 200 || emailResponse.statusText === "OK")) {
+                //         console.log("RESPONSE: ", emailResponse)
+                //         // mailerSend.email.message.single("message_id")
+                //         // .then((response) => console.log(response.body))
+                //         // .catch((error) => console.log(error.body));
+                //     }
+
+                //     res.status(200).json({ message: "message is sent okay" })
+                // } catch (error) {
+                //     console.log(error);
+                //     res.status(500).json({ message: error })
+                // }
+
             }
 
             res.status(200).json({ message: "success" })
@@ -134,3 +149,5 @@ export default async function handler(req, res) {
         console.log(error)
     }
 }
+
+

@@ -53,12 +53,13 @@ export default function Hero() {
             <div className="mx-auto max-w-7xl px-6 pb-6 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                    Automation tools for eCommerce brands to reach broader
-                    audience and boost sales through social media.
+                  <h1 className="text-5xl font-bold tracking-tight text-gray-900 ">
+                    Automation for brands to reach broader
+                    audience and boost sales through social media,
+                    Artificial Intelligence, and tools built for marketing.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    <span className="font-extrabold">Just Launched:</span> Email
+                    <span className="font-extrabold">Just Launched!:</span> Email
                     Conversational Agent is an AI powered marketing tool that
                     enhances communication between brand Marketers, Sales
                     professionals and their clients/customers by injecting
@@ -70,7 +71,7 @@ export default function Hero() {
                       href="/tools"
                       className="text-sm font-semibold leading-6 text-gray-900"
                     >
-                      Try for Free <span aria-hidden="true">→</span>
+                      Try it for free <span aria-hidden="true">→</span>
                     </Link>
                     <Link
                       href="/tools"

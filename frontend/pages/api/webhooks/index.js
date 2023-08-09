@@ -1,6 +1,3 @@
-import { WebhookEvent } from "@clerk/clerk-sdk-node";
-// import { createUserEntry } from "./createUser";
-
 const handleEvent = async (req) => {
   const { evt } = req.body;
 

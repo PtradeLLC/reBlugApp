@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import { useUser } from "@clerk/nextjs";
+import { getSession } from "next-auth/react"
 
 const navigation = [
   { name: "Home", href: "#", current: true },
@@ -87,8 +87,8 @@ const actions = [
   { id: 3, name: "KPI-THREE" },
 ];
 
-export default function Dashboard() {
-  const { isLoaded, isSignedIn, user } = useUser();
+export default function Dashboard({ user }) {
+
   return (
     <>
       <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -255,7 +255,7 @@ export default function Dashboard() {
                           <div className="flex-shrink-0">
                             <img
                               className="mx-auto h-20 w-20 rounded-full"
-                              src={user?.imageUrl}
+                              src={user.image}
                               alt="profile image"
                             />
                           </div>
@@ -266,11 +266,11 @@ export default function Dashboard() {
                                   Welcome,
                                 </p>
                                 <p className="text-xl font-bold text-gray-900 sm:text-2xl">
-                                  {user.firstName}
+                                  {user.name}
                                 </p>
-                                <p className="text-sm font-medium text-gray-600">
+                                {/* <p className="text-sm font-medium text-gray-600">
                                   {user.role}
-                                </p>
+                                </p> */}
                               </>
                             ) : (
                               <p className="text-sm font-medium text-gray-600">
@@ -510,3 +510,24 @@ export default function Dashboard() {
     </>
   );
 }
+
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login', // Redirect to login page if no session
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+};
+
