@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const session = !!req.cookies.get("next-auth.session-token");
