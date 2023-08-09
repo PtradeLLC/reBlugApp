@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const session = !!req.cookies.get("next-auth.session-token");
 
   if (!session) {
-    return NextResponse.redirect(new URL(`/login`, req.url));
+    return NextResponse.redirect(new URL(`pages/login`, req.url));
   }
   return NextResponse.next();
 }
