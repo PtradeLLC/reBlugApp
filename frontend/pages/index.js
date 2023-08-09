@@ -1,6 +1,6 @@
+import { useState } from "react";
 import Head from "next/head";
 import Hero from "../components/Hero";
-import { useState } from "react";
 import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
