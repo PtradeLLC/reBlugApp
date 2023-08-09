@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "next-auth/next"
 
 const prisma = new PrismaClient();
 
@@ -8,20 +9,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    // const session = await getSession({ req });
-    // const { userId, email, firstName, lastName } = req.body;
+    const session = await getServerSession(req, res, authOptions)
+    const { email, firstName } = req.body;
 
-    // if (!session || session.userId !== userId) {
-    //   return res.status(401).json({ message: "Unauthorized" });
-    // }
 
-    // const userInfo = await prisma.user.create({
-    //   data: {
-    //     userId,
-    //     email,
-    //     firstName,
-    //   },
-    // });
+    const userInfo = await prisma.user.create({
+      data: {
+        email,
+        firstName,
+      },
+    });
 
     return res.status(200).json({ message: "This file should not exist haha" });
   } catch (error) {
