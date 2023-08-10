@@ -9,13 +9,12 @@ export default async function handler(req, res) {
     return { id, email_address };
   });
 
-  if (req.method === "POST"){
-    if (data){
+  if (req.method === "POST") {
+    if (data) {
       try {
         const prisma = new PrismaClient(); // Instantiate Prisma client within the handler
         const user = await prisma.user.create({
           data: {
-            userId: data.id,
             externalId: data.external_id,
             Username: data.username,
             firstName: data.first_name,
@@ -29,7 +28,7 @@ export default async function handler(req, res) {
       } catch (error) {
         res.status(500).json({ message: `Oops! there is an error: ${error.message}` });
       }
-    } else{
+    } else {
       console.log("no data")
     }
   }

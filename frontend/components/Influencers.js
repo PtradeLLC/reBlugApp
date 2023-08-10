@@ -4,7 +4,7 @@ import MobilePlatform from "./MobilePlatform";
 export default function Influencer({ openModal, setOpenModal }) {
   return (
     <>
-      <div className="overflow-hidden bg-white py-16 lg:w-[90%]">
+      <div className="overflow-hidden bg-white py-16 lg:w-[93%]">
         <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8 lg:max-w-full ">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-full lg:flex-none lg:gap-y-8">
             <div className="lg:col-end-1  lg:w-full lg:max-w-lg lg:pb-8">
@@ -69,7 +69,7 @@ export default function Influencer({ openModal, setOpenModal }) {
                     alt=""
                     width={400}
                     height={400}
-                    className="aspect-[4/3] w-[24rem] max-w-none rounded-2xl bg-gray-50 object-cover"
+                    className="aspect-[4/3] w-[7rem] max-w-none rounded-2xl bg-gray-50 object-cover"
                   />
                 </div>
               </div>

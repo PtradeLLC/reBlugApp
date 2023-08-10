@@ -1,8 +1,8 @@
 import React from 'react'
-import { useSession, signIn, signOut, getSession } from "next-auth/react"
+import { signOut, getSession } from "next-auth/react"
 
 const Account = ({ session }) => {
-    const { data: session, status } = useSession({ required: true })
+    // TBD
     if (session) {
         return (
             <>
@@ -22,13 +22,13 @@ export default Account;
 
 export const getServerSideProps = async (context) => {
     const session = await getSession(context);
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/sign-in"
-            }
-        }
-    }
+    // if (!session) {
+    //     return {
+    //         redirect: {
+    //             destination: "/login"
+    //         }
+    //     }
+    // }
 
     return {
         props: {

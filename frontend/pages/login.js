@@ -1,37 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { signIn } from "next-auth/react"
+
 
 export default function Login() {
-    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [authenticatedUser, setAuthenticatedUser] = useState(false);
 
-    useEffect(() => {
-        if (authenticatedUser) {
-            router.push('/dashboard');
-        }
-    }, [authenticatedUser]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Simulate authentication logic
-        if (email === 'user@example.com' && password === 'password') {
-            setAuthenticatedUser(true);
+        // Make Request to the backend to handle the form on the page ***
+        if (email && password) {
+            // something goes here 
         }
     };
-
-    if (authenticatedUser) {
-        return null; // Redirecting, so no need to render anything
-    }
 
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <h2 className="mt-12 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Sign in to your account
+                        Sign In
                     </h2>
                 </div>
 
@@ -78,18 +66,17 @@ export default function Login() {
 
                             {/* Remember me and Forgot password */}
                             <div className="flex items-center justify-between">
+                                {/* Implement SSO here */}
                                 {/* ... (remember me checkbox) */}
                                 {/* ... (forgot password link) */}
                             </div>
 
                             {/* Sign-in button */}
                             <div>
-                                <button
-                                    type="submit"
-                                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                >
-                                    Sign in
+                                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]" type='submit'>
+                                    Sign In
                                 </button>
+
                             </div>
                         </form>
 
@@ -105,9 +92,8 @@ export default function Login() {
                             </div>
 
                             <div className="mt-6 grid grid-cols-2 gap-4">
-                                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" onClick={() => signIn("google", { callbackUrl: '/dashboard' })}>Sign in with Google</button>
-                                {/* <button className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" onClick={() => signIn("facebook", { callbackUrl: '/dashboard' })}>Sign in with Facebook</button> */}
-
+                                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Sign in with Google</button>
+                                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Sign in with Facebook</button>
                             </div>
                         </div>
                     </div>

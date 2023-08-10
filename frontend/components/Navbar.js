@@ -2,14 +2,12 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";;
-import { useSession } from "next-auth/react"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const { data: session } = useSession()
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">

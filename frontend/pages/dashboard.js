@@ -510,8 +510,6 @@ export default function Dashboard({ user }) {
     </>
   );
 }
-
-
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
 

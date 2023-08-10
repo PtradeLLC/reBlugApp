@@ -39,20 +39,22 @@ model Session {
 }
 
 model User {
-  id           String      @id @default(cuid())
-  userId       String      @unique
-  // attributes Json 
-  externalId   String?
-  Username     String?
-  firstName    String?
-  profileImage String?
-  lastName     String?
-  email        String      @unique
-  emailtool    EmailTool[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  Account      Account[]
-  Session      Session[]
+  id            String      @id @default(cuid())
+  userId        String?     @unique
+  name          String? //Social Auth Login - revisit later
+  externalId    String?
+  Username      String?
+  firstName     String?
+  profileImage  String?
+  emailVerified String?
+  image         String?
+  lastName      String?
+  email         String      @unique
+  emailtool     EmailTool[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Account       Account[]
+  Session       Session[]
 }
 
 model VerificationToken {

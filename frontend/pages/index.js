@@ -5,10 +5,9 @@ import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
+import Dashboard from "../components/Dashboard"
 
 const Home = () => {
-  const [prediction, setPrediction] = useState(null);
-  const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -19,6 +18,7 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <main>
         <div>
           <Hero />

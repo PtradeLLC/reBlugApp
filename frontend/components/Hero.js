@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { useState } from "react";
-import Tools from "./Tools";
 import Link from "next/link";
 
 export default function Hero() {
@@ -52,7 +50,7 @@ export default function Hero() {
           <div className="overflow-hidden items-baseline pb-6 mb-1 border-b border-slate-200">
             <div className="mx-auto max-w-7xl px-6 pb-6 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-                <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
+                <div className="w-full max-w-xl lg:shrink-1 xl:max-w-2xl">
                   <h1 className="text-5xl font-bold tracking-tight text-gray-900 ">
                     Automation for brands to reach broader
                     audience and boost sales through social media,
