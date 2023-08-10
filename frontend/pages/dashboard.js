@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import { getSession } from "next-auth/react"
 
 const navigation = [
   { name: "Home", href: "#", current: true },
@@ -510,22 +509,5 @@ export default function Dashboard({ user }) {
     </>
   );
 }
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login', // Redirect to login page if no session
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      user: session.user,
-    },
-  };
-};
 
