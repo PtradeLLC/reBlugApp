@@ -1,6 +1,0 @@
-{
-    "functions": {
-        "source": "path/to/functions",
-        "runtime": "python3.11"
-    }
-}
