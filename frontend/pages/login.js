@@ -55,6 +55,9 @@ export default function Login() {
             } else if ("facebook") {
                 account.createOAuth2Session('facebook');
                 logIn();
+            } else if ("facebook") {
+                account.createOAuth2Session('linkedin');
+                logIn();
             }
         } catch (error) {
             console.log(error)
