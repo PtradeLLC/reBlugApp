@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const navigation = [
   {
@@ -89,9 +90,12 @@ export default function Footer() {
             </a>
           ))}
         </div>
-        <div className="mt-8 md:order-1 md:mt-0">
-          <p className="text-center text-xs leading-5 text-gray-500">
+        <div className="mt-8 md:order-1 md:mt-0 flex z-30">
+          <p className="text-center text-xs leading-5 text-gray-500 mx-2">
             &copy; {year} PublicTrades,LLC. All rights reserved.
+          </p>
+          <p className="text-center text-xs leading-5 text-gray-500">
+            <Link href="/privacy-policy">Privacy Policy</Link>
           </p>
         </div>
       </div>

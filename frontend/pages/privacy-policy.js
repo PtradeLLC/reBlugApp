@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 const Privacy = () => {
     return (
-        <div class="grid min-h-full place-items-center bg-white px-6 py-14 sm:py-24 lg:px-8">
-            <h1>Privacy Policy</h1><br />
+        <div className="grid min-h-full place-items-center bg-white px-6 py-14 sm:py-24 lg:px-8">
+            <h1>Privacy Policy</h1>
             <p className=''>This Privacy policy describes how ForgedMart collects, uses, and shares your personal information when you use our website, <Link href="www.forgedmart.com">forgedmart.com</Link> and our SaaS platform.
                 Personal Information We Collect
                 We collect the following types of personal information from you:
