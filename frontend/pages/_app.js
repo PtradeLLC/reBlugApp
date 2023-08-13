@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
-import { AuthProvider } from './AuthContext';
+import AuthProvider, { useAuth } from './AuthContext';
 
 export default function App({
   Component,
