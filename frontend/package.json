@@ -39,6 +39,7 @@
     "@tailwindcss/forms": "^0.5.4",
     "@types/connect": "^3.4.35",
     "ai": "^2.1.15",
+    "appwrite": "^11.0.0",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",
     "csrf-csrf": "^2.2.4",
@@ -65,7 +66,8 @@
     "swr": "^2.2.0",
     "ts-loader": "^9.4.4",
     "twilio": "^4.14.0",
-    "typewriter-effect": "^2.20.1"
+    "typewriter-effect": "^2.20.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",

@@ -1,13 +1,59 @@
+import { useState, useEffect } from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Image from "next/image";;
+import Image from "next/image";
+import { Client, Account } from 'appwrite';
+import { useAuth } from "../pages/AuthContext";
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const { isAuthenticated, logOut } = useAuth(); // Use the useAuth hook
+  const [id, setId] = useState(null);
+  const [hasScope, setHasScope] = useState(false); // State to track account scope
+  const router = useRouter();
+
+  const client = new Client();
+  const account = new Account(client);
+
+  client
+    .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT) // API Endpoint
+    .setProject(process.env.NEXT_PUBLIC_PROJECT_ID); // Project ID
+
+  const hasAccountScope = async (userId) => {
+    const user = await account.get(userId);
+    return user.scopes.includes('account');
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Delete the session using account.deleteSession
+      await account.deleteSession('current');
+
+      // Call the logOut function from the AuthContext to update the authentication status
+      logOut();
+      router.push(`/`);
+
+      // Reset the scope state on logout
+      setHasScope(false);
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated && id) {
+      // Fetch and set the account scope
+      hasAccountScope(id).then(scope => setHasScope(scope));
+      logIn();
+      setId(id)
+    }
+  }, [isAuthenticated, id]);
+
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -17,7 +63,7 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="sm:mt-2 pr-16">
-                  <Link href={`/`}>
+                  <Link href={isAuthenticated ? `/dashboard/${id}` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -53,9 +99,14 @@ export default function Navbar() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
-                  <Link href={'/login'}>
-                    Sign In
-                  </Link>
+                  {/* <button onClick={handleLogout}>{signIn}</button> */}
+                  {isAuthenticated ? (
+                    <button onClick={handleLogout}>Sign Out</button>
+                  ) : (
+                    <Link href={'/login'}>
+                      {hasScope ? 'Sign In' : 'Sign In | Register'}
+                    </Link>
+                  )}
                 </Menu>
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
@@ -89,15 +140,14 @@ export default function Navbar() {
               >
                 Contact
               </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                <div>
+              <Disclosure.Button as="button">
+                {isAuthenticated ? (
+                  <button onClick={handleLogout}>Sign Out</button>
+                ) : (
                   <Link href={'/login'}>
-                    Sign In
+                    {hasScope ? 'Sign In' : 'Sign In | Register'}
                   </Link>
-                </div>
+                )}
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>

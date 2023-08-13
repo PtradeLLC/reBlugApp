@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { Client, Account } from 'appwrite';
+import { Client, Account, Mail, ID, } from 'appwrite';
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from './AuthContext';
 
-export default function Login() {
+export default function Register() {
+    const [name, setName] = useState("")
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
-    const { logIn } = useAuth();
     const router = useRouter();
+    const { logIn } = useAuth();
 
     const client = new Client();
     const account = new Account(client);
+    // const mail = new Mail(client);
 
     client
         .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
@@ -22,34 +24,47 @@ export default function Login() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'email') {
-            setEmail(value);
-        } else if (name === 'password') {
-            setPassword(value);
+        switch (name) {
+            case 'email':
+                setEmail(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            case 'name':
+                setName(value);
+                break;
         }
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const userAccount = await account.create(ID.unique(), email, password, name);
 
-        const promise = account.createEmailSession(email, password);
-        promise.then(function (response) {
-            if (response.userId) {
-                const userId = `${response.userId}`
+            if (userAccount) {
+                // Create a session for the user based on their email address
+                const session = await account.createEmailSession(email, password);
+
+                // Call the logIn function to update the authentication status
                 logIn();
-                router.push(`/dashboard/${userId}`)
+                const accInfo = await account.get();
+                const { $id } = accInfo;
+                router.push(`/dashboard/${$id}`);
+                return;
+            } else {
+                console.log("See you soon");
+                return;
             }
-        }, function (error) {
-            console.log(error.message);
-            setErrors(error.message)
-        });
-
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-12 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Sign in to your account
+                    Sign up for an account
                 </h2>
             </div>
 
@@ -57,6 +72,23 @@ export default function Login() {
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         {/* Email input */}
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                                Name
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    autoComplete="name"
+                                    required
+                                    value={name}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -67,7 +99,7 @@ export default function Login() {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
-                                    // required
+                                    required
                                     value={email}
                                     onChange={handleChange}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -86,7 +118,7 @@ export default function Login() {
                                     name="password"
                                     type="password"
                                     autoComplete="current-password"
-                                    // required
+                                    required
                                     value={password}
                                     onChange={handleChange}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -94,7 +126,7 @@ export default function Login() {
                             </div>
                         </div>
                         {/* Remember me and Forgot password */}
-                        <div className="flex items-center justify-end">
+                        <div className="flex items-center justify-between">
                             {/* Implement SSO here */}
                             {/* ... (remember me checkbox) */}
                             {/* ... (forgot password link) */}
@@ -103,15 +135,14 @@ export default function Login() {
                         {/* Sign-in button */}
                         <div className="flex flex-col items-end justify-end">
                             <button className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]" type='submit'>
-                                Log In
+                                Sign Up
                             </button>
-                            <span className='text-sm mt-4'><Link href="/register">No account? Register here</Link></span>
+                            <span className='text-sm mt-4'><Link href="/login">Got an account? Login here</Link></span>
                         </div>
                         {errors &&
-                            <div className='bg-red-200'>
+                            <div className='bg-red-200 m-auto px-2'>
                                 <p>{errors}</p>
-                            </div>
-                        }
+                            </div>}
                     </form>
 
                     {/* Continue with social buttons */}
