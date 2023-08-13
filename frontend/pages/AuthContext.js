@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const logIn = () => {
@@ -20,6 +20,10 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-export const useAuth = () => {
+const useAuth = () => {
     return useContext(AuthContext);
 };
+
+export default AuthProvider; // Exporting AuthProvider as the default export
+
+export { useAuth }; // Exporting useAuth as a named export
