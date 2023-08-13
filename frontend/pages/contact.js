@@ -102,7 +102,7 @@ export default function Contact() {
           Contact Us
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Please use this form to contact us for any reason
+          Use the form below to contact us.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">

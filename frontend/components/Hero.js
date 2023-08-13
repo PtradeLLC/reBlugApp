@@ -64,7 +64,7 @@ export default function Hero() {
                     'conversational AI commerce' into the body of an email
                     and/or newsletter.
                   </p>
-                  <div className="mt-10 flex items-center gap-x-6">
+                  <div className="mt-10 flex items-center gap-x-6 width-[350px]">
                     <Link
                       href="/tools"
                       className="text-sm font-semibold leading-6 text-gray-900"

@@ -60,6 +60,29 @@ export default function Register() {
             console.log(error);
         }
     };
+
+    const handleOAuth = async (e) => {
+        e.preventDefault();
+        try {
+            if ("google") {
+                account.createOAuth2Session('google');
+                logIn();
+            } else if ("facebook") {
+                account.createOAuth2Session('facebook');
+                logIn();
+            } else if ("facebook") {
+                account.createOAuth2Session('linkedin');
+                logIn();
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+
+
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -74,7 +97,7 @@ export default function Register() {
                         {/* Email input */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Name
+                                Brand Name
                             </label>
                             <div className="mt-2">
                                 <input
@@ -157,8 +180,10 @@ export default function Register() {
                         </div>
 
                         <div className="mt-6 grid grid-cols-2 gap-4">
-                            <button className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Sign in with Google</button>
-                            <button className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Sign in with Facebook</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Linkedin</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Salesforce</button>
                         </div>
                     </div>
                 </div>
