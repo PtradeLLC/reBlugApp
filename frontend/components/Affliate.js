@@ -14,7 +14,7 @@ export default function Affiliate({ openModal, setOpenModal }) {
     <div className="bg-slate-50 sm:py-16">
       <div className="relative isolate">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="mx-auto flex max-w-2xl flex-col gap-16 px-6 py-16 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20">
+          <div className="mx-auto flex max-w-2xl flex-col gap-16 px-6 py-10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-5 xl:gap-x-20 xl:px-20">
             <Image
               className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
               src="/images/affiliate.png"
