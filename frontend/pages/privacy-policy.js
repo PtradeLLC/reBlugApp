@@ -3,18 +3,17 @@ import Link from 'next/link'
 
 const Privacy = () => {
     return (
-        <div class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-            Privacy Policy
-            This Privacy policy describes how ForgedMart collects, uses, and shares your personal information when you use our website, <Link href="www.forgedmart.com">forgedmart.com</Link> and our SaaS platform.
-
-            Personal Information We Collect
-            We collect the following types of personal information from you:
-            <br />
-            Information you provide to us: We collect the personal information you provide to us when you create an account, sign up for our newsletter, contact us with a question, or use our platform. This information may include your name, email address, company name, phone number, and billing information.
-            Information we collect automatically: We collect certain information automatically when you use our platform, such as your IP address, browser type, and operating system. We also collect information about your interactions with our platform, such as the pages you visit, the links you click, and the actions you take.
-            Information from third parties: We may receive personal information about you from third parties, such as social media platforms, marketing partners, and credit bureaus.
-            How We Use Your Personal Information
-            <br />
+        <div class="grid min-h-full place-items-center bg-white px-6 py-14 sm:py-24 lg:px-8">
+            <h1>Privacy Policy</h1><br />
+            <p className=''>This Privacy policy describes how ForgedMart collects, uses, and shares your personal information when you use our website, <Link href="www.forgedmart.com">forgedmart.com</Link> and our SaaS platform.
+                Personal Information We Collect
+                We collect the following types of personal information from you:
+            </p>
+            <p className=''> Information you provide to us: We collect the personal information you provide to us when you create an account, sign up for our newsletter, contact us with a question, or use our platform. This information may include your name, email address, company name, phone number, and billing information.
+                Information we collect automatically: We collect certain information automatically when you use our platform, such as your IP address, browser type, and operating system. We also collect information about your interactions with our platform, such as the pages you visit, the links you click, and the actions you take.
+                Information from third parties: We may receive personal information about you from third parties, such as social media platforms, marketing partners, and credit bureaus.
+                How We Use Your Personal Information
+            </p>
             We use your personal information for the following purposes:
             <br />
             To provide you with our services: We use your personal information to provide you with the services you have requested, such as creating an account, sending you marketing emails, and processing your payments.
@@ -48,11 +47,8 @@ const Privacy = () => {
             <br />
             We will retain your personal information for as long as it is necessary for the purposes for which it was collected, such as to provide you with our services, comply with our legal obligations, or resolve disputes.
             <br />
-            Changes to this Privacy Policy
-            <br />
-            We may update this Privacy Policy from time to time. If we make any material changes to this Privacy Policy, we will notify you by email or by posting a notice on our website.
-            <br />
-            Contact Us
+            <p className=''>Changes to this Privacy Policy</p>
+            We may update this Privacy Policy from time to time. If we make any material changes to this Privacy Policy, we will notify you by email or by posting a notice on our website. Contact Us
             <br />
             If you have any questions about this Privacy Policy, <Link href="/contact">please contact us</Link>
         </div>
