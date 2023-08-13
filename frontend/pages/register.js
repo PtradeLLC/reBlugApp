@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from './AuthContext';
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 export default function Register() {
     const [name, setName] = useState("")
@@ -15,7 +16,26 @@ export default function Register() {
 
     const client = new Client();
     const account = new Account(client);
-    // const mail = new Mail(client);
+    const mail = new Mail(client);
+
+    // MailerSend email Information
+    const mailerSend = async (name, email,) => {
+        const mailersend_API_KEY = process.env.MAILERSEND_API_KEY;
+        const sentFrom = new Sender("support@forgedmart.com", "ForgedMart Team");
+        const recipients = [
+            new Recipient(email, name)
+        ];
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setReplyTo(sentFrom)
+            .setSubject("Welcome to ForgedMart")
+            .setTemplateId("jy7zpl9nqx345vx6");
+
+        return await mailerSend.email.send(emailParams);
+
+    }
+
 
     client
         .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
@@ -45,12 +65,15 @@ export default function Register() {
             if (userAccount) {
                 // Create a session for the user based on their email address
                 const session = await account.createEmailSession(email, password);
-
                 // Call the logIn function to update the authentication status
                 logIn();
                 const accInfo = await account.get();
                 const { $id } = accInfo;
                 router.push(`/dashboard/${$id}`);
+                await mail.create(
+                    mailerSend(name, email),
+                    []
+                );
                 return;
             } else {
                 console.log("See you soon");
@@ -79,9 +102,6 @@ export default function Register() {
         }
 
     }
-
-
-
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
