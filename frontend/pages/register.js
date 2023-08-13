@@ -63,6 +63,7 @@ export default function Register() {
             const userAccount = await account.create(ID.unique(), email, password, name);
 
             if (userAccount) {
+                await account.createVerification('https://forgedmart.com');
                 // Create a session for the user based on their email address
                 const session = await account.createEmailSession(email, password);
                 // Call the logIn function to update the authentication status
