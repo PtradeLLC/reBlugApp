@@ -16,25 +16,24 @@ export default function Register() {
 
     const client = new Client();
     const account = new Account(client);
-    const mail = new Mail(client);
 
     // MailerSend email Information
-    const mailerSend = async (name, email,) => {
-        const mailersend_API_KEY = process.env.MAILERSEND_API_KEY;
-        const sentFrom = new Sender("support@forgedmart.com", "ForgedMart Team");
-        const recipients = [
-            new Recipient(email, name)
-        ];
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipients)
-            .setReplyTo(sentFrom)
-            .setSubject("Welcome to ForgedMart")
-            .setTemplateId("jy7zpl9nqx345vx6");
+    // const mailerSend = async (name, email,) => {
+    //     const mailersend_API_KEY = process.env.MAILERSEND_API_KEY;
+    //     const sentFrom = new Sender("support@forgedmart.com", "ForgedMart Team");
+    //     const recipients = [
+    //         new Recipient(email, name)
+    //     ];
+    //     const emailParams = new EmailParams()
+    //         .setFrom(sentFrom)
+    //         .setTo(recipients)
+    //         .setReplyTo(sentFrom)
+    //         .setSubject("Welcome to ForgedMart")
+    //         .setTemplateId("jy7zpl9nqx345vx6");
 
-        return await mailerSend.email.send(emailParams);
+    //     return await mailerSend.email.send(emailParams);
 
-    }
+    // }
 
 
     client
@@ -61,25 +60,28 @@ export default function Register() {
         e.preventDefault();
         try {
             const userAccount = await account.create(ID.unique(), email, password, name);
+            const verifiedUser = await account.createVerification('https://forgedmart.com');
+            console.log("Verified:", verifiedUser);
 
-            if (userAccount) {
-                await account.createVerification('https://forgedmart.com');
-                // Create a session for the user based on their email address
-                const session = await account.createEmailSession(email, password);
-                // Call the logIn function to update the authentication status
-                logIn();
-                const accInfo = await account.get();
-                const { $id } = accInfo;
-                router.push(`/dashboard/${$id}`);
-                await mail.create(
-                    mailerSend(name, email),
-                    []
-                );
-                return;
-            } else {
-                console.log("See you soon");
-                return;
-            }
+            // if (userAccount) {
+            //     // const promise = account.updateVerification('[USER_ID]', '[SECRET]');
+
+            //     // Create a session for the user based on their email address
+            //     const session = await account.createEmailSession(email, password);
+            //     // Call the logIn function to update the authentication status
+            //     logIn();
+            //     const accInfo = await account.get();
+            //     const { $id } = accInfo;
+            //     router.push(`/dashboard/${$id}`);
+            //     await mail.create(
+            //         mailerSend(name, email),
+            //         []
+            //     );
+            //     return;
+            // } else {
+            //     console.log("See you soon");
+            //     return;
+            // }
         } catch (error) {
             console.log(error);
         }
@@ -94,8 +96,11 @@ export default function Register() {
             } else if ("facebook") {
                 account.createOAuth2Session('facebook');
                 logIn();
-            } else if ("facebook") {
+            } else if ("linkedin") {
                 account.createOAuth2Session('linkedin');
+                logIn();
+            } else if ("amazon") {
+                account.createOAuth2Session('amazon');
                 logIn();
             }
         } catch (error) {
@@ -188,7 +193,6 @@ export default function Register() {
                                 <p>{errors}</p>
                             </div>}
                     </form>
-
                     {/* Continue with social buttons */}
                     <div>
                         <div className="relative mt-10">
@@ -204,7 +208,7 @@ export default function Register() {
                             <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
                             <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>
                             <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Linkedin</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Salesforce</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]">Salesforce</button>
                         </div>
                     </div>
                 </div>
