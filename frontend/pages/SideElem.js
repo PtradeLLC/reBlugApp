@@ -10,7 +10,6 @@ export default function DisplayWebpage(url) {
     window.open(url, 'newWindow', `width=${halfScreenWidth},height=600`);
     setOpen(true);
   };
-
   return (
     <div>
       <button onClick={openPopUp}>Display Webpage</button>

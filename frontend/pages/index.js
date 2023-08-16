@@ -5,12 +5,10 @@ import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
-import Dashboard from "../components/Dashboard"
+import { Client, Account } from 'appwrite';
 
 const Home = ({ emailMessages }) => {
   const [openModal, setOpenModal] = useState(false);
-
-  console.log(emailMessages);
 
   // CREATE ACC 
   const createAccount = async () => {
@@ -22,9 +20,8 @@ const Home = ({ emailMessages }) => {
       .setProject(process.env.NEXT_PUBLIC_PROJECT);
 
     const response = account.create("username", "email", "password")
-    console.log(response)
-  }
 
+  }
   // LOGIN
   const logInSession = async () => {
     const client = new Client()
@@ -35,7 +32,6 @@ const Home = ({ emailMessages }) => {
       .setProject(process.env.NEXT_PUBLIC_PROJECT);
 
     const response = account.create("email", "password")
-    console.log(response)
   }
 
   // LOGOUT 
@@ -48,14 +44,7 @@ const Home = ({ emailMessages }) => {
       .setProject(process.env.NEXT_PUBLIC_PROJECT);
 
     const response = account.delete();
-    console.log(response)
   }
-
-
-
-
-
-
   return (
     <>
       <Head>

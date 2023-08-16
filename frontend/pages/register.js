@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from './AuthContext';
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 export default function Register() {
     const [name, setName] = useState("")
@@ -16,25 +15,6 @@ export default function Register() {
 
     const client = new Client();
     const account = new Account(client);
-
-    // MailerSend email Information
-    // const mailerSend = async (name, email,) => {
-    //     const mailersend_API_KEY = process.env.MAILERSEND_API_KEY;
-    //     const sentFrom = new Sender("support@forgedmart.com", "ForgedMart Team");
-    //     const recipients = [
-    //         new Recipient(email, name)
-    //     ];
-    //     const emailParams = new EmailParams()
-    //         .setFrom(sentFrom)
-    //         .setTo(recipients)
-    //         .setReplyTo(sentFrom)
-    //         .setSubject("Welcome to ForgedMart")
-    //         .setTemplateId("jy7zpl9nqx345vx6");
-
-    //     return await mailerSend.email.send(emailParams);
-
-    // }
-
 
     client
         .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
@@ -60,54 +40,71 @@ export default function Register() {
         e.preventDefault();
         try {
             const userAccount = await account.create(ID.unique(), email, password, name);
-            const verifiedUser = await account.createVerification('https://forgedmart.com');
-            console.log("Verified:", verifiedUser);
+            if (userAccount) {
+                const userEmail = userAccount.email;
+                const userName = userAccount.name;
+                const baseUrl = "/api/email-parser";
 
-            // if (userAccount) {
-            //     // const promise = account.updateVerification('[USER_ID]', '[SECRET]');
+                const response = await fetch(baseUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email: userEmail, name: userName })
+                });
 
-            //     // Create a session for the user based on their email address
-            //     const session = await account.createEmailSession(email, password);
-            //     // Call the logIn function to update the authentication status
-            //     logIn();
-            //     const accInfo = await account.get();
-            //     const { $id } = accInfo;
-            //     router.push(`/dashboard/${$id}`);
-            //     await mail.create(
-            //         mailerSend(name, email),
-            //         []
-            //     );
-            //     return;
-            // } else {
-            //     console.log("See you soon");
-            //     return;
-            // }
+                if (!response.ok) {
+                    console.log("Response error:", response.statusText);
+                } else {
+                    // Send Verification email
+                    try {
+                        let url = "https://forgedmart.com";
+                        const verification = await account.createVerification(url);
+
+                        console.log(verification); // Success
+
+                        // Verify using secret and user ID
+                        try {
+                            const verified = await account.updateVerification(userAccount.id, verification.secret);
+                            console.log("Verified:", verified);
+                        } catch (verificationError) {
+                            console.log("Error verifying:", verificationError);
+                        }
+
+                        // Setting data
+                        const data = await response.json();
+                        console.log("Data:", data);
+                    } catch (error) {
+                        console.log("Error sending Verification:", error);
+                    } finally {
+                        console.log("Verification process completed");
+                    }
+                }
+            } else {
+                console.log("See you soon");
+            }
         } catch (error) {
             console.log(error);
         }
-    };
+    }
 
-    const handleOAuth = async (e) => {
-        e.preventDefault();
+
+    const handleOAuth = async (provider) => {
         try {
-            if ("google") {
-                account.createOAuth2Session('google');
+            if (provider === "google" || provider === "facebook" || provider === "linkedin" || provider === "amazon") {
+                // Create OAuth2 session
+                account.createOAuth2Session(provider);
+
+                // Log in the user
                 logIn();
-            } else if ("facebook") {
-                account.createOAuth2Session('facebook');
-                logIn();
-            } else if ("linkedin") {
-                account.createOAuth2Session('linkedin');
-                logIn();
-            } else if ("amazon") {
-                account.createOAuth2Session('amazon');
-                logIn();
+
+                // Redirect user to dashboard
+                router.push('/dashboard');
             }
         } catch (error) {
             console.log(error)
         }
-
-    }
+    };
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -192,25 +189,26 @@ export default function Register() {
                             <div className='bg-red-200 m-auto px-2'>
                                 <p>{errors}</p>
                             </div>}
-                    </form>
-                    {/* Continue with social buttons */}
-                    <div>
-                        <div className="relative mt-10">
-                            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div className="w-full border-t border-gray-200" />
-                            </div>
-                            <div className="relative flex justify-center text-sm font-medium leading-6">
-                                <span className="bg-white px-6 text-gray-900">Or continue with</span>
-                            </div>
-                        </div>
 
-                        <div className="mt-6 grid grid-cols-2 gap-4">
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Linkedin</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]">Salesforce</button>
+                        {/* Continue with social buttons */}
+                        <div>
+                            <div className="relative mt-10">
+                                <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                                    <div className="w-full border-t border-gray-200" />
+                                </div>
+                                <div className="relative flex justify-center text-sm font-medium leading-6">
+                                    <span className="bg-white px-6 text-gray-900">Or continue with</span>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 grid grid-cols-2 gap-4">
+                                <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
+                                <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>
+                                <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Linkedin</button>
+                                <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]">Salesforce</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

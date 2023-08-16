@@ -43,7 +43,6 @@ export default function Tools() {
                 Help customers, sell products and service in real‑time within
                 email messages.
               </p>
-
               <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
                   <div key={feature.id} className="relative pl-9">

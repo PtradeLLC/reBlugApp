@@ -6,7 +6,7 @@ export default function Hero() {
     <div className="">
       <main>
         <div className="relative isolate">
-          <svg
+          {/* <svg
             className="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
             aria-hidden="true"
           >
@@ -34,7 +34,7 @@ export default function Hero() {
               strokeWidth={0}
               fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)"
             />
-          </svg>
+          </svg> */}
           <div
             className="absolute left-1/2 right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
             aria-hidden="true"
@@ -57,11 +57,11 @@ export default function Hero() {
                     Artificial Intelligence, and tools built for marketing.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    <span className="font-extrabold">Just Launched!:</span> Email
-                    Conversational Agent is an AI powered marketing tool that
+                    <span className="font-extrabold text-red-500">Just Launched!:</span> Email
+                    Conversational Tool, an AI powered marketing tool that
                     enhances communication between brand Marketers, Sales
                     professionals and their clients/customers by injecting
-                    'conversational AI commerce' into the body of an email
+                    'conversational AI chatbot' into the body of an email
                     and/or newsletter.
                   </p>
                   <div className="mt-10 flex items-center gap-x-6 width-[350px]">
@@ -73,9 +73,9 @@ export default function Hero() {
                     </Link>
                     <Link
                       href="/tools"
-                      className="rounded-md bg-red-600 px-3.5 text-center w-[280px] h-[52px] py-2.5 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                      className="rounded-md bg-red-600 px-3.5 text-center w-[242px] h-[52px] py-2.5 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                     >
-                      Email Conversational Agent
+                      Email Conversational Tool
                     </Link>
                   </div>
                 </div>

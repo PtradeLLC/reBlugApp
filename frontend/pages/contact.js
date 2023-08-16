@@ -78,7 +78,6 @@ export default function Contact() {
         setSuccess(
           "Thanks! Your inquiry is successfully submitted, and we'll get back to you as soon as possible."
         );
-
         // Reset the success message after a few seconds (optional)
         setTimeout(() => {
           setSuccess("");
