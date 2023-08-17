@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Client, Account, Mail, ID, } from 'appwrite';
-import { v4 as uuidv4 } from 'uuid';
+import { Client, Account, ID, } from 'appwrite';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from './AuthContext';
 
 export default function Register() {
-    const [name, setName] = useState("")
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
     const router = useRouter();
     const { logIn } = useAuth();
+    const [registerMessage, setRegisterMessage] = useState("");
 
     const client = new Client();
     const account = new Account(client);
@@ -36,73 +36,61 @@ export default function Register() {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const sendVerification = async () => {
         try {
-            const userAccount = await account.create(ID.unique(), email, password, name);
-            if (userAccount) {
-                const userEmail = userAccount.email;
-                const userName = userAccount.name;
-                const baseUrl = "/api/email-parser";
-
-                const response = await fetch(baseUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ email: userEmail, name: userName })
-                });
-
-                if (!response.ok) {
-                    console.log("Response error:", response.statusText);
+            const response = await account.createEmailSession(email, password);
+            if (response) {
+                const verificationResponse = await account.createVerification('http://localhost:3000');
+                if (verificationResponse) {
+                    console.log("Verification email sent");
                 } else {
-                    // Send Verification email
-                    try {
-                        let url = "https://forgedmart.com";
-                        const verification = await account.createVerification(url);
-
-                        console.log(verification); // Success
-
-                        // Verify using secret and user ID
-                        try {
-                            const verified = await account.updateVerification(userAccount.id, verification.secret);
-                            console.log("Verified:", verified);
-                        } catch (verificationError) {
-                            console.log("Error verifying:", verificationError);
-                        }
-
-                        // Setting data
-                        const data = await response.json();
-                        console.log("Data:", data);
-                    } catch (error) {
-                        console.log("Error sending Verification:", error);
-                    } finally {
-                        console.log("Verification process completed");
-                    }
+                    console.log("Verification not sent");
                 }
-            } else {
-                console.log("See you soon");
             }
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
+            setErrors(error.message);
+            throw error; // Re-throw the error to be caught in the calling function
         }
-    }
+    };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            // Create User Account.
+            const userAccount = await account.create(ID.unique(), email, password, name);
+            if (userAccount) {
+                try {
+                    // Call Login and sendVerification functions to log the user in and send email verification.
+                    await logIn();
+                    const verificationResponse = await sendVerification(); //Calls the sendVerification function.
+                    setRegisterMessage("Please check your email to confirm.");
+                } catch (error) {
+                    console.log("Error creating email session:", error);
+                }
+            } else {
+                console.log("UserAccount doesn't exist");
+            }
+        } catch (error) {
+            console.log("Error creating user account:", error);
+        } finally {
+            console.log("See you soon");
+        }
+    };
 
     const handleOAuth = async (provider) => {
         try {
             if (provider === "google" || provider === "facebook" || provider === "linkedin" || provider === "amazon") {
                 // Create OAuth2 session
                 account.createOAuth2Session(provider);
-
                 // Log in the user
                 logIn();
-
-                // Redirect user to dashboard
+                // Redirect user to dashboard after authentication
                 router.push('/dashboard');
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
 
@@ -120,7 +108,7 @@ export default function Register() {
                         {/* Email input */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Brand Name
+                                Brand | Agency Name
                             </label>
                             <div className="mt-2">
                                 <input
@@ -171,12 +159,6 @@ export default function Register() {
                                 />
                             </div>
                         </div>
-                        {/* Remember me and Forgot password */}
-                        <div className="flex items-center justify-between">
-                            {/* Implement SSO here */}
-                            {/* ... (remember me checkbox) */}
-                            {/* ... (forgot password link) */}
-                        </div>
 
                         {/* Sign-in button */}
                         <div className="flex flex-col items-end justify-end">
@@ -185,10 +167,13 @@ export default function Register() {
                             </button>
                             <span className='text-sm mt-4'><Link href="/login">Got an account? Login here</Link></span>
                         </div>
-                        {errors &&
-                            <div className='bg-red-200 m-auto px-2'>
+                        {errors ?
+                            (<div className='bg-red-200 rounded text-center m-auto px-2'>
                                 <p>{errors}</p>
-                            </div>}
+                            </div>) : registerMessage ? (<div className='bg-green-200 rounded text-center m-auto px-2'>
+                                <p>{registerMessage}</p>
+                            </div>) : null
+                        }
 
                         {/* Continue with social buttons */}
                         <div>

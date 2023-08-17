@@ -52,7 +52,7 @@ export default function Hero() {
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-1 xl:max-w-2xl">
                   <h1 className="text-5xl font-bold tracking-tight text-gray-900 ">
-                    Automation for brands to reach broader
+                    Automation tools for brands to reach broader
                     audience and boost sales through social media,
                     Artificial Intelligence, and tools built for marketing.
                   </h1>
@@ -64,7 +64,7 @@ export default function Hero() {
                     'conversational AI chatbot' into the body of an email
                     and/or newsletter.
                   </p>
-                  <div className="mt-10 flex items-center gap-x-6 width-[350px]">
+                  <div className="mt-10 flex items-center gap-x-6 width-[250px]">
                     <Link
                       href="/tools"
                       className="text-sm font-semibold leading-6 text-gray-900"
@@ -73,9 +73,9 @@ export default function Hero() {
                     </Link>
                     <Link
                       href="/tools"
-                      className="rounded-md bg-red-600 px-3.5 text-center w-[242px] h-[52px] py-2.5 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                      className="rounded-md bg-red-600 px-3.5 text-center w-[200px] h-[52px] py-2.5 sm:text-sm items-center font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                     >
-                      Email Conversational Tool
+                      Conversational Tool
                     </Link>
                   </div>
                 </div>

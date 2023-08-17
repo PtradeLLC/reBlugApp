@@ -1,22 +1,20 @@
 export default async function handler(req, res) {
-  const { email, name } = req.body;
-  console.log(email);
-  // const { body } = await req;
-  // const { email, name } = JSON.parse(body);
+
+  const { body } = await req;
+  const { email, name } = JSON.parse(body);
 
   // Extract the word before '@' from the email
-  // const atIndex = email.indexOf('@');
-  // const username = email.slice(0, atIndex);
+  const atIndex = email.indexOf('@');
+  const username = email.slice(0, atIndex);
 
-  // console.log(username)
+  console.log(username)
 
   // Create the modified email
-  // const modifiedEmail = `${username}@forgedmart.com`;
+  const modifiedEmail = `${username}@forgedmart.com`;
 
-  // console.log(modifiedEmail);
+  console.log(modifiedEmail);
 
   try {
-    console.log(name);
     // const apiKey = `${process.env.MAILERSEND_API_KEY}`;
     // const apiUrl = "https://api.mailersend.com/v1/identities"
     // const identity = {
