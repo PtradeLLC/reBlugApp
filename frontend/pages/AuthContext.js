@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
     const logIn = () => {
         setIsAuthenticated(true);
     };
-
     const logOut = () => {
         setIsAuthenticated(false);
     };
@@ -24,6 +23,5 @@ const useAuth = () => {
     return useContext(AuthContext);
 };
 
-export default AuthProvider; // Exporting AuthProvider as the default export
-
-export { useAuth }; // Exporting useAuth as a named export
+export default AuthProvider;
+export { useAuth }; 

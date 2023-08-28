@@ -49,7 +49,7 @@ const Home = ({ emailMessages }) => {
     <>
       <Head>
         <title>ForgedMart</title>
-        <meta name="description" content="Gen" />
+        <meta name="description" content="Our workflow automation tools helps brand marketers automate their marketing tasks, such as email marketing, lead generation, and social media marketing. By developing marketing workflow automation tools to help brand marketers save time and resources, brands can improve efficiency, and generate more sales and brand awareness." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

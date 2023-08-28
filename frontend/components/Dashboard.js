@@ -87,12 +87,6 @@ const actions = [
 ];
 
 export default function Dashboard() {
-
-
-
-
-
-
     return (
         <>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -121,23 +115,6 @@ export default function Dashboard() {
                                                         </a>
                                                     ))}
                                                 </nav>
-                                            </div>
-                                            <div className="px-12 lg:px-0">
-
-                                                <div className="mx-auto w-full max-w-xs lg:max-w-md">
-                                                    <label htmlFor="search" className="sr-only">
-                                                        Search
-                                                    </label>
-                                                    <div className="relative text-gray-400 focus-within:text-gray-600">
-                                                        <input
-                                                            id="search"
-                                                            className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-gray-600 placeholder:text-gray-600 focus:bg-white focus:text-gray-900 ring-1 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
-                                                            placeholder="Search"
-                                                            type="search"
-                                                            name="search"
-                                                        />
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

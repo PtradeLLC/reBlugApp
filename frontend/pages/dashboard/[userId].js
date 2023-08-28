@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { Client, Account } from 'appwrite';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -93,49 +93,34 @@ export default function Dashboard() {
     const [userData, setUserData] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState('');
-    const router = useRouter()
+    const router = useRouter();
 
     const client = new Client();
     const account = new Account(client);
-
 
     client
         .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
         .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
 
-    const promise = account.getSession("current");
-
-    promise.then(function (response) {
-        if (response.current) {
-            setIsAuthenticated(true)
-        }
-    }, function (error) {
-        if (error.code === 401) {
-            router.push("/login")
-        }
-    });
-
     useEffect(() => {
-        const resp = account.get()
+        // const promise = account.getSession("current");
 
+        const resp = account.get();
         resp.then(function (response) {
-            setUserData(response)
+            setUserData(response);
         }, function (error) {
-            setErrors(error.message)
+            setErrors(error.message);
         });
 
-
-    }, [isAuthenticated])
+    }, [isAuthenticated]);
 
     const logout = () => {
-        const deleteAcc = account.deleteSessions()
-        deleteAcc.then(() => router.push("/")),
-            function (error) {
-                console.log(error); // Failure
-            };
+        const deleteAcc = account.deleteSessions();
+        deleteAcc.then(() => router.push("/"))
+            .catch(error => {
+                console.log(error);
+            });
     }
-
-    if (!isAuthenticated) return null;
     return (
         <>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -307,17 +292,14 @@ export default function Dashboard() {
                                                         /> */}
                                                     </div>
                                                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                        {userData ? (
+                                                        {userData && (
                                                             <>
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {userData?.name},
+                                                                    Welcome {userData?.name}
                                                                 </h2>
                                                             </>
-                                                        ) : (
-                                                            <p className="text-sm font-medium text-gray-600">
-                                                                Hello {userData?.name},
-                                                            </p>
-                                                        )}
+                                                        )
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">

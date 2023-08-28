@@ -40,7 +40,7 @@ export default function Register() {
         try {
             const response = await account.createEmailSession(email, password);
             if (response) {
-                const verificationResponse = await account.createVerification('http://localhost:3000');
+                const verificationResponse = await account.createVerification('http://localhost:3000/login'); //Change this url
                 if (verificationResponse) {
                     console.log("Verification email sent");
                 } else {
@@ -48,7 +48,7 @@ export default function Register() {
                 }
             }
         } catch (error) {
-            console.log(error.message);
+            console.log("Error creating email session:", error.message);
             setErrors(error.message);
             throw error; // Re-throw the error to be caught in the calling function
         }
@@ -56,7 +56,7 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const baseUrl = "./api/email/sendersId";
         try {
             // Create User Account.
             const userAccount = await account.create(ID.unique(), email, password, name);
@@ -65,7 +65,24 @@ export default function Register() {
                     // Call Login and sendVerification functions to log the user in and send email verification.
                     await logIn();
                     const verificationResponse = await sendVerification(); //Calls the sendVerification function.
-                    setRegisterMessage("Please check your email to confirm.");
+                    setRegisterMessage("Please check your email to confirm.You may need to check your Junk mail");
+                    const response = await fetch(baseUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_MAILERSEND_API_KEY}`,
+                        },
+                        body: JSON.stringify({ name, email }),
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log("DT", data);
+                    } else {
+                        const errorResponse = await response.json();
+                        throw new Error(errorResponse.message || 'Failed to create account');
+                    }
+
                 } catch (error) {
                     console.log("Error creating email session:", error);
                 }

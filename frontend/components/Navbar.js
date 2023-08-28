@@ -5,55 +5,90 @@ import Link from "next/link";
 import Image from "next/image";
 import { Client, Account } from 'appwrite';
 import { useAuth } from "../pages/AuthContext";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join("");
 }
 
 export default function Navbar() {
-  const { isAuthenticated, logOut } = useAuth(); // Use the useAuth hook
-  const [id, setId] = useState(null);
-  const [hasScope, setHasScope] = useState(false); // State to track account scope
+  const { logOut, isAuthenticated } = useAuth();
+  const [user, setUser] = useState(null);
+  const [errors, setErrors] = useState('');
+  const [userId, setUserId] = useState("undefined");
+  const [showSignOutLink, setShowSignOutLink] = useState(false);
+  const [userAuth, setUserAuth] = useState(false);
   const router = useRouter();
 
   const client = new Client();
   const account = new Account(client);
 
   client
-    .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT) // API Endpoint
-    .setProject(process.env.NEXT_PUBLIC_PROJECT_ID); // Project ID
+    .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
+    .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
 
-  const hasAccountScope = async (userId) => {
-    const user = await account.get(userId);
-    return user.scopes.includes('account');
-  };
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await account.getSession("current");
+        if (response.current && response.userId) {
+          isAuthenticated
+          setUserId(response.userId);
+          setUserAuth(true);
+        } else {
+          !isAuthenticated;
+          setUserAuth(false);
+        }
+      } catch (error) {
+        !isAuthenticated;
+        setUserAuth(false);
+      }
+    };
+
+    const fetchUserData = async () => {
+      try {
+        const response = await account.get();
+        if (response && response.$id) {
+          isAuthenticated;
+          setUser(response.name);
+          setUserAuth(true);
+        }
+      } catch (error) {
+        setErrors(error.message);
+      }
+    };
+    checkSession();
+    if (isAuthenticated) {
+      setUserAuth(true);
+      fetchUserData();
+    } else {
+      setUserAuth(false);
+    }
+  }, [isAuthenticated]);
+
 
   const handleLogout = async () => {
     try {
-      // Delete the session using account.deleteSession
       await account.deleteSession('current');
-
-      // Call the logOut function from the AuthContext to update the authentication status
+      !isAuthenticated;
+      setUserAuth(false);
       logOut();
-      router.push(`/`);
-
-      // Reset the scope state on logout
-      setHasScope(false);
+      router.push('/');
     } catch (error) {
       console.error("Logout Error:", error);
     }
   };
 
   useEffect(() => {
-    if (isAuthenticated && id) {
-      // Fetch and set the account scope
-      hasAccountScope(id).then(scope => setHasScope(scope));
-      logIn();
-      setId(id)
+    if (isAuthenticated && userId !== null) {
+      setUserAuth(true);
+      setShowSignOutLink(true);
+    } else {
+      setUserAuth(false);
+      setShowSignOutLink(false);
+      router.push("/");
     }
-  }, [isAuthenticated, id]);
-
+  }, [isAuthenticated, userId]);
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -63,7 +98,7 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="sm:mt-2 pr-16">
-                  <Link href={isAuthenticated ? `/dashboard/${id}` : `/`}>
+                  <Link href={userAuth ? `/dashboard/${userId}` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -74,6 +109,14 @@ export default function Navbar() {
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                  {userAuth && (
+                    <Link
+                      href={`/dashboard/${userId}`}
+                      className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
                   <Link
                     href={"/creators"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
@@ -96,18 +139,18 @@ export default function Navbar() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
                 </button>
-
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
-                  {/* <button onClick={handleLogout}>{signIn}</button> */}
-                  {isAuthenticated ? (
-                    <button onClick={handleLogout}>Sign Out</button>
-                  ) : (
-                    <Link href={'/login'}>
-                      {hasScope ? 'Sign In' : 'Sign In | Register'}
-                    </Link>
-                  )}
-                </Menu>
+                {
+                  <Menu as="div" className="relative ml-3">
+                    {userAuth ? (
+                      <button onClick={handleLogout}>Sign Out</button>
+                    ) : (
+                      <Link href="/login">
+                        Sign In | Register
+                      </Link>
+                    )}
+                  </Menu>
+                }
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
                 {/* Mobile menu button */}
@@ -123,7 +166,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
               <Disclosure.Button
@@ -141,18 +183,22 @@ export default function Navbar() {
                 Contact
               </Disclosure.Button>
               <Disclosure.Button as="button">
-                {isAuthenticated ? (
-                  <button onClick={handleLogout}>Sign Out</button>
-                ) : (
-                  <Link href={'/login'}>
-                    {hasScope ? 'Sign In' : 'Sign In | Register'}
-                  </Link>
-                )}
-              </Disclosure.Button>
-            </div>
-          </Disclosure.Panel>
+                {
+                  <Menu as="div" className="relative ml-3">
+                    {userAuth ? (
+                      <button onClick={handleLogout}>Sign Out</button>
+                    ) : (
+                      <Link href="/login">
+                        Sign In | Register
+                      </Link>
+                    )}
+                  </Menu>
+                }
+              </Disclosure.Button >
+            </div >
+          </Disclosure.Panel >
         </>
       )}
-    </Disclosure>
+    </Disclosure >
   );
 }

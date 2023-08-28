@@ -173,3 +173,26 @@ If you don't wait for my input you will fail your job so please wait for my prom
 
         // 5. Response Handling: Once the response is forwarded, you can optionally mark the conversation thread as replied, update the status in your application, or take any other action that suits your use case.
 
+
+
+
+
+## MEGAGPT INSTALLATION COMMAND
+# Must have conda installed
+# It costs approximately $0.2 (in GPT-4 API fees) to generate one example with analysis and design, and around $2.0 for a full project.
+
+1. conda create -n metagpt python=3.11.4
+2. conda activate metagpt
+3. npm --version # to check you have npm installed
+# optional: install node if you don't have it
+4. npm install -g @mermaid-js/mermaid-cli
+5.git clone https://github.com/geekan/metagpt
+6. cd metagpt
+7. python -m pip install -r requirements.txt
+8. python setup.py install
+# create openai API key
+# insert API key into config/config.yaml
+# make sure to set the model correctly depending on which model you have access to
+##Create a new project, type: python startup.py "Write a cli snake game based on pygame" # optional --code_review True (better code, costs more)
+# if you get ModuleNotFoundError: No module named 'bs4’, run "python -m pip install bs4"
+python startup.py "Write a cli snake game based on pygame" # do this again if you got the ModuleNotFoundError

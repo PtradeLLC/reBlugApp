@@ -10,6 +10,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
     const { logIn } = useAuth();
+    const [emailVerification, setEmailVerification] = useState(false)
     const router = useRouter();
 
     const client = new Client();
@@ -31,19 +32,33 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const baseUrl = `/api/userVerification`;
+            const response = await account.createEmailSession(email, password);
+            const appWrite_Key = process.env.NEXT_PUBLIC_CLIENT_APPWRITE_API_KEY;
 
-        const promise = account.createEmailSession(email, password);
-        promise.then(function (response) {
             if (response.userId) {
-                const userId = `${response.userId}`
-                logIn();
-                router.push(`/dashboard/${userId}`)
-            }
-        }, function (error) {
-            console.log(error.message);
-            setErrors(error.message)
-        });
+                const userId = response.userId;
+                //Create emailVerification
+                if (!emailVerification) {
+                    const res = await fetch(baseUrl, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${appWrite_Key}`
+                        },
+                        body: JSON.stringify({ emailVerification: true, userId: userId })
+                    });
+                    const data = await res.json();
+                }
 
+                logIn();
+                router.push(`/dashboard/${userId}`);
+            }
+        } catch (error) {
+            console.error(error.message);
+            setErrors(error.message);
+        }
     };
 
     const handleOAuth = async (e) => {
@@ -128,8 +143,8 @@ export default function Login() {
                             <span className='text-sm mt-4'><Link href="/register">No account? Register here</Link></span>
                         </div>
                         {errors &&
-                            <div className='bg-red-200'>
-                                <p>{errors}</p>
+                            <div className='bg-red-200 text-center'>
+                                <p className='p-'>{errors}</p>
                             </div>
                         }
                     </form>
@@ -144,7 +159,6 @@ export default function Login() {
                                 <span className="bg-white px-6 text-gray-900">Or continue with</span>
                             </div>
                         </div>
-
                         <div className="mt-6 grid grid-cols-2 gap-4">
                             <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
                             <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>

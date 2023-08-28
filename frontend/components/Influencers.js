@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import MobilePlatform from "./MobilePlatform";
 
 export default function Influencer({ openModal, setOpenModal }) {
@@ -80,12 +81,12 @@ export default function Influencer({ openModal, setOpenModal }) {
           <MobilePlatform />
         </div> */}
         <div className="mt-2 flex justify-center text-center">
-          <a
+          <Link
             href="/creators"
             className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
           >
             Try this tool<span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
         </div>
       </div>
     </>
