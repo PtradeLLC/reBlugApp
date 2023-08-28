@@ -48,7 +48,7 @@ export default function Creators() {
                     />
                     <img
                         src="/images/pileo2.png"
-                        alt="Side of walnut card tray with card groove and recessed card area."
+                        alt="Mobile commerce."
                         className="rounded-lg bg-gray-100"
                     />
                 </div>

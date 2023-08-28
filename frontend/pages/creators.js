@@ -7,9 +7,9 @@ export default function CreatorsPage() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white ">
       <Creators />
-      <div className="mx-auto">
+      <div className="mx-auto mt-4">
         <div className="mx-auto flex justify-center items-center">
           <div className="">
             <button

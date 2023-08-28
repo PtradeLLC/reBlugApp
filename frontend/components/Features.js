@@ -36,22 +36,22 @@ export default function Features() {
                 </div>
                 <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
                     <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
+                        src="/images/creatorplat.jpg"
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
                         className="rounded-lg bg-gray-100"
                     />
                     <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-02.jpg"
+                        src="/images/branding.jpg"
                         alt="Top down view of walnut card tray with embedded magnets and card groove."
                         className="rounded-lg bg-gray-100"
                     />
                     <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-03.jpg"
+                        src="/images/broadreach.jpg"
                         alt="Side of walnut card tray with card groove and recessed card area."
                         className="rounded-lg bg-gray-100"
                     />
                     <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-04.jpg"
+                        src="/images/mail.jpg"
                         alt="Walnut card tray filled with cards and card angled in dedicated groove."
                         className="rounded-lg bg-gray-100"
                     />
