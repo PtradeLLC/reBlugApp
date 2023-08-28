@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Client, Account } from 'appwrite';
-import { v4 as uuidv4 } from 'uuid';
 import Link from 'next/link';
 import { useAuth } from './AuthContext';
+import Image from 'next/image';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -138,7 +138,7 @@ export default function Login() {
                         {/* Sign-in button */}
                         <div className="flex flex-col items-end justify-end">
                             <button className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]" type='submit'>
-                                Log In
+                                <Image src="/images/OtherVar.png" width={30} height={30} alt='Login with ForgedMart' />  Log In
                             </button>
                             <span className='text-sm mt-4'><Link href="/register">No account? Register here</Link></span>
                         </div>
@@ -160,10 +160,18 @@ export default function Login() {
                             </div>
                         </div>
                         <div className="mt-6 grid grid-cols-2 gap-4">
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-red-600 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">Google</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Facebook</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Linkedin</button>
-                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >Salesforce</button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#bdbdbd] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">
+                                <Image src="/images/icons8-google-48.png" width={28} height={28} alt='Login with Google' />Google
+                            </button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >
+                                <Image src="/images/icons8-facebook-48.png" width={28} height={28} alt='Login with Facebook' /> Facebook
+                            </button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#7cc4fa] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]" >
+                                <Image src="/images/icons8-linkedin-logo-48.png" width={28} height={28} alt='Login with LinkedIn' />LinkedIn
+                            </button>
+                            <button onClick={handleOAuth} className="flex w-full items-center justify-center gap-3 rounded-md bg-[#ffeade] px-3 py-1.5 text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#585858]" >
+                                <Image src="/images/hubspot.png" width={28} height={28} alt='Login with HubSpot' /> HubSpot
+                            </button>
                         </div>
                     </div>
                 </div>
