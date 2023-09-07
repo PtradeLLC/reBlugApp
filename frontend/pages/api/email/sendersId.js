@@ -4,14 +4,8 @@ import { Client, Account } from 'appwrite';
 export default async function handler(req, res) {
     const mailerSendUrl = "https://api.mailersend.com/v1/identities";
     const baseUrl = `${process.env.NEXT_PUBLIC_ENDPOINT}/users`;
-    const appWrite_Key = process.env.NEXT_PUBLIC_CLIENT_APPWRITE_API_KEY;
-
-
-
-
 
     if (req.method === "POST") {
-        //Create verification
         const { name, email } = req.body;
         const senderData = {
             "domain_id": `${process.env.NEXT_PUBLIC_DOMAIN_ID}`,
@@ -30,11 +24,6 @@ export default async function handler(req, res) {
 
             // const newUser = await promise;
             // console.log(newUser);
-
-
-
-
-
 
             //MAILSENDER CALL
 

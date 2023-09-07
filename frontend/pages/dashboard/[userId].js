@@ -88,39 +88,12 @@ const actions = [
     { id: 3, name: "KPI-THREE" },
 ];
 
-export default function Dashboard() {
+export default function Dashboard({ params }) {
     const [user, setUser] = useState(null);
     const [userData, setUserData] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState('');
     const router = useRouter();
 
-    const client = new Client();
-    const account = new Account(client);
-
-    client
-        .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-        .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
-
-    useEffect(() => {
-        // const promise = account.getSession("current");
-
-        const resp = account.get();
-        resp.then(function (response) {
-            setUserData(response);
-        }, function (error) {
-            setErrors(error.message);
-        });
-
-    }, [isAuthenticated]);
-
-    const logout = () => {
-        const deleteAcc = account.deleteSessions();
-        deleteAcc.then(() => router.push("/"))
-            .catch(error => {
-                console.log(error);
-            });
-    }
     return (
         <>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -233,10 +206,10 @@ export default function Dashboard() {
                                                         </div>
                                                         <div className="ml-3 min-w-0 flex-1">
                                                             <div className="truncate text-base font-medium text-gray-800">
-                                                                Hello {userData?.name},
+                                                                Hello {params?.name},
                                                             </div>
                                                             <div className="truncate text-sm font-medium text-gray-500">
-                                                                {userData?.email}
+                                                                {params?.email}
                                                             </div>
                                                         </div>
                                                         <button
@@ -292,10 +265,10 @@ export default function Dashboard() {
                                                         /> */}
                                                     </div>
                                                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                        {userData && (
+                                                        {params && (
                                                             <>
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {userData?.name}
+                                                                    Welcome {params?.name}
                                                                 </h2>
                                                             </>
                                                         )

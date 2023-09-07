@@ -25,7 +25,7 @@ export default function Hero() {
                   <h1 className="text-5xl font-bold tracking-tight text-gray-900 ">
                     Automation tools for brands to reach broader
                     audience and boost sales through social media,
-                    Artificial Intelligence, and tools built for marketing.
+                    Artificial Intelligence, using tools built for marketing.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                     <span className="font-extrabold text-red-500">Just Launched!:</span> Email

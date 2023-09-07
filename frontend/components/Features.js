@@ -1,10 +1,12 @@
 const features = [
-    { name: 'What is a Chatbot?', description: 'Powered by artificial intelligence, Chatbot is computer program that simulates human conversation through text or voice interactions.' },
+    { name: 'What is a Chatbot?', description: 'Powered by artificial intelligence, chatbot is computer program that simulates human conversation through text or voice interactions.' },
     { name: 'Chatbot In Email', description: ' Email is a cost-effective and targeted way to reach a large audience; and integrating chatbot into personalized emails to your recipients helps brands build stronger relationships. ' },
-    { name: 'As Marketing Tool', description: 'Our Chatbot can generate leads, provide product information, and answer questions about a company`s products or services.' },
-    { name: 'As Sales Tool', description: 'Our Chatbot can be used to close sales by providing product demonstrations, and offering discounts or cross-promotions.' },
+    { name: 'As Marketing Tool', description: 'Our chatbot can generate leads, provide product information, and answer questions about a company`s products or services.' },
+    { name: 'As Sales Tool', description: 'Our chatbot can be used to close sales by providing product demonstrations, and offering discounts or cross-promotions.' },
     { name: 'Reporting', description: ' It`s important to track the results of your email marketing campaigns so you can see what`s working and what`s not. Via our dashboard you can track open rates, click-through rates, and conversion rates and other metrics even in real time. ' },
     { name: 'Advantages of Chatbot', description: 'Our tool offer a number of advantages over traditional customer service channels, such as 24/7 availability, scalability, SMS marketing, and cost-effectiveness.' },
+    { name: 'Cross Marketing', description: 'If this feature is enabled, our chatbot will recommend your product/services (within same category) to email recipients on page exit. This helps boost sales and subscriptions.' },
+    { name: 'Who is this for', description: 'Marketing agencies, Startup companies, eCommerce brands, Social media Influencers and Creators.' },
 ]
 
 export default function Features() {
@@ -24,6 +26,7 @@ export default function Features() {
                         Upload your product information, and let AI chatbot close sales and subscriptions on your behalf with our conversational AI commerce technology.
                         Integrate and connect with your existing apps and tools you know and love.
                     </p>
+                    <p className="mt-4 text-gray-500">Getting started with ForgedMart is easy: Import your data from spreadsheet or your CMS, or grow your email list with us from scratch.</p>
 
                     <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
                         {features.map((feature) => (

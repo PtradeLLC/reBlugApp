@@ -6,89 +6,88 @@ import Image from "next/image";
 import { Client, Account } from 'appwrite';
 import { useAuth } from "../pages/AuthContext";
 import { useRouter } from 'next/navigation';
+import { useSession, signIn, signOut } from "next-auth/react";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
 export default function Navbar() {
-  const { logOut, isAuthenticated } = useAuth();
-  const [user, setUser] = useState(null);
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
-  const [showSignOutLink, setShowSignOutLink] = useState(false);
-  const [userAuth, setUserAuth] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
-  const client = new Client();
-  const account = new Account(client);
+  // const client = new Client();
+  // const account = new Account(client);
 
-  client
-    .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
+  // client
+  //   .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
+  //   .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const response = await account.getSession("current");
-        if (response.current && response.userId) {
-          isAuthenticated
-          setUserId(response.userId);
-          setUserAuth(true);
-        } else {
-          !isAuthenticated;
-          setUserAuth(false);
-        }
-      } catch (error) {
-        !isAuthenticated;
-        setUserAuth(false);
-      }
-    };
+  // useEffect(() => {
+  //   const checkSession = async () => {
+  //     try {
+  //       const response = await account.getSession("current");
+  //       if (response.current && response.userId) {
+  //         isAuthenticated
+  //         setUserId(response.userId);
+  //         setUserAuth(true);
+  //       } else {
+  //         !isAuthenticated;
+  //         setUserAuth(false);
+  //       }
+  //     } catch (error) {
+  //       !isAuthenticated;
+  //       setUserAuth(false);
+  //     }
+  //   };
 
-    const fetchUserData = async () => {
-      try {
-        const response = await account.get();
-        if (response && response.$id) {
-          isAuthenticated;
-          setUser(response.name);
-          setUserAuth(true);
-        }
-      } catch (error) {
-        setErrors(error.message);
-      }
-    };
-    checkSession();
-    if (isAuthenticated) {
-      setUserAuth(true);
-      fetchUserData();
-    } else {
-      setUserAuth(false);
-    }
-  }, [isAuthenticated]);
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await account.get();
+  //       if (response && response.$id) {
+  //         isAuthenticated;
+  //         setUser(response.name);
+  //         setUserAuth(true);
+  //       }
+  //     } catch (error) {
+  //       setErrors(error.message);
+  //     }
+  //   };
+  //   checkSession();
+  //   if (isAuthenticated) {
+  //     setUserAuth(true);
+  //     fetchUserData();
+  //   } else {
+  //     setUserAuth(false);
+  //   }
+  // }, [isAuthenticated]);
 
 
-  const handleLogout = async () => {
-    try {
-      await account.deleteSession('current');
-      !isAuthenticated;
-      setUserAuth(false);
-      logOut();
-      router.push('/');
-    } catch (error) {
-      console.error("Logout Error:", error);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await account.deleteSession('current');
+  //     !isAuthenticated;
+  //     setUserAuth(false);
+  //     logOut();
+  //     router.push('/');
+  //   } catch (error) {
+  //     console.error("Logout Error:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isAuthenticated && userId !== null) {
-      setUserAuth(true);
-      setShowSignOutLink(true);
-    } else {
-      setUserAuth(false);
-      setShowSignOutLink(false);
-      router.push("/");
-    }
-  }, [isAuthenticated, userId]);
+  // useEffect(() => {
+  //   if (isAuthenticated && userId !== null) {
+  //     setUserAuth(true);
+  //     setShowSignOutLink(true);
+  //   } else {
+  //     setUserAuth(false);
+  //     setShowSignOutLink(false);
+  //     router.push("/");
+  //   }
+  // }, [isAuthenticated, userId]);
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -98,7 +97,7 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="sm:mt-2 pr-16">
-                  <Link href={userAuth ? `/dashboard/${userId}` : `/`}>
+                  <Link href={session ? `/dashboard/` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -109,9 +108,9 @@ export default function Navbar() {
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  {userAuth && (
+                  {session && (
                     <Link
-                      href={`/dashboard/${userId}`}
+                      href={`/dashboard/`}
                       className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                     >
                       Dashboard
@@ -142,12 +141,10 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 {
                   <Menu as="div" className="relative ml-3">
-                    {userAuth ? (
-                      <button onClick={handleLogout}>Sign Out</button>
+                    {session ? (
+                      <button onClick={() => signOut()}>Sign out</button>
                     ) : (
-                      <Link href="/login">
-                        Sign In | Register
-                      </Link>
+                      <button onClick={() => signIn()}>Sign In | Register</button>
                     )}
                   </Menu>
                 }
@@ -185,12 +182,10 @@ export default function Navbar() {
               <Disclosure.Button as="button">
                 {
                   <Menu as="div" className="relative ml-3">
-                    {userAuth ? (
-                      <button onClick={handleLogout}>Sign Out</button>
+                    {session ? (
+                      <button onClick={() => signOut()}>Sign out</button>
                     ) : (
-                      <Link href="/login">
-                        Sign In | Register
-                      </Link>
+                      <button onClick={() => signIn()}>Sign In | Register</button>
                     )}
                   </Menu>
                 }

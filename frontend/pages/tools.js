@@ -20,7 +20,7 @@ export default function Tools() {
             onClick={handleClick}
             className="rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
           >
-            See how it works now
+            Now check out how it works
           </button>
         </div>
       </div>
