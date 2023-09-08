@@ -1,38 +1,28 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { getProviders, signIn, useSession } from "next-auth/react"
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { getProviders, signIn } from "next-auth/react";
 import Image from 'next/image';
-import LinkedIn from 'next-auth/providers/linkedin';
 
 export default function Login({ providers }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
-    const [emailVerification, setEmailVerification] = useState(false)
-    const { data: session } = useSession;
     const router = useRouter();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const isProduction = process.env.NODE_ENV === 'production';
 
-        if (name === 'email') {
-            setEmail(value);
-        } else if (name === 'password') {
-            setPassword(value);
-        }
-    }
+    const callbackUrl = isProduction
+        ? `https://forgedmart.com/dashboard`
+        : `http://localhost:3000/dashboard`;
 
-    const handleSubmit = async (e) => {
+    const handleClick = async (e, provider) => {
         e.preventDefault();
         try {
-            const baseUrl = `/api/userVerification`;
-            if (!session) {
-                router.push("/login");
-            } else {
-                console.log("Login code lives here")
+            const baseUrl = `/api/userLogin`;
+
+
+            if (provider) {
+                await signIn(provider.id, {
+                    callbackUrl: callbackUrl,
+                });
             }
         } catch (error) {
             console.error(error.message);
@@ -50,7 +40,7 @@ export default function Login({ providers }) {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
+                    <div className="space-y-6">
                         {/* Email input */}
                         <div>
                             <label htmlFor="email" className="block text-md font-medium leading-6 text-gray-900">
@@ -80,11 +70,8 @@ export default function Login({ providers }) {
                                         >
                                             <button
                                                 className='flex px-4 justify-center items-center'
-                                                onClick={() =>
-                                                    signIn(provider.id, {
-                                                        callbackUrl: `http://localhost:3000/dashboard || https://forgedmart.com/dashboard`,
-                                                    })
-                                                }
+                                                onClick={(e) => handleClick(e, provider)}
+
                                             >
                                                 <Image src={`/images/${provider.name.toLowerCase()}.png`} width={28} height={28} alt={`Login with ${provider.name}`} />
                                                 {provider.name}
@@ -98,7 +85,7 @@ export default function Login({ providers }) {
                                 <p className='p-'>{errors}</p>
                             </div>
                         }
-                    </form>
+                    </div>
 
                     {/* Continue with social buttons */}
                     <div>
@@ -133,11 +120,7 @@ export default function Login({ providers }) {
                                     >
                                         <button
                                             className='flex px-4 justify-center items-center'
-                                            onClick={() =>
-                                                signIn(provider.id, {
-                                                    callbackUrl: `http://localhost:3000/dashboard || https://forgedmart.com/dashboard`,
-                                                })
-                                            }
+                                            onClick={(e) => { handleClick(e, provider) }}
                                         >
                                             <Image src={`/images/${provider.name.toLowerCase()}.png`} width={28} height={28} alt={`Login with ${provider.name}`} />
                                             {provider.name}
@@ -154,16 +137,13 @@ export default function Login({ providers }) {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getServerSession(context.req, context.res, authOptions);
-    // If the user is already logged in, redirect.
-    // Note: Do not to redirect to the same page
-    // To avoid an infinite loop!
-    if (session) {
-        return { redirect: { destination: "/dashboard" } };
-    }
+    // const session = await getServerSession(context.req, context.res, authOptions);
+
     const providers = await getProviders();
 
     return {
-        props: { providers: providers ?? [] },
+        props: {
+            providers: providers ?? []
+        },
     }
-}
+};

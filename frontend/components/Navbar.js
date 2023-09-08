@@ -3,8 +3,6 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { Client, Account } from 'appwrite';
-import { useAuth } from "../pages/AuthContext";
 import { useRouter } from 'next/navigation';
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -19,75 +17,7 @@ export default function Navbar() {
   const router = useRouter();
   const { data: session } = useSession();
 
-  // const client = new Client();
-  // const account = new Account(client);
 
-  // client
-  //   .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-  //   .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
-
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     try {
-  //       const response = await account.getSession("current");
-  //       if (response.current && response.userId) {
-  //         isAuthenticated
-  //         setUserId(response.userId);
-  //         setUserAuth(true);
-  //       } else {
-  //         !isAuthenticated;
-  //         setUserAuth(false);
-  //       }
-  //     } catch (error) {
-  //       !isAuthenticated;
-  //       setUserAuth(false);
-  //     }
-  //   };
-
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await account.get();
-  //       if (response && response.$id) {
-  //         isAuthenticated;
-  //         setUser(response.name);
-  //         setUserAuth(true);
-  //       }
-  //     } catch (error) {
-  //       setErrors(error.message);
-  //     }
-  //   };
-  //   checkSession();
-  //   if (isAuthenticated) {
-  //     setUserAuth(true);
-  //     fetchUserData();
-  //   } else {
-  //     setUserAuth(false);
-  //   }
-  // }, [isAuthenticated]);
-
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await account.deleteSession('current');
-  //     !isAuthenticated;
-  //     setUserAuth(false);
-  //     logOut();
-  //     router.push('/');
-  //   } catch (error) {
-  //     console.error("Logout Error:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isAuthenticated && userId !== null) {
-  //     setUserAuth(true);
-  //     setShowSignOutLink(true);
-  //   } else {
-  //     setUserAuth(false);
-  //     setShowSignOutLink(false);
-  //     router.push("/");
-  //   }
-  // }, [isAuthenticated, userId]);
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -97,7 +27,7 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="sm:mt-2 pr-16">
-                  <Link href={session ? `/dashboard/` : `/`}>
+                  <Link href={session ? `/dashboard` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -110,7 +40,7 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {session && (
                     <Link
-                      href={`/dashboard/`}
+                      href={`/dashboard`}
                       className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                     >
                       Dashboard

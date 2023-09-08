@@ -1,7 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import { Client, Account } from 'appwrite';
+import { Fragment, useState } from "react";
+import { Popover, Transition } from "@headlessui/react";
 import { useRouter } from 'next/navigation';
+import { useSession } from "next-auth/react";
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth/next";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -88,11 +90,8 @@ const actions = [
     { id: 3, name: "KPI-THREE" },
 ];
 
-export default function Dashboard({ params }) {
-    const [user, setUser] = useState(null);
-    const [userData, setUserData] = useState(null);
+export default function Dashboard({ user }) {
     const [errors, setErrors] = useState('');
-    const router = useRouter();
 
     return (
         <>
@@ -178,8 +177,8 @@ export default function Dashboard({ params }) {
                                                         <div>
                                                             <img
                                                                 className="h-8 w-auto"
-                                                                src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=600"
-                                                                alt="Your Company"
+                                                                src="/images/Mart.png"
+                                                                alt="ForgedMart"
                                                             />
                                                         </div>
                                                     </div>
@@ -206,10 +205,10 @@ export default function Dashboard({ params }) {
                                                         </div>
                                                         <div className="ml-3 min-w-0 flex-1">
                                                             <div className="truncate text-base font-medium text-gray-800">
-                                                                Hello {params?.name},
+                                                                Hello {user?.name},
                                                             </div>
                                                             <div className="truncate text-sm font-medium text-gray-500">
-                                                                {params?.email}
+                                                                {user?.email}
                                                             </div>
                                                         </div>
                                                         <button
@@ -258,21 +257,16 @@ export default function Dashboard({ params }) {
                                             <div className="sm:flex sm:items-center sm:justify-between">
                                                 <div className="sm:flex sm:space-x-5">
                                                     <div className="flex-shrink-0">
-                                                        {/* <img
+                                                        <img
                                                             className="mx-auto h-20 w-20 rounded-full"
-                                                            src={image || profileImage}
+                                                            src={user?.image}
                                                             alt="profile image"
-                                                        /> */}
+                                                        />
                                                     </div>
                                                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                        {params && (
-                                                            <>
-                                                                <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {params?.name}
-                                                                </h2>
-                                                            </>
-                                                        )
-                                                        }
+                                                        <h2 className="text-2xl font-semibold text-gray-900">
+                                                            Welcome {user?.name}
+                                                        </h2>
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">
@@ -326,8 +320,6 @@ export default function Dashboard({ params }) {
                                         </div>
                                     </div>
                                 </section>
-
-
                                 <section aria-labelledby="quick-links-title">
                                     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
@@ -387,8 +379,6 @@ export default function Dashboard({ params }) {
                                     </div>
                                 </section>
                             </div>
-
-
                             <div className="grid grid-cols-1 gap-4">
 
                                 <section aria-labelledby="quicklinks-title">
@@ -448,7 +438,7 @@ export default function Dashboard({ params }) {
                                                 className="text-base font-medium text-gray-900"
                                                 id="recent-hires-title"
                                             >
-                                                Recent Hires
+                                                Team Members
                                             </h2>
                                             <div className="mt-6 flow-root">
                                                 <ul
@@ -467,7 +457,7 @@ export default function Dashboard({ params }) {
                                                                 </div>
                                                                 <div className="min-w-0 flex-1">
                                                                     <p className="truncate text-sm font-medium text-gray-900">
-                                                                        {userData?.name}
+                                                                        {user?.name}
                                                                     </p>
                                                                     <p className="truncate text-sm text-gray-500">
                                                                         {"@" + person.handle}
@@ -504,6 +494,27 @@ export default function Dashboard({ params }) {
             </div>
         </>
     );
+}
+
+export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions);
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        }
+    }
+
+    const { user } = session;
+
+    return {
+        props: {
+            user
+        },
+    }
 }
 
 

@@ -37,27 +37,25 @@ model Session {
 }
 
 model User {
-  id                String      @id @default(cuid())
-  userId            String?     @unique
-  name              String? //Social Auth Login - revisit later
-  externalId        String?
-  Username          String?
-  firstName         String?
-  profileImage      String?
-  emailVerified     Boolean     @default(false)
-  role              Role        @default(USER)
-  image             String?
-  lastName          String?
-  email             String      @unique
-  password          String
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  Accounts          Account[]
-  Sessions          Session[]
-  profileId         String?
-  Profile           Profile[]
-  EmailTool         EmailTool[]
-  verificationToken String
+  id            String      @id @default(cuid())
+  userId        String?     @unique
+  name          String?
+  externalId    String?
+  Username      String?
+  firstName     String?
+  profileImage  String?
+  role          Role        @default(USER)
+  image         String?
+  lastName      String?
+  emailVerified DateTime?
+  email         String      @unique
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Accounts      Account[]
+  Sessions      Session[]
+  profileId     String?
+  Profile       Profile[]
+  EmailTool     EmailTool[]
 }
 
 model Profile {
