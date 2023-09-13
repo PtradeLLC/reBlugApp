@@ -2,12 +2,29 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getProviders, signIn } from "next-auth/react";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Login({ providers }) {
     const [errors, setErrors] = useState('');
     const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [providerId, setProviderId] = useState('');
+    const [registerMessage, setRegisterMessage] = useState('');
 
     const isProduction = process.env.NODE_ENV === 'production';
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        switch (name) {
+            case 'email':
+                setEmail(value);
+                break;
+            case 'name':
+                setName(value);
+                break;
+        }
+    };
 
     const callbackUrl = isProduction
         ? `https://forgedmart.com/dashboard`
@@ -17,12 +34,43 @@ export default function Login({ providers }) {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
+            const emailData = JSON.stringify({ email });
 
+            if (!email) {
+                setErrors("Please enter email")
+            } else if (email) {
+                console.log("email is sent");
+                // setRegisterMessage("📨 Please check your email to continue.");
+                // setEmail("");
+            } else {
+                console.log("There is an issue");
+            }
 
             if (provider) {
                 await signIn(provider.id, {
                     callbackUrl: callbackUrl,
                 });
+                setProviderId(provider);
+                const response = await fetch(baseUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: `${provider.id}`
+                })
+                const data = await response.json();
+                console.log("Provider", data);
+            } else if (email) {
+                const res = await fetch(baseUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: emailData
+                })
+                const data = await res.json();
+                setRegisterMessage("📨 Please check your email to continue.");
+                setEmail("");
             }
         } catch (error) {
             console.error(error.message);
@@ -43,47 +91,33 @@ export default function Login({ providers }) {
                     <div className="space-y-6">
                         {/* Email input */}
                         <div>
-                            <label htmlFor="email" className="block text-md font-medium leading-6 text-gray-900">
-                                Brands & Marketers
+                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                                Email address
                             </label>
-                            <p>Access with these CRMs</p>
-                            <div className="mt-6 grid grid-cols-2 gap-4">
-                                {Object.values(providers)
-                                    .filter((provider) =>
-                                        ['Zoho', 'Salesforce', 'HubSpot', "Google"].includes(provider.name)
-                                    )
-                                    .map((provider) => (
-                                        <div
-                                            key={provider.name}
-                                            className={`flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a] ${provider.name === 'Zoho'
-                                                ? 'bg-[#E42527]'
-                                                : provider.name === 'Salesforce'
-                                                    ? 'bg-[#21A0DF]'
-                                                    : provider.name === 'HubSpot'
-                                                        ? 'bg-[#fa7820]'
-                                                        : provider.name === 'Google'
-                                                            ? 'bg-[#DB4437]'
-                                                            : !provider.name
-                                                                ? null
-                                                                : ''
-                                                }`}
-                                        >
-                                            <button
-                                                className='flex px-4 justify-center items-center'
-                                                onClick={(e) => handleClick(e, provider)}
-
-                                            >
-                                                <Image src={`/images/${provider.name.toLowerCase()}.png`} width={28} height={28} alt={`Login with ${provider.name}`} />
-                                                {provider.name}
-                                            </button>
-                                        </div>
-                                    ))}
+                            <div className="mt-2">
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    required
+                                    value={email}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
                             </div>
                         </div>
-                        {errors &&
-                            <div className='bg-red-200 text-center'>
-                                <p className='p-'>{errors}</p>
-                            </div>
+                        <div className="flex flex-col items-end justify-end">
+                            <button onClick={handleClick} className="flex w-full items-center justify-center gap-3 rounded-md bg-slate-200 px-3 py-1.5 text-black border shadow-md outline-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]" type='submit'>
+                                <Image src="/images/OtherVar.png" width={30} height={30} alt='Login with ForgedMart' />  Get Access
+                            </button>
+                        </div>
+                        {errors ?
+                            (<div className='bg-red-200 rounded text-center m-auto px-2'>
+                                <p>{errors}</p>
+                            </div>) : registerMessage ? (<div className='bg-green-200 rounded text-center m-auto px-2'>
+                                <p>{registerMessage}</p>
+                            </div>) : null
                         }
                     </div>
 
@@ -100,7 +134,7 @@ export default function Login({ providers }) {
                         <div className="mt-6 grid grid-cols-2 gap-4">
                             {Object.values(providers)
                                 .filter((provider) =>
-                                    ['Facebook', 'Twitch', 'Google', 'LinkedIn'].includes(provider.name)
+                                    ['Facebook', 'Twitch', 'Google', 'Zoho'].includes(provider.name)
                                 )
                                 .map((provider) => (
                                     <div
@@ -113,12 +147,15 @@ export default function Login({ providers }) {
                                                     ? 'bg-[#DB4437]'
                                                     : provider.name === 'LinkedIn'
                                                         ? 'bg-[#0A66C2]'
-                                                        : !provider.name
-                                                            ? null
-                                                            : ''
+                                                        : provider.name === 'Zoho'
+                                                            ? 'bg-[#E42527]'
+                                                            : !provider.name
+                                                                ? null
+                                                                : ''
                                             }`}
                                     >
                                         <button
+                                            name={providerId}
                                             className='flex px-4 justify-center items-center'
                                             onClick={(e) => { handleClick(e, provider) }}
                                         >

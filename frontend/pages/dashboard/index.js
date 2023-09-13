@@ -1,7 +1,5 @@
 import { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { useRouter } from 'next/navigation';
-import { useSession } from "next-auth/react";
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { getServerSession } from "next-auth/next";
 

@@ -7,6 +7,7 @@ const benefits = [
   "Free to Join",
   "Work from anywhere",
   "No Tier Limit",
+  "50% Referral fee"
 ];
 
 export default function Affiliate({ openModal, setOpenModal }) {
