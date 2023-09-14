@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { getProviders, signIn } from "next-auth/react";
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function Login({ providers }) {
     const [errors, setErrors] = useState('');
-    const router = useRouter();
     const [email, setEmail] = useState('');
     const [providerId, setProviderId] = useState('');
     const [registerMessage, setRegisterMessage] = useState('');
@@ -26,9 +23,9 @@ export default function Login({ providers }) {
         }
     };
 
-    // const callbackUrl = isProduction
-    //     ? `https://forgedmart.com/dashboard`
-    //     : `http://localhost:3000/dashboard`;
+    const callbackUrl = isProduction
+        ? "https://forgedmart.com/login?callbackUrl=/dashboard"
+        : "http://localhost:3000/login?callbackUrl=/dashboard";
 
     const handleClick = async (e, provider) => {
         e.preventDefault();
@@ -44,17 +41,29 @@ export default function Login({ providers }) {
                 console.log("There is an issue");
             }
 
+            const requestBody = {
+                // providerId: provider.id,
+                callbackUrl: callbackUrl,
+                email: email,
+            };
+            const emailRequestBody = {
+                callbackUrl: callbackUrl,
+                email: email,
+            };
+
             if (provider) {
                 await signIn(provider.id, {
-                    callbackUrl: 'http://localhost:3000/dashboard',
+                    callbackUrl: callbackUrl,
                 });
+
                 setProviderId(provider);
+
                 const response = await fetch(baseUrl, {
                     method: "POST",
                     headers: {
                         'content-type': "application/json",
                     },
-                    body: `${provider.id}`
+                    body: JSON.stringify({ provider }),
                 })
                 const data = await response.json();
             } else if (email) {

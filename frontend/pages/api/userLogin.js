@@ -1,14 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import { MailerSend } from "mailersend";
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getServerSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    // const 
+    const session = await getServerSession(req, res, authOptions)
+
+    console.log("from userLogin", session);
+
+
+
     if (req.method === "POST") {
         try {
-            const { email, provider } = req.body;
+            const { email } = req.body;
+
 
             if (email) {
                 const existingUser = await prisma.user.findUnique({

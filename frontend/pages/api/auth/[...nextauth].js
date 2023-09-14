@@ -7,7 +7,6 @@ import FreshbooksProvider from "next-auth/providers/freshbooks";
 import ZohoProvider from "next-auth/providers/zoho";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import sendVerificationEmail from "./emailVerification";
 
 const prisma = new PrismaClient();
 
@@ -67,10 +66,13 @@ export const authOptions = {
     },
     session: {
         jwt: false,
+        maxAge: 30 * 24 * 60 * 60,
+        // updateAge: 10 * 60 * 60 * 24, // Use to update database with Age extension
     },
     database: process.env.DATABASE_URL,
     callbacks: {
-        async signIn({ user, account, email }) {
+        async signIn({ user, account, profile, email }) {
+            console.log("from [...nextauth.js]", user, profile);
 
             const userExists = await prisma.user.findUnique({
                 where: {
@@ -83,6 +85,16 @@ export const authOptions = {
                 return "/login";
             }
         },
+        async session({ session, token }) {
+            if (token) {
+                session.accessToken = token.accessToken;
+            }
+            return session;
+        },
+        // async redirect({ url, baseUrl }) {
+        //     //return something like 'baseUrl' if user is signed in
+        // },
+
     },
 }
 
