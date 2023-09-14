@@ -37,7 +37,7 @@ export default function Features() {
                         ))}
                     </dl>
                 </div>
-                <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
+                <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8 lg:mt-[-656px]">
                     <img
                         src="/images/creatorplat.jpg"
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
