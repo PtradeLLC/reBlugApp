@@ -12,7 +12,6 @@ export default async function handler(req, res) {
                 const existingUser = await prisma.user.findUnique({
                     where: {
                         email: email,
-                        // id: userId,
                     },
                 });
 

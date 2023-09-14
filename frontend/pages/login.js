@@ -52,7 +52,7 @@ export default function Login({ providers }) {
                 const response = await fetch(baseUrl, {
                     method: "POST",
                     headers: {
-                        "Content‐Type": "application/json",
+                        'content-type': "application/json",
                     },
                     body: `${provider.id}`
                 })
@@ -61,7 +61,7 @@ export default function Login({ providers }) {
                 const res = await fetch(baseUrl, {
                     method: "POST",
                     headers: {
-                        "Content‐Type": "application/json",
+                        'content-type': "application/json",
                     },
                     body: emailData
                 })
