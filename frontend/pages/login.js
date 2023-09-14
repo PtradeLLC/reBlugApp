@@ -26,9 +26,9 @@ export default function Login({ providers }) {
         }
     };
 
-    const callbackUrl = isProduction
-        ? `https://forgedmart.com/dashboard`
-        : `http://localhost:3000/dashboard`;
+    // const callbackUrl = isProduction
+    //     ? `https://forgedmart.com/dashboard`
+    //     : `http://localhost:3000/dashboard`;
 
     const handleClick = async (e, provider) => {
         e.preventDefault();
@@ -40,15 +40,13 @@ export default function Login({ providers }) {
                 setErrors("Please enter email")
             } else if (email) {
                 console.log("email is sent");
-                // setRegisterMessage("📨 Please check your email to continue.");
-                // setEmail("");
             } else {
                 console.log("There is an issue");
             }
 
             if (provider) {
                 await signIn(provider.id, {
-                    callbackUrl: callbackUrl,
+                    callbackUrl: 'https://forgedmart.com/dashboard',
                 });
                 setProviderId(provider);
                 const response = await fetch(baseUrl, {
