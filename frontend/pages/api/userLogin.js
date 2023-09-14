@@ -43,11 +43,11 @@ export default async function handler(req, res) {
                     const response = await sender.email.send(emailParams);
                     console.log("Response", response);
 
-                    if (response.status !== 200) {
-                        console.log(response.status);
-                        throw new Error(`Failed to send email. Status: ${response.status}`);
-                    } else {
+                    if (response.status === 200) {
                         res.status(201).json({ message: "User Created" });
+
+                    } else {
+                        throw new Error(`Failed to send email. Status: ${response.status}`);
                     }
                 } else {
                     res.status(200).json({ message: "User already exists" });
