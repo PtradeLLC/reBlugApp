@@ -40,6 +40,7 @@ export default async function handler(req, res) {
                         },
                     };
 
+
                     const response = await sender.email.send(emailParams);
                     console.log("Response", response);
 
@@ -69,16 +70,6 @@ export default async function handler(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "./auth/[...nextauth]";
 // import { PrismaClient } from "@prisma/client";
 // import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
@@ -88,7 +79,7 @@ export default async function handler(req, res) {
 //     if (req.method === "POST") {
 //         // const session = await getServerSession(req, res, authOptions);
 //         try {
-//             const { email, provider, callbackUrl } = req.body;
+//             const { email, provider } = req.body;
 //             if (email) {
 //                 // Check if the user already exists
 //                 const existingUser = await prisma.user.findUnique({
@@ -96,6 +87,10 @@ export default async function handler(req, res) {
 //                         email: email,
 //                     },
 //                 });
+
+//                 if (existingUser) {
+//                     res.status(200).json({ message: "User already exists" });
+//                 }
 
 //                 if (!existingUser) {
 //                     // User doesn't exist, create a new one
@@ -122,28 +117,51 @@ export default async function handler(req, res) {
 //                         }
 //                     });
 
-//                     const senderData = {
-//                         "domain_id": `${process.env.NEXT_PUBLIC_DOMAIN_ID}`,
-//                         "email": `${email}`,
-//                         "name": `${email}`,
-//                         "personal_note": `Hi ${email}, please confirm this email by clicking on the link below.`,
-//                         "reply_to_name": "ForgedMart Support",
-//                         "reply_to_email": "support@forgedmart.com",
-//                         "add_note": true,
-//                     };
-//                     // Create new user
-
-//                     const mailerSendUrl = "https://api.mailersend.com/v1/email"
-
-//                     // MAILSENDER CALL
-//                     const response = await fetch(mailerSendUrl, {
-//                         method: "POST",
-//                         headers: {
-//                             "Content-Type": "application/json",
-//                             Authorization: `Bearer ${process.env.MAILERSEND_API_KEY}`
-//                         },
-//                         body: JSON.stringify(senderData)
+//                     const sender = new MailerSend({
+//                         apiKey: process.env.MAILERSEND_API_KEY,
 //                     });
+
+//                     const emailParams = {
+//                         to: [{ email: email }],
+//                         subject: "Confirmation Email",
+//                         text: `Hi, please confirm your email by clicking on the link below. ${redirectUrl}`,
+//                         "html": `<b> Hi, please confirm your email by clicking on the link: ${redirectUrl}</b>`,
+//                         from: {
+//                             name: "✨ForgedMart Support",
+//                             email: "support@forgedmart.com",
+//                         },
+//                     };
+
+//                     // const senderData = {
+//                     //     "domain_id": `${process.env.NEXT_PUBLIC_DOMAIN_ID}`,
+//                     //     "email": `${email}`,
+//                     //     "name": `${email}`,
+//                     //     "personal_note": `Hi, please confirm your email by clicking on the link below.`,
+//                     //     "reply_to_name": "ForgedMart Support",
+//                     //     "reply_to_email": "support@forgedmart.com",
+//                     //     "html": `<b> Hi, please confirm your email by clicking on the link:</b>`,
+//                     //     "add_note": true,
+//                     //     "from": {
+//                     //         "name": "✨ForgedMart Support",
+//                     //         "email": "support@forgedmart.com",
+//                     //     },
+//                     // };
+
+//                     const response = await sender.email.send(emailParams);
+
+
+//                     // Create new user
+//                     // const mailerSendUrl = "https://api.mailersend.com/v1/email"
+
+//                     // // MAILSENDER CALL
+//                     // const response = await fetch(mailerSendUrl, {
+//                     //     method: "POST",
+//                     //     headers: {
+//                     //         'content-type': "application/json",
+//                     //         Authorization: `Bearer ${process.env.MAILERSEND_API_KEY}`
+//                     //     },
+//                     //     body: JSON.stringify(senderData)
+//                     // });
 
 //                     if (response.ok) {
 //                         res.status(201).json({ message: 'User Created' });
@@ -187,3 +205,43 @@ export default async function handler(req, res) {
 //         }
 //     }
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
