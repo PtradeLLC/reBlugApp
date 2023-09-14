@@ -46,7 +46,7 @@ export default function Login({ providers }) {
 
             if (provider) {
                 await signIn(provider.id, {
-                    callbackUrl: 'https://forgedmart.com/dashboard',
+                    callbackUrl: 'http://localhost:3000/dashboard',
                 });
                 setProviderId(provider);
                 const response = await fetch(baseUrl, {
@@ -57,7 +57,6 @@ export default function Login({ providers }) {
                     body: `${provider.id}`
                 })
                 const data = await response.json();
-                console.log("Provider", data);
             } else if (email) {
                 const res = await fetch(baseUrl, {
                     method: "POST",
@@ -126,7 +125,7 @@ export default function Login({ providers }) {
                                 <div className="w-full border-t border-gray-200" />
                             </div>
                             <div className="relative flex justify-center text-sm font-medium leading-6">
-                                <span className="bg-white px-6 text-gray-900">or continue as Creator or Influencer</span>
+                                <span className="bg-white px-6 text-gray-900">or continue with these providers</span>
                             </div>
                         </div>
                         <div className="mt-6 grid grid-cols-2 gap-4">
