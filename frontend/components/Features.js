@@ -4,7 +4,7 @@ const features = [
     { name: 'As Marketing Tool', description: 'Our chatbot can generate leads, provide product information, and answer questions about a company`s products or services.' },
     { name: 'As Sales Tool', description: 'Our chatbot can be used to close sales by providing product demonstrations, and offering discounts or cross-promotions.' },
     { name: 'Reporting', description: ' It`s important to track the results of your email marketing campaigns so you can see what`s working and what`s not. Via our dashboard you can track open rates, click-through rates, and conversion rates and other metrics even in real time. ' },
-    { name: 'Advantages of Chatbot', description: 'Our tool offer a number of advantages over traditional customer service channels, such as 24/7 availability, scalability, SMS marketing, and cost-effectiveness.' },
+    { name: 'Advantages of Chatbot', description: 'Our tool offer a number of advantages over traditional customer service channels, such as 24/7 availability, scalability, SMS marketing, cross promotion, and cost-effectiveness.' },
     { name: 'Cross Marketing', description: 'If this feature is enabled, our chatbot will recommend your product/services (within same category) to email recipients on page exit. This helps boost sales and subscriptions.' },
     { name: 'Who is this for', description: 'Marketing agencies, Startup companies, eCommerce brands, Social media Influencers and Creators.' },
 ]
@@ -17,16 +17,35 @@ export default function Features() {
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Product and Features</h2>
                     <h3 className="mt-4 text-gray-500">
-                        Embed conversational AI chatbot into your emails and newsletters.
-                        Help customers, sell products and service in real‑time within email messages.
+                        Email Conversational Tool is an AI-powered marketing tool that helps businesses improve their email
+                        communication by embedding a chatbot into their emails and newsletters.
+                        This allows email recipients to interact with a knowledge-based chatbot that can answer their questions
+                        and provide support, help with fundraising, sales, marketing, and more.
                     </h3>
+                    <p className="mt-4 text-gray-500">Here is an example of how Email Conversational Tool can be used:</p>
+                    <ul className="list-disc mt-4 text-gray-500">
+                        <li>A non-profit organization could use Email Conversational Tool to embed a chatbot into their donation email.
+                            The chatbot could answer questions about the organization's mission and programs, and help donors make a
+                            donation.
+                        </li>
+                        <li>An e-commerce company could use Email Conversational Tool to embed a chatbot into their product newsletter.
+                            The chatbot could answer questions about the company's products, help customers place an order, and track
+                            their shipments.
+                        </li>
+                        <li>A software company could use Email Conversational Tool to embed a chatbot into their customer support email.
+                            The chatbot could answer questions about the company's software, help customers troubleshoot problems, and
+                            create support tickets.
+                        </li>
+                    </ul>
+
                     <p className="mt-4 text-gray-500">
-                        With our Conversational Email Tool your email recipients can chat with an AI chatbot within the body of your email messages to get answers about your brand, products, and services.
-                        The chatbot is powered by your knowledge-based documents to provide information about your company, uploaded products and services. Recipients can get the information and the help they need without having to contact your customer support team if they choose not to or reach out to human counterparts if needed.
-                        Upload your product information, and let AI chatbot close sales and subscriptions on your behalf with our conversational AI commerce technology.
-                        Integrate and connect with your existing apps and tools you know and love.
+                        Email Conversational Tool is a powerful tool that can help businesses of all sizes improve their email communication
+                        and achieve their marketing goals.
                     </p>
-                    <p className="mt-4 text-gray-500">Getting started with ForgedMart is easy: Import your data from spreadsheet or your CMS, or grow your email list with us from scratch.</p>
+                    <p className="mt-4 text-gray-500">Getting started is easy: Sign up or login, import your existing contact list from
+                        a spreadsheet/connect to your CMS or grow your email list with us from scratch, upload your knowledge-base document.
+                        It is as simple as that.
+                    </p>
 
                     <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
                         {features.map((feature) => (
