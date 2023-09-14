@@ -65,6 +65,10 @@ export const authOptions = {
         error: '/auth/error', // Error code passed in query string as ?error=
         verifyRequest: '/auth/verify-request', // (used for check email message)
     },
+    session: {
+        jwt: false,
+    },
+    database: process.env.DATABASE_URL,
     callbacks: {
         async signIn({ user, account, email }) {
 

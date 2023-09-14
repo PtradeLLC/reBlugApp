@@ -1,9 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { MailerSend } from "mailersend";
+import { getServerSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
+    // const 
     if (req.method === "POST") {
         try {
             const { email, provider } = req.body;
@@ -27,7 +29,7 @@ export default async function handler(req, res) {
                         apiKey: process.env.MAILERSEND_API_KEY,
                     });
 
-                    const redirectUrl = "https://forgedmart.com/dashboard"
+                    const redirectUrl = "https://forgedmart.com/login?callbackUrl=/dashboard"
 
                     const emailParams = {
                         to: [{ email: email }],
