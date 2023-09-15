@@ -42,20 +42,6 @@ export const authOptions = {
             clientId: process.env.TWITCH_CLIENT_ID,
             clientSecret: process.env.TWITCH_CLIENT_SECRET
         }),
-        // SalesforceProvider({
-        //     clientId: process.env.SALESFORCE_CLIENT_ID,
-        //     clientSecret: process.env.SALESFORCE_CLIENT_SECRET,
-        // }),
-        // HubspotProvider({
-        //     clientId: process.env.HUBSPOT_CLIENT_ID,
-        //     clientSecret: process.env.HUBSPOT_CLIENT_SECRET
-        // }),
-        // LinkedInProvider({
-        //     clientId: process.env.LINKEDIN_CLIENT_ID,
-        //     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-        //     scope: "openid, profile, email",
-        // }),
-        // ...add more providers here if needed
     ],
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
@@ -72,11 +58,10 @@ export const authOptions = {
     database: process.env.DATABASE_URL,
     callbacks: {
         async signIn({ user, account, profile, email }) {
-            console.log("from [...nextauth.js]", user, profile);
 
             const userExists = await prisma.user.findUnique({
                 where: {
-                    email: email
+                    id: `${user.id}`
                 }
             });
             if (userExists) {

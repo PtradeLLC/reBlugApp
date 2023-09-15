@@ -6,7 +6,7 @@ const features = [
     { name: 'Reporting', description: ' It`s important to track the results of your email marketing campaigns so you can see what`s working and what`s not. Via our dashboard you can track open rates, click-through rates, and conversion rates and other metrics even in real time. ' },
     { name: 'Advantages of Chatbot', description: 'Our tool offer a number of advantages over traditional customer service channels, such as 24/7 availability, scalability, SMS marketing, cross promotion, and cost-effectiveness.' },
     { name: 'Cross Marketing', description: 'If this feature is enabled, our chatbot will recommend your product/services (within same category) to email recipients on page exit. This helps boost sales and subscriptions.' },
-    { name: 'Who is this for', description: 'Marketing agencies, Startup companies, eCommerce brands, Social media Influencers and Creators.' },
+    { name: 'Who is this for', description: 'Businesses, Startup companies, eCommerce brands, Social media Influencers and Creators.' },
 ]
 
 export default function Features() {
@@ -36,6 +36,24 @@ export default function Features() {
                             The chatbot could answer questions about the company's software, help customers troubleshoot problems, and
                             create support tickets.
                         </li>
+                        <li>Businesses can use Email Conversational Tool in a variety of ways to improve their email marketing
+                            campaigns and support their clients.
+                        </li>
+                    </ul>
+                    <p className="mt-4 text-gray-500 font-semibold">This tool addresses these pain points for businesses and organizations in multiple industries</p>
+                    <ul className="list-disc mt-4 text-gray-500">
+                        <li><span className="text-gray-500 font-semibold">Generate leads:</span> Businesses can use Email Conversational Tool to generate leads for their clients by
+                            embedding a chatbot into their email marketing campaigns. The chatbot can ask potential leads qualifying questions and collect their contact information.
+                        </li>
+                        <li><span className="text-gray-500 font-semibold">Nurture leads:</span> Businesses can use Email Conversational Tool to nurture leads for their clients by providing them with personalized content and support.
+                            The chatbot can answer their questions, send them relevant content, and guide them through the sales funnel.
+                        </li>
+                        <li><span className="text-gray-500 font-semibold">Provide customer support:</span> Businesses can use Email Conversational Tool to provide customer support for their clients. The chatbot can answer customer
+                            questions, resolve issues, and collect feedback.
+                        </li>
+                        <li><span className="text-gray-500 font-semibold">Collect feedback:</span> Businesses can use Email Conversational Tool to collect feedback from their clients. The chatbot can ask customers about their
+                            satisfaction with the services and products, and collect their suggestions for improvement.
+                        </li>
                     </ul>
 
                     <p className="mt-4 text-gray-500">
@@ -56,7 +74,7 @@ export default function Features() {
                         ))}
                     </dl>
                 </div>
-                <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8 lg:mt-[-656px]">
+                <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8 lg:mt-[-1356px]">
                     <img
                         src="/images/creatorplat.jpg"
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."

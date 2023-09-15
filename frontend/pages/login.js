@@ -24,8 +24,8 @@ export default function Login({ providers }) {
     };
 
     const callbackUrl = isProduction
-        ? "https://forgedmart.com/login?callbackUrl=/dashboard"
-        : "http://localhost:3000/login?callbackUrl=/dashboard";
+        ? "https://forgedmart.com/dashboard"
+        : "http://localhost:3000/dashboard";
 
     const handleClick = async (e, provider) => {
         e.preventDefault();
@@ -33,8 +33,10 @@ export default function Login({ providers }) {
             const baseUrl = `/api/userLogin`;
             const emailData = JSON.stringify({ email });
 
+            console.log(provider);
+
             if (!email) {
-                setErrors("Please enter email")
+                setErrors("Please enter an email")
             } else if (email) {
                 console.log("email is sent");
             } else {
@@ -61,7 +63,7 @@ export default function Login({ providers }) {
                 const response = await fetch(baseUrl, {
                     method: "POST",
                     headers: {
-                        'content-type': "application/json",
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ provider }),
                 })
@@ -70,7 +72,7 @@ export default function Login({ providers }) {
                 const res = await fetch(baseUrl, {
                     method: "POST",
                     headers: {
-                        'content-type': "application/json",
+                        "Content-Type": "application/json",
                     },
                     body: emailData
                 })
