@@ -25,7 +25,10 @@ export default function Register() {
         try {
             if (provider) {
                 nhost.auth.signIn({
-                    provider: provider
+                    provider: provider,
+                    options: {
+                        redirectTo: "https://forgedmart.com/dashboard",
+                    },
                 });
             }
 

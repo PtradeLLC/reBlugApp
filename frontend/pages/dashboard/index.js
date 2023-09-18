@@ -2,8 +2,6 @@ import { Fragment, useState, createContext, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { getServerSession } from "next-auth/next";
 import { useAuthenticationStatus } from '@nhost/nextjs'
 
 const navigation = [
