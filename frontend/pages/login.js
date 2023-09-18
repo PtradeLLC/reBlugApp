@@ -4,12 +4,18 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from './api/auth/[...nextauth]'
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
+import { NhostClient } from '@nhost/nhost-js'
 
 export default function Login({ providers, session }) {
     const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [providerId, setProviderId] = useState('');
     const [registerMessage, setRegisterMessage] = useState('');
+
+    const nhost = new NhostClient({
+        subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
+        region: process.env.NEXT_PUBLIC_NHOST_REGION
+    })
 
     const isProduction = process.env.NODE_ENV === 'production';
 
@@ -34,52 +40,21 @@ export default function Login({ providers, session }) {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
-            const emailData = JSON.stringify({ email });
-
-            if (!email) {
-                setErrors("Please enter an email")
-            } else if (email) {
-                console.log("email is sent");
-            } else {
-                console.log("There is an issue");
-            }
-
-            const requestBody = {
-                // providerId: provider.id,
-                callbackUrl: callbackUrl,
-                email: email,
-            };
-            const emailRequestBody = {
-                callbackUrl: callbackUrl,
-                email: email,
-            };
-
             if (provider) {
-                await signIn(provider.id, {
-                    callbackUrl: callbackUrl,
+                nhost.auth.signIn({
+                    provider: provider
                 });
 
-                setProviderId(provider);
+                // setProviderId(provider);
 
-                const response = await fetch(baseUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ provider }),
-                })
-                const data = await response.json();
-            } else if (email) {
-                const res = await fetch(baseUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: emailData
-                })
-                const data = await res.json();
-                setRegisterMessage("📨 Please check your email to continue.");
-                setEmail("");
+                // const response = await fetch(baseUrl, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify({ provider }),
+                // })
+                // const data = await response.json();
             }
         } catch (error) {
             console.error(error.message);
@@ -91,7 +66,7 @@ export default function Login({ providers, session }) {
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-12 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Sign up or sign in to your account
+                    Sign in to your account
                 </h2>
             </div>
 
