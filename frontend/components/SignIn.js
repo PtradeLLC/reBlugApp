@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSignInEmailPassword } from '@nhost/nextjs';
+import { useSignInEmailPassword, useResetPassword } from '@nhost/nextjs';
 import Link from 'next/link';
 import Loading from './Loading';
+import PasswordReset from './PassReset';
 
 const SignIn = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [open, setOpen] = useState(false);
+
 
     const router = useRouter()
 
@@ -24,6 +27,13 @@ const SignIn = () => {
     }
 
     const disableForm = isLoading || needsEmailVerification
+
+    const openModal = (e) => {
+        e.preventDefault();
+        setOpen(true);
+    }
+
+
 
     return (
         <div className="">
@@ -66,16 +76,23 @@ const SignIn = () => {
 
                             {isError ? <p className="bg-red-200 rounded text-center m-auto px-2">{error?.message}</p> : null}
                         </form>
+                        <div className='mt-2 text-right'>
+                            <button type='button' onClick={openModal} >Reset password</button>
+                        </div>
                     </>
                 )}
             </div>
-
-            <p className="text-right mt-3">
-                No account yet?{' '}
-                <Link href="/register">
-                    Sign up
-                </Link>
-            </p>
+            <div>
+                <p className="text-right mt-3">
+                    No account yet?{' '}
+                    <Link href="/register">
+                        Sign up
+                    </Link>
+                </p>
+            </div>
+            <div>
+                <PasswordReset open={open} setOpen={setOpen} />
+            </div>
         </div>
     )
 }

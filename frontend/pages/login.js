@@ -4,14 +4,12 @@ import SignIn from '../components/SignIn';
 import { NhostClient } from '@nhost/nhost-js';
 import { useProviderLink } from '@nhost/nextjs';
 
-
-const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
-
 export default function Login() {
     const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [providerId, setProviderId] = useState('');
     const [registerMessage, setRegisterMessage] = useState('');
+    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
@@ -22,8 +20,6 @@ export default function Login() {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
-
-
             if (provider) {
                 nhost.auth.signIn({
                     provider: provider
