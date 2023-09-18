@@ -53,7 +53,7 @@ export default function Login() {
                 </h2>
             </div>
             <div className='flex justify-center items-center'>
-                {Loading ? <span className="bg-green-200 rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span> : null}
+                {isLoading ? <span className="bg-green-200 rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span> : null}
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">

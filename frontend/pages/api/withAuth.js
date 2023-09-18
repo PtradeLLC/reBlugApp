@@ -10,14 +10,13 @@ const withAuth = function (Component) {
         if (isLoading) {
             return (
                 <div className="">
-                    <Loading />
+                    <span className="bg-green-200 flex justify-center items-center rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span>
                 </div>
             )
         }
 
         if (!isAuthenticated) {
-            router.push('/login')
-            return null
+            router.push('/login');
         }
 
         return <Component {...props} />
