@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
 import { NhostClient } from '@nhost/nhost-js';
+import { useProviderLink } from '@nhost/nextjs';
+
 
 const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
 
@@ -16,16 +18,12 @@ export default function Login() {
         region: process.env.NEXT_PUBLIC_NHOST_REGION
     });
 
-    const isProduction = process.env.NODE_ENV === 'production';
-
-    const callbackUrl = isProduction
-        ? "https://forgedmart.com/dashboard"
-        : "http://localhost:3000/dashboard";
-
     const handleClick = async (e, provider) => {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
+
+
             if (provider) {
                 nhost.auth.signIn({
                     provider: provider

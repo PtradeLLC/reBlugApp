@@ -2,7 +2,6 @@ import { Fragment, useState, createContext, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
-import { useAuthenticationStatus } from '@nhost/nextjs'
 
 const navigation = [
     { name: "Home", href: "#", current: true },

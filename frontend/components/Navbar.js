@@ -5,21 +5,33 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSignOut } from '@nhost/nextjs'
 import { useRouter } from 'next/navigation';
-import { useSession, signIn, signOut } from "next-auth/react";
+import {
+  getNhostSession,
+  NhostSession,
+  useAccessToken,
+  useAuthenticated,
+  useUserData
+} from '@nhost/nextjs'
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
-export default function Navbar({ children = null }) {
+export default function Navbar({ nhostSession }) {
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
   const { signOut } = useSignOut()
   const router = useRouter();
-  const session = ""
+  const isAuthenticated = useAuthenticated()
+  const user = useUserData()
+  const accessToken = useAccessToken()
 
+  if (!isAuthenticated) {
+    console.log("");
+  }
 
+  console.log("Sess", nhostSession);
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -29,7 +41,7 @@ export default function Navbar({ children = null }) {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="sm:mt-2 pr-16">
-                  <Link href={session ? `/dashboard` : `/`}>
+                  <Link href={isAuthenticated ? `/dashboard` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -40,14 +52,6 @@ export default function Navbar({ children = null }) {
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  {session && (
-                    <Link
-                      href={`/dashboard`}
-                      className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
-                    >
-                      Dashboard
-                    </Link>
-                  )}
                   <Link
                     href={"/creators"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
@@ -73,11 +77,7 @@ export default function Navbar({ children = null }) {
                 {/* Profile dropdown */}
                 {
                   <Menu as="div" className="relative ml-3">
-                    {session ? (
-                      <button onClick={signOut}>Sign out</button>
-                    ) : (
-                      <Link href={"/login"}>Sign In | Register</Link>
-                    )}
+                    {isAuthenticated ? <button onClick={signOut}>Sign out</button> : <Link href={"/login"}>Sign In | Register</Link>}
                   </Menu>
                 }
               </div>
@@ -112,15 +112,7 @@ export default function Navbar({ children = null }) {
                 Contact
               </Disclosure.Button>
               <Disclosure.Button as="button">
-                {
-                  <Menu as="div" className="relative ml-3">
-                    {session ? (
-                      <button onClick={() => signOut()}>Sign out</button>
-                    ) : (
-                      <Link href={"/login"}>Sign In | Register</Link>
-                    )}
-                  </Menu>
-                }
+                {isAuthenticated ? <button onClick={signOut}>Sign out</button> : <Link href={"/login"}>Sign In | Register</Link>}
               </Disclosure.Button >
             </div >
           </Disclosure.Panel >
@@ -128,4 +120,16 @@ export default function Navbar({ children = null }) {
       )}
     </Disclosure >
   );
+}
+
+export const getServerSideProps = async (context) => {
+  const nhostSession = await getNhostSession(
+    { subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN, region: process.env.NEXT_PUBLIC_NHOST_REGION },
+    context
+  )
+  return {
+    props: {
+      nhostSession
+    }
+  }
 }
