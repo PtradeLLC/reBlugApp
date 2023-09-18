@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getProviders, signIn, useSession } from "next-auth/react"
+import SignUp from '../components/SignUp';
 
 export default function Register({ providers }) {
     const [name, setName] = useState('');
@@ -13,7 +14,6 @@ export default function Register({ providers }) {
     const [errors, setErrors] = useState('');
     const router = useRouter();
     const [registerMessage, setRegisterMessage] = useState("");
-    const { data: session } = useSession();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -74,9 +74,10 @@ export default function Register({ providers }) {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+                    <SignUp />
                     <form className="space-y-6" onSubmit={handleSubmit}>
-                        {/* Email Registration */}
-                        <div>
+
+                        {/* <div>
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                                 Brand | Agency Name
                             </label>
@@ -92,8 +93,8 @@ export default function Register({ providers }) {
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
-                        </div>
-                        <div>
+                        </div> */}
+                        {/* <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
                             </label>
@@ -109,10 +110,10 @@ export default function Register({ providers }) {
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Password input */}
-                        <div>
+                        {/* <div>
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                 Password
                             </label>
@@ -128,22 +129,22 @@ export default function Register({ providers }) {
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Sign-in button */}
-                        <div className="flex flex-col items-end justify-end">
+                        {/* <div className="flex flex-col items-end justify-end">
                             <button className="flex w-full items-center justify-center gap-3 rounded-md bg-slate-200 px-3 py-1.5 text-black border shadow-md outline-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]" type='submit'>
                                 <Image src="/images/OtherVar.png" width={30} height={30} alt='Login with ForgedMart' />  Sign Up
                             </button>
                             <span className='text-sm mt-4'><Link href="/login">Got an account? Login here</Link></span>
-                        </div>
-                        {errors ?
+                        </div> */}
+                        {/* {errors ?
                             (<div className='bg-red-200 rounded text-center m-auto px-2'>
                                 <p>{errors}</p>
                             </div>) : registerMessage ? (<div className='bg-green-200 rounded text-center m-auto px-2'>
                                 <p>{registerMessage}</p>
                             </div>) : null
-                        }
+                        } */}
 
                         {/* Continue with social buttons */}
                         <div>

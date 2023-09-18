@@ -15,7 +15,8 @@ export default function Navbar() {
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
   const router = useRouter();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const session = ""
 
 
 

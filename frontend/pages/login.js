@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { getProviders, signIn } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from './api/auth/[...nextauth]'
 import Image from 'next/image';
+import SignIn from '../components/SignIn';
 
-export default function Login({ providers }) {
+export default function Login({ providers, session }) {
     const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [providerId, setProviderId] = useState('');
@@ -32,8 +35,6 @@ export default function Login({ providers }) {
         try {
             const baseUrl = `/api/userLogin`;
             const emailData = JSON.stringify({ email });
-
-            console.log(provider);
 
             if (!email) {
                 setErrors("Please enter an email")
@@ -96,8 +97,9 @@ export default function Login({ providers }) {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-                    <div className="space-y-6">
-                        {/* Email input */}
+                    <SignIn />
+                    {/* <div className="space-y-6">
+
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -127,7 +129,7 @@ export default function Login({ providers }) {
                                 <p>{registerMessage}</p>
                             </div>) : null
                         }
-                    </div>
+                    </div> */}
 
                     {/* Continue with social buttons */}
                     <div>
@@ -182,12 +184,13 @@ export default function Login({ providers }) {
 }
 
 export async function getServerSideProps(context) {
-    // const session = await getServerSession(context.req, context.res, authOptions);
+    const session = await getServerSession(context.req, context.res, authOptions);
 
     const providers = await getProviders();
 
     return {
         props: {
+            session,
             providers: providers ?? []
         },
     }
