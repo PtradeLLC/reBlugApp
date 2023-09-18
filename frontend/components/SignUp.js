@@ -97,7 +97,7 @@ const SignUp = () => {
                             {isLoading ? <Loading size="sm" /> : 'Create account'}
                         </button>
 
-                        {isError ? <p className="">{error?.message}</p> : null}
+                        {isError ? <p className="bg-red-200 rounded text-center m-auto px-2">{error?.message}</p> : null}
                     </form>
                 )}
             </div>

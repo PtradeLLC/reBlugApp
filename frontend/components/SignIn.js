@@ -29,7 +29,7 @@ const SignIn = () => {
         <div className="">
             <div className="">
                 {needsEmailVerification ? (
-                    <p className="">
+                    <p className="bg-green-200 rounded text-center m-auto px-2">
                         Please check your mailbox and follow the verification link to verify your email.
                     </p>
                 ) : (
@@ -64,7 +64,7 @@ const SignIn = () => {
                                 {isLoading ? <Loading size="sm" /> : 'Sign in'}
                             </button>
 
-                            {isError ? <p className="">{error?.message}</p> : null}
+                            {isError ? <p className="bg-red-200 rounded text-center m-auto px-2">{error?.message}</p> : null}
                         </form>
                     </>
                 )}
