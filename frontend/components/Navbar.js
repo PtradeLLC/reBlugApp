@@ -3,6 +3,7 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { useSignOut } from '@nhost/nextjs'
 import { useRouter } from 'next/navigation';
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -11,11 +12,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
-export default function Navbar() {
+export default function Navbar({ children = null }) {
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
+  const { signOut } = useSignOut()
   const router = useRouter();
-  // const { data: session } = useSession();
   const session = ""
 
 
@@ -73,9 +74,9 @@ export default function Navbar() {
                 {
                   <Menu as="div" className="relative ml-3">
                     {session ? (
-                      <button onClick={() => signOut()}>Sign out</button>
+                      <button onClick={signOut}>Sign out</button>
                     ) : (
-                      <button onClick={() => signIn()}>Sign In | Register</button>
+                      <Link href={"/login"}>Sign In | Register</Link>
                     )}
                   </Menu>
                 }
@@ -116,7 +117,7 @@ export default function Navbar() {
                     {session ? (
                       <button onClick={() => signOut()}>Sign out</button>
                     ) : (
-                      <button onClick={() => signIn()}>Sign In | Register</button>
+                      <Link href={"/login"}>Sign In | Register</Link>
                     )}
                   </Menu>
                 }

@@ -4,9 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model Account {
@@ -44,10 +44,10 @@ model User {
   externalId    String?
   Username      String?
   firstName     String?
+  lastName      String?
   profileImage  String?
   role          Role        @default(USER)
   image         String?
-  lastName      String?
   emailVerified DateTime?
   email         String      @unique
   createdAt     DateTime    @default(now())

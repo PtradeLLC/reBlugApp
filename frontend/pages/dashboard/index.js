@@ -1,7 +1,10 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, createContext, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
+import withAuth from "../api/withAuth";
+import { useUserData } from '@nhost/nextjs';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { getServerSession } from "next-auth/next";
+import { useAuthenticationStatus } from '@nhost/nextjs'
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -88,11 +91,14 @@ const actions = [
     { id: 3, name: "KPI-THREE" },
 ];
 
-export default function Dashboard({ user }) {
+const UserContext = createContext();
+
+const Dashboard = function ({ children = null }) {
     const [errors, setErrors] = useState('');
+    const user = useUserData()
 
     return (
-        <>
+        <UserContext.Provider value={user}>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
                 <Popover as="header" className=" pb-24">
                     {({ open }) => (
@@ -203,7 +209,7 @@ export default function Dashboard({ user }) {
                                                         </div>
                                                         <div className="ml-3 min-w-0 flex-1">
                                                             <div className="truncate text-base font-medium text-gray-800">
-                                                                Hello {user?.name},
+                                                                Hello {user?.firstName},
                                                             </div>
                                                             <div className="truncate text-sm font-medium text-gray-500">
                                                                 {user?.email}
@@ -490,29 +496,31 @@ export default function Dashboard({ user }) {
                     </div>
                 </main>
             </div>
-        </>
+        </UserContext.Provider>
     );
 }
 
-export async function getServerSideProps(context) {
-    const session = await getServerSession(context.req, context.res, authOptions);
+export default withAuth(Dashboard);
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
-            },
-        }
-    }
+// export async function getServerSideProps(context) {
+//     const session = await getServerSession(context.req, context.res, authOptions);
 
-    const { user } = session;
+//     if (!session) {
+//         return {
+//             redirect: {
+//                 destination: '/login',
+//                 permanent: false,
+//             },
+//         }
+//     }
 
-    return {
-        props: {
-            user
-        },
-    }
-}
+//     const { user } = session;
+
+//     return {
+//         props: {
+//             user
+//         },
+//     }
+// }
 
 
