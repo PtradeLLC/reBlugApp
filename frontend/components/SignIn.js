@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSignInEmailPassword, useResetPassword } from '@nhost/nextjs';
+import { useSignInEmailPassword } from '@nhost/nextjs';
 import Link from 'next/link';
 import Loading from './Loading';
 import PasswordReset from './PassReset';
@@ -32,6 +32,8 @@ const SignIn = () => {
         e.preventDefault();
         setOpen(true);
     }
+
+    if (isError) console.log("ERR from SignIn", error);
 
 
 

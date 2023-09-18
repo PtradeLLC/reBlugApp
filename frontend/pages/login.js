@@ -38,6 +38,13 @@ export default function Login() {
         setLoading(true)
     };
 
+    if (isSuccess) {
+        router.push('/dashboard')
+        return null
+    }
+
+    if (isError) console.log("ERR from LogIn", error);
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
