@@ -21,17 +21,15 @@ function classNames(...classes) {
 export default function Navbar({ nhostSession }) {
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
-  const { signOut } = useSignOut()
+  const { signOut } = useSignOut();
   const router = useRouter();
-  const isAuthenticated = useAuthenticated()
-  const user = useUserData()
-  const accessToken = useAccessToken()
+  const isAuthenticated = useAuthenticated();
+  const user = useUserData();
+  const accessToken = useAccessToken();
 
   if (!isAuthenticated) {
     console.log("");
   }
-
-  console.log("Sess", nhostSession);
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">

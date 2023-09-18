@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
 import { NhostClient } from '@nhost/nhost-js';
-import { useProviderLink } from '@nhost/nextjs';
+import Loading from '../components/Loading';
+import { useSignInEmailPassword } from '@nhost/nextjs';
 
 export default function Login() {
     const [errors, setErrors] = useState('');
     const [email, setEmail] = useState('');
     const [providerId, setProviderId] = useState('');
     const [registerMessage, setRegisterMessage] = useState('');
-    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
+    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
+    const { isLoading, isSuccess, isError, error } = useSignInEmailPassword();
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
@@ -30,6 +32,18 @@ export default function Login() {
             setErrors(error.message);
         }
     };
+
+    if (isLoading) {
+        return (
+            <div className='flex justify-center items-center'>
+                <Loading size="lg" />
+            </div>
+        )
+    }
+
+    if (isError) {
+        return error;
+    }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
