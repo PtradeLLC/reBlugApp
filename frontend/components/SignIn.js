@@ -1,4 +1,5 @@
-import { useState } from 'react';
+//SignIn
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 import Link from 'next/link';
@@ -10,32 +11,49 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [open, setOpen] = useState(false);
 
-
-    const router = useRouter()
+    const router = useRouter();
 
     const { signInEmailPassword, isLoading, isSuccess, needsEmailVerification, isError, error } =
-        useSignInEmailPassword()
+        useSignInEmailPassword();
 
     const handleOnSubmit = async (e) => {
-        e.preventDefault()
-        await signInEmailPassword(email, password)
-    }
+        e.preventDefault();
 
-    if (isSuccess) {
-        router.push('/dashboard')
-        return null
-    }
+        try {
+            const data = await signInEmailPassword(email, password);
 
-    const disableForm = isLoading || needsEmailVerification
+            const baseUrl = `/api/userLogin`;
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                await response.json();
+                router.push('/dashboard');
+            } else {
+                console.error(`Error: ${response.statusText}`);
+                setErrors(`Error: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error(error.message);
+            setErrors(error.message);
+        }
+    };
+
+    const setErrors = (error) => {
+        return error.message
+    };
+
+    const disableForm = isLoading || needsEmailVerification;
 
     const openModal = (e) => {
         e.preventDefault();
         setOpen(true);
-    }
-
-    if (isError) console.log("ERR from SignIn", error);
-
-
+    };
 
     return (
         <div className="">
@@ -96,7 +114,7 @@ const SignIn = () => {
                 <PasswordReset open={open} setOpen={setOpen} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SignIn
+export default SignIn;

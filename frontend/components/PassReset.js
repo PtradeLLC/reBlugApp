@@ -30,8 +30,6 @@ export default function PasswordReset({ open, setOpen }) {
         }
     };
 
-    console.log(open);
-
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -77,7 +75,6 @@ export default function PasswordReset({ open, setOpen }) {
                                     />
                                 </div>
                                 <div className="mt-5 sm:mt-6">
-                                    {console.log(open)}
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"

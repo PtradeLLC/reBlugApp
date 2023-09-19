@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
-import { NhostClient } from '@nhost/nhost-js';
-import Loading from '../components/Loading';
+import { NhostClient, useProviderLink } from '@nhost/nhost-js';
+import LoadingComponent from '../components/Loading';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 
 export default function Login() {
-    const [errors, setErrors] = useState('');
-    const [email, setEmail] = useState('');
-    const [providerId, setProviderId] = useState('');
-    const [registerMessage, setRegisterMessage] = useState('');
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
-    const { isLoading, isSuccess, isError, error } = useSignInEmailPassword();
-    const [Loading, setLoading] = useState(false);
+    const { isLoading } = useSignInEmailPassword();
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
@@ -24,26 +19,33 @@ export default function Login() {
         try {
             const baseUrl = `/api/userLogin`;
             if (provider) {
+                // const { provider } = useProviderLink();
                 nhost.auth.signIn({
                     provider: provider
                 });
+            };
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${process.env.AUTH_TOKEN}`
+                },
+                body: JSON.stringify(provider)
+            })
+            if (response.ok) {
+                await response.json();
+            } else if (response.status === 401) {
+                console.error("Unauthorized: Check API Key or authentication.");
+                return;
+            } else {
+                console.error(`Error: ${response.statusText}`);
+                setErrors(`Error: ${response.statusText}`);
             }
         } catch (error) {
             console.error(error.message);
             setErrors(error.message);
         }
     };
-
-    if (isLoading) {
-        setLoading(true)
-    };
-
-    if (isSuccess) {
-        router.push('/dashboard')
-        return null
-    }
-
-    if (isError) console.log("ERR from LogIn", error);
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -53,7 +55,7 @@ export default function Login() {
                 </h2>
             </div>
             <div className='flex justify-center items-center'>
-                {isLoading ? <span className="bg-green-200 rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span> : null}
+                {isLoading ? <span className="bg-green-200 rounded text-center m-auto px-2"><LoadingComponent size="lg" />Loading...</span> : null}
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
