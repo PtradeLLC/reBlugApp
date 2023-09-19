@@ -19,7 +19,7 @@ export default function Login() {
         try {
             const baseUrl = `/api/userLogin`;
             if (provider) {
-                // const { provider } = useProviderLink();
+                const { provider } = useProviderLink();
                 nhost.auth.signIn({
                     provider: provider
                 });

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import SignUp from '../components/SignUp';
 import Image from 'next/image';
-import { NhostClient } from '@nhost/nhost-js';
+import { NhostClient, } from '@nhost/nhost-js';
 
 const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
 
@@ -24,14 +24,9 @@ export default function Register() {
         const baseUrl = "./api/email/emailLogic";
         try {
             if (provider) {
-                nhost.auth.signIn({
-                    provider: provider,
-                    options: {
-                        redirectTo: "https://forgedmart.com/dashboard",
-                    },
-                });
+                const { provider } = useProviderLink();
+                return provider;
             }
-
         } catch (error) {
             console.log("Error creating user account:", error);
             setErrors("An error occurred while creating your account.");
