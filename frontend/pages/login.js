@@ -8,6 +8,7 @@ import { useSignInEmailPassword } from '@nhost/nextjs';
 export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
     const { isLoading } = useSignInEmailPassword();
+    const [errors, setErrors] = useState("");
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,

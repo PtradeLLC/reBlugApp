@@ -18,7 +18,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
-export default function Navbar({ nhostSession, signOut }) {
+export default function Navbar({ signOut }) {
   const [errors, setErrors] = useState('');
   const [userId, setUserId] = useState("undefined");
   const router = useRouter();
