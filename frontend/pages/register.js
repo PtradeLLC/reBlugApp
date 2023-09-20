@@ -15,7 +15,7 @@ export default function Register() {
     const router = useRouter();
     const [registerMessage, setRegisterMessage] = useState("");
 
-    const { provider } = useProviderLink({ redirectTo: '/dashboard' });
+    const { provider } = useProviderLink();
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
         region: process.env.NEXT_PUBLIC_NHOST_REGION
