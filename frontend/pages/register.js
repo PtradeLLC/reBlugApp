@@ -3,17 +3,18 @@ import { useRouter } from 'next/router';
 import SignUp from '../components/SignUp';
 import Image from 'next/image';
 import { NhostClient, } from '@nhost/nhost-js';
-import { useProviderLink } from '@nhost/nextjs'
+import { useProviderLink } from '@nhost/nextjs';
 
-const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
+
 
 export default function Register() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [name, setName] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
     const router = useRouter();
     const [registerMessage, setRegisterMessage] = useState("");
+    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
 
     const { provider } = useProviderLink();
     const nhost = new NhostClient({
@@ -29,7 +30,7 @@ export default function Register() {
                 console.log("No provider");
             } else {
                 nhost.auth.signIn({
-                    provider: 'google'
+                    provider: provider,
                 })
             }
         } catch (error) {

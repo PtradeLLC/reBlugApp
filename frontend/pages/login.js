@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
-import { NhostClient, useProviderLink } from '@nhost/nhost-js';
 import LoadingComponent from '../components/Loading';
 import { useSignInEmailPassword } from '@nhost/nextjs';
+import { NhostClient, } from '@nhost/nhost-js';
+import { useProviderLink } from '@nhost/nextjs';
+
+
+const { provider } = useProviderLink();
 
 export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
@@ -15,16 +19,17 @@ export default function Login() {
         region: process.env.NEXT_PUBLIC_NHOST_REGION
     });
 
-    const handleClick = async (e, provider) => {
+    const handleClick = async (e) => {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
-            if (provider) {
-                const { provider } = useProviderLink();
+            if (!provider) {
+                console.log("No provider");
+            } else {
                 nhost.auth.signIn({
-                    provider: provider
-                });
-            };
+                    provider: provider,
+                })
+            }
             const response = await fetch(baseUrl, {
                 method: "POST",
                 headers: {
