@@ -21,14 +21,16 @@ export default function Register() {
         region: process.env.NEXT_PUBLIC_NHOST_REGION
     });
 
-    console.log(provider);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const baseUrl = "./api/email/emailLogic";
         try {
-            if (provider) {
-                console.log(provider);
+            if (!provider) {
+                console.log("No provider");
+            } else {
+                nhost.auth.signIn({
+                    provider: 'google'
+                })
             }
         } catch (error) {
             console.log("Error creating user account:", error);
@@ -65,7 +67,7 @@ export default function Register() {
                             <div className="mt-6 grid grid-cols-2 gap-4">
                                 {providers.map((provider) => (
                                     <div key={provider} className={`flex w-full providers-center justify-center gap-3 rounded-md px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a] ${provider === 'Facebook' ? 'bg-[#4267B2]' : provider === 'Google' ? 'bg-[#DB4437]' : provider === 'LinkedIn' ? 'bg-[#0A66C2]' : provider === 'Twitch' ? 'bg-[#9146FF]' : ""}`}>
-                                        <button className='flex px-4 justify-center providers-center' onClick={(e) => { handleSubmit(e, provider) }}>
+                                        <button className='flex px-4 justify-center providers-center' onClick={(e) => { handleSubmit(e) }}>
                                             <Image src={`/images/${provider.toLowerCase()}.png`} width={28} height={28} alt={`Login with ${provider}`} />
                                             {provider}
                                         </button>
