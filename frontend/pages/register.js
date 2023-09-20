@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import SignUp from '../components/SignUp';
 import Image from 'next/image';
 import { NhostClient, } from '@nhost/nhost-js';
-import { useProviderLink } from '@nhost/react';
+import { useProviderLink } from '@nhost/nextjs'
 
 const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn']
 
@@ -15,7 +15,7 @@ export default function Register() {
     const router = useRouter();
     const [registerMessage, setRegisterMessage] = useState("");
 
-    const { provider } = useProviderLink();
+    const { provider } = useProviderLink({ redirectTo: '/dashboard' });
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
         region: process.env.NEXT_PUBLIC_NHOST_REGION
