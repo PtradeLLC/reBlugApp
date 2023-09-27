@@ -4,10 +4,9 @@ import SignIn from '../components/SignIn';
 import LoadingComponent from '../components/Loading';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 import { NhostClient, } from '@nhost/nhost-js';
-import { useProviderLink } from '@nhost/nextjs';
 
 export default function Login() {
-    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
+    const providers = ['Facebook', 'Twitch', 'Google'];
     const { isLoading } = useSignInEmailPassword();
     const [errors, setErrors] = useState("");
 
@@ -77,7 +76,7 @@ export default function Login() {
                                 <span className="bg-white px-6 text-gray-900">or continue with these providers</span>
                             </div>
                         </div>
-                        <div className="mt-6 grid grid-cols-2 gap-4">
+                        <div className="mt-6 grid grid-cols-3 gap-4">
                             {providers.map((provider) => (
                                 <div
                                     key={provider}

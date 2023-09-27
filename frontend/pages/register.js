@@ -13,7 +13,7 @@ export default function Register() {
     const router = useRouter();
     const { isLoading } = useSignInEmailPassword();
     const [registerMessage, setRegisterMessage] = useState("");
-    const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
+    const providers = ['Facebook', 'Twitch', 'Google'];
 
 
     const nhost = new NhostClient({
@@ -78,7 +78,7 @@ export default function Register() {
                                     <span className="bg-white px-6 text-gray-900">Or continue with</span>
                                 </div>
                             </div>
-                            <div className="mt-6 grid grid-cols-2 gap-4">
+                            <div className="mt-6 grid grid-cols-3 gap-4">
                                 {providers.map((provider) => (
                                     <div
                                         key={provider}
