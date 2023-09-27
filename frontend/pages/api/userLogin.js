@@ -4,7 +4,7 @@ import { MailerSend } from "mailersend";
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+    const session = await getServerSession(req, res, authOptions);
 
     if (req.method === "POST") {
         try {

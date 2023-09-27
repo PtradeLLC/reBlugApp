@@ -6,47 +6,50 @@ import { useSignInEmailPassword } from '@nhost/nextjs';
 import { NhostClient, } from '@nhost/nhost-js';
 import { useProviderLink } from '@nhost/nextjs';
 
-
-const { provider } = useProviderLink();
-
 export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
     const { isLoading } = useSignInEmailPassword();
     const [errors, setErrors] = useState("");
+    const { provider } = useProviderLink();
+    const [name, setName] = useState("");
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
         region: process.env.NEXT_PUBLIC_NHOST_REGION
     });
 
-    const handleClick = async (e) => {
+    const handleClick = async (e, provider) => {
         e.preventDefault();
         try {
             const baseUrl = `/api/userLogin`;
             if (!provider) {
                 console.log("No provider");
             } else {
+                console.log(provider);
                 nhost.auth.signIn({
                     provider: provider,
+                    options: {
+                        redirectTo: "/dashboard",
+                    },
                 })
             }
-            const response = await fetch(baseUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${process.env.AUTH_TOKEN}`
-                },
-                body: JSON.stringify(provider)
-            })
-            if (response.ok) {
-                await response.json();
-            } else if (response.status === 401) {
-                console.error("Unauthorized: Check API Key or authentication.");
-                return;
-            } else {
-                console.error(`Error: ${response.statusText}`);
-                setErrors(`Error: ${response.statusText}`);
-            }
+            // const response = await fetch(baseUrl, {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": `Bearer ${process.env.AUTH_TOKEN}`
+            //     },
+            //     body: JSON.stringify(provider)
+            // })
+            // if (response.ok) {
+            //     await response.json();
+            // } else if (response.status === 401) {
+            //     console.error("Unauthorized: Check API Key or authentication.");
+            //     return;
+            // } else {
+            //     console.error(`Error: ${response.statusText}`);
+            //     setErrors(`Error: ${response.statusText}`);
+            // }
         } catch (error) {
             console.error(error.message);
             setErrors(error.message);

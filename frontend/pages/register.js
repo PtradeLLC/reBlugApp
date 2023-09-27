@@ -15,8 +15,9 @@ export default function Register() {
     const router = useRouter();
     const [registerMessage, setRegisterMessage] = useState("");
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
-
     const { provider } = useProviderLink();
+
+
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
         region: process.env.NEXT_PUBLIC_NHOST_REGION
@@ -29,9 +30,17 @@ export default function Register() {
             if (!provider) {
                 console.log("No provider");
             } else {
+                console.log("Provider", provider);
                 nhost.auth.signIn({
                     provider: provider,
-                })
+                });
+
+                // const response = await fetch(baseUrl, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json"
+                //     }
+                // })
             }
         } catch (error) {
             console.log("Error creating user account:", error);
@@ -74,6 +83,7 @@ export default function Register() {
                                         </button>
                                     </div>
                                 ))}
+                                {/* <p>Link</p> */}
                             </div>
                         </div>
                     </form>
