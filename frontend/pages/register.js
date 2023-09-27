@@ -4,7 +4,6 @@ import SignUp from '../components/SignUp';
 import Image from 'next/image';
 import { useSignInEmailPassword } from '@nhost/nextjs';
 import { NhostClient, } from '@nhost/nhost-js';
-import { useProviderLink } from '@nhost/nextjs';
 
 
 

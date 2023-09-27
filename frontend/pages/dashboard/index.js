@@ -499,25 +499,4 @@ const Dashboard = function ({ children = null }) {
 
 export default withAuth(Dashboard);
 
-// export async function getServerSideProps(context) {
-//     const session = await getServerSession(context.req, context.res, authOptions);
-
-//     if (!session) {
-//         return {
-//             redirect: {
-//                 destination: '/login',
-//                 permanent: false,
-//             },
-//         }
-//     }
-
-//     const { user } = session;
-
-//     return {
-//         props: {
-//             user
-//         },
-//     }
-// }
-
 

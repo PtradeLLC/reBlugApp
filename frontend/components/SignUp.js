@@ -26,12 +26,12 @@ const SignUp = () => {
                 lastName
             }
         })
-    }
+    };
 
     if (isSuccess) {
-        router.push('/dashboard')
-        return null
-    }
+        router.push('/dashboard');
+        return null;
+    };
 
     const disableForm = isLoading || needsEmailVerification
 
@@ -103,8 +103,8 @@ const SignUp = () => {
             </div>
 
             <p className="text-right mt-3">
-                Already have an account?{' '}
                 <Link href="/login">
+                    Already have an account?{' '}
                     Sign in
                 </Link>
             </p>
@@ -112,4 +112,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default SignUp;

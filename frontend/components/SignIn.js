@@ -18,22 +18,22 @@ const SignIn = () => {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const data = await signInEmailPassword(email, password);
 
-            const baseUrl = `/api/userLogin`;
-            const response = await fetch(baseUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                await response.json();
+            if (isSuccess) {
                 router.push('/dashboard');
+                return null;
+
+                // const baseUrl = `/api/userLogin`;
+                // const response = await fetch(baseUrl, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify(data)
+                // });
+
             } else {
                 console.error(`Error: ${response.statusText}`);
                 setErrors(`Error: ${response.statusText}`);
@@ -104,8 +104,8 @@ const SignIn = () => {
             </div>
             <div>
                 <p className="text-right mt-3">
-                    No account yet?{' '}
                     <Link href="/register">
+                        No account yet?{' '}
                         Sign up
                     </Link>
                 </p>

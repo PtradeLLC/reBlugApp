@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useSignOut } from '@nhost/nextjs'
 import { useRouter } from 'next/navigation';
 import {
+  useSignOut,
   getNhostSession,
   NhostSession,
   useAccessToken,
@@ -18,13 +18,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
-export default function Navbar({ signOut }) {
-  const [errors, setErrors] = useState('');
-  const [userId, setUserId] = useState("undefined");
-  const router = useRouter();
+export default function Navbar() {
   const isAuthenticated = useAuthenticated();
-  const user = useUserData();
-  const accessToken = useAccessToken();
+  const { signOut } = useSignOut()
 
   if (!isAuthenticated) {
     console.log("");
@@ -119,14 +115,14 @@ export default function Navbar({ signOut }) {
   );
 }
 
-export const getServerSideProps = async (context) => {
-  const nhostSession = await getNhostSession(
-    { subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN, region: process.env.NEXT_PUBLIC_NHOST_REGION },
-    context
-  )
-  return {
-    props: {
-      nhostSession
-    }
-  }
-}
+// export const getServerSideProps = async (context) => {
+//   const nhostSession = await getNhostSession(
+//     { subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN, region: process.env.NEXT_PUBLIC_NHOST_REGION },
+//     context
+//   )
+//   return {
+//     props: {
+//       nhostSession
+//     }
+//   }
+// }
