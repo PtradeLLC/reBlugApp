@@ -1,17 +1,12 @@
-import { useState } from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 import {
   useSignOut,
-  getNhostSession,
-  NhostSession,
-  useAccessToken,
   useAuthenticated,
-  useUserData
 } from '@nhost/nextjs'
+import { useRouter } from 'next/router';
 
 
 function classNames(...classes) {
@@ -20,10 +15,14 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const isAuthenticated = useAuthenticated();
-  const { signOut } = useSignOut()
+  const { signOut } = useSignOut();
+  const router = useRouter();
 
   if (!isAuthenticated) {
-    console.log("");
+    console.log("true");
+    // router.push('/');
+  } else {
+    console.log("false");
   }
 
   return (
@@ -114,15 +113,3 @@ export default function Navbar() {
     </Disclosure >
   );
 }
-
-// export const getServerSideProps = async (context) => {
-//   const nhostSession = await getNhostSession(
-//     { subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN, region: process.env.NEXT_PUBLIC_NHOST_REGION },
-//     context
-//   )
-//   return {
-//     props: {
-//       nhostSession
-//     }
-//   }
-// }

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import SignIn from '../components/SignIn';
 import LoadingComponent from '../components/Loading';
-import { useSignInEmailPassword } from '@nhost/nextjs';
-import { NhostClient, } from '@nhost/nhost-js';
+import { useSignInEmailPassword, NhostClient } from '@nhost/nextjs';
+
 
 export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google'];

@@ -90,9 +90,13 @@ const actions = [
 
 const UserContext = createContext();
 
-const Dashboard = function ({ children = null }) {
+const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
-    const user = useUserData()
+    const user = useUserData();
+    console.log(children);
+    console.log(user);
+
+
 
     return (
         <UserContext.Provider value={user}>
