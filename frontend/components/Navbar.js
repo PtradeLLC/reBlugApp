@@ -13,17 +13,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   const isAuthenticated = useAuthenticated();
   const { signOut } = useSignOut();
-  const router = useRouter();
+  // const router = useRouter();
+  console.log(user);
 
-  if (!isAuthenticated) {
-    console.log("true");
-    // router.push('/');
-  } else {
-    console.log("false");
-  }
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
