@@ -10,8 +10,6 @@ export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google', 'LinkedIn'];
     const { isLoading } = useSignInEmailPassword();
     const [errors, setErrors] = useState("");
-    const { provider } = useProviderLink();
-    const [name, setName] = useState("");
 
     const nhost = new NhostClient({
         subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
@@ -25,9 +23,8 @@ export default function Login() {
             if (!provider) {
                 console.log("No provider");
             } else {
-                console.log(provider);
                 nhost.auth.signIn({
-                    provider: provider,
+                    provider: provider.toLowerCase(),
                     options: {
                         redirectTo: "/dashboard",
                     },
