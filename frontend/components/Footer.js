@@ -92,7 +92,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 md:order-1 md:mt-0 flex z-30">
           <p className="text-center text-xs leading-5 text-gray-500 mx-2">
-            &copy; {year} <Link href={"https://www.publictrades.com"} target="_blank">PublicTrades,LLC.</Link> All rights reserved.
+            &copy; {year} <Link href={"https://publictrades-git-main-ptradellc.vercel.app/"} target="_blank">PublicTrades,LLC.</Link> All rights reserved.
           </p>
           <p className="text-center text-xs leading-5 text-gray-500">
             <Link href="/privacy-policy">Privacy Policy</Link>
