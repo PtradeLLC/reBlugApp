@@ -12,7 +12,7 @@ const SignIn = () => {
     const [open, setOpen] = useState(false);
 
     const router = useRouter();
-    const { signInEmailPassword, isLoading, needsEmailVerification, isError } = useSignInEmailPassword();
+    const { signInEmailPassword, isLoading, needsEmailVerification, isError, error } = useSignInEmailPassword();
 
 
     const handleOnSubmit = async (e) => {
