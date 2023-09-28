@@ -93,8 +93,7 @@ const UserContext = createContext();
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
-    console.log(children);
-    console.log(user, "from dash");
+    console.log("from dash", user);
 
 
 
@@ -210,7 +209,7 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                         <div className="ml-3 min-w-0 flex-1">
                                                             <div className="truncate text-base font-medium text-gray-800">
-                                                                Hello {user?.firstName},
+                                                                Hello {user?.displayName},
                                                             </div>
                                                             <div className="truncate text-sm font-medium text-gray-500">
                                                                 {user?.email}
@@ -270,7 +269,7 @@ const Dashboard = function ({ children }) {
                                                     </div>
                                                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                         <h2 className="text-2xl font-semibold text-gray-900">
-                                                            Welcome {user?.name}
+                                                            Welcome {user?.displayName}
                                                         </h2>
                                                     </div>
                                                 </div>
