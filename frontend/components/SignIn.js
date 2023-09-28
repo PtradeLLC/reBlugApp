@@ -12,32 +12,18 @@ const SignIn = () => {
     const [open, setOpen] = useState(false);
 
     const router = useRouter();
-    const { signInEmailPassword, isSuccess, isLoading, needsEmailVerification, isError, error } = useSignInEmailPassword();
+    const { signInEmailPassword, isLoading, needsEmailVerification, isError } = useSignInEmailPassword();
 
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
+        const { isSuccess, error } = await signInEmailPassword(email, password);
         try {
-            const data = await signInEmailPassword(email, password);
-
             if (isSuccess) {
                 router.push('/dashboard');
-                console.log("yay!");
-                return null
-
-                // const baseUrl = `/api/userLogin`;
-                // const response = await fetch(baseUrl, {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     body: JSON.stringify(data)
-                // });
-
             } else {
-                // console.error(`Error: ${response.statusText}`);
-                // setErrors(`Error: ${response.statusText}`);
                 console.log("There is an error", error);
+                setErrors(error.message)
             }
         } catch (error) {
             console.error(error.message);

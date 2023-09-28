@@ -30,7 +30,7 @@ const SignUp = () => {
 
     if (isSuccess) {
         router.push('/dashboard');
-        return null;
+        // return null;
     };
 
     const disableForm = isLoading || needsEmailVerification
