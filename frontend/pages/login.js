@@ -9,10 +9,9 @@ export default function Login() {
     const providers = ['Facebook', 'Twitch', 'Google'];
     const { isLoading } = useSignInEmailPassword();
     const [errors, setErrors] = useState("");
-
     const nhost = new NhostClient({
-        subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
-        region: process.env.NEXT_PUBLIC_NHOST_REGION
+        subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN || '',
+        region: process.env.NEXT_PUBLIC_NHOST_REGION || ''
     });
 
     const handleClick = async (e, provider) => {
@@ -20,7 +19,7 @@ export default function Login() {
         try {
             const baseUrl = `/api/userLogin`;
             if (!provider) {
-                console.log("No provider");
+                setErrors("You need to sign in with a provider");
             } else {
                 nhost.auth.signIn({
                     provider: provider.toLowerCase(),

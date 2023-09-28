@@ -30,6 +30,7 @@ export default function Register() {
                     provider: provider.toLowerCase(),
                     options: {
                         redirectTo: "/dashboard",
+                        allowedRoles: ['user']
                     },
                 })
             }

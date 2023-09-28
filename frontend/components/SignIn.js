@@ -13,7 +13,6 @@ const SignIn = () => {
 
     const router = useRouter();
     const { signInEmailPassword, isSuccess, isLoading, needsEmailVerification, isError, error } = useSignInEmailPassword();
-    console.log(signInEmailPassword, isSuccess, isLoading, needsEmailVerification, isError, error);
 
 
     const handleOnSubmit = async (e) => {
