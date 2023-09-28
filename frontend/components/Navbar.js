@@ -8,7 +8,6 @@ import {
 } from '@nhost/nextjs'
 import { useRouter } from 'next/router';
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
