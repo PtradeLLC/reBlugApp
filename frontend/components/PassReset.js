@@ -4,29 +4,39 @@ import { EnvelopeIcon } from '@heroicons/react/20/solid';
 import { useResetPassword } from '@nhost/nextjs';
 import Loading from './Loading';
 
+
+
 //Modal
 export default function PasswordReset({ open, setOpen }) {
     const [email, setEmail] = useState("");
-    const { resetPassword, isSent, isLoading } = useResetPassword();
-    const [sentMessage, setSentMessage] = useState("")
+    const { resetPassword, isLoading, isSent, isError, error } = useResetPassword();
+    const [sentMessage, setSentMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target
         if (name === "email") {
             setEmail(value);
         }
-    }
+    };
 
     const resetPass = async (e) => {
         e.preventDefault();
-        await resetPassword(email, {
-            redirectTo: 'https://forgedmart.com/login'
-        });
-        if (isSent) {
-            setEmail("");
-            setSentMessage("Please check your email");
-            console.log(open);
-            // setOpen(false);
+
+        try {
+            await resetPassword(email, {
+                redirectTo: 'https://forgedmart.com/api/reset-password'
+            });
+            if (isSent) {
+                setEmail("");
+                setSentMessage("Please check your email");
+                setOpen(false);
+            } else if (isError) {
+                setSentMessage(error)
+            } else {
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
