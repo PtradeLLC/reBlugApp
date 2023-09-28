@@ -13,9 +13,10 @@ import {
 export default function Layout({ children }) {
   const { signOut } = useSignOut();
   const user = useUserData();
+
   return (
     <>
-      <Navbar user={user} signOut={signOut} />
+      <Navbar signOut={signOut} />
       <main>{children}</main>
       <Footer />
     </>

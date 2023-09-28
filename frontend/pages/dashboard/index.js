@@ -94,7 +94,7 @@ const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
     console.log(children);
-    console.log(user);
+    console.log(user, "from dash");
 
 
 
