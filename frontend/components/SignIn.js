@@ -12,9 +12,9 @@ const SignIn = () => {
     const [open, setOpen] = useState(false);
 
     const router = useRouter();
+    const { signInEmailPassword, isSuccess, isLoading, needsEmailVerification, isError, error } = useSignInEmailPassword();
+    console.log(signInEmailPassword, isSuccess, isLoading, needsEmailVerification, isError, error);
 
-    const { signInEmailPassword, isLoading, isSuccess, needsEmailVerification, isError, error } =
-        useSignInEmailPassword();
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +23,8 @@ const SignIn = () => {
 
             if (isSuccess) {
                 router.push('/dashboard');
-                return null;
+                console.log("yay!");
+                return null
 
                 // const baseUrl = `/api/userLogin`;
                 // const response = await fetch(baseUrl, {
@@ -35,8 +36,9 @@ const SignIn = () => {
                 // });
 
             } else {
-                console.error(`Error: ${response.statusText}`);
-                setErrors(`Error: ${response.statusText}`);
+                // console.error(`Error: ${response.statusText}`);
+                // setErrors(`Error: ${response.statusText}`);
+                console.log("There is an error", error);
             }
         } catch (error) {
             console.error(error.message);

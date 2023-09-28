@@ -12,7 +12,6 @@ import {
 
 export default function Layout({ children }) {
   const { signOut } = useSignOut();
-  const user = useUserData();
 
   return (
     <>

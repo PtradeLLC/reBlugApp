@@ -93,7 +93,6 @@ const UserContext = createContext();
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
-    console.log("from dash", user);
 
 
 
@@ -263,7 +262,7 @@ const Dashboard = function ({ children }) {
                                                     <div className="flex-shrink-0">
                                                         <img
                                                             className="mx-auto h-20 w-20 rounded-full"
-                                                            src={user?.image}
+                                                            src={user?.avatarUrl}
                                                             alt="profile image"
                                                         />
                                                     </div>
