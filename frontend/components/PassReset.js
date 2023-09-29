@@ -24,7 +24,7 @@ export default function PasswordReset({ open, setOpen }) {
 
         try {
             await resetPassword(email, {
-                redirectTo: 'https://forgedmart.com/api/reset-password'
+                redirectTo: 'https://forgedmart.com/dashboard/reset-password'
             });
             if (isSent) {
                 setEmail("");
