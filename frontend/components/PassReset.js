@@ -31,7 +31,8 @@ export default function PasswordReset({ open, setOpen }) {
                 setSentMessage("Please check your email");
                 setOpen(false);
             } else if (isError) {
-                setSentMessage(error)
+                console.log(error);
+                setSentMessage(error);
             } else {
                 console.log(error);
             }
@@ -92,7 +93,7 @@ export default function PasswordReset({ open, setOpen }) {
                                     >
                                         {isLoading ? <Loading size="sm" /> : isSent ? "Close" : "Submit"}
                                     </button>
-                                    {isSent && sentMessage}
+                                    {sentMessage}
                                 </div>
 
                             </Dialog.Panel>
