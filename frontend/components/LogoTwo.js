@@ -15,8 +15,10 @@ export default function LogoTwo() {
                     <div className="mx-auto w-full max-w-xl lg:mx-0">
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900">Few of the notable brands and companies we're lucky to call partners</h2>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
-                            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a
-                            scelerisque amet ullamcorper eu enim et fermentum, augue. */}
+                            Being partners with us can be mutually beneficial in many ways. Increased brand awareness,
+                            Joint marketing opportunities, and Increased sales opportunities to name a few.  Our
+                            partnership can be a mutually beneficial relationship that can help us achieve our
+                            business goals sooner.
                         </p>
                         <div className="mt-8 flex items-center gap-x-6">
                             <a
