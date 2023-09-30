@@ -1,10 +1,19 @@
 export default function LogoTwo() {
+
+    const partners = [
+        {
+            name: "",
+            image: "",
+            url: ""
+        }
+    ];
+
     return (
         <div className="bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
                     <div className="mx-auto w-full max-w-xl lg:mx-0">
-                        <h2 className="text-3xl font-bold tracking-tight text-gray-900">Trusted by the most innovative teams</h2>
+                        <h2 className="text-3xl font-bold tracking-tight text-gray-900">Few of the notable brands and companies we're lucky to call partners</h2>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a
                             scelerisque amet ullamcorper eu enim et fermentum, augue.
@@ -23,16 +32,14 @@ export default function LogoTwo() {
                     </div>
                     <div className="mx-auto grid w-full max-w-xl grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
                         <img
-                            className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/tuple-logo-gray-900.svg"
-                            alt="Tuple"
-                            width={105}
-                            height={48}
+                            className="max-h-12 w-[130px] object-contain object-left"
+                            src="/images/onramp.png"
+                            alt="onramp-funds"
                         />
                         <img
                             className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/reform-logo-gray-900.svg"
-                            alt="Reform"
+                            src="/images/y_combinator.png"
+                            alt="YCombinator"
                             width={104}
                             height={48}
                         />

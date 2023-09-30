@@ -6,6 +6,8 @@ import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
 import { Client, Account } from 'appwrite';
+import LogoOne from "../components/Logo-One";
+import LogoTwo from "../components/LogoTwo";
 
 const Home = ({ emailMessages }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -60,6 +62,9 @@ const Home = ({ emailMessages }) => {
         </div>
         <div className="flex justify-center content-center">
           <Tools openModal={openModal} setOpenModal={setOpenModal} />
+        </div>
+        <div className="flex mt-3 mb-2 w-full justify-center content-center">
+          <LogoTwo />
         </div>
         <div className="flex justify-center content-center mt-3">
           <Influencer openModal={openModal} setOpenModal={setOpenModal} />
