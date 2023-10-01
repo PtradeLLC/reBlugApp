@@ -8,6 +8,7 @@ import {
     UserCircleIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { useUserData } from '@nhost/nextjs';
 
 const user = {
@@ -16,6 +17,19 @@ const user = {
     imageUrl:
         'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80',
 }
+
+const teams = [
+    { id: 1, name: 'Planetaria', href: '#', initial: 'P', current: false },
+    { id: 2, name: 'Protocol', href: '#', initial: 'P', current: false },
+    { id: 3, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
+]
+const secondaryNavigation = [
+    { name: 'Account', href: '#', current: true },
+    { name: 'Notifications', href: '#', current: false },
+    { name: 'Billing', href: '#', current: false },
+    { name: 'Teams', href: '#', current: false },
+    { name: 'Integrations', href: '#', current: false },
+];
 const navigation = [
     { name: 'Dashboard', href: '#' },
     { name: 'Jobs', href: '#' },
