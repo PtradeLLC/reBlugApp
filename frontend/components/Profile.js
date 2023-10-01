@@ -1,68 +1,24 @@
-import { Fragment, useState, createContext } from 'react';
+import { Fragment, useState, createContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-    Bars3Icon,
-    CreditCardIcon,
-    KeyIcon,
-    SquaresPlusIcon,
-    UserCircleIcon,
+    FolderIcon,
+    GlobeAltIcon,
+    SignalIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { useUserData } from '@nhost/nextjs';
 
-const user = {
-    name: 'Lisa Marie',
-    email: 'lisamarie@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80',
-}
-
+const navigation = [
+    { name: 'Profile Information', href: '#personal', icon: FolderIcon, current: false },
+    { name: 'Password', href: '#pass', icon: SignalIcon, current: false },
+    { name: 'Account', href: '#account', icon: GlobeAltIcon, current: false },
+    // { name: 'Usage', href: '#', icon: ChartBarSquareIcon, current: false },
+]
 const teams = [
     { id: 1, name: 'Planetaria', href: '#', initial: 'P', current: false },
     { id: 2, name: 'Protocol', href: '#', initial: 'P', current: false },
     { id: 3, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-]
-const secondaryNavigation = [
-    { name: 'Account', href: '#', current: true },
-    { name: 'Notifications', href: '#', current: false },
-    { name: 'Billing', href: '#', current: false },
-    { name: 'Teams', href: '#', current: false },
-    { name: 'Integrations', href: '#', current: false },
 ];
-const navigation = [
-    { name: 'Dashboard', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Applicants', href: '#' },
-    { name: 'Company', href: '#' },
-]
-const userNavigation = [
-    { name: 'Your Profile', href: '#profile-info' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
-const subNavigation = [
-    { name: 'Profile', href: '#profile-info', icon: UserCircleIcon, current: false },
-    { name: 'Password', href: '#', icon: KeyIcon, current: false },
-    { name: 'Plan & Billing', href: '#plans', icon: CreditCardIcon, current: false },
-    { name: 'Integrations', href: '#', icon: SquaresPlusIcon, current: false },
-]
-const plans = [
-    { name: 'Startup', priceMonthly: 29, priceYearly: 290, limit: 'Up to 5 active job postings' },
-    { name: 'Brands', priceMonthly: 99, priceYearly: 990, limit: 'Up to 25 active job postings' },
-    { name: 'Agency', priceMonthly: 99, priceYearly: 990, limit: 'Up to 25 active job postings' },
-    { name: 'Enterprise', priceMonthly: 249, priceYearly: 2490, limit: 'Unlimited active job postings' },
-]
-const payments = [
-    {
-        id: 1,
-        date: '1/1/2020',
-        datetime: '2020-01-01',
-        description: 'Business Plan - Annual Billing',
-        amount: 'CA$109.00',
-        href: '#',
-    },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -71,16 +27,14 @@ function classNames(...classes) {
 const UserContext = createContext();
 
 export default function ProfilePg() {
-    const [selectedPlan, setSelectedPlan] = useState(plans[0]);
-    const [annualBillingEnabled, setAnnualBillingEnabled] = useState(false);
-    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const user = useUserData();
 
     return (
         <UserContext.Provider value={user}>
             <div>
                 <Transition.Root show={sidebarOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-50 xl:hidden" onClose={setSidebarOpen}>
+                    <Dialog as="div" className="relative xl:hidden" onClose={setSidebarOpen}>
                         <Transition.Child
                             as={Fragment}
                             enter="transition-opacity ease-linear duration-300"
@@ -90,7 +44,7 @@ export default function ProfilePg() {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <div className="fixed inset-0 bg-gray-900/80" />
+                            <div className="fixed inset-0" />
                         </Transition.Child>
 
                         <div className="fixed inset-0 flex">
@@ -116,12 +70,12 @@ export default function ProfilePg() {
                                         <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                                             <button type="button" className="-m-2.5 p-2.5" onClick={() => setSidebarOpen(false)}>
                                                 <span className="sr-only">Close sidebar</span>
-                                                <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                                                <XMarkIcon className="h-6 w-6 text-black" aria-hidden="true" />
                                             </button>
                                         </div>
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
+                                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6 ring-1 ring-white/10">
                                         <div className="flex h-16 shrink-0 items-center">
                                             <img
                                                 className="h-8 w-auto"
@@ -139,8 +93,8 @@ export default function ProfilePg() {
                                                                     href={item.href}
                                                                     className={classNames(
                                                                         item.current
-                                                                            ? 'bg-gray-800 text-white'
-                                                                            : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                                                                            ? 'bg-white text-black'
+                                                                            : 'text-slate-400 hover:text-black hover:bg-white',
                                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
                                                                 >
@@ -152,7 +106,7 @@ export default function ProfilePg() {
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                                                    <div className="text-xs font-semibold leading-6 text-slate-400">Your teams</div>
                                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                                         {teams.map((team) => (
                                                             <li key={team.name}>
@@ -160,12 +114,12 @@ export default function ProfilePg() {
                                                                     href={team.href}
                                                                     className={classNames(
                                                                         team.current
-                                                                            ? 'bg-gray-800 text-white'
-                                                                            : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                                                                            ? 'bg-white text-black'
+                                                                            : 'text-slate-400 hover:text-black hover:bg-white',
                                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                                     )}
                                                                 >
-                                                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                                                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-slate-700 bg-white text-[0.625rem] font-medium text-slate-400 group-hover:text-black">
                                                                         {team.initial}
                                                                     </span>
                                                                     <span className="truncate">{team.name}</span>
@@ -173,20 +127,6 @@ export default function ProfilePg() {
                                                             </li>
                                                         ))}
                                                     </ul>
-                                                </li>
-                                                <li className="-mx-6 mt-auto">
-                                                    <a
-                                                        href="#"
-                                                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
-                                                    >
-                                                        <img
-                                                            className="h-8 w-8 rounded-full bg-gray-800"
-                                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                            alt=""
-                                                        />
-                                                        <span className="sr-only">Your profile</span>
-                                                        <span aria-hidden="true">Tom Cook</span>
-                                                    </a>
                                                 </li>
                                             </ul>
                                         </nav>
@@ -198,15 +138,11 @@ export default function ProfilePg() {
                 </Transition.Root>
 
                 {/* Static sidebar for desktop */}
-                <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
+                <div className="hidden xl:fixed xl:inset-y-0 xl:flex xl:w-72 xl:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
+                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 ring-1 ring-white/5">
                         <div className="flex h-16 shrink-0 items-center">
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"
-                            />
+
                         </div>
                         <nav className="flex flex-1 flex-col">
                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -218,8 +154,8 @@ export default function ProfilePg() {
                                                     href={item.href}
                                                     className={classNames(
                                                         item.current
-                                                            ? 'bg-gray-800 text-white'
-                                                            : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                                                            ? 'bg-white text-black'
+                                                            : 'text-slate-400 hover:text-black hover:bg-white',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                     )}
                                                 >
@@ -231,7 +167,7 @@ export default function ProfilePg() {
                                     </ul>
                                 </li>
                                 <li>
-                                    <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                                    <div className="text-xs font-semibold leading-6 text-slate-400">Your teams</div>
                                     <ul role="list" className="-mx-2 mt-2 space-y-1">
                                         {teams.map((team) => (
                                             <li key={team.name}>
@@ -239,12 +175,12 @@ export default function ProfilePg() {
                                                     href={team.href}
                                                     className={classNames(
                                                         team.current
-                                                            ? 'bg-gray-800 text-white'
-                                                            : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                                                            ? 'bg-white text-black'
+                                                            : 'text-slate-400 hover:text-black hover:bg-white',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                     )}
                                                 >
-                                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                                                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-slate-700 bg-white text-[0.625rem] font-medium text-slate-400 group-hover:text-black">
                                                         {team.initial}
                                                     </span>
                                                     <span className="truncate">{team.name}</span>
@@ -253,80 +189,19 @@ export default function ProfilePg() {
                                         ))}
                                     </ul>
                                 </li>
-                                <li className="-mx-6 mt-auto">
-                                    <a
-                                        href="#"
-                                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
-                                    >
-                                        <img
-                                            className="h-8 w-8 rounded-full bg-gray-800"
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                            alt=""
-                                        />
-                                        <span className="sr-only">Your profile</span>
-                                        <span aria-hidden="true">Tom Cook</span>
-                                    </a>
-                                </li>
                             </ul>
                         </nav>
                     </div>
                 </div>
 
                 <div className="xl:pl-72">
-                    {/* Sticky search header */}
-                    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
-                        <button type="button" className="-m-2.5 p-2.5 text-white xl:hidden" onClick={() => setSidebarOpen(true)}>
-                            <span className="sr-only">Open sidebar</span>
-                            <Bars3Icon className="h-5 w-5" aria-hidden="true" />
-                        </button>
-
-                        <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-                            <form className="flex flex-1" action="#" method="GET">
-                                <label htmlFor="search-field" className="sr-only">
-                                    Search
-                                </label>
-                                <div className="relative w-full">
-                                    <MagnifyingGlassIcon
-                                        className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    <input
-                                        id="search-field"
-                                        className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-white focus:ring-0 sm:text-sm"
-                                        placeholder="Search..."
-                                        type="search"
-                                        name="search"
-                                    />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <main>
-                        <header className="border-b border-white/5">
-                            {/* Secondary navigation */}
-                            <nav className="flex overflow-x-auto py-4">
-                                <ul
-                                    role="list"
-                                    className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8"
-                                >
-                                    {secondaryNavigation.map((item) => (
-                                        <li key={item.name}>
-                                            <a href={item.href} className={item.current ? 'text-indigo-400' : ''}>
-                                                {item.name}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </nav>
-                        </header>
-
+                    <main className='mt-3'>
                         {/* Settings forms */}
-                        <div className="divide-y divide-white/5">
+                        <div id='personal' className="divide-y divide-white/5">
                             <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                                 <div>
-                                    <h2 className="text-base font-semibold leading-7 text-white">Personal Information</h2>
-                                    <p className="mt-1 text-sm leading-6 text-gray-400">
+                                    <h2 className="text-base font-semibold leading-7 text-black">Personal Information</h2>
+                                    <p className="mt-1 text-sm leading-6 text-slate-400">
                                         Use a permanent address where you can receive mail.
                                     </p>
                                 </div>
@@ -335,23 +210,23 @@ export default function ProfilePg() {
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-full flex items-center gap-x-8">
                                             <img
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                alt=""
-                                                className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"
+                                                src={user?.avatarUrl}
+                                                alt={user?.displayName}
+                                                className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
                                             />
                                             <div>
                                                 <button
                                                     type="button"
-                                                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+                                                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
                                                 >
                                                     Change avatar
                                                 </button>
-                                                <p className="mt-2 text-xs leading-5 text-gray-400">JPG, GIF or PNG. 1MB max.</p>
+                                                <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
                                             </div>
                                         </div>
 
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-black">
                                                 First name
                                             </label>
                                             <div className="mt-2">
@@ -359,14 +234,15 @@ export default function ProfilePg() {
                                                     type="text"
                                                     name="first-name"
                                                     id="first-name"
+                                                    placeholder='change first name'
                                                     autoComplete="given-name"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-black">
                                                 Last name
                                             </label>
                                             <div className="mt-2">
@@ -374,14 +250,15 @@ export default function ProfilePg() {
                                                     type="text"
                                                     name="last-name"
                                                     id="last-name"
+                                                    placeholder='change last name'
                                                     autoComplete="family-name"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-span-full">
-                                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-black">
                                                 Email address
                                             </label>
                                             <div className="mt-2">
@@ -389,47 +266,31 @@ export default function ProfilePg() {
                                                     id="email"
                                                     name="email"
                                                     type="email"
+                                                    placeholder='change email'
                                                     autoComplete="email"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-span-full">
-                                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-black">
                                                 Username
                                             </label>
                                             <div className="mt-2">
                                                 <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                                                    <span className="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
-                                                        example.com/
+                                                    <span className="flex select-none items-center pl-3 text-slate-400 sm:text-sm">
+                                                        forgedmart.com/
                                                     </span>
                                                     <input
                                                         type="text"
                                                         name="username"
                                                         id="username"
                                                         autoComplete="username"
-                                                        className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
-                                                        placeholder="janesmith"
+                                                        className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
+                                                        placeholder="edit-your-name"
                                                     />
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="col-span-full">
-                                            <label htmlFor="timezone" className="block text-sm font-medium leading-6 text-white">
-                                                Timezone
-                                            </label>
-                                            <div className="mt-2">
-                                                <select
-                                                    id="timezone"
-                                                    name="timezone"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black"
-                                                >
-                                                    <option>Pacific Standard Time</option>
-                                                    <option>Eastern Standard Time</option>
-                                                    <option>Greenwich Mean Time</option>
-                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -437,7 +298,7 @@ export default function ProfilePg() {
                                     <div className="mt-8 flex">
                                         <button
                                             type="submit"
-                                            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                            className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                         >
                                             Save
                                         </button>
@@ -445,10 +306,10 @@ export default function ProfilePg() {
                                 </form>
                             </div>
 
-                            <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                            <div id='pass' className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                                 <div>
-                                    <h2 className="text-base font-semibold leading-7 text-white">Change password</h2>
-                                    <p className="mt-1 text-sm leading-6 text-gray-400">
+                                    <h2 className="text-base font-semibold leading-7 text-black">Change password</h2>
+                                    <p className="mt-1 text-sm leading-6 text-slate-400">
                                         Update your password associated with your account.
                                     </p>
                                 </div>
@@ -456,7 +317,7 @@ export default function ProfilePg() {
                                 <form className="md:col-span-2">
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-full">
-                                            <label htmlFor="current-password" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="current-password" className="block text-sm font-medium leading-6 text-black">
                                                 Current password
                                             </label>
                                             <div className="mt-2">
@@ -464,14 +325,15 @@ export default function ProfilePg() {
                                                     id="current-password"
                                                     name="current_password"
                                                     type="password"
+                                                    placeholder='your current password'
                                                     autoComplete="current-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-span-full">
-                                            <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
                                                 New password
                                             </label>
                                             <div className="mt-2">
@@ -479,14 +341,15 @@ export default function ProfilePg() {
                                                     id="new-password"
                                                     name="new_password"
                                                     type="password"
+                                                    placeholder='your new password'
                                                     autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-span-full">
-                                            <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-white">
+                                            <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-black">
                                                 Confirm password
                                             </label>
                                             <div className="mt-2">
@@ -494,8 +357,9 @@ export default function ProfilePg() {
                                                     id="confirm-password"
                                                     name="confirm_password"
                                                     type="password"
+                                                    placeholder='confirm password'
                                                     autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
@@ -504,7 +368,7 @@ export default function ProfilePg() {
                                     <div className="mt-8 flex">
                                         <button
                                             type="submit"
-                                            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                            className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
                                         >
                                             Save
                                         </button>
@@ -512,48 +376,10 @@ export default function ProfilePg() {
                                 </form>
                             </div>
 
-                            <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                            <div id='account' className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                                 <div>
-                                    <h2 className="text-base font-semibold leading-7 text-white">Log out other sessions</h2>
-                                    <p className="mt-1 text-sm leading-6 text-gray-400">
-                                        Please enter your password to confirm you would like to log out of your other sessions across all of
-                                        your devices.
-                                    </p>
-                                </div>
-
-                                <form className="md:col-span-2">
-                                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full">
-                                            <label htmlFor="logout-password" className="block text-sm font-medium leading-6 text-white">
-                                                Your password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="logout-password"
-                                                    name="password"
-                                                    type="password"
-                                                    autoComplete="current-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-8 flex">
-                                        <button
-                                            type="submit"
-                                            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                                        >
-                                            Log out other sessions
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-                                <div>
-                                    <h2 className="text-base font-semibold leading-7 text-white">Delete account</h2>
-                                    <p className="mt-1 text-sm leading-6 text-gray-400">
+                                    <h2 className="text-base font-semibold leading-7 text-black">Delete account</h2>
+                                    <p className="mt-1 text-sm leading-6 text-slate-400">
                                         No longer want to use our service? You can delete your account here. This action is not reversible.
                                         All information related to this account will be deleted permanently.
                                     </p>
@@ -572,6 +398,6 @@ export default function ProfilePg() {
                     </main>
                 </div>
             </div>
-        </UserContext.Provider>
+        </UserContext.Provider >
     )
 }

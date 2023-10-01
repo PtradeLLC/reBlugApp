@@ -4,7 +4,7 @@ import withAuth from "../api/withAuth";
 
 const Profile = () => {
     return (
-        <div>
+        <div className='bg-white'>
             <ProfilePg />
         </div>
     )
