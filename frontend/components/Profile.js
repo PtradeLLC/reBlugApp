@@ -34,7 +34,7 @@ const subNavigation = [
     { name: 'Account', href: '#', icon: CogIcon, current: false },
     { name: 'Password', href: '#', icon: KeyIcon, current: false },
     { name: 'Notifications', href: '#', icon: BellIcon, current: false },
-    { name: 'Plan & Billing', href: '#', icon: CreditCardIcon, current: true },
+    { name: 'Plan & Billing', href: '#', icon: CreditCardIcon, current: false },
     { name: 'Integrations', href: '#', icon: SquaresPlusIcon, current: false },
 ]
 const plans = [
@@ -51,7 +51,6 @@ const payments = [
         amount: 'CA$109.00',
         href: '#',
     },
-    // More payments...
 ]
 
 function classNames(...classes) {
@@ -59,8 +58,8 @@ function classNames(...classes) {
 }
 
 export default function ProfilePg() {
-    const [selectedPlan, setSelectedPlan] = useState(plans[1])
-    const [annualBillingEnabled, setAnnualBillingEnabled] = useState(true)
+    const [selectedPlan, setSelectedPlan] = useState(plans[0])
+    const [annualBillingEnabled, setAnnualBillingEnabled] = useState(false)
 
     return (
         <>
