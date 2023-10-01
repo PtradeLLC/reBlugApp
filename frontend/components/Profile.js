@@ -7,7 +7,6 @@ import {
     SquaresPlusIcon,
     UserCircleIcon,
     XMarkIcon,
-    XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useUserData } from '@nhost/nextjs';
 
