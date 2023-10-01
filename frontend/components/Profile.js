@@ -1,11 +1,12 @@
 import { Fragment, useState, createContext } from 'react';
-import { Disclosure, Menu, RadioGroup, Switch, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
     CreditCardIcon,
     KeyIcon,
     SquaresPlusIcon,
     UserCircleIcon,
+    XMarkIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useUserData } from '@nhost/nextjs';
