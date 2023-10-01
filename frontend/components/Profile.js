@@ -217,7 +217,7 @@ export default function ProfilePg() {
                                             <div>
                                                 <button
                                                     type="button"
-                                                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
+                                                    className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
                                                 >
                                                     Change avatar
                                                 </button>
