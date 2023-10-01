@@ -93,9 +93,6 @@ const UserContext = createContext();
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
-
-
-
     return (
         <UserContext.Provider value={user}>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
