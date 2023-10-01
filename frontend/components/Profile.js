@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Disclosure, Menu, RadioGroup, Switch, Transition } from '@headlessui/react'
-import { MagnifyingGlassIcon, QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
+import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
 import {
     Bars3Icon,
     BellIcon,
