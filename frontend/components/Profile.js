@@ -1,17 +1,17 @@
 import { Fragment, useState, createContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
-    FolderIcon,
-    GlobeAltIcon,
+    UserCircleIcon,
+    LockClosedIcon,
     SignalIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useUserData } from '@nhost/nextjs';
 
 const navigation = [
-    { name: 'Profile Information', href: '#personal', icon: FolderIcon, current: false },
+    { name: 'Profile Information', href: '#personal', icon: UserCircleIcon, current: false },
     { name: 'Password', href: '#pass', icon: SignalIcon, current: false },
-    { name: 'Account', href: '#account', icon: GlobeAltIcon, current: false },
+    { name: 'Account', href: '#account', icon: LockClosedIcon, current: false },
     // { name: 'Usage', href: '#', icon: ChartBarSquareIcon, current: false },
 ]
 const teams = [
