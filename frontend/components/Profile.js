@@ -54,6 +54,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+const UserContext = createContext();
+
 export default function ProfilePg() {
     const [selectedPlan, setSelectedPlan] = useState(plans[0]);
     const [annualBillingEnabled, setAnnualBillingEnabled] = useState(false);
