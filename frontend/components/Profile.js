@@ -202,7 +202,7 @@ export default function ProfilePg() {
                                 <div>
                                     <h2 className="text-base font-semibold leading-7 text-black">Personal Information</h2>
                                     <p className="mt-1 text-sm leading-6 text-slate-400">
-                                        Use a permanent address where you can receive mail.
+                                        Update your personal information.
                                     </p>
                                 </div>
 
@@ -261,6 +261,7 @@ export default function ProfilePg() {
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-black">
                                                 Email address
                                             </label>
+                                            <span>current email: {user?.email}</span>
                                             <div className="mt-2">
                                                 <input
                                                     id="email"
@@ -275,7 +276,7 @@ export default function ProfilePg() {
 
                                         <div className="col-span-full">
                                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-black">
-                                                Username
+                                                Brand | Company
                                             </label>
                                             <div className="mt-2">
                                                 <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
@@ -288,7 +289,7 @@ export default function ProfilePg() {
                                                         id="username"
                                                         autoComplete="username"
                                                         className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
-                                                        placeholder="edit-your-name"
+                                                        placeholder="edit-brand-name"
                                                     />
                                                 </div>
                                             </div>
@@ -316,22 +317,6 @@ export default function ProfilePg() {
 
                                 <form className="md:col-span-2">
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full">
-                                            <label htmlFor="current-password" className="block text-sm font-medium leading-6 text-black">
-                                                Current password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="current-password"
-                                                    name="current_password"
-                                                    type="password"
-                                                    placeholder='your current password'
-                                                    autoComplete="current-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
-                                        </div>
-
                                         <div className="col-span-full">
                                             <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
                                                 New password
@@ -380,7 +365,7 @@ export default function ProfilePg() {
                                 <div>
                                     <h2 className="text-base font-semibold leading-7 text-black">Delete account</h2>
                                     <p className="mt-1 text-sm leading-6 text-slate-400">
-                                        No longer want to use our service? You can delete your account here. This action is not reversible.
+                                        You can delete your account here. This action is not reversible.
                                         All information related to this account will be deleted permanently.
                                     </p>
                                 </div>
