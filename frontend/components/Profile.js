@@ -8,7 +8,7 @@ import {
     UserCircleIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { useUserData } from '@nhost/nextjs';
 
 const user = {
