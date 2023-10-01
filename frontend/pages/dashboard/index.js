@@ -1,4 +1,4 @@
-import { Fragment, useState, createContext, useContext } from "react";
+import { Fragment, useState, createContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
