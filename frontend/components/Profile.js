@@ -3,15 +3,15 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
     UserCircleIcon,
     LockClosedIcon,
-    SignalIcon,
     XMarkIcon,
+    IdentificationIcon
 } from '@heroicons/react/24/outline';
 import { useUserData } from '@nhost/nextjs';
 
 const navigation = [
-    { name: 'Profile Information', href: '#personal', icon: UserCircleIcon, current: false },
-    { name: 'Password', href: '#pass', icon: SignalIcon, current: false },
-    { name: 'Account', href: '#account', icon: LockClosedIcon, current: false },
+    { name: 'Profile Information', href: '#personal', icon: IdentificationIcon, current: false },
+    { name: 'Password', href: '#pass', icon: LockClosedIcon, current: false },
+    { name: 'Account', href: '#account', icon: UserCircleIcon, current: false },
     // { name: 'Usage', href: '#', icon: ChartBarSquareIcon, current: false },
 ]
 const teams = [
