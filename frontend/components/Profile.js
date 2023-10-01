@@ -70,34 +70,6 @@ export default function ProfilePg() {
                         <>
                             <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
                                 <div className="relative flex h-16 justify-between">
-                                    {/* <div className="relative z-10 flex px-2 lg:px-0">
-                                        <div className="flex flex-shrink-0 items-center">
-                                            <img
-                                                className="block h-8 w-auto"
-                                                src="https://tailwindui.com/img/logos/mark.svg?color=orange&shade=500"
-                                                alt="Your Company"
-                                            />
-                                        </div>
-                                    </div> */}
-                                    {/* <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                                        <div className="w-full max-w-xs">
-                                            <label htmlFor="search" className="sr-only">
-                                                Search
-                                            </label>
-                                            <div className="relative">
-                                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                    <MagnifyingGlassIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                </div>
-                                                <input
-                                                    name="search"
-                                                    id="search"
-                                                    className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
-                                                    placeholder="Search"
-                                                    type="search"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     <div className="relative flex items-center lg:hidden">
                                         {/* Mobile menu button */}
                                         <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900">
@@ -111,24 +83,8 @@ export default function ProfilePg() {
                                         </Disclosure.Button>
                                     </div>
                                     <div className="hidden lg:relative lg:ml-4 lg:flex lg:items-center">
-                                        {/* <button
-                                            type="button"
-                                            className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                        >
-                                            <span className="absolute -inset-1.5" />
-                                            <span className="sr-only">View notifications</span>
-                                            <BellIcon className="h-6 w-6" aria-hidden="true" />
-                                        </button> */}
-
                                         {/* Profile dropdown */}
                                         <Menu as="div" className="relative ml-4 flex-shrink-0">
-                                            {/* <div>
-                                                <Menu.Button className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">
-                                                    <span className="absolute -inset-1.5" />
-                                                    <span className="sr-only">Open user menu</span>
-                                                    <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
-                                                </Menu.Button>
-                                            </div> */}
                                             <Transition
                                                 as={Fragment}
                                                 enter="transition ease-out duration-100"
@@ -186,23 +142,6 @@ export default function ProfilePg() {
                                     ))}
                                 </div>
                                 <div className="border-t border-gray-200 pb-3 pt-4">
-                                    {/* <div className="flex items-center px-4">
-                                        <div className="flex-shrink-0">
-                                            <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
-                                        </div>
-                                        <div className="ml-3">
-                                            <div className="text-base font-medium text-gray-800">{user.name}</div>
-                                            <div className="text-sm font-medium text-gray-500">{user.email}</div>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            className="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                                        >
-                                            <span className="absolute -inset-1.5" />
-                                            <span className="sr-only">View notifications</span>
-                                            <BellIcon className="h-6 w-6" aria-hidden="true" />
-                                        </button>
-                                    </div> */}
                                     <div className="mt-3 space-y-1 px-2">
                                         {userNavigation.map((item) => (
                                             <Disclosure.Button

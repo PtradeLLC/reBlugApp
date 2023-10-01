@@ -24,7 +24,7 @@ export default function PasswordReset({ open, setOpen }) {
 
         try {
             await resetPassword(email, {
-                redirectTo: '/profile'
+                redirectTo: '/dashboard/profile'
             });
             if (isSent) {
                 setEmail("");
