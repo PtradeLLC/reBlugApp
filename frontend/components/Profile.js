@@ -75,14 +75,14 @@ export default function ProfilePg() {
                                         </div>
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-900 px-6 ring-1 ring-white/10">
-                                        <div className="flex h-16 shrink-0 items-center">
+                                    <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 ring-1 ring-white/10">
+                                        {/* <div className="flex h-16 shrink-0 items-center">
                                             <img
                                                 className="h-8 w-auto"
                                                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                                                 alt="Your Company"
                                             />
-                                        </div>
+                                        </div> */}
                                         <nav className="flex flex-1 flex-col">
                                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                                 <li>
@@ -261,7 +261,7 @@ export default function ProfilePg() {
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-black">
                                                 Email address
                                             </label>
-                                            <span>current email: {user?.email}</span>
+                                            <span className='text-slate-500'>current email: {user?.email}</span>
                                             <div className="mt-2">
                                                 <input
                                                     id="email"
