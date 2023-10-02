@@ -48,31 +48,31 @@ export default function LogoTwo() {
                         <img
                             className="max-h-12 w-full object-contain object-left"
                             src="/images/shopifylogo.png"
-                            alt="SavvyCal"
+                            alt="Shopify"
                             width={140}
                             height={48}
                         />
                         <img
                             className="max-h-12 w-full object-contain object-left"
                             src="/images/stripe.jpeg"
-                            alt="Laravel"
+                            alt="Stripe"
                             width={136}
                             height={48}
                         />
-                        {/* <img
+                        <img
                             className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/transistor-logo-gray-900.svg"
-                            alt="Transistor"
+                            src="/images/Deep.jpeg"
+                            alt="Deepgram"
                             width={158}
                             height={48}
                         />
                         <img
                             className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/statamic-logo-gray-900.svg"
-                            alt="Statamic"
-                            width={147}
-                            height={48}
-                        /> */}
+                            src="/images/twilio.png"
+                            alt="Twillio"
+                            width={120}
+                            height={38}
+                        />
                     </div>
                 </div>
             </div>
