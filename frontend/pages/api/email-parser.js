@@ -7,12 +7,8 @@ export default async function handler(req, res) {
   const atIndex = email.indexOf('@');
   const username = email.slice(0, atIndex);
 
-  console.log(username)
-
   // Create the modified email
   const modifiedEmail = `${username}@forgedmart.com`;
-
-  console.log(modifiedEmail);
 
   try {
     // const apiKey = `${process.env.MAILERSEND_API_KEY}`;

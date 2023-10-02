@@ -17,15 +17,32 @@ const SignUp = () => {
         useSignUpEmailPassword()
 
     const handleOnSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        await signUpEmailPassword(email, password, {
-            displayName: `${firstName} ${lastName}`.trim(),
-            metadata: {
-                firstName,
-                lastName
-            }
-        })
+        const baseUrl = "/api/email/sendersId";
+
+        try {
+            await signUpEmailPassword(email, password, {
+                displayName: `${firstName} ${lastName}`.trim(),
+                metadata: {
+                    firstName,
+                    lastName
+                }
+            });
+
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ firstName, lastName, email })
+            })
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     if (isSuccess) {
