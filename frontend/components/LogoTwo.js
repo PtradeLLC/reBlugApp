@@ -47,19 +47,19 @@ export default function LogoTwo() {
                         />
                         <img
                             className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/savvycal-logo-gray-900.svg"
+                            src="/images/shopifylogo.png"
                             alt="SavvyCal"
                             width={140}
                             height={48}
                         />
                         <img
                             className="max-h-12 w-full object-contain object-left"
-                            src="https://tailwindui.com/img/logos/laravel-logo-gray-900.svg"
+                            src="/images/stripe.jpeg"
                             alt="Laravel"
                             width={136}
                             height={48}
                         />
-                        <img
+                        {/* <img
                             className="max-h-12 w-full object-contain object-left"
                             src="https://tailwindui.com/img/logos/transistor-logo-gray-900.svg"
                             alt="Transistor"
@@ -72,7 +72,7 @@ export default function LogoTwo() {
                             alt="Statamic"
                             width={147}
                             height={48}
-                        />
+                        /> */}
                     </div>
                 </div>
             </div>
