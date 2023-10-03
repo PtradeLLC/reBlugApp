@@ -93,6 +93,10 @@ export default async function handler(req, res) {
         logo,
         input: dataInput,
     } = req.body;
+
+    const mailerSendUrl = "https://api.mailersend.com/v1/identities";
+
+
     if (req.method === "POST") {
         try {
 

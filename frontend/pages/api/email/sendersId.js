@@ -1,4 +1,4 @@
-import { MailerSend, Inbound, InboundFilterType, Identity } from "mailersend";
+import { MailerSend, Identity } from "mailersend";
 
 export default async function handler(req, res) {
     const mailerSendUrl = "https://api.mailersend.com/v1/identities";
