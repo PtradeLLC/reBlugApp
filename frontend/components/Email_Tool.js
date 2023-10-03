@@ -11,7 +11,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [error, setError] = useState("");
   const [beforeClick, setBeforeClick] = useState(
-    "Complete the form field below"
+    "Complete the form field low"
   );
   const initialEmailForm = {
     email: "",
@@ -49,7 +49,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
 
     if (emailForm.email === "") {
       setIsEmailEmpty(true);
-      setBeforeClick("Enter your email in the form below");
+      setBeforeClick("Fill out and submit the form below");
       return;
     }
 
@@ -155,7 +155,7 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                                 </span>
                               </div>
                               <p className="text-sm text-gray-500">
-                                {emailForm.email || beforeClick}
+                                This simulates a message sent from a brand(ForgedMart) to a recipient(you)
                               </p>
                             </div>
                           </div>
