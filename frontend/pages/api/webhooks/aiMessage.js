@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from "../emailfiles/react-email.js";
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+import { MailerSend, EmailParams, Sender, Recipient, Identity } from "mailersend";
 import ReactDOMServer from "react-dom/server";
 
 const aiMessage = `
@@ -95,8 +95,20 @@ export default async function handler(req, res) {
     } = req.body;
     if (req.method === "POST") {
         try {
-            const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
 
+            //Create Senders ID
+            const identity = new Identity()
+                .setDomainId(process.env.NEXT_PUBLIC_DOMAIN_ID)
+                .setEmail(email)
+                .setName(firstName)
+                .setReplyToEmail('support@forgedmart.com')
+                .setReplyToName('Support Team')
+                .setAddNote(false);
+
+            const response = await mailerSend.email.identity.create(identity);
+
+            //Email configuration
+            const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
             const recipients = [new Recipient(email, firstName)];
 
             const personalization = [
