@@ -1,7 +1,7 @@
 const handleRequest = (req, res) => {
   if (req.method === "POST") {
     const payload = req.body;
-    console.log(payload);
+    // console.log(payload);
     res.statusCode = 200;
   }
 };

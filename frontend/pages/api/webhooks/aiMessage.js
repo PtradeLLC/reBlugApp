@@ -1,7 +1,8 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from "../emailfiles/react-email.js";
-import { MailerSend, EmailParams, Sender, Recipient, Identity } from "mailersend";
+import { MailerSend, EmailParams, Sender, Recipient, Identity, Inbound, InboundFilterType } from "mailersend";
 import ReactDOMServer from "react-dom/server";
+
 
 const aiMessage = `
 * About Us
@@ -85,69 +86,100 @@ const mailerSend = new MailerSend({
 const openai = new OpenAIApi(configuration);
 
 export default async function handler(req, res) {
-    const {
-        email,
-        firstName,
-        lastName,
-        brand_url,
-        logo,
-        input: dataInput,
-    } = req.body;
-
-    const mailerSendUrl = "https://api.mailersend.com/v1/identities";
-
-
     if (req.method === "POST") {
         try {
+            const {
+                email,
+                firstName,
+                lastName,
+                brand_url,
+                logo,
+                input: dataInput,
+            } = req.body;
 
-            //Create Senders ID
+            // Create Senders ID
             const identity = new Identity()
-                .setDomainId(process.env.NEXT_PUBLIC_DOMAIN_ID)
-                .setEmail(email)
-                .setName(firstName)
-                .setReplyToEmail('support@forgedmart.com')
+                .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
+                .setEmail(`${email}`)
+                .setName(`${firstName}`)
+                .setReplyToEmail(`support@forgedmart.com`)
                 .setReplyToName('Support Team')
                 .setAddNote(false);
 
             const response = await mailerSend.email.identity.create(identity);
 
-            //Email configuration
-            const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
-            const recipients = [new Recipient(email, firstName)];
+            if (response && response.statusCode === 201) {
 
-            const personalization = [
-                {
-                    email: email,
-                    data: {
-                        test: "",
-                    },
-                },
-            ];
+                // Creating Inbound
+                async function createInbound() {
+                    const inbound = new Inbound()
+                        .setDomainId(process.env.NEXT_PUBLIC_DOMAIN_ID)
+                        .setName('ForgedMart')
+                        .catch_filter()
+                        .catchFilter()
+                        .inbound_priority()
+                        .setInboundPriority(100)
+                        .inbound_domain()
+                        .setDomainEnabled(true)
+                        .setMatchFilter({
+                            type: InboundFilterType.MATCH_ALL,
+                        })
+                        .setForwards([
+                            {
+                                type: "webhook",
+                                value: "https://bd2e540af0eb98c636fe5f8ff0b98852.m.pipedream.net"
+                            }
+                        ]);
 
-            const result = await openai.createChatCompletion({
-                model: "gpt-4-0613",
-                messages: [
+                    try {
+                        const response = await mailerSend.email.inbound.create(inbound);
+                        console.log(response.body);
+                    } catch (error) {
+                        console.error(error.body);
+                    }
+                }
+
+                createInbound();
+
+                // Email configuration
+                const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
+                const recipients = [new Recipient(email, firstName)];
+
+                const personalization = [
                     {
-                        role: "assistant",
-                        content: aiMessage,
+                        email: email,
+                        data: {
+                            test: "",
+                        },
                     },
-                    {
-                        role: "user",
-                        content: dataInput, // Use the dataInput variable here
-                    },
-                ],
-                temperature: 0,
-            });
+                ];
 
-            const responseContent = result.data.choices[0].message.content;
+                const result = await openai.createChatCompletion({
+                    model: "gpt-4-0613",
+                    messages: [
+                        {
+                            role: "assistant",
+                            content: aiMessage,
+                        },
+                        {
+                            role: "user",
+                            content: dataInput,
+                        },
+                    ],
+                    temperature: 0,
+                });
 
-            if (responseContent) {
-                // Assuming responseContent is a string
+                const responseContent = result.data.choices[0].message.content;
+
+                if (!responseContent) {
+                    return res.status(500).json({ message: "Error generating response content" });
+                }
+
                 const responseArray = responseContent.split("\n").map((message) => ({
                     sender: "Forged AI",
                     message: message.trim(),
                 }));
-                // Generate email content using the Email component
+
                 const emailContent = ReactDOMServer.renderToStaticMarkup(
                     <Email
                         firstName={firstName}
@@ -157,6 +189,7 @@ export default async function handler(req, res) {
                         chatHistory={responseArray}
                     />
                 );
+
                 const emailParams = new EmailParams()
                     .setFrom(sentFrom)
                     .setTo(recipients)
@@ -165,31 +198,35 @@ export default async function handler(req, res) {
                     .setSubject(
                         "Email Conversational Tool - Thanks for Interest in ForgedMart"
                     )
-                    .setHtml(emailContent) // Use the generated email content
-                    .setText(responseContent);
+                    .setHtml(emailContent)
+                    .setText(responseContent)
+                    ;
 
-                await mailerSend.email.send(emailParams);
-                try {
-                    const emailResponse = await mailerSend.email.send(emailParams);
-                    if (emailResponse && (emailResponse.status === 200 || emailResponse.statusText === "OK")) {
-                        mailerSend.email.message.single("message_id")
-                            .then((response) => console.log(response.body))
-                            .catch((error) => console.log(error.body));
-                    }
+                const emailResponse = await mailerSend.email.send(emailParams);
 
-                    res.status(200).json({ message: "message is sent okay" })
-                } catch (error) {
-                    console.log(error);
-                    res.status(500).json({ message: error })
+                if (
+                    emailResponse &&
+                    (emailResponse.status === 200 || emailResponse.statusText === "OK")
+                ) {
+                    await mailerSend.email.message.single("message_id")
+                        .then((response) => console.log(response.body))
+                        .catch((error) => console.log(error.body));
+
+                    console.log("EmailResponse:", emailResponse);
+                    return res.status(200).json({ message: "message is sent okay" });
+                } else {
+                    return res.status(500).json({ message: "Error sending email" });
                 }
+            } else {
+                throw new Error(`Error fetching response: ${response.statusCode}`);
             }
-
-            res.status(200).json({ message: "success" });
         } catch (error) {
             console.error("An error occurred:", error);
-            res.status(500).json({ message: error });
+            return res.status(500).json({ message: error.message });
         }
     } else {
-        console.log(error);
+        return res.status(405).json({ message: "Method not allowed" });
     }
 }
+
+

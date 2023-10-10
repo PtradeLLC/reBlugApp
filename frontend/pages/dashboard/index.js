@@ -5,11 +5,11 @@ import { useUserData } from '@nhost/nextjs';
 
 const navigation = [
     { name: "Home", href: "#", current: true },
-    { name: "Profile", href: "#", current: false },
+    { name: "Profile", href: "/profile", current: false },
     { name: "Resources", href: "#", current: false },
 ];
 const userNavigation = [
-    { name: "Your Profile", href: "#" },
+    { name: "Your Profile", href: "/profile" },
     { name: "Settings", href: "#" },
     { name: "Sign out", href: "#" },
 ];

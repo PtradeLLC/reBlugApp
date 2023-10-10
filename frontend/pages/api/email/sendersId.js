@@ -19,6 +19,9 @@ export default async function handler(req, res) {
                 .setAddNote(false);
 
             const response = await mailerSend.email.identity.create(identity);
+            if (!response) {
+                throw new Error(`There is no response ${response.statusText}`);
+            }
             res.status(200).json({ message: "Success" });
         } catch (error) {
             res.status(500).json({ message: error.message || 'Internal server error' });

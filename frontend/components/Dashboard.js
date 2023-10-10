@@ -3,11 +3,11 @@ import { Menu, Popover, Transition } from "@headlessui/react";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
-    { name: "Profile", href: "#", current: false },
+    { name: "Profile", href: "/profile", current: false },
     { name: "Resources", href: "#", current: false },
 ];
 const userNavigation = [
-    { name: "Your Profile", href: "#" },
+    { name: "Your Profile", href: "/profile" },
     { name: "Settings", href: "#" },
     { name: "Sign out", href: "#" },
 ];
@@ -81,7 +81,7 @@ function classNames(...classes) {
 }
 
 const actions = [
-    { id: 1, name: "KPI-ONE" },
+    { id: 1, name: "KI-ONE" },
     { id: 2, name: "KPI-TWO" },
     { id: 3, name: "KPI-THREE" },
 ];
