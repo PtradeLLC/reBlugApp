@@ -12,7 +12,7 @@ export default function Email({ firstName, chatHistory }) {
       <Body> {/*This is the code at react-email.js:11.*/}
         <p>Hello {firstName},</p>
         <p>Hope this email finds you well.</p>
-        <p>Please reply to this email to ask any questions you may have about our products and services.</p>
+        <p>Please reply to this email with questions about our products and services.</p>
         <div>
           {/* Render each chat message */}
           {chatItems.map((message, index) => (
