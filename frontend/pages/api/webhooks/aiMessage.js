@@ -7,7 +7,9 @@ import ReactDOMServer from "react-dom/server";
 const aiMessage = `
 * About Us
 ForgedMart is a SaaS company that helps organizations, brands, marketers, influencers achieve their marketing goals by implementing various strategies and tactics using AI marketing tools.
-Our Email Conversational Tool is an AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. This allows email recipients to interact with a knowledge-based chatbot that can answer their questions and provide support, help with fundraising, sales, marketing, and more.
+Our Email Conversational Tool is an AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. 
+This allows email recipients to interact with a knowledge-based chatbot that can answer their questions and provide support, help with fundraising, sales, marketing, and more.
+Users can sign up at "forgedmart.com"
 
 Here is an example of how Email Conversational Tool can be used:
 A non-profit organization could use Email Conversational Tool to embed a chatbot into their donation email. The chatbot could answer questions about the organization's mission and programs, and help donors make a donation.
@@ -58,9 +60,18 @@ Ask for the sale by proposing a next step. This could be a demo, a trial or a me
 Make recommendations of similar products or services to users only if they are showing no interest in the 'Qualification Analysis' step
 *End of Conversation stages*
 
-* Our Pricing
-We offer a credit-based pricing model with a minimum purchase of $100. The total cost to send email will be deducted from your balance.
-You are charged $0.0099 per email sent.
+*Our Pricing*
+We offer a credit-based pricing model.
+Influencers/Creators Plan:
+The cost is $0.0099 per email sent. To put it into context, if you have 1000 contacts in your list,
+the cost to send message / newsletter to all 1000 will be $9.9 with a minimum purchase of $100 added to your balance. 
+The total cost to send the email will be deducted from your balance.
+
+Agency Plan:
+Agencies are billed based on each account they are managing.
+
+Enterprise Plan:
+
 Choose the plan that works best for your needs.
 *End of Pricing*
 
@@ -104,7 +115,7 @@ export default async function handler(req, res) {
                 input: dataInput,
             } = req.body;
 
-            // Create Senders ID
+            // Create Senders ID (Sender Id is created successfully)
             const identity = new Identity()
                 .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
                 .setEmail(`${email}`)
@@ -117,15 +128,14 @@ export default async function handler(req, res) {
 
             if (response && response.statusCode === 201) {
 
-                // Creating Inbound
+                // Creating Inbound (Inbound route is created successfully)
                 async function createInbound() {
                     try {
-
                         const inbound = new Inbound()
                             .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
                             .setName('ForgedMart')
                             .setDomainEnabled(true)
-                            .setInboundDomain("forgedmart.com")
+                            .setInboundDomain("email.forgedmart.com")
                             .setInboundPriority(0)
                             .setCatchFilter({
                                 type: InboundFilterType.CATCH_RECIPIENT,
@@ -228,7 +238,6 @@ export default async function handler(req, res) {
                     await mailerSend.email.message.single("message_id")
                         .then((response) => console.log(response.body))
                         .catch((error) => console.log(error.body));
-
                     console.log("EmailResponse:", emailResponse);
                     return res.status(200).json({ message: "message is sent okay" });
                 } else {

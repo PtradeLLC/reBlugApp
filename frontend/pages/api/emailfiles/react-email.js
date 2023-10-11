@@ -10,7 +10,7 @@ export default function Email({ firstName, chatHistory }) {
   return (
     <Html>
       <Body> {/*This is the code at react-email.js:11.*/}
-        <p>Hello</p>
+        <p>Hello {firstName},</p>
         <p>Hope this email finds you well.</p>
         <p>Please reply to this email to ask any questions you may have about our products and services.</p>
         <div>
