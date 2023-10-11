@@ -58,6 +58,13 @@ Ask for the sale by proposing a next step. This could be a demo, a trial or a me
 Make recommendations of similar products or services to users only if they are showing no interest in the 'Qualification Analysis' step
 *End of Conversation stages*
 
+* Our Pricing
+We offer a credit-based pricing model with a minimum purchase of $100. The total cost to send email will be deducted from your balance.
+You are charged $0.0099 per email sent.
+Choose the plan that works best for your needs.
+*End of Pricing*
+
+
 This is an example of something User might ask:
 *Example*
 User: “What is the name of your business or brand?”
@@ -112,28 +119,38 @@ export default async function handler(req, res) {
 
                 // Creating Inbound
                 async function createInbound() {
-                    const inbound = new Inbound()
-                        .setDomainId(process.env.NEXT_PUBLIC_DOMAIN_ID)
-                        .setName('ForgedMart')
-                        .catch_filter()
-                        .catchFilter()
-                        .inbound_priority()
-                        .setInboundPriority(100)
-                        .inbound_domain()
-                        .setDomainEnabled(true)
-                        .setMatchFilter({
-                            type: InboundFilterType.MATCH_ALL,
-                        })
-                        .setForwards([
-                            {
-                                type: "webhook",
-                                value: "https://bd2e540af0eb98c636fe5f8ff0b98852.m.pipedream.net"
-                            }
-                        ]);
-
                     try {
-                        const response = await mailerSend.email.inbound.create(inbound);
-                        console.log(response.body);
+
+                        const inbound = new Inbound()
+                            .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
+                            .setName('ForgedMart')
+                            .setDomainEnabled(true)
+                            .setInboundDomain("forgedmart.com")
+                            .setInboundPriority(0)
+                            .setCatchFilter({
+                                type: InboundFilterType.CATCH_RECIPIENT,
+                                filters: [{
+                                    comparer: "equal",
+                                    value: email
+                                }]
+                            })
+                            .setMatchFilter({
+                                type: InboundFilterType.MATCH_SENDER,
+                                filters: [{
+                                    comparer: "equal",
+                                    value: "support@forgedmart.com"
+                                }]
+                            })
+                            .setForwards([
+                                {
+                                    type: "webhook",
+                                    value: "https://b32997d406e5d4da9aa81b0b3d0eeb4f.m.pipedream.net"
+                                }
+                            ]);
+
+                        mailerSend.email.inbound.create(inbound)
+                            .then((response) => console.log(response.body))
+                            .catch((error) => console.log(error.body));
                     } catch (error) {
                         console.error(error.body);
                     }
@@ -149,7 +166,7 @@ export default async function handler(req, res) {
                     {
                         email: email,
                         data: {
-                            test: "",
+                            test: "This is a test, pls change this soon",
                         },
                     },
                 ];
@@ -228,5 +245,6 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: "Method not allowed" });
     }
 }
+
 
 
