@@ -18,11 +18,6 @@ const cards = [
     { name: "Creators", href: "#", amount: "Messaging Platform", id: 3 },
 ];
 
-const stats = [
-    { label: "Vacation days left", value: 12 },
-    { label: "Sick days left", value: 4 },
-    { label: "Personal days left", value: 2 },
-];
 const recentHires = [
     {
         name: "Leonard Krasner",
@@ -304,8 +299,8 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-gray-50 sm:grid-cols-1 sm:divide-x sm:divide-y-0">
-                                            {/* <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
+                                        {/* <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-gray-50 sm:grid-cols-1 sm:divide-x sm:divide-y-0">
+                                            <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
 
                                                 {cards.map((card) => (
                                                     <div
@@ -341,8 +336,8 @@ export default function Dashboard() {
                                                         </div>
                                                     </div>
                                                 ))}
-                                            </div> */}
-                                        </div>
+                                            </div>
+                                        </div> */}
                                     </div>
                                 </section>
 
