@@ -263,7 +263,7 @@ export default function Dashboard() {
                                                                 key={card.id}
                                                                 className="overflow-hidden rounded-lg bg-white shadow"
                                                             >
-                                                                <div className="p-5">
+                                                                {/* <div className="p-5">
                                                                     <div className="flex items-center">
                                                                         <div className="flex-shrink-0"></div>
                                                                         <div className="ml-5 w-0 flex-1">
@@ -279,14 +279,14 @@ export default function Dashboard() {
                                                                             </dl>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
                                                                 <div className="bg-gray-50 px-5 py-3">
                                                                     <div className="text-sm text-center">
                                                                         <a
                                                                             href={card.href}
                                                                             className="font-medium text-gray-700 hover:text-gray-900"
                                                                         >
-                                                                            Click
+                                                                            {card.name}
                                                                         </a>
                                                                     </div>
                                                                 </div>
