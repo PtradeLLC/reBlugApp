@@ -285,7 +285,7 @@ const Dashboard = function ({ children }) {
                                                         className="overflow-hidden rounded-lg bg-white shadow"
                                                     >
                                                         <div className="bg-gray-50 px-5 py-3">
-                                                            <div className="text-sm text-center">
+                                                            <div className="text-sm flex flex-col text-center">
                                                                 <a
                                                                     href={card.href}
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
