@@ -85,9 +85,13 @@ function classNames(...classes) {
 }
 
 const actions = [
-    { id: 1, name: "KPI-ONE" },
-    { id: 2, name: "KPI-TWO" },
-    { id: 3, name: "KPI-THREE" },
+    { id: 1, name: "Processed" },
+    { id: 2, name: "Delivered" },
+    { id: 3, name: "Opened" },
+    { id: 4, name: "Clicked" },
+    { id: 5, name: "Received" },
+    { id: 6, name: "Spam complaint" },
+    { id: 7, name: "Bounced" },
 ];
 
 const UserContext = createContext();
