@@ -63,14 +63,14 @@ const quicklinks = [
         title: "Email Conversational Tool",
         href: "#",
         preview:
-            "Turn chats into sales with our conversational AI commerce. Let chatbot provide answers to your customers and handle sales on your behalf in a personalized shopping environment. Connect with clients in real time to promote new initiatives, update customers on key happenings all within the email.",
+            "An AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. This allows recipients to interact with a knowledge-based chatbot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
     },
     {
         id: 2,
         title: "Marketing Automation",
         href: "#",
         preview:
-            "Let this Ai powered tool analyze trends, plan, and launch your campaign...",
+            "This AI-powered tool can help you with every stage of your marketing campaign, from analyzing trends to planning and launching your campaign. It can help you to Identify your target audience and their needs, Research your competition, Understand the latest marketing trends, Develop a marketing strategy that is tailored to your specific goals, Create and distribute engaging marketing content, Track and measure the results of your campaigns",
     },
     {
         id: 3,
