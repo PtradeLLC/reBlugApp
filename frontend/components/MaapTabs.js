@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function EmailTabs() {
+export default function MaapTabs() {
     const [selectedTab, setSelectedTab] = useState(tabs.find((tab) => tab.current));
 
     const handleTabClick = (tab) => {

@@ -4,7 +4,11 @@ import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
 import { FaceIcon, ImageIcon, SizeIcon } from '@radix-ui/react-icons'
 import Link from "next/link";
-import Tabs from "../../components/Tabs";
+import EmailTabs from "../../components/EmailTabs";
+import MaapTabs from "../../components/MaapTabs";
+import MarketTabs from "../../components/MarketCampTab";
+
+
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -345,7 +349,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    <Tabs />
+                                    <EmailTabs />
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
