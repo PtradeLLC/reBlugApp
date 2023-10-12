@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 const tabs = [
-    { name: 'My Account', href: '#account', current: true, content: 'Content for My Account tab' },
-    { name: 'Company', href: '#company', current: false, content: 'Content for Company tab' },
-    { name: 'Team Members', href: '#tmember', current: false, content: 'Content for Team Members tab' },
-    { name: 'Billing', href: '#', current: false, content: 'Content for Billing tab' },
+    { name: 'Features', href: '#features', current: true, content: 'Content for My Account tab' },
+    { name: 'Latest Campaign', href: '#campaign', current: false, content: 'Content for Company tab' },
+    { name: 'Outcomes', href: '#outcomes', current: false, content: 'Content for Team Members tab' },
+    // { name: 'Billing', href: '#', current: false, content: 'Content for Billing tab' },
 ];
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export default function EmailTabs() {
     const [selectedTab, setSelectedTab] = useState(tabs.find((tab) => tab.current));
 
     const handleTabClick = (tab) => {
