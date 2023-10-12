@@ -76,7 +76,7 @@ const quicklinks = [
         id: 3,
         title: "Messaging as a Platform",
         href: "#",
-        preview: "Creators can ....",
+        preview: "Messaging platforms are the new frontier for creators. They give you the power to connect with your audience on a deeper level, build stronger relationships, and boost engagement. With Messaging as a Platform (MaaP), you can create personalized and interactive messaging experiences that will keep your fans coming back for more. Create exclusive content and experiences for your fans who sign up for messaging notifications all without depending on any social media network.",
     },
 ];
 
