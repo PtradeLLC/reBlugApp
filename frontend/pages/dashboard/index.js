@@ -299,6 +299,7 @@ const Dashboard = function ({ children }) {
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
+                                                                    <FaceIcon className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400" />
 
                                                                 </Link>
                                                             </div>
@@ -310,7 +311,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section aria-labelledby="quick-links-title">
-                                    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 gap-4 sm:gap-px sm:divide-y-0">
+                                    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
@@ -331,7 +332,7 @@ const Dashboard = function ({ children }) {
                                                     "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                                                 )}
                                             >
-                                                <div className="mt-8">
+                                                <div className="mt-8 gap-4">
                                                     <h3 className="text-lg font-medium">
                                                         <a
                                                             href={action.href}
@@ -377,7 +378,7 @@ const Dashboard = function ({ children }) {
                                                 className="text-base font-medium text-gray-900"
                                                 id="quicklinks-title"
                                             >
-                                                Quick Links
+                                                Quick Link
                                             </h2>
                                             <div className="mt-6 flow-root">
                                                 <ul
