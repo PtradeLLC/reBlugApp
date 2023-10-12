@@ -310,7 +310,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section aria-labelledby="quick-links-title">
-                                    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 sm:gap-px sm:divide-y-0">
+                                    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
@@ -319,7 +319,7 @@ const Dashboard = function ({ children }) {
                                                 key={action.id}
                                                 className={classNames(
                                                     actionIdx === 0
-                                                        ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none"
+                                                        ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
                                                         : "",
                                                     actionIdx === 1 ? "sm:rounded-tr-lg" : "",
                                                     actionIdx === actions.length - 2
