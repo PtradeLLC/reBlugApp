@@ -17,9 +17,9 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Marketing", href: "#", amount: "Email Conversational Tool", id: 1, icon: "SizeIcon" },
-    { name: "Marketing", href: "#", amount: "Campaign Automation", id: 2, icon: "SizeIcon" },
-    { name: "Creators", href: "#", amount: "Messaging Platform", id: 3, icon: "SizeIcon" },
+    { name: "Marketing", href: "#", amount: "Email Conversational Tool", id: 1, icon: "SizeIcon", bground: "#A18072" },
+    { name: "Marketing", href: "#", amount: "Campaign Automation", id: 2, icon: "SizeIcon", bground: "#A18072" },
+    { name: "Creators", href: "#", amount: "Messaging Platform", id: 3, icon: "SizeIcon", bground: "#A18072" }
 ];
 
 const stats = [
@@ -285,7 +285,8 @@ const Dashboard = function ({ children }) {
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className="overflow-hidden rounded-lg bg-gray-50 shadow"
+                                                        className={`overflow-hidden rounded-lg ${card.id === '1' ? 'bg-yellow-400' : card.id === '2' ? 'bg-blue-500' : card.id === '3' ? 'bg-blue-900' : null} shadow`}
+                                                    // className="overflow-hidden rounded-lg bg-gray-50 shadow"
                                                     >
                                                         <div className="bg-gray-50 px-5 py-3">
                                                             <div className="text-sm text-center">
@@ -293,7 +294,6 @@ const Dashboard = function ({ children }) {
                                                                     href={card.href}
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
-                                                                    <SizeIcon />
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
 
