@@ -293,9 +293,10 @@ const Dashboard = function ({ children }) {
                                                                     href={card.href}
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
+                                                                    <SizeIcon />
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
-                                                                    <SizeIcon />
+
                                                                 </Link>
                                                             </div>
                                                         </div>
