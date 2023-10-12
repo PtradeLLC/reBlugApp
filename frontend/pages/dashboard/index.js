@@ -2,7 +2,7 @@ import { Fragment, useState, createContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
-import { FaceIcon, ImageIcon, SunIcon } from '@radix-ui/react-icons'
+import { FaceIcon, ImageIcon, SizeIcon } from '@radix-ui/react-icons'
 import Link from "next/link";
 
 const navigation = [
