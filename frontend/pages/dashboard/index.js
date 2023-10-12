@@ -128,7 +128,7 @@ const Dashboard = function ({ children }) {
                                                     ))}
                                                 </nav>
                                             </div>
-                                            <div className="px-12 lg:px-0">
+                                            {/* <div className="px-12 lg:px-0">
 
                                                 <div className="mx-auto w-full max-w-xs lg:max-w-md">
                                                     <label htmlFor="search" className="sr-only">
@@ -144,7 +144,7 @@ const Dashboard = function ({ children }) {
                                                         />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
