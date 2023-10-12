@@ -290,8 +290,8 @@ const Dashboard = function ({ children }) {
                                                                     href={card.href}
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
-                                                                    <span className="mx-2 text-3xl">{card.name}</span>
-                                                                    <span>{card.amount}</span>
+                                                                    <span className="mx-2">{card.name}</span>
+                                                                    <span className="text-3xl">{card.amount}</span>
 
                                                                 </a>
                                                             </div>
