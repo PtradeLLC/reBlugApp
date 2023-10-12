@@ -286,9 +286,9 @@ const Dashboard = function ({ children }) {
                                                     <div
                                                         key={card.id}
                                                         // className={`overflow-hidden rounded-lg ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null} shadow`}
-                                                        className={`overflow-hidden rounded-lg shadow ${card.id === 1 ? 'bg-[#e4e4e7]' : card.id === 2 ? 'bg-[#e5e5e5]' : card.id === 3 ? 'bg-[#e7e5e4]' : null} `}
+                                                        className={`overflow-hidden rounded-lg shadow bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                     >
-                                                        <div className={`px-5 py-3 ${card.id === 1 ? '#e4e4e7' : card.id === 2 ? 'bg-[#e5e5e5]' : card.id === 3 ? 'bg-[#e7e5e4]' : null}`}>
+                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
