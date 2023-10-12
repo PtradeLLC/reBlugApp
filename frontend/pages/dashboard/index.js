@@ -343,6 +343,8 @@ const Dashboard = function ({ children }) {
                                             </div>
                                         ))}
                                     </div>
+                                </section>
+                                <section className="mt-4">
                                     <Tabs />
                                 </section>
                             </div>
