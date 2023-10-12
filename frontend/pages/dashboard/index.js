@@ -90,8 +90,8 @@ const actions = [
     { id: 3, name: "Opened" },
     { id: 4, name: "Clicked" },
     { id: 5, name: "Received" },
-    { id: 6, name: "Spam complaint" },
-    { id: 7, name: "Bounced" },
+    // { id: 6, name: "Spam complaint" },
+    // { id: 7, name: "Bounced" },
 ];
 
 const UserContext = createContext();
