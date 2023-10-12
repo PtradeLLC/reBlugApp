@@ -128,23 +128,6 @@ const Dashboard = function ({ children }) {
                                                     ))}
                                                 </nav>
                                             </div>
-                                            {/* <div className="px-12 lg:px-0">
-
-                                                <div className="mx-auto w-full max-w-xs lg:max-w-md">
-                                                    <label htmlFor="search" className="sr-only">
-                                                        Search
-                                                    </label>
-                                                    <div className="relative text-gray-400 focus-within:text-gray-600">
-                                                        <input
-                                                            id="search"
-                                                            className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-gray-600 placeholder:text-gray-600 focus:bg-white focus:text-gray-900 ring-1 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
-                                                            placeholder="Search"
-                                                            type="search"
-                                                            name="search"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -202,13 +185,6 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                                 <div className="pb-2 pt-4">
                                                     <div className="flex items-center px-5">
-                                                        <div className="flex-shrink-0">
-                                                            {/* <img
-                                                                className="h-10 w-10 rounded-full"
-                                                                src={image || profileImage}
-                                                                alt="profile image"
-                                                            /> */}
-                                                        </div>
                                                         <div className="ml-3 min-w-0 flex-1">
                                                             <div className="truncate text-base font-medium text-gray-800">
                                                                 Hello {user?.displayName},
@@ -300,7 +276,6 @@ const Dashboard = function ({ children }) {
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
                                                                     <FaceIcon className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400" />
-
                                                                 </Link>
                                                             </div>
                                                         </div>
@@ -403,18 +378,18 @@ const Dashboard = function ({ children }) {
                                                                 <p className="mt-1  text-sm text-gray-600">
                                                                     {quicklink.preview}
                                                                 </p>
+                                                                <div className="mt-6">
+                                                                    <Link
+                                                                        href={quicklink.href}
+                                                                        className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                    >
+                                                                        Find out more
+                                                                    </Link>
+                                                                </div>
                                                             </div>
                                                         </li>
                                                     ))}
                                                 </ul>
-                                            </div>
-                                            <div className="mt-6">
-                                                <a
-                                                    href="#"
-                                                    className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                >
-                                                    Visit
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
