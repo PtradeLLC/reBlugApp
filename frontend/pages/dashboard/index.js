@@ -277,21 +277,21 @@ const Dashboard = function ({ children }) {
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">
-                                                    <a
+                                                    <Link
                                                         href="#"
                                                         className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                     >
                                                         Add Team Member
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className={`overflow-hidden rounded-lg shadow-sm bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                        className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                     >
-                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}>
+                                                        <div className={`px-5 py-3 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
