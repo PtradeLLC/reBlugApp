@@ -285,9 +285,10 @@ const Dashboard = function ({ children }) {
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className={`overflow-hidden rounded-lg ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null} shadow`}
+                                                        // className={`overflow-hidden rounded-lg ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null} shadow`}
+                                                        className={`overflow-hidden rounded-lg bg-gray-50 shadow ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null} `}
                                                     >
-                                                        <div className="bg-gray-50 px-5 py-3">
+                                                        <div className={`bg-gray-50 px-5 py-3 ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null}`}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
