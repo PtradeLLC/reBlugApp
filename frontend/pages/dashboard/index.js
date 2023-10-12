@@ -291,7 +291,7 @@ const Dashboard = function ({ children }) {
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
-                                                                    <span className="text-xl font-bold">{card.amount}</span>
+                                                                    <span className="text-lg font-bold">{card.amount}</span>
 
                                                                 </a>
                                                             </div>
