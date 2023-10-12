@@ -282,16 +282,16 @@ const Dashboard = function ({ children }) {
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className="overflow-hidden rounded-lg bg-white shadow"
+                                                        className="overflow-hidden rounded-lg bg-gray-50 shadow"
                                                     >
                                                         <div className="bg-gray-50 px-5 py-3">
-                                                            <div className="text-sm flex flex-col text-center">
+                                                            <div className="text-sm text-center">
                                                                 <a
                                                                     href={card.href}
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
-                                                                    <span className="mx-2">{card.name}</span>
-                                                                    <span className="text-3xl">{card.amount}</span>
+                                                                    <span className="mx-2">{card.name}<br /></span>
+                                                                    <span className="text-2xl">{card.amount}</span>
 
                                                                 </a>
                                                             </div>
