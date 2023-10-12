@@ -65,7 +65,9 @@ export default function EmailTabs() {
                     ))}
                 </nav>
             </div>
-            <div className="mt-4">{selectedTab.content}</div>
+            <div className="mt-4">
+                {selectedTab.content.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+            </div>
         </div>
     );
 }
