@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 const tabs = [
-    { name: 'My Account', href: '#', current: true, content: 'Content for My Account tab' },
-    { name: 'Company', href: '#', current: false, content: 'Content for Company tab' },
-    { name: 'Team Members', href: '#', current: false, content: 'Content for Team Members tab' },
+    { name: 'My Account', href: '#account', current: true, content: 'Content for My Account tab' },
+    { name: 'Company', href: '#company', current: false, content: 'Content for Company tab' },
+    { name: 'Team Members', href: '#tmember', current: false, content: 'Content for Team Members tab' },
     { name: 'Billing', href: '#', current: false, content: 'Content for Billing tab' },
 ];
 
