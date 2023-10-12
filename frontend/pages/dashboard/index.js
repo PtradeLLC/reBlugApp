@@ -285,10 +285,9 @@ const Dashboard = function ({ children }) {
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        // className={`overflow-hidden rounded-lg ${card.id === 1 ? 'bg-yellow-400' : card.id === 2 ? 'bg-blue-500' : card.id === 3 ? 'bg-blue-900' : null} shadow`}
-                                                        className={`overflow-hidden rounded-lg shadow bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                        className={`overflow-hidden rounded-lg shadow-sm bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                     >
-                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}>
+                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 shadow-sm `}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
