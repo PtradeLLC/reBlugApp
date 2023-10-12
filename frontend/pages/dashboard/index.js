@@ -291,7 +291,7 @@ const Dashboard = function ({ children }) {
                                                         key={card.id}
                                                         className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                     >
-                                                        <div className={`px-5 py-3 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}>
+                                                        <div className={`px-5 py-3`}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
