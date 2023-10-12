@@ -267,6 +267,7 @@ const Dashboard = function ({ children }) {
                                                         <h2 className="text-2xl font-semibold text-gray-900">
                                                             Welcome {user?.displayName}
                                                         </h2>
+                                                        <span className="">Edit</span>
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">
@@ -291,7 +292,7 @@ const Dashboard = function ({ children }) {
                                                                     className="font-medium text-gray-700 hover:text-gray-900"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
-                                                                    <span className="text-lg font-bold">{card.amount}</span>
+                                                                    <span className="font-bold">{card.amount}</span>
 
                                                                 </a>
                                                             </div>
