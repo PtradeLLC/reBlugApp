@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { emailTab, marketing_tab, outcomes_tab } from "/tabpage";
 
 const tabs = [
-    { name: 'Features', href: '#features', current: true, content: 'Content for My Account tab' },
+    { name: 'Features', href: '#features', current: true, content: emailTab },
     { name: 'Latest Campaign', href: '#campaign', current: false, content: 'Content for Company tab' },
     { name: 'Outcomes', href: '#outcomes', current: false, content: 'Content for Team Members tab' },
-    // { name: 'Billing', href: '#', current: false, content: 'Content for Billing tab' },
 ];
 
 function classNames(...classes) {
@@ -27,7 +27,7 @@ export default function EmailTabs() {
                 <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="block w-full rounded-md border-gray-300 focus:border-red-500 focus:ring-red-500"
                     value={selectedTab.name}
                     onChange={(e) => setSelectedTab(tabs.find((tab) => tab.name === e.target.value))}
                 >
@@ -57,7 +57,7 @@ export default function EmailTabs() {
                             <span
                                 aria-hidden="true"
                                 className={classNames(
-                                    selectedTab === tab ? 'bg-indigo-500' : 'bg-transparent',
+                                    selectedTab === tab ? 'bg-red-500' : 'bg-transparent',
                                     'absolute inset-x-0 bottom-0 h-0.5'
                                 )}
                             />
