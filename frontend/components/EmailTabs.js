@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { emailTab, marketing_tab, outcomes_tab } from "../pages/tabpage";
+import { emailTab, marketing_tab, outcomes_tab } from "../utils/tabpage";
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: emailTab },
