@@ -287,11 +287,11 @@ const Dashboard = function ({ children }) {
                                                         key={card.id}
                                                         className={`overflow-hidden rounded-lg shadow-sm bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                     >
-                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 shadow-sm `}>
+                                                        <div className={`px-5 py-3 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}>
                                                             <div className="text-sm text-center">
                                                                 <Link
                                                                     href={card.href}
-                                                                    className="font-medium text-[#0f172a] hover:text-gray-400"
+                                                                    className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
@@ -303,45 +303,6 @@ const Dashboard = function ({ children }) {
                                                 ))}
                                             </div>
                                         </div>
-                                        {/* <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-gray-50 sm:grid-cols-1 sm:divide-x sm:divide-y-0">
-                                            <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
-
-                                                {cards.map((card) => (
-                                                    <div
-                                                        key={card.id}
-                                                        className="overflow-hidden rounded-lg bg-white shadow"
-                                                    >
-                                                        <div className="p-5">
-                                                            <div className="flex items-center">
-                                                                <div className="flex-shrink-0"></div>
-                                                                <div className="ml-5 w-0 flex-1">
-                                                                    <dl>
-                                                                        <dt className="truncate text-sm font-medium text-gray-500">
-                                                                            {card.name}
-                                                                        </dt>
-                                                                        <dd>
-                                                                            <div className="text-lg font-medium text-gray-900">
-                                                                                {card.amount}
-                                                                            </div>
-                                                                        </dd>
-                                                                    </dl>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="bg-gray-50 px-5 py-3">
-                                                            <div className="text-sm text-center">
-                                                                <a
-                                                                    href={card.href}
-                                                                    className="font-medium text-gray-700 hover:text-gray-900"
-                                                                >
-                                                                    Click
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </section>
                                 <section aria-labelledby="quick-links-title">
