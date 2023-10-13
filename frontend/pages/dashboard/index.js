@@ -87,7 +87,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-const actions = [
+const emailAction = [
     { id: 1, name: "Processed" },
     { id: 2, name: "Delivered" },
     { id: 3, name: "Opened" },
@@ -96,6 +96,22 @@ const actions = [
     // { id: 6, name: "Spam complaint" },
     // { id: 7, name: "Bounced" },
 ];
+
+const automationAction = [
+    { id: 1, name: "Procesed" },
+    { id: 2, name: "Delivered" },
+    { id: 3, name: "Opened" },
+    { id: 4, name: "Clicked" },
+    { id: 5, name: "Received" },
+];
+
+const marketingAction = [
+    { id: 1, name: "Procesed" },
+    { id: 2, name: "Delivered" },
+    { id: 3, name: "Opened" },
+    { id: 4, name: "Clicked" },
+    { id: 5, name: "Received" },
+]
 
 const UserContext = createContext();
 
@@ -293,7 +309,8 @@ const Dashboard = function ({ children }) {
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        {actions.map((action, actionIdx) => (
+                                        {/* EDIT THE CLICK FLOW ON THIS NEXT */}
+                                        {emailAction.map((action, actionIdx) => (
                                             <div
                                                 key={action.id}
                                                 className={classNames(
@@ -301,10 +318,10 @@ const Dashboard = function ({ children }) {
                                                         ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
                                                         : "",
                                                     actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                                                    actionIdx === actions.length - 2
+                                                    actionIdx === emailAction.length - 2
                                                         ? "sm:rounded-bl-lg"
                                                         : "",
-                                                    actionIdx === actions.length - 1
+                                                    actionIdx === emailAction.length - 1
                                                         ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                                                         : "",
                                                     "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
@@ -347,7 +364,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    <EmailTabs />
+                                    {/* <EmailTabs /> */}
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
