@@ -122,7 +122,7 @@ const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
     const [selectedComponent, setSelectedComponent] = useState(null);
-    const [selectedKPI, setSelectedKpi] = useState("blah blah blah")
+    const [selectedKpi, setSelectedKpi] = useState("blah blah blah")
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
@@ -457,7 +457,7 @@ const Dashboard = function ({ children }) {
                                                             <div className="text-sm text-center">
                                                                 {/* kpi(card.title) */}
                                                                 <button
-                                                                    onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card) }}
+                                                                    onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
@@ -478,11 +478,11 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         {/* EDIT THE CLICK FLOW ON THIS NEXT */}
-                                        {selectedKPI && (
+                                        {selectedKpi && (
                                             <div>
-                                                {selectedKPI.title === "Email Conversational" && kpi("Email Conversational")}
-                                                {selectedKPI.title === "Campaign Automation" && kpi("Campaign Automation")}
-                                                {selectedKPI.title === "Messaging Platform" && kpi("Messaging Platform")}
+                                                {selectedKpi.title === "Email Conversational" && kpi("Email Conversational")}
+                                                {selectedKpi.title === "Campaign Automation" && kpi("Campaign Automation")}
+                                                {selectedKpi.title === "Messaging Platform" && kpi("Messaging Platform")}
                                             </div>
                                         )}
                                     </div>
