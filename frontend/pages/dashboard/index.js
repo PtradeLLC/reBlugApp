@@ -8,9 +8,6 @@ import EmailTabs from "../../components/EmailTabs";
 import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
 
-
-
-
 const navigation = [
     { name: "Home", href: "#", current: true },
     { name: "Profile", href: "/profile", current: false },
@@ -255,7 +252,7 @@ const Dashboard = function ({ children }) {
                                                         <h2 className="text-2xl font-semibold text-gray-900">
                                                             Welcome {user?.displayName}
                                                         </h2>
-                                                        <span className="text-sm">Edit</span>
+                                                        <Link href={"/profile"}><span className="text-sm">Edit</span></Link>
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">
@@ -281,7 +278,8 @@ const Dashboard = function ({ children }) {
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
-                                                                    <FaceIcon className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400" />
+                                                                    <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span>
+                                                                    {/* <FaceIcon  /> */}
                                                                 </Link>
                                                             </div>
                                                         </div>
