@@ -127,6 +127,7 @@ const Dashboard = function ({ children }) {
     const kpi = (title) => {
         if (title === "Email Conversational") {
             console.log("EC", title);
+            console.log("SEC", selectedKpi);
             emailAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
@@ -180,6 +181,7 @@ const Dashboard = function ({ children }) {
             ))
         } else if (title === "Campaign Automation") {
             console.log("CA", title);
+            console.log("SCA", selectedKpi);
             automationAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
@@ -233,6 +235,7 @@ const Dashboard = function ({ children }) {
             ))
         } else if (title === "Messaging Platform") {
             console.log("MP", title);
+            console.log("SMP", selectedKpi);
             marketingAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
@@ -477,22 +480,22 @@ const Dashboard = function ({ children }) {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="mt-4">
-                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                    {selectedComponent === "Campaign Automation" && <MarketTabs />}
-                                    {selectedComponent === "Messaging Platform" && <MaapTabs />}
-                                </section>
                                 <section aria-labelledby="quick-links-title">
-                                    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                    <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
-                                            Quick linnks
+                                            Quick links
                                         </h2>
                                         {selectedKpi && (
-                                            <div>
+                                            <div className="mt-1">
                                                 {kpi(selectedKpi)} {/* Render the selected content */}
                                             </div>
                                         )}
                                     </div>
+                                </section>
+                                <section className="mt-4">
+                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                    {selectedComponent === "Campaign Automation" && <MarketTabs />}
+                                    {selectedComponent === "Messaging Platform" && <MaapTabs />}
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
