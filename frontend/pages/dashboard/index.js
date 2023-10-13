@@ -477,7 +477,7 @@ const Dashboard = function ({ children }) {
                                 <section aria-labelledby="quick-links-title">
                                     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
-                                            Quick links
+                                            Quick linnks
                                         </h2>
                                         {selectedKpi && (
                                             <div>
