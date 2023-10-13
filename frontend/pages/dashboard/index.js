@@ -480,14 +480,15 @@ const Dashboard = function ({ children }) {
                                         </div>
                                     </div>
                                 </section>
-                                <section aria-labelledby="quick-links-title">
+                                <section className="mt-4">
                                     <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
+                                        {/* If selectedKpi is exist, then component is rendered */}
                                         {selectedKpi && (
-                                            <div className="mt-1">
-                                                {kpi(selectedKpi)} {/* Render the selected content */}
+                                            <div className="">
+                                                {kpi(selectedKpi)}
                                             </div>
                                         )}
                                     </div>
