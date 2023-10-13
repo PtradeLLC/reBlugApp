@@ -273,13 +273,12 @@ const Dashboard = function ({ children }) {
                                                         <div className={`px-5 py-3`}>
                                                             <div className="text-sm text-center">
                                                                 <Link
-                                                                    href={card.href}
+                                                                    href={card.id === 1 ? <EmailTabs /> : card.id === 2 ? <MarketTabs /> : card.id === 3 ? <MaapTabs /> : null}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
                                                                     <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span>
-                                                                    {/* <FaceIcon  /> */}
                                                                 </Link>
                                                             </div>
                                                         </div>
