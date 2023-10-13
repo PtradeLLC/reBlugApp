@@ -20,9 +20,9 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Marketing", href: "#", amount: "Email Conversational", id: 1, icon: "SizeIcon", bground: "#A18072" },
-    { name: "Marketing", href: "#", amount: "Campaign Automation", id: 2, icon: "SizeIcon", bground: "#A18072" },
-    { name: "Creators", href: "#", amount: "Messaging Platform", id: 3, icon: "SizeIcon", bground: "#A18072" }
+    { name: "Marketing", href: "#", title: "Email Conversational", id: 1, icon: "SizeIcon", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "SizeIcon", bground: "#A18072" },
+    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "SizeIcon", bground: "#A18072" }
 ];
 
 const stats = [
@@ -121,7 +121,170 @@ const UserContext = createContext();
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
-    const [selectedComponent, setSelectedComponent] = useState(<EmailTabs />)
+    const [selectedComponent, setSelectedComponent] = useState(null);
+    const [selectedKPI, setSelectedKpi] = useState("blah blah blah")
+
+    const kpi = (title) => {
+        if (title === "Email Conversational") {
+            emailAction.map((action, actionIdx) => (
+                <div
+                    key={action.id}
+                    className={classNames(
+                        actionIdx === 0
+                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                            : "",
+                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
+                        actionIdx === emailAction.length - 2
+                            ? "sm:rounded-bl-lg"
+                            : "",
+                        actionIdx === emailAction.length - 1
+                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                            : "",
+                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                    )}
+                >
+                    <div className="mt-8 gap-4">
+                        <h3 className="text-lg font-medium">
+                            <a
+                                href={action.href}
+                                className="focus:outline-none"
+                            >
+
+                                <span
+                                    className="absolute inset-0"
+                                    aria-hidden="true"
+                                />
+                                {action.name}
+                            </a>
+                        </h3>
+                        <p className="mt-2 text-sm text-gray-500">
+                            Doloribus dolores nostrum quia qui natus officia
+                            quod et dolorem. Sit repellendus qui ut at
+                            blanditiis et quo et molestiae.
+                        </p>
+                    </div>
+                    <span
+                        className="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            className="h-6 w-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                        </svg>
+                    </span>
+                </div>
+            ))
+        } else if (title === "Campaign Automation") {
+            automationAction.map((action, actionIdx) => (
+                <div
+                    key={action.id}
+                    className={classNames(
+                        actionIdx === 0
+                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                            : "",
+                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
+                        actionIdx === emailAction.length - 2
+                            ? "sm:rounded-bl-lg"
+                            : "",
+                        actionIdx === emailAction.length - 1
+                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                            : "",
+                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                    )}
+                >
+                    <div className="mt-8 gap-4">
+                        <h3 className="text-lg font-medium">
+                            <a
+                                href={action.href}
+                                className="focus:outline-none"
+                            >
+
+                                <span
+                                    className="absolute inset-0"
+                                    aria-hidden="true"
+                                />
+                                {action.name}
+                            </a>
+                        </h3>
+                        <p className="mt-2 text-sm text-gray-500">
+                            Doloribus dolores nostrum quia qui natus officia
+                            quod et dolorem. Sit repellendus qui ut at
+                            blanditiis et quo et molestiae.
+                        </p>
+                    </div>
+                    <span
+                        className="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            className="h-6 w-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                        </svg>
+                    </span>
+                </div>
+            ))
+        } else if (title === "Messaging Platform") {
+            marketingAction.map((action, actionIdx) => (
+                <div
+                    key={action.id}
+                    className={classNames(
+                        actionIdx === 0
+                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                            : "",
+                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
+                        actionIdx === emailAction.length - 2
+                            ? "sm:rounded-bl-lg"
+                            : "",
+                        actionIdx === emailAction.length - 1
+                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                            : "",
+                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                    )}
+                >
+                    <div className="mt-8 gap-4">
+                        <h3 className="text-lg font-medium">
+                            <a
+                                href={action.href}
+                                className="focus:outline-none"
+                            >
+
+                                <span
+                                    className="absolute inset-0"
+                                    aria-hidden="true"
+                                />
+                                {action.name}
+                            </a>
+                        </h3>
+                        <p className="mt-2 text-sm text-gray-500">
+                            Doloribus dolores nostrum quia qui natus officia
+                            quod et dolorem. Sit repellendus qui ut at
+                            blanditiis et quo et molestiae.
+                        </p>
+                    </div>
+                    <span
+                        className="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            className="h-6 w-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+                        </svg>
+                    </span>
+                </div>
+            ))
+
+        }
+    };
+
     return (
         <UserContext.Provider value={user}>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -285,25 +448,6 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
-                                                {/* {cards.map((card) => (
-                                                    <div
-                                                        key={card.id}
-                                                        className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
-                                                    >
-                                                        <div className={`px-5 py-3`}>
-                                                            <div className="text-sm text-center">
-                                                                <Link
-                                                                    href={card.id === 1 ? <EmailTabs /> : card.id === 2 ? <MarketTabs /> : card.id === 3 ? <MaapTabs /> : null}
-                                                                    className="font-medium text-[#0f172a] hover:text-black"
-                                                                >
-                                                                    <span className="mx-2">{card.name}<br /></span>
-                                                                    <span className="font-bold">{card.amount}</span>
-                                                                    <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))} */}
                                                 {cards.map((card) => (
                                                     <div
                                                         key={card.id}
@@ -311,12 +455,13 @@ const Dashboard = function ({ children }) {
                                                     >
                                                         <div className={`px-5 py-3`}>
                                                             <div className="text-sm text-center">
+                                                                {/* kpi(card.title) */}
                                                                 <button
-                                                                    onClick={() => setSelectedComponent(card.amount)}
+                                                                    onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
-                                                                    <span className="font-bold">{card.amount}</span>
+                                                                    <span className="font-bold">{card.title}</span>
                                                                     <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
                                                                 </button>
                                                             </div>
@@ -333,57 +478,7 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         {/* EDIT THE CLICK FLOW ON THIS NEXT */}
-                                        {emailAction.map((action, actionIdx) => (
-                                            <div
-                                                key={action.id}
-                                                className={classNames(
-                                                    actionIdx === 0
-                                                        ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
-                                                        : "",
-                                                    actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                                                    actionIdx === emailAction.length - 2
-                                                        ? "sm:rounded-bl-lg"
-                                                        : "",
-                                                    actionIdx === emailAction.length - 1
-                                                        ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                                                        : "",
-                                                    "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                                                )}
-                                            >
-                                                <div className="mt-8 gap-4">
-                                                    <h3 className="text-lg font-medium">
-                                                        <a
-                                                            href={action.href}
-                                                            className="focus:outline-none"
-                                                        >
-
-                                                            <span
-                                                                className="absolute inset-0"
-                                                                aria-hidden="true"
-                                                            />
-                                                            {action.name}
-                                                        </a>
-                                                    </h3>
-                                                    <p className="mt-2 text-sm text-gray-500">
-                                                        Doloribus dolores nostrum quia qui natus officia
-                                                        quod et dolorem. Sit repellendus qui ut at
-                                                        blanditiis et quo et molestiae.
-                                                    </p>
-                                                </div>
-                                                <span
-                                                    className="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"
-                                                    aria-hidden="true"
-                                                >
-                                                    <svg
-                                                        className="h-6 w-6"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
-                                                    </svg>
-                                                </span>
-                                            </div>
-                                        ))}
+                                        { }
                                     </div>
                                 </section>
                                 <section className="mt-4">

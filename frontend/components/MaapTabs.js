@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { emailTab, marketing_tab, outcomes_tab } from "../utils/tabpage";
 
 const tabs = [
-    { name: 'Features', href: '#features', current: true, content: emailTab },
+    { name: 'Features', href: '#features', current: true, content: marketing_tab },
     { name: 'Latest Campaign', href: '#campaign', current: false, content: marketing_tab },
-    { name: 'Outcomes', href: '#outcomes', current: false, content: outcomes_tab },
+    { name: 'Outcomes', href: '#outcomes', current: false, content: marketing_tab },
 ];
 
 function classNames(...classes) {
