@@ -485,7 +485,7 @@ const Dashboard = function ({ children }) {
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        {/* If selectedKpi is exist, then component is rendered */}
+                                        {/* If selectedKpi exist, then component is rendered */}
                                         {selectedKpi && (
                                             <div className="">
                                                 {kpi(selectedKpi)}
