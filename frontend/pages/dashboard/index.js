@@ -122,7 +122,7 @@ const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
     const [selectedComponent, setSelectedComponent] = useState(null);
-    const [selectedKpi, setSelectedKpi] = useState("blah blah blah")
+    const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
@@ -282,6 +282,8 @@ const Dashboard = function ({ children }) {
                 </div>
             ))
 
+        } else {
+            return null;
         }
     };
 
@@ -477,12 +479,9 @@ const Dashboard = function ({ children }) {
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        {/* EDIT THE CLICK FLOW ON THIS NEXT */}
                                         {selectedKpi && (
                                             <div>
-                                                {selectedKpi.title === "Email Conversational" && kpi("Email Conversational")}
-                                                {selectedKpi.title === "Campaign Automation" && kpi("Campaign Automation")}
-                                                {selectedKpi.title === "Messaging Platform" && kpi("Messaging Platform")}
+                                                {kpi(selectedKpi)} {/* Render the selected content */}
                                             </div>
                                         )}
                                     </div>
