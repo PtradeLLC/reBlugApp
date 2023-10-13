@@ -3,8 +3,8 @@ import { emailTab, marketing_tab, outcomes_tab } from "../utils/tabpage";
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: emailTab },
-    { name: 'Latest Campaign', href: '#campaign', current: false, content: 'Content for Company tab' },
-    { name: 'Outcomes', href: '#outcomes', current: false, content: 'Content for Team Members tab' },
+    { name: 'Latest Campaign', href: '#campaign', current: false, content: marketing_tab },
+    { name: 'Outcomes', href: '#outcomes', current: false, content: outcomes_tab },
 ];
 
 function classNames(...classes) {
