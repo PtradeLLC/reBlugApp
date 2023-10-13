@@ -478,7 +478,9 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         {/* EDIT THE CLICK FLOW ON THIS NEXT */}
-                                        { }
+                                        {selectedKPI === "Email Conversational" && kpi("Email Conversational")}
+                                        {selectedKPI === "Campaign Automation" && kpi("Campaign Automation")}
+                                        {selectedKPI === "Messaging Platform" && kpi("Messaging Platform")}
                                     </div>
                                 </section>
                                 <section className="mt-4">
