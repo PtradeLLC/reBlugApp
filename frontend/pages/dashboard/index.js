@@ -281,7 +281,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
-                                                {cards.map((card) => (
+                                                {/* {cards.map((card) => (
                                                     <div
                                                         key={card.id}
                                                         className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
@@ -295,6 +295,25 @@ const Dashboard = function ({ children }) {
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
                                                                     <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))} */}
+                                                {cards.map((card) => (
+                                                    <div
+                                                        key={card.id}
+                                                        className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                    >
+                                                        <div className={`px-5 py-3`}>
+                                                            <div className="text-sm text-center">
+                                                                <Link
+                                                                    href={card.id === 1 ? "/EmailConversational" : card.id === 2 ? "/CampaignAutomation" : card.id === 3 ? "/MessagingPlatform" : null}
+                                                                    className="font-medium text-[#0f172a] hover:text-black"
+                                                                >
+                                                                    <span className="mx-2">{card.name}<br /></span>
+                                                                    <span className="font-bold">{card.amount}</span>
+                                                                    <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
                                                                 </Link>
                                                             </div>
                                                         </div>
@@ -437,11 +456,11 @@ const Dashboard = function ({ children }) {
                                                         <li key={person.handle} className="py-4">
                                                             <div className="flex items-center space-x-4">
                                                                 <div className="flex-shrink-0">
-                                                                    {/* <img
+                                                                    <img
                                                                         className="h-8 w-8 rounded-full"
                                                                         src={image || profileImage}
                                                                         alt=""
-                                                                    /> */}
+                                                                    />
                                                                 </div>
                                                                 <div className="min-w-0 flex-1">
                                                                     <p className="truncate text-sm font-medium text-gray-900">
