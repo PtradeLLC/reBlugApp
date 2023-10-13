@@ -186,10 +186,10 @@ const Dashboard = function ({ children }) {
                             ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
                             : "",
                         actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                        actionIdx === emailAction.length - 2
+                        actionIdx === automationAction.length - 2
                             ? "sm:rounded-bl-lg"
                             : "",
-                        actionIdx === emailAction.length - 1
+                        actionIdx === automationAction.length - 1
                             ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                             : "",
                         "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
@@ -238,10 +238,10 @@ const Dashboard = function ({ children }) {
                             ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
                             : "",
                         actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                        actionIdx === emailAction.length - 2
+                        actionIdx === marketingAction.length - 2
                             ? "sm:rounded-bl-lg"
                             : "",
-                        actionIdx === emailAction.length - 1
+                        actionIdx === marketingAction.length - 1
                             ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                             : "",
                         "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
