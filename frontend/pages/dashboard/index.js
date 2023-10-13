@@ -457,7 +457,7 @@ const Dashboard = function ({ children }) {
                                                             <div className="text-sm text-center">
                                                                 {/* kpi(card.title) */}
                                                                 <button
-                                                                    onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
+                                                                    onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card) }}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
@@ -478,9 +478,13 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         {/* EDIT THE CLICK FLOW ON THIS NEXT */}
-                                        {selectedKPI === "Email Conversational" && kpi("Email Conversational")}
-                                        {selectedKPI === "Campaign Automation" && kpi("Campaign Automation")}
-                                        {selectedKPI === "Messaging Platform" && kpi("Messaging Platform")}
+                                        {selectedCard && (
+                                            <div>
+                                                {selectedKPI.title === "Email Conversational" && kpi("Email Conversational")}
+                                                {selectedKPI.title === "Campaign Automation" && kpi("Campaign Automation")}
+                                                {selectedKPI.title === "Messaging Platform" && kpi("Messaging Platform")}
+                                            </div>
+                                        )}
                                     </div>
                                 </section>
                                 <section className="mt-4">
