@@ -121,6 +121,7 @@ const UserContext = createContext();
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
+    const [selectedComponent, setSelectedComponent] = useState(<EmailTabs />)
     return (
         <UserContext.Provider value={user}>
             <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
@@ -310,14 +311,14 @@ const Dashboard = function ({ children }) {
                                                     >
                                                         <div className={`px-5 py-3`}>
                                                             <div className="text-sm text-center">
-                                                                <Link
-                                                                    href={card.id === 1 ? "/EmailConversational" : card.id === 2 ? "/CampaignAutomation" : card.id === 3 ? "/MessagingPlatform" : null}
+                                                                <button
+                                                                    onClick={() => setSelectedComponent(card.amount)}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
                                                                 >
                                                                     <span className="mx-2">{card.name}<br /></span>
                                                                     <span className="font-bold">{card.amount}</span>
                                                                     <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
-                                                                </Link>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -386,7 +387,9 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    {/* <EmailTabs /> */}
+                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                    {selectedComponent === "Campaign Automation" && <MarketTabs />}
+                                    {selectedComponent === "Messaging Platform" && <MaapTabs />}
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
