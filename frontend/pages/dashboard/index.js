@@ -126,6 +126,7 @@ const Dashboard = function ({ children }) {
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
+            console.log("EC");
             emailAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
@@ -178,6 +179,7 @@ const Dashboard = function ({ children }) {
                 </div>
             ))
         } else if (title === "Campaign Automation") {
+            console.log("CA");
             automationAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
@@ -230,6 +232,7 @@ const Dashboard = function ({ children }) {
                 </div>
             ))
         } else if (title === "Messaging Platform") {
+            console.log("MP");
             marketingAction.map((action, actionIdx) => (
                 <div
                     key={action.id}
