@@ -87,6 +87,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
+// emailCharts
 const emailAction = [
     { id: 1, name: "Processed" },
     { id: 2, name: "Delivered" },
@@ -97,6 +98,7 @@ const emailAction = [
     // { id: 7, name: "Bounced" },
 ];
 
+// automated charts
 const automationAction = [
     { id: 1, name: "Procesed" },
     { id: 2, name: "Delivered" },
@@ -105,6 +107,7 @@ const automationAction = [
     { id: 5, name: "Received" },
 ];
 
+//marketing charts
 const marketingAction = [
     { id: 1, name: "Procesed" },
     { id: 2, name: "Delivered" },
@@ -456,11 +459,11 @@ const Dashboard = function ({ children }) {
                                                         <li key={person.handle} className="py-4">
                                                             <div className="flex items-center space-x-4">
                                                                 <div className="flex-shrink-0">
-                                                                    <img
+                                                                    {/* <img
                                                                         className="h-8 w-8 rounded-full"
                                                                         src={image || profileImage}
                                                                         alt=""
-                                                                    />
+                                                                    /> */}
                                                                 </div>
                                                                 <div className="min-w-0 flex-1">
                                                                     <p className="truncate text-sm font-medium text-gray-900">
