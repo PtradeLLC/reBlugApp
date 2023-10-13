@@ -477,6 +477,11 @@ const Dashboard = function ({ children }) {
                                         </div>
                                     </div>
                                 </section>
+                                <section className="mt-4">
+                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                    {selectedComponent === "Campaign Automation" && <MarketTabs />}
+                                    {selectedComponent === "Messaging Platform" && <MaapTabs />}
+                                </section>
                                 <section aria-labelledby="quick-links-title">
                                     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
@@ -488,11 +493,6 @@ const Dashboard = function ({ children }) {
                                             </div>
                                         )}
                                     </div>
-                                </section>
-                                <section className="mt-4">
-                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                    {selectedComponent === "Campaign Automation" && <MarketTabs />}
-                                    {selectedComponent === "Messaging Platform" && <MaapTabs />}
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
