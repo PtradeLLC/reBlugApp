@@ -478,7 +478,7 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         {/* EDIT THE CLICK FLOW ON THIS NEXT */}
-                                        {selectedCard && (
+                                        {selectedKPI && (
                                             <div>
                                                 {selectedKPI.title === "Email Conversational" && kpi("Email Conversational")}
                                                 {selectedKPI.title === "Campaign Automation" && kpi("Campaign Automation")}
