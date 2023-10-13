@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { emailTab, marketing_tab, outcomes_tab } from "../utils/tabpage";
 
 const tabs = [
-    { name: 'My Account', href: '#account', current: true, content: 'Content for My Account tab' },
-    { name: 'Company', href: '#company', current: false, content: 'Content for Company tab' },
-    { name: 'Team Members', href: '#tmember', current: false, content: 'Content for Team Members tab' },
-    { name: 'Billing', href: '#', current: false, content: 'Content for Billing tab' },
+    { name: 'Features', href: '#features', current: true, content: emailTab },
+    { name: 'Latest Campaign', href: '#campaign', current: false, content: marketing_tab },
+    { name: 'Outcomes', href: '#outcomes', current: false, content: outcomes_tab },
 ];
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function MaapTabs() {
+export default function EmailTabs() {
     const [selectedTab, setSelectedTab] = useState(tabs.find((tab) => tab.current));
 
     const handleTabClick = (tab) => {
@@ -27,7 +27,7 @@ export default function MaapTabs() {
                 <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="block w-full rounded-md border-gray-300 focus:border-red-500 focus:ring-red-500"
                     value={selectedTab.name}
                     onChange={(e) => setSelectedTab(tabs.find((tab) => tab.name === e.target.value))}
                 >
@@ -57,7 +57,7 @@ export default function MaapTabs() {
                             <span
                                 aria-hidden="true"
                                 className={classNames(
-                                    selectedTab === tab ? 'bg-indigo-500' : 'bg-transparent',
+                                    selectedTab === tab ? 'bg-red-500' : 'bg-transparent',
                                     'absolute inset-x-0 bottom-0 h-0.5'
                                 )}
                             />
@@ -65,7 +65,9 @@ export default function MaapTabs() {
                     ))}
                 </nav>
             </div>
-            <div className="mt-4">{selectedTab.content}</div>
+            <div className="mt-4">
+                {selectedTab.content.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+            </div>
         </div>
     );
 }
