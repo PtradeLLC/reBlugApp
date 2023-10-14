@@ -486,12 +486,16 @@ const Dashboard = function ({ children }) {
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        {selectedKpi && (
+                                        <div className="">
+                                            {console.log("SELECTEDKPI:", selectedKpi)}
+                                            <Kpi selectedKpi={selectedKpi} />
+                                        </div>
+                                        {/* {selectedKpi && (
                                             <div className="">
                                                 {console.log("SELECTEDKPI:", selectedKpi)}
                                                 <Kpi selectedKpi={selectedKpi} />
                                             </div>
-                                        )}
+                                        )} */}
                                     </div> : <p>This is a test</p>}
                                 </section>
                                 <section className="mt-4">
