@@ -127,9 +127,6 @@ const Dashboard = function ({ children }) {
     const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
     const [loading, setLoading] = useState(false);
 
-
-
-
     // const kpi = (title) => {
     //     if (title === "Email Conversational") {
     //         console.log("EC", title);
@@ -298,6 +295,25 @@ const Dashboard = function ({ children }) {
     //         return null;
     //     }
     // };
+
+    const koi = (title) => {
+        if (title === "Email Conversational") {
+            return emailAction.map((action) => (
+                <div key={action.id} className="...">
+
+                    {/* ... (rest of your JSX for Email Conversational) */}
+                </div>
+            ));
+        } else if (title === "Campaign Automation") {
+            return automationAction.map((action) => (
+                <div key={action.id} className="...">
+                    {/* ... (rest of your JSX for Campaign Automation) */}
+                </div>
+            ));
+        } else {
+            return null;
+        }
+    };
 
     if (loading) return <Loading />;
 
@@ -489,19 +505,13 @@ const Dashboard = function ({ children }) {
                                 </section>
                                 <section className="mt-4">
                                     {selectedKpi ? <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
-                                        <h2 id="quick-links-title">
-                                            {/* {className="sr-only"} */}
+                                        <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
                                         <div className="">
-                                            <Kpi selectedKpi={selectedKpi} />
+                                            {/* {kpi(selectedComponent)} */}
+                                            {koi(selectedComponent)}
                                         </div>
-                                        {/* {selectedKpi && (
-                                            <div className="">
-                                                {console.log("SELECTEDKPI:", selectedKpi)}
-                                                <Kpi selectedKpi={selectedKpi} />
-                                            </div>
-                                        )} */}
                                     </div> : <p>This is a test</p>}
                                 </section>
                                 <section className="mt-4">
