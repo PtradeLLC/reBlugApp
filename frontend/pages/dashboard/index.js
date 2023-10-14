@@ -482,8 +482,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    <p>This is a test</p>
-                                    {selectedKpi && <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                    {selectedKpi ? <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
@@ -493,7 +492,7 @@ const Dashboard = function ({ children }) {
                                                 <Kpi selectedKpi={selectedKpi} />
                                             </div>
                                         )}
-                                    </div>}
+                                    </div> : <p>This is a test</p>}
                                 </section>
                                 <section className="mt-4">
                                     {selectedComponent === "Email Conversational" && <EmailTabs />}
