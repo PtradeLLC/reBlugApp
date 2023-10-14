@@ -243,7 +243,7 @@ const Dashboard = function ({ children }) {
             return emailAction.map((action) => (
                 <div key={action.id} className="...">
                     <h3 className="text-lg font-medium">
-                        <Link href={action.href} className="focus:outline-none">
+                        <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
@@ -253,7 +253,7 @@ const Dashboard = function ({ children }) {
             return automationAction.map((action) => (
                 <div key={action.id} className="...">
                     <h3 className="text-lg font-medium">
-                        <Link href={action.href} className="focus:outline-none">
+                        <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
