@@ -248,7 +248,7 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                 </div>
-            ));
+            ))
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
                 <div key={action.id} className="...">
@@ -258,7 +258,17 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                 </div>
-            ));
+            ))
+        } else if (title === "Messaging Platform") {
+            return automationAction.map((action) => (
+                <div key={action.id} className="...">
+                    <h3 className="text-lg font-medium">
+                        <Link href="" className="focus:outline-none">
+                            {action.name}
+                        </Link>
+                    </h3>
+                </div>
+            ))
         } else {
             return null;
         }
