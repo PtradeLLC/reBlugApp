@@ -449,12 +449,12 @@ const Dashboard = function ({ children }) {
                                                     </div>
                                                 </div>
                                                 <div className="mt-5 flex justify-center sm:mt-0">
-                                                    <Link
-                                                        href="#"
+                                                    <button
+                                                        onClick={""}
                                                         className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                     >
                                                         Add Team Member
-                                                    </Link>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
@@ -465,7 +465,6 @@ const Dashboard = function ({ children }) {
                                                     >
                                                         <div className={`px-5 py-3`}>
                                                             <div className="text-sm text-center">
-                                                                {/* kpi(card.title) */}
                                                                 <button
                                                                     onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                     className="font-medium text-[#0f172a] hover:text-black"
@@ -483,19 +482,18 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                    <p>This is a test</p>
+                                    {/* <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        {/* If selectedKpi exist, then component is rendered */}
                                         {selectedKpi && (
                                             <div className="">
                                                 {console.log("SELECTEDKPI:", selectedKpi)}
                                                 <Kpi selectedKpi={selectedKpi} />
-                                                {/* {kpi(selectedKpi)} */}
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </section>
                                 <section className="mt-4">
                                     {selectedComponent === "Email Conversational" && <EmailTabs />}
@@ -504,7 +502,6 @@ const Dashboard = function ({ children }) {
                                 </section>
                             </div>
                             <div className="grid grid-cols-1 gap-4">
-
                                 <section aria-labelledby="quicklinks-title">
                                     <div className="overflow-hidden rounded-lg bg-white shadow">
                                         <div className="p-6">
