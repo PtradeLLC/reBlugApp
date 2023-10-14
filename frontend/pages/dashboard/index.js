@@ -490,7 +490,8 @@ const Dashboard = function ({ children }) {
                                         {/* If selectedKpi exist, then component is rendered */}
                                         {selectedKpi && (
                                             <div className="">
-                                                <Kpi />
+                                                <Kpi selectedKpi={selectedKpi} />
+                                                {/* {kpi(selectedKpi)} */}
                                             </div>
                                         )}
                                     </div>
