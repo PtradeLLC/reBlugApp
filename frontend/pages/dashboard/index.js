@@ -300,13 +300,14 @@ const Dashboard = function ({ children }) {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
                 <div key={action.id} className="...">
-
+                    <p>This is a test Email Convo</p>
                     {/* ... (rest of your JSX for Email Conversational) */}
                 </div>
             ));
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
                 <div key={action.id} className="...">
+                    <p>This is a test Campaign Auto</p>
                     {/* ... (rest of your JSX for Campaign Automation) */}
                 </div>
             ));
@@ -511,6 +512,7 @@ const Dashboard = function ({ children }) {
                                         <div className="">
                                             {/* {kpi(selectedComponent)} */}
                                             {koi(selectedComponent)}
+                                            {console.log(selectedComponent)}
                                         </div>
                                     </div> : <p>This is a test</p>}
                                 </section>
