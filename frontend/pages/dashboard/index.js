@@ -129,36 +129,21 @@ const Dashboard = function ({ children }) {
 
     const koi = (title) => {
         if (title === "Email Conversational") {
-            emailAction.map((action, actionIdx) => (
-                <div
-                    key={action.id}
-                    className={classNames(
-                        actionIdx === 0
-                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
-                            : "",
-                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                        actionIdx === emailAction.length - 2
-                            ? "sm:rounded-bl-lg"
-                            : "",
-                        actionIdx === emailAction.length - 1
-                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                            : "",
-                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                    )}
-                >
+            emailAction.map((action) => (
+                <div key={action.id} className="">
                     <div className="mt-8 gap-4">
                         <h3 className="text-lg font-medium">
-                            <a
+                            <Link
                                 href={action.href}
                                 className="focus:outline-none"
                             >
 
-                                <span
+                                {/* <span
                                     className="absolute inset-0"
                                     aria-hidden="true"
-                                />
+                                /> */}
                                 {action.name}
-                            </a>
+                            </Link>
                         </h3>
                         <p className="mt-2 text-sm text-gray-500">
                             Doloribus dolores nostrum quia qui natus officia
@@ -181,36 +166,17 @@ const Dashboard = function ({ children }) {
                 </div>
             ))
         } else if (title === "Campaign Automation") {
-            automationAction.map((action, actionIdx) => (
-                <div
-                    key={action.id}
-                    className={classNames(
-                        actionIdx === 0
-                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
-                            : "",
-                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                        actionIdx === automationAction.length - 2
-                            ? "sm:rounded-bl-lg"
-                            : "",
-                        actionIdx === automationAction.length - 1
-                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                            : "",
-                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                    )}
-                >
+            automationAction.map((action) => (
+                <div key={action.id} className="">
                     <div className="mt-8 gap-4">
                         <h3 className="text-lg font-medium">
-                            <a
-                                href={action.href}
-                                className="focus:outline-none"
-                            >
-
-                                <span
+                            <Link href={action.href} className="focus:outline-none">
+                                {/* <span
                                     className="absolute inset-0"
                                     aria-hidden="true"
-                                />
+                                /> */}
                                 {action.name}
-                            </a>
+                            </Link>
                         </h3>
                         <p className="mt-2 text-sm text-gray-500">
                             Doloribus dolores nostrum quia qui natus officia
@@ -234,35 +200,17 @@ const Dashboard = function ({ children }) {
             ))
         } else if (title === "Messaging Platform") {
             marketingAction.map((action, actionIdx) => (
-                <div
-                    key={action.id}
-                    className={classNames(
-                        actionIdx === 0
-                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
-                            : "",
-                        actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-                        actionIdx === marketingAction.length - 2
-                            ? "sm:rounded-bl-lg"
-                            : "",
-                        actionIdx === marketingAction.length - 1
-                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                            : "",
-                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                    )}
-                >
+                <div key={action.id} className="">
                     <div className="mt-8 gap-4">
                         <h3 className="text-lg font-medium">
-                            <a
-                                href={action.href}
-                                className="focus:outline-none"
-                            >
+                            <Link href={action.href} className="focus:outline-none">
 
-                                <span
+                                {/* <span
                                     className="absolute inset-0"
                                     aria-hidden="true"
-                                />
+                                /> */}
                                 {action.name}
-                            </a>
+                            </Link>
                         </h3>
                         <p className="mt-2 text-sm text-gray-500">
                             Doloribus dolores nostrum quia qui natus officia
