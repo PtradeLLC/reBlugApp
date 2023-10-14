@@ -8,6 +8,7 @@ import EmailTabs from "../../components/EmailTabs";
 import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
 import Kpi from "../../components/Kpi";
+import Loading from "../../components/Loading";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -124,6 +125,9 @@ const Dashboard = function ({ children }) {
     const user = useUserData();
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
+    const [loading, setLoading] = useState(false);
+
+
 
 
     // const kpi = (title) => {
@@ -294,6 +298,8 @@ const Dashboard = function ({ children }) {
     //         return null;
     //     }
     // };
+
+    if (loading) return <Loading />;
 
     return (
         <UserContext.Provider value={user}>
@@ -483,11 +489,11 @@ const Dashboard = function ({ children }) {
                                 </section>
                                 <section className="mt-4">
                                     {selectedKpi ? <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
-                                        <h2 className="sr-only" id="quick-links-title">
+                                        <h2 id="quick-links-title">
+                                            {/* {className="sr-only"} */}
                                             Quick links
                                         </h2>
                                         <div className="">
-                                            {console.log("SELECTEDKPI:", selectedKpi)}
                                             <Kpi selectedKpi={selectedKpi} />
                                         </div>
                                         {/* {selectedKpi && (
