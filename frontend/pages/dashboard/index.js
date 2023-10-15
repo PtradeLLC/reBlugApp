@@ -150,7 +150,7 @@ const Dashboard = function ({ children }) {
             ))
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
-                <div key={action.id} className="...">
+                <div key={action.id} className="bg-red-500 grid">
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
@@ -362,36 +362,33 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    {selectedKpi && <div
-                                        className={classNames(
-                                            "divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0",
-                                            {
-                                                "bg-slate-700": emailAction.id === 0,
-                                                "bg-red-700": emailAction.id === 1,
-                                                // Add other classes based on conditions here
-                                            }
-                                        )}
-                                    >
-                                        <h2 className="sr-only" id="quick-links-title">
-                                            Quick links
-                                        </h2>
-                                        <div
-                                            className={classNames(
-                                                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500",
-                                                {
-                                                    "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none":
-                                                        emailAction.id === 0,
-                                                    "sm:rounded-tr-lg": emailAction.id === 1,
-                                                    "sm:rounded-bl-lg":
-                                                        emailAction.id === emailAction.length - 2,
-                                                    "rounded-bl-lg rounded-br-lg sm:rounded-bl-none":
-                                                        emailAction.id === emailAction.length - 1,
-                                                }
-                                            )}
-                                        >
-                                            {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
+                                    {selectedKpi && (
+                                        <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                            <h2 className="sr-only" id="quick-links-title">
+                                                Quick links
+                                            </h2>
+                                            {emailAction.map((action) => (
+                                                <div
+                                                    key={action.id}
+                                                    className={classNames(
+                                                        action.id === 0
+                                                            ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none bg-slate-700"
+                                                            : "",
+                                                        action.id === 1 ? "sm:rounded-tr-lg bg-red-700" : "",
+                                                        action.id === emailAction.length - 2
+                                                            ? "sm:rounded-bl-lg"
+                                                            : "",
+                                                        action.id === emailAction.length - 1
+                                                            ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                                                            : "",
+                                                        "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                                                    )}
+                                                >
+                                                    {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
+                                                </div>
+                                            ))}
                                         </div>
-                                    </div>}
+                                    )}
                                 </section>
                                 <section className="mt-4">
                                     {selectedComponent === "Email Conversational" && <EmailTabs />}
