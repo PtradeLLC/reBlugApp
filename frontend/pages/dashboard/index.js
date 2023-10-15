@@ -130,12 +130,22 @@ const Dashboard = function ({ children }) {
     const kpi = (title) => {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
-                <div key={action.id} className="...">
+                <div key={action.id} className="bg-red-500 grid col-span-2">
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
+                    <div>
+                        <p>
+                            Email Conversational Tool is an AI-powered marketing tool that helps
+                            businesses improve their email communication by embedding a chatbot into
+                            their emails and newsletters.This allows email recipients to interact with
+                            a knowledge-based chatbot that can answer their questions and provide support,
+                            help with fundraising, sales, marketing, and more.
+                            Here is an example of how Email Conversational Tool can be used:
+                        </p>
+                    </div>
                 </div>
             ))
         } else if (title === "Campaign Automation") {
