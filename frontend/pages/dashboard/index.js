@@ -364,24 +364,7 @@ const Dashboard = function ({ children }) {
                                             <h2 className="sr-only" id="quick-links-title">
                                                 Quick links
                                             </h2>
-                                            <div
-                                                className={classNames(
-                                                    action.id === 0
-                                                        ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none bg-slate-700"
-                                                        : "",
-                                                    action.id === 1 ? "sm:rounded-tr-lg bg-red-700" : "",
-                                                    action.id === emailAction.length - 2
-                                                        ? "sm:rounded-bl-lg"
-                                                        : "",
-                                                    action.id === emailAction.length - 1
-                                                        ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                                                        : "",
-                                                    "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                                                )}
-                                            >
-                                                {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
-                                            </div>
-                                            {/* {emailAction.map((action) => (
+                                            {emailAction.map((action) => (
                                                 <section key={action.id} className="mt-4">
                                                     {selectedKpi && (
                                                         <div
@@ -403,7 +386,7 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     )}
                                                 </section>
-                                            ))} */}
+                                            ))}
                                         </div>
                                     )}
                                 </section>
