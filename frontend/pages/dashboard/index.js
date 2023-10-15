@@ -127,7 +127,7 @@ const Dashboard = function ({ children }) {
     const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
     const [loading, setLoading] = useState(false);
 
-    const koi = (title) => {
+    const kpi = (title) => {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
                 <div key={action.id} className="...">
@@ -352,16 +352,24 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </section>
                                 <section className="mt-4">
-                                    {selectedKpi ? <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                    {selectedKpi && <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                         <h2 className="sr-only" id="quick-links-title">
                                             Quick links
                                         </h2>
-                                        <div className="">
-                                            {/* {kpi(selectedComponent)} */}
-                                            {koi(selectedComponent)}
-                                            {console.log(selectedComponent)}
+                                        <div className={classNames(
+                                            selectedKpi.id === 1 ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                                                : "", selectedKpi.id === 1 ? "sm:rounded-tr-lg" : "",
+                                            selectedKpi.id === emailAction.length - 2
+                                                ? "sm:rounded-bl-lg"
+                                                : "",
+                                            selectedKpi.id === emailAction.length - 1
+                                                ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                                                : "",
+                                            "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                                        )}>
+                                            {kpi(selectedComponent)}
                                         </div>
-                                    </div> : <p>This is a test</p>}
+                                    </div>}
                                 </section>
                                 <section className="mt-4">
                                     {selectedComponent === "Email Conversational" && <EmailTabs />}
