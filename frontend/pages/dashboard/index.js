@@ -357,7 +357,7 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         <div className={classNames(
-                                            selectedKpi.id === 1 ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                                            selectedKpi.id === 0 ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
                                                 : "", selectedKpi.id === 1 ? "sm:rounded-tr-lg" : "",
                                             selectedKpi.id === emailAction.length - 2
                                                 ? "sm:rounded-bl-lg"
