@@ -357,12 +357,12 @@ const Dashboard = function ({ children }) {
                                             Quick links
                                         </h2>
                                         <div className={classNames(
-                                            selectedKpi.id === 0 ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
-                                                : "", selectedKpi.id === 1 ? "sm:rounded-tr-lg" : "",
-                                            selectedKpi.id === emailAction.length - 2
+                                            emailAction.id === 0 ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none"
+                                                : "", emailAction.id === 1 ? "sm:rounded-tr-lg" : "",
+                                            emailAction.id === emailAction.length - 2
                                                 ? "sm:rounded-bl-lg"
                                                 : "",
-                                            selectedKpi.id === emailAction.length - 1
+                                            emailAction.id === emailAction.length - 1
                                                 ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                                                 : "",
                                             "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
