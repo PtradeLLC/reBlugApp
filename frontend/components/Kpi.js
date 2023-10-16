@@ -1,14 +1,7 @@
 import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
-const hashCode = (str) => {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-    }
-    return Math.abs(hash);
-};
+
 
 const alldata = [
     {
@@ -50,13 +43,9 @@ const alldata = [
 
 const delivered_data = [
     {
-        "name": 'sentiment Analysis',
+        "name": 55,
         "value": 93,
-        "fill": `#${hashCode("18-24").toString(16).substring(0, 6)}`
-        // "fill": "#8884d8"
-        // "uv": 31.47,
-        // "pv": 2400,
-
+        "fill": "#8884d8"
     },
     {
         "name": 25,
