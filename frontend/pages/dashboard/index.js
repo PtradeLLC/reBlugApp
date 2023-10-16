@@ -144,11 +144,11 @@ const Dashboard = function ({ children }) {
                 )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
-                            {action.name}
+                            {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </Link>
                     </h3>
                     <div>
-                        <span className="font-bold text-4xl">{action.num}</span>
+                        <Kpi />
                     </div>
                 </div>
             ));
