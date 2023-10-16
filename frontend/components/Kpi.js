@@ -110,30 +110,35 @@ const EmailBarChart = ({ name }) => {
             )}
             {name === "Delivered" && (
                 <ResponsiveContainer width="100%" height={200}>
-                    <RadialBarChart
-                        innerRadius="10%"
-                        outerRadius="80%"
-                        data={delivered_data}
-                        startAngle={180}
-                        endAngle={0}
-                    >
-                        <RadialBar
-                            minAngle={15}
-                            label={{ fill: '#666', position: 'insideStart' }}
-                            background
-                            clockWise
-                            dataKey='uv'
-                        />
-                        <Legend
-                            iconSize={10}
-                            width={120}
-                            height={140}
-                            layout='vertical'
-                            verticalAlign='middle'
-                            align="right"
-                        />
-                        <Tooltip />
-                    </RadialBarChart>
+                    <span className='flex justify-between'>
+                        <RadialBarChart
+                            innerRadius="10%"
+                            outerRadius="80%"
+                            data={delivered_data}
+                            startAngle={180}
+                            endAngle={0}
+                        >
+                            <span><RadialBar
+                                minAngle={15}
+                                label={{ fill: '#666', position: 'insideStart' }}
+                                background
+                                clockWise
+                                dataKey='uv'
+                            /></span>
+                            <span>
+                                <Legend
+                                    iconSize={10}
+                                    width={120}
+                                    height={140}
+                                    layout='vertical'
+                                    verticalAlign='middle'
+                                    align="right"
+                                />
+                            </span>
+
+                            <Tooltip />
+                        </RadialBarChart>
+                    </span>
                 </ResponsiveContainer>
             )}
         </>
