@@ -41,10 +41,12 @@ const alldata = [
 
 const delivered_data = [
     {
-        "name": 18,
-        "uv": 31.47,
-        "pv": 2400,
+        "name": 'sentiment Analysis',
+        "value": 93,
         "fill": "#8884d8"
+        // "uv": 31.47,
+        // "pv": 2400,
+
     },
     {
         "name": 25,
