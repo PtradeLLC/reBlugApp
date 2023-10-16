@@ -142,7 +142,7 @@ const Dashboard = function ({ children }) {
                     action.id === emailAction.length - 1
                         ? "rounded-bl-lg bg-lime-300 rounded-br-lg sm:rounded-bl-none"
                         : "",
-                    "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                    "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
