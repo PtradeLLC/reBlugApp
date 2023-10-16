@@ -144,12 +144,15 @@ const Dashboard = function ({ children }) {
             ));
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
-                <div key={action.id} className="bg-red-500 grid">
+                <div key={action.id} className="bg-slate-500">
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
+                    <div>
+                        <p>This contains charts</p>
+                    </div>
                 </div>
             ));
         } else {
