@@ -87,7 +87,7 @@ const delivered_data = [
 const EmailBarChart = ({ name }) => {
     return (
         <>
-            {/* {name === "Processed" && (
+            {name === "Processed" && (
                 <AreaChart width={700} height={200} data={alldata}
                     margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
@@ -107,7 +107,7 @@ const EmailBarChart = ({ name }) => {
                     <Area type="monotone" dataKey="opened" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
                     <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
                 </AreaChart>
-            )} */}
+            )}
             {name === "Processed" && (
                 <ResponsiveContainer width="100%" height={200}>
                     <RadialBarChart
