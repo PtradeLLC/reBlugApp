@@ -43,27 +43,27 @@ const alldata = [
 
 const delivered_data = [
     {
-        "Metrics": 55,
+        "Metrics": 20,
         "value": 93,
-        "fill": "#8884d8"
+        "fill": "#D8D9CF"
     },
     {
-        "Metrics": 25,
+        "Metrics": 20,
         "uv": 26.69,
         "pv": 4567,
-        "fill": "#83a6ed"
+        "fill": "#FF6D60"
     },
     {
-        "Metrics": 34,
+        "Metrics": 20,
         "uv": -15.69,
         "pv": 1398,
-        "fill": "#8dd1e1"
+        "fill": "#6527BE"
     },
     {
-        "Metrics": 39,
+        "Metrics": 20,
         "uv": 8.22,
         "pv": 9800,
-        "fill": "#82ca9d"
+        "fill": "#352F44"
     },
 ]
 
