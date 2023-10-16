@@ -43,18 +43,18 @@ const alldata = [
 
 const delivered_data = [
     {
-        "name": 55,
+        "Sentiment Analysis": 55,
         "value": 93,
         "fill": "#8884d8"
     },
     {
-        "name": 25,
+        "Audience Segment": 25,
         "uv": 26.69,
         "pv": 4567,
         "fill": "#83a6ed"
     },
     {
-        "name": 34,
+        "Another One": 34,
         "uv": -15.69,
         "pv": 1398,
         "fill": "#8dd1e1"
@@ -107,7 +107,7 @@ const EmailBarChart = ({ name }) => {
                             minAngle={15}
                             background
                             clockWise
-                            dataKey='name'
+                            dataKey='Audience Segment, Another One, Sentiment Analysis'
                         />
                         <Legend
                             width="100%"
