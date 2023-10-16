@@ -4,38 +4,38 @@ import { BarChart, Bar, Area, linearGradient, XAxis, YAxis, CartesianGrid, Toolt
 const data = [
     {
         "name": "Mon",
-        "opened": 4000,
-        "delivered": 2400
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Tue",
-        "opened": 3000,
-        "delivered": 1398
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Weds",
-        "opened": 2000,
-        "delivered": 9800
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Thurs",
-        "opened": 2780,
-        "delivered": 3908
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Fri",
-        "opened": 1890,
-        "delivered": 4800
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Sat",
-        "opened": 1890,
-        "delivered": 4800
+        "opened": 0,
+        "delivered": 0
     },
     {
         "name": "Sun",
-        "opened": 1890,
-        "delivered": 4800
+        "opened": 0,
+        "delivered": 0
     },
 ];
 
