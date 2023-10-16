@@ -119,7 +119,6 @@ const EmailBarChart = ({ name }) => {
                             background
                             clockWise
                             dataKey='name'
-                            barSize={10}
                         />
                         <Legend
                             iconSize={5}
