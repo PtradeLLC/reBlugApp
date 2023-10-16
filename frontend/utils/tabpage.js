@@ -1,5 +1,45 @@
-const emailTab = `
+import { Grid, Flex, Text } from '@radix-ui/themes'
 
+
+const emailTab = `
+${<Grid align="center" columns="2" gap="5" p="3">
+        <Flex direction="column">
+            <Text size="3" weight="bold">
+                Get started
+            </Text>
+            <Text color="gray" size="2">
+                Start your next project in minutes
+            </Text>
+        </Flex>
+
+        <Flex direction="column">
+            <Text size="2" weight="bold">
+                Get started
+            </Text>
+            <Text color="gray" size="2">
+                Start your next project in minutes
+            </Text>
+        </Flex>
+
+        <Flex direction="column">
+            <Text size="2" weight="bold">
+                Get started
+            </Text>
+            <Text color="gray" size="1">
+                Start your next project in minutes
+            </Text>
+        </Flex>
+
+        <Flex direction="column">
+            <Text size="1" weight="bold">
+                Get started
+            </Text>
+            <Text color="gray" size="1">
+                Start your next project in minutes
+            </Text>
+        </Flex>
+    </Grid>
+    }
 Features:
 1. Phone - Use this tool to make sales calls in your native language, and let AI feature translate the call to your prospective client's native language.
 2. Survey - Ditch conventional surveys forms and create AI-powered surveys through conversation. AI-powered surveys are more engaging and efficient, and they can help you collect richer data. 
