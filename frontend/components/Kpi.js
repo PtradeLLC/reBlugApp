@@ -108,7 +108,7 @@ const EmailBarChart = ({ name }) => {
                     <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
                 </AreaChart>
             )}
-            {name === "Processed" && (
+            {name === "Delivered" && (
                 <ResponsiveContainer width="100%" height={200}>
                     <RadialBarChart
                         innerRadius="40%"
