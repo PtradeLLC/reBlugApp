@@ -1,6 +1,15 @@
 import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
+const hashCode = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+    }
+    return Math.abs(hash);
+};
+
 const alldata = [
     {
         "name": "Mon",
@@ -70,6 +79,7 @@ const delivered_data = [
 ]
 
 const EmailBarChart = ({ name }) => {
+
     return (
         <>
             {name === "Processed" && (
