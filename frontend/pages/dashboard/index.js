@@ -365,9 +365,10 @@ const Dashboard = function ({ children }) {
                                                 Quick links
                                             </h2>
                                             {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
-                                            {/* {emailAction.map((action) => (
+                                            {emailAction.map((action) => (
                                                 <section key={action.id} className="mt-4">
-                                                    {selectedKpi && (
+                                                    {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
+                                                    {/* {selectedKpi && (
                                                         <div
                                                             className={classNames(
                                                                 action.id === 0
@@ -385,9 +386,9 @@ const Dashboard = function ({ children }) {
                                                         >
                                                             {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
                                                         </div>
-                                                    )}
+                                                    )} */}
                                                 </section>
-                                            ))} */}
+                                            ))}
                                         </div>
                                     )}
                                 </section>
