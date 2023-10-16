@@ -58,24 +58,24 @@ const delivered_data = [
         "pv": 1398,
         "fill": "#8dd1e1"
     },
-    // {
-    //     "name": "35-39",
-    //     "uv": 8.22,
-    //     "pv": 9800,
-    //     "fill": "#82ca9d"
-    // },
-    // {
-    //     "name": "40-49",
-    //     "uv": -8.63,
-    //     "pv": 3908,
-    //     "fill": "#a4de6c"
-    // },
-    // {
-    //     "name": "50+",
-    //     "uv": -2.63,
-    //     "pv": 4800,
-    //     "fill": "#d0ed57"
-    // },
+    {
+        "name": "35-39",
+        "uv": 8.22,
+        "pv": 9800,
+        "fill": "#82ca9d"
+    },
+    {
+        "name": "40-49",
+        "uv": -8.63,
+        "pv": 3908,
+        "fill": "#a4de6c"
+    },
+    {
+        "name": "50+",
+        "uv": -2.63,
+        "pv": 4800,
+        "fill": "#d0ed57"
+    },
     {
         "name": "unknow",
         "uv": 6.67,
@@ -124,14 +124,14 @@ const EmailBarChart = ({ name }) => {
                             clockWise
                             dataKey='uv'
                         />
-                        {/* <Legend
+                        <Legend
                             iconSize={10}
                             width={120}
                             height={140}
                             layout='horizontal'
-                            verticalAlign='top'
+                            verticalAlign='bottom'
                             align="center"
-                        />*/}
+                        />
                         <Tooltip />
                     </RadialBarChart>
                 </ResponsiveContainer>
