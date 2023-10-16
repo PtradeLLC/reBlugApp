@@ -127,7 +127,7 @@ const EmailBarChart = ({ name }) => {
                         <Legend
                             iconSize={10}
                             width="100%"
-                            height={14}
+                            height={19}
                             layout='horizontal'
                             verticalAlign='bottom'
                             align="center"
