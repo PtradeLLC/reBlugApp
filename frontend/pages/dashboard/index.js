@@ -9,6 +9,7 @@ import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
 import Kpi from "../../components/Kpi";
 import Loading from "../../components/Loading";
+import DashConvTool from "../../components/DashEmailMar";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
