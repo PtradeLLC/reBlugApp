@@ -65,8 +65,8 @@ const delivered_data = [
     },
     {
         "Metrics": 20,
-        "value": "Conversation",
-        "fill": "#FFFFFF"
+        "value": "Bounced",
+        "fill": "#D2001A"
     },
 ]
 
