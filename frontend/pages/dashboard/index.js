@@ -131,7 +131,19 @@ const Dashboard = function ({ children }) {
     const kpi = (title) => {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
-                <div key={action.id} className="bg-red-500">
+                <div key={action.id} className={classNames(
+                    action.id === 0
+                        ? "rounded-tl-lg col-span-2 bg-zinc-500 rounded-tr-lg sm:rounded-tr-none"
+                        : "",
+                    action.id === 1 ? "sm:rounded-tr-lg bg-red-300" : "",
+                    action.id === emailAction.length - 2
+                        ? "sm:rounded-bl-lg"
+                        : "",
+                    action.id === emailAction.length - 1
+                        ? "rounded-bl-lg bg-lime-300 rounded-br-lg sm:rounded-bl-none"
+                        : "",
+                    "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
@@ -397,30 +409,7 @@ const Dashboard = function ({ children }) {
                                             <h2 className="sr-only" id="quick-links-title">
                                                 Quick links
                                             </h2>
-                                            {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
-                                            {/* {emailAction.map((action) => (
-                                                <section key={action.id} className="mt-4">
-                                                    {selectedKpi && (
-                                                        <div
-                                                            className={classNames(
-                                                                action.id === 0
-                                                                    ? "rounded-tl-lg col-span-2 rounded-tr-lg sm:rounded-tr-none bg-slate-700"
-                                                                    : "",
-                                                                action.id === 1 ? "sm:rounded-tr-lg bg-red-700" : "",
-                                                                action.id === emailAction.length - 2
-                                                                    ? "sm:rounded-bl-lg"
-                                                                    : "",
-                                                                action.id === emailAction.length - 1
-                                                                    ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-                                                                    : "",
-                                                                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
-                                                            )}
-                                                        >
-                                                            {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
-                                                        </div>
-                                                    )}
-                                                </section>
-                                            ))} */}
+                                            {selectedComponent ? kpi(selectedComponent) : <span className="bg-white">While you were gone</span>}
                                         </div>
                                     )}
                                 </section>
