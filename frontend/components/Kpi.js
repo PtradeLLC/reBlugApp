@@ -44,26 +44,29 @@ const alldata = [
 const delivered_data = [
     {
         "Metrics": 20,
-        "value": 93,
+        "value": "Sentiment Analysis",
         "fill": "#D8D9CF"
     },
     {
         "Metrics": 20,
-        "uv": 26.69,
-        "pv": 4567,
-        "fill": "#FF6D60"
+        "value": "Segmentation",
+        "fill": "#DE8F5F"
     },
     {
         "Metrics": 20,
-        "uv": -15.69,
+        "value": "Sending Time",
         "pv": 1398,
         "fill": "#6527BE"
     },
     {
         "Metrics": 20,
-        "uv": 8.22,
-        "pv": 9800,
+        "value": "Target Audience",
         "fill": "#352F44"
+    },
+    {
+        "Metrics": 20,
+        "value": "Conversation",
+        "fill": "#FFFFFF"
     },
 ]
 
