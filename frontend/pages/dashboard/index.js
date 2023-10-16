@@ -149,7 +149,9 @@ const Dashboard = function ({ children }) {
                     </h3>
                     <div>
                         {action.name === "Processed" && (
-                            <span className="w-full"><Kpi name={action.name} /></span>
+                            <span className="w-full">
+                                <Kpi name={action.name} />
+                            </span>
                         )}
                     </div>
                 </div>
@@ -176,7 +178,9 @@ const Dashboard = function ({ children }) {
                     </h3>
                     <div>
                         {action.name === "Delivered" && (
-                            <span className="w-full"><Kpi name={action.name} /></span>
+                            <span className="w-full">
+                                <Kpi name={action.name} />
+                            </span>
                         )}
                     </div>
                 </div>
@@ -203,6 +207,11 @@ const Dashboard = function ({ children }) {
                     </h3>
                     <div>
                         <span className="font-bold text-4xl">{action.num}</span>
+                        {/* {action.name === "Delivered" && (
+                            <span className="w-full">
+                                <Kpi name={action.name} />
+                            </span>
+                        )} */}
                     </div>
                 </div>
             ))

@@ -85,54 +85,45 @@ const delivered_data = [
 ]
 
 const EmailBarChart = ({ name }) => {
-    console.log("NAME:", name);
-    const charts = () => {
-        if (name === "Processed") {
-            <AreaChart width={500} height={200} data={alldata}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                    <linearGradient id="coloropened" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="colordelivered" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                    </linearGradient>
-                </defs>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Area type="monotone" dataKey="opened" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
-                <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
-            </AreaChart>
-        } else if (name === "Delivered") {
-            <RadialBarChart
-                width={730}
-                height={250}
-                innerRadius="10%"
-                outerRadius="80%"
-                data={delivered_data}
-                startAngle={180}
-                endAngle={0}
-            >
-                <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv' />
-                <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' align="right" />
-                <Tooltip />
-            </RadialBarChart>
-        } else if (name === "Opened") {
-            console.log("Opened");
-
-        } else if (name === "Clicked") {
-            console.log("Clicked");
-
-        } else {
-            console.log("No data");
-        }
-    }
     return (
-        <>{charts}</>
+        <>
+            {name === "Processed" && (
+                <AreaChart width={500} height={200} data={alldata}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                        <linearGradient id="coloropened" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                        </linearGradient>
+                        <linearGradient id="colordelivered" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                        </linearGradient>
+                    </defs>
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="opened" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
+                    <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
+                </AreaChart>
+            )}
+            {name === "Delivered" && (
+                <RadialBarChart
+                    width={730}
+                    height={250}
+                    innerRadius="10%"
+                    outerRadius="80%"
+                    data={delivered_data}
+                    startAngle={180}
+                    endAngle={0}
+                >
+                    <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv' />
+                    <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' align="right" />
+                    <Tooltip />
+                </RadialBarChart>
+            )}
+        </>
     );
 }
 
