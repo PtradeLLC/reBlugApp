@@ -156,6 +156,7 @@ const Dashboard = function ({ children }) {
                         {action.name === "Delivered" && (
                             <span className="w-full">
                                 <Kpi name={action.name} />
+                                <Link href={""}><p className="text-sm">Get more details</p></Link>
                             </span>
                         )}
                     </div>
