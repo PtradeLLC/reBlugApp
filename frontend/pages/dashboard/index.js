@@ -148,7 +148,9 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                     <div>
-                        <Kpi />
+                        {action.name === "Processed" && (
+                            <span className="w-full"><Kpi /></span>
+                        )}
                     </div>
                 </div>
             ));
@@ -169,11 +171,11 @@ const Dashboard = function ({ children }) {
                 )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
-                            {action.name}
+                            {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </Link>
                     </h3>
                     <div>
-                        <span className="font-bold text-4xl">{action.num}</span>
+                        <span></span>
                     </div>
                 </div>
             ));
@@ -194,7 +196,7 @@ const Dashboard = function ({ children }) {
                 )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
-                            {action.name}
+                            {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </Link>
                     </h3>
                     <div>
