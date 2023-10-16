@@ -124,6 +124,11 @@ const Dashboard = function ({ children }) {
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleClick = () => {
+        setOpenModal(true);
+    };
 
 
     const kpi = (title) => {
@@ -469,12 +474,12 @@ const Dashboard = function ({ children }) {
                                                                             {quicklink.preview}
                                                                         </p>
                                                                         <div className="mt-6">
-                                                                            <Link
-                                                                                href={quicklink.href}
+                                                                            <button
+                                                                                onClick={handleClick}
                                                                                 className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                             >
                                                                                 Get Started
-                                                                            </Link>
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -545,6 +550,9 @@ const Dashboard = function ({ children }) {
                                 </div>
                             </div>
                         </main>
+                        <span className="mt-3">
+                            {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                        </span>
                     </div>
                 </UserContext.Provider>
             )}
