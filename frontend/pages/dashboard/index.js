@@ -135,7 +135,7 @@ const Dashboard = function ({ children }) {
                         : "",
                     action.id === 2 ? "bg-[#EAD7BB]" : "",
                     action.id === emailAction.length - 2
-                        ? "sm:rounded-bl-lg bg-[#FF6969] text-white"
+                        ? "sm:rounded-bl-lg bg-[#159895] text-white"
                         : "",
                     action.id === emailAction.length - 1
                         ? " bg-[#EEEEEE] sm:rounded-bl-none"
