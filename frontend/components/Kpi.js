@@ -41,25 +41,25 @@ const alldata = [
 
 const delivered_data = [
     {
-        "name": "18-24",
+        "name": 18,
         "uv": 31.47,
         "pv": 2400,
         "fill": "#8884d8"
     },
     {
-        "name": "25-29",
+        "name": 25,
         "uv": 26.69,
         "pv": 4567,
         "fill": "#83a6ed"
     },
     {
-        "name": "30-34",
+        "name": 34,
         "uv": -15.69,
         "pv": 1398,
         "fill": "#8dd1e1"
     },
     {
-        "name": "35-39",
+        "name": 39,
         "uv": 8.22,
         "pv": 9800,
         "fill": "#82ca9d"
@@ -105,7 +105,7 @@ const EmailBarChart = ({ name }) => {
                             minAngle={15}
                             background
                             clockWise
-                            dataKey='uv'
+                            dataKey='name'
                         />
                         <Legend
                             width="100%"
