@@ -43,7 +43,8 @@ const delivered_data = [
     {
         "name": 'sentiment Analysis',
         "value": 93,
-        "fill": "#8884d8"
+        "fill": `#${hashCode("18-24").toString(16).substring(0, 6)}`
+        // "fill": "#8884d8"
         // "uv": 31.47,
         // "pv": 2400,
 
