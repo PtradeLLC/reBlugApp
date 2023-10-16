@@ -134,7 +134,7 @@ const Dashboard = function ({ children }) {
                 <div key={action.id} className={classNames(
                     action.id === 0
                         ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
-                        : "",
+                        : "bg-orange-200",
                     action.id === 1 ? "sm:rounded-tr-lg bg-red-300" : "",
                     action.id === emailAction.length - 2
                         ? "sm:rounded-bl-lg"
@@ -405,7 +405,7 @@ const Dashboard = function ({ children }) {
                                 </section>
                                 <section className="mt-4">
                                     {selectedKpi && (
-                                        <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                        <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                             <h2 className="sr-only" id="quick-links-title">
                                                 Quick links
                                             </h2>
