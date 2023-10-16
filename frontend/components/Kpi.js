@@ -118,7 +118,7 @@ const EmailBarChart = ({ name }) => {
                             label={{ fill: '#666', position: 'insideStart' }}
                             background
                             clockWise
-                            dataKey='name'
+                            dataKey='uv'
                         />
                         <Legend
                             iconSize={5}
