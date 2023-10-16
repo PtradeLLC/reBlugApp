@@ -134,10 +134,10 @@ const Dashboard = function ({ children }) {
                 <div key={action.id} className={classNames(
                     action.id === 0
                         ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
-                        : "bg-orange-200",
-                    action.id === 1 ? "sm:rounded-tr-lg bg-red-300" : "",
+                        : "",
+                    action.id === 1 ? "bg-red-300" : "",
                     action.id === emailAction.length - 2
-                        ? "sm:rounded-bl-lg"
+                        ? "sm:rounded-bl-lg bg-slate-700 text-white"
                         : "",
                     action.id === emailAction.length - 1
                         ? " bg-lime-300 sm:rounded-bl-none"
