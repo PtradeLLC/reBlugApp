@@ -111,7 +111,7 @@ const EmailBarChart = ({ name }) => {
             {name === "Delivered" && (
                 <ResponsiveContainer width="100%" height={200}>
                     <RadialBarChart
-                        innerRadius="20%"
+                        innerRadius="40%"
                         outerRadius="90%"
                         data={delivered_data}
                         startAngle={180}
