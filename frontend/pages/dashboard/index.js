@@ -96,17 +96,15 @@ const emailAction = [
     { id: 3, name: "Opened", num: 0 },
     { id: 4, name: "Clicked", num: 0 },
     { id: 5, name: "Received", num: 0 },
-    // { id: 6, name: "Spam complaint" },
-    // { id: 7, name: "Bounced" },
 ];
 
 // automated charts
 const automationAction = [
-    { id: 1, name: "Procesed" },
-    { id: 2, name: "Delivered" },
-    { id: 3, name: "Opened" },
-    { id: 4, name: "Clicked" },
-    { id: 5, name: "Received" },
+    { id: 1, name: "Processed", num: 0 },
+    { id: 2, name: "Delivered", num: 0 },
+    { id: 3, name: "Opened", num: 0 },
+    { id: 4, name: "Clicked", num: 0 },
+    { id: 5, name: "Received", num: 0 },
 ];
 
 //marketing charts
@@ -156,18 +154,56 @@ const Dashboard = function ({ children }) {
             ));
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
-                <div key={action.id} className="bg-slate-500">
+                <div key={action.id} className={classNames(
+                    action.id === 1
+                        ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
+                        : "",
+                    action.id === 2 ? "bg-red-300" : "",
+                    action.id === automationAction.length - 2
+                        ? "sm:rounded-bl-lg bg-slate-700 text-white"
+                        : "",
+                    action.id === automationAction.length - 1
+                        ? " bg-lime-300 sm:rounded-bl-none"
+                        : "",
+                    "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                )}>
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
                     <div>
-                        <p>This contains charts</p>
+                        <span className="font-bold text-4xl">{action.num}</span>
                     </div>
                 </div>
             ));
-        } else {
+        } else if (title === "Messaging Platform") {
+            return marketingAction.map((action) => (
+                <div key={action.id} className={classNames(
+                    action.id === 1
+                        ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
+                        : "",
+                    action.id === 2 ? "bg-red-300" : "",
+                    action.id === marketingAction.length - 2
+                        ? "sm:rounded-bl-lg bg-slate-700 text-white"
+                        : "",
+                    action.id === marketingAction.length - 1
+                        ? " bg-lime-300 sm:rounded-bl-none"
+                        : "",
+                    "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
+                )}>
+                    <h3 className="text-lg font-medium">
+                        <Link href="" className="focus:outline-none">
+                            {action.name}
+                        </Link>
+                    </h3>
+                    <div>
+                        <span className="font-bold text-4xl">{action.num}</span>
+                    </div>
+                </div>
+            ))
+        }
+        else {
             return null;
         }
     };
