@@ -91,11 +91,11 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed" },
-    { id: 2, name: "Delivered" },
-    { id: 3, name: "Opened" },
-    { id: 4, name: "Clicked" },
-    { id: 5, name: "Received" },
+    { id: 1, name: "Processed", num: 0 },
+    { id: 2, name: "Delivered", num: 0 },
+    { id: 3, name: "Opened", num: 0 },
+    { id: 4, name: "Clicked", num: 0 },
+    { id: 5, name: "Received", num: 0 },
     // { id: 6, name: "Spam complaint" },
     // { id: 7, name: "Bounced" },
 ];
@@ -111,11 +111,11 @@ const automationAction = [
 
 //marketing charts
 const marketingAction = [
-    { id: 1, name: "Procesed" },
-    { id: 2, name: "Delivered" },
-    { id: 3, name: "Opened" },
-    { id: 4, name: "Clicked" },
-    { id: 5, name: "Received" },
+    { id: 1, name: "Processed", num: 0 },
+    { id: 2, name: "Delivered", num: 0 },
+    { id: 3, name: "Opened", num: 0 },
+    { id: 4, name: "Clicked", num: 0 },
+    { id: 5, name: "Received", num: 0 },
 ]
 
 const UserContext = createContext();
@@ -150,7 +150,7 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                     <div>
-                        <p>This contains charts</p>
+                        <span className="font-bold text-4xl">{action.num}</span>
                     </div>
                 </div>
             ));
