@@ -57,7 +57,7 @@ const EmailBarChart = () => {
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
-            <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+            <Area type="monotone" dataKey="uv" stroke="#F8485E" fillOpacity={1} fill="url(#EF6262)" />
             <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
         </AreaChart>
         // <BarChart width={500} height={200} data={data}>
