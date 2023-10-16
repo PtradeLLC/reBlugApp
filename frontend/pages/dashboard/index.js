@@ -95,7 +95,7 @@ const emailAction = [
     { id: 2, name: "Delivered", num: 0 },
     { id: 3, name: "Opened", num: 0 },
     { id: 4, name: "Clicked", num: 0 },
-    { id: 5, name: "Received", num: 0 },
+    { id: 5, name: "Start a campaign", num: "" },
 ];
 
 // automated charts
