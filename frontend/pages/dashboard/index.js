@@ -407,7 +407,7 @@ const Dashboard = function ({ children }) {
                                                     <h2 className="sr-only" id="quick-links-title">
                                                         Quick links
                                                     </h2>
-                                                    {selectedComponent ? kpi(selectedComponent) : <span className="bg-white">While you were gone</span>}
+                                                    {selectedComponent ? kpi(selectedComponent) : <span className="bg-white sm:col-span-3 justify-center items-center">While you were gone</span>}
                                                 </div>
                                             )}
                                         </section>
