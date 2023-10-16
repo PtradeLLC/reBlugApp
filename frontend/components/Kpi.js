@@ -64,18 +64,6 @@ const delivered_data = [
         "pv": 9800,
         "fill": "#82ca9d"
     },
-    {
-        "name": "40-49",
-        "uv": -8.63,
-        "pv": 3908,
-        "fill": "#a4de6c"
-    },
-    {
-        "name": "50+",
-        "uv": -2.63,
-        "pv": 4800,
-        "fill": "#d0ed57"
-    },
 ]
 
 const EmailBarChart = ({ name }) => {
@@ -115,13 +103,11 @@ const EmailBarChart = ({ name }) => {
                     >
                         <RadialBar
                             minAngle={15}
-                            // label={{ fill: '#666', position: 'insideStart' }}
                             background
                             clockWise
                             dataKey='uv'
                         />
                         <Legend
-                            // iconSize={5}
                             width="100%"
                             height={29}
                             layout='horizontal'
