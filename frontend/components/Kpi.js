@@ -3,37 +3,37 @@ import { BarChart, Bar, Area, linearGradient, XAxis, YAxis, CartesianGrid, Toolt
 
 const data = [
     {
-        "name": "Page A",
+        "name": "Mon",
         "uv": 4000,
         "pv": 2400
     },
     {
-        "name": "Page B",
+        "name": "Tue",
         "uv": 3000,
         "pv": 1398
     },
     {
-        "name": "Page C",
+        "name": "Weds",
         "uv": 2000,
         "pv": 9800
     },
     {
-        "name": "Page D",
+        "name": "Thurs",
         "uv": 2780,
         "pv": 3908
     },
     {
-        "name": "Page E",
+        "name": "Fri",
         "uv": 1890,
         "pv": 4800
     },
     {
-        "name": "Page F",
+        "name": "Sat",
         "uv": 1890,
         "pv": 4800
     },
     {
-        "name": "Page G",
+        "name": "Sun",
         "uv": 1890,
         "pv": 4800
     },
@@ -60,15 +60,6 @@ const EmailBarChart = () => {
             <Area type="monotone" dataKey="uv" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
             <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
         </AreaChart>
-        // <BarChart width={500} height={200} data={data}>
-        //     <CartesianGrid strokeDasharray="3 3" />
-        //     <XAxis dataKey="name" />
-        //     <YAxis />
-        //     <Tooltip />
-        //     <Legend />
-        //     <Bar dataKey="uv" fill="#E43F5A" />
-        //     <Bar dataKey="pv" fill="#67BA6D" />
-        // </BarChart>
     );
 }
 
