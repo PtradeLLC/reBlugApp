@@ -131,14 +131,14 @@ const Dashboard = function ({ children }) {
             return emailAction.map((action) => (
                 <div key={action.id} className={classNames(
                     action.id === 1
-                        ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
+                        ? "rounded-tl-lg grid col-span-2 bg-[#A8DF8E] sm:rounded-tr-none"
                         : "",
-                    action.id === 2 ? "bg-red-300" : "",
+                    action.id === 2 ? "bg-[#EAD7BB]" : "",
                     action.id === emailAction.length - 2
-                        ? "sm:rounded-bl-lg bg-slate-700 text-white"
+                        ? "sm:rounded-bl-lg bg-[#FF6969] text-white"
                         : "",
                     action.id === emailAction.length - 1
-                        ? " bg-lime-300 sm:rounded-bl-none"
+                        ? " bg-[#EEEEEE] sm:rounded-bl-none"
                         : "",
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
@@ -160,7 +160,7 @@ const Dashboard = function ({ children }) {
                         : "",
                     action.id === 2 ? "bg-emerald-300" : "",
                     action.id === automationAction.length - 2
-                        ? "sm:rounded-bl-lg bg-[#D2E0FB] text-white"
+                        ? "sm:rounded-bl-lg bg-[#D2E0FB] text-black"
                         : "",
                     action.id === automationAction.length - 1
                         ? " bg-[#ffeecb] sm:rounded-bl-none"
