@@ -45,7 +45,7 @@ const delivered_data = [
     {
         "Metrics": 20,
         "value": "Sentiment Analysis",
-        "fill": "#D8D9CF"
+        "fill": "#704F4F"
     },
     {
         "Metrics": 20,
