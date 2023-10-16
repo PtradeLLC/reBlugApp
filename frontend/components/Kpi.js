@@ -1,7 +1,7 @@
-import { BarChart, Bar, Area, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { BarChart, Bar, Area, RadialBarChart, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
-const data = [
+const alldata = [
     {
         "name": "Mon",
         "opened": 0,
@@ -39,27 +39,100 @@ const data = [
     },
 ];
 
-const EmailBarChart = () => {
+const delivered_data = [
+    {
+        "name": "18-24",
+        "uv": 31.47,
+        "pv": 2400,
+        "fill": "#8884d8"
+    },
+    {
+        "name": "25-29",
+        "uv": 26.69,
+        "pv": 4567,
+        "fill": "#83a6ed"
+    },
+    {
+        "name": "30-34",
+        "uv": -15.69,
+        "pv": 1398,
+        "fill": "#8dd1e1"
+    },
+    {
+        "name": "35-39",
+        "uv": 8.22,
+        "pv": 9800,
+        "fill": "#82ca9d"
+    },
+    {
+        "name": "40-49",
+        "uv": -8.63,
+        "pv": 3908,
+        "fill": "#a4de6c"
+    },
+    {
+        "name": "50+",
+        "uv": -2.63,
+        "pv": 4800,
+        "fill": "#d0ed57"
+    },
+    {
+        "name": "unknow",
+        "uv": 6.67,
+        "pv": 4800,
+        "fill": "#ffc658"
+    }
+]
+
+const EmailBarChart = ({ name }) => {
+    console.log("NAME:", name);
+    const charts = () => {
+        if (name === "Processed") {
+            <AreaChart width={500} height={200} data={alldata}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                    <linearGradient id="coloropened" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colordelivered" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                    </linearGradient>
+                </defs>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="opened" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
+                <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
+            </AreaChart>
+        } else if (name === "Delivered") {
+            <RadialBarChart
+                width={730}
+                height={250}
+                innerRadius="10%"
+                outerRadius="80%"
+                data={delivered_data}
+                startAngle={180}
+                endAngle={0}
+            >
+                <RadialBar minAngle={15} label={{ fill: '#666', position: 'insideStart' }} background clockWise={true} dataKey='uv' />
+                <Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' align="right" />
+                <Tooltip />
+            </RadialBarChart>
+        } else if (name === "Opened") {
+            console.log("Opened");
+
+        } else if (name === "Clicked") {
+            console.log("Clicked");
+
+        } else {
+            console.log("No data");
+        }
+    }
     return (
-        <AreaChart width={500} height={200} data={data}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-            <defs>
-                <linearGradient id="coloropened" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colordelivered" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                </linearGradient>
-            </defs>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Area type="monotone" dataKey="opened" stroke="#EF6262" fillOpacity={1} fill="#F8485E" />
-            <Area type="monotone" dataKey="delivered" stroke="#82ca9d" fillOpacity={1} fill="url(#colordelivered)" />
-        </AreaChart>
+        <>{charts}</>
     );
 }
 

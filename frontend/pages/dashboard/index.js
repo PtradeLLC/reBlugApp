@@ -122,7 +122,7 @@ const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const user = useUserData();
     const [selectedComponent, setSelectedComponent] = useState(null);
-    const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
+    const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
 
 
@@ -149,7 +149,7 @@ const Dashboard = function ({ children }) {
                     </h3>
                     <div>
                         {action.name === "Processed" && (
-                            <span className="w-full"><Kpi /></span>
+                            <span className="w-full"><Kpi name={action.name} /></span>
                         )}
                     </div>
                 </div>
@@ -175,7 +175,9 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                     <div>
-                        <span></span>
+                        {action.name === "Delivered" && (
+                            <span className="w-full"><Kpi name={action.name} /></span>
+                        )}
                     </div>
                 </div>
             ));
@@ -209,7 +211,6 @@ const Dashboard = function ({ children }) {
             return null;
         }
     };
-
 
     return (
         <>
@@ -457,7 +458,7 @@ const Dashboard = function ({ children }) {
                                                                                 href={quicklink.href}
                                                                                 className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                             >
-                                                                                Find out more
+                                                                                Get Started
                                                                             </Link>
                                                                         </div>
                                                                     </div>
@@ -468,7 +469,6 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-
 
                                         <section aria-labelledby="recent-hires-title">
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
