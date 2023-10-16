@@ -364,7 +364,8 @@ const Dashboard = function ({ children }) {
                                             <h2 className="sr-only" id="quick-links-title">
                                                 Quick links
                                             </h2>
-                                            {emailAction.map((action) => (
+                                            {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
+                                            {/* {emailAction.map((action) => (
                                                 <section key={action.id} className="mt-4">
                                                     {selectedKpi && (
                                                         <div
@@ -386,7 +387,7 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     )}
                                                 </section>
-                                            ))}
+                                            ))} */}
                                         </div>
                                     )}
                                 </section>
