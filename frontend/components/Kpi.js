@@ -27,6 +27,16 @@ const data = [
         "uv": 1890,
         "pv": 4800
     },
+    {
+        "name": "Page F",
+        "uv": 1890,
+        "pv": 4800
+    },
+    {
+        "name": "Page G",
+        "uv": 1890,
+        "pv": 4800
+    },
 ];
 
 const EmailBarChart = () => {
@@ -37,8 +47,8 @@ const EmailBarChart = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="uv" fill="#8884d8" />
-            <Bar dataKey="pv" fill="#82ca9d" />
+            <Bar dataKey="uv" fill="#E43F5A" />
+            <Bar dataKey="pv" fill="#67BA6D" />
         </BarChart>
     );
 }
