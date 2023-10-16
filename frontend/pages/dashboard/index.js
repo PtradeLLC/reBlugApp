@@ -182,7 +182,7 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                     <div>
-                        {action.name === "Delivered" && (
+                        {action.name === "Processed" && (
                             <span className="w-full">
                                 <Kpi name={action.name} />
                             </span>
