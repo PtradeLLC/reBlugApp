@@ -133,14 +133,14 @@ const Dashboard = function ({ children }) {
             return emailAction.map((action) => (
                 <div key={action.id} className={classNames(
                     action.id === 0
-                        ? "rounded-tl-lg col-span-2 bg-zinc-500 rounded-tr-lg sm:rounded-tr-none"
+                        ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
                         : "",
                     action.id === 1 ? "sm:rounded-tr-lg bg-red-300" : "",
                     action.id === emailAction.length - 2
                         ? "sm:rounded-bl-lg"
                         : "",
                     action.id === emailAction.length - 1
-                        ? "rounded-bl-lg bg-lime-300 rounded-br-lg sm:rounded-bl-none"
+                        ? " bg-lime-300 sm:rounded-bl-none"
                         : "",
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
