@@ -127,48 +127,78 @@ const Dashboard = function ({ children }) {
     const [selectedKpi, setSelectedKpi] = useState("blah blah blah");
     const [loading, setLoading] = useState(false);
 
+
     const kpi = (title) => {
         if (title === "Email Conversational") {
-            return (
-                <div>
-                    <div></div>
+            return emailAction.map((action) => (
+                <div key={action.id} className="bg-red-500">
+                    <h3 className="text-lg font-medium">
+                        <Link href="" className="focus:outline-none">
+                            {action.name}
+                        </Link>
+                    </h3>
                     <div>
-                        {emailAction.map((action) => (
-                            <div key={action.id} className="bg-red-500 grid">
-                                <h3 className="text-lg font-medium">
-                                    <Link href="" className="focus:outline-none">
-                                        {action.name}
-                                    </Link>
-                                </h3>
-                            </div>
-                        ))}
+                        <p>This contains charts</p>
                     </div>
                 </div>
-            )
+            ));
         } else if (title === "Campaign Automation") {
             return automationAction.map((action) => (
-                <div key={action.id} className="bg-red-100 grid">
+                <div key={action.id} className="bg-red-500 grid">
                     <h3 className="text-lg font-medium">
                         <Link href="" className="focus:outline-none">
                             {action.name}
                         </Link>
                     </h3>
                 </div>
-            ))
-        } else if (title === "Messaging Platform") {
-            return marketingAction.map((action) => (
-                <div key={action.id} className="...">
-                    <h3 className="text-lg font-medium">
-                        <Link href="" className="focus:outline-none">
-                            {action.name}
-                        </Link>
-                    </h3>
-                </div>
-            ))
+            ));
         } else {
             return null;
         }
     };
+
+    // const kpi = (title) => {
+    //     if (title === "Email Conversational") {
+    //         return (
+    //             <div>
+    //                 <div></div>
+    //                 <div>
+    //                     {emailAction.map((action) => (
+    //                         <div key={action.id} className="bg-red-500 grid">
+    //                             <h3 className="text-lg font-medium">
+    //                                 <Link href="" className="focus:outline-none">
+    //                                     {action.name}
+    //                                 </Link>
+    //                             </h3>
+    //                         </div>
+    //                     ))}
+    //                 </div>
+    //             </div>
+    //         )
+    //     } else if (title === "Campaign Automation") {
+    //         return automationAction.map((action) => (
+    //             <div key={action.id} className="bg-red-100 grid">
+    //                 <h3 className="text-lg font-medium">
+    //                     <Link href="" className="focus:outline-none">
+    //                         {action.name}
+    //                     </Link>
+    //                 </h3>
+    //             </div>
+    //         ))
+    //     } else if (title === "Messaging Platform") {
+    //         return marketingAction.map((action) => (
+    //             <div key={action.id} className="...">
+    //                 <h3 className="text-lg font-medium">
+    //                     <Link href="" className="focus:outline-none">
+    //                         {action.name}
+    //                     </Link>
+    //                 </h3>
+    //             </div>
+    //         ))
+    //     } else {
+    //         return null;
+    //     }
+    // };
 
     if (loading) return <Loading />;
 
@@ -367,8 +397,8 @@ const Dashboard = function ({ children }) {
                                             {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
                                             {emailAction.map((action) => (
                                                 <section key={action.id} className="mt-4">
-                                                    {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
-                                                    {/* {selectedKpi && (
+                                                    {/* {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>} */}
+                                                    {selectedKpi && (
                                                         <div
                                                             className={classNames(
                                                                 action.id === 0
@@ -386,7 +416,7 @@ const Dashboard = function ({ children }) {
                                                         >
                                                             {selectedComponent ? kpi(selectedComponent) : <p>While you were gone</p>}
                                                         </div>
-                                                    )} */}
+                                                    )}
                                                 </section>
                                             ))}
                                         </div>
