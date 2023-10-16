@@ -1,4 +1,4 @@
-import { BarChart, Bar, Area, RadialBarChart, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { BarChart, Bar, Area, RadialBar, RadialBarChart, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
 const alldata = [
