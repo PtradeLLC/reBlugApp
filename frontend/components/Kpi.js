@@ -115,13 +115,13 @@ const EmailBarChart = ({ name }) => {
                     >
                         <RadialBar
                             minAngle={15}
-                            label={{ fill: '#666', position: 'insideStart' }}
+                            // label={{ fill: '#666', position: 'insideStart' }}
                             background
                             clockWise
                             dataKey='uv'
                         />
                         <Legend
-                            iconSize={5}
+                            // iconSize={5}
                             width="100%"
                             height={29}
                             layout='horizontal'
