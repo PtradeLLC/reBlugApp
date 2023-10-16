@@ -132,10 +132,10 @@ const Dashboard = function ({ children }) {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
                 <div key={action.id} className={classNames(
-                    action.id === 0
+                    action.id === 1
                         ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
                         : "",
-                    action.id === 1 ? "bg-red-300" : "",
+                    action.id === 2 ? "bg-red-300" : "",
                     action.id === emailAction.length - 2
                         ? "sm:rounded-bl-lg bg-slate-700 text-white"
                         : "",
