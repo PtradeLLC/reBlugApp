@@ -116,6 +116,7 @@ const EmailBarChart = ({ name }) => {
                         data={delivered_data}
                         startAngle={180}
                         endAngle={0}
+                        barSize={10}
                     >
                         <RadialBar
                             minAngle={15}
@@ -125,9 +126,9 @@ const EmailBarChart = ({ name }) => {
                             dataKey='uv'
                         />
                         <Legend
-                            iconSize={10}
+                            iconSize={5}
                             width="100%"
-                            height={19}
+                            height={29}
                             layout='horizontal'
                             verticalAlign='bottom'
                             align="center"
