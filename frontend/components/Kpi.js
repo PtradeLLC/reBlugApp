@@ -27,21 +27,11 @@ const data = [
         "uv": 1890,
         "pv": 4800
     },
-    {
-        "name": "Page F",
-        "uv": 2390,
-        "pv": 3800
-    },
-    {
-        "name": "Page G",
-        "uv": 3490,
-        "pv": 4300
-    }
 ];
 
 const EmailBarChart = () => {
     return (
-        <BarChart width={600} height={400} data={data}>
+        <BarChart width={500} height={200} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
