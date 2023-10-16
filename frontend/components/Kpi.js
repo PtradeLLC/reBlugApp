@@ -118,24 +118,21 @@ const EmailBarChart = ({ name }) => {
                             startAngle={180}
                             endAngle={0}
                         >
-                            <span><RadialBar
+                            <RadialBar
                                 minAngle={15}
                                 label={{ fill: '#666', position: 'insideStart' }}
                                 background
                                 clockWise
                                 dataKey='uv'
-                            /></span>
-                            <span>
-                                <Legend
-                                    iconSize={10}
-                                    width={120}
-                                    height={140}
-                                    layout='vertical'
-                                    verticalAlign='middle'
-                                    align="right"
-                                />
-                            </span>
-
+                            />
+                            <Legend
+                                iconSize={10}
+                                width={120}
+                                height={140}
+                                layout='vertical'
+                                verticalAlign='middle'
+                                align="right"
+                            />
                             <Tooltip />
                         </RadialBarChart>
                     </span>
