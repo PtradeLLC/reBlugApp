@@ -1,4 +1,4 @@
-import { PolarGrid, Area, RadarChart, PolarAngleAxis, ResponsiveContainer, Legend, Radar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { Area, Legend, XAxis, YAxis, ScatterChart, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
 const alldata = [
@@ -46,44 +46,70 @@ const alldata = [
     },
 ];
 
-const delivered_data = [
+const delever_01 = [
     {
-        "subject": "Math",
-        "A": 120,
-        "B": 110,
-        "fullMark": 150
+        "x": 100,
+        "y": 200,
+        "z": 200
     },
     {
-        "subject": "Chinese",
-        "A": 98,
-        "B": 130,
-        "fullMark": 150
+        "x": 120,
+        "y": 100,
+        "z": 260
     },
     {
-        "subject": "English",
-        "A": 86,
-        "B": 130,
-        "fullMark": 150
+        "x": 170,
+        "y": 300,
+        "z": 400
     },
     {
-        "subject": "Geography",
-        "A": 99,
-        "B": 100,
-        "fullMark": 150
+        "x": 140,
+        "y": 250,
+        "z": 280
     },
     {
-        "subject": "Physics",
-        "A": 85,
-        "B": 90,
-        "fullMark": 150
+        "x": 150,
+        "y": 400,
+        "z": 500
     },
     {
-        "subject": "History",
-        "A": 65,
-        "B": 85,
-        "fullMark": 150
+        "x": 110,
+        "y": 280,
+        "z": 200
     }
-]
+];
+const delever_02 = [
+    {
+        "x": 200,
+        "y": 260,
+        "z": 240
+    },
+    {
+        "x": 240,
+        "y": 290,
+        "z": 220
+    },
+    {
+        "x": 190,
+        "y": 290,
+        "z": 250
+    },
+    {
+        "x": 198,
+        "y": 250,
+        "z": 210
+    },
+    {
+        "x": 180,
+        "y": 280,
+        "z": 260
+    },
+    {
+        "x": 210,
+        "y": 220,
+        "z": 230
+    }
+];
 
 const EmailBarChart = ({ name }) => {
 
@@ -117,14 +143,25 @@ const EmailBarChart = ({ name }) => {
                 </AreaChart>
             )}
             {name === "Delivered" && (
-                <RadarChart outerRadius={90} width={500} height={200} data={delivered_data}>
-                    <PolarGrid />
-                    <PolarAngleAxis dataKey="subject" />
-                    <PolarRadiusAxis angle={30} domain={[0, 150]} />
-                    <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                    <Radar name="Lily" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+                <ScatterChart
+                    width={730}
+                    height={250}
+                    margin={{
+                        top: 20,
+                        right: 20,
+                        bottom: 10,
+                        left: 10,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="x" type="number" name="stature" unit="cm" />
+                    <YAxis dataKey="y" type="number" name="weight" unit="kg" />
+                    <ZAxis dataKey="z" type="number" range={[64, 144]} name="score" unit="km" />
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                </RadarChart>
+                    <Scatter name="A school" data={delever_01} fill="#8884d8" />
+                    <Scatter name="B school" data={delever_02} fill="#82ca9d" />
+                </ScatterChart>
             )}
         </>
     );
