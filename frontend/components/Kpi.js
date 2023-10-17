@@ -1,4 +1,4 @@
-import { Area, Legend, XAxis, YAxis, ScatterChart, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { Area, Legend, XAxis, YAxis, ScatterChart, CartesianGrid, Tooltip, AreaChart } from 'recharts';
 
 
 const alldata = [
