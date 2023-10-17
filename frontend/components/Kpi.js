@@ -117,7 +117,7 @@ const EmailBarChart = ({ name }) => {
                 </AreaChart>
             )}
             {name === "Delivered" && (
-                <RadarChart outerRadius={90} width={730} height={250} data={data}>
+                <RadarChart outerRadius={90} width={500} height={200} data={delivered_data}>
                     <PolarGrid />
                     <PolarAngleAxis dataKey="subject" />
                     <PolarRadiusAxis angle={30} domain={[0, 150]} />
