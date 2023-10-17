@@ -432,9 +432,10 @@ const Dashboard = function ({ children }) {
                                                     <h2 className="sr-only" id="quick-links-title">
                                                         Summary
                                                     </h2>
-                                                    {selectedComponent ? kpi(selectedComponent) : <CampaignSummary />}
+                                                    {selectedComponent ? kpi(selectedComponent) : <span>Hello</span>}
                                                 </div>
                                             )}
+                                            {!selectedKpi && (<CampaignSummary />)}
                                         </section>
                                         <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
