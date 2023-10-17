@@ -390,7 +390,7 @@ const Dashboard = function ({ children }) {
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
                                                                     Welcome {user?.displayName}
                                                                 </h2>
-                                                                <Link href={"/profile"}><span className="text-sm">Edit</span></Link>
+                                                                <Link href={"/profile"}><span className="text-xs">Brand or Agency? Edit Profile</span></Link>
                                                             </div>
                                                         </div>
                                                         <div className="mt-5 flex justify-center sm:mt-0">
