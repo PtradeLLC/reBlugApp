@@ -24,7 +24,6 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                         <p>You have no summary.</p> Please <button onClick={handleClick} type='button' className='bg-slate-400' >Launch a campaign</button> to get started
                     </>
                 )
-
             }
         </div>
     )

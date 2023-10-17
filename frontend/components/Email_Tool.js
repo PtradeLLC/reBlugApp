@@ -111,7 +111,9 @@ export default function EmailConvTool({ openModal, setOpenModal }) {
                             className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-red-500"
                             onClick={() => setOpen(false)}
                           >
+                            <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close panel</span>
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
