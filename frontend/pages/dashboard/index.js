@@ -136,7 +136,7 @@ const Dashboard = function ({ children }) {
     const kpi = (title) => {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
-                <Suspense fallback={Loading}>
+                <Suspense fallback={<Loading />}>
                     <div key={action.id} className={classNames(
                         action.id === 1
                             ? "rounded-tl-lg grid col-span-2 bg-[#A8DF8E] sm:rounded-tr-none"
@@ -239,7 +239,7 @@ const Dashboard = function ({ children }) {
 
     return (
         <>
-            <Suspense>
+            <Suspense fallback={<Loading />}>
                 <UserContext.Provider value={user}>
                     <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
                         <Popover as="header" className=" pb-24">
