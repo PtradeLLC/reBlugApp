@@ -1,4 +1,4 @@
-import { Client, Databases } from 'appwrite';
+// import { Client, Databases } from 'appwrite';
 import Head from 'next/head';
 
 const User = ({ User }) => {
