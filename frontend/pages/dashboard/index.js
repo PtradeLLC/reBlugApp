@@ -237,7 +237,7 @@ const Dashboard = function ({ children }) {
     return (
         <>
             {loading ? (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center blur-md items-center">
                     <Loading />
                 </div>
             ) : (
