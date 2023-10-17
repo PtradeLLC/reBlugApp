@@ -1,7 +1,37 @@
 import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart } from 'chart.js';
+import 'chartjs-adapter-luxon';
+import ChartStreaming from 'chartjs-plugin-streaming';
 
+Chart.register(ChartStreaming);
 
+//Chart Streaming
+Chart.defaults.set('plugins.streaming', {
+    duration: 20000
+});
 
+const chart = new Chart(ctx, {
+    options: {
+        plugins: {
+            // Change options for ALL axes of THIS CHART
+            streaming: {
+                duration: 20000
+            }
+        },
+        scales: {
+            x: {
+                type: 'realtime',
+                // Change options only for THIS AXIS
+                realtime: {
+                    duration: 20000
+                }
+            }
+        }
+    }
+});
+
+//End of Streaming
 
 const alldata = [
     {
