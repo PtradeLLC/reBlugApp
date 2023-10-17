@@ -435,7 +435,7 @@ const Dashboard = function ({ children }) {
                                                     {selectedComponent ? kpi(selectedComponent)
                                                         :
                                                         <div>
-                                                            <CampaignSummary selectedComponent={selectedComponent} />
+                                                            <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
                                                         </div>
                                                     }
                                                 </div>

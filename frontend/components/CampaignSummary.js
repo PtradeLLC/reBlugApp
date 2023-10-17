@@ -2,12 +2,17 @@ import Link from 'next/link';
 import React from 'react'
 import { useState } from 'react'
 
-const CampaignSummary = ({ selectedComponent }) => {
+const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
     const [summary, setSummary] = useState("");
 
     const campSummary = () => {
         setSummary("");
     }
+
+    const handleClick = () => {
+        setOpenModal(true);
+    };
+
 
 
     return (
@@ -15,8 +20,8 @@ const CampaignSummary = ({ selectedComponent }) => {
             {summary ? <div>Here are your summary {summary}</div> :
                 !selectedComponent && (
                     <>
-                        <span className="bg-white justify-center items-center text-center py-2 font-semibold text-l">Campaign Summary</span>
-                        <p>You have no summary. Please <Link href={""}>Launch a campaign to get started</Link></p>
+                        <span className="bg-white justify-center items-center text-center py-2 font-semibold mb-2 text-l">Campaign Summary</span>
+                        <p>You have no summary. Please</p> <button onClick={handleClick}>Launch a campaign to get started</button>
                     </>
                 )
 
