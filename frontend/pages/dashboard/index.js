@@ -1,4 +1,4 @@
-import { Fragment, useState, createContext } from "react";
+import { Fragment, useState, createContext, Suspense } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
@@ -365,187 +365,189 @@ const Dashboard = function ({ children }) {
                             )}
                         </Popover>
                         <main className="-mt-24 pb-8">
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                                <h1 className="sr-only">Profile</h1>
+                            <Suspense fallback={<p>Loading Dashboard...</p>}>
+                                <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                                    <h1 className="sr-only">Profile</h1>
 
-                                <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+                                    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
 
-                                    <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+                                        <div className="grid grid-cols-1 gap-4 lg:col-span-2">
 
-                                        <section aria-labelledby="profile-overview-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <h2 className="sr-only" id="profile-overview-title">
-                                                    Profile Overview
-                                                </h2>
-                                                <div className="bg-white p-6">
-                                                    <div className="sm:flex sm:items-center sm:justify-between">
-                                                        <div className="sm:flex sm:space-x-5">
-                                                            <div className="flex-shrink-0">
-                                                                <img
-                                                                    className="mx-auto h-20 w-20 rounded-full"
-                                                                    src={user?.avatarUrl}
-                                                                    alt="profile image"
-                                                                />
-                                                            </div>
-                                                            <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                                <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {user?.displayName}
-                                                                </h2>
-                                                                <Link href={"/profile"}><span className="text-xs">Brand or Agency? Edit Profile</span></Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="mt-5 flex justify-center sm:mt-0">
-                                                            <button
-                                                                onClick={""}
-                                                                className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                            >
-                                                                Add Team Member
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
-                                                        {cards.map((card) => (
-                                                            <div
-                                                                key={card.id}
-                                                                className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
-                                                            >
-                                                                <div className={`px-5 py-3`}>
-                                                                    <div className="text-sm text-center">
-                                                                        <button
-                                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black"
-                                                                        >
-                                                                            <span className="mx-2">{card.title}<br /></span>
-                                                                            <span className="font-bold">{card.name}</span>
-                                                                            <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
-                                                                        </button>
-                                                                    </div>
+                                            <section aria-labelledby="profile-overview-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <h2 className="sr-only" id="profile-overview-title">
+                                                        Profile Overview
+                                                    </h2>
+                                                    <div className="bg-white p-6">
+                                                        <div className="sm:flex sm:items-center sm:justify-between">
+                                                            <div className="sm:flex sm:space-x-5">
+                                                                <div className="flex-shrink-0">
+                                                                    <img
+                                                                        className="mx-auto h-20 w-20 rounded-full"
+                                                                        src={user?.avatarUrl}
+                                                                        alt="profile image"
+                                                                    />
+                                                                </div>
+                                                                <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                                                                    <h2 className="text-2xl font-semibold text-gray-900">
+                                                                        Welcome {user?.displayName}
+                                                                    </h2>
+                                                                    <Link href={"/profile"}><span className="text-xs">Brand or Agency? Edit Profile</span></Link>
                                                                 </div>
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
-                                            {selectedKpi && (
-                                                <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
-                                                    <h2 className="sr-only" id="quick-links-title">
-                                                        Summary
-                                                    </h2>
-                                                    {selectedComponent ? kpi(selectedComponent) : <CampaignSummary />}
-                                                </div>
-                                            )}
-                                        </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
-                                            {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                            {selectedComponent === "Campaign Automation" && <MarketTabs />}
-                                            {selectedComponent === "Messaging Platform" && <MaapTabs />}
-                                        </section>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-4">
-                                        <section aria-labelledby="quicklinks-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <h2
-                                                        className="text-base font-medium text-gray-900"
-                                                        id="quicklinks-title"
-                                                    >
-                                                        Quick Link
-                                                    </h2>
-                                                    <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
-                                                        >
-                                                            {quicklinks.map((quicklink) => (
-                                                                <li key={quicklink.id} className="py-5">
-                                                                    <div className="relative">
-                                                                        <h3 className="text-sm font-semibold text-gray-800">
-                                                                            {quicklink.title}
-                                                                        </h3>
-                                                                        <p className="mt-1  text-sm text-gray-600">
-                                                                            {quicklink.preview}
-                                                                        </p>
-                                                                        <div className="mt-6">
+                                                            <div className="mt-5 flex justify-center sm:mt-0">
+                                                                <button
+                                                                    onClick={""}
+                                                                    className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                >
+                                                                    Add Team Member
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
+                                                            {cards.map((card) => (
+                                                                <div
+                                                                    key={card.id}
+                                                                    className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                                >
+                                                                    <div className={`px-5 py-3`}>
+                                                                        <div className="text-sm text-center">
                                                                             <button
-                                                                                onClick={handleClick}
-                                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
+                                                                                className="font-medium text-[#0f172a] hover:text-black"
                                                                             >
-                                                                                Get Started
+                                                                                <span className="mx-2">{card.title}<br /></span>
+                                                                                <span className="font-bold">{card.name}</span>
+                                                                                <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
                                                                             </button>
                                                                         </div>
                                                                     </div>
-                                                                </li>
+                                                                </div>
                                                             ))}
-                                                        </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-
-                                        <section aria-labelledby="recent-hires-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <h2
-                                                        className="text-base font-medium text-gray-900"
-                                                        id="recent-hires-title"
-                                                    >
-                                                        Team Members
-                                                    </h2>
-                                                    <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
+                                            </section>
+                                            <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
+                                                {selectedKpi && (
+                                                    <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
+                                                        <h2 className="sr-only" id="quick-links-title">
+                                                            Summary
+                                                        </h2>
+                                                        {selectedComponent ? kpi(selectedComponent) : <CampaignSummary />}
+                                                    </div>
+                                                )}
+                                            </section>
+                                            <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
+                                                {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                                {selectedComponent === "Campaign Automation" && <MarketTabs />}
+                                                {selectedComponent === "Messaging Platform" && <MaapTabs />}
+                                            </section>
+                                        </div>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <section aria-labelledby="quicklinks-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <div className="p-6">
+                                                        <h2
+                                                            className="text-base font-medium text-gray-900"
+                                                            id="quicklinks-title"
                                                         >
-                                                            {recentHires.map((person) => (
-                                                                <li key={person.handle} className="py-4">
-                                                                    <div className="flex items-center space-x-4">
-                                                                        <div className="flex-shrink-0">
-                                                                            {/* <img
+                                                            Quick Link
+                                                        </h2>
+                                                        <div className="mt-6 flow-root">
+                                                            <ul
+                                                                role="list"
+                                                                className="-my-5 divide-y divide-gray-200"
+                                                            >
+                                                                {quicklinks.map((quicklink) => (
+                                                                    <li key={quicklink.id} className="py-5">
+                                                                        <div className="relative">
+                                                                            <h3 className="text-sm font-semibold text-gray-800">
+                                                                                {quicklink.title}
+                                                                            </h3>
+                                                                            <p className="mt-1  text-sm text-gray-600">
+                                                                                {quicklink.preview}
+                                                                            </p>
+                                                                            <div className="mt-6">
+                                                                                <button
+                                                                                    onClick={handleClick}
+                                                                                    className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                >
+                                                                                    Get Started
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                            <section aria-labelledby="recent-hires-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <div className="p-6">
+                                                        <h2
+                                                            className="text-base font-medium text-gray-900"
+                                                            id="recent-hires-title"
+                                                        >
+                                                            Team Members
+                                                        </h2>
+                                                        <div className="mt-6 flow-root">
+                                                            <ul
+                                                                role="list"
+                                                                className="-my-5 divide-y divide-gray-200"
+                                                            >
+                                                                {recentHires.map((person) => (
+                                                                    <li key={person.handle} className="py-4">
+                                                                        <div className="flex items-center space-x-4">
+                                                                            <div className="flex-shrink-0">
+                                                                                {/* <img
                                                                         className="h-8 w-8 rounded-full"
                                                                         src={image || profileImage}
                                                                         alt=""
                                                                     /> */}
+                                                                            </div>
+                                                                            <div className="min-w-0 flex-1">
+                                                                                <p className="truncate text-sm font-medium text-gray-900">
+                                                                                    {user?.name}
+                                                                                </p>
+                                                                                <p className="truncate text-sm text-gray-500">
+                                                                                    {"@" + person.handle}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a
+                                                                                    href={person.href}
+                                                                                    className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                >
+                                                                                    View
+                                                                                </a>
+                                                                            </div>
                                                                         </div>
-                                                                        <div className="min-w-0 flex-1">
-                                                                            <p className="truncate text-sm font-medium text-gray-900">
-                                                                                {user?.name}
-                                                                            </p>
-                                                                            <p className="truncate text-sm text-gray-500">
-                                                                                {"@" + person.handle}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div>
-                                                                            <a
-                                                                                href={person.href}
-                                                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                            >
-                                                                                View
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                    <div className="mt-6">
-                                                        <a
-                                                            href="#"
-                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            Click
-                                                        </a>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                        <div className="mt-6">
+                                                            <a
+                                                                href="#"
+                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                            >
+                                                                Click
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
+                                            </section>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <span className="mt-3">
-                                {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
-                            </span>
+                                <span className="mt-3">
+                                    {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                                </span>
+                            </Suspense>
                         </main>
                     </div>
                 </UserContext.Provider>
