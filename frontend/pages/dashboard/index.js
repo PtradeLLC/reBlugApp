@@ -550,10 +550,10 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </div>
                             </div>
+                            <span className="mt-3">
+                                {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                            </span>
                         </main>
-                        <span className="mt-3">
-                            {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
-                        </span>
                     </div>
                 </UserContext.Provider>
             )}
