@@ -1,5 +1,5 @@
 import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
-import { Chart } from 'chart.js';
+import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
 import ChartStreaming from 'chartjs-plugin-streaming';
 
