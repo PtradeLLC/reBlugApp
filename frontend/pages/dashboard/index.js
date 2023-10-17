@@ -426,7 +426,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className="mt-4">
+                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
                                             {selectedKpi && (
                                                 <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                                     <h2 className="sr-only" id="quick-links-title">
