@@ -1,4 +1,4 @@
-import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, linearGradient, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
+import { PolarGrid, Area, RadarChart, PolarAngleAxis, ResponsiveContainer, Legend, Radar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart } from 'recharts';
 
 
 const alldata = [
@@ -48,31 +48,41 @@ const alldata = [
 
 const delivered_data = [
     {
-        "Metrics": 20,
-        "value": "Sentiment Analysis",
-        "fill": "#704F4F"
+        "subject": "Math",
+        "A": 120,
+        "B": 110,
+        "fullMark": 150
     },
     {
-        "Metrics": 20,
-        "value": "Segmentation",
-        "fill": "#DE8F5F"
+        "subject": "Chinese",
+        "A": 98,
+        "B": 130,
+        "fullMark": 150
     },
     {
-        "Metrics": 20,
-        "value": "Sending Time",
-        "pv": 1398,
-        "fill": "#6527BE"
+        "subject": "English",
+        "A": 86,
+        "B": 130,
+        "fullMark": 150
     },
     {
-        "Metrics": 20,
-        "value": "Target Audience",
-        "fill": "#352F44"
+        "subject": "Geography",
+        "A": 99,
+        "B": 100,
+        "fullMark": 150
     },
     {
-        "Metrics": 20,
-        "value": "Bounced",
-        "fill": "#D2001A"
+        "subject": "Physics",
+        "A": 85,
+        "B": 90,
+        "fullMark": 150
     },
+    {
+        "subject": "History",
+        "A": 65,
+        "B": 85,
+        "fullMark": 150
+    }
 ]
 
 const EmailBarChart = ({ name }) => {
@@ -107,32 +117,14 @@ const EmailBarChart = ({ name }) => {
                 </AreaChart>
             )}
             {name === "Delivered" && (
-                <ResponsiveContainer width="100%" height={200}>
-                    <RadialBarChart
-                        innerRadius="50%"
-                        outerRadius="100%"
-                        data={delivered_data}
-                        startAngle={180}
-                        endAngle={0}
-                        barSize={40}
-
-                    >
-                        <RadialBar
-                            minAngle={15}
-                            background
-                            clockWise
-                            dataKey='Metrics'
-                        />
-                        <Legend
-                            width="100%"
-                            height={29}
-                            layout='horizontal'
-                            verticalAlign='bottom'
-                            align="center"
-                        />
-                        <Tooltip />
-                    </RadialBarChart>
-                </ResponsiveContainer>
+                <RadarChart outerRadius={90} width={730} height={250} data={data}>
+                    <PolarGrid />
+                    <PolarAngleAxis dataKey="subject" />
+                    <PolarRadiusAxis angle={30} domain={[0, 150]} />
+                    <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                    <Radar name="Lily" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+                    <Legend />
+                </RadarChart>
             )}
         </>
     );
