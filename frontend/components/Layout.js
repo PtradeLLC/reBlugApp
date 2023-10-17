@@ -1,7 +1,6 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import Loading from "../pages/dashboard/loading";
-import { Suspense } from "react";
+
 import {
   useSignOut,
   getNhostSession,
@@ -19,9 +18,7 @@ export default function Layout({ children }) {
     <>
       <Navbar signOut={signOut} />
       <main>
-        <Suspense fallback={Loading}>
-          {children}
-        </Suspense>
+        {children}
       </main>
       <Footer />
     </>
