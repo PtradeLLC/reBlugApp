@@ -10,6 +10,7 @@ import MarketTabs from "../../components/MarketCampTab";
 import Kpi from "../../components/Kpi";
 import Loading from "../../components/Loading";
 import DashConvTool from "../../components/DashEmailMar";
+import CampaignSummary from "../../components/CampaignSummary";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -432,7 +433,7 @@ const Dashboard = function ({ children }) {
                                                     <h2 className="sr-only" id="quick-links-title">
                                                         Quick links
                                                     </h2>
-                                                    {selectedComponent ? kpi(selectedComponent) : <span className="bg-white sm:col-span-3 justify-center items-center text-center py-2 font-semibold text-xl">Campaign Summary</span>}
+                                                    {selectedComponent ? kpi(selectedComponent) : <CampaignSummary />}
                                                 </div>
                                             )}
                                         </section>
