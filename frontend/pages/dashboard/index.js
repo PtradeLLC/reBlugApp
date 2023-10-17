@@ -428,23 +428,6 @@ const Dashboard = function ({ children }) {
                                         </section>
                                         <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
                                             {selectedKpi && (
-                                                <>
-                                                    <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
-                                                        <h2 className="sr-only" id="quick-links-title">Summary</h2>
-                                                    </div>
-                                                    {selectedComponent ? kpi(selectedComponent) : null}
-                                                </>
-                                            )}
-                                            {!selectedComponent && (
-                                                <>
-                                                    <span className="bg-white justify-center items-center text-center py-2 font-semibold text-l">Campaign Summary</span>
-                                                    <CampaignSummary />
-                                                </>
-                                            )}
-                                        </section>
-
-                                        {/* <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
-                                            {selectedKpi && (
                                                 <div className="divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0">
                                                     <h2 className="sr-only" id="quick-links-title">
                                                         Summary
@@ -452,15 +435,12 @@ const Dashboard = function ({ children }) {
                                                     {selectedComponent ? kpi(selectedComponent)
                                                         :
                                                         <div>
-                                                            <span className="bg-white justify-center items-center text-center py-2 font-semibold text-l">
-                                                                Campaign Summary
-                                                            </span>
-                                                            <CampaignSummary />
+                                                            <CampaignSummary selectedComponent={selectedComponent} />
                                                         </div>
                                                     }
                                                 </div>
                                             )}
-                                        </section> */}
+                                        </section>
                                         <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
                                             {selectedComponent === "Campaign Automation" && <MarketTabs />}
