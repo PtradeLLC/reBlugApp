@@ -157,12 +157,13 @@ const Dashboard = function ({ children }) {
                         {action.name === "Processed" && (
                             <span className="w-full">
                                 <Kpi name={action.name} />
+                                <Link href={""}><p className="text-sm">Get Insight details</p></Link>
                             </span>
                         )}
                         {action.name === "Delivered" && (
                             <span className="w-full">
                                 <Kpi name={action.name} />
-                                <Link href={""}><p className="text-sm">Get more details</p></Link>
+                                <Link href={""}><p className="text-sm">Get Insight details</p></Link>
                             </span>
                         )}
                     </div>
@@ -458,7 +459,7 @@ const Dashboard = function ({ children }) {
                                                         >
                                                             {quicklinks.map((quicklink) => (
                                                                 <li key={quicklink.id} className="py-5">
-                                                                    <div className="relative focus-within:ring-2 focus-within:ring-gray-500">
+                                                                    <div className="relative">
                                                                         <h3 className="text-sm font-semibold text-gray-800">
                                                                             {quicklink.title}
                                                                         </h3>
