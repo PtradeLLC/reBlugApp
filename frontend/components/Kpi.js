@@ -144,7 +144,7 @@ const EmailBarChart = ({ name }) => {
             )}
             {name === "Delivered" && (
                 <ScatterChart
-                    width={200}
+                    width={250}
                     height={200}
                     margin={{
                         top: 20,
