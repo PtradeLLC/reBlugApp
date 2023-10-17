@@ -110,7 +110,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                     <button
                                                         type="button"
                                                         className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-red-500"
-                                                        onClick={() => setOpen(false)}
+                                                        onClick={handleClose}
                                                     >
                                                         <span className="absolute -inset-2.5" />
                                                         <span className="sr-only">Close panel</span>
