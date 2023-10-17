@@ -21,7 +21,7 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                 !selectedComponent && (
                     <>
                         <span className="bg-white justify-center items-center text-center py-2 font-semibold mb-2 text-l">Campaign Summary</span>
-                        <p>You have no summary. Please</p> <button onClick={handleClick}>Launch a campaign to get started</button>
+                        <p>You have no summary.</p> Please <button onClick={handleClick} type='button' className='bg-slate-400' >Launch a campaign</button> to get started
                     </>
                 )
 
