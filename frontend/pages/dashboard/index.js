@@ -493,7 +493,7 @@ const Dashboard = function ({ children }) {
                                                         className="text-base font-medium text-gray-900"
                                                         id="recent-hires-title"
                                                     >
-                                                        Team Members
+                                                        Team Member
                                                     </h2>
                                                     <div className="mt-6 flow-root">
                                                         <ul
