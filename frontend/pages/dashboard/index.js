@@ -222,7 +222,7 @@ const Dashboard = function ({ children }) {
                         </Link>
                     </h3>
                     <div>
-                        <span className="font-bold text-4xl">{action.num}</span>
+                        {/* <span className="font-bold text-4xl">{action.num}</span> */}
                         {/* {action.name === "Delivered" && (
                             <span className="w-full">
                                 <Kpi name={action.name} />

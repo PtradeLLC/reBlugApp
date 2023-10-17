@@ -4,38 +4,45 @@ import { BarChart, Bar, Area, RadialBar, RadialBarChart, ResponsiveContainer, li
 const alldata = [
     {
         "name": "Mon",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Tue",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Weds",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Thurs",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Fri",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Sat",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
     {
         "name": "Sun",
+        "delivered": 0,
         "opened": 0,
-        "delivered": 0
+        "clicked": 0
     },
 ];
 
