@@ -460,16 +460,7 @@ const Dashboard = function ({ children }) {
                                                                 <li key={quicklink.id} className="py-5">
                                                                     <div className="relative focus-within:ring-2 focus-within:ring-gray-500">
                                                                         <h3 className="text-sm font-semibold text-gray-800">
-                                                                            <a
-                                                                                href={quicklink.href}
-                                                                                className="hover:underline focus:outline-none"
-                                                                            >
-                                                                                <span
-                                                                                    className="absolute inset-0"
-                                                                                    aria-hidden="true"
-                                                                                />
-                                                                                {quicklink.title}
-                                                                            </a>
+                                                                            {quicklink.title}
                                                                         </h3>
                                                                         <p className="mt-1  text-sm text-gray-600">
                                                                             {quicklink.preview}
