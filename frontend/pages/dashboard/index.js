@@ -436,7 +436,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             )}
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" ? "blur-sm" : ""}`}>
+                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-sm" : ""}`}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
                                             {selectedComponent === "Campaign Automation" && <MarketTabs />}
                                             {selectedComponent === "Messaging Platform" && <MaapTabs />}
