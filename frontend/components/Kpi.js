@@ -111,16 +111,16 @@ const delever_02 = [
     }
 ];
 
+const convRate = delever_01.map((index) => {
+    const conversion_Rate = Number(index.y / index.x) * 100;
+    index.z = conversion_Rate;
+    return index
+})
+
+console.log(convRate);
+
 const EmailBarChart = ({ name }) => {
-
-    const convRate = delever_01.map((index) => {
-        const conversion_Rate = Number(index.y / index.x) * 100;
-        return {
-            "z": conversion_Rate
-        };
-    })
-
-    console.log(convRate);
+    // console.log();
     // Formula:
     // Conversion = Total number of Email Contacts
     // Delivered = Total number of delivered emails
