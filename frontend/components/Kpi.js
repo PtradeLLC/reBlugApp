@@ -78,7 +78,7 @@ const bounced = [
         "z": Number("num_bounced" / "email_sent") * 100
     }
 ];
-const delever_02 = [
+const delivered = [
     {
         "email_sent": 0,
         "num_bounced": 0,
@@ -171,8 +171,8 @@ const EmailBarChart = ({ name }) => {
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
                     <Scatter className='text-sm' name="Bounced" data={bounced} fill="#CD1818" />
-                    <Scatter className='text-sm' name="Delivered" data={delever_02} fill="#1F8A70" />
-                    <Scatter className='text-sm' name="BR - Bounce Rate" data={delever_02} fill="#2B3A55" />
+                    <Scatter className='text-sm' name="Delivered" data={delivered} fill="#1F8A70" />
+                    <Scatter className='text-sm' name="BR - Bounce Rate" data={delivered} fill="#2B3A55" />
                 </ScatterChart>
             )}
         </>
