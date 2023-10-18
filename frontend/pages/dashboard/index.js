@@ -390,16 +390,16 @@ const Dashboard = function ({ children }) {
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
                                                                     Welcome {user?.displayName}
                                                                 </h2>
-                                                                <Link href={"/profile"}><span className="text-xs">Brand or Agency? Edit Profile</span></Link>
+                                                                <Link href={"/profile"}><span className="text-xs">Edit Profile</span></Link>
                                                             </div>
                                                         </div>
                                                         <div className="mt-5 flex justify-center sm:mt-0">
-                                                            <button
-                                                                onClick={""}
+                                                            <Link
+                                                                onClick={"/profile"}
                                                                 className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                             >
-                                                                Use as a Company
-                                                            </button>
+                                                                Use as Brand or Agency
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                     <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
