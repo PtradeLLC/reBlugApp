@@ -48,9 +48,9 @@ const alldata = [
 
 const delever_01 = [
     {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": 12,
+        "y": 10,
+        "z": 4
     },
     {
         "x": 0,
@@ -80,9 +80,9 @@ const delever_01 = [
 ];
 const delever_02 = [
     {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": 20,
+        "y": 40,
+        "z": 10
     },
     {
         "x": 0,
