@@ -219,7 +219,7 @@ export default function ProfilePg() {
                                                     type="button"
                                                     className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
                                                 >
-                                                    Change avatar
+                                                    Change avatar | Logo
                                                 </button>
                                                 <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
                                             </div>
