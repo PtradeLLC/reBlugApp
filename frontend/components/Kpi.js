@@ -159,7 +159,7 @@ const EmailBarChart = ({ name }) => {
                     <ZAxis dataKey="z" type="number" range={[64, 144]} name="score" unit="km" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name="Bounced" data={delever_01} fill="#8884d8" />
+                    <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
                     <Scatter name="Delivered" data={delever_02} fill="#82ca9d" />
                 </ScatterChart>
             )}
