@@ -159,13 +159,13 @@ const Dashboard = function ({ children }) {
                             {action.name === "Processed" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <Link href={""}><p className="text-sm">Get Insight details</p></Link>
+                                    <Link href={""}><p className="text-sm">Expand to get details</p></Link>
                                 </span>
                             )}
                             {action.name === "Delivered" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <Link href={""}><p className="text-sm">Get Insight details</p></Link>
+                                    <Link href={""}><p className="text-sm">Expand to get details</p></Link>
                                 </span>
                             )}
                         </div>
