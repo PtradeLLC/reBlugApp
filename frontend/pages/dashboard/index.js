@@ -398,7 +398,7 @@ const Dashboard = function ({ children }) {
                                                                 onClick={""}
                                                                 className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                             >
-                                                                Add Team Member
+                                                                Use as a Company
                                                             </button>
                                                         </div>
                                                     </div>
@@ -498,7 +498,7 @@ const Dashboard = function ({ children }) {
                                                             href="#"
                                                             className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                         >
-                                                            Click
+                                                            Add Team Member
                                                         </a>
                                                     </div>
                                                 </div>
