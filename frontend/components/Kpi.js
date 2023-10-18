@@ -53,29 +53,29 @@ const delever_01 = [
         "z": 200
     },
     {
-        "x": 120,
-        "y": 100,
-        "z": 260
+        "x": 0,
+        "y": 0,
+        "z": 0
     },
     {
-        "x": 170,
-        "y": 300,
-        "z": 400
+        "x": 0,
+        "y": 0,
+        "z": 0
     },
     {
-        "x": 140,
-        "y": 250,
-        "z": 280
+        "x": 0,
+        "y": 0,
+        "z": 0
     },
     {
-        "x": 150,
-        "y": 400,
-        "z": 500
+        "x": 0,
+        "y": 0,
+        "z": 0
     },
     {
-        "x": 110,
-        "y": 280,
-        "z": 200
+        "x": 0,
+        "y": 0,
+        "z": 0
     }
 ];
 const delever_02 = [
@@ -113,6 +113,9 @@ const delever_02 = [
 
 const EmailBarChart = ({ name }) => {
 
+    // Converion = Total number of Contacts
+    // Delivered = Total number of delivered emails
+    // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
     return (
         <>
             {name === "Processed" && (
@@ -155,11 +158,11 @@ const EmailBarChart = ({ name }) => {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="x" type="number" name="Delivered" unit="" />
-                    <YAxis dataKey="y" type="number" name="Bounced" unit="" />
-                    <ZAxis dataKey="z" type="number" range={[64, 144]} name="score" unit="" />
+                    <YAxis dataKey="y" type="number" name="Conversions" unit="" />
+                    <ZAxis dataKey="z" type="number" range={[64, 144]} name="Conversion rate" unit="" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
+                    <Scatter name="Conversion" data={delever_01} fill="#CD1818" />
                     <Scatter name="Delivered" data={delever_02} fill="#1F8A70" />
                 </ScatterChart>
             )}
