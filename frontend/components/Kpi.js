@@ -159,7 +159,7 @@ const EmailBarChart = ({ name }) => {
                     height={200}
                     margin={{
                         top: 20,
-                        right: 125,
+                        right: 30,
                         bottom: 10,
                         left: 10,
                     }}
