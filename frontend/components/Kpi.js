@@ -113,7 +113,15 @@ const delever_02 = [
 
 const EmailBarChart = ({ name }) => {
 
-    // Converion = Total number of Contacts
+    const conv = delever_01.map((index) => {
+        console.log(index.z);
+        console.log(typeof (index.z));
+        console.log((index.y / index.x) * 100);
+    })
+
+    console.log(conv);
+    // Formula:
+    // Conversion = Total number of Email Contacts
     // Delivered = Total number of delivered emails
     // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
     return (
