@@ -50,64 +50,64 @@ const delever_01 = [
     {
         "x": 1000,
         "y": 10000,
-        "z": ("y" / "x") * 100
+        "z": NumberNumber("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": NumberNumber("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": NumberNumber("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     }
 ];
 const delever_02 = [
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": ("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     }
 ];
 
@@ -116,7 +116,7 @@ const EmailBarChart = ({ name }) => {
     const conv = delever_01.map((index) => {
         console.log(index.z);
         console.log(typeof (index.z));
-        console.log((index.y / index.x) * 100);
+        console.log(Number(index.y / index.x) * 100);
     })
 
     console.log(conv);
