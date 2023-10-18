@@ -72,19 +72,19 @@ const quicklinks = [
         preview:
             "An AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. This allows recipients to interact with a knowledge-based chatbot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
     },
-    {
-        id: 2,
-        title: "Marketing Automation",
-        href: "#",
-        preview:
-            "This AI-powered tool can help you with every stage of your marketing campaign, from analyzing trends to planning and launching your campaign. It can help you to Identify your target audience and their needs, Research your competition, Understand the latest marketing trends, Develop a marketing strategy that is tailored to your specific goals, Create and distribute engaging marketing content, Track and measure the results of your campaigns",
-    },
-    {
-        id: 3,
-        title: "Messaging as a Platform",
-        href: "#",
-        preview: "Messaging platforms are the new frontier for creators. They give you the power to connect with your audience on a deeper level, build stronger relationships, and boost engagement. With Messaging as a Platform (MaaP), you can create personalized and interactive messaging experiences that will keep your fans coming back for more. Create exclusive content and experiences for your fans who sign up for messaging notifications all without depending on any social media network.",
-    },
+    // {
+    //     id: 2,
+    //     title: "Marketing Automation",
+    //     href: "#",
+    //     preview:
+    //         "This AI-powered tool can help you with every stage of your marketing campaign, from analyzing trends to planning and launching your campaign. It can help you to Identify your target audience and their needs, Research your competition, Understand the latest marketing trends, Develop a marketing strategy that is tailored to your specific goals, Create and distribute engaging marketing content, Track and measure the results of your campaigns",
+    // },
+    // {
+    //     id: 3,
+    //     title: "Messaging as a Platform",
+    //     href: "#",
+    //     preview: "Messaging platforms are the new frontier for creators. They give you the power to connect with your audience on a deeper level, build stronger relationships, and boost engagement. With Messaging as a Platform (MaaP), you can create personalized and interactive messaging experiences that will keep your fans coming back for more. Create exclusive content and experiences for your fans who sign up for messaging notifications all without depending on any social media network.",
+    // },
 ];
 
 function classNames(...classes) {
@@ -395,7 +395,7 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                         <div className="mt-5 flex justify-center sm:mt-0">
                                                             <Link
-                                                                onClick={"/profile"}
+                                                                href={"/profile"}
                                                                 className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                             >
                                                                 Use as Brand or Agency
