@@ -173,8 +173,8 @@ const EmailBarChart = ({ name }) => {
                     <Legend />
                     <Scatter name="D" data={delivered} fill="#1F8A70" />
                     <Scatter name="B" data={bounced} fill="#CD1818" />
-                    <Scatter name="DR" data={delivered} fill="#1F8A70" />
-                    <Scatter name="BR" data={bounced} fill="#2B3A55" />
+                    <Scatter name="DR" data={delivered} fill="#A0D995" />
+                    <Scatter name="BR" data={bounced} fill="#CC3636" />
                 </ScatterChart>
             )}
         </>
