@@ -111,20 +111,19 @@ const delever_02 = [
     }
 ];
 
+
+// Formula:
+// Conversion = Total number of Email Contacts
+// Delivered = Total number of delivered emails
+// Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
 const convRate = delever_01.map((index) => {
     const conversion_Rate = Number(index.y / index.x) * 100;
     index.z = conversion_Rate;
     return index
-})
-
-console.log(convRate);
+});
 
 const EmailBarChart = ({ name }) => {
-    // console.log();
-    // Formula:
-    // Conversion = Total number of Email Contacts
-    // Delivered = Total number of delivered emails
-    // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
+
     return (
         <>
             {name === "Processed" && (
@@ -166,9 +165,9 @@ const EmailBarChart = ({ name }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="x" type="number" name="Delivered" unit="" />
-                    <YAxis dataKey="y" type="number" name="Conversions" unit="" />
-                    <ZAxis dataKey="z" type="number" range={[0, 100]} name="Conversion rate" unit="%" />
+                    <XAxis className='text-sm' dataKey="x" type="number" name="Delivered" unit="" />
+                    <YAxis className='text-sm' dataKey="y" type="number" name="Conversions" unit="" />
+                    <ZAxis className='text-sm' dataKey="z" type="number" range={[0, 100]} name="Conversion rate" unit="%" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
                     <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
