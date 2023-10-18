@@ -448,46 +448,6 @@ const Dashboard = function ({ children }) {
                                         </section>
                                     </div>
                                     <div className="grid grid-cols-1 gap-4">
-                                        <section aria-labelledby="quicklinks-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <h2
-                                                        className="text-base font-medium text-gray-900"
-                                                        id="quicklinks-title"
-                                                    >
-                                                        Quick Link
-                                                    </h2>
-                                                    <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
-                                                        >
-                                                            {quicklinks.map((quicklink) => (
-                                                                <li key={quicklink.id} className="py-5">
-                                                                    <div className="relative">
-                                                                        <h3 className="text-sm font-semibold text-gray-800">
-                                                                            {quicklink.title}
-                                                                        </h3>
-                                                                        <p className="mt-1  text-sm text-gray-600">
-                                                                            {quicklink.preview}
-                                                                        </p>
-                                                                        <div className="mt-6">
-                                                                            <button
-                                                                                onClick={handleClick}
-                                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                            >
-                                                                                Get Started
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-
                                         <section aria-labelledby="recent-hires-title">
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
                                                 <div className="p-6">
@@ -540,6 +500,45 @@ const Dashboard = function ({ children }) {
                                                         >
                                                             Click
                                                         </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section aria-labelledby="quicklinks-title">
+                                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                <div className="p-6">
+                                                    <h2
+                                                        className="text-base font-medium text-gray-900"
+                                                        id="quicklinks-title"
+                                                    >
+                                                        Quick Link
+                                                    </h2>
+                                                    <div className="mt-6 flow-root">
+                                                        <ul
+                                                            role="list"
+                                                            className="-my-5 divide-y divide-gray-200"
+                                                        >
+                                                            {quicklinks.map((quicklink) => (
+                                                                <li key={quicklink.id} className="py-5">
+                                                                    <div className="relative">
+                                                                        <h3 className="text-sm font-semibold text-gray-800">
+                                                                            {quicklink.title}
+                                                                        </h3>
+                                                                        <p className="mt-1  text-sm text-gray-600">
+                                                                            {quicklink.preview}
+                                                                        </p>
+                                                                        <div className="mt-6">
+                                                                            <button
+                                                                                onClick={handleClick}
+                                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                            >
+                                                                                Get Started
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>

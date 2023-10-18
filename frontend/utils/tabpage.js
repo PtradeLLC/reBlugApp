@@ -9,11 +9,12 @@ Features:
 4. eCommerce - Have chatbot double up as your sales agent by helping prospective customers find the products or services they're looking for, and guide them through the purchase process with this tool.
 5. Reporting - Collect rich insight on your campaign, what is working, and what's not, and how you can improve to reach your goals quicker through the outcomes tab.
 6. SMS - If the conversation needs to be transferred to a human representative, the chatbot can connect the user to them via SMS messages.
+Cross Promotion - 
 `;
 
-const marketing_tab = `There are no campaigns to track. Please launch a campaign first.`;
+const marketing_tab = `There are no campaigns to track. Please start a campaign.`;
 
-const outcomes_tab = `There is nothing to report yet. Please launch a campaign first.`;
+const outcomes_tab = `There are no campaigns to track. Please start a campaign.`;
 
 export { emailTab, marketing_tab, outcomes_tab }
 
