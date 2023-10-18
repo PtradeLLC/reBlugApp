@@ -50,17 +50,17 @@ const delever_01 = [
     {
         "x": 1000,
         "y": 10000,
-        "z": NumberNumber("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": NumberNumber("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": NumberNumber("y" / "x") * 100
+        "z": Number("y" / "x") * 100
     },
     {
         "x": 0,
