@@ -162,7 +162,7 @@ const EmailBarChart = ({ name }) => {
                     <ZAxis dataKey="z" type="number" range={[64, 144]} name="Conversion rate" unit="" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name="Conversion Rate" data={delever_01} fill="#CD1818" />
+                    <Scatter name="Bounce rate" data={delever_01} fill="#CD1818" />
                     <Scatter name="Delivered" data={delever_02} fill="#1F8A70" />
                 </ScatterChart>
             )}
