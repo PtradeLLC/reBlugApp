@@ -116,7 +116,7 @@ const EmailBarChart = ({ name }) => {
     const conv = delever_01.map((index) => {
         console.log(index.z);
         console.log(typeof (index.z));
-        console.log(Number(index.y / index.x) * 100);
+        console.log("ConvRate:", Number(index.y / index.x) * 100);
     })
 
     console.log(conv);
