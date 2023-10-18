@@ -46,68 +46,68 @@ const alldata = [
     },
 ];
 
-const delever_01 = [
+const bounced = [
     {
-        "x": 1000,
-        "y": 10000,
-        "z": Number("y" / "x") * 100
+        "email_sent": 10000,
+        "num_bounced": 100,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     }
 ];
 const delever_02 = [
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     },
     {
-        "x": 0,
-        "y": 0,
-        "z": Number("y" / "x") * 100
+        "email_sent": 0,
+        "num_bounced": 0,
+        "z": Number("num_bounced" / "email_sent") * 100
     }
 ];
 
@@ -116,7 +116,7 @@ const delever_02 = [
 // Conversion = Total number of Email Contacts
 // Delivered = Total number of delivered emails
 // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
-const convRate = delever_01.map((index) => {
+const convRate = bounced.map((index) => {
     const conversion_Rate = Number(index.y / index.x) * 100;
     index.z = conversion_Rate;
     return index
@@ -165,14 +165,14 @@ const EmailBarChart = ({ name }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis className='text-xs' dataKey="x" type="number" name="Delivered" unit="" />
-                    <YAxis className='text-sm' dataKey="y" type="number" name="Conversions" unit="" />
-                    <ZAxis className='text-xs' dataKey="z" type="number" range={[0, 100]} name="CR" unit="%" />
+                    <XAxis className='text-xs' dataKey="email_sent" type="number" name="Delivered" unit="" />
+                    <YAxis className='text-sm' dataKey="num_bounced" type="number" name="Conversions" unit="" />
+                    <ZAxis className='text-xs' dataKey="z" type="number" range={[0, 100]} name="BR" unit="%" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter className='text-sm' name="Bounced" data={delever_01} fill="#CD1818" />
+                    <Scatter className='text-sm' name="Bounced" data={bounced} fill="#CD1818" />
                     <Scatter className='text-sm' name="Delivered" data={delever_02} fill="#1F8A70" />
-                    <Scatter className='text-sm' name="CR - Conversion Rate" data={delever_02} fill="#1F8A70" />
+                    <Scatter className='text-sm' name="BR - Bounce Rate" data={delever_02} fill="#2B3A55" />
                 </ScatterChart>
             )}
         </>
