@@ -117,7 +117,7 @@ const delivered = [
 // Delivered = Total number of delivered emails
 // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
 const convRate = bounced.map((index) => {
-    const conversion_Rate = Number(index.y / index.x) * 100;
+    const conversion_Rate = Number(index.num_bounced / index.email_sent) * 100;
     index.z = conversion_Rate;
     return index
 });
@@ -173,7 +173,7 @@ const EmailBarChart = ({ name }) => {
                     <Legend />
                     <Scatter name="D" data={delivered} fill="#1F8A70" />
                     <Scatter name="B" data={bounced} fill="#CD1818" />
-                    <Scatter name="CR" data={delivered} fill="#1F8A70" />
+                    <Scatter name="DR" data={delivered} fill="#1F8A70" />
                     <Scatter name="BR" data={bounced} fill="#2B3A55" />
                 </ScatterChart>
             )}
