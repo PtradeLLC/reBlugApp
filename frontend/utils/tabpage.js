@@ -3,7 +3,7 @@ import { Grid, Flex, Text } from '@radix-ui/themes'
 
 const emailTab = `
 Features:
-1. Cross-promotion: Your products or services can be recommended by the chatbot in other user's campaigns, and to other user's email contact lists.
+1. Cross-promotion - Your products or services can be recommended by the chatbot in other user's campaigns, and to other user's email contact lists.
 2. Phone - Use this tool to make sales calls in your native language, and let AI feature translate the call to your prospective client's native language.
 3. Survey - Ditch conventional surveys forms and create AI-powered surveys through conversation. AI-powered surveys are more engaging and efficient, and they can help you collect richer data. 
 4. Chatbot - Answer questions, provide information, customer support using AI powered conversational chatbot in emails / newsletters.

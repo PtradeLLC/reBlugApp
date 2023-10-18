@@ -48,66 +48,66 @@ const alldata = [
 
 const delever_01 = [
     {
-        "x": 12,
-        "y": 10,
-        "z": 4
+        "x": 1000,
+        "y": 10000,
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     }
 ];
 const delever_02 = [
     {
-        "x": 20,
-        "y": 40,
-        "z": 10
+        "x": 0,
+        "y": 0,
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     },
     {
         "x": 0,
         "y": 0,
-        "z": 0
+        "z": (y / x) * 100
     }
 ];
 
@@ -159,10 +159,10 @@ const EmailBarChart = ({ name }) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="x" type="number" name="Delivered" unit="" />
                     <YAxis dataKey="y" type="number" name="Conversions" unit="" />
-                    <ZAxis dataKey="z" type="number" range={[64, 144]} name="Conversion rate" unit="" />
+                    <ZAxis dataKey="z" type="number" range={[64, 144]} name="Conversion rate" unit="%" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name="Bounce rate" data={delever_01} fill="#CD1818" />
+                    <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
                     <Scatter name="Delivered" data={delever_02} fill="#1F8A70" />
                 </ScatterChart>
             )}
