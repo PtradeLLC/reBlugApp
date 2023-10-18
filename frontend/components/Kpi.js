@@ -160,7 +160,7 @@ const EmailBarChart = ({ name }) => {
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
                     <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
-                    <Scatter name="Delivered" data={delever_02} fill="#82ca9d" />
+                    <Scatter name="Delivered" data={delever_02} fill="#1F8A70" />
                 </ScatterChart>
             )}
         </>
