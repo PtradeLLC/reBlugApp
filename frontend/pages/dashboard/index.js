@@ -546,7 +546,7 @@ const Dashboard = function ({ children }) {
                                     </div>
                                 </div>
                             </div>
-                            <span className="mt-3">
+                            <span className="mt-3 px-2">
                                 {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
                             </span>
                         </main>
