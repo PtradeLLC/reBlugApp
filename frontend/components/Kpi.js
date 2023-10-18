@@ -165,13 +165,14 @@ const EmailBarChart = ({ name }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis className='text-sm' dataKey="x" type="number" name="Delivered" unit="" />
+                    <XAxis className='text-xs' dataKey="x" type="number" name="Delivered" unit="" />
                     <YAxis className='text-sm' dataKey="y" type="number" name="Conversions" unit="" />
-                    <ZAxis className='text-sm' dataKey="z" type="number" range={[0, 100]} name="Conversion rate" unit="%" />
+                    <ZAxis className='text-xs' dataKey="z" type="number" range={[0, 100]} name="CR" unit="%" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name="Bounced" data={delever_01} fill="#CD1818" />
-                    <Scatter name="Delivered" data={delever_02} fill="#1F8A70" />
+                    <Scatter className='text-sm' name="Bounced" data={delever_01} fill="#CD1818" />
+                    <Scatter className='text-sm' name="Delivered" data={delever_02} fill="#1F8A70" />
+                    <Scatter className='text-sm' name="CR - Conversion Rate" data={delever_02} fill="#1F8A70" />
                 </ScatterChart>
             )}
         </>
