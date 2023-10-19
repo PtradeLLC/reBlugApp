@@ -139,14 +139,14 @@ const Dashboard = function ({ children }) {
                 <Suspense fallback={<Loading />}>
                     <div key={action.id} className={classNames(
                         action.id === 1
-                            ? "rounded-tl-lg grid col-span-2 bg-[#A8DF8E] sm:rounded-tr-none"
+                            ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none"
                             : "",
-                        action.id === 2 ? "bg-[#EAD7BB]" : "",
+                        action.id === 2 ? "bg-[#ECECEC]" : "",
                         action.id === emailAction.length - 2
-                            ? "sm:rounded-bl-lg bg-[#159895] text-white"
+                            ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black"
                             : "",
                         action.id === emailAction.length - 1
-                            ? " bg-[#EEEEEE] sm:rounded-bl-none"
+                            ? " bg-[#F0F0F0] sm:rounded-bl-none"
                             : "",
                         "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                     )}>
