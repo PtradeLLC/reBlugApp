@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     });
 
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists. Please login." });
+      return res.status(400).json({ message: "User already exists, please login." });
     }
 
     // Hash user's password
