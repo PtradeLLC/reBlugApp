@@ -6,7 +6,7 @@ import Report from './Report_one'
 const DashEmailMar = ({ open, setOpen }) => {
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     return (
         <>
