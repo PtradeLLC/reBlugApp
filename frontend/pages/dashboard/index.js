@@ -129,6 +129,7 @@ const Dashboard = function ({ children }) {
     const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
+    const [blurClass, setBlurClass] = useState('blur-sm');
 
     const handleClick = () => {
         setOpenModal(true);
@@ -428,7 +429,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? leftRow : ""}`}>
+                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? blurClass : ""}`}>
                                             {selectedKpi && (
                                                 <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""}`}>
                                                     <h2 className="sr-only" id="quick-links-title">
