@@ -445,7 +445,7 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                            <DashConvTool selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
+                                                            {/* <DashConvTool selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} /> */}
                                                         </div>
                                                     }
                                                 </div>

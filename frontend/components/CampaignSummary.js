@@ -14,8 +14,6 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
         setOpenModal(true);
     };
 
-
-
     return (
         <div className="mt-4  overflow-hidden rounded-lg bg-white">
             {summary ? <div>Here are your summary {summary}</div> :
