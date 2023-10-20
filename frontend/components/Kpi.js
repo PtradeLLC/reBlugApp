@@ -50,14 +50,14 @@ const bounced = [
     {
         "email_sent": 0,
         "num_bounced": 0,
-        "z": ""
+        "z": 0
     },
 ];
 const delivered = [
     {
         "email_sent": 10000,
         "num_clicked": 1000,
-        "z": ""
+        "z": 0
     },
 ];
 
