@@ -3,15 +3,16 @@ import DashConvTool from './EmailMarkForm'
 import EmailCamp from './EmailCampaign'
 import Report from './Report_one'
 
-const DashEmailMar = () => {
+const DashEmailMar = ({ open, setOpen }) => {
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
         <>
             <div>
                 <EmailCamp />
-                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+                <DashConvTool openModal={openModal} setOpenModal={openModal} />
             </div>
             <div>
                 <Report />
