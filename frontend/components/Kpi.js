@@ -128,7 +128,7 @@ const EmailBarChart = ({ name }) => {
         <>
             {name === "Processed" && (
                 <AreaChart width={500} height={200} data={alldata}
-                    margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                     <defs>
                         <linearGradient id="colordelivered" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
@@ -159,9 +159,9 @@ const EmailBarChart = ({ name }) => {
                     height={200}
                     margin={{
                         top: 20,
-                        right: 33,
+                        right: 23,
                         bottom: 10,
-                        left: 10,
+                        left: 20,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
