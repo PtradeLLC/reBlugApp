@@ -6,7 +6,7 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        commit: '2d89f0c8',
+        "Recipient Engagement": 'Yes',
         branch: 'main',
         status: 'Completed',
         duration: '25s',
@@ -19,7 +19,7 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        commit: '249df660',
+        "Recipient Engagement": 'Yes',
         branch: 'main',
         status: 'Completed',
         duration: '1m 32s',
@@ -32,77 +32,12 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        commit: '11464223',
+        "Recipient Engagement": 'No',
         branch: 'main',
         status: 'Error',
         duration: '1m 4s',
         date: '12 hours ago',
         dateTime: '2023-01-23T00:00',
-    },
-    {
-        user: {
-            name: 'Courtney Henry',
-            imageUrl:
-                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        commit: 'dad28e95',
-        branch: 'main',
-        status: 'Completed',
-        duration: '2m 15s',
-        date: '2 days ago',
-        dateTime: '2023-01-21T13:00',
-    },
-    {
-        user: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        commit: '624bc94c',
-        branch: 'main',
-        status: 'Completed',
-        duration: '1m 12s',
-        date: '5 days ago',
-        dateTime: '2023-01-18T12:34',
-    },
-    {
-        user: {
-            name: 'Courtney Henry',
-            imageUrl:
-                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        commit: 'e111f80e',
-        branch: 'main',
-        status: 'Completed',
-        duration: '1m 56s',
-        date: '1 week ago',
-        dateTime: '2023-01-16T15:54',
-    },
-    {
-        user: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        commit: '5e136005',
-        branch: 'main',
-        status: 'Completed',
-        duration: '3m 45s',
-        date: '1 week ago',
-        dateTime: '2023-01-16T11:31',
-    },
-    {
-        user: {
-            name: 'Whitney Francis',
-            imageUrl:
-                'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        commit: '5c1fd07f',
-        branch: 'main',
-        status: 'Completed',
-        duration: '37s',
-        date: '2 weeks ago',
-        dateTime: '2023-01-09T08:45',
     },
 ]
 
@@ -128,7 +63,7 @@ export default function Summary() {
                             User
                         </th>
                         <th scope="col" className="hidden py-2 pl-0 pr-8 font-semibold sm:table-cell">
-                            Commit
+                            Recipient Engagement
                         </th>
                         <th scope="col" className="py-2 pl-0 pr-4 text-right font-semibold sm:pr-8 sm:text-left lg:pr-20">
                             Status
@@ -143,7 +78,7 @@ export default function Summary() {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                     {activityItems.map((item) => (
-                        <tr key={item.commit}>
+                        <tr key={item['Recipient Engagement']}>
                             <td className="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
                                 <div className="flex items-center gap-x-4">
                                     <img src={item.user.imageUrl} alt="" className="h-8 w-8 rounded-full bg-gray-800" />
@@ -152,7 +87,7 @@ export default function Summary() {
                             </td>
                             <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
                                 <div className="flex gap-x-3">
-                                    <div className="font-mono text-sm leading-6 text-gray-400">{item.commit}</div>
+                                    <div className="font-mono text-sm leading-6 text-gray-400">{item['Recipient Engagement']}</div>
                                     <div className="rounded-md bg-white border px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-white/10">
                                         {item.branch}
                                     </div>
@@ -179,6 +114,6 @@ export default function Summary() {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </div >
     )
 }
