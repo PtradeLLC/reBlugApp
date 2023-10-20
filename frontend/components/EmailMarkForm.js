@@ -158,9 +158,6 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                                     <span className="sr-only">Online</span>
                                                                 </span>
                                                             </div>
-                                                            <p className="text-sm text-gray-500">
-                                                                This simulates a message sent from a brand(ForgedMart) to a recipient(you)
-                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -170,6 +167,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
  bg-white shadow-xl rounded-xl"
                                             >
                                                 <EmailCamp />
+                                                <Report />
                                                 {/* <form onSubmit={handleSubmit}>
                                                     <div className="space-y-6">
                                                         <div className="space-y-6">
