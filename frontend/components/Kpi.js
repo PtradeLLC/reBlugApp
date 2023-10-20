@@ -66,20 +66,35 @@ const delivered = [
 // Conversion = Total number of Email Contacts
 // Delivered = Total number of delivered emails
 // Conversion rate = (Number of conversions / Total number of delivered emails) * 100%
-const convRate = bounced.map((index) => {
-    const conversion_Rate = Number(index.num_bounced / index.email_sent) * 100;
-    index.z = conversion_Rate;
-    return index
-});
-const delRate = delivered.map((index) => {
-    const conversion_Rate = Number(index.num_clicked / index.email_sent) * 100;
-    index.z = conversion_Rate;
-    return index
-});
 
-console.log(delivered);
+// const delRate = delivered.map((index) => {
+//     const conversion_Rate = Number(index.num_clicked / index.email_sent) * 100;
+//     index.z = conversion_Rate;
+//     return index
+// });
+
+// const convRate = bounced.map((index) => {
+//     const conversion_Rate = Number(index.num_bounced / index.email_sent) * 100;
+//     index.z = conversion_Rate;
+//     return index
+// });
+
+// console.log(delivered);
 
 const EmailBarChart = ({ name, data }) => {
+    const combinedData = [...bounced, ...delivered];
+
+
+    const dataWithConversionRate = combinedData.map((item) => {
+        const conversionRate = (item.num_bounced / item.email_sent) * 100;
+        return {
+            ...item,
+            conversionRate,
+        };
+    });
+
+
+
     return (
         <>
             {name === "Processed" && (
@@ -122,8 +137,16 @@ const EmailBarChart = ({ name, data }) => {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="email_sent" type="number" name="D: Delivered" unit="" />
+                    <YAxis dataKey="num_bounced" type="number" name="B: Bounced" unit="" />
+                    <ZAxis dataKey="conversionRate" type="number" range={[0, 100]} name="CR: Conversion Rate" unit="%" />
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <Legend />
+                    <Scatter name="Delivered" data={delivered} fill="#1F8A70" />
+                    <Scatter name="Bounced" data={bounced} fill="#CD1818" />
+                    <Scatter name="Conversion Rate" data={dataWithConversionRate} fill="#FFA500" />
+                    {/* <XAxis dataKey="email_sent" type="number" name="D: Delivered" unit="" />
 
-                    {/* Use conditional rendering to set the YAxis dataKey */}
+                  
                     {name === "delivered" && <YAxis dataKey="num_clicked" type="number" name="D: Delivered" unit="" />}
                     {name === "bounced" && <YAxis dataKey="num_bounced" type="number" name="B: Bounced" unit="" />}
 
@@ -134,7 +157,7 @@ const EmailBarChart = ({ name, data }) => {
                     <Scatter name="D" data={delivered} fill="#1F8A70" />
                     <Scatter name="B" data={bounced} fill="#CD1818" />
                     <Scatter name="DR" data={delivered} fill="#519259" />
-                    <Scatter name="BR" data={bounced} fill="#CC3636" />
+                    <Scatter name="BR" data={bounced} fill="#CC3636" /> */}
                 </ScatterChart>
             )}
         </>
