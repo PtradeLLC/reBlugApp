@@ -113,7 +113,7 @@ function classNames(...classes) {
 export default function Summary() {
     return (
         <div className="bg-white py-10 border rounded-sm">
-            <h2 className="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">Latest activity</h2>
+            <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8">Latest activity</h2>
             <table className="mt-6 w-full whitespace-nowrap text-left">
                 <colgroup>
                     <col className="w-full sm:w-4/12" />
@@ -122,7 +122,7 @@ export default function Summary() {
                     <col className="lg:w-1/12" />
                     <col className="lg:w-1/12" />
                 </colgroup>
-                <thead className="border-b border-white/10 text-sm leading-6 text-white">
+                <thead className="border-b border-white/10 text-sm leading-6 text-black">
                     <tr>
                         <th scope="col" className="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">
                             User
@@ -147,7 +147,7 @@ export default function Summary() {
                             <td className="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
                                 <div className="flex items-center gap-x-4">
                                     <img src={item.user.imageUrl} alt="" className="h-8 w-8 rounded-full bg-gray-800" />
-                                    <div className="truncate text-sm font-medium leading-6 text-white">{item.user.name}</div>
+                                    <div className="truncate text-sm font-medium leading-6 text-black">{item.user.name}</div>
                                 </div>
                             </td>
                             <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
@@ -166,7 +166,7 @@ export default function Summary() {
                                     <div className={classNames(statuses[item.status], 'flex-none rounded-full p-1')}>
                                         <div className="h-1.5 w-1.5 rounded-full bg-current" />
                                     </div>
-                                    <div className="hidden text-white sm:block">{item.status}</div>
+                                    <div className="hidden text-black sm:block">{item.status}</div>
                                 </div>
                             </td>
                             <td className="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">
