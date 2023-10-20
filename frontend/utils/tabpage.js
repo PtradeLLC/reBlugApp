@@ -3,13 +3,13 @@ import { Grid, Flex, Text } from '@radix-ui/themes'
 
 const emailTab = `
 Features:
-1. Cross-promotion - Your products or services can be recommended by the chatbot in other user's campaigns, and to other user's email contact lists.
-2. Phone - Use this tool to make sales calls in your native language, and let AI feature translate the call to your prospective client's native language.
-3. Survey - Ditch conventional surveys forms and create AI-powered surveys through conversation. AI-powered surveys are more engaging and efficient, and they can help you collect richer data. 
-4. Chatbot - Answer questions, provide information, customer support using AI powered conversational chatbot in emails / newsletters.
-5. eCommerce - Have chatbot double up as your sales agent by helping prospective customers find the products or services they're looking for, and guide them through the purchase process with this tool.
-6. Reporting - Collect rich insight on your campaign, what is working, and what's not, and how you can improve to reach your goals quicker through the outcomes tab.
-7. SMS - If the conversation needs to be transferred to a human representative, the chatbot can connect the user to them via SMS messages.
+1. Co-promotion: Opt in to partner with other brands and influencers in designated categories to reach a wider audience through chatbot recommendations.
+2. Phone: Use this tool to make sales calls in your native language, and let AI feature translate the call to your prospective client's native language.
+3. Survey: Ditch conventional surveys forms and create AI-powered surveys through conversation. AI-powered surveys are more engaging and efficient, and they can help you collect richer data. 
+4. Chatbot: Answer questions, provide information, customer support using AI powered conversational chatbot in emails / newsletters.
+5. eCommerce: Have chatbot double up as your sales agent by helping prospective customers find the products or services they're looking for, and guide them through the purchase process with this tool.
+6. Reporting: Collect rich insight on your campaign, what is working, and what's not, and how you can improve to reach your goals quicker through the outcomes tab.
+7. SMS: If the conversation needs to be transferred to a human representative, the chatbot can connect the user to them via SMS messages.
 `;
 
 const marketing_tab = `There are no campaigns to track. Please start a campaign.`;

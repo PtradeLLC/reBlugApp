@@ -48,15 +48,15 @@ const alldata = [
 
 const bounced = [
     {
-        "email_sent": 10000,
-        "num_bounced": 1000,
+        "email_sent": 0,
+        "num_bounced": 0,
         "z": 0
     },
 ];
 const delivered = [
     {
-        "email_sent": 10000,
-        "num_clicked": 1000,
+        "email_sent": 0,
+        "num_clicked": 0,
         "z": 0
     },
 ];
