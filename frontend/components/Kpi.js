@@ -48,8 +48,8 @@ const alldata = [
 
 const bounced = [
     {
-        "email_sent": 10000,
-        "num_bounced": 100,
+        "email_sent": 0,
+        "num_bounced": 0,
         "z": Number("num_bounced" / "email_sent") * 100
     },
     {
@@ -80,8 +80,8 @@ const bounced = [
 ];
 const delivered = [
     {
-        "email_sent": 0,
-        "num_bounced": 0,
+        "email_sent": 10000,
+        "num_bounced": 100,
         "z": Number("num_bounced" / "email_sent") * 100
     },
     {
@@ -165,7 +165,7 @@ const EmailBarChart = ({ name }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="email_sent" type="number" name="D: Email Sent" unit="" />
+                    <XAxis dataKey="email_sent" type="number" name="D: Delivered" unit="" />
                     <YAxis dataKey="num_bounced" type="number" name="B: Bounced" unit="" />
                     <ZAxis dataKey="z" type="number" range={[0, 100]} name="BR: Bounced Rate" unit="%" />
                     <ZAxis dataKey="z" type="number" range={[0, 100]} name="DR: Delivery Rate" unit="%" />
