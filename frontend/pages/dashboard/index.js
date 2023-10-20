@@ -134,7 +134,9 @@ const Dashboard = function ({ children }) {
         setOpenModal(true);
     };
     const handleNotification = () => {
-        setShow(true);
+        if (componentName === "Campaign Automation" || componentName === "Messaging Platform") {
+            setOpenModal(true);
+        }
     };
 
 
@@ -205,13 +207,6 @@ const Dashboard = function ({ children }) {
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </button>
                     </h3>
-                    <div>
-                        {/* {action.name === "Delivered" && (
-                            <span className="w-full">
-                                <Kpi name={action.name} />
-                            </span>
-                        )} */}
-                    </div>
                 </div>
             ));
         } else if (title === "Messaging Platform") {
@@ -450,7 +445,8 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                            {handleNotification}
+                                                            <button type="button" onClick={() => handleNotification("Campaign Automation")}>Open Modal for Campaign Automation</button>
+                                                            {/* <button type="button" onClick={() => handleNotification("Messaging Platform")}>Open Modal for Messaging Platform</button> */}
                                                         </div>
                                                     }
                                                 </div>
