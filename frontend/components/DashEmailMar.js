@@ -10,7 +10,7 @@ const DashEmailMar = () => {
         <>
             <div>
                 <EmailCamp />
-                <DashConvTool open={open} setOpen={setOpen} />
+                {/* <DashConvTool open={open} setOpen={setOpen} /> */}
             </div>
             <div>
                 <Report />
