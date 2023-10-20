@@ -133,6 +133,9 @@ const Dashboard = function ({ children }) {
     const handleClick = () => {
         setOpenModal(true);
     };
+    const handleNotification = () => {
+        setShow(true);
+    };
 
 
     const kpi = (title) => {
@@ -438,7 +441,7 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                            <Hover show={show} setShow={setShow} />
+                                                            {handleNotification}
                                                         </div>
                                                     }
                                                 </div>
