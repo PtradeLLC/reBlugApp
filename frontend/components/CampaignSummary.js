@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
-import { useState } from 'react'
+import { useState } from 'react';
+import Summary from './Summary';
 
 const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
     const [summary, setSummary] = useState("");
@@ -27,6 +28,9 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                                 Launch a campaign
                             </button> to get started
                         </span>
+                        <div>
+                            <Summary />
+                        </div>
 
                     </>
                 )

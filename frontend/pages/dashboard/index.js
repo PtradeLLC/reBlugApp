@@ -420,7 +420,7 @@ const Dashboard = function ({ children }) {
                                                                 <div className={`px-5 py-3`}>
                                                                     <div className="text-sm text-center">
                                                                         <button
-                                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title); handleClick }}
+                                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                             className="font-medium text-[#0f172a] hover:text-black"
                                                                         >
                                                                             <span className="mx-2">{card.title}<br /></span>
