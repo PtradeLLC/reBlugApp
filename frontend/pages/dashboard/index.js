@@ -164,13 +164,13 @@ const Dashboard = function ({ children }) {
                             {action.name === "Processed" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <Link href={""}><p className="text-sm">Expand to get details</p></Link>
+                                    <button type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
                                 </span>
                             )}
                             {action.name === "Delivered" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <Link href={""}><p className="text-sm">Expand to get details</p></Link>
+                                    <button type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
                                 </span>
                             )}
                         </div>
@@ -193,9 +193,9 @@ const Dashboard = function ({ children }) {
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
                     <h3 className="text-lg font-medium">
-                        <Link href="" className="focus:outline-none">
+                        <button type="button" onClick={handleClick} className="focus:outline-none">
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                        </Link>
+                        </button>
                     </h3>
                     <div>
                         {/* {action.name === "Delivered" && (
@@ -222,9 +222,9 @@ const Dashboard = function ({ children }) {
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
                     <h3 className="text-lg font-medium">
-                        <Link href="" className="focus:outline-none">
+                        <button type="button" onClick={handleClick} className="focus:outline-none">
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                        </Link>
+                        </button>
                     </h3>
                     <div>
                         {/* <span className="font-bold text-4xl">{action.num}</span> */}
