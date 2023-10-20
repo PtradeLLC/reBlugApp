@@ -50,14 +50,14 @@ const bounced = [
     {
         "email_sent": 0,
         "num_bounced": 0,
-        "z": Number("num_bounced" / "email_sent") * 100
+        "z": ""
     },
 ];
 const delivered = [
     {
         "email_sent": 10000,
         "num_clicked": 1000,
-        "z": Number("num_clicked" / "email_sent") * 100
+        "z": ""
     },
 ];
 
@@ -76,6 +76,8 @@ const delRate = delivered.map((index) => {
     index.z = conversion_Rate;
     return index
 });
+
+console.log(delivered);
 
 const EmailBarChart = ({ name, data }) => {
     return (
