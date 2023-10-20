@@ -12,6 +12,7 @@ import Loading from "./loading";
 import DashConvTool from "../../components/DashEmailMar";
 import CampaignSummary from "../../components/CampaignSummary";
 import Hover from "../../components/Hover";
+import DashEmailMar from "../../components/DashEmailMar";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -557,7 +558,8 @@ const Dashboard = function ({ children }) {
                                 </div>
                             </div>
                             <span className="mt-3 px-2">
-                                {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                                {/* {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />} */}
+                                <DashEmailMar />
                             </span>
                         </main>
                     </div>
