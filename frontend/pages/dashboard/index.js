@@ -134,7 +134,7 @@ const Dashboard = function ({ children }) {
 
 
     const handleClick = () => {
-        setShow(true);
+        setOpenModal(true);
     };
     const handleNotification = () => {
         if (componentName === "Campaign Automation" || componentName === "Messaging Platform") {
