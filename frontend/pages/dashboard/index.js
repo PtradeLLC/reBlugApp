@@ -11,6 +11,7 @@ import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/DashEmailMar";
 import CampaignSummary from "../../components/CampaignSummary";
+import Hover from "../../components/Hover";
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -129,10 +130,11 @@ const Dashboard = function ({ children }) {
     const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const [blurClass, setBlurClass] = useState('blur-sm');
+    const [show, setShow] = useState(false);
 
     const handleClick = () => {
         setOpenModal(true);
+        setShow(true)
     };
 
 
@@ -551,6 +553,7 @@ const Dashboard = function ({ children }) {
                             </div>
                             <span className="mt-3 px-2">
                                 {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                                <Hover show={show} setShow={setShow} />
                             </span>
                         </main>
                     </div>
