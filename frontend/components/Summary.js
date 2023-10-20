@@ -153,7 +153,7 @@ export default function Summary() {
                             <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
                                 <div className="flex gap-x-3">
                                     <div className="font-mono text-sm leading-6 text-gray-400">{item.commit}</div>
-                                    <div className="rounded-md bg-gray-700/40 px-2 py-1 text-xs font-medium text-gray-400 ring-1 ring-inset ring-white/10">
+                                    <div className="rounded-md bg-white border px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-white/10">
                                         {item.branch}
                                     </div>
                                 </div>
