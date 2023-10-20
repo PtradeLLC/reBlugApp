@@ -136,28 +136,14 @@ const EmailBarChart = ({ name, data }) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="email_sent" type="number" name="D: Delivered" unit="" />
-                    <YAxis dataKey="num_bounced" type="number" name="B: Bounced" unit="" />
-                    <ZAxis dataKey="conversionRate" type="number" range={[0, 100]} name="CR: Conversion Rate" unit="%" />
+                    <XAxis dataKey="email_sent" type="number" name="Delivered" unit="" />
+                    <YAxis dataKey="num_bounced" type="number" name="Bounced" unit="" />
+                    <ZAxis dataKey="conversionRate" type="number" range={[0, 100]} name="Conversion Rate" unit="%" />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
                     <Scatter name="Delivered" data={delivered} fill="#1F8A70" />
                     <Scatter name="Bounced" data={bounced} fill="#CD1818" />
                     <Scatter name="Conversion Rate" data={dataWithConversionRate} fill="#FFA500" />
-                    {/* <XAxis dataKey="email_sent" type="number" name="D: Delivered" unit="" />
-
-                  
-                    {name === "delivered" && <YAxis dataKey="num_clicked" type="number" name="D: Delivered" unit="" />}
-                    {name === "bounced" && <YAxis dataKey="num_bounced" type="number" name="B: Bounced" unit="" />}
-
-                    <ZAxis dataKey="z" type="number" range={[0, 100]} name="BR: Bounced Rate" unit="%" />
-                    <ZAxis dataKey="z" type="number" range={[0, 100]} name="DR: Delivery Rate" unit="%" />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                    <Legend />
-                    <Scatter name="D" data={delivered} fill="#1F8A70" />
-                    <Scatter name="B" data={bounced} fill="#CD1818" />
-                    <Scatter name="DR" data={delivered} fill="#519259" />
-                    <Scatter name="BR" data={bounced} fill="#CC3636" /> */}
                 </ScatterChart>
             )}
         </>
