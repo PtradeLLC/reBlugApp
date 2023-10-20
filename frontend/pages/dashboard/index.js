@@ -9,10 +9,11 @@ import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
 import Kpi from "../../components/Kpi";
 import Loading from "./loading";
-import DashConvTool from "../../components/DashEmailMar";
+import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Hover from "../../components/Hover";
 import DashEmailMar from "../../components/DashEmailMar";
+
 
 const navigation = [
     { name: "Home", href: "#", current: true },
@@ -131,8 +132,9 @@ const Dashboard = function ({ children }) {
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
 
+
     const handleClick = () => {
-        setOpenModal(true);
+        setShow(true);
     };
     const handleNotification = () => {
         if (componentName === "Campaign Automation" || componentName === "Messaging Platform") {
@@ -558,8 +560,8 @@ const Dashboard = function ({ children }) {
                                 </div>
                             </div>
                             <span className="mt-3 px-2">
-                                {/* {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />} */}
-                                <DashEmailMar isOpen={show} closeModal={() => setShow(false)} />
+                                {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
+                                {/* <DashEmailMar isOpen={show} closeModal={() => setShow(false)} /> */}
                             </span>
                         </main>
                     </div>

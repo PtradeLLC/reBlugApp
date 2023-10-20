@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from "next/image";
+import EmailCamp from "./EmailCampaign";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -168,7 +169,8 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform  
  bg-white shadow-xl rounded-xl"
                                             >
-                                                <form onSubmit={handleSubmit}>
+                                                <EmailCamp />
+                                                {/* <form onSubmit={handleSubmit}>
                                                     <div className="space-y-6">
                                                         <div className="space-y-6">
                                                             <div className="space-y-2">
@@ -292,7 +294,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </form> */}
                                             </div>
                                         </div>
                                     </div>
