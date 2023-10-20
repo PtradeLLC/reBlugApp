@@ -30,8 +30,6 @@ const cards = [
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "SizeIcon", bground: "#A18072" }
 ];
 
-const leftRow = 'blur-sm'
-
 const stats = [
     { label: "Vacation days left", value: 12 },
     { label: "Sick days left", value: 4 },
@@ -134,7 +132,6 @@ const Dashboard = function ({ children }) {
 
     const handleClick = () => {
         setOpenModal(true);
-        setShow(true)
     };
 
 
@@ -441,6 +438,7 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
+                                                            <Hover show={show} setShow={setShow} />
                                                         </div>
                                                     }
                                                 </div>
@@ -553,7 +551,6 @@ const Dashboard = function ({ children }) {
                             </div>
                             <span className="mt-3 px-2">
                                 {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
-                                <Hover show={show} setShow={setShow} />
                             </span>
                         </main>
                     </div>
