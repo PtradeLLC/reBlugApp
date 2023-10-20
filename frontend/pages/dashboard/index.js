@@ -132,7 +132,7 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
 
     const handleClick = () => {
-        setOpen(true);
+        setOpenModal(true);
     };
     const handleNotification = () => {
         if (componentName === "Campaign Automation" || componentName === "Messaging Platform") {
@@ -559,7 +559,7 @@ const Dashboard = function ({ children }) {
                             </div>
                             <span className="mt-3 px-2">
                                 {/* {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />} */}
-                                <DashEmailMar open={open} setOpen={setOpen} />
+                                <DashEmailMar openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                         </main>
                     </div>
