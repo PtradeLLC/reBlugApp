@@ -156,11 +156,17 @@ const Dashboard = function ({ children }) {
                         "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                     )}>
                         <h3 className="text-lg font-medium">
-                            {/* {action.name === "Start a campaign" ? } */}
-                            <button type="button" onClick={action.name === "Start a campaign" && ({ handleClick })}>
-                                {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                            </button>
+                            {action.name === "Start a campaign" ? (
+                                <button type="button" onClick={handleClick}>
+                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                </button>
+                            ) : (
+                                <span>
+                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                </span>
+                            )}
                         </h3>
+
                         <div>
                             {action.name === "Processed" && (
                                 <span className="w-full">
