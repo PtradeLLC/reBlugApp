@@ -25,9 +25,9 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "SizeIcon", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "SizeIcon", bground: "#A18072" },
-    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "SizeIcon", bground: "#A18072" }
+    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "coming soon", bground: "#A18072" },
+    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "coming soon", bground: "#A18072" }
 ];
 
 const stats = [
@@ -425,7 +425,7 @@ const Dashboard = function ({ children }) {
                                                                         >
                                                                             <span className="mx-2">{card.title}<br /></span>
                                                                             <span className="font-bold">{card.name}</span>
-                                                                            <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400"><card.icon /></span>
+                                                                            <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span>
                                                                         </button>
                                                                     </div>
                                                                 </div>
