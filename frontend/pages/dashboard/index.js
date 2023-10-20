@@ -156,9 +156,7 @@ const Dashboard = function ({ children }) {
                         "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                     )}>
                         <h3 className="text-lg font-medium">
-                            <Link href="" className="focus:outline-none">
-                                {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                            </Link>
+                            {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </h3>
                         <div>
                             {action.name === "Processed" && (
@@ -193,6 +191,7 @@ const Dashboard = function ({ children }) {
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
                     <h3 className="text-lg font-medium">
+                        {/* EDIT THIS  */}
                         <button type="button" onClick={handleClick} className="focus:outline-none">
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </button>
@@ -222,6 +221,7 @@ const Dashboard = function ({ children }) {
                     "group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500"
                 )}>
                     <h3 className="text-lg font-medium">
+                        {/* EDIT THIS  */}
                         <button type="button" onClick={handleClick} className="focus:outline-none">
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </button>
