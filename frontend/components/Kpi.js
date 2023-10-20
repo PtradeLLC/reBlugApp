@@ -159,9 +159,9 @@ const EmailBarChart = ({ name }) => {
                     height={200}
                     margin={{
                         top: 20,
-                        right: 43,
+                        right: 48,
                         bottom: 10,
-                        left: -10,
+                        left: -15,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
