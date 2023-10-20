@@ -445,8 +445,7 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                            <button type="button" onClick={() => handleNotification("Campaign Automation")}>Open Modal for Campaign Automation</button>
-                                                            {/* <button type="button" onClick={() => handleNotification("Messaging Platform")}>Open Modal for Messaging Platform</button> */}
+                                                            <DashConvTool selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
                                                         </div>
                                                     }
                                                 </div>
