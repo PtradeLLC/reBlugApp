@@ -132,8 +132,10 @@ const Dashboard = function ({ children }) {
                 const prevChange = emailAction[index - 1].change;
                 if (item.change > prevChange) {
                     item.changeType = "Increased";
+                    setDataColor("#14C38E");
                 } else if (item.change < prevChange) {
                     item.changeType = "Decreased";
+                    setDataColor("#FF1E1E");
                 }
             }
             return item;
@@ -167,9 +169,16 @@ const Dashboard = function ({ children }) {
                                     {action.name}
                                 </button>
                             ) : (
-                                <span>
-                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                </span>
+                                <>
+                                    <span>
+                                        {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                    </span>
+                                    <span className="font-thin text-xs text-end">
+                                        <span className={`text-[${dataColor}]`}>
+                                            {dataChange} {action.changeType} {action.change}%
+                                        </span> from last campaign
+                                    </span>
+                                </>
                             )}
                         </h3>
 
@@ -187,11 +196,6 @@ const Dashboard = function ({ children }) {
                                 </span>
                             )}
                         </div>
-                    </div>
-                    <div className="font-thin text-xs text-end">
-                        <span className={`text-[${dataColor}]`}>
-                            {dataChange} {action.changeType} {action.change}%
-                        </span> from last campaign
                     </div>
                 </Suspense>
             ));
