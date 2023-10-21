@@ -155,10 +155,10 @@ const Dashboard = function ({ children }) {
                             ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none"
                             : "",
                         action.id === 2 ? "bg-[#ECECEC]" : "",
-                        action.id === emailAction.length - 2
+                        action.id === updatedEmailAction.length - 2
                             ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black"
                             : "",
-                        action.id === emailAction.length - 1
+                        action.id === updatedEmailAction.length - 1
                             ? " bg-[#F0F0F0] sm:rounded-bl-none"
                             : "",
                         "group relative p-6 "
@@ -169,16 +169,14 @@ const Dashboard = function ({ children }) {
                                     {action.name}
                                 </button>
                             ) : (
-                                <>
-                                    <span>
-                                        {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    </span><br />
-                                    {/* <span className="font-thin text-xs text-end">
+                                <span>
+                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                    <span className="font-thin text-xs text-end">
                                         <span className={`text-[${dataColor}]`}>
                                             {dataChange} {action.changeType} {action.change}%
                                         </span> since last campaign
-                                    </span> */}
-                                </>
+                                    </span>
+                                </span>
                             )}
                         </h3>
 
