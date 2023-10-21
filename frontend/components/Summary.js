@@ -6,7 +6,7 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        "Recipient Engagement": 'Yes',
+        "engaged": 'Yes',
         branch: 'main',
         status: 'Delivered',
         duration: '25s',
@@ -19,7 +19,7 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        "Recipient Engagement": 'Yes',
+        "engaged": 'Yes',
         branch: 'main',
         status: 'Delivered',
         duration: '1m 32s',
@@ -32,7 +32,7 @@ const activityItems = [
             imageUrl:
                 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        "Recipient Engagement": 'No',
+        "engaged": 'No',
         branch: 'main',
         status: 'Bounced',
         duration: '1m 4s',
@@ -63,7 +63,7 @@ export default function Summary() {
                             User
                         </th>
                         <th scope="col" className="hidden py-2 pl-0 pr-8 font-semibold sm:table-cell">
-                            Recipient Engagement
+                            Engaged
                         </th>
                         <th scope="col" className="py-2 pl-0 pr-4 text-right font-semibold sm:pr-8 sm:text-left lg:pr-20">
                             Status
@@ -78,7 +78,7 @@ export default function Summary() {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                     {activityItems.map((item) => (
-                        <tr key={item['Recipient Engagement']}>
+                        <tr key={item['engaged']}>
                             <td className="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
                                 <div className="flex items-center gap-x-4">
                                     <img src={item.user.imageUrl} alt="" className="h-8 w-8 rounded-full bg-gray-800" />
@@ -87,7 +87,7 @@ export default function Summary() {
                             </td>
                             <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
                                 <div className="flex gap-x-3">
-                                    <div className="font-mono text-sm leading-6 text-gray-400">{item['Recipient Engagement']}</div>
+                                    <div className="font-mono text-sm leading-6 text-gray-400">{item['engaged']}</div>
                                     <div className="rounded-md bg-white border px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-white/10">
                                         {item.branch}
                                     </div>
