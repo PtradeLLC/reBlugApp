@@ -128,7 +128,7 @@ const Dashboard = function ({ children }) {
 
     const changedData = () => {
         const dataDiff = emailAction.map((item, index) => {
-            if (index > 0) {
+            if (index > item.num) {
                 const prevChange = emailAction[index - 1].change;
                 if (item.change > prevChange) {
                     item.changeType = "Increased";
