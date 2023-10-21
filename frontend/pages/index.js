@@ -48,7 +48,7 @@ const Home = ({ emailMessages }) => {
     const response = account.delete();
   }
   return (
-    <div className="h-screen">
+    <div>
       <Head>
         <title>ForgedMart</title>
         <meta name="description" content="Our workflow automation tools helps brand marketers automate their marketing tasks, such as email marketing, lead generation, and social media marketing. By developing marketing workflow automation tools to help brand marketers save time and resources, brands can improve efficiency, and generate more sales and brand awareness." />
