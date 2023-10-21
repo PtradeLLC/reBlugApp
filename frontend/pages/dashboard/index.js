@@ -168,7 +168,7 @@ const Dashboard = function ({ children }) {
                             ) : (
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    <div>Hello test</div>
+                                    <span className="font-thin text-xs text-end">180.1% from last month</span>
                                 </span>
                             )}
                         </h3>
