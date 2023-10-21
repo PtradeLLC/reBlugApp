@@ -25,7 +25,7 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                                 Launch a campaign
                             </button> to get started
                         </span>
-                        <div className='flex justify-center items-center'>
+                        <div>
                             <Summary />
                         </div>
 
