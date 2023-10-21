@@ -126,39 +126,39 @@ const Dashboard = function ({ children }) {
         setOpenModal(true);
     };
 
-    const changedData = () => {
-        const dataDiff = emailAction.map((item, index) => {
-            if (index > item.num) {
-                const prevChange = emailAction[index - 1].change;
-                if (item.change > prevChange) {
-                    item.changeType = "Increased";
-                    setDataColor("#14C38E");
-                } else if (item.change < prevChange) {
-                    item.changeType = "Decreased";
-                    setDataColor("#FF1E1E");
-                }
-            }
-            return item;
-        });
-        return dataDiff;
-    };
+    // const changedData = () => {
+    //     const dataDiff = emailAction.map((item, index) => {
+    //         if (index > item.num) {
+    //             const prevChange = emailAction[index - 1].change;
+    //             if (item.change > prevChange) {
+    //                 item.changeType = "Increased";
+    //                 setDataColor("#14C38E");
+    //             } else if (item.change < prevChange) {
+    //                 item.changeType = "Decreased";
+    //                 setDataColor("#FF1E1E");
+    //             }
+    //         }
+    //         return item;
+    //     });
+    //     return dataDiff;
+    // };
 
-    const updatedEmailAction = changedData();
+    // const updatedEmailAction = changedData();
 
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
-            return updatedEmailAction.map((action) => (
+            return emailAction.map((action) => (
                 <Suspense fallback={<Loading />}>
                     <div key={action.id} className={classNames(
                         action.id === 1
                             ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none"
                             : "",
                         action.id === 2 ? "bg-[#ECECEC]" : "",
-                        action.id === updatedEmailAction.length - 2
+                        action.id === emailAction.length - 2
                             ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black"
                             : "",
-                        action.id === updatedEmailAction.length - 1
+                        action.id === emailAction.length - 1
                             ? " bg-[#F0F0F0] sm:rounded-bl-none"
                             : "",
                         "group relative p-6 "
