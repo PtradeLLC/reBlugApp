@@ -1,4 +1,7 @@
+import { useState } from "react"
+
 const statuses = { Completed: 'text-green-400 bg-green-400/10', Error: 'text-rose-400 bg-rose-400/10' }
+
 const activityItems = [
     {
         user: {
@@ -12,19 +15,6 @@ const activityItems = [
         duration: '25s',
         date: '45 minutes ago',
         dateTime: '2023-01-23T11:00',
-    },
-    {
-        user: {
-            name: 'Lindsay Walton',
-            imageUrl:
-                'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        "engaged": 'Yes',
-        branch: 'main',
-        status: 'Delivered',
-        duration: '1m 32s',
-        date: '3 hours ago',
-        dateTime: '2023-01-23T09:00',
     },
     {
         user: {
@@ -46,6 +36,9 @@ function classNames(...classes) {
 }
 
 export default function Summary() {
+    const [summary, setSummary] = useState("There are no recent summary");
+
+
     return (
         <div className="bg-white py-10 border rounded-sm">
             <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8">Latest activity</h2>
@@ -77,41 +70,43 @@ export default function Summary() {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
-                    {activityItems.map((item) => (
-                        <tr key={item['engaged']}>
-                            <td className="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
-                                <div className="flex items-center gap-x-4">
-                                    <img src={item.user.imageUrl} alt="" className="h-8 w-8 rounded-full bg-gray-800" />
-                                    <div className="truncate text-sm font-medium leading-6 text-black">{item.user.name}</div>
-                                </div>
-                            </td>
-                            <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
-                                <div className="flex gap-x-3">
-                                    <div className="font-mono text-sm leading-6 text-gray-400">{item['engaged']}</div>
-                                    <div className="rounded-md bg-white border px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-white/10">
-                                        {item.branch}
+                    {activityItems.length > 0 ?
+                        activityItems.map((item) => (
+                            <tr key={item['engaged']}>
+                                <td className="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
+                                    <div className="flex items-center gap-x-4">
+                                        <img src={item.user.imageUrl} alt="" className="h-8 w-8 rounded-full bg-gray-800" />
+                                        <div className="truncate text-sm font-medium leading-6 text-black">{item.user.name}</div>
                                     </div>
-                                </div>
-                            </td>
-                            <td className="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
-                                <div className="flex items-center justify-end gap-x-2 sm:justify-start">
-                                    <time className="text-gray-400 sm:hidden" dateTime={item.dateTime}>
-                                        {item.date}
-                                    </time>
-                                    <div className={classNames(statuses[item.status], 'flex-none rounded-full p-1')}>
-                                        <div className="h-1.5 w-1.5 rounded-full bg-current" />
+                                </td>
+                                <td className="hidden py-4 pl-0 pr-4 sm:table-cell sm:pr-8">
+                                    <div className="flex gap-x-3">
+                                        <div className="font-mono text-sm leading-6 text-gray-400">{item['engaged']}</div>
+                                        <div className="rounded-md bg-white border px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-white/10">
+                                            {item.branch}
+                                        </div>
                                     </div>
-                                    <div className="hidden text-black sm:block">{item.status}</div>
-                                </div>
-                            </td>
-                            <td className="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">
-                                {item.duration}
-                            </td>
-                            <td className="hidden py-4 pl-0 pr-4 text-right text-sm leading-6 text-gray-400 sm:table-cell sm:pr-6 lg:pr-8">
-                                <time dateTime={item.dateTime}>{item.date}</time>
-                            </td>
-                        </tr>
-                    ))}
+                                </td>
+                                <td className="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
+                                    <div className="flex items-center justify-end gap-x-2 sm:justify-start">
+                                        <time className="text-gray-400 sm:hidden" dateTime={item.dateTime}>
+                                            {item.date}
+                                        </time>
+                                        <div className={classNames(statuses[item.status], 'flex-none rounded-full p-1')}>
+                                            <div className="h-1.5 w-1.5 rounded-full bg-current" />
+                                        </div>
+                                        <div className="hidden text-black sm:block">{item.status}</div>
+                                    </div>
+                                </td>
+                                <td className="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">
+                                    {item.duration}
+                                </td>
+                                <td className="hidden py-4 pl-0 pr-4 text-right text-sm leading-6 text-gray-400 sm:table-cell sm:pr-6 lg:pr-8">
+                                    <time dateTime={item.dateTime}>{item.date}</time>
+                                </td>
+                            </tr>
+                        ))
+                        : summary}
                 </tbody>
             </table>
         </div >
