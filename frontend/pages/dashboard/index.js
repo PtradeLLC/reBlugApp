@@ -168,6 +168,7 @@ const Dashboard = function ({ children }) {
                             ) : (
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                    <div>Hello test</div>
                                 </span>
                             )}
                         </h3>

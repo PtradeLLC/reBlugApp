@@ -53,7 +53,7 @@ export default function Summary() {
                 <thead className="border-b border-white/10 text-sm leading-6 text-black">
                     <tr>
                         <th scope="col" className="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">
-                            User
+                            Users
                         </th>
                         <th scope="col" className="hidden py-2 pl-0 pr-8 font-semibold sm:table-cell">
                             Engaged
