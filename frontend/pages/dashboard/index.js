@@ -175,7 +175,7 @@ const Dashboard = function ({ children }) {
                                     </span><br />
                                     <span className="font-thin text-xs text-end">
                                         <span className={`text-[${dataColor}]`}>
-                                            {dataChange}: {action.changeType} {action.change}%
+                                            {dataChange} {action.changeType} {action.change}%
                                         </span> since last campaign
                                     </span>
                                 </>
