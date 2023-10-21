@@ -83,10 +83,10 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0, change: '122', changeType: 'increase' },
+    { id: 1, name: "Processed", num: 0, change: '112', changeType: 'increase' },
     { id: 2, name: "Delivered", num: 0, change: '122', changeType: 'increase' },
-    { id: 3, name: "Opened", num: 0, change: '122', changeType: 'increase' },
-    { id: 4, name: "Clicked", num: 0, change: '122', changeType: 'increase' },
+    { id: 3, name: "Opened", num: 0, change: '192', changeType: 'increase' },
+    { id: 4, name: "Clicked", num: 0, change: '12', changeType: 'increase' },
     { id: 5, name: "Start a campaign" },
 ];
 
@@ -172,11 +172,11 @@ const Dashboard = function ({ children }) {
                                 <>
                                     <span>
                                         {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    </span>
+                                    </span><br />
                                     <span className="font-thin text-xs text-end">
                                         <span className={`text-[${dataColor}]`}>
-                                            {dataChange} {action.changeType} {action.change}%
-                                        </span> from last campaign
+                                            {dataChange}: {action.changeType} {action.change}%
+                                        </span> since last campaign
                                     </span>
                                 </>
                             )}
