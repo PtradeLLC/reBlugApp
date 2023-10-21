@@ -96,11 +96,11 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0 },
-    { id: 2, name: "Delivered", num: 0 },
-    { id: 3, name: "Opened", num: 0 },
-    { id: 4, name: "Clicked", num: 0 },
-    { id: 5, name: "Start a campaign", num: "" },
+    { id: 1, name: "Processed", num: 0, change: '122', changeType: 'increase' },
+    { id: 2, name: "Delivered", num: 0, change: '122', changeType: 'increase' },
+    { id: 3, name: "Opened", num: 0, change: '122', changeType: 'increase' },
+    { id: 4, name: "Clicked", num: 0, change: '122', changeType: 'increase' },
+    { id: 5, name: "Start a campaign" },
 ];
 
 // automated charts
@@ -131,16 +131,26 @@ const Dashboard = function ({ children }) {
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
+    const [dataChange, setDataChange] = useState("");
+    const [dataColor, setDataColor] = useState("")
 
 
     const handleClick = () => {
         setOpenModal(true);
     };
-    const handleNotification = () => {
-        if (componentName === "Campaign Automation" || componentName === "Messaging Platform") {
-            setOpenModal(true);
-        }
-    };
+
+    const changedData = () => {
+        const dataDiff = emailAction.map((item) => {
+            if (item.change += 1) {
+                setDataChange("increased");
+                setDataColor("#16FF00");
+            } else if (item.change -= 1) {
+                setDataChange("decreased");
+                setDataColor("#FF1E1E");
+            }
+        })
+        return dataDiff;
+    }
 
 
     const kpi = (title) => {
@@ -163,12 +173,12 @@ const Dashboard = function ({ children }) {
                         <h3 className="text-lg font-medium">
                             {action.name === "Start a campaign" ? (
                                 <button type="button" onClick={handleClick}>
-                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
+                                    {action.name}
                                 </button>
                             ) : (
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    <span className="font-thin text-xs text-end">180.1% from last month</span>
+                                    <span className="font-thin text-xs text-end"><span className={text - [`${dataColor}`]}> {dataChange}{action.change}%</span> from last campaign</span>
                                 </span>
                             )}
                         </h3>
