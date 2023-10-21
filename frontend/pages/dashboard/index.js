@@ -178,7 +178,7 @@ const Dashboard = function ({ children }) {
                             ) : (
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    <span className="font-thin text-xs text-end"><span className={text - [`${dataColor}`]}> {dataChange}{action.change}%</span> from last campaign</span>
+                                    <span className="font-thin text-xs text-end"><span className={`text-[${dataColor}]`}> {dataChange}{action.change}%</span> from last campaign</span>
                                 </span>
                             )}
                         </h3>
