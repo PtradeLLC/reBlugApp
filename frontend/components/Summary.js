@@ -107,7 +107,7 @@ export default function Summary() {
                             </tr>
                         ))
                         :
-                        <span className='className=flex justify-center items-center'>{summary}</span>
+                        <span className='flex justify-center items-center'>{summary}</span>
                     }
                 </tbody>
             </table>
