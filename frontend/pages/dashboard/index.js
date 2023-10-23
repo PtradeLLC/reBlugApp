@@ -11,8 +11,7 @@ import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
-import Hover from "../../components/Hover";
-import DashEmailMar from "../../components/DashEmailMar";
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 
 
 const navigation = [
