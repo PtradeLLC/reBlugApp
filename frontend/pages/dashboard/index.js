@@ -161,7 +161,7 @@ const Dashboard = function ({ children }) {
                         action.id === emailAction.length - 1
                             ? " bg-[#F0F0F0] sm:rounded-bl-none"
                             : "",
-                        "group relative p-6 "
+                        "group relative p-6"
                     )}>
                         <h3 className="text-lg font-medium">
                             {action.name === "Start a campaign" ? (
@@ -426,7 +426,7 @@ const Dashboard = function ({ children }) {
                                                         {cards.map((card) => (
                                                             <div
                                                                 key={card.id}
-                                                                className={`overflow-hidden rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                                className={`overflow-hidden w-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                             >
                                                                 <div className={`px-5 py-3`}>
                                                                     <div className="text-sm text-center">
