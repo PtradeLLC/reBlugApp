@@ -32,11 +32,6 @@ const cards = [
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "coming soon", bground: "#A18072" }
 ];
 
-const stats = [
-    { label: "Vacation days left", value: 12 },
-    { label: "Sick days left", value: 4 },
-    { label: "Personal days left", value: 2 },
-];
 const recentHires = [
     {
         name: "Leonard Krasner",
@@ -83,10 +78,10 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0, change: '112', changeType: 'increase' },
-    { id: 2, name: "Delivered", num: 0, change: '122', changeType: 'increase' },
-    { id: 3, name: "Opened", num: 0, change: '192', changeType: 'increase' },
-    { id: 4, name: "Clicked", num: 0, change: '12', changeType: 'increase' },
+    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase' },
+    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase' },
+    { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase' },
+    { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase' },
     { id: 5, name: "Start a campaign" },
 ];
 
@@ -126,25 +121,6 @@ const Dashboard = function ({ children }) {
         setOpenModal(true);
     };
 
-    // const changedData = () => {
-    //     const dataDiff = emailAction.map((item, index) => {
-    //         if (index > item.num) {
-    //             const prevChange = emailAction[index - 1].change;
-    //             if (item.change > prevChange) {
-    //                 item.changeType = "Increased";
-    //                 setDataColor("#14C38E");
-    //             } else if (item.change < prevChange) {
-    //                 item.changeType = "Decreased";
-    //                 setDataColor("#FF1E1E");
-    //             }
-    //         }
-    //         return item;
-    //     });
-    //     return dataDiff;
-    // };
-
-    // const updatedEmailAction = changedData();
-
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
@@ -171,11 +147,21 @@ const Dashboard = function ({ children }) {
                             ) : (
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    {/* <span className="font-thin text-xs text-end">
-                                        <span className={`text-[${dataColor}]`}>
-                                            {dataChange} {action.changeType} {action.change}%
-                                        </span> since last campaign
-                                    </span> */}
+                                    <p
+                                        className={classNames(
+                                            action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
+                                            'ml-2 flex items-baseline text-sm font-semibold'
+                                        )}
+                                    >
+                                        {action.changeType === 'increase' ? (
+                                            <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                                        ) : (
+                                            <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                                        )}
+
+                                        <span className="sr-only"> {action.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
+                                        {action.change}
+                                    </p>
                                 </span>
                             )}
                         </h3>
@@ -436,7 +422,6 @@ const Dashboard = function ({ children }) {
                                                                         >
                                                                             <span className="mx-2">{card.title}<br /></span>
                                                                             <span className="font-bold">{card.name}</span>
-                                                                            {/* <span className="absolute right-6 top-6 text-gray-300 group-hover:text-gray-400">{card.icon}</span> */}
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -456,7 +441,6 @@ const Dashboard = function ({ children }) {
                                                         :
                                                         <div>
                                                             <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                            {/* <DashConvTool selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} /> */}
                                                         </div>
                                                     }
                                                 </div>
