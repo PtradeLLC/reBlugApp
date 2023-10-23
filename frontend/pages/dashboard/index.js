@@ -426,7 +426,7 @@ const Dashboard = function ({ children }) {
                                                         {cards.map((card) => (
                                                             <div
                                                                 key={card.id}
-                                                                className={`overflow-hidden w-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                                className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                             >
                                                                 <div className={`px-5 py-3`}>
                                                                     <div className="text-sm text-center">
