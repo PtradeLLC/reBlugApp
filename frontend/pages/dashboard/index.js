@@ -147,18 +147,19 @@ const Dashboard = function ({ children }) {
                                 <span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
+
                                         className={classNames(
-                                            action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
-                                            'ml-2 flex items-baseline text-sm font-semibold'
+                                            action.num > 0 && action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
+                                            'ml-2 flex items-baseline text-sm font-semibold text-end'
                                         )}
                                     >
-                                        {action.changeType === 'increase' ? (
-                                            <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                                        {action.num > 0 && action.changeType === 'increase' ? (
+                                            <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-green-500" aria-hidden="true" />
                                         ) : (
-                                            <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                                            <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-red-500" aria-hidden="true" />
                                         )}
 
-                                        <span className="sr-only"> {action.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
+                                        <span className="sr-only"> {action.num > 0 && action.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
                                         {action.change}
                                     </p>
                                 </span>
