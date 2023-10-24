@@ -88,7 +88,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
 
     return (
         <Transition.Root show={openModal} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={handleClose}>
+            <Dialog as="div" className="relative z-10">
                 <div className="fixed inset-0" />
 
                 <div className="fixed inset-0 overflow-hidden">
