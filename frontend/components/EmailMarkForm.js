@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from "next/image";
 import EmailCamp from "./EmailCampaign";
 import Report from "./Report_one";
+import EmailForm from "./EmailConvoForm";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -29,6 +30,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [isClicked, setIsClicked] = useState(false);
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
+    const [showForm, setShowForm] = useState(false);
 
     const url = "/api/webhooks/aiMessage";
 
@@ -169,131 +171,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                {/* <form onSubmit={handleSubmit}>
-                                                    <div className="space-y-6">
-                                                        <div className="space-y-6">
-                                                            <div className="space-y-2">
-                                                                <label
-                                                                    htmlFor="email"
-                                                                    className="block text-sm font-medium text-gray-900"
-                                                                >
-                                                                    Email
-                                                                </label>
-                                                                <input
-                                                                    type="email"
-                                                                    name="email"
-                                                                    id="email"
-                                                                    disabled={isClicked}
-                                                                    placeholder="Enter your email"
-                                                                    className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
- ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                                    value={emailForm.email}
-                                                                    onChange={handleChange}
-                                                                />
-                                                                {isEmailEmpty &&
-                                                                    !emailForm.email &&
-                                                                    isClicked && (
-                                                                        <p className="text-red-500 text-xs mt-1">
-                                                                            Please enter your email address
-                                                                        </p>
-                                                                    )}
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                <label
-                                                                    htmlFor="firstName"
-                                                                    className="block text-sm font-medium text-gray-900"
-                                                                >
-                                                                    First Name
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    name="firstName"
-                                                                    id="firstName"
-                                                                    disabled={isClicked}
-                                                                    placeholder="Enter your first name"
-                                                                    className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                                    value={emailForm.firstName}
-                                                                    onChange={handleChange}
-                                                                />
-                                                                {isEmailEmpty &&
-                                                                    !emailForm.firstName &&
-                                                                    isClicked && (
-                                                                        <p className="text-red-500 text-xs mt-1">
-                                                                            Please enter your first name
-                                                                        </p>
-                                                                    )}
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                <label
-                                                                    htmlFor="lastName"
-                                                                    className="block text-sm font-medium text-gray-900"
-                                                                >
-                                                                    Last Name
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    name="lastName"
-                                                                    id="lastName"
-                                                                    disabled={isClicked}
-                                                                    placeholder="Enter your last name"
-                                                                    className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
- ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                                    value={emailForm.lastName}
-                                                                    onChange={handleChange}
-                                                                />
-                                                                {isEmailEmpty &&
-                                                                    !emailForm.lastName &&
-                                                                    isClicked && (
-                                                                        <p className="text-red-500 text-xs mt-1">
-                                                                            Please enter your last name
-                                                                        </p>
-                                                                    )}
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                <label
-                                                                    htmlFor="input"
-                                                                    className="block text-sm font-medium text-gray-900"
-                                                                >
-                                                                    Enter a question
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    name="input"
-                                                                    id="input"
-                                                                    disabled={isClicked}
-                                                                    placeholder="Enter a question"
-                                                                    className="block w-full p-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  
- ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                                    value={emailForm.input}
-                                                                    onChange={handleChange}
-                                                                />
-                                                                {isEmailEmpty &&
-                                                                    !emailForm.input &&
-                                                                    isClicked && (
-                                                                        <p className="text-red-500 text-xs mt-1">
-                                                                            Enter any question for our tool
-                                                                        </p>
-                                                                    )}
-                                                            </div>
-
-                                                            <div className="mt-5 flex w-[200px] m-auto flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
-                                                                <button
-                                                                    id="send"
-                                                                    type="submit"
-                                                                    className="inline-flex flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2  
- text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2                           
- focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1"
-                                                                >
-                                                                    {error ? (
-                                                                        <p>{error}</p>
-                                                                    ) : (
-                                                                        <p>{beforeButton}</p>
-                                                                    )}
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form> */}
+                                                <EmailForm />
                                             </div>
                                         </div>
                                     </div>
