@@ -119,9 +119,6 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                     <span className="sr-only">Close panel</span>
                                                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                                                 </button>
-                                                {/* <div className="ml-3 flex h-7 items-center">
-                                                    
-                                                </div> */}
                                             </div>
                                         </div>
                                         {/* Main */}
