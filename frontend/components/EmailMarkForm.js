@@ -110,16 +110,17 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                     Email Conversational Tool
                                                 </Dialog.Title>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md bg-white text-gray-400 hover:text-gray-500"
+                                                    onClick={handleClose}
+                                                >
+                                                    <span className="absolute -inset-2.5" />
+                                                    <span className="sr-only">Close panel</span>
+                                                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                                </button>
                                                 {/* <div className="ml-3 flex h-7 items-center">
-                                                    <button
-                                                        type="button"
-                                                        className="rounded-md bg-white text-gray-400 hover:text-gray-500"
-                                                        onClick={handleClose}
-                                                    >
-                                                        <span className="absolute -inset-2.5" />
-                                                        <span className="sr-only">Close panel</span>
-                                                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                                    </button>
+                                                    
                                                 </div> */}
                                             </div>
                                         </div>
