@@ -123,15 +123,15 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                     <div>
                                                         <div className="-m-1 flex rounded">
                                                             <Image
-                                                                className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-48 rounded lg:w-48 border"
+                                                                className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
                                                                 src={
                                                                     selectedImage
                                                                         ? URL.createObjectURL(selectedImage)
                                                                         : "/images/OtherVar.png"
                                                                 }
                                                                 alt="product image"
-                                                                width={144}
-                                                                height={144}
+                                                                width={200}
+                                                                height={200}
                                                             />
                                                         </div>
                                                     </div>
