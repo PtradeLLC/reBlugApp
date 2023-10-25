@@ -1,8 +1,10 @@
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
+import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+import { useUserData } from '@nhost/nextjs';
 
 export default function EmailCamp() {
-    const baseUrl = "";
+    const user = useUserData();
 
+    const baseUrl = "";
     const salesCall = fetch(baseUrl, {
         method: "POST",
         headers: {
@@ -24,8 +26,8 @@ export default function EmailCamp() {
                         <div className="flex-shrink-0">
                             <img
                                 className="h-12 w-12 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
+                                src={user?.avatarUrl}
+                                alt="profile image"
                             />
                         </div>
                         <div className="ml-4">
@@ -50,7 +52,15 @@ export default function EmailCamp() {
                         className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <EnvelopeIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                        <span>Email</span>
+                        <span>Email campaign</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleClick}
+                        className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                        <EnvelopeIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <span>Newsletter campaign</span>
                     </button>
                 </div>
             </div>

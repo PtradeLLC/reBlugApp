@@ -15,7 +15,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
     const [beforeClick, setBeforeClick] = useState(
-        "Dashboard Marketing"
+        "Start an Email campaign"
     );
     const initialEmailForm = {
         email: "",
