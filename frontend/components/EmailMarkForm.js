@@ -118,7 +118,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                         {/* Main */}
                                         <div id="review" className="divide-y divide-gray-200">
                                             <div className="pb-6">
-                                                <div className="h-24 mb-3 bg-red-700 sm:h-20 lg:h-28" />
+                                                <div className="h-24 mb-3 bg-green-700 sm:h-20 lg:h-28" />
                                                 <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16">
                                                     <div>
                                                         <div className="-m-1 flex rounded">

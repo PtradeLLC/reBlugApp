@@ -33,7 +33,7 @@ export default function EmailCamp() {
                         <div className="ml-4">
                             <h3 className="text-base font-semibold leading-6 text-gray-900">{user?.displayName}</h3>
                             <p className="text-sm text-gray-500">
-                                <a href="#">@{user?.displayName}</a>
+                                <a href="#">@{"_".join(user?.displayName)}</a>
                             </p>
                         </div>
                     </div>
