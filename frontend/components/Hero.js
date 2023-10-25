@@ -28,7 +28,7 @@ export default function Hero() {
                     Intelligence.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    <span className="font-extrabold text-red-500">Just Launched!:</span>
+                    <span className="font-extrabold text-red-500">Just Launched!: </span>
                     Email Conversational Tool, an AI powered marketing tool that
                     enhances communication between brand Marketers, Sales
                     professionals and their clients/customers by injecting
