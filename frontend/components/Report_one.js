@@ -17,7 +17,7 @@ export default function Report() {
                         <dt className="text-sm font-medium leading-6 text-gray-900">Application for</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>
                     </div> */}
-                    <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Email Contacts</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Uploaded list of contacts</dd>
                     </div>

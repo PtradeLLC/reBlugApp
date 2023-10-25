@@ -133,6 +133,9 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                                 width={200}
                                                                 height={200}
                                                             />
+                                                            <Link href="/profile">
+                                                                <span className="text-sm">Edit Logo</span>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                     <div className="mt-6 sm:ml-6 sm:flex-1">
