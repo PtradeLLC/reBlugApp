@@ -108,9 +108,9 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                         <div className="px-4 py-6 sm:px-6">
                                             <div className="flex items-start justify-between">
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                                                    ""
+                                                    {/* Add a title here later */}
                                                 </Dialog.Title>
-                                                <span className="close" onClick={handleClose}>
+                                                <span className="close font-medium h-2 w-2" onClick={handleClose}>
                                                     &times;
                                                 </span>
                                             </div>

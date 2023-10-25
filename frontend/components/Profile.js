@@ -219,7 +219,7 @@ export default function ProfilePg() {
                                                     type="button"
                                                     className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
                                                 >
-                                                    Change avatar | Logo
+                                                    Change avatar
                                                 </button>
                                                 <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
                                             </div>
@@ -285,12 +285,28 @@ export default function ProfilePg() {
                                                     </span>
                                                     <input
                                                         type="text"
-                                                        name="username"
-                                                        id="username"
-                                                        autoComplete="username"
+                                                        name="brandname"
+                                                        id="brandname"
+                                                        autoComplete="brandname"
                                                         className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
                                                         placeholder="edit-brand-name"
                                                     />
+                                                </div>
+                                            </div>
+                                            <div className="col-span-full flex items-center gap-x-8">
+                                                <img
+                                                    src={user?.avatarUrl}
+                                                    alt={user?.displayName}
+                                                    className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
+                                                />
+                                                <div>
+                                                    <button
+                                                        type="button"
+                                                        className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
+                                                    >
+                                                        Add Brand Logo
+                                                    </button>
+                                                    <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,7 +317,7 @@ export default function ProfilePg() {
                                             type="submit"
                                             className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                         >
-                                            Save
+                                            Save Logo
                                         </button>
                                     </div>
                                 </form>
