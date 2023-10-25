@@ -5,6 +5,7 @@ import Image from "next/image";
 import EmailCamp from "./EmailCampaign";
 import Report from "./Report_one";
 import EmailForm from "./EmailConvoForm";
+import Link from "next/link";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
