@@ -88,7 +88,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
 
     return (
         <Transition.Root show={openModal} as={Fragment}>
-            <Dialog as="div" className="relative z-10">
+            <Dialog as="div" className="relative z-10" onClose={handleClose}>
                 <div className="fixed inset-0" />
 
                 <div className="fixed inset-0 overflow-hidden">
@@ -110,7 +110,8 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                     Email Conversational Tool
                                                 </Dialog.Title>
-                                                <button
+                                                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                                                {/* <button
                                                     type="button"
                                                     className="rounded-md bg-white text-gray-400 hover:text-gray-500"
                                                     onClick={handleClose}
@@ -118,7 +119,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                     <span className="absolute -inset-2.5" />
                                                     <span className="sr-only">Close panel</span>
                                                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                                </button>
+                                                </button> */}
                                             </div>
                                         </div>
                                         {/* Main */}
