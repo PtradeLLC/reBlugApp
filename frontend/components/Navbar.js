@@ -24,7 +24,7 @@ export default function Navbar() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between">
               <div className="flex">
-                <div className="pr-16">
+                <div className="pr-16 pt-1 pb-1">
                   <Link href={isAuthenticated ? `/dashboard` : `/`}>
                     <Image
                       src="/images/Mart.png"
