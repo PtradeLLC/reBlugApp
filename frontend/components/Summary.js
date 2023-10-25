@@ -39,6 +39,7 @@ export default function Summary() {
     const [summary, setSummary] = useState("There are no recent summary");
 
 
+
     return (
         <div className="bg-white py-10 border rounded-sm">
             <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8">Latest activity</h2>
@@ -53,7 +54,7 @@ export default function Summary() {
                 <thead className="border-b border-white/10 text-sm leading-6 text-black">
                     <tr>
                         <th scope="col" className="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">
-                            Users
+                            Team
                         </th>
                         <th scope="col" className="hidden py-2 pl-0 pr-8 font-semibold sm:table-cell">
                             Engaged

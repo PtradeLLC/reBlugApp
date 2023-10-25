@@ -31,7 +31,7 @@ const cards = [
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "coming soon", bground: "#A18072" }
 ];
 
-const recentHires = [
+const teamMembers = [
     {
         name: "Leonard Krasner",
         handle: "leonardkrasner",
@@ -113,7 +113,8 @@ const Dashboard = function ({ children }) {
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
-    const [dataColor, setDataColor] = useState("")
+    const [dataColor, setDataColor] = useState("");
+    const [team, setTeam] = useState("You currently have no team members")
 
 
     const handleClick = () => {
@@ -467,19 +468,19 @@ const Dashboard = function ({ children }) {
                                                             role="list"
                                                             className="-my-5 divide-y divide-gray-200"
                                                         >
-                                                            {recentHires.map((person) => (
+                                                            {teamMembers.length > 0 ? teamMembers.map((person) => (
                                                                 <li key={person.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">
                                                                         <div className="flex-shrink-0">
-                                                                            {/* <img
-                                                                        className="h-8 w-8 rounded-full"
-                                                                        src={image || profileImage}
-                                                                        alt=""
-                                                                    /> */}
+                                                                            <img
+                                                                                className="h-8 w-8 rounded-full"
+                                                                                src={person.imageUrl}
+                                                                                alt="profile image"
+                                                                            />
                                                                         </div>
                                                                         <div className="min-w-0 flex-1">
                                                                             <p className="truncate text-sm font-medium text-gray-900">
-                                                                                {user?.name}
+                                                                                {person?.name}
                                                                             </p>
                                                                             <p className="truncate text-sm text-gray-500">
                                                                                 {"@" + person.handle}
@@ -495,7 +496,17 @@ const Dashboard = function ({ children }) {
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                            ))}
+                                                            )) : <div>
+                                                                <span>{team}</span>
+                                                                <div className="mt-6">
+                                                                    <a
+                                                                        href="#"
+                                                                        className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                    >
+                                                                        Add Team Member
+                                                                    </a>
+                                                                </div>
+                                                            </div>}
                                                         </ul>
                                                     </div>
                                                     <div className="mt-6">
