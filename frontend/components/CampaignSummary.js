@@ -20,7 +20,7 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                 !selectedComponent && (
                     <>
                         <span className="bg-white justify-center items-center text-center py-2 font-semibold px-2 text-l">Campaign Summary</span>
-                        <span className="flex mb-2 px-2 justify-center items-center mt-2 mb-1 ">
+                        <span className="flex mb-2 px-2 justify-center items-center mt-2  ">
                             <button onClick={handleClick} type='button' className="mx-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" >
                                 Start a campaign
                             </button> to get started

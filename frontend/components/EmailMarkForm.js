@@ -108,18 +108,11 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                         <div className="px-4 py-6 sm:px-6">
                                             <div className="flex items-start justify-between">
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                                                    Email Conversational Tool
+                                                    ""
                                                 </Dialog.Title>
-                                                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                                {/* <button
-                                                    type="button"
-                                                    className="rounded-md bg-white text-gray-400 hover:text-gray-500"
-                                                    onClick={handleClose}
-                                                >
-                                                    <span className="absolute -inset-2.5" />
-                                                    <span className="sr-only">Close panel</span>
-                                                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                                                </button> */}
+                                                <span className="close" onClick={handleClose}>
+                                                    &times;
+                                                </span>
                                             </div>
                                         </div>
                                         {/* Main */}

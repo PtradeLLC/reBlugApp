@@ -115,7 +115,7 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
-    const [team, setTeam] = useState("You currently have no team members")
+    const [team, setTeam] = useState("There are no members of your team here")
 
 
     const handleClick = () => {
@@ -462,7 +462,7 @@ const Dashboard = function ({ children }) {
                                                         className="text-base font-medium text-gray-900"
                                                         id="recent-hires-title"
                                                     >
-                                                        Team Member
+                                                        Team Members
                                                     </h2>
                                                     <div className="mt-6 flow-root">
                                                         <ul
@@ -499,14 +499,6 @@ const Dashboard = function ({ children }) {
                                                                 </li>
                                                             )) : <div>
                                                                 <span>{team}</span>
-                                                                <div className="mt-6">
-                                                                    <a
-                                                                        href="#"
-                                                                        className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                    >
-                                                                        Add Team Member
-                                                                    </a>
-                                                                </div>
                                                             </div>}
                                                         </ul>
                                                     </div>
@@ -565,7 +557,6 @@ const Dashboard = function ({ children }) {
                             </div>
                             <span className="mt-3 px-2">
                                 {<DashConvTool openModal={openModal} setOpenModal={setOpenModal} />}
-                                {/* <DashEmailMar isOpen={show} closeModal={() => setShow(false)} /> */}
                             </span>
                         </main>
                     </div>
