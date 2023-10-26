@@ -21,6 +21,7 @@ export default function EmailCamp() {
 
     const onButtonClick = (button) => {
         if (button === "survey") {
+            console.log("From function:", survey);
             setSurvey(true);
         }
     }
@@ -72,11 +73,8 @@ export default function EmailCamp() {
                     </button>
                 </div>
             </div>
-            {survey && (
-                <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                    <EmailForm email={email} survey={survey} newsletter={newsletter} />
-                </div>
-            )}
+            {console.log("Survey from ECampaign: ", survey)}
+            <EmailForm email={email} survey={survey} newsletter={newsletter} />
         </div>
     )
 }
