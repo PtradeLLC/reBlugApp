@@ -112,10 +112,14 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
 
     if (email || survey || newsletter) {
         console.log("SURVEY from MarkForm if Statement:", survey || email || newsletter);
-        return setSelectedButton(email || survey || newsletter)
+        console.log("SelectedButt", selectedButton);
+        return setSelectedButton(email || survey || newsletter);
     }
 
-    console.log("SURVEY from MarkForm:", survey);
+    if (selectedButton) {
+        console.log("SelectedButton:", selectedButton)
+    }
+
     return (
         <Transition.Root show={openModal} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -195,7 +199,8 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
  bg-white shadow-xl rounded-xl"
                                             >
                                                 <EmailCamp />
-                                                {setSelectedButton ? <EmailForm /> : <Report /> ? null : null}
+
+                                                {selectedButton ? <EmailForm /> : <Report /> ? null : null}
                                             </div>
                                         </div>
                                     </div>
