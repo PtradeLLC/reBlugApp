@@ -71,12 +71,12 @@ export default function EmailCamp() {
                         <span>Newsletter</span>
                     </button>
                 </div>
-                {survey && (
-                    <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                        <EmailForm email={email} survey={survey} newsletter={newsletter} />
-                    </div>
-                )}
             </div>
+            {survey && (
+                <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                    <EmailForm email={email} survey={survey} newsletter={newsletter} />
+                </div>
+            )}
         </div>
     )
 }
