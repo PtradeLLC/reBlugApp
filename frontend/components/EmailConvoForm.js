@@ -96,7 +96,7 @@ export default function EmailForm({ email, survey, newsletter }) {
                         <div className="sm:col-span-3">
                             {survey ? <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                 First name
-                            </label> : null}
+                            </label> : <span>Hello</span>}
                             {/* <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                  First name
                              </label> */}
