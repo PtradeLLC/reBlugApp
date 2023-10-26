@@ -71,9 +71,9 @@ export default function EmailCamp() {
                         <span>Newsletter</span>
                     </button>
                 </div>
-                <div>
+                {/* <div>
                     <EmailForm email={email} survey={survey} newsletter={newsletter} />
-                </div>
+                </div> */}
             </div>
         </div>
     )
