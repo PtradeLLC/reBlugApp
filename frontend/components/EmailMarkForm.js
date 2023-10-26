@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function DashConvTool({ openModal, setOpenModal }) {
+export default function DashConvTool({ openModal, setOpenModal, email, survey, newsletter }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
@@ -21,9 +21,9 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
-    const [email, setEmail] = useState(false);
-    const [survey, setSurvey] = useState(false);
-    const [newsletter, setNewsletter] = useState(false);
+    // const [email, setEmail] = useState(false);
+    // const [survey, setSurvey] = useState(false);
+    // const [newsletter, setNewsletter] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
 
     const initialEmailForm = {
@@ -108,6 +108,8 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     //         setNewsletter(true);
     //     }
     // };
+
+    console.log("SURVEY:", survey);
 
     return (
         <Transition.Root show={openModal} as={Fragment}>
