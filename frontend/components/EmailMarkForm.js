@@ -94,16 +94,18 @@ export default function DashConvTool({ openModal, setOpenModal }) {
 
     const handleButtonClick = (button) => {
         setSelectedButton(button);
-        setOpenModal(true);
         setEmail(false);
         setSurvey(false);
         setNewsletter(false);
 
         if (button === "email") {
+            console.log("email was clicked");
             setEmail(true);
         } else if (button === "survey") {
+            console.log("survey was clicked");
             setSurvey(true);
         } else if (button === "newsletter") {
+            console.log("newsletter was clicked");
             setNewsletter(true);
         }
     };
