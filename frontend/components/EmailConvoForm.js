@@ -1,12 +1,10 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-export default function EmailForm({ email, survey, newsletter }) {
+export default function EmailForm({ email, survey, newsletter, selectedButton }) {
 
-    if (survey) {
+    if (selectedButton === 'survey') {
         console.log("Survey is clicked")
     }
-
-
 
     return (
         <form>
@@ -101,12 +99,9 @@ export default function EmailForm({ email, survey, newsletter }) {
 
                     <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                         <div className="sm:col-span-3">
-                            {survey ? <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                 First name
-                            </label> : <span>Hello</span>}
-                            {/* <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                 First name
-                             </label> */}
+                            </label>
                             <div className="mt-2">
                                 <input
                                     type="text"

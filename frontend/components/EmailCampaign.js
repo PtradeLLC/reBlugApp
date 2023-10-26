@@ -11,18 +11,8 @@ export default function EmailCamp() {
 
     const baseUrl = "";
 
-    const handleClick = (e) => {
-        const { name, value } = e.target;
-
-        if (name === "email") {
-            setEmail(true);
-        } else if (name === "survey") {
-            setSurvey(true);
-        } else if (name === "newsletter") {
-            setNewsletter(true)
-        } else {
-            console.log("make selection")
-        }
+    const handleClick = (button) => {
+        setSelectedButton(button);
     }
 
 
@@ -58,7 +48,7 @@ export default function EmailCamp() {
                     <button
                         type="button"
                         name="survey"
-                        onClick={handleClick}
+                        onClick={() => handleClick('survey')}
                         value={survey}
                         className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
@@ -68,7 +58,7 @@ export default function EmailCamp() {
                     <button
                         type="button"
                         name="email"
-                        onClick={handleClick}
+                        onClick={() => handleClick('email')}
                         value={email}
                         className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
@@ -78,7 +68,7 @@ export default function EmailCamp() {
                     <button
                         type="button"
                         name="newsletter"
-                        onClick={handleClick}
+                        onClick={() => handleClick('newsletter')}
                         value={newsletter}
                         className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >

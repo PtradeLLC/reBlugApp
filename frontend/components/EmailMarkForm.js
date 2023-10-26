@@ -32,6 +32,7 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
+    const [selectedButton, setSelectedButton] = useState(null);
 
     const url = "/api/webhooks/aiMessage";
 
@@ -167,7 +168,7 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                {email || survey || newsletter && <EmailForm email={email} survey={survey} newsletter={newsletter} />}
+                                                <EmailForm email={email} survey={survey} newsletter={newsletter} selectedButton={selectedButton} />
                                             </div>
                                         </div>
                                     </div>
