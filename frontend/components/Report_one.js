@@ -39,7 +39,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">resume_back_end_developer.pdf</span>
+                                            <span className="truncate font-medium">campaign_report.pdf</span>
                                             <span className="flex-shrink-0 text-gray-400">2.4mb</span>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">coverletter_back_end_developer.pdf</span>
+                                            <span className="truncate font-medium">conversations.pdf</span>
                                             <span className="flex-shrink-0 text-gray-400">4.5mb</span>
                                         </div>
                                     </div>
