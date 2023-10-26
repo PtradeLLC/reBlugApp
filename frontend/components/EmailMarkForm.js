@@ -191,7 +191,8 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                {/* {email || survey || newsletter ? <EmailForm /> : null} */}
+                                                {console.log("From eMark2", email, survey, newsletter)}
+                                                {email || survey || newsletter ? <EmailForm /> : null}
                                             </div>
                                         </div>
                                     </div>
