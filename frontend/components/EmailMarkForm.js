@@ -16,7 +16,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
     const [beforeClick, setBeforeClick] = useState("Start a Campaign");
-    const [emailForm, setEmailForm] = useState(initialEmailForm);
+
     const [isClicked, setIsClicked] = useState(false);
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
@@ -34,6 +34,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
         logo: "/images/Marttwainxyz.png",
         input: "",
     };
+    const [emailForm, setEmailForm] = useState(initialEmailForm);
 
     const url = "/api/webhooks/aiMessage";
 
