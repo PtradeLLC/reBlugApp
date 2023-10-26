@@ -167,8 +167,8 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                {/* {email || survey || newsletter ? <EmailForm email={email} survey={survey} newsletter={newsletter} /> : null}A */}
-                                                <EmailForm />
+                                                {email || survey || newsletter ? <EmailForm email={email} survey={survey} newsletter={newsletter} /> : null}A
+                                                {/* <EmailForm /> */}
                                             </div>
                                         </div>
                                     </div>
