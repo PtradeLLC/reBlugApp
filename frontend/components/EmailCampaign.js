@@ -21,9 +21,15 @@ export default function EmailCamp() {
 
     const onButtonClick = (button) => {
         if (button === "survey") {
-            console.log("From function:", survey);
-            setSurvey(true);
+            return setSurvey(true);
+        } else if (button === "email") {
+            return setEmail(true);
+        } else if (button === "newsletter") {
+            return setNewsletter(true);
+        } else {
+            console.log("There is no selection");
         }
+        return;
     }
 
     return (

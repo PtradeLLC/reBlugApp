@@ -24,7 +24,7 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
     // const [email, setEmail] = useState(false);
     // const [survey, setSurvey] = useState(false);
     // const [newsletter, setNewsletter] = useState(false);
-    const [selectedButton, setSelectedButton] = useState(null);
+    const [selectedButton, setSelectedButton] = useState(false);
 
     const initialEmailForm = {
         email: "",
@@ -109,8 +109,13 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
     //     }
     // };
 
-    console.log("SURVEY from MarkForm:", survey);
 
+    if (email || survey || newsletter) {
+        console.log("SURVEY from MarkForm if Statement:", survey || email || newsletter);
+        return setSelectedButton(email || survey || newsletter)
+    }
+
+    console.log("SURVEY from MarkForm:", survey);
     return (
         <Transition.Root show={openModal} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -190,9 +195,7 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
  bg-white shadow-xl rounded-xl"
                                             >
                                                 <EmailCamp />
-                                                <Report />
-                                                {console.log("From eMark2", email, survey, newsletter)}
-                                                {email || survey || newsletter ? <EmailForm /> : null}
+                                                {setSelectedButton ? <EmailForm /> : <Report /> ? null : null}
                                             </div>
                                         </div>
                                     </div>
