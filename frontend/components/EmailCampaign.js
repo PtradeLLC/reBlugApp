@@ -3,7 +3,7 @@ import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
-export default function EmailCamp({ onButtonClick }) {
+export default function EmailCamp() {
     const [email, setEmail] = useState(false);
     const [survey, setSurvey] = useState(false);
     const [newsletter, setNewsletter] = useState(false);
@@ -18,6 +18,12 @@ export default function EmailCamp({ onButtonClick }) {
         },
         body: JSON.stringify()
     });
+
+    const onButtonClick = (button) => {
+        if (button === "survey") {
+            setSurvey(true);
+        }
+    }
 
     return (
         <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
@@ -65,9 +71,9 @@ export default function EmailCamp({ onButtonClick }) {
                         <span>Newsletter</span>
                     </button>
                 </div>
-                {/* <div>
+                <div>
                     {email || survey || newsletter && <EmailForm email={email} survey={survey} newsletter={newsletter} />}
-                </div> */}
+                </div>
             </div>
         </div>
     )

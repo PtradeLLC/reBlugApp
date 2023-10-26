@@ -91,23 +91,23 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     // };
 
 
-    const handleButtonClick = (button) => {
-        setSelectedButton(button);
-        setEmail(false);
-        setSurvey(false);
-        setNewsletter(false);
+    // const handleButtonClick = (button) => {
+    //     setSelectedButton(button);
+    //     setEmail(false);
+    //     setSurvey(false);
+    //     setNewsletter(false);
 
-        if (button === "email") {
-            console.log("email was clicked");
-            setEmail(true);
-        } else if (button === "survey") {
-            console.log("survey was clicked");
-            setSurvey(true);
-        } else if (button === "newsletter") {
-            console.log("newsletter was clicked");
-            setNewsletter(true);
-        }
-    };
+    //     if (button === "email") {
+    //         console.log("email was clicked");
+    //         setEmail(true);
+    //     } else if (button === "survey") {
+    //         console.log("survey was clicked");
+    //         setSurvey(true);
+    //     } else if (button === "newsletter") {
+    //         console.log("newsletter was clicked");
+    //         setNewsletter(true);
+    //     }
+    // };
 
     return (
         <Transition.Root show={openModal} as={Fragment}>
@@ -189,7 +189,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                {showForm && <EmailForm email={email} survey={survey} newsletter={newsletter} selectedButton={selectedButton} />}
+                                                {email || survey || newsletter && <EmailForm email={email} survey={survey} newsletter={newsletter} selectedButton={selectedButton} />}
                                             </div>
                                         </div>
                                     </div>
