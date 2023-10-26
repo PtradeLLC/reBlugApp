@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function DashConvTool({ openModal, setOpenModal }) {
+export default function DashConvTool({ openModal, setOpenModal, email, survey, newsletter }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
@@ -167,6 +167,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                             >
                                                 <EmailCamp />
                                                 <Report />
+                                                {/* {email || survey || newsletter ? <EmailForm email={email} survey={survey} newsletter={newsletter} /> : null}A */}
                                                 <EmailForm />
                                             </div>
                                         </div>

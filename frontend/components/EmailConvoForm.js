@@ -1,6 +1,6 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-export default function EmailForm() {
+export default function EmailForm({ email, survey, newsletter }) {
     return (
         <form>
             <div className="space-y-12 mt-2">
@@ -94,9 +94,12 @@ export default function EmailForm() {
 
                     <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                         <div className="sm:col-span-3">
-                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                            {survey ? <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                 First name
-                            </label>
+                            </label> : null}
+                            {/* <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                 First name
+                             </label> */}
                             <div className="mt-2">
                                 <input
                                     type="text"
