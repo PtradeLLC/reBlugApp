@@ -11,7 +11,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function DashConvTool({ openModal, setOpenModal, email, survey, newsletter }) {
+export default function DashConvTool({ openModal, setOpenModal, emailForm, surveyForm, newsletterForm }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
@@ -110,10 +110,10 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
     // };
 
 
-    if (email || survey || newsletter) {
-        console.log("SURVEY from MarkForm if Statement:", survey || email || newsletter);
+    if (emailForm || surveyForm || newsletterForm) {
+        console.log("SURVEY from MarkForm if Statement:", emailForm || surveyForm || newsletterForm);
         console.log("SelectedButt", selectedButton);
-        return setSelectedButton(email || survey || newsletter);
+        return setSelectedButton(emailForm || surveyForm || newsletterForm);
     }
 
     console.log("SelectedButton from out function:", selectedButton);
@@ -196,14 +196,11 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform  
- bg-white shadow-xl rounded-xl"
-                                            >
-                                                <EmailCamp />
-
-                                                {selectedButton ? <EmailForm /> : <Report /> ? null : null}
-                                            </div>
+                                            {selectedButton && (
+                                                <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                                                    <EmailCamp emailForm={emailForm} survey={surveyForm} newsletter={newsletterForm} />
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </Dialog.Panel>

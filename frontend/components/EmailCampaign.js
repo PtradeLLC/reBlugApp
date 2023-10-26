@@ -3,11 +3,12 @@ import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
-export default function EmailCamp() {
-    const [email, setEmail] = useState(false);
-    const [survey, setSurvey] = useState(false);
-    const [newsletter, setNewsletter] = useState(false);
+export default function EmailCamp({ emailForm, surveyForm, newsletterForm }) {
+    const [campaignEmail, setCampaignEmail] = useState(false);
+    // const [campaignSurvey, setCampaignSurvey] = useState(false);
+    // const [campaignNewsletter, setCampaignNewsletter] = useState(false);
     const user = useUserData();
+
 
     const baseUrl = "";
 
@@ -21,11 +22,11 @@ export default function EmailCamp() {
 
     const onButtonClick = (button) => {
         if (button === "survey") {
-            return setSurvey(true);
+            return setCampaignEmail(true);
         } else if (button === "email") {
-            return setEmail(true);
+            return setCampaignEmail(true);
         } else if (button === "newsletter") {
-            return setNewsletter(true);
+            return setCampaignEmail(true);
         } else {
             console.log("There is no selection");
         }
@@ -79,7 +80,12 @@ export default function EmailCamp() {
                     </button>
                 </div>
             </div>
-            <EmailForm email={email} survey={survey} newsletter={newsletter} />
+
+            {campaignEmail && (
+                <div>
+                    <EmailForm emailForm={emailForm} surveyForm={surveyForm} newsletterForm={newsletterForm} />
+                </div>
+            )}
         </div>
     )
 }
