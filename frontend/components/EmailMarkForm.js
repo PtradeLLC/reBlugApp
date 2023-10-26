@@ -32,6 +32,9 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [survey, setSurvey] = useState(false);
+    const [newsletter, setNewsletter] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
 
     const url = "/api/webhooks/aiMessage";
@@ -88,6 +91,23 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
         }
     };
 
+
+    const handleButtonClick = (button) => {
+        setSelectedButton(button);
+        setOpenModal(true);
+        setEmail(false);
+        setSurvey(false);
+        setNewsletter(false);
+
+        if (button === "email") {
+            setEmail(true);
+        } else if (button === "survey") {
+            setSurvey(true);
+        } else if (button === "newsletter") {
+            setNewsletter(true);
+        }
+    };
+
     return (
         <Transition.Root show={openModal} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -123,7 +143,7 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
                                                 <div className="h-24 mb-3 bg-[#F5F7F8] sm:h-20 lg:h-28" />
                                                 <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16">
                                                     <div>
-                                                        <div className="-m-1 flex rounded">
+                                                        <div className="-m-1 flex flex-col rounded">
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
                                                                 src={

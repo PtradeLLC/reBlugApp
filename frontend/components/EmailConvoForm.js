@@ -1,9 +1,12 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-export default function EmailForm({ email, survey, newsletter, selectedButton }) {
+export default function EmailForm({ email,
+    survey,
+    newsletter,
+    selectedButton, }) {
 
-    if (selectedButton === 'survey') {
-        console.log("Survey is clicked")
+    if (selectedButton === "survey") {
+        console.log("Survey is clicked");
     }
 
     return (

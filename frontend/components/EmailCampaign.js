@@ -3,18 +3,13 @@ import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
-export default function EmailCamp() {
+export default function EmailCamp({ onButtonClick }) {
     const [email, setEmail] = useState(false);
     const [survey, setSurvey] = useState(false);
     const [newsletter, setNewsletter] = useState(false);
     const user = useUserData();
 
     const baseUrl = "";
-
-    const handleClick = (button) => {
-        setSelectedButton(button);
-    }
-
 
     const salesCall = fetch(baseUrl, {
         method: "POST",
@@ -47,9 +42,7 @@ export default function EmailCamp() {
                 <div className="ml-5 mt-4 flex flex-shrink-0">
                     <button
                         type="button"
-                        name="survey"
-                        onClick={() => handleClick('survey')}
-                        value={survey}
+                        onClick={() => onButtonClick('survey')}
                         className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <PencilSquareIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -57,9 +50,7 @@ export default function EmailCamp() {
                     </button>
                     <button
                         type="button"
-                        name="email"
-                        onClick={() => handleClick('email')}
-                        value={email}
+                        onClick={() => onButtonClick('email')}
                         className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <EnvelopeIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -67,18 +58,16 @@ export default function EmailCamp() {
                     </button>
                     <button
                         type="button"
-                        name="newsletter"
-                        onClick={() => handleClick('newsletter')}
-                        value={newsletter}
+                        onClick={() => onButtonClick('newsletter')}
                         className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <EnvelopeOpenIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                         <span>Newsletter</span>
                     </button>
                 </div>
-                <div>
+                {/* <div>
                     {email || survey || newsletter && <EmailForm email={email} survey={survey} newsletter={newsletter} />}
-                </div>
+                </div> */}
             </div>
         </div>
     )
