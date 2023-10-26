@@ -116,6 +116,8 @@ export default function DashConvTool({ openModal, setOpenModal, email, survey, n
         return setSelectedButton(email || survey || newsletter);
     }
 
+    console.log("SelectedButton from out function:", selectedButton);
+
     if (selectedButton) {
         console.log("SelectedButton:", selectedButton)
     }
