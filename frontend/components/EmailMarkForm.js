@@ -15,18 +15,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
-    const [beforeClick, setBeforeClick] = useState(
-        "Start a Campaign"
-    );
-    const initialEmailForm = {
-        email: "",
-        firstName: "",
-        lastName: "",
-        brand_url: "https://forgedmart.com/",
-        logo: "/images/Marttwainxyz.png",
-        input: "",
-    };
-
+    const [beforeClick, setBeforeClick] = useState("Start a Campaign");
     const [emailForm, setEmailForm] = useState(initialEmailForm);
     const [isClicked, setIsClicked] = useState(false);
     const [beforeButton, setBeforeButton] = useState("Click to Send");
@@ -37,59 +26,68 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [newsletter, setNewsletter] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
 
+    const initialEmailForm = {
+        email: "",
+        firstName: "",
+        lastName: "",
+        brand_url: "https://forgedmart.com/",
+        logo: "/images/Marttwainxyz.png",
+        input: "",
+    };
+
     const url = "/api/webhooks/aiMessage";
 
     const handleClose = () => {
         setOpenModal(false);
     };
 
-    const handleChange = (e) => {
-        e.preventDefault();
-        const { name, value } = e.target;
+    // const handleChange = (e) => {
+    //     e.preventDefault();
+    //     const { name, value } = e.target;
 
-        setEmailForm((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
+    //     setEmailForm((prevState) => ({
+    //         ...prevState,
+    //         [name]: value,
+    //     }));
+    // };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsClicked(true);
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setIsClicked(true);
 
-        if (emailForm.email === "") {
-            setIsEmailEmpty(true);
-            setBeforeClick("Fill out and submit the form below");
-            return;
-        }
+    //     if (emailForm.email === "") {
+    //         setIsEmailEmpty(true);
+    //         setBeforeClick("Fill out and submit the form below");
+    //         return;
+    //     }
 
-        try {
-            const { email, firstName, input, brand_url, logo, lastName } =
-                emailForm;
+    //     try {
+    //         const { email, firstName, input, brand_url, logo, lastName } =
+    //             emailForm;
 
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    firstName,
-                    lastName,
-                    brand_url,
-                    logo,
-                    input,
-                }),
-            });
+    //         const response = await fetch(url, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 email,
+    //                 firstName,
+    //                 lastName,
+    //                 brand_url,
+    //                 logo,
+    //                 input,
+    //             }),
+    //         });
 
-            const data = await response.json(); // Parse the response as JSON
-        } catch (error) {
-            console.error(error);
-            setError(
-                "An error occurred while sending the email. Please try again or contact us for support."
-            );
-        }
-    };
+    //         const data = await response.json(); // Parse the response as JSON
+    //     } catch (error) {
+    //         console.error(error);
+    //         setError(
+    //             "An error occurred while sending the email. Please try again or contact us for support."
+    //         );
+    //     }
+    // };
 
 
     const handleButtonClick = (button) => {
@@ -190,7 +188,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                             >
                                                 <EmailCamp />
                                                 <Report />
-                                                <EmailForm email={email} survey={survey} newsletter={newsletter} selectedButton={selectedButton} />
+                                                {showForm && <EmailForm email={email} survey={survey} newsletter={newsletter} selectedButton={selectedButton} />}
                                             </div>
                                         </div>
                                     </div>
