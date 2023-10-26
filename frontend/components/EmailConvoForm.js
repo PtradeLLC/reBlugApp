@@ -1,6 +1,13 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 export default function EmailForm({ email, survey, newsletter }) {
+
+    if (survey) {
+        console.log("Survey is clicked")
+    }
+
+
+
     return (
         <form>
             <div className="space-y-12 mt-2">

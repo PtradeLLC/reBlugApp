@@ -87,7 +87,7 @@ export default function EmailCamp() {
                     </button>
                 </div>
                 <div>
-                    {email || survey || newsletter ? <EmailForm email={email} survey={survey} newsletter={newsletter} /> : null}
+                    {email || survey || newsletter && <EmailForm email={email} survey={survey} newsletter={newsletter} />}
                 </div>
             </div>
         </div>
