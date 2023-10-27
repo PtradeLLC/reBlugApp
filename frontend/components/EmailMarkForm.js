@@ -153,7 +153,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                                 height={200}
                                                             />
                                                             <Link href="/profile">
-                                                                <span className="text-sm block">Update Logo</span>
+                                                                <span className="text-sm">Edit Logo</span>
                                                             </Link>
                                                         </div>
                                                     </div>
