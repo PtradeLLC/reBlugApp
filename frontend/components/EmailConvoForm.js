@@ -2,12 +2,8 @@ import { useState } from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import DashConvTool from './EmailMarkForm';
 
-export default function EmailForm({ emailForm, surveyForm, newsletterForm }) {
+export default function EmailForm() {
     const [emailFormInput, setEmailFormInput] = useState(false);
-
-    if (emailForm || surveyForm || newsletterForm) {
-        setEmailFormInput(true);
-    };
 
     return (
         <>

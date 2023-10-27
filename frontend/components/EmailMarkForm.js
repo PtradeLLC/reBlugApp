@@ -12,7 +12,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function DashConvTool({ openModal, setOpenModal, emailForm: emailFormTwo, surveyForm: surveyFormTwo, newsletterForm: newsletterFormTwo }) {
+export default function DashConvTool({ openModal, setOpenModal }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
@@ -109,13 +109,6 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm: email
     //     }
     // };
 
-
-
-
-
-
-
-
     return (
         <Transition.Root show={openModal} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
@@ -187,7 +180,7 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm: email
                                                 </div>
                                             </div>
                                             <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                                                <EmailCamp emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
+                                                <EmailCamp />
                                             </div>
                                         </div>
                                     </div>
