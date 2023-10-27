@@ -13,7 +13,7 @@ export default function EmailForm() {
                         <div>
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Email Campaign</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                                Use this form to compose your campaign.
+                                Use the form to compose your campaign.
                             </p>
                         </div>
 
