@@ -3,7 +3,7 @@ import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
-export default function EmailCamp() {
+export default function EmailCamp({ openModal, setOpenModal }) {
     const [campaignEmail, setCampaignEmail] = useState(false);
     // const [campaignSurvey, setCampaignSurvey] = useState(false);
     // const [campaignNewsletter, setCampaignNewsletter] = useState(false);

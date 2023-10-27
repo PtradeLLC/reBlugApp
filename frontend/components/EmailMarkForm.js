@@ -180,7 +180,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 </div>
                                             </div>
                                             <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                                                <EmailCamp />
+                                                <EmailCamp openModal={openModal} setOpenModal={setOpenModal} />
                                             </div>
                                         </div>
                                     </div>

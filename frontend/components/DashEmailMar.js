@@ -4,6 +4,7 @@ import EmailCamp from './EmailCampaign'
 import Report from './Report_one'
 
 const DashEmailMar = ({ isOpen, closeModal, children }) => {
+    const [openModal, setOpenModal] = useState(false);
     if (!isOpen) return null;
 
     return (
