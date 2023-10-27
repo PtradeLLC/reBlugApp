@@ -5,13 +5,14 @@ import Image from "next/image";
 import EmailCamp from "./EmailCampaign";
 import Report from "./Report_one";
 import EmailForm from "./EmailConvoForm";
+import { useUserData } from '@nhost/nextjs';
 import Link from "next/link";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function DashConvTool({ openModal, setOpenModal, emailForm, surveyForm, newsletterForm }) {
+export default function DashConvTool({ openModal, setOpenModal, emailForm: emailFormTwo, surveyForm: surveyFormTwo, newsletterForm: newsletterFormTwo }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
@@ -21,17 +22,16 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm, surve
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
-    // const [email, setEmail] = useState(false);
-    // const [survey, setSurvey] = useState(false);
-    // const [newsletter, setNewsletter] = useState(false);
     const [selectedButton, setSelectedButton] = useState(false);
+    const user = useUserData();
+
 
     const initialEmailForm = {
         email: "",
         firstName: "",
         lastName: "",
         brand_url: "https://forgedmart.com/",
-        logo: "/images/Marttwainxyz.png",
+        logo: `${"/images/Marttwainxyz.png" || user.avatarUrl}`,
         input: "",
     };
     const [emailForm, setEmailForm] = useState(initialEmailForm);
@@ -110,10 +110,10 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm, surve
     // };
 
 
-    if (emailForm || surveyForm || newsletterForm) {
-        console.log("SURVEY from MarkForm if Statement:", emailForm || surveyForm || newsletterForm);
+    if (emailFormTwo || surveyFormTwo || newsletterFormTwo) {
+        console.log("SURVEY from MarkForm if Statement:", emailFormTwo || surveyFormTwo || newsletterFormTwo);
         console.log("SelectedButt", selectedButton);
-        return setSelectedButton(emailForm || surveyForm || newsletterForm);
+        return setSelectedButton(emailFormTwo || surveyFormTwo || newsletterFormTwo);
     }
 
     console.log("SelectedButton from out function:", selectedButton);
@@ -160,11 +160,7 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm, surve
                                                         <div className="-m-1 flex flex-col rounded">
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
-                                                                src={
-                                                                    selectedImage
-                                                                        ? URL.createObjectURL(selectedImage)
-                                                                        : "/images/OtherVar.png"
-                                                                }
+                                                                src={`${user.avatarUrl}` || "/images/Marttwainxyz.png"}
                                                                 alt="product image"
                                                                 width={200}
                                                                 height={200}
@@ -198,7 +194,7 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm, surve
                                             </div>
                                             {selectedButton && (
                                                 <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                                                    <EmailCamp emailForm={emailForm} survey={surveyForm} newsletter={newsletterForm} />
+                                                    <EmailCamp emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
                                                 </div>
                                             )}
                                         </div>

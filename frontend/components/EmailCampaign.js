@@ -3,7 +3,7 @@ import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
-export default function EmailCamp({ emailForm, surveyForm, newsletterForm }) {
+export default function EmailCamp({ emailFormTwo, surveyFormTwo, newsletterFormTwo }) {
     const [campaignEmail, setCampaignEmail] = useState(false);
     // const [campaignSurvey, setCampaignSurvey] = useState(false);
     // const [campaignNewsletter, setCampaignNewsletter] = useState(false);
@@ -83,7 +83,7 @@ export default function EmailCamp({ emailForm, surveyForm, newsletterForm }) {
 
             {campaignEmail && (
                 <div>
-                    <EmailForm emailForm={emailForm} surveyForm={surveyForm} newsletterForm={newsletterForm} />
+                    <EmailForm emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
                 </div>
             )}
         </div>
