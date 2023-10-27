@@ -4,9 +4,7 @@ import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
 
 export default function EmailCamp({ openModal, setOpenModal }) {
-    const [campaignEmail, setCampaignEmail] = useState(false);
-    // const [campaignSurvey, setCampaignSurvey] = useState(false);
-    // const [campaignNewsletter, setCampaignNewsletter] = useState(false);
+    const [campaignEmail, setCampaignEmail] = useState(null);
     const user = useUserData();
 
     const baseUrl = "";
@@ -18,6 +16,10 @@ export default function EmailCamp({ openModal, setOpenModal }) {
         },
         body: JSON.stringify()
     });
+
+    const onButtonClick = (type) => {
+        setCampaignEmail(type);
+    }
 
 
 
@@ -45,7 +47,7 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                     <button
                         type="button"
                         onClick={() => onButtonClick('email')}
-                        className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <EnvelopeIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                         <span>Product Email</span>
@@ -53,7 +55,7 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                     <button
                         type="button"
                         onClick={() => onButtonClick('survey')}
-                        className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                         <PencilSquareIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                         <span>Survey</span>
@@ -69,7 +71,7 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                 </div>
             </div>
             <div className='mt-3'>
-                <EmailForm />
+                <EmailForm campaignEmail={campaignEmail} />
             </div>
         </div>
     )
