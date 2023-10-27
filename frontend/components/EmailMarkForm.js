@@ -110,17 +110,11 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm: email
     // };
 
 
-    if (emailFormTwo || surveyFormTwo || newsletterFormTwo) {
-        console.log("SURVEY from MarkForm if Statement:", emailFormTwo || surveyFormTwo || newsletterFormTwo);
-        console.log("SelectedButt", selectedButton);
-        return setSelectedButton(emailFormTwo || surveyFormTwo || newsletterFormTwo);
-    }
 
-    console.log("SelectedButton from out function:", selectedButton);
 
-    if (selectedButton) {
-        console.log("SelectedButton:", selectedButton)
-    }
+
+
+
 
     return (
         <Transition.Root show={openModal} as={Fragment}>

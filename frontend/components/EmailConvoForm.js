@@ -9,10 +9,6 @@ export default function EmailForm({ emailForm, surveyForm, newsletterForm }) {
         setEmailFormInput(true);
     };
 
-    console.log("emailFormInput:", emailFormInput);
-
-
-
     return (
         <>
             <form>
