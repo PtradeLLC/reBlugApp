@@ -12,7 +12,7 @@ export default function EmailForm({ campaignEmail }) {
                     <div className="relative">
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                             {campaignEmail ? null : (
-                                <div className="flex justify-center items-center h-screen">
+                                <div className="flex justify-center items-center">
                                     <div className="email-camp absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                         <h2 className="text-base font-semibold leading-7 text-gray-900">Email Campaign</h2>
                                         <p className="mt-1 text-sm leading-6 text-gray-600">
