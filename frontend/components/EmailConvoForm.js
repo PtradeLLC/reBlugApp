@@ -348,11 +348,9 @@ export default function EmailForm({ emailForm, surveyForm, newsletterForm }) {
                     </button>
                 </div>
             </form>
-            {emailFormInput && (
-                <div>
-                    <DashConvTool emailForm={emailForm} surveyForm={surveyForm} newsletterForm={newsletterForm} />
-                </div>
-            )}
+            <div>
+                <DashConvTool emailForm={emailForm} surveyForm={surveyForm} newsletterForm={newsletterForm} />
+            </div>
         </>
     )
 }

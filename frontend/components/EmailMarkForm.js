@@ -192,11 +192,9 @@ export default function DashConvTool({ openModal, setOpenModal, emailForm: email
                                                     </div>
                                                 </div>
                                             </div>
-                                            {selectedButton && (
-                                                <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
-                                                    <EmailCamp emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
-                                                </div>
-                                            )}
+                                            <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                                                <EmailCamp emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
+                                            </div>
                                         </div>
                                     </div>
                                 </Dialog.Panel>

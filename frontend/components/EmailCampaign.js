@@ -81,11 +81,9 @@ export default function EmailCamp({ emailFormTwo, surveyFormTwo, newsletterFormT
                 </div>
             </div>
 
-            {campaignEmail && (
-                <div>
-                    <EmailForm emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
-                </div>
-            )}
+            <div>
+                <EmailForm emailFormTwo={emailFormTwo} surveyFormTwo={surveyFormTwo} newsletterFormTwo={newsletterFormTwo} />
+            </div>
         </div>
     )
 }
