@@ -341,7 +341,7 @@ export default function EmailForm() {
                 </div>
             </form>
             <div>
-                <DashConvTool emailForm={emailForm} surveyForm={surveyForm} newsletterForm={newsletterForm} />
+                <DashConvTool />
             </div>
         </>
     )
