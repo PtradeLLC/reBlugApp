@@ -415,11 +415,11 @@ const Dashboard = function ({ children }) {
                                                                 className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                             >
                                                                 <div className={`px-5 py-3`}>
-                                                                    <div className="flex text-sm text-center items-center"> {/* Added 'items-center' here */}
+                                                                    <div className="flex text-sm text-center items-center">
                                                                         <button
                                                                             type="button"
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-2"
+                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                                         >
                                                                             <Image src={card.icon} alt="icon" width={30} height={30} />
                                                                             <span>{card.title}</span>
