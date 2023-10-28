@@ -134,7 +134,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                     {/* Add a title here later */}
                                                 </Dialog.Title>
-                                                <span className="close font-medium h-2 w-2" onClick={handleClose}>
+                                                <span className="close font-medium h-2 w-2 text-lg" onClick={handleClose}>
                                                     &times;
                                                 </span>
                                             </div>
@@ -148,8 +148,8 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                         <div className="-m-1 flex flex-col rounded">
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
-                                                                src={`${user.avatarUrl}` || "/images/Marttwainxyz.png"}
-                                                                alt="product image"
+                                                                src={user.avatarUrl || "/images/Marttwainxyz.png"}
+                                                                alt="logo"
                                                                 width={200}
                                                                 height={200}
                                                             />
