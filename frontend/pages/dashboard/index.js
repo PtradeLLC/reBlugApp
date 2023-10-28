@@ -80,8 +80,8 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase', icon: "/images/" },
-    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase', icon: "/images/" },
+    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase', icon: "" },
+    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase', icon: "" },
     { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase', icon: "/images/barchart.png" },
     { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase', icon: "/images/piechart.png" },
     { id: 5, name: "Start a campaign" },
