@@ -11,7 +11,7 @@ import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
+import { ArrowDownIcon, ArrowUpIcon, Square3Stack3DIcon } from '@heroicons/react/20/solid';
 
 
 const navigation = [
@@ -63,6 +63,9 @@ const teamMembers = [
     //     href: "#",
     // },
 ];
+
+
+// absolute inset-0 rounded-xl   Checkout later
 
 const quicklinks = [
     {
@@ -188,7 +191,7 @@ const Dashboard = function ({ children }) {
                     </div>
                 </Suspense>
             ));
-        } else if (title === "Campaign Automation") {
+        } else if (title === "Automate Marketing") {
             return automationAction.map((action) => (
                 <div key={action.id} className={classNames(
                     action.id === 1

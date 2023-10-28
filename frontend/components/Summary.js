@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import { Square3Stack3DIcon } from '@heroicons/react/20/solid';
 
 const statuses = { Completed: 'text-green-400 bg-green-400/10', Error: 'text-rose-400 bg-rose-400/10' }
 
@@ -42,6 +43,7 @@ export default function Summary() {
 
     return (
         <div className="bg-white py-10 border rounded-sm">
+            <Square3Stack3DIcon />
             <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8">Latest activity</h2>
             <table className="mt-6 w-full whitespace-nowrap text-left">
                 <colgroup>
