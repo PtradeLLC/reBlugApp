@@ -84,7 +84,7 @@ const actions = [
 export default function Dashboard() {
     return (
         <>
-            <div className="min-h-full overflow-hidden bg-white py-24 sm:py-32">
+            <div className="min-h-full overflow-hidden bg-white py-16 sm:py-28">
                 <Popover as="header" className=" pb-24">
                     {({ open }) => (
                         <>

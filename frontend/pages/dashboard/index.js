@@ -524,7 +524,7 @@ const Dashboard = function ({ children }) {
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
                                                 <div className="p-6">
                                                     <span className="flex">
-                                                        <div className="flex">
+                                                        <div className="flex space-x-0">
                                                             <Image src="/images/link.png" width={15} height={15} alt="quick links" />
                                                             <h2 className="text-base font-medium text-gray-900" id="quicklinks-title">
                                                                 Quick Link
