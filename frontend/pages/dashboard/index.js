@@ -27,7 +27,7 @@ const userNavigation = [
 
 const cards = [
     { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "/images/automate.png", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Automate Campaign", id: 2, icon: "/images/automate.png", bground: "#A18072" },
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072" }
 ];
 
@@ -138,7 +138,7 @@ const Dashboard = function ({ children }) {
                             ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3"
                             : "",
                         action.id === emailAction.length - 1
-                            ? " bg-[#F0F0F0] sm:rounded-bl-none lg:h-[108px] pt-3 pb-3"
+                            ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3"
                             : "",
                         "group relative p-6"
                     )}>
@@ -175,7 +175,7 @@ const Dashboard = function ({ children }) {
                             {action.name === "Processed" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <button type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
+                                    <button className="flex justify-end items-end" type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
                                 </span>
                             )}
                             {action.name === "Delivered" && (
@@ -232,14 +232,6 @@ const Dashboard = function ({ children }) {
                             {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                         </button>
                     </h3>
-                    <div>
-                        {/* <span className="font-bold text-4xl">{action.num}</span> */}
-                        {/* {action.name === "Delivered" && (
-                            <span className="w-full">
-                                <Kpi name={action.name} />
-                            </span>
-                        )} */}
-                    </div>
                 </div>
             ))
         }
