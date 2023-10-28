@@ -9,7 +9,7 @@ export default function EmailForm({ campaignEmail }) {
         <>
             <form>
                 <div className="space-y-12 mt-2">
-                    <div className="max-w-screen-lg w-full">
+                    <div className="relative">
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                             {campaignEmail ? null : (
                                 <>
