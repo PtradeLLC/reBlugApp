@@ -178,13 +178,13 @@ const Dashboard = function ({ children }) {
                             {action.name === "Processed" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <button className="flex justify-end items-end" type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
+                                    <button className="flex justify-end items-end" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                                 </span>
                             )}
                             {action.name === "Delivered" && (
                                 <span className="w-full">
                                     <Kpi name={action.name} />
-                                    <button type="button" onClick={handleClick}><p className="text-sm">Expand to get insight</p></button>
+                                    <button type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                                 </span>
                             )}
                         </div>

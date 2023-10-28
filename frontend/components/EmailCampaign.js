@@ -7,16 +7,6 @@ export default function EmailCamp({ openModal, setOpenModal }) {
     const [campaignEmail, setCampaignEmail] = useState(null);
     const user = useUserData();
 
-    const baseUrl = "";
-
-    const salesCall = fetch(baseUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify()
-    });
-
     const onButtonClick = (type) => {
         setCampaignEmail(type);
     }

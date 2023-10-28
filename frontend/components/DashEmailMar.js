@@ -14,7 +14,8 @@ const DashEmailMar = ({ isOpen, closeModal, children }) => {
                     &times;
                 </span>
                 <div >
-                    <EmailCamp />
+                    What happens here
+                    {/* <EmailCamp /> */}
                     {/* <Report /> */}
                 </div>
                 <div>
