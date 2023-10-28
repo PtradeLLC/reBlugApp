@@ -124,9 +124,8 @@ const Dashboard = function ({ children }) {
     const [campaignEmail, setCampaignEmail] = useState(null);
 
 
-    const handleClick = (type) => {
+    const handleClick = () => {
         setOpenModal(true);
-        setCampaignEmail(type)
     };
 
 
@@ -140,16 +139,16 @@ const Dashboard = function ({ children }) {
                             : "",
                         action.id === 2 ? "bg-[#ECECEC]" : "",
                         action.id === emailAction.length - 2
-                            ? "sm:rounded-bl-lg bg-[#EEEEEE] h-[103px] text-black pt-3 pb-3"
+                            ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3"
                             : "",
                         action.id === emailAction.length - 1
-                            ? " bg-[#F0F0F0] flex justify-center items-center sm:rounded-bl-none pt-3 pb-3"
+                            ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3"
                             : "",
                         "group relative p-6"
                     )}>
                         <h3 className="text-lg font-medium">
                             {action.name === "Start a campaign" ? (
-                                <button type="button" onClick={handleClick("campaign")}>
+                                <button type="button" onClick={handleClick}>
                                     {action.name}
                                 </button>
                             ) : (
