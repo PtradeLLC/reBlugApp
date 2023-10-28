@@ -42,7 +42,7 @@ export default function Summary() {
 
 
     return (
-        <div className="bg-white py-10 border rounded-sm">
+        <div className="bg-white py-10 border shadow-xl rounded-sm">
             <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2>
             <table className="mt-6 w-full whitespace-nowrap text-left">
                 <colgroup>
@@ -52,7 +52,7 @@ export default function Summary() {
                     <col className="lg:w-1/12" />
                     <col className="lg:w-1/12" />
                 </colgroup>
-                <thead className="border-b border-white/10 text-sm leading-6 text-black">
+                <thead className="border-b border-white/10 text-sm shadow-md leading-6 text-black">
                     <tr>
                         <th scope="col" className="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">
                             Team
