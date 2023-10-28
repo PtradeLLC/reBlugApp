@@ -42,8 +42,10 @@ export default function Summary() {
 
 
     return (
-        <div className="bg-white py-10 border shadow-xl rounded-sm">
-            <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2>
+        <div className="bg-white py-10 border rounded-sm">
+            <span className="shadow-xl">
+                <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2>
+            </span>
             <table className="mt-6 w-full whitespace-nowrap text-left">
                 <colgroup>
                     <col className="w-full sm:w-4/12" />
@@ -109,7 +111,7 @@ export default function Summary() {
                             </tr>
                         ))
                         :
-                        <span className='flex justify-center items-center'>{summary}</span>
+                        <span className='flex mt-2 justify-center items-center'>{summary}</span>
                     }
                 </tbody>
             </table>
