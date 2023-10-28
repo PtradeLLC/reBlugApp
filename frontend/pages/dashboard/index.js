@@ -27,7 +27,7 @@ const userNavigation = [
 
 const cards = [
     { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Automate Campaign", id: 2, icon: "/images/automate.png", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Automate Marketing", id: 2, icon: "/images/automate.png", bground: "#A18072" },
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072" }
 ];
 
