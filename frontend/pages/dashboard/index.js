@@ -26,9 +26,9 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "coming soon", bground: "#A18072" },
-    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "coming soon", bground: "#A18072" }
+    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/piechart.png", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "/images/convotool.png", bground: "#A18072" },
+    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/barchart.png", bground: "#A18072" }
 ];
 
 const teamMembers = [
@@ -422,7 +422,7 @@ const Dashboard = function ({ children }) {
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                             className="font-medium text-[#0f172a] hover:text-black"
                                                                         >
-                                                                            <span className="mx-2">{card.title}<br /></span>
+                                                                            <span className="mx-2">{card.icon}{card.title}<br /></span>
                                                                             <span className="font-bold">{card.name}</span>
                                                                         </button>
                                                                     </div>
