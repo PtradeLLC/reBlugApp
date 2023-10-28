@@ -247,7 +247,7 @@ const Dashboard = function ({ children }) {
         <>
             <Suspense fallback={<Loading />}>
                 <UserContext.Provider value={user}>
-                    <div className="min-h-full overflow-hidden bg-white py-16 sm:py-28">
+                    <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
                         <Popover as="header" className=" pb-24">
                             {({ open }) => (
                                 <>
