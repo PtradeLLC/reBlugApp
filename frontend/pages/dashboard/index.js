@@ -149,7 +149,7 @@ const Dashboard = function ({ children }) {
                                 </button>
                             ) : (
                                 <span>
-                                    <span className="flex justify-end items-end"><Image src={`${!action.icon ? null : action.icon}`} alt="chart icon" width={30} h={30} /></span>
+                                    <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} h={24} />}</span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
 
@@ -426,7 +426,7 @@ const Dashboard = function ({ children }) {
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                             className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-0.5"
                                                                         >
-                                                                            <Image src={card.icon} alt="icon" width={24} height={24} />
+                                                                            <Image src={card.icon} alt="icon" width={30} height={30} />
                                                                             <span>{card.title}</span>
                                                                         </button>
                                                                     </div>
