@@ -426,9 +426,7 @@ const Dashboard = function ({ children }) {
                                                                             className="font-medium text-[#0f172a] hover:text-black flex items-center"
                                                                         >
                                                                             <Image src={card.icon} alt="icon" width={24} height={24} />
-                                                                            <span>{card.title}</span>
-                                                                            <br />
-                                                                            {/* <span className="font-bold">{card.name}</span> */}
+                                                                            <span className="mx-1">{card.title}</span>
                                                                         </button>
                                                                     </div>
                                                                 </div>
