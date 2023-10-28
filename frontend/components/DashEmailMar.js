@@ -13,7 +13,7 @@ const DashEmailMar = ({ isOpen, closeModal, children }) => {
                 <span className="close" onClick={closeModal}>
                     &times;
                 </span>
-                <div >
+                <div>
                     What happens
                     {/* <DashConvTool openModal={openModal} setOpenModal={setOpenModal} /> */}
 
