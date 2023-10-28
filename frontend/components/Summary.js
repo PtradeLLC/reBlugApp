@@ -43,7 +43,7 @@ export default function Summary() {
 
     return (
         <div className="bg-white py-10 border rounded-sm">
-            <span className="shadow-xl">
+            <span className="shadow-xl border-b border-white/10 bg-slate-200">
                 <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2>
             </span>
             <table className="mt-6 w-full whitespace-nowrap text-left">
