@@ -31,13 +31,10 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                             </div>
                         </div>
                     </div>
-                    <div className="ml-6 mt-4 flex flex-shrink-0">
+                    <div className="ml-6 mt-4 flex flex-col flex-shrink-0">
                         <div className="flex justify-center items-center">
                             <div className="email-camp">
                                 <h2 className="text-base font-semibold leading-7 text-gray-900">Email Campaign</h2>
-                                <p className="mt-1 text-sm leading-6 text-gray-600">
-                                    From above, select an action to perform.
-                                </p>
                             </div>
                         </div>
                         <button
