@@ -146,6 +146,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16">
                                                     <div>
                                                         <div className="-m-1 flex flex-col rounded">
+                                                            {console.log(user)}
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
                                                                 src={user.avatarUrl || "/images/Marttwainxyz.png"}
@@ -167,14 +168,6 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                                 >
                                                                     {beforeClick}
                                                                 </h3>
-                                                                {/* <span
-                                                                    className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${emailForm.email
-                                                                        ? "bg-green-400"
-                                                                        : "bg-red-400"
-                                                                        }`}
-                                                                >
-                                                                    <span className="sr-only">Online</span>
-                                                                </span> */}
                                                             </div>
                                                         </div>
                                                     </div>
