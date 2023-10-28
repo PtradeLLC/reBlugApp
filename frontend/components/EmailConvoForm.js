@@ -23,6 +23,11 @@ export default function EmailForm({ campaignEmail }) {
                             )}
 
                             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+                                {campaignEmail === "campaign" && (
+                                    <>
+                                        <Report />
+                                    </>)
+                                }
                                 {campaignEmail === "email" && (
                                     <>
                                         <div className="sm:col-span-4">

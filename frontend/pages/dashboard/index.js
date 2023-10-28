@@ -11,7 +11,7 @@ import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
-import { ArrowDownIcon, ArrowUpIcon, Square3Stack3DIcon } from '@heroicons/react/20/solid';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 
 
 const navigation = [
@@ -120,11 +120,13 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
-    const [team, setTeam] = useState("There are no members of your team here")
+    const [team, setTeam] = useState("There are no members of your team here");
+    const [campaignEmail, setCampaignEmail] = useState(null);
 
 
-    const handleClick = () => {
+    const handleClick = (type) => {
         setOpenModal(true);
+        setCampaignEmail(type)
     };
 
 
@@ -147,7 +149,7 @@ const Dashboard = function ({ children }) {
                     )}>
                         <h3 className="text-lg font-medium">
                             {action.name === "Start a campaign" ? (
-                                <button type="button" onClick={handleClick}>
+                                <button type="button" onClick={handleClick("campaign")}>
                                     {action.name}
                                 </button>
                             ) : (
@@ -556,7 +558,7 @@ const Dashboard = function ({ children }) {
                                 </div>
                             </div>
                             <span className="mt-3 px-2">
-                                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+                                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} campaignEmail={campaignEmail} />
                             </span>
                         </main>
                     </div>
