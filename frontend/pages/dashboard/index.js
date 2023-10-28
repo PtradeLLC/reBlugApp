@@ -458,12 +458,17 @@ const Dashboard = function ({ children }) {
                                         <section aria-labelledby="recent-hires-title">
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
                                                 <div className="p-6">
-                                                    <h2
-                                                        className="text-base font-medium text-gray-900"
-                                                        id="recent-hires-title"
-                                                    >
-                                                        Team Members
-                                                    </h2>
+                                                    <span className="flex">
+                                                        <h2
+                                                            className="text-base font-medium text-gray-900"
+                                                            id="recent-hires-title"
+                                                        >
+                                                            <Image src="/images/team.png" width={25} height={25} alt="team members" />
+                                                            Team Members
+                                                        </h2>
+
+                                                    </span>
+
                                                     <div className="mt-6 flow-root">
                                                         <ul
                                                             role="list"
