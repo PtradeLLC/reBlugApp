@@ -428,7 +428,7 @@ const Dashboard = function ({ children }) {
                                                                             <Image src={card.icon} alt="icon" width={24} height={24} />
                                                                             <span>{card.title}</span>
                                                                             <br />
-                                                                            <span className="font-bold">{card.name}</span>
+                                                                            {/* <span className="font-bold">{card.name}</span> */}
                                                                         </button>
                                                                     </div>
                                                                 </div>
