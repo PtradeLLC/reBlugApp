@@ -420,13 +420,12 @@ const Dashboard = function ({ children }) {
                                                                 <div className={`px-5 py-3`}>
                                                                     <div className="flex text-sm text-center">
                                                                         <button
+                                                                            type="button"
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black"
+                                                                            className="font-medium text-[#0f172a] hover:text-black "
                                                                         >
-                                                                            <span className="">
-                                                                                <Image src={card.icon} alt="icon" width={24} height={24} />
-                                                                                {card.title}<br />
-                                                                            </span>
+                                                                            <Image src={card.icon} alt="icon" width={24} height={24} />
+                                                                            {card.title}<br />
                                                                             <span className="font-bold">{card.name}</span>
                                                                         </button>
                                                                     </div>
