@@ -7,6 +7,7 @@ import Link from "next/link";
 import EmailTabs from "../../components/EmailTabs";
 import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
+import Image from "next/image";
 import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
@@ -424,6 +425,7 @@ const Dashboard = function ({ children }) {
                                                                         >
                                                                             <span className="mx-2"><img src={card.icon} alt="icon" />{card.title}<br /></span>
                                                                             <span className="font-bold">{card.name}</span>
+                                                                            <Image />
                                                                         </button>
                                                                     </div>
                                                                 </div>
