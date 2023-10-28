@@ -149,7 +149,7 @@ const Dashboard = function ({ children }) {
                                 </button>
                             ) : (
                                 <span>
-                                    <span className="flex justify-end items-end">{action.icon}</span>
+                                    <span className="flex justify-end items-end"><Image src={action.icon} alt="chart icon" width={30} h={30} /></span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
 
