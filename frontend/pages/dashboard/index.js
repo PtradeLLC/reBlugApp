@@ -80,10 +80,10 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase' },
-    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase' },
-    { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase' },
-    { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase' },
+    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase', icon: "/images/" },
+    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase', icon: "/images/" },
+    { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase', icon: "/images/barchart.png" },
+    { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase', icon: "/images/piechart.png" },
     { id: 5, name: "Start a campaign" },
 ];
 
@@ -149,6 +149,7 @@ const Dashboard = function ({ children }) {
                                 </button>
                             ) : (
                                 <span>
+                                    <span className="flex justify-end items-end">{action.icon}</span>
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
 
