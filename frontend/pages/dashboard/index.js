@@ -121,7 +121,6 @@ const Dashboard = function ({ children }) {
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
     const [team, setTeam] = useState("There are no members of your team here");
-    const [campaignEmail, setCampaignEmail] = useState(null);
 
 
     const handleClick = () => {

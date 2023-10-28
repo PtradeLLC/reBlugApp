@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import DashConvTool from './EmailMarkForm';
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import Report from "./Report_one";
 
 export default function EmailForm({ campaignEmail }) {
@@ -28,7 +27,7 @@ export default function EmailForm({ campaignEmail }) {
 
                             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
 
-                                {campaignEmail === "email"(
+                                {campaignEmail === "email" && (
                                     <>
                                         <div className="sm:col-span-4">
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
