@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import DashConvTool from './EmailMarkForm'
-import EmailCamp from './EmailCampaign'
-import Report from './Report_one'
+import React, { useState } from 'react';
+import DashConvTool from './EmailMarkForm';
+import EmailCamp from './EmailCampaign';
+import Report from './Report_one';
 
 const DashEmailMar = ({ isOpen, closeModal, children }) => {
     const [openModal, setOpenModal] = useState(false);
@@ -15,7 +15,7 @@ const DashEmailMar = ({ isOpen, closeModal, children }) => {
                 </span>
                 <div >
                     <EmailCamp />
-                    <Report />
+                    {/* <Report /> */}
                 </div>
                 <div>
                     <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
