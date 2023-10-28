@@ -2,7 +2,6 @@ import { Fragment, useState, createContext, Suspense } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import withAuth from "../api/withAuth";
 import { useUserData } from '@nhost/nextjs';
-import { FaceIcon, ImageIcon, SizeIcon } from '@radix-ui/react-icons'
 import Link from "next/link";
 import EmailTabs from "../../components/EmailTabs";
 import MaapTabs from "../../components/MaapTabs";
@@ -27,10 +26,12 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/piechart.png", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "/images/convotool.png", bground: "#A18072" },
-    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/barchart.png", bground: "#A18072" }
+    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072" },
+    { name: "Marketing", href: "#", title: "Campaign Automation", id: 2, icon: "/images/automate.png", bground: "#A18072" },
+    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072" }
 ];
+
+
 
 const teamMembers = [
     // {
@@ -418,14 +419,15 @@ const Dashboard = function ({ children }) {
                                                                 className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
                                                             >
                                                                 <div className={`px-5 py-3`}>
-                                                                    <div className="flex text-sm text-center">
+                                                                    <div className="flex text-sm text-center items-center"> {/* Added 'items-center' here */}
                                                                         <button
                                                                             type="button"
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black "
+                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center"
                                                                         >
                                                                             <Image src={card.icon} alt="icon" width={24} height={24} />
-                                                                            {card.title}<br />
+                                                                            <span>{card.title}</span>
+                                                                            <br />
                                                                             <span className="font-bold">{card.name}</span>
                                                                         </button>
                                                                     </div>
@@ -433,6 +435,7 @@ const Dashboard = function ({ children }) {
                                                             </div>
                                                         ))}
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </section>
