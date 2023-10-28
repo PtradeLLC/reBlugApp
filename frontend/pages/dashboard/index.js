@@ -516,12 +516,12 @@ const Dashboard = function ({ children }) {
                                         <section aria-labelledby="quicklinks-title">
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
                                                 <div className="p-6">
-                                                    <Image src="/images/link.png" width={20} height={20} alt="quick links" />
+
                                                     <h2
                                                         className="text-base font-medium text-gray-900"
                                                         id="quicklinks-title"
                                                     >
-                                                        Quick Link
+                                                        <Image src="/images/link.png" width={25} height={25} alt="quick links" /> Quick Link
                                                     </h2>
                                                     <div className="mt-6 flow-root">
                                                         <ul
