@@ -145,8 +145,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <div className="h-24 mb-3 bg-[#F5F7F8] sm:h-20 lg:h-28" />
                                                 <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16">
                                                     <div>
-                                                        <div className="-m-1 flex flex-col rounded">
-                                                            {console.log(user)}
+                                                        <div className="m-2 flex flex-col rounded">
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
                                                                 src={user.avatarUrl || "/images/Marttwainxyz.png"}
@@ -173,10 +172,9 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* This was unCommented */}
-                                            {/* <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                                            <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
                                                 <EmailCamp openModal={openModal} setOpenModal={setOpenModal} />
-                                            </div> */}
+                                            </div>
                                         </div>
                                     </div>
                                 </Dialog.Panel>
