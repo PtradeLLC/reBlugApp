@@ -135,10 +135,10 @@ const Dashboard = function ({ children }) {
                             : "",
                         action.id === 2 ? "bg-[#ECECEC]" : "",
                         action.id === emailAction.length - 2
-                            ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black"
+                            ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3"
                             : "",
                         action.id === emailAction.length - 1
-                            ? " bg-[#F0F0F0] sm:rounded-bl-none h-32 pt-3 pb-3"
+                            ? " bg-[#F0F0F0] sm:rounded-bl-none lg:h-[108px] pt-3 pb-3"
                             : "",
                         "group relative p-6"
                     )}>
