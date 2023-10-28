@@ -14,12 +14,14 @@ const DashEmailMar = ({ isOpen, closeModal, children }) => {
                     &times;
                 </span>
                 <div >
-                    What happens here
+                    What happens
+                    {/* <DashConvTool openModal={openModal} setOpenModal={setOpenModal} /> */}
+
                     {/* <EmailCamp /> */}
                     {/* <Report /> */}
                 </div>
                 <div>
-                    <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+
                 </div>
             </div>
         </div>
