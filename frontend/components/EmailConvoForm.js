@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import DashConvTool from './EmailMarkForm';
+import Report from "./Report_one";
 
 export default function EmailForm({ campaignEmail }) {
     const [emailFormInput, setEmailFormInput] = useState(false);
@@ -23,12 +24,8 @@ export default function EmailForm({ campaignEmail }) {
                             )}
 
                             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-                                {campaignEmail === "campaign" && (
-                                    <>
-                                        <Report />
-                                    </>)
-                                }
-                                {campaignEmail === "email" && (
+
+                                {campaignEmail === "email" ? (
                                     <>
                                         <div className="sm:col-span-4">
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -96,9 +93,7 @@ export default function EmailForm({ campaignEmail }) {
                                             </div>
                                         </div>
                                     </>
-                                )}
-
-                                {campaignEmail === "newsletter" && (
+                                ) : campaignEmail === "newsletter" ? (
                                     <>
                                         <div className="sm:col-span-4">
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -130,7 +125,7 @@ export default function EmailForm({ campaignEmail }) {
                                             <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
                                         </div>
                                     </>
-                                )}
+                                ) : <Report />}
                             </div>
                         </div>
                     </div>
