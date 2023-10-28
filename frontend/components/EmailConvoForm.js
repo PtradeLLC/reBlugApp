@@ -9,19 +9,19 @@ export default function EmailForm({ campaignEmail }) {
         <>
             <form>
                 <div className="space-y-12 mt-2">
-                    <div className="relative">
+                    <div className="max-w-screen-lg w-full">
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                             {campaignEmail ? null : (
                                 <>
                                     <div className="flex justify-center items-center">
-                                        <div className="email-camp absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <div className="email-camp">
                                             <h2 className="text-base font-semibold leading-7 text-gray-900">Email Campaign</h2>
                                             <p className="mt-1 text-sm leading-6 text-gray-600">
                                                 From above, select an action to perform.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="flex justify-center items-center h-full">
+                                    <div className="flex justify-center items-center">
                                         <div className="w-full max-w-screen-lg">
                                             <Report />
                                         </div>
