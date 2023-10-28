@@ -21,11 +21,11 @@ export default function EmailForm({ campaignEmail }) {
                                             </p>
                                         </div>
                                     </div>
-                                    {/* <div className="flex justify-center items-center">
+                                    <div className="flex justify-center items-center">
                                         <div className="w-full max-w-screen-lg">
                                             <Report />
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </>
                             )}
                             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
