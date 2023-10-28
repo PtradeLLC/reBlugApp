@@ -14,14 +14,6 @@ export default function EmailForm({ campaignEmail }) {
                             {campaignEmail ? null : (
                                 <>
                                     <div className="flex justify-center items-center">
-                                        <div className="email-camp">
-                                            <h2 className="text-base font-semibold leading-7 text-gray-900">Email Campaign</h2>
-                                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                From above, select an action to perform.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-center items-center">
                                         <div className="w-full max-w-screen-lg">
                                             <Report />
                                         </div>
