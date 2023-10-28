@@ -43,8 +43,7 @@ export default function Summary() {
 
     return (
         <div className="bg-white py-10 border rounded-sm">
-            <Square3Stack3DIcon />
-            <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8">Latest activity</h2>
+            <h2 className="px-4 text-base font-semibold leading-7 text-black sm:px-6 lg:px-8"><Square3Stack3DIcon />Latest activity</h2>
             <table className="mt-6 w-full whitespace-nowrap text-left">
                 <colgroup>
                     <col className="w-full sm:w-4/12" />
