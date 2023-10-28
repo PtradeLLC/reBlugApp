@@ -166,22 +166,23 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                                 >
                                                                     {beforeClick}
                                                                 </h3>
-                                                                <span
+                                                                {/* <span
                                                                     className={`ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full ${emailForm.email
                                                                         ? "bg-green-400"
                                                                         : "bg-red-400"
                                                                         }`}
                                                                 >
                                                                     <span className="sr-only">Online</span>
-                                                                </span>
+                                                                </span> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
+                                            {/* This was unCommented */}
+                                            {/* <div className="inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl">
                                                 <EmailCamp openModal={openModal} setOpenModal={setOpenModal} />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </Dialog.Panel>

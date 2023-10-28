@@ -43,7 +43,7 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                         </div>
                     </div>
                 </div>
-                <div className="ml-5 mt-4 flex flex-shrink-0">
+                <div className="ml-6 mt-4 flex flex-shrink-0">
                     <button
                         type="button"
                         onClick={() => onButtonClick('email')}
