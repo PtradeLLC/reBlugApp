@@ -419,7 +419,7 @@ const Dashboard = function ({ children }) {
                                                                         <button
                                                                             type="button"
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-0.5"
+                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-2"
                                                                         >
                                                                             <Image src={card.icon} alt="icon" width={30} height={30} />
                                                                             <span>{card.title}</span>
@@ -433,7 +433,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""}`}>
+                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""}`}>
                                             {selectedKpi && (
                                                 <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""}`}>
                                                     <h2 className="sr-only" id="quick-links-title">
@@ -448,9 +448,9 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             )}
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Campaign Automation" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""}`}>
+                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""}`}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                            {selectedComponent === "Campaign Automation" && <MarketTabs />}
+                                            {selectedComponent === "Automate Marketing" && <MarketTabs />}
                                             {selectedComponent === "Messaging Platform" && <MaapTabs />}
                                         </section>
                                     </div>
