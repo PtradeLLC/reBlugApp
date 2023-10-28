@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from "next/image";
 import EmailCamp from "./EmailCampaign";
 import Report from "./Report_one";
@@ -12,6 +11,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
+
+//MODAL
 export default function DashConvTool({ openModal, setOpenModal }) {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);

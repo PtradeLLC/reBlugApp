@@ -12,7 +12,6 @@ import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import DashEmailMar from "../../components/DashEmailMar";
 
 
 const navigation = [
@@ -557,8 +556,7 @@ const Dashboard = function ({ children }) {
                                 </div>
                             </div>
                             <span className="mt-3 px-2">
-                                {/* <DashConvTool openModal={openModal} setOpenModal={setOpenModal} /> */}
-                                <DashEmailMar openModal={openModal} setOpenModal={setOpenModal} />
+                                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                         </main>
                     </div>
