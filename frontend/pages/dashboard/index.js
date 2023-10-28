@@ -422,8 +422,8 @@ const Dashboard = function ({ children }) {
                                                                         <button
                                                                             onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                             className="font-medium text-[#0f172a] hover:text-black"
-                                                                        >
-                                                                            <span className="mx-2"><Image src={card.icon} alt="icon" width={48} height={48} />{card.title}<br /></span>
+                                                                        ><Image src={card.icon} alt="icon" width={24} height={24} />
+                                                                            <span className="mx-2">{card.title}<br /></span>
                                                                             <span className="font-bold">{card.name}</span>
 
                                                                         </button>
