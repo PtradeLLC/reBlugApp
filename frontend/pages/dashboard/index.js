@@ -462,7 +462,7 @@ const Dashboard = function ({ children }) {
                                                                                 {person?.user?.displayName}
                                                                             </p>
                                                                             <p className="truncate text-sm text-gray-500">
-                                                                                {"@" + person.user.displayName.split().join("_")}
+                                                                                {"@" + person.user.displayName.split(" ").join("_")}
                                                                             </p>
                                                                         </div>
                                                                         <div>
