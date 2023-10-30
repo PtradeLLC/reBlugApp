@@ -3,13 +3,13 @@ import { useState } from 'react';
 
 export default function Report() {
     const [campaign, setCampaign] = useState({
-        Title: "Test",
-        Email_Contacts: ["test@gmail.com", " test2@gmail.com"],
-        Campaign_Goals: "testGoal",
-        Insight: "",
+        Title: "Campaign Title",
+        Email_Contacts: ["import contact"],
+        Campaign_Goals: "Campaign Goals",
+        Insight: "Detail insights",
         Attachments: {
-            report: "",
-            conversations: ""
+            report: "Download Report",
+            conversations: "Download Conversation"
         }
 
 
@@ -19,7 +19,7 @@ export default function Report() {
         <div>
             <div className="px-4 sm:px-0">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">Campaign Insight</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Here are detail about your latest campaign.</p>
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Here are details about your latest campaign.</p>
             </div>
             <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">

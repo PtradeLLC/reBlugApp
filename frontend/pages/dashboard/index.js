@@ -401,7 +401,7 @@ const Dashboard = function ({ children }) {
                                                                             <span>{card.title}</span>
                                                                         </button>
                                                                     </div>
-                                                                    <span className="text-xs block">{card.category}</span>
+                                                                    <span className="text-xs block text-center">{card.category}</span>
                                                                 </div>
                                                             </div>
                                                         ))}
