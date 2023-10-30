@@ -545,7 +545,7 @@ const Dashboard = function ({ children }) {
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                             <span>
-                                <Team show={show} setShow={setShow} />
+                                {show && <Team show={show} setShow={setShow} />}
                             </span>
                         </main>
                     </div>
