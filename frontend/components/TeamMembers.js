@@ -6,7 +6,8 @@ export default function Team({ show, setShow }) {
     // const [open, setOpen] = useState(true)
 
     const handleClick = () => {
-        () => setShow(false)
+        //CALL BACKEND API TO ADD TEAM ARRAY
+        setShow(false);
     }
 
     return (
@@ -37,7 +38,7 @@ export default function Team({ show, setShow }) {
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                                 <div>
-                                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full">
                                         <Image
                                             className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
                                             src="/images/Marttwainxyz.png"
@@ -48,7 +49,7 @@ export default function Team({ show, setShow }) {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-5">
                                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                            Add members to your list
+                                            Build your Team
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
@@ -66,13 +67,13 @@ export default function Team({ show, setShow }) {
                                             type="text"
                                             name="team"
                                             id="team"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                                             placeholder="email@example.com"
                                             aria-describedby="team-description"
                                         />
                                         <button
                                             type="submit"
-                                            className="inline-flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             onClick={handleClick}
                                         >
                                             Add Member
