@@ -33,7 +33,7 @@ export default function Report() {
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Campaign Goals</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaignCampaign_Goals}`</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.campaignCampaign_Goals}`</dd>
                     </div>
                     <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Insight</dt>
