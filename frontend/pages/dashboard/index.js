@@ -31,37 +31,13 @@ const cards = [
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072" }
 ];
 
-
-
 const teamMembers = [
     {
         name: "",
         handle: "",
-        imageUrl:
-            "",
+        avatarUrl: "",
         href: "",
     },
-    // {
-    //     name: "Floyd Miles",
-    //     handle: "floydmiles",
-    //     imageUrl:
-    //         "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    //     href: "#",
-    // },
-    // {
-    //     name: "Emily Selman",
-    //     handle: "emilyselman",
-    //     imageUrl:
-    //         "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    //     href: "#",
-    // },
-    // {
-    //     name: "Kristin Watson",
-    //     handle: "kristinwatson",
-    //     imageUrl:
-    //         "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    //     href: "#",
-    // },
 ];
 
 
@@ -469,14 +445,12 @@ const Dashboard = function ({ children }) {
                                                             </h2>
                                                         </div>
                                                     </span>
-
-
                                                     <div className="mt-6 flow-root">
                                                         <ul
                                                             role="list"
                                                             className="-my-5 divide-y divide-gray-200"
                                                         >
-                                                            {console.log("TEAMcOUNT", teamCount)}
+                                                            {console.log("TEAMcOUNT:", teamCount, "User:", user)}
                                                             {teamCount.length > 0 ? teamCount.map((person) => (
                                                                 <li key={person.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">

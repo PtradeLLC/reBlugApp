@@ -274,7 +274,7 @@ export default function ProfilePg() {
                                             </div>
                                         </div>
 
-                                        <div className="col-span-full">
+                                        <div id="brandCompany" className="col-span-full">
                                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-black">
                                                 Brand | Company
                                             </label>
