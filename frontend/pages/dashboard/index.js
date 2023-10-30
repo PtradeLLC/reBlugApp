@@ -87,7 +87,7 @@ const emailAction = [
     { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase', icon: "" },
     { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase', icon: "/images/barchart.png" },
     { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase', icon: "/images/piechart.png" },
-    { id: 5, name: "Start a campaign" },
+    { id: 5, name: "Start your campaign" },
 ];
 
 // automated charts
