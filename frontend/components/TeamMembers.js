@@ -3,11 +3,15 @@ import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 
 export default function Team({ show, setShow }) {
-    const [open, setOpen] = useState(true)
+    // const [open, setOpen] = useState(true)
+
+    const handleClick = () => {
+        () => setShow(false)
+    }
 
     return (
         <Transition.Root show={show} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+            <Dialog as="div" className="relative z-10" onClose={setShow}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -17,7 +21,7 @@ export default function Team({ show, setShow }) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setShow(false)} />
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -36,8 +40,8 @@ export default function Team({ show, setShow }) {
                                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                                         <Image
                                             className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
-                                            src="/images/affiliate.png"
-                                            alt=""
+                                            src="/images/Marttwainxyz.png"
+                                            alt="logo"
                                             width={400}
                                             height={400}
                                         />
@@ -68,13 +72,12 @@ export default function Team({ show, setShow }) {
                                         />
                                         <button
                                             type="submit"
-                                            className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                            onClick={() => setShow(false)}
+                                            className="inline-flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            onClick={handleClick}
                                         >
-                                            Add a Member
+                                            Add Member
                                         </button>
                                     </form>
-
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
