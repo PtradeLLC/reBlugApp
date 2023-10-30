@@ -4,7 +4,7 @@ import { useState } from 'react';
 export default function Report() {
     const [campaign, setCampaign] = useState({
         Title: "Test",
-        Email_Contacts: ["test@gmail.com", "test2@gmail.com"],
+        Email_Contacts: ["test@gmail.com", " test2@gmail.com"],
         Campaign_Goals: "testGoal",
         Insight: "",
         Attachments: {
@@ -25,20 +25,20 @@ export default function Report() {
                 <dl className="divide-y divide-gray-100">
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Title</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.Title}`</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{campaign.Title}</dd>
                     </div>
                     <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Email Contacts</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.Email_Contacts}`</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{campaign.Email_Contacts}</dd>
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Campaign Goals</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.campaignCampaign_Goals}`</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{campaign.campaignCampaign_Goals}</dd>
                     </div>
                     <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Insight</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            `{campaign.Insight}`
+                            {campaign.Insight}
                         </dd>
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
@@ -49,7 +49,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">`{campaign.Attachments.report}`</span>
+                                            <span className="truncate font-medium">{campaign.Attachments.report}</span>
                                             <span className="flex-shrink-0 text-gray-400">2.4mb</span>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">`{campaign.Attachments.conversations}`</span>
+                                            <span className="truncate font-medium">{campaign.Attachments.conversations}</span>
                                             <span className="flex-shrink-0 text-gray-400">4.5mb</span>
                                         </div>
                                     </div>
