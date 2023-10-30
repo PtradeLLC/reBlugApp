@@ -34,13 +34,13 @@ const cards = [
 
 
 const teamMembers = [
-    // {
-    //     name: "Leonard Krasner",
-    //     handle: "leonardkrasner",
-    //     imageUrl:
-    //         "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    //     href: "#",
-    // },
+    {
+        name: "",
+        handle: "",
+        imageUrl:
+            "",
+        href: "",
+    },
     // {
     //     name: "Floyd Miles",
     //     handle: "floydmiles",
@@ -120,6 +120,7 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
+    const [teamCount, setTeamCount] = useState([`${user}`]);
     const [team, setTeam] = useState("There are no members of your team here");
 
 
@@ -155,7 +156,6 @@ const Dashboard = function ({ children }) {
                                     {action.name !== "Start a campaign" && <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} h={24} />}</span>}
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
-
                                         className={classNames(
                                             action.num > 0 && action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
                                             'ml-2 flex items-baseline text-sm font-semibold text-end'
@@ -476,13 +476,13 @@ const Dashboard = function ({ children }) {
                                                             role="list"
                                                             className="-my-5 divide-y divide-gray-200"
                                                         >
-                                                            {teamMembers.length > 0 ? teamMembers.map((person) => (
+                                                            {teamCount.length > 0 ? teamCount.map((person) => (
                                                                 <li key={person.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">
                                                                         <div className="flex-shrink-0">
                                                                             <img
                                                                                 className="h-8 w-8 rounded-full"
-                                                                                src={person.imageUrl}
+                                                                                src={person.avatarUrl}
                                                                                 alt="profile image"
                                                                             />
                                                                         </div>
