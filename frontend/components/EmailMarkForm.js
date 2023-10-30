@@ -145,6 +145,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16">
                                                     <div>
                                                         <div className="m-2 flex flex-col rounded">
+                                                            {console.log(user.avatarUrl)}
                                                             <Image
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
                                                                 src={user.avatarUrl || "/images/Marttwainxyz.png"}

@@ -15,7 +15,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 
 
 const navigation = [
-    { name: "Home", href: "#", current: true },
+    { name: "Home", href: "/", current: true },
     { name: "Profile", href: "/profile", current: false },
     { name: "Resources", href: "#", current: false },
 ];
