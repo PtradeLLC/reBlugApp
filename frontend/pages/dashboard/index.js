@@ -476,6 +476,7 @@ const Dashboard = function ({ children }) {
                                                             role="list"
                                                             className="-my-5 divide-y divide-gray-200"
                                                         >
+                                                            {console.log("TEAMcOUNT", teamCount)}
                                                             {teamCount.length > 0 ? teamCount.map((person) => (
                                                                 <li key={person.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">
