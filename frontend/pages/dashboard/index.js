@@ -446,11 +446,7 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     </span>
                                                     <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
-                                                        >
-                                                            {console.log("TEAMcOUNT:", teamCount.user, "User:", user)}
+                                                        <ul role="list" className="-my-5 divide-y divide-gray-200">
                                                             {teamCount.length > 0 ? teamCount.map((person) => (
                                                                 <li key={person.user.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">
@@ -466,7 +462,7 @@ const Dashboard = function ({ children }) {
                                                                                 {person?.user?.displayName}
                                                                             </p>
                                                                             <p className="truncate text-sm text-gray-500">
-                                                                                {"@" + person.user.handle}
+                                                                                {"@" + person.user.displayName.split().join("_")}
                                                                             </p>
                                                                         </div>
                                                                         <div>
