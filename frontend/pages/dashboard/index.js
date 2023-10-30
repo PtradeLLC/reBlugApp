@@ -96,7 +96,7 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
-    const [teamCount, setTeamCount] = useState([`${user}`]);
+    const [teamCount, setTeamCount] = useState([{ user }]);
     const [team, setTeam] = useState("There are no members of your team here");
 
 
@@ -450,28 +450,28 @@ const Dashboard = function ({ children }) {
                                                             role="list"
                                                             className="-my-5 divide-y divide-gray-200"
                                                         >
-                                                            {console.log("TEAMcOUNT:", teamCount, "User:", user)}
+                                                            {console.log("TEAMcOUNT:", teamCount.user, "User:", user)}
                                                             {teamCount.length > 0 ? teamCount.map((person) => (
-                                                                <li key={person.handle} className="py-4">
+                                                                <li key={person.user.handle} className="py-4">
                                                                     <div className="flex items-center space-x-4">
                                                                         <div className="flex-shrink-0">
                                                                             <img
                                                                                 className="h-8 w-8 rounded-full"
-                                                                                src={person.avatarUrl}
+                                                                                src={person.user.avatarUrl}
                                                                                 alt="profile image"
                                                                             />
                                                                         </div>
                                                                         <div className="min-w-0 flex-1">
                                                                             <p className="truncate text-sm font-medium text-gray-900">
-                                                                                {person?.name}
+                                                                                {person?.user?.displayName}
                                                                             </p>
                                                                             <p className="truncate text-sm text-gray-500">
-                                                                                {"@" + person.handle}
+                                                                                {"@" + person.user.handle}
                                                                             </p>
                                                                         </div>
                                                                         <div>
                                                                             <a
-                                                                                href={person.href}
+                                                                                href={person.user.isAnonymoushref}
                                                                                 className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                             >
                                                                                 View
