@@ -13,9 +13,11 @@ export default function EmailForm({ campaignEmail }) {
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                             {campaignEmail ? null : (
                                 <>
-                                    <div className="flex justify-center items-center">
-                                        <div className="w-full max-w-screen-lg">
-                                            <Report />
+                                    <div className="col-span-full">
+                                        <div className="flex justify-center items-center">
+                                            <div className="w-full max-w-screen-lg">
+                                                <Report />
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -23,7 +25,7 @@ export default function EmailForm({ campaignEmail }) {
                             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                                 {campaignEmail === "email" && (
                                     <>
-                                        <div className="sm:col-span-4">
+                                        <div className="col-span-full">
                                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                                 Email address
                                             </label>
