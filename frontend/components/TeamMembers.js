@@ -53,7 +53,7 @@ export default function Team({ show, setShow }) {
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
-                                                Enter email to invite member.
+                                                Enter email to invite a member.
                                             </p>
                                         </div>
                                     </div>
@@ -61,12 +61,13 @@ export default function Team({ show, setShow }) {
                                 <div className="mt-5 sm:mt-6">
                                     <form>
                                         <label htmlFor="team" className="block text-sm font-medium leading-6 text-gray-900">
-                                            Add a member
+                                            Member's email
                                         </label>
                                         <input
                                             type="text"
                                             name="team"
                                             id="team"
+                                            required
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                                             placeholder="email@example.com"
                                             aria-describedby="team-description"
