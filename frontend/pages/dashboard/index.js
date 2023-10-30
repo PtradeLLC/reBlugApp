@@ -26,9 +26,9 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072" },
-    { name: "Marketing", href: "#", title: "Automate Marketing", id: 2, icon: "/images/automate.png", bground: "#A18072" },
-    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072" }
+    { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072", category: "Tool" },
+    { name: "Marketing", href: "#", title: "Automate Marketing", id: 2, icon: "/images/automate.png", bground: "#A18072", category: "Marketing" },
+    { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072", category: "Creator" }
 ];
 
 const teamMembers = [
@@ -399,6 +399,7 @@ const Dashboard = function ({ children }) {
                                                                         >
                                                                             <Image src={card.icon} alt="icon" width={30} height={30} />
                                                                             <span>{card.title}</span>
+                                                                            <span className="text-xs">{card.category}</span>
                                                                         </button>
                                                                     </div>
                                                                 </div>
