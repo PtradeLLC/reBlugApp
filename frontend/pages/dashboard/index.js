@@ -11,6 +11,7 @@ import Kpi from "../../components/Kpi";
 import Loading from "./loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
+import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 
 
@@ -482,12 +483,13 @@ const Dashboard = function ({ children }) {
                                                         </ul>
                                                     </div>
                                                     <div className="mt-6">
-                                                        <a
-                                                            href="#"
+                                                        <button
+                                                            type="button"
+                                                            onClick={handleClick}
                                                             className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                         >
                                                             Add Team Member
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -539,6 +541,9 @@ const Dashboard = function ({ children }) {
                             </div>
                             <span className="mt-3 px-2">
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+                            </span>
+                            <span>
+                                <Team openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                         </main>
                     </div>
