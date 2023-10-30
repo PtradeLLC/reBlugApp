@@ -100,11 +100,13 @@ const Dashboard = function ({ children }) {
     const [teamCount, setTeamCount] = useState([{ user }]);
     const [team, setTeam] = useState("There are no members of your team here");
 
-
     const handleClick = () => {
         setOpenModal(true);
     };
 
+    const handleModalClick = () => {
+        setShow(true);
+    };
 
     const kpi = (title) => {
         if (title === "Email Conversational") {
@@ -485,7 +487,7 @@ const Dashboard = function ({ children }) {
                                                     <div className="mt-6">
                                                         <button
                                                             type="button"
-                                                            onClick={handleClick}
+                                                            onClick={handleModalClick}
                                                             className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                         >
                                                             Add Team Member
@@ -543,7 +545,7 @@ const Dashboard = function ({ children }) {
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                             <span>
-                                <Team openModal={openModal} setOpenModal={setOpenModal} />
+                                <Team show={show} setShow={setShow} />
                             </span>
                         </main>
                     </div>

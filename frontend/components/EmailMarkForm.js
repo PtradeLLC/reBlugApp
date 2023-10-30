@@ -18,7 +18,6 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [error, setError] = useState("");
     const [beforeClick, setBeforeClick] = useState("Start your Campaign");
-
     const [isClicked, setIsClicked] = useState(false);
     const [beforeButton, setBeforeButton] = useState("Click to Send");
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);

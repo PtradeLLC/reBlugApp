@@ -1,63 +1,66 @@
-import Image from "next/image";
+import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { CheckIcon } from '@heroicons/react/24/outline'
 
-const members = [];
+export default function Team({ show, Setshow }) {
+    const [open, setOpen] = useState(true)
 
-export default function Team({ openModal, setOpenModal }) {
     return (
-        <div className="bg-slate-50 sm:py-16">
-            <div className="relative isolate">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mx-auto flex max-w-2xl flex-col gap-16 px-6 py-10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-5 xl:gap-x-20 xl:px-20">
-                        <Image
-                            className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
-                            src="/images/affiliate.png"
-                            alt=""
-                            width={400}
-                            height={400}
-                        />
-                        <div className="w-full flex-auto">
-                            <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
-                                Affiliate Spotlight
-                            </h2>
-                            <p className="mt-6 text-lg leading-8 text-black">
-                                Add member to your account
-                            </p>
-                            <ul
-                                role="list"
-                                className="mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-black sm:grid-cols-2"
-                            >
-                                {members.map((member) => (
-                                    <li key={member} className="flex gap-x-3">
-                                        {member}
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="mt-10 flex">
-                                <button
-                                    onClick={() => {
-                                        setOpenModal(true);
-                                    }}
-                                    className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                                >
-                                    Add<span aria-hidden="true">&rarr;</span>
-                                </button>
-                            </div>
-                        </div>
+        <Transition.Root show={show} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+                <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </Transition.Child>
+
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                                <div>
+                                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                                        <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                                    </div>
+                                    <div className="mt-3 text-center sm:mt-5">
+                                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                            Payment successful
+                                        </Dialog.Title>
+                                        <div className="mt-2">
+                                            <p className="text-sm text-gray-500">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-5 sm:mt-6">
+                                    <button
+                                        type="button"
+                                        className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        onClick={() => setShow(false)}
+                                    >
+                                        Go back to dashboard
+                                    </button>
+                                </div>
+                            </Dialog.Panel>
+                        </Transition.Child>
                     </div>
                 </div>
-                <div
-                    className="absolute inset-x-0 -top-16 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
-                    aria-hidden="true"
-                >
-                    <div
-                        className="aspect-[1318/752] w-[82.375rem] flex-none opacity-25"
-                        style={{
-                            clipPath:
-                                "polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)",
-                        }}
-                    />
-                </div>
-            </div>
-        </div>
-    );
+            </Dialog>
+        </Transition.Root>
+    )
 }
