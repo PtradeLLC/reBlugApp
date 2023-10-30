@@ -1,6 +1,20 @@
-import { PaperClipIcon } from '@heroicons/react/20/solid'
+import { PaperClipIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 
 export default function Report() {
+    const [campaign, setCampaign] = useState({
+        Title: "Test",
+        Email_Contacts: ["test@gmail.com", "test2@gmail.com"],
+        Campaign_Goals: "testGoal",
+        Insight: "",
+        Attachments: {
+            report: "",
+            conversations: ""
+        }
+
+
+    });
+
     return (
         <div>
             <div className="px-4 sm:px-0">
@@ -11,24 +25,20 @@ export default function Report() {
                 <dl className="divide-y divide-gray-100">
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Title</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Campaign Title</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.Title}`</dd>
                     </div>
-                    {/* <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-                        <dt className="text-sm font-medium leading-6 text-gray-900">Application for</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>
-                    </div> */}
                     <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Email Contacts</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Uploaded list of contacts</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaign.Email_Contacts}`</dd>
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Campaign Goals</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Reach 50,000 Sign ups</dd>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">`{campaignCampaign_Goals}`</dd>
                     </div>
                     <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Insight</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            Insight goes here.
+                            `{campaign.Insight}`
                         </dd>
                     </div>
                     <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
@@ -39,7 +49,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">campaign_report.pdf</span>
+                                            <span className="truncate font-medium">`{campaign.Attachments.report}`</span>
                                             <span className="flex-shrink-0 text-gray-400">2.4mb</span>
                                         </div>
                                     </div>
@@ -53,7 +63,7 @@ export default function Report() {
                                     <div className="flex w-0 flex-1 items-center">
                                         <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                         <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium">conversations.pdf</span>
+                                            <span className="truncate font-medium">`{campaign.Attachments.conversations}`</span>
                                             <span className="flex-shrink-0 text-gray-400">4.5mb</span>
                                         </div>
                                     </div>
