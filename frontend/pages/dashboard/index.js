@@ -123,30 +123,10 @@ const Dashboard = function ({ children }) {
                         "group relative p-6"
                     )}>
                         <h3 className="text-lg font-medium">
-                            {action.name === "Start a campaign" ? (
+                            {action.name === "Start a campaign" && (
                                 <button type="button" onClick={handleClick}>
                                     {action.name}
                                 </button>
-                            ) : (
-                                <span>
-                                    {action.name !== "Start a campaign" && <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} h={24} />}</span>}
-                                    {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                                    <p
-                                        className={classNames(
-                                            action.num > 0 && action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
-                                            'ml-2 flex items-baseline text-sm font-semibold text-end'
-                                        )}
-                                    >
-                                        {action.num > 0 && action.changeType === 'increase' ? (
-                                            <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-green-500" aria-hidden="true" />
-                                        ) : (
-                                            <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-red-500" aria-hidden="true" />
-                                        )}
-
-                                        <span className="sr-only"> {action.num > 0 && action.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
-                                        {action.change}
-                                    </p>
-                                </span>
                             )}
                         </h3>
 
@@ -467,7 +447,7 @@ const Dashboard = function ({ children }) {
                                                                         </div>
                                                                         <div>
                                                                             <a
-                                                                                href={person.user.isAnonymoushref}
+                                                                                href={person?.user?.href}
                                                                                 className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                             >
                                                                                 View
