@@ -17,16 +17,20 @@ export default function Team({ show, setShow }) {
 
     const handleSubmit = async () => {
         setEmailSent(true);
-        // setShow(false);
-        // const baseUrl = "/api/team-members.js";
-        // const response = await fetch(baseUrl, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify()
-        // });
         console.log(email);
+        const baseUrl = "/api/team-members.js";
+        const response = await fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify()
+        });
+
+    }
+
+    const handleClick = () => {
+        console.log(email)
     }
 
     return (
@@ -104,6 +108,7 @@ export default function Team({ show, setShow }) {
                                             />
                                             <button
                                                 type="button"
+                                                onClick={handleClick}
                                                 className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
                                                 Add Member
