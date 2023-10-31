@@ -8,16 +8,16 @@ export default function Team({ show, setShow }) {
     const [emailMessage, setEmailMessage] = useState("An Invite will be sent");
     const [emailSent, setEmailSent] = useState(false);
 
-
-
     const handleChange = (e) => {
         e.preventDefault();
         setEmail(e.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleClick = () => {
         setEmailSent(true);
-        console.log(email);
+    };
+
+    const handleSubmit = async () => {
         const baseUrl = "/api/team-members.js";
         const response = await fetch(baseUrl, {
             method: "POST",
@@ -29,9 +29,7 @@ export default function Team({ show, setShow }) {
 
     }
 
-    const handleClick = () => {
-        console.log(email)
-    }
+
 
     return (
         <Transition.Root show={show} as={Fragment}>
