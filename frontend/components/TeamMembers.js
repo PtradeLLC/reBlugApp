@@ -24,9 +24,10 @@ export default function Team({ show, setShow }) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify()
+            body: JSON.stringify(email)
         });
 
+        const data = await response.json();
     }
 
 
