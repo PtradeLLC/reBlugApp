@@ -9,10 +9,12 @@ export default function Team({ show, setShow }) {
     const [emailSent, setEmailSent] = useState(false);
 
 
+
     const handleChange = (e) => {
         e.preventDefault();
-        setEmail(e.target.value)
+        setEmail(e.target.value);
     };
+
     const handleSubmit = async () => {
         setEmailSent(true);
         // setShow(false);
@@ -68,17 +70,14 @@ export default function Team({ show, setShow }) {
                                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                                             Build your Team
                                         </Dialog.Title>
-                                        <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
-                                                Enter email to invite a member.
-                                            </p>
-                                        </div>
+                                        {emailSent && (<div className="mt-2">
+                                            {emailMessage}
+                                        </div>)}
                                     </div>
                                 </div>
                                 <div className="mt-5 sm:mt-6">
                                     {emailSent ? (
                                         <>
-                                            <p className="text-sm text-gray-500">{emailMessage}</p>
                                             <button
                                                 type="button"
                                                 onClick={() => setShow(false)}
