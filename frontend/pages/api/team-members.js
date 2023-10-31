@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const { data } = req.body;
     try {
         if (req.method === "POST") {
-
+            console.log("from backend", data);
         } else {
             console.log("There is an issue");
         }
