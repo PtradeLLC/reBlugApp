@@ -18,7 +18,7 @@ export default function Team({ show, setShow }) {
     };
 
     const handleSubmit = async () => {
-        const baseUrl = "/api/team-members.js";
+        const baseUrl = "/api/team-members";
         const response = await fetch(baseUrl, {
             method: "POST",
             headers: {
