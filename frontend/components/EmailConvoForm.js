@@ -84,7 +84,7 @@ export default function EmailForm({ campaignEmail }) {
                                                             <span>Upload a file</span>
                                                             <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                                                         </label>
-                                                        <p className="pl-1">or drag and drop</p>
+                                                        <p className="pl-1">or drag and drop </p>
                                                     </div>
                                                     <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                                                 </div>
