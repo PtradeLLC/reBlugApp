@@ -58,7 +58,7 @@ export default function Session_Email({ openModal, setOpenModal }) {
         body: JSON.stringify(emailForm),
       });
       const data = await response.json();
-      console.log(data);
+
 
       // const response = await axios.post(url, emailForm);
       // const data = response.data;

@@ -36,7 +36,6 @@ const handler = async (req, res) => {
           }),
         });
       }
-      console.log(result);
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json({ message: `There is an error: ${error}` });

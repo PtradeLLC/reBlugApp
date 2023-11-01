@@ -30,8 +30,6 @@ export default function Team({ show, setShow }) {
         const data = await response.json();
     }
 
-
-
     return (
         <Transition.Root show={show} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setShow}>

@@ -11,7 +11,8 @@ export default async function handler(req, res) {
         }
 
         // Extract the email from the request body
-        const { email } = req.body;
+        const data = req.body;
+        const { email } = data;
 
         // Check if email is provided
         if (!email) {
