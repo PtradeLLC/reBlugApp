@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 export default function Team({ show, setShow, userId }) {
     const [email, setEmail] = useState({ userId: userId, userEmail: "" });
-    const [emailMessage, setEmailMessage] = useState("An Invite will be sent");
+    const [emailMessage, setEmailMessage] = useState("An Invite will be sent to your team members");
     const [emailSent, setEmailSent] = useState(false);
 
     const handleChange = (e) => {
         e.preventDefault();
-        setEmail(e.target.value);
+        setEmail({ ...email, userEmail: e.target.value });
     };
 
     const handleClick = () => {
@@ -18,18 +18,27 @@ export default function Team({ show, setShow, userId }) {
     };
 
     const handleSubmit = async () => {
-        const baseUrl = "/api/team-members";
-        const response = await fetch(baseUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(email)
-        });
+        try {
+            const baseUrl = "/api/team-members";
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(email)
+            });
 
-        const data = await response.json();
-        console.log("EmailData:", data);
-    }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("EmailData:", data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
 
 
 
@@ -109,7 +118,8 @@ export default function Team({ show, setShow, userId }) {
                                             />
                                             <button
                                                 type="button"
-                                                onClick={handleClick}
+                                                // onClick={handleClick}
+                                                onClick={() => setEmailSent(true)}
                                                 className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
                                                 Add Member
