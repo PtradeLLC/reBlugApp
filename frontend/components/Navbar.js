@@ -6,7 +6,6 @@ import {
   useSignOut,
   useAuthenticated,
 } from '@nhost/nextjs'
-import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
@@ -15,7 +14,6 @@ function classNames(...classes) {
 export default function Navbar() {
   const isAuthenticated = useAuthenticated();
   const { signOut } = useSignOut();
-  // const router = useRouter();
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
