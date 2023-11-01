@@ -28,9 +28,10 @@ export default function Team({ show, setShow, userId }) {
         });
 
         const data = await response.json();
+        console.log("EmailData:", data);
     }
 
-    console.log("EMAILLLL", email);
+
 
     return (
         <Transition.Root show={show} as={Fragment}>
@@ -94,7 +95,7 @@ export default function Team({ show, setShow, userId }) {
                                             <label htmlFor="team" className="block text-sm py-1 font-medium leading-6 text-gray-900">
                                                 Member's email
                                             </label>
-                                            <p>Please enter one or more emails separated by commas (,)</p>
+                                            <p className='text-xs'>Please enter one or more emails separated by commas ','</p>
                                             <input
                                                 type="text"
                                                 name="team"
