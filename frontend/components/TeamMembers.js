@@ -3,8 +3,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 
 
-export default function Team({ show, setShow }) {
-    const [email, setEmail] = useState("");
+export default function Team({ show, setShow, userId }) {
+    const [email, setEmail] = useState({ userId: userId });
     const [emailMessage, setEmailMessage] = useState("An Invite will be sent");
     const [emailSent, setEmailSent] = useState(false);
 
@@ -29,6 +29,8 @@ export default function Team({ show, setShow }) {
 
         const data = await response.json();
     }
+
+    console.log("EMAILLLL", email)
 
     return (
         <Transition.Root show={show} as={Fragment}>

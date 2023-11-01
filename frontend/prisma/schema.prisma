@@ -53,6 +53,7 @@ model User {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   profileId     String?
+  EmailList     emailList[]
   Accounts      Account[]
   EmailTool     EmailTool[]
   Profile       Profile[]
@@ -110,8 +111,10 @@ model TrialProspect {
 }
 
 model emailList {
-  id    Int    @id @default(autoincrement())
-  email String
+  id     Int     @id @default(autoincrement())
+  email  String
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 model TrialProspectTwo {

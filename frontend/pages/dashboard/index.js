@@ -100,6 +100,8 @@ const Dashboard = function ({ children }) {
     const [teamCount, setTeamCount] = useState([{ user }]);
     const [team, setTeam] = useState("There are no members of your team here");
 
+    const userId = user.id;
+
     const handleClick = () => {
         setOpenModal(true);
     };
@@ -545,7 +547,7 @@ const Dashboard = function ({ children }) {
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                             <span>
-                                {show && <Team show={show} setShow={setShow} />}
+                                {show && <Team userId={userId} show={show} setShow={setShow} />}
                             </span>
                         </main>
                     </div>

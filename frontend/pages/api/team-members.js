@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         const createdEmail = emailData.email;
 
         // Respond with the created email
-        res.status(200).json({ createdEmail });
+        res.status(200).json(createdEmail);
     } catch (error) {
         // Handle any potential errors
         res.status(500).json({ message: `Internal Server Error: ${error.message}` });
