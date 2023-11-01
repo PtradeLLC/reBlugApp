@@ -13,9 +13,10 @@ export default function Team({ show, setShow, userId }) {
         setEmail({ ...email, userEmail: e.target.value });
     };
 
+
     const handleSubmit = async () => {
         try {
-            const baseUrl = "/api/team-members";
+            const baseUrl = "../pages/api/team-members";
             const response = await fetch(baseUrl, {
                 method: "POST",
                 headers: {
