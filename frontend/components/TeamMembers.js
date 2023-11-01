@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 
 export default function Team({ show, setShow, userId }) {
-    const [email, setEmail] = useState({ userId: userId });
+    const [email, setEmail] = useState({ userId: userId, userEmail: "" });
     const [emailMessage, setEmailMessage] = useState("An Invite will be sent");
     const [emailSent, setEmailSent] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Team({ show, setShow, userId }) {
         const data = await response.json();
     }
 
-    console.log("EMAILLLL", email)
+    console.log("EMAILLLL", email);
 
     return (
         <Transition.Root show={show} as={Fragment}>
@@ -91,14 +91,15 @@ export default function Team({ show, setShow, userId }) {
                                         </>
                                     ) : (
                                         <form onSubmit={handleSubmit}>
-                                            <label htmlFor="team" className="block text-sm font-medium leading-6 text-gray-900">
+                                            <label htmlFor="team" className="block text-sm py-1 font-medium leading-6 text-gray-900">
                                                 Member's email
                                             </label>
+                                            <p>Please enter one or more emails separated by commas (,)</p>
                                             <input
                                                 type="text"
                                                 name="team"
                                                 id="team"
-                                                value={email}
+                                                value={email.userEmail}
                                                 onChange={handleChange}
                                                 required
                                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
