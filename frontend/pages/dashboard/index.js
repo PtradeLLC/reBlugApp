@@ -115,7 +115,7 @@ const Dashboard = function ({ children }) {
         if (title === "Email Conversational") {
             return emailAction.map((action) => (
                 <Suspense fallback={<Loading />}>
-                    <div key={action.name} className={classNames(
+                    <div key={`${action.id}-${title}`} className={classNames(
                         action.id === 1
                             ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none"
                             : "",
@@ -175,7 +175,7 @@ const Dashboard = function ({ children }) {
             ));
         } else if (title === "Automate Marketing") {
             return automationAction.map((action) => (
-                <div key={action.name} className={classNames(
+                <div key={`${action.id}-${title}`} className={classNames(
                     action.id === 1
                         ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
                         : "",
@@ -198,7 +198,7 @@ const Dashboard = function ({ children }) {
             ));
         } else if (title === "Messaging Platform") {
             return marketingAction.map((action) => (
-                <div key={action.name} className={classNames(
+                <div key={`${action.id}-${title}`} className={classNames(
                     action.id === 1
                         ? "rounded-tl-lg grid col-span-2 bg-yellow-500 sm:rounded-tr-none"
                         : "",

@@ -13,6 +13,9 @@ export default async function handler(req, res) {
         // Extract the email from the request body
         const data = req.body;
         const { email, userId } = data;
+        console.log(data);
+        console.log(email);
+        console.log(userId);
 
         // Check if email is provided
         if (!userId || !email) {
