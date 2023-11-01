@@ -12,17 +12,31 @@ export default async function handler(req, res) {
 
         // Extract the email from the request body
         const data = req.body;
-        const { email } = data;
+        const { email, userId } = data;
 
         // Check if email is provided
-        if (!email) {
-            return res.status(400).json({ message: "No email provided" });
+        if (!userId || !email) {
+            return res.status(400).json({ message: "UserId and email are required" });
+        };
+
+        // find the user based on the userId
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-        // Create a new record in the emailList table
+        // create a new record in the emailList table associated it with the user
         const emailData = await prisma.emailList.create({
             data: {
-                email: email
+                email: email,
+                User: {
+                    connect: { id: userId }
+                }
             }
         });
 

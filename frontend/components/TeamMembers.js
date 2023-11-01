@@ -13,10 +13,6 @@ export default function Team({ show, setShow, userId }) {
         setEmail({ ...email, userEmail: e.target.value });
     };
 
-    const handleClick = () => {
-        setEmailSent(true);
-    };
-
     const handleSubmit = async () => {
         try {
             const baseUrl = "/api/team-members";
@@ -118,7 +114,6 @@ export default function Team({ show, setShow, userId }) {
                                             />
                                             <button
                                                 type="button"
-                                                // onClick={handleClick}
                                                 onClick={() => setEmailSent(true)}
                                                 className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
