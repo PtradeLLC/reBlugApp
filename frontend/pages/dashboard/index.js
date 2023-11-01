@@ -16,14 +16,14 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 
 
 const navigation = [
-    { name: "Home", href: "/", current: true },
-    { name: "Profile", href: "/profile", current: false },
-    { name: "Resources", href: "#", current: false },
+    { id: 1, name: "Home", href: "/", current: true },
+    { id: 2, name: "Profile", href: "/profile", current: false },
+    { id: 3, name: "Resources", href: "#", current: false },
 ];
 const userNavigation = [
-    { name: "Your Profile", href: "/profile" },
-    { name: "Settings", href: "#" },
-    { name: "Sign out", href: "#" },
+    { id: 1, name: "Your Profile", href: "/profile" },
+    { id: 2, name: "Settings", href: "#" },
+    { id: 3, name: "Sign out", href: "#" },
 ];
 
 const cards = [
@@ -34,6 +34,7 @@ const cards = [
 
 const teamMembers = [
     {
+        id: 1,
         name: "",
         handle: "",
         avatarUrl: "",

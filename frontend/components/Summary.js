@@ -111,7 +111,11 @@ export default function Summary() {
                             </tr>
                         ))
                         :
-                        <span className='flex mt-2 justify-center items-center'>{summary}</span>
+                        <tr>
+                            <td className="flex mt-2 justify-center items-center">
+                                {summary}
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
