@@ -548,7 +548,9 @@ const Dashboard = function ({ children }) {
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                             <span>
-                                {show && <Team userId={userId} show={show} setShow={setShow} />}
+                                {show && (<form onSubmit={handleSubmit}>
+                                    <Team userId={userId} show={show} setShow={setShow} />
+                                </form>)}
                             </span>
                         </main>
                     </div>
