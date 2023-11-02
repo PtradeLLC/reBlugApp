@@ -8,13 +8,23 @@ export default function Team({ show, setShow, userId }) {
     const [emailMessage, setEmailMessage] = useState("An Invite will be sent to your team members");
     const [emailSent, setEmailSent] = useState(false);
 
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    const isEmailValid = (email) => {
+        return emailRegex.test(email);
+    };
+
     const handleChange = (e) => {
         e.preventDefault();
         setEmail({ ...email, userEmail: e.target.value });
     };
 
-
     const handleSubmit = async () => {
+        if (!isEmailValid(email.userEmail)) {
+            setEmailMessage("Please enter a valid email address.");
+            return;
+        };
+
         try {
             const baseUrl = "/api/team-members";
             const response = await fetch(baseUrl, {
@@ -29,19 +39,26 @@ export default function Team({ show, setShow, userId }) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            console.log("EmailData:", data);
+            console.log("EMAIL", email);
+
+            setEmailMessage("Invite sent successfully!");
+            setEmailSent(true);
         } catch (error) {
             console.error("Error fetching data:", error);
+            setEmailMessage("An error occurred while sending the invite.");
         }
     };
 
-
-
+    const handleClose = () => {
+        setEmailSent(false);
+        setEmailMessage("An Invite will be sent to your team members");
+        setEmail({ userId: userId, userEmail: "" });
+        setShow(false);
+    };
 
     return (
         <Transition.Root show={show} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setShow}>
+            <Dialog as="div" className="relative z-10" onClose={handleClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -118,7 +135,7 @@ export default function Team({ show, setShow, userId }) {
                                                 onClick={() => setEmailSent(true)}
                                                 className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
-                                                Add Member
+                                                Add Team member
                                             </button>
                                         </form>
                                     )}
