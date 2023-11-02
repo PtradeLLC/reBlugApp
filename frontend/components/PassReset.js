@@ -9,8 +9,8 @@ import Loading from './Loading';
 //Modal
 export default function PasswordReset({ open, setOpen }) {
     const [email, setEmail] = useState("");
-    const { resetPassword, isLoading, isSent, isError, error } = useResetPassword();
     const [sentMessage, setSentMessage] = useState("");
+    const { resetPassword, isLoading, isSent, isError, error } = useResetPassword();
 
     const handleChange = (e) => {
         const { name, value } = e.target

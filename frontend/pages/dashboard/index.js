@@ -94,18 +94,50 @@ const Dashboard = function ({ children }) {
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
+    const userId = user.id;
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
     const [teamCount, setTeamCount] = useState([{ user }]);
     const [team, setTeam] = useState("There are no members of your team here");
-
-    const userId = user.id;
+    const [email, setEmail] = useState({ userId: userId, userEmail: "" });
+    const [emailSent, setEmailSent] = useState(false);
 
     const handleClick = () => {
         setOpenModal(true);
     };
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (!isEmailValid(email.userEmail)) {
+    //         setEmailMessage("Please enter a valid email address.");
+    //         return;
+    //     };
+
+    //     try {
+    //         const baseUrl = "/api/team-members";
+    //         const response = await fetch(baseUrl, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(email)
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+
+    //         console.log("EMAIL", email);
+
+    //         setEmailMessage("Invite sent successfully!");
+    //         setEmailSent(true);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //         setEmailMessage("An error occurred while sending the invite.");
+    //     }
+    // };
 
     const handleModalClick = () => {
         setShow(true);
@@ -135,7 +167,7 @@ const Dashboard = function ({ children }) {
                                 </button>
                             ) : (
                                 <span>
-                                    {action.name !== "Start your campaign" && <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} h={24} />}</span>}
+                                    {action.name !== "Start your campaign" && <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} height={24} />}</span>}
                                     {action.name}: <span className="font-bold text-4xl">{action.num}</span>
                                     <p
                                         className={classNames(
@@ -548,7 +580,7 @@ const Dashboard = function ({ children }) {
                                 <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                             <span>
-                                {show && <Team userId={userId} show={show} setShow={setShow} />}
+                                {show && <Team email={email} setEmail={setEmail} userId={userId} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                         </main>
                     </div>

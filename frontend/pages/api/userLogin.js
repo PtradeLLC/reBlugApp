@@ -10,8 +10,6 @@ export default async function handler(req, res) {
         try {
             const { email } = req.body;
 
-            console.log("from userLogin", session);
-
             await prisma.user.create({
                 data: {
                     email: email,

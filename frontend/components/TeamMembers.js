@@ -1,64 +1,125 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import Loading from './Loading';
 
 
 export default function Team({ show, setShow, userId }) {
-    const [email, setEmail] = useState({ userId: userId, userEmail: "" });
-    const [emailMessage, setEmailMessage] = useState("An Invite will be sent to your team members");
-    const [emailSent, setEmailSent] = useState(false);
+    const [state, setState] = useState(
+        {
+            emails: [''],
+            emailMessage: 'An Invite will be sent to your team members',
+            emailSent: false,
+            loading: false,
+        });
 
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    const isEmailValid = (email) => {
-        return emailRegex.test(email);
+    const addEmailField = () => {
+        setState((prevState) => ({
+            ...prevState,
+            emails: [...prevState.emails, ''],
+        }));
     };
 
-    const handleChange = (e) => {
+    const isEmailValid = (emails) => {
+        const emailArray = emails.split(',').map((email) => email.trim());
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return emailArray.every((email) => emailRegex.test(email));
+    };
+
+    const handleChange = (e, index) => {
         e.preventDefault();
-        setEmail({ ...email, userEmail: e.target.value });
-    };
+        const { name, value } = e.target;
 
-    const handleSubmit = async () => {
-        if (!isEmailValid(email.userEmail)) {
-            setEmailMessage("Please enter a valid email address.");
-            return;
-        };
-
-        try {
-            const baseUrl = "/api/team-members";
-            const response = await fetch(baseUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(email)
+        // Check if the name is 'email' and update the corresponding index in the emails array
+        if (name === `email-${index}`) {
+            setState((prevState) => {
+                const updatedEmails = [...prevState.emails];
+                updatedEmails[index] = value;
+                return { ...prevState, emails: updatedEmails };
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            console.log("EMAIL", email);
-
-            setEmailMessage("Invite sent successfully!");
-            setEmailSent(true);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setEmailMessage("An error occurred while sending the invite.");
         }
     };
 
-    const handleClose = () => {
-        setEmailSent(false);
-        setEmailMessage("An Invite will be sent to your team members");
-        setEmail({ userId: userId, userEmail: "" });
-        setShow(false);
+
+    const sendInvite = async () => {
+        try {
+            setState((prevState) => ({
+                ...prevState,
+                loading: true, // Set loading to true when sending invite
+            }));
+
+            const response = await fetch('/api/team-members', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: userId, emails: state.emails }),
+            });
+
+            console.log("SendInvite: ", response)
+
+            return response;
+        } catch (error) {
+            console.error('Error sending invite:', error);
+            throw new Error('Error sending invite');
+        } finally {
+            setState((prevState) => ({
+                ...prevState,
+                loading: false, // Set loading back to false after request is complete
+            }));
+        }
     };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (state.emails.length === 0) {
+            setState((prevState) => ({
+                ...prevState,
+                emailMessage: 'Please enter at least one email address.',
+            }));
+            return;
+        }
+
+        const validEmails = isEmailValid(state.emails.join(','));
+        if (!validEmails) {
+            setState((prevState) => ({
+                ...prevState,
+                emailMessage: 'Please enter valid email addresses separated by commas.',
+            }));
+            return;
+        }
+
+        try {
+            const response = await sendInvite();
+            console.log("OutRes", response)
+
+            if (response.ok) {
+                console.log("InRes", response)
+                const userData = await response.json();
+                setState((prevState) => ({
+                    ...prevState,
+                    emailSent: true,
+                }));
+                console.log("InUdata", userData);
+            } else {
+                throw new Error('Error sending invite');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setState((prevState) => ({
+                ...prevState,
+                emailMessage: 'An error occurred while sending the invite.',
+            }));
+        }
+    };
+
+
 
     return (
         <Transition.Root show={show} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={handleClose}>
+            <Dialog as="div" className="relative z-10" onClose={setShow}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -97,13 +158,13 @@ export default function Team({ show, setShow, userId }) {
                                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                                             Build your Team
                                         </Dialog.Title>
-                                        {emailSent && (<div className="mt-2">
-                                            {emailMessage}
+                                        {state.emailSent && (<div className="mt-2">
+                                            {state.emailMessage}
                                         </div>)}
                                     </div>
                                 </div>
                                 <div className="mt-5 sm:mt-6">
-                                    {emailSent ? (
+                                    {state.emailSent ? (
                                         <>
                                             <button
                                                 type="button"
@@ -115,24 +176,36 @@ export default function Team({ show, setShow, userId }) {
                                         </>
                                     ) : (
                                         <form onSubmit={handleSubmit}>
-                                            <label htmlFor="team" className="block text-sm py-1 font-medium leading-6 text-gray-900">
-                                                Member's email
+                                            <label htmlFor="email" className="block text-sm py-1 font-medium leading-6 text-gray-900">
+                                                Members emails
                                             </label>
-                                            <p className='text-xs'>Please enter one or more emails separated by commas ','</p>
-                                            <input
-                                                type="text"
-                                                name="team"
-                                                id="team"
-                                                value={email.userEmail}
-                                                onChange={handleChange}
-                                                required
-                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                placeholder="email@example.com"
-                                                aria-describedby="team-description"
-                                            />
+                                            <p className='text-xs'>Please enter one or more emails</p>
+                                            {state.emails.map((email, index) => (
+                                                <div key={index}>
+                                                    <input
+                                                        id={`email-${index}`}
+                                                        name={`email-${index}`}
+                                                        type="email"
+                                                        onChange={(e) => handleChange(e, index)}
+                                                        autoComplete="email"
+                                                        value={email}
+                                                        required
+                                                        className="block w-full mt-1 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                                        placeholder="email@example.com"
+                                                    />
+                                                    {index === state.emails.length - 1 && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={addEmailField}
+                                                            className="text-red-600 hover:text-red-800 font-medium text-sm mt-1 cursor-pointer"
+                                                        >
+                                                            Add Another Email
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            ))}
                                             <button
                                                 type="submit"
-                                                onClick={() => setEmailSent(true)}
                                                 className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                             >
                                                 Submit

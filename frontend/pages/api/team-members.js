@@ -10,44 +10,55 @@ export default async function handler(req, res) {
             throw new Error('Invalid HTTP method');
         }
 
-        // Extract the email from the request body
-        const data = req.body;
-        const { email, userId } = data;
-        console.log(data);
-        console.log(email);
-        console.log(userId);
+        // Extract the user data from the request body
+        const usersData = req.body;
 
-        // Check if email is provided
-        if (!userId || !email) {
-            return res.status(400).json({ message: "UserId and email are required" });
+        console.log("UData", usersData);
+        // Check if user data is provided
+        if (!usersData || !Array.isArray(usersData)) {
+            return res.status(400).json({ message: "Invalid user data" });
         };
 
-        // find the user based on the userId
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            }
-        });
+        const createdUsers = [];
 
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
+        for (const userData of usersData) {
+            const { email, userId } = userData;
+
+            // Check if userId and email are provided
+            if (!userId || !email) {
+                return res.status(400).json({ message: "UserId and email are required" });
+            };
+
+            // Create a new record in the emailList table associated with the user
+            const emailData = await prisma.emailList.create({
+                data: {
+                    email: email,
+                    User: {
+                        connect: { id: userId }
+                    }
+                }
+            });
+
+            console.log("EMAIL DATA:", emailData);
+
+            // Find the user based on the userId
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: userId
+                }
+            });
+
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            console.log("USER:", user);
+
+            createdUsers.push(user);
         }
 
-        // create a new record in the emailList table associated it with the user
-        const emailData = await prisma.emailList.create({
-            data: {
-                email: email,
-                User: {
-                    connect: { id: userId }
-                }
-            }
-        });
-
-        // Extract the created email
-        const createdEmail = emailData.email;
-
-        // Respond with the created email
-        res.status(200).json(createdEmail);
+        // Respond with the created users
+        res.status(200).json(createdUsers);
     } catch (error) {
         // Handle any potential errors
         res.status(500).json({ message: `Internal Server Error: ${error.message}` });

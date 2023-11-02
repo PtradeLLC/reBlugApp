@@ -246,7 +246,6 @@ export default async function handler(req, res) {
                     await mailerSend.email.message.single("message_id")
                         .then((response) => console.log(response.body))
                         .catch((error) => console.log(error.body));
-                    console.log("EmailResponse:", emailResponse);
                     return res.status(200).json({ message: "message is sent okay" });
                 } else {
                     return res.status(500).json({ message: "Error sending email" });

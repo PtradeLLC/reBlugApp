@@ -65,7 +65,6 @@ const openai = new OpenAIApi(configuration);
 
 const handler = async (req, res) => {
     const { data } = req.body;
-    console.log(data)
 
     if (req.method === "POST") {
         try {

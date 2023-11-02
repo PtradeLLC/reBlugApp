@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -39,7 +39,7 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     var m = o[Symbol.asyncIterator], i;
     return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
 };
 import { createParser, } from "eventsource-parser";
 export function OpenAIStream(payload) {
@@ -60,10 +60,10 @@ export function OpenAIStream(payload) {
                         requestHeaders["OpenAI-Organization"] = process.env.OPENAI_API_ORG;
                     }
                     return [4 /*yield*/, fetch("https://api.openai.com/v1/chat/completions", {
-                            headers: requestHeaders,
-                            method: "POST",
-                            body: JSON.stringify(payload),
-                        })];
+                        headers: requestHeaders,
+                        method: "POST",
+                        body: JSON.stringify(payload),
+                    })];
                 case 1:
                     res = _b.sent();
                     stream = new ReadableStream({
@@ -77,7 +77,6 @@ export function OpenAIStream(payload) {
                                         var data = event.data;
                                         // https://beta.openai.com/docs/api-reference/completions/create#completions/create-stream
                                         if (data === "[DONE]") {
-                                            console.log("DONE");
                                             controller.close();
                                             return;
                                         }
