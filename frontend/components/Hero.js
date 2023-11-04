@@ -23,9 +23,9 @@ export default function Hero() {
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-1 xl:max-w-2xl sm:mt-[37px] md:mt-[37px] lg:mt-[-203px]">
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 ">
-                    Utilizing automation tools developed for marketing to help brands expand
-                    customer base and increase sales through social messaging and Artificial
-                    Intelligence.
+                    We use software and technologies to streamline and automate marketing tasks, so
+                    that brands can reach more customers and sell more products or services through
+                    social media and AI.
                   </h1>
                   <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                     <span className="font-extrabold text-red-500">Just Launched!: </span>
