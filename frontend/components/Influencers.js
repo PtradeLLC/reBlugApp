@@ -31,6 +31,7 @@ export default function Influencer({ openModal, setOpenModal }) {
                 <li>Represent brand partners through subtle advertisement</li>
                 <li>Your content view and subscription is NEVER based on platform algorithm</li>
                 <li>Never again beg for likes or subscriptions</li>
+                <li>Train and activate your personal AI assistant</li>
                 <li>No app to download, just your regular text redesigned & configured as a platform </li>
                 <li>We help you launch your own consumer brands or promote affiliate products from leading brands</li>
               </ul>
