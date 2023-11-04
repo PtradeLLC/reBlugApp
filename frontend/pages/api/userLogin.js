@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { MailerSend } from "mailersend";
+// import { MailerSend } from "mailersend";
 
 const prisma = new PrismaClient();
 
@@ -16,9 +16,9 @@ export default async function handler(req, res) {
                 },
             });
 
-            const sender = new MailerSend({
-                apiKey: process.env.MAILERSEND_API_KEY,
-            });
+            // const sender = new MailerSend({
+            //     apiKey: process.env.MAILERSEND_API_KEY,
+            // });
 
             const redirectUrl = "https://forgedmart.com/dashboard"
 

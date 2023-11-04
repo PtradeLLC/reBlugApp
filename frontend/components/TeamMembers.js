@@ -41,12 +41,11 @@ export default function Team({ show, setShow, userId }) {
         }
     };
 
-
     const sendInvite = async () => {
         try {
             setState((prevState) => ({
                 ...prevState,
-                loading: true, // Set loading to true when sending invite
+                loading: true,
             }));
 
             const response = await fetch('/api/team-members', {
@@ -57,16 +56,21 @@ export default function Team({ show, setShow, userId }) {
                 body: JSON.stringify({ userId: userId, emails: state.emails }),
             });
 
-            console.log("SendInvite: ", response)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-            return response;
+            const data = await response.json();
+            console.log("Response Data:", data);
+
+            return data;
         } catch (error) {
             console.error('Error sending invite:', error);
-            throw new Error('Error sending invite');
+            throw error;
         } finally {
             setState((prevState) => ({
                 ...prevState,
-                loading: false, // Set loading back to false after request is complete
+                loading: false,
             }));
         }
     };
@@ -93,16 +97,16 @@ export default function Team({ show, setShow, userId }) {
 
         try {
             const response = await sendInvite();
-            console.log("OutRes", response)
+            console.log("SubmitResponse:", response);
 
-            if (response.ok) {
-                console.log("InRes", response)
-                const userData = await response.json();
+            // response.ok
+            if (state.emails) {
+                // console.log("InRes", response)
+                // const userData = await response.json();
                 setState((prevState) => ({
                     ...prevState,
                     emailSent: true,
                 }));
-                console.log("InUdata", userData);
             } else {
                 throw new Error('Error sending invite');
             }

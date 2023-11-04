@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from "../emailfiles/react-email.js";
-import { MailerSend, EmailParams, Sender, Recipient, Identity, Inbound, InboundFilterType } from "mailersend";
+// import { MailerSend, EmailParams, Sender, Recipient, Identity, Inbound, InboundFilterType } from "mailersend";
 import ReactDOMServer from "react-dom/server";
 
 
@@ -105,9 +105,9 @@ const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-const mailerSend = new MailerSend({
-    apiKey: process.env.MAILERSEND_API_KEY,
-});
+// const mailerSend = new MailerSend({
+//     apiKey: process.env.MAILERSEND_API_KEY,
+// });
 
 const openai = new OpenAIApi(configuration);
 
@@ -123,62 +123,65 @@ export default async function handler(req, res) {
                 input: dataInput,
             } = req.body;
 
-            // Create Senders ID (Sender Id is created successfully)
-            const identity = new Identity()
-                .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
-                .setEmail(`${email}`)
-                .setName(`${firstName}`)
-                .setReplyToEmail(`support@forgedmart.com`)
-                .setReplyToName('Support Team')
-                .setAddNote(false);
+            const response = console.log("hola");
 
-            const response = await mailerSend.email.identity.create(identity);
+            // Create Senders ID (Sender Id is created successfully)
+            // const identity = new Identity()
+            //     .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
+            //     .setEmail(`${email}`)
+            //     .setName(`${firstName}`)
+            //     .setReplyToEmail(`support@forgedmart.com`)
+            //     .setReplyToName('Support Team')
+            //     .setAddNote(false);
+
+            // const response = await mailerSend.email.identity.create(identity);
 
             if (response && response.statusCode === 201) {
+                console.log("hola")
 
                 // Creating Inbound (Inbound route is created successfully)
-                async function createInbound() {
-                    try {
-                        const inbound = new Inbound()
-                            .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
-                            .setName('ForgedMart')
-                            .setDomainEnabled(true)
-                            .setInboundDomain("email.forgedmart.com")
-                            .setInboundPriority(0)
-                            .setCatchFilter({
-                                type: InboundFilterType.CATCH_RECIPIENT,
-                                filters: [{
-                                    comparer: "equal",
-                                    value: email
-                                }]
-                            })
-                            .setMatchFilter({
-                                type: InboundFilterType.MATCH_SENDER,
-                                filters: [{
-                                    comparer: "equal",
-                                    value: "support@forgedmart.com"
-                                }]
-                            })
-                            .setForwards([
-                                {
-                                    type: "webhook",
-                                    value: "https://b32997d406e5d4da9aa81b0b3d0eeb4f.m.pipedream.net"
-                                }
-                            ]);
+                // async function createInbound() {
+                //     try {
+                //         const inbound = new Inbound()
+                //             .setDomainId(`${process.env.NEXT_PUBLIC_DOMAIN_ID}`)
+                //             .setName('ForgedMart')
+                //             .setDomainEnabled(true)
+                //             .setInboundDomain("email.forgedmart.com")
+                //             .setInboundPriority(0)
+                //             .setCatchFilter({
+                //                 type: InboundFilterType.CATCH_RECIPIENT,
+                //                 filters: [{
+                //                     comparer: "equal",
+                //                     value: email
+                //                 }]
+                //             })
+                //             .setMatchFilter({
+                //                 type: InboundFilterType.MATCH_SENDER,
+                //                 filters: [{
+                //                     comparer: "equal",
+                //                     value: "support@forgedmart.com"
+                //                 }]
+                //             })
+                //             .setForwards([
+                //                 {
+                //                     type: "webhook",
+                //                     value: "https://b32997d406e5d4da9aa81b0b3d0eeb4f.m.pipedream.net"
+                //                 }
+                //             ]);
 
-                        mailerSend.email.inbound.create(inbound)
-                            .then((response) => console.log(response.body))
-                            .catch((error) => console.log(error.body));
-                    } catch (error) {
-                        console.error(error.body);
-                    }
-                }
+                //         mailerSend.email.inbound.create(inbound)
+                //             .then((response) => console.log(response.body))
+                //             .catch((error) => console.log(error.body));
+                //     } catch (error) {
+                //         console.error(error.body);
+                //     }
+                // }
 
-                createInbound();
+                // createInbound();
 
                 // Email configuration
                 const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
-                const recipients = [new Recipient(email, firstName)];
+                // const recipients = [new Recipient(email, firstName)];
 
                 const personalization = [
                     {
@@ -237,15 +240,15 @@ export default async function handler(req, res) {
                     .setText(responseContent)
                     ;
 
-                const emailResponse = await mailerSend.email.send(emailParams);
+                const emailResponse = console.log("hola")
 
                 if (
                     emailResponse &&
                     (emailResponse.status === 200 || emailResponse.statusText === "OK")
                 ) {
-                    await mailerSend.email.message.single("message_id")
-                        .then((response) => console.log(response.body))
-                        .catch((error) => console.log(error.body));
+                    // await mailerSend.email.message.single("message_id")
+                    //     .then((response) => console.log(response.body))
+                    //     .catch((error) => console.log(error.body));
                     return res.status(200).json({ message: "message is sent okay" });
                 } else {
                     return res.status(500).json({ message: "Error sending email" });

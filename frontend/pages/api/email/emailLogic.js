@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { MailerSend, Sender, Recipient, EmailParams, Token } from "mailersend";
+// import { MailerSend, Sender, Recipient, EmailParams, Token } from "mailersend";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -16,15 +16,15 @@ export default async function handler(req, res) {
     const { email, name, password } = req.body;
 
     // Configuring MailerSend and send an email
-    const mailerSend = new MailerSend({
-      apiKey: process.env.MAILERSEND_API_KEY,
-    });
+    // const mailerSend = new MailerSend({
+    //   apiKey: process.env.MAILERSEND_API_KEY,
+    // });
     const sentFrom = new Sender("support@forgedmart.com", "Support Team");
-    const recipients = [new Recipient(email, name)];
+    // const recipients = [new Recipient(email, name)];
 
     //STEP TWO - CREATE TOKEN AND SEND EMAIL TO NEW USERS
     // Creating token
-    const token = await createToken(mailerSend);
+    // const token = await createToken(mailerSend);
 
     // Check if the user with the provided email already exists in the database
     const existingUser = await prisma.user.findUnique({
@@ -52,12 +52,12 @@ export default async function handler(req, res) {
 
     //STEP THREE - EMAIL VERIFICATION IF NEW USER IS CREATED SUCCESSFULLY
     // Make a POST request to the email verification API
-    const verificationBaseUrl = "https://api.mailersend.com/v1/email-verification/verify";
+    // const verificationBaseUrl = "https://api.mailersend.com/v1/email-verification/verify";
     const emailVerificationResponse = await fetch(verificationBaseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.MAILERSEND_API_KEY}`,
+        Authorization: `Bearer `,
       },
       body: JSON.stringify({
         email, // Including the email in the request body
@@ -84,30 +84,30 @@ export default async function handler(req, res) {
   }
 }
 
-async function createToken(mailerSend) {
-  try {
-    const token = new Token()
-      .setName("newAPI_KEY_ForgedMart")
-      .setDomainId(process.env.DOMAIN_ID)
-      .setScopes([
-        "email_full",
-        "domains_read",
-        "domains_full",
-        "activity_read",
-        "activity_full",
-        "analytics_read",
-        "analytics_full",
-        "email_verification_read",
-        "email_verification_full",
-      ]);
+// async function createToken(mailerSend) {
+//   try {
+//     const token = new Token()
+//       .setName("newAPI_KEY_ForgedMart")
+//       .setDomainId(process.env.DOMAIN_ID)
+//       .setScopes([
+//         "email_full",
+//         "domains_read",
+//         "domains_full",
+//         "activity_read",
+//         "activity_full",
+//         "analytics_read",
+//         "analytics_full",
+//         "email_verification_read",
+//         "email_verification_full",
+//       ]);
 
-    const response = await mailerSend.token.create(token);
-    return response.body.token; // Return the token value
-  } catch (error) {
-    console.error(error.body);
-    throw new Error("Token creation failed");
-  }
-}
+//     const response = await mailerSend.token.create(token);
+//     return response.body.token; // Return the token value
+//   } catch (error) {
+//     console.error(error.body);
+//     throw new Error("Token creation failed");
+//   }
+// }
 
 
 

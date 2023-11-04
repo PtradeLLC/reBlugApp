@@ -1,0 +1,23 @@
+name: forgedMaart
+id: 67a631b3-4985-4928-84c1-6f576700673d
+languages:
+  - Python
+extensions:
+  - .py
+  - .cgi
+  - .fcgi
+  - .gyp
+  - .gypi
+  - .lmi
+  - .py3
+  - .pyde
+  - .pyi
+  - .pyp
+  - .pyt
+  - .pyw
+  - .rpy
+  - .smk
+  - .spec
+  - .tac
+  - .wsgi
+  - .xpy

@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from "../emailfiles/react-email";
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+// import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 const aiMessage = `From now on you will role play as Forged AI. 
     You are a helpful marketing assistant that helps users with all their 
@@ -57,9 +57,9 @@ const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-const mailerSend = new MailerSend({
-    apiKey: process.env.API_KEY,
-});
+// const mailerSend = new MailerSend({
+//     apiKey: process.env.API_KEY,
+// });
 
 const openai = new OpenAIApi(configuration);
 
@@ -72,7 +72,7 @@ const handler = async (req, res) => {
             const sentFrom = new Sender("support@forgedmart.com", "ForgedMart AI");
 
             const recipients = [
-                new Recipient(data.email, data.firstName)
+                // new Recipient(data.email, data.firstName)
             ];
 
             const personalization = [
@@ -114,16 +114,16 @@ const handler = async (req, res) => {
                     data: responseContent // Pass the data received in the request body to the Email component
                 });
 
-                const emailParams = new EmailParams()
-                    .setFrom(sentFrom)
-                    .setTo(recipients)
-                    .setReplyTo(sentFrom)
-                    .setPersonalization(personalization)
-                    .setSubject("Email Conversational Tool - Thanks for Interest in ForgedMart")
-                    .setHtml(emailContent) // Use the generated email content
-                    .setText(responseContent);
+                // const emailParams = new EmailParams()
+                //     .setFrom(sentFrom)
+                //     .setTo(recipients)
+                //     .setReplyTo(sentFrom)
+                //     .setPersonalization(personalization)
+                //     .setSubject("Email Conversational Tool - Thanks for Interest in ForgedMart")
+                //     .setHtml(emailContent) // Use the generated email content
+                //     .setText(responseContent);
 
-                await mailerSend.email.send(emailParams);
+                // await mailerSend.email.send(emailParams);
             }
             res.status(200).json({ message: "okay" })
         } catch (error) {

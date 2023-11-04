@@ -416,9 +416,9 @@ const Dashboard = function ({ children }) {
                                                         <div className="mt-5 flex justify-center sm:mt-0">
                                                             <Link
                                                                 href={"/profile"}
-                                                                className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
                                                             >
-                                                                Use as Brand or Agency
+                                                                <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Use as Brand or Agency
                                                             </Link>
                                                         </div>
                                                     </div>
@@ -475,7 +475,7 @@ const Dashboard = function ({ children }) {
                                                 <div className="p-6">
                                                     <span className="flex">
                                                         <div className="flex">
-                                                            <Image src="/images/team.png" width={25} height={25} alt="team members" />
+                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src="/images/team.png" width={25} height={18} alt="team members" />
                                                             <h2
                                                                 className="text-base font-medium text-gray-900"
                                                                 id="recent-hires-title"
