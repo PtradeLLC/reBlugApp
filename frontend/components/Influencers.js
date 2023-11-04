@@ -10,7 +10,7 @@ export default function Influencer({ openModal, setOpenModal }) {
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-full lg:flex-none lg:gap-y-8">
             <div className="lg:col-end-1  lg:w-full lg:max-w-lg lg:pb-8">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Creators Economy
+                Hello Creators & Influencers
               </h2>
               <p className="mt-6 text-xl leading-8 text-gray-600"></p>
               <p className="mt-6 text-base leading-7 text-gray-600">
@@ -28,12 +28,12 @@ export default function Influencer({ openModal, setOpenModal }) {
               <ul className="mt-3 text-base leading-7 text-gray-600 list-disc ml-3">
                 <li>Take complete control of your platform</li>
                 <li>Monetize content on your own terms</li>
-                <li>Represent brand partners through subtle advertisement</li>
+                <li>Represent brand partners through subtle promotions</li>
                 <li>Your content view and subscription is NEVER based on platform algorithm</li>
                 <li>Never again beg for likes or subscriptions</li>
                 <li>Train and activate your personal AI assistant</li>
                 <li>No app to download, just your regular text redesigned & configured as a platform </li>
-                <li>We help you launch your own consumer brands or promote affiliate products from leading brands</li>
+                <li>We help you launch your own consumer brand products or promote affiliate products from leading brands</li>
               </ul>
             </div>
             <div className="flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents">
