@@ -1,6 +1,6 @@
 const features = [
     { name: 'As a Platform', description: 'Designed to be intuitive and user-friendly, manage your messaging platform efficiently with more time to focus on creating exceptional content.' },
-    { name: 'Get a personal SMS number', description: 'Sign up for a ForgedMart account and get your free SMS number. Use this number instead of your actual mobile phone number.' },
+    { name: 'Get a personal SMS number', description: 'Sign up for a ForgedMart account and get your free SMS number. You can use this number instead of your real mobile phone number.' },
     { name: 'Invite everyone', description: 'Your free SMS number is one you can publicly share on social media with your audience, and it`s equipped with all the features any mobile number has.' },
     { name: 'Audience as a Group', description: 'Your audience joins as a group, and you can use all the features your phone allows: Go live with FaceTime, share images and videos e.t.c.' },
     { name: 'SMS Features', description: 'Using this number followers can connect by sending you and each other messages via text, share media assets, Go live with FaceTime,  and if you don`t want to receive messages at any point in time - put it on silent, your personalized chatbot would take over on your behalf.' },
