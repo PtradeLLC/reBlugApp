@@ -5,12 +5,12 @@ import MobilePlatform from "./MobilePlatform";
 export default function Influencer({ openModal, setOpenModal }) {
   return (
     <>
-      <div className="overflow-hidden bg-white py-16 lg:w-[93%]">
-        <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8 lg:max-w-full ">
+      <div className="overflow-hidden flex justify-center items-center flex-col bg-white py-2 lg:w-[93%]">
+        <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-4 lg:max-w-full ">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-full lg:flex-none lg:gap-y-8">
             <div className="lg:col-end-1  lg:w-full lg:max-w-lg lg:pb-8">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Influencers and Creators
+                Creators Economy
               </h2>
               <p className="mt-6 text-xl leading-8 text-gray-600"></p>
               <p className="mt-6 text-base leading-7 text-gray-600">
@@ -50,55 +50,10 @@ export default function Influencer({ openModal, setOpenModal }) {
                   className="absolute top-0 left-0 w-full h-full object-cover"
                 />
               </div>
-
-              {/* <div className="w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end h-full">
-                <video autoPlay loop muted playsInline className="w-full h-full object-contain">
-                  <source src="https://res.cloudinary.com/publictrades/video/upload/q_96,vc_auto/v1699085129/z82rryxouroqgfjajatm.mp4" type="video/mp4" />
-                </video>
-                <Image
-                  src="/images/iphoneimage.png"
-                  alt=""
-                  width={385}
-                  height={600}
-                  className="aspect-[7/5] w-full max-w-none rounded-2xl bg-gray-50 object-contain h-full"
-                />
-              </div> */}
-              <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:items-start lg:justify-end lg:gap-x-8">
-                <div className="order-first flex w-64 flex-none justify-end self-end lg:w-auto">
-                  <Image
-                    src="/images/guy.png"
-                    alt=""
-                    width={400}
-                    height={400}
-                    className="aspect-[4/3] w-[24rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
-                  />
-                </div>
-                <div className="flex w-96 flex-auto justify-end lg:w-auto lg:flex-none">
-                  <Image
-                    src="/images/fashion.png"
-                    alt=""
-                    width={400}
-                    height={400}
-                    className="aspect-[7/5] w-[37rem] max-w-none flex-none rounded-2xl bg-gray-50 object-cover"
-                  />
-                </div>
-                <div className="hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none">
-                  <Image
-                    src="/images/vidgirl.png"
-                    alt=""
-                    width={400}
-                    height={400}
-                    className="aspect-[4/3] w-[7rem] max-w-none rounded-2xl bg-gray-50 object-cover"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
-        {/* <div>
-          <MobilePlatform />
-        </div> */}
-        <div className="mt-2 flex justify-center text-center">
+        <div className="mt-2 flex justify-center text-center w-full">
           <Link
             href="/creators"
             className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
