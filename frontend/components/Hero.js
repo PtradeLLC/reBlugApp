@@ -23,7 +23,7 @@ export default function Hero() {
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="w-full max-w-xl lg:shrink-1 xl:max-w-2xl sm:mt-[37px] md:mt-[37px] lg:mt-[-203px]">
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 ">
-                    We use software and technologies to streamline and automate marketing tasks, so
+                    Using software and technologies to streamline and automate marketing tasks, so
                     that brands can reach more customers and sell more products or services through
                     social media and AI.
                   </h1>
