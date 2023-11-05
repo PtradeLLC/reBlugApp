@@ -34,7 +34,7 @@ export default function Influencer({ openModal, setOpenModal }) {
                 <li>Train and activate your personal AI assistant.</li>
                 <li>No app to download, just your regular text redesigned & configured as a platform.</li>
                 <li>We help you launch your own consumer brand products or promote affiliate products from leading brands.</li><br />
-                <span className="list-none"><li>We hope you see the value in this, and thanks for scrolling to you got to the section.</li></span>
+                <span className="list-none"><li>We hope you see the value in this amazing Tool, and thanks for scrolling to this section.</li></span>
                 <span className="list-none"><li>Sincerely, <br /> ForgedMart Team</li></span>
               </ul>
             </div>
