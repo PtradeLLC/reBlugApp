@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions", "driverAdapters"]
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
 }
 
 datasource db {
@@ -15,7 +15,6 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  api_domain        String?
   refresh_token     String?
   access_token      String?
   expires_at        Int?
@@ -23,6 +22,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+  api_domain        String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -43,20 +43,20 @@ model User {
   externalId    String?
   Username      String?
   firstName     String?
-  lastName      String?
   profileImage  String?
-  role          Role        @default(USER)
   image         String?
-  emailVerified DateTime?
+  lastName      String?
   email         String      @unique
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   profileId     String?
-  EmailLists    emailList[]
+  role          Role        @default(USER)
+  emailVerified DateTime?
   Accounts      Account[]
   EmailTool     EmailTool[]
   Profile       Profile[]
   Sessions      Session[]
+  EmailLists    emailList[]
 }
 
 model Profile {
@@ -112,8 +112,8 @@ model TrialProspect {
 model emailList {
   id     Int     @id @default(autoincrement())
   email  String
-  User   User?   @relation(fields: [userId], references: [id])
   userId String?
+  User   User?   @relation(fields: [userId], references: [id])
 }
 
 model TrialProspectTwo {
