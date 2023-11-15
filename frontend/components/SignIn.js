@@ -5,12 +5,14 @@ import Link from 'next/link';
 import Loading from './Loading';
 import PasswordReset from './PassReset';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const { data: session } = useSession();
 
     const router = useRouter();
 
@@ -28,9 +30,9 @@ const SignIn = () => {
 
             console.log("signInData:", signInData);
 
-            if (signInData.ok) {
+            if (signInData.ok & session) {
                 console.log("Sign-in successful!");
-                router.push('/dashboard'); // Replace with the appropriate redirect path
+                router.push('/dashboard');
             } else {
                 console.error('Authentication failed:', signInData.error);
                 setErrors(`Authentication failed: ${signInData.error}`);

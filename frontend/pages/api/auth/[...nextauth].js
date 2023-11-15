@@ -57,49 +57,6 @@ export const authOptions = {
             }
         }),
 
-
-
-        // CredentialsProvider({
-        //     id: "username-login",
-        //     name: "Credentials",
-        //     credentials: {
-        //         email: { label: "Email", type: "email", placeholder: "you@company.com" },
-        //         password: { label: "Password", type: "password" }
-        //     },
-        //     async authorize(credentials) {
-        //         try {
-        //             if (!credentials?.email || !credentials?.password) {
-        //                 throw new Error("Missing credentials");
-        //             }
-
-        //             const existingUser = await prisma.user.findUnique({
-        //                 where: {
-        //                     email: credentials?.email
-        //                 },
-        //             });
-
-        //             if (!existingUser) {
-        //                 throw new Error("User not found");
-
-        //             }
-
-        //             const passwordMatch = await compare(credentials?.password, existingUser?.password);
-
-        //             if (!passwordMatch) {
-        //                 throw new Error("Invalid password");
-        //             }
-
-        //             return {
-        //                 email: `${existingUser.email}`
-        //             };
-        //         } catch (error) {
-        //             // Log the error or handle it appropriately
-        //             console.error("Authentication error:", error.message);
-        //             return null;
-        //         }
-        //     }
-        // }),
-
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -124,6 +81,7 @@ export const authOptions = {
         signIn: '/login',
         signOut: '/login',
         error: '/404',
+        dashboard: '/dashboard',
     },
     debug: true,
 };
