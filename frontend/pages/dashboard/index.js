@@ -1,7 +1,6 @@
-import { Fragment, useState, createContext, Suspense } from "react";
+import { Fragment, useState, useEffect, createContext, Suspense } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import withAuth from "../api/withAuth";
-import { useUserData } from '@nhost/nextjs';
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import EmailTabs from "../../components/EmailTabs";
 import MaapTabs from "../../components/MaapTabs";
@@ -13,6 +12,7 @@ import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
+import { useRouter } from 'next/router';
 
 
 const navigation = [
@@ -90,23 +90,28 @@ const UserContext = createContext();
 
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
-    const user = useUserData();
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("undefined");
     const [loading, setLoading] = useState(false);
-    const userId = user.id;
     const [openModal, setOpenModal] = useState(false);
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
-    const [teamCount, setTeamCount] = useState([{ user }]);
     const [team, setTeam] = useState("There are no members of your team here");
-    const [email, setEmail] = useState({ userId: userId, userEmail: "" });
     const [emailSent, setEmailSent] = useState(false);
+    const { data: session, status } = useSession();
+    const { user } = session || {};
+    const [teamCount, setTeamCount] = useState([]);
+    const router = useRouter();
+    const [email, setEmail] = useState({ userId: `${user?.email}`, userEmail: "" });
 
     const handleClick = () => {
         setOpenModal(true);
     };
+
+    useEffect(() => {
+        setTeamCount([{ user }]);
+    }, [user]);
 
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
@@ -259,338 +264,393 @@ const Dashboard = function ({ children }) {
 
     return (
         <>
-            <Suspense fallback={<Loading />}>
-                <UserContext.Provider value={user}>
-                    <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
-                        <Popover as="header" className=" pb-24">
-                            {({ open }) => (
-                                <>
-                                    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                                        <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
+            {status === "authenticated" && (
+                <Suspense fallback={<Loading />}>
+                    <UserContext.Provider value={user}>
+                        <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
+                            <Popover as="header" className=" pb-24">
+                                {({ open }) => (
+                                    <>
+                                        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                                            <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
 
-                                            <div className="w-full py-5 lg:border-t lg:border-white lg:border-opacity-20">
-                                                <div className="lg:grid lg:grid-cols-3 lg:items-center lg:gap-8">
+                                                <div className="w-full py-5 lg:border-t lg:border-white lg:border-opacity-20">
+                                                    <div className="lg:grid lg:grid-cols-3 lg:items-center lg:gap-8">
 
-                                                    <div className="hidden lg:col-span-2 lg:block">
-                                                        <nav className="flex space-x-4">
-                                                            {navigation.map((item) => (
-                                                                <a
-                                                                    key={item.name}
-                                                                    href={item.href}
-                                                                    className={classNames(
-                                                                        item.current ? "text-black" : "text-black",
-                                                                        "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
-                                                                    )}
-                                                                    aria-current={item.current ? "page" : undefined}
-                                                                >
-                                                                    {item.name}
-                                                                </a>
-                                                            ))}
-                                                        </nav>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <Transition.Root as={Fragment}>
-                                        <div className="lg:hidden">
-                                            <Transition.Child
-                                                as={Fragment}
-                                                enter="duration-150 ease-out"
-                                                enterFrom="opacity-0"
-                                                enterTo="opacity-100"
-                                                leave="duration-150 ease-in"
-                                                leaveFrom="opacity-100"
-                                                leaveTo="opacity-0"
-                                            >
-                                                <Popover.Overlay className="fixed inset-0 z-20 bg-black bg-opacity-25" />
-                                            </Transition.Child>
-
-                                            <Transition.Child
-                                                as={Fragment}
-                                                enter="duration-150 ease-out"
-                                                enterFrom="opacity-0 scale-95"
-                                                enterTo="opacity-100 scale-100"
-                                                leave="duration-150 ease-in"
-                                                leaveFrom="opacity-100 scale-100"
-                                                leaveTo="opacity-0 scale-95"
-                                            >
-                                                <Popover.Panel
-                                                    focus
-                                                    className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition"
-                                                >
-                                                    <div className="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                                                        <div className="pb-2 pt-3">
-                                                            <div className="flex items-center justify-between px-4">
-                                                                <div>
-                                                                    <img
-                                                                        className="h-8 w-auto"
-                                                                        src="/images/Mart.png"
-                                                                        alt="ForgedMart"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="mt-3 space-y-1 px-2">
+                                                        <div className="hidden lg:col-span-2 lg:block">
+                                                            <nav className="flex space-x-4">
                                                                 {navigation.map((item) => (
                                                                     <a
                                                                         key={item.name}
                                                                         href={item.href}
-                                                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                                                                        className={classNames(
+                                                                            item.current ? "text-black" : "text-black",
+                                                                            "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
+                                                                        )}
+                                                                        aria-current={item.current ? "page" : undefined}
                                                                     >
                                                                         {item.name}
                                                                     </a>
                                                                 ))}
-                                                            </div>
-                                                        </div>
-                                                        <div className="pb-2 pt-4">
-                                                            <div className="flex items-center px-5">
-                                                                <div className="ml-3 min-w-0 flex-1">
-                                                                    <div className="truncate text-base font-medium text-gray-800">
-                                                                        Hello {user?.displayName},
-                                                                    </div>
-                                                                    <div className="truncate text-sm font-medium text-gray-500">
-                                                                        {user?.email}
-                                                                    </div>
-                                                                </div>
-                                                                <button
-                                                                    type="button"
-                                                                    className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                                                                >
-                                                                    <span className="sr-only">
-                                                                        View notifications
-                                                                    </span>
-                                                                </button>
-                                                            </div>
-                                                            <div className="mt-3 space-y-1 px-2">
-                                                                {userNavigation.map((item) => (
-                                                                    <a
-                                                                        key={item.name}
-                                                                        href={item.href}
-                                                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                                                                    >
-                                                                        {item.name}
-                                                                    </a>
-                                                                ))}
-                                                            </div>
+                                                            </nav>
                                                         </div>
                                                     </div>
-                                                </Popover.Panel>
-                                            </Transition.Child>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </Transition.Root>
-                                </>
-                            )}
-                        </Popover>
-                        <main className="-mt-24 pb-8">
 
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                                <h1 className="sr-only">Profile</h1>
+                                        <Transition.Root as={Fragment}>
+                                            <div className="lg:hidden">
+                                                <Transition.Child
+                                                    as={Fragment}
+                                                    enter="duration-150 ease-out"
+                                                    enterFrom="opacity-0"
+                                                    enterTo="opacity-100"
+                                                    leave="duration-150 ease-in"
+                                                    leaveFrom="opacity-100"
+                                                    leaveTo="opacity-0"
+                                                >
+                                                    <Popover.Overlay className="fixed inset-0 z-20 bg-black bg-opacity-25" />
+                                                </Transition.Child>
 
-                                <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-
-                                    <div className="grid grid-cols-1 gap-4 lg:col-span-2">
-
-                                        <section aria-labelledby="profile-overview-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <h2 className="sr-only" id="profile-overview-title">
-                                                    Profile Overview
-                                                </h2>
-                                                <div className="bg-[#f4f4f4] p-6">
-                                                    <div className="sm:flex sm:items-center sm:justify-between">
-                                                        <div className="sm:flex sm:space-x-5">
-                                                            <div className="flex-shrink-0">
-                                                                <img
-                                                                    className="mx-auto h-20 w-20 rounded-full"
-                                                                    src={user?.avatarUrl}
-                                                                    alt="profile image"
-                                                                />
-                                                            </div>
-                                                            <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                                <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {user?.displayName}
-                                                                </h2>
-                                                                <Link href={"/profile"}><span className="text-xs">Edit Profile</span></Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="mt-5 flex justify-center sm:mt-0">
-                                                            <Link
-                                                                href={"/profile"}
-                                                                className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
-                                                            >
-                                                                <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Use as Brand or Agency
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
-                                                        {cards.map((card) => (
-                                                            <div
-                                                                key={card.id}
-                                                                className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
-                                                            >
-                                                                <div className={`px-5 py-3`}>
-                                                                    <div className="flex text-sm text-center items-center">
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
-                                                                        >
-                                                                            <Image src={card.icon} alt="icon" width={30} height={30} />
-                                                                            <span>{card.title}</span>
-                                                                        </button>
+                                                <Transition.Child
+                                                    as={Fragment}
+                                                    enter="duration-150 ease-out"
+                                                    enterFrom="opacity-0 scale-95"
+                                                    enterTo="opacity-100 scale-100"
+                                                    leave="duration-150 ease-in"
+                                                    leaveFrom="opacity-100 scale-100"
+                                                    leaveTo="opacity-0 scale-95"
+                                                >
+                                                    <Popover.Panel
+                                                        focus
+                                                        className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition"
+                                                    >
+                                                        <div className="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                                                            <div className="pb-2 pt-3">
+                                                                <div className="flex items-center justify-between px-4">
+                                                                    <div>
+                                                                        <Image
+                                                                            src="/images/Mart.png"
+                                                                            alt="ForgedMart Logo"
+                                                                            width={100}
+                                                                            height={24}
+                                                                            priority
+                                                                        />
                                                                     </div>
-                                                                    <span className="text-xs block text-center">{card.category}</span>
+                                                                </div>
+                                                                <div className="mt-3 space-y-1 px-2">
+                                                                    {navigation.map((item) => (
+                                                                        <a
+                                                                            key={item.name}
+                                                                            href={item.href}
+                                                                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                                                                        >
+                                                                            {item.name}
+                                                                        </a>
+                                                                    ))}
                                                                 </div>
                                                             </div>
-                                                        ))}
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""}`}>
-                                            {selectedKpi && (
-                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""}`}>
-                                                    <h2 className="sr-only">
-                                                        Summary
-                                                    </h2>
-                                                    {selectedComponent ? kpi(selectedComponent)
-                                                        :
-                                                        <div>
-                                                            <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                        </div>
-                                                    }
-                                                </div>
-                                            )}
-                                        </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""}`}>
-                                            {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                            {selectedComponent === "Automate Marketing" && <MarketTabs />}
-                                            {selectedComponent === "Messaging Platform" && <MaapTabs />}
-                                        </section>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-4">
-                                        <section aria-labelledby="recent-hires-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <span className="flex">
-                                                        <div className="flex">
-                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src="/images/team.png" width={25} height={18} alt="team members" />
-                                                            <h2
-                                                                className="text-base font-medium text-gray-900"
-                                                                id="recent-hires-title"
-                                                            >
-                                                                Team Members
-                                                            </h2>
-                                                        </div>
-                                                    </span>
-                                                    <div className="mt-6 flow-root">
-                                                        <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                            {teamCount.length > 0 ? teamCount.map((person) => (
-                                                                <li key={person.user.handle} className="py-4">
-                                                                    <div className="flex items-center space-x-4">
-                                                                        <div className="flex-shrink-0">
-                                                                            <img
-                                                                                className="h-8 w-8 rounded-full"
-                                                                                src={person.user.avatarUrl}
-                                                                                alt="profile image"
-                                                                            />
+                                                            <div className="pb-2 pt-4">
+                                                                <div className="flex items-center px-5">
+                                                                    <div className="ml-3 min-w-0 flex-1">
+                                                                        <div className="truncate text-base font-medium text-gray-800">
+                                                                            Hello {user?.name},
                                                                         </div>
-                                                                        <div className="min-w-0 flex-1">
-                                                                            <p className="truncate text-sm font-medium text-gray-900">
-                                                                                {person?.user?.displayName}
-                                                                            </p>
-                                                                            <p className="truncate text-sm text-gray-500">
-                                                                                {"@" + person.user.displayName.split(" ").join("_")}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div>
-                                                                            <a
-                                                                                href={person.user.href}
-                                                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                            >
-                                                                                View
-                                                                            </a>
+                                                                        <div className="truncate text-sm font-medium text-gray-500">
+                                                                            {user?.email}
                                                                         </div>
                                                                     </div>
-                                                                </li>
-                                                            )) : <div>
-                                                                <span>{team}</span>
-                                                            </div>}
-                                                        </ul>
-                                                    </div>
-                                                    <div className="mt-6">
-                                                        <button
-                                                            type="button"
-                                                            onClick={handleModalClick}
-                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            Add Team Member
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <section aria-labelledby="quicklinks-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <span className="flex">
-                                                        <div className="flex space-x-1">
-                                                            <Image src="/images/link.png" width={15} height={15} alt="quick links" />
-                                                            <h2 className="text-base font-medium text-gray-900" id="quicklinks-title">
-                                                                Quick Link
-                                                            </h2>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                                                                    >
+                                                                        <span className="sr-only">
+                                                                            View notifications
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                                <div className="mt-3 space-y-1 px-2">
+                                                                    {userNavigation.map((item) => (
+                                                                        <a
+                                                                            key={item.name}
+                                                                            href={item.href}
+                                                                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
+                                                                        >
+                                                                            {item.name}
+                                                                        </a>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </span>
+                                                    </Popover.Panel>
+                                                </Transition.Child>
+                                            </div>
+                                        </Transition.Root>
+                                    </>
+                                )}
+                            </Popover>
+                            <main className="-mt-24 pb-8">
 
-                                                    <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
-                                                        >
-                                                            {quicklinks.map((quicklink) => (
-                                                                <li key={quicklink.id} className="py-5">
-                                                                    <div className="relative">
-                                                                        <h3 className="text-sm font-semibold text-gray-800">
-                                                                            {quicklink.title}
-                                                                        </h3>
-                                                                        <p className="mt-1  text-sm text-gray-600">
-                                                                            {quicklink.preview}
-                                                                        </p>
-                                                                        <div className="mt-6">
+                                <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                                    <h1 className="sr-only">Profile</h1>
+
+                                    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+
+                                        <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+
+                                            <section aria-labelledby="profile-overview-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <h2 className="sr-only" id="profile-overview-title">
+                                                        Profile Overview
+                                                    </h2>
+                                                    <div className="bg-[#f4f4f4] p-6">
+                                                        <div className="sm:flex sm:items-center sm:justify-between">
+                                                            <div className="sm:flex sm:space-x-5">
+                                                                <div className="flex-shrink-0">
+                                                                    <img
+                                                                        className="mx-auto h-20 w-20 rounded-full"
+                                                                        src={user?.image}
+                                                                        alt="profile image"
+                                                                    />
+                                                                </div>
+                                                                <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                                                                    <h2 className="text-2xl font-semibold text-gray-900">
+                                                                        Welcome {user?.name}
+                                                                    </h2>
+                                                                    <Link href={"/profile"}><span className="text-xs">Edit Profile</span></Link>
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-5 flex justify-center sm:mt-0">
+                                                                <Link
+                                                                    href={"/profile"}
+                                                                    className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
+                                                                >
+                                                                    <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Use as Brand or Agency
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
+                                                            {cards.map((card) => (
+                                                                <div
+                                                                    key={card.id}
+                                                                    className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                                >
+                                                                    <div className={`px-4 py-3`}>
+                                                                        <div className="flex text-sm text-center items-center">
                                                                             <button
-                                                                                onClick={handleClick}
-                                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                type="button"
+                                                                                onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
+                                                                                className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                                             >
-                                                                                Get Started
+                                                                                <Image src={card.icon} alt="icon" width={30} height={30} />
+                                                                                <span>{card.title}</span>
                                                                             </button>
                                                                         </div>
+                                                                        <span className="text-xs block text-center">{card.category}</span>
                                                                     </div>
-                                                                </li>
+                                                                </div>
                                                             ))}
-                                                        </ul>
+                                                        </div>
+
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
+                                            </section>
+                                            <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""}`}>
+                                                {selectedKpi && (
+                                                    <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""}`}>
+                                                        <h2 className="sr-only">
+                                                            Summary
+                                                        </h2>
+                                                        {selectedComponent ? kpi(selectedComponent)
+                                                            :
+                                                            <div>
+                                                                <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                )}
+                                            </section>
+                                            <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""}`}>
+                                                {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                                {selectedComponent === "Automate Marketing" && <MarketTabs />}
+                                                {selectedComponent === "Messaging Platform" && <MaapTabs />}
+                                            </section>
+                                        </div>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <section aria-labelledby="recent-hires-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <div className="p-6">
+                                                        <span className="flex">
+                                                            <div className="flex">
+                                                                <Image className="h-[17px] w-[20px] justify-center items-center" src="/images/team.png" width={25} height={18} alt="team members" />
+                                                                <h2
+                                                                    className="text-base font-medium text-gray-900"
+                                                                    id="recent-hires-title"
+                                                                >
+                                                                    Team Members
+                                                                </h2>
+                                                            </div>
+                                                        </span>
+                                                        <div className="mt-6 flow-root">
+                                                            <ul role="list" className="-my-5 divide-y divide-gray-200">
+                                                                {teamCount.length > 0 ? teamCount.map((person, index) => (
+                                                                    <li key={index} className="py-4">
+                                                                        {person?.user?.name !== undefined && person.user.image !== undefined && (
+                                                                            <div className="flex items-center space-x-4">
+                                                                                <div className="flex-shrink-0">
+                                                                                    <img
+                                                                                        className="h-8 w-8 rounded-full"
+                                                                                        src={person?.user?.image || person.user.image}
+                                                                                        alt="profile image"
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="min-w-0 flex-1">
+                                                                                    <p className="truncate text-sm font-medium text-gray-900">
+                                                                                        {person?.user?.name || person.user.name}
+                                                                                        {person?.user?.name || person.user.name === user.name && (
+                                                                                            <span className="ml-2 text-xs font-semibold text-slate-500">Manager(You)</span>
+                                                                                        )}
+                                                                                    </p>
+                                                                                    <p className="truncate text-sm text-gray-500">
+                                                                                        {"@" + person?.user?.name?.split(" ").join("_")}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <a
+                                                                                        href={person?.user?.href || person.user.href}
+                                                                                        className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                    >
+                                                                                        View
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </li>
+                                                                )) : (
+                                                                    <div>
+                                                                        <span>{team}</span>
+                                                                    </div>
+                                                                )}
+                                                            </ul>
+                                                        </div>
+
+                                                        {/* <div className="mt-6 flow-root">
+                                                            <ul role="list" className="-my-5 divide-y divide-gray-200">
+                                                                {teamCount.length > 0 ? teamCount.map((person, index) => (
+                                                                    <li key={index} className="py-4">
+                                                                        {person?.user?.name !== undefined && person.user.image !== undefined && (
+                                                                            <div className="flex items-center space-x-4">
+                                                                                <div className="flex-shrink-0">
+                                                                                    <img
+                                                                                        className="h-8 w-8 rounded-full"
+                                                                                        src={person?.user?.image}
+                                                                                        alt="profile image"
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="min-w-0 flex-1">
+                                                                                    <p className="truncate text-sm font-medium text-gray-900">
+                                                                                        {person?.user?.name}
+                                                                                        {person?.user?.name === user.name && (
+                                                                                            <span className="ml-2 text-xs font-semibold text-slate-500">Manager</span>
+                                                                                        )}
+                                                                                    </p>
+                                                                                    <p className="truncate text-sm text-gray-500">
+                                                                                        {"@" + person?.user?.name?.split(" ").join("_")}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <a
+                                                                                        href={person?.user?.href}
+                                                                                        className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                    >
+                                                                                        View
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </li>
+                                                                )) : (
+                                                                    <div>
+                                                                        <span>{team}</span>
+                                                                    </div>
+                                                                )}
+                                                            </ul>
+                                                        </div> */}
+                                                        <div className="mt-6">
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleModalClick}
+                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                            >
+                                                                Add Team Member
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <section aria-labelledby="quicklinks-title">
+                                                <div className="overflow-hidden rounded-lg bg-white shadow">
+                                                    <div className="p-6">
+                                                        <span className="flex">
+                                                            <div className="flex space-x-1">
+                                                                <Image src="/images/link.png" width={15} height={15} alt="quick links" />
+                                                                <h2 className="text-base font-medium text-gray-900" id="quicklinks-title">
+                                                                    Quick Link
+                                                                </h2>
+                                                            </div>
+                                                        </span>
+
+                                                        <div className="mt-6 flow-root">
+                                                            <ul
+                                                                role="list"
+                                                                className="-my-5 divide-y divide-gray-200"
+                                                            >
+                                                                {quicklinks.map((quicklink) => (
+                                                                    <li key={quicklink.id} className="py-5">
+                                                                        <div className="relative">
+                                                                            <h3 className="text-sm font-semibold text-gray-800">
+                                                                                {quicklink.title}
+                                                                            </h3>
+                                                                            <p className="mt-1  text-sm text-gray-600">
+                                                                                {quicklink.preview}
+                                                                            </p>
+                                                                            <div className="mt-6">
+                                                                                <button
+                                                                                    onClick={handleClick}
+                                                                                    className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                >
+                                                                                    Get Started
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <span className="mt-3 px-2">
-                                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
-                            </span>
-                            <span>
-                                {show && <Team email={email} setEmail={setEmail} userId={userId} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
-                            </span>
-                        </main>
-                    </div>
-                </UserContext.Provider>
-            </Suspense>
+                                <span className="mt-3 px-2">
+                                    <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+                                </span>
+                                <span>
+                                    {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
+                                </span>
+                            </main>
+                        </div>
+                    </UserContext.Provider>
+                </Suspense>
+            )}
+
         </>
 
     );
 }
 
-export default withAuth(Dashboard);
+export default Dashboard;
 
 

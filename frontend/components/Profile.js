@@ -6,7 +6,8 @@ import {
     XMarkIcon,
     IdentificationIcon
 } from '@heroicons/react/24/outline';
-import { useUserData } from '@nhost/nextjs';
+import { useSession } from "next-auth/react";
+
 
 const navigation = [
     { name: 'Profile Information', href: '#personal', icon: IdentificationIcon, current: false },
@@ -28,7 +29,9 @@ const UserContext = createContext();
 
 export default function ProfilePg() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const user = useUserData();
+    const { data: session, status, update } = useSession();
+
+    const { user } = session || {};
 
     return (
         <UserContext.Provider value={user}>
@@ -210,8 +213,8 @@ export default function ProfilePg() {
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-full flex items-center gap-x-8">
                                             <img
-                                                src={user?.avatarUrl}
-                                                alt={user?.displayName}
+                                                src={user?.image}
+                                                alt={user?.name}
                                                 className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
                                             />
                                             <div>
@@ -295,8 +298,8 @@ export default function ProfilePg() {
                                             </div>
                                             <div className="col-span-full flex items-center gap-x-8">
                                                 <img
-                                                    src={user?.avatarUrl}
-                                                    alt={user?.displayName}
+                                                    src={user?.image}
+                                                    alt={user?.name}
                                                     className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
                                                 />
                                                 <div>

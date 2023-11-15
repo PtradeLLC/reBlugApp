@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SignUp from '../components/SignUp';
+import Loading from '../components/Loading';
 import AuthPro from '../components/OAuthProv';
-import { useSignInEmailPassword } from '@nhost/nextjs';
 
 
 export default function Register() {
-    const { isLoading } = useSignInEmailPassword();
+    const [loading, setLoading] = useState(false);
+    const [type, setType] = useState("");
+
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -17,10 +19,10 @@ export default function Register() {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <div className='flex justify-center items-center'>
-                    {isLoading ? <span className="bg-green-200 rounded text-center m-auto px-2"><LoadingComponent size="lg" />Loading...</span> : null}
+                    {loading ? <span className="bg-green-200 rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span> : null}
                 </div>
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-                    <SignUp />
+                    <SignUp type={type} setType={setType} />
                     <form className="space-y-6">
                         {/* Continue with social buttons */}
                         <div>
@@ -33,7 +35,7 @@ export default function Register() {
                                 </div>
                             </div>
                             <div>
-                                <AuthPro />
+                                <AuthPro type={type} setType={setType} />
                             </div>
                         </div>
                     </form>

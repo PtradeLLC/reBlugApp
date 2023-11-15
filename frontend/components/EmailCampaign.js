@@ -1,11 +1,14 @@
 import { EnvelopeIcon, PencilSquareIcon, EnvelopeOpenIcon } from '@heroicons/react/20/solid';
-import { useUserData } from '@nhost/nextjs';
 import { useState } from 'react';
 import EmailForm from "./EmailConvoForm";
+import { useSession } from "next-auth/react";
 
 export default function EmailCamp({ openModal, setOpenModal }) {
     const [campaignEmail, setCampaignEmail] = useState(null);
-    const user = useUserData();
+    const { data: session, status, update } = useSession();
+
+    const { user } = session || {};
+
 
     const onButtonClick = (type) => {
         setCampaignEmail(type);
@@ -19,14 +22,14 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                             <div className="flex-shrink-0">
                                 <img
                                     className="h-12 w-12 rounded-full"
-                                    src={user?.avatarUrl}
+                                    src={user?.image}
                                     alt="profile image"
                                 />
                             </div>
                             <div className="ml-4">
-                                <h3 className="text-base font-semibold leading-6 text-gray-900">{user?.displayName}</h3>
+                                <h3 className="text-base font-semibold leading-6 text-gray-900">{user?.name}</h3>
                                 <p className="text-sm text-gray-500">
-                                    <a href="#">@{user?.displayName.split(' ').join('_')}</a>
+                                    <a href="#">@{user?.name.split(' ').join('_')}</a>
                                 </p>
                             </div>
                         </div>

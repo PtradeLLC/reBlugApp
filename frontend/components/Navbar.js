@@ -1,19 +1,23 @@
+import { useEffect } from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  useSignOut,
-  useAuthenticated,
-} from '@nhost/nextjs'
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
 
 export default function Navbar() {
-  const isAuthenticated = useAuthenticated();
-  const { signOut } = useSignOut();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleClick = async () => {
+    await signOut({ callbackUrl: "/login" });
+  };
+
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -23,7 +27,7 @@ export default function Navbar() {
             <div className="flex justify-between">
               <div className="flex">
                 <div className="pr-16 pt-1 pb-1">
-                  <Link href={isAuthenticated ? `/dashboard` : `/`}>
+                  <a href={session ? `/dashboard` : `/`}>
                     <Image
                       src="/images/Mart.png"
                       alt="ForgedMart Logo"
@@ -31,7 +35,7 @@ export default function Navbar() {
                       height={24}
                       priority
                     />
-                  </Link>
+                  </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   <Link
@@ -59,7 +63,7 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 {
                   <Menu as="div" className="relative ml-3">
-                    {isAuthenticated ? <button onClick={signOut}>Sign out</button> : <Link href={"/login"}>Sign In | Register</Link>}
+                    {session ? <button onClick={handleClick}>Sign out</button> : <Link href={"/api/auth/signin"}>Sign In | Register</Link>}
                   </Menu>
                 }
               </div>
@@ -94,7 +98,7 @@ export default function Navbar() {
                 Contact
               </Disclosure.Button>
               <Disclosure.Button as="button">
-                {isAuthenticated ? <button onClick={signOut}>Sign out</button> : <Link href={"/login"}>Sign In | Register</Link>}
+                {session ? <button onClick={handleClick}>Sign out</button> : <Link href={"/api/auth/signin"}>Sign In | Register</Link>}
               </Disclosure.Button >
             </div >
           </Disclosure.Panel >

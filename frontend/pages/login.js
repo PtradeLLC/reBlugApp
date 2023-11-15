@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SignIn from '../components/SignIn';
-import LoadingComponent from '../components/Loading';
-import { useSignInEmailPassword } from '@nhost/nextjs';
+import Loading from '../components/Loading';
 import AuthPro from '../components/OAuthProv';
 
+
 export default function Login() {
-    const { isLoading } = useSignInEmailPassword();
+    const [loading, setLoading] = useState(false);
+
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-12 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Sign in to your account
+                    Sign In to your account
                 </h2>
             </div>
             <div className='flex justify-center items-center'>
-                {isLoading ? <span className="bg-green-200 rounded text-center m-auto px-2"><LoadingComponent size="lg" />Loading...</span> : null}
+                {loading ? <span className="bg-green-200 rounded text-center m-auto px-2"><Loading size="lg" />Loading...</span> : null}
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">

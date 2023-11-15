@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { EnvelopeIcon } from '@heroicons/react/20/solid';
-import { useResetPassword } from '@nhost/nextjs';
 import Loading from './Loading';
 
 
@@ -10,7 +9,9 @@ import Loading from './Loading';
 export default function PasswordReset({ open, setOpen }) {
     const [email, setEmail] = useState("");
     const [sentMessage, setSentMessage] = useState("");
-    const { resetPassword, isLoading, isSent, isError, error } = useResetPassword();
+    const [loading, setLoading] = useState(false);
+    const [isSent, setIsSent] = useState(false);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -91,7 +92,7 @@ export default function PasswordReset({ open, setOpen }) {
                                         className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                                         onClick={resetPass}
                                     >
-                                        {isLoading ? <Loading size="sm" /> : isSent ? "Close" : "Submit"}
+                                        {loading ? <Loading size="sm" /> : isSent ? "Close" : "Submit"}
                                     </button>
                                     {sentMessage}
                                 </div>

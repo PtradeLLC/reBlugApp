@@ -43,7 +43,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       <p className="text-lg mt-4 mb-3 flex justify-center text-center pl-2 pr-2 font-semibold">
         Growth-hack your brand to success in three easy steps
       </p>
-      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ml-12 mr-12">
+      <ul className="grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ml-12 mr-12">
         {people.map((person) => (
           <li
             key={person.id}

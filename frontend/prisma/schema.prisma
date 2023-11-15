@@ -41,16 +41,18 @@ model User {
   userId        String?     @unique
   name          String?
   externalId    String?
-  Username      String?
+  brandName     String?     @unique
   firstName     String?
   profileImage  String?
+  password      String?
   image         String?
   lastName      String?
+  provider      String?
   email         String      @unique
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   profileId     String?
-  role          Role        @default(USER)
+  role          Role        @default(MANAGER)
   emailVerified DateTime?
   Accounts      Account[]
   EmailTool     EmailTool[]
@@ -146,6 +148,10 @@ model Contact {
   message   String
 }
 
+model MaaP {
+  id String @unique @default(uuid())
+}
+
 model Trends_Document {
   id        String   @unique @default(uuid())
   content   String
@@ -178,5 +184,6 @@ model Marketing_Creatives_Document {
 
 enum Role {
   USER
+  MANAGER
   ADMIN
 }

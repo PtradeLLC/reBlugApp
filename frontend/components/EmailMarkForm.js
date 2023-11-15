@@ -4,8 +4,8 @@ import Image from "next/image";
 import EmailCamp from "./EmailCampaign";
 import Report from "./Report_one";
 import EmailForm from "./EmailConvoForm";
-import { useUserData } from '@nhost/nextjs';
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -23,7 +23,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [selectedButton, setSelectedButton] = useState(false);
-    const user = useUserData();
+    const { data: session, status, update } = useSession();
 
 
     const initialEmailForm = {
@@ -31,7 +31,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
         firstName: "",
         lastName: "",
         brand_url: "https://forgedmart.com/",
-        logo: `${"/images/Marttwainxyz.png" || user.avatarUrl}`,
+        logo: `${"/images/Marttwainxyz.png" || user?.image}`,
         input: "",
     };
     const [emailForm, setEmailForm] = useState(initialEmailForm);
@@ -146,7 +146,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                         <div className="m-2 flex flex-col rounded">
                                                             <img
                                                                 className="h-24 w-24 bg-white flex-shrink-0 sm:h-40 sm:w-40 lg:h-36 rounded lg:w-36 border"
-                                                                src={user.avatarUrl || "/images/Marttwainxyz.png"}
+                                                                src={session?.user?.image || "/images/Marttwainxyz.png"}
                                                                 alt="logo"
                                                                 width={200}
                                                                 height={200}

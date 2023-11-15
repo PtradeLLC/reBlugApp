@@ -43,7 +43,6 @@ export default function Influencer({ openModal, setOpenModal }) {
                 <video autoPlay loop muted className="w-[385px] h-[570px] max-w-full object-contain">
                   <source src="/images/mobileassaplatform.mp4" type="video/mp4" />
                 </video>
-
                 <Image
                   src="/images/iphoneimage.png"
                   alt=""

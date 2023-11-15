@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Loading from './Loading';
 
 
-export default function Team({ show, setShow, userId }) {
+export default function Team({ show, setShow }) {
     const [state, setState] = useState(
         {
             emails: [''],
@@ -53,7 +53,7 @@ export default function Team({ show, setShow, userId }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId: userId, emails: state.emails }),
+                body: JSON.stringify({ emails: state.emails }),
             });
 
             if (!response.ok) {
