@@ -6,10 +6,8 @@ import EmailProvider from "next-auth/providers/email";
 import TwitchProvider from "next-auth/providers/twitch";
 import SlackProvider from "next-auth/providers/slack";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "../../../utils/db"
+import prisma from '../../../utils/db';
 import { compare } from "bcrypt";
-
-// const prisma = new PrismaClient();
 
 export const authOptions = {
     providers: [
@@ -53,7 +51,6 @@ export const authOptions = {
             }
 
         }),
-
         // EmailProvider({
         //     server: {
         //         host: process.env.EMAIL_SERVER_HOST,
