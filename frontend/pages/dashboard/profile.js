@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfilePg from "../../components/Profile";
 import withAuth from "../api/withAuth";
 

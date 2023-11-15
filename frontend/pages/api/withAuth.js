@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Loading from '../../components/Loading';
 
 const withAuth = function (Component) {
@@ -15,10 +15,9 @@ const withAuth = function (Component) {
                 </div>
             )
         }
-
         //change loading to check if authenticated
         if (loading) {
-            router.push('/login');
+            router.push('/api/auth/signin');
         }
 
         return <Component {...props} />
