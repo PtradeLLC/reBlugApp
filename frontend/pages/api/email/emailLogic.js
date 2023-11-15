@@ -25,6 +25,7 @@ export default async function handler(req, res) {
         where: {
           email,
         },
+        cacheStrategy: { swr: 60, ttl: 60 },
       });
 
 
@@ -32,15 +33,6 @@ export default async function handler(req, res) {
         return res.status(409).json({ user: null, message: "User already exists, please login." });
       }
 
-      // const existingBrand = await prisma.user.findUnique({
-      //   where: {
-      //     brandName,
-      //   },
-      // });
-
-      // if (existingBrand) {
-      //   return res.status(409).json({ brandName: null, message: "Brand already exists, please login." });
-      // };
 
       // Hash user's password
       const hashedPassword = await bcrypt.hash(password, saltRounds);

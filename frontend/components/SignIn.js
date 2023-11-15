@@ -26,7 +26,7 @@ const SignIn = () => {
             console.log(signInData);
             // Check if user is defined before accessing properties
             if (signInData?.user) {
-                console.log(signInData?.user)
+                router.push('/dashboard');
             } else {
                 // Handle authentication failure
                 console.error('Authentication failed');
