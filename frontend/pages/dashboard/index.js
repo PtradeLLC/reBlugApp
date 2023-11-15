@@ -12,7 +12,7 @@ import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 const navigation = [
@@ -103,7 +103,7 @@ const Dashboard = function ({ children }) {
     const { user } = session || {};
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
-    const [email, setEmail] = useState({ userId: `${user?.email}`, userEmail: "" });
+    const [email, setEmail] = useState({ userId: ``, userEmail: "" });
 
     const handleClick = () => {
         setOpenModal(true);
@@ -264,7 +264,7 @@ const Dashboard = function ({ children }) {
 
     return (
         <>
-            {status === "authenticated" && (
+            {session && (
                 <Suspense fallback={<Loading />}>
                     <UserContext.Provider value={user}>
                         <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
