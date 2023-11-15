@@ -5,48 +5,13 @@ import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
-// import { Client, Account } from 'appwrite';
 import LogoOne from "../components/Logo-One";
 import LogoTwo from "../components/LogoTwo";
 
-const Home = ({ emailMessages }) => {
+const Home = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  // CREATE ACC 
-  const createAccount = async () => {
-    const client = new Client()
-    const account = new Account(client)
 
-    client
-      .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-      .setProject(process.env.NEXT_PUBLIC_PROJECT);
-
-    const response = account.create("username", "email", "password")
-
-  }
-  // LOGIN
-  const logInSession = async () => {
-    const client = new Client()
-    const account = new Account(client)
-
-    client
-      .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-      .setProject(process.env.NEXT_PUBLIC_PROJECT);
-
-    const response = account.create("email", "password")
-  }
-
-  // LOGOUT 
-  const logOutSession = async () => {
-    const client = new Client()
-    const account = new Account(client)
-
-    client
-      .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT)
-      .setProject(process.env.NEXT_PUBLIC_PROJECT);
-
-    const response = account.delete();
-  }
   return (
     <div>
       <Head>

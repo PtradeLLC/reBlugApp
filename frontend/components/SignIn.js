@@ -18,24 +18,30 @@ const SignIn = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
-            const signInData = await signIn('credentials', {
+            console.log("Attempting to sign in with:", email, password);
+
+            const signInData = await signIn('Credentials', {
                 email,
                 password,
+                redirect: false,
             });
 
-            console.log(signInData);
-            // Check if user is defined before accessing properties
-            if (signInData) {
-                router.push('/dashboard');
+            console.log("signInData:", signInData);
+
+            if (signInData.ok) {
+                console.log("Sign-in successful!");
+                router.push('/dashboard'); // Replace with the appropriate redirect path
             } else {
-                // Handle authentication failure
-                console.error('Authentication failed');
+                console.error('Authentication failed:', signInData.error);
+                setErrors(`Authentication failed: ${signInData.error}`);
             }
         } catch (error) {
-            console.error(`There is an error: ${error.message}`);
-            setErrors(`There is an error: ${error.message}`);
+            console.error('Authentication error:', error.message);
+            setErrors(`Authentication error: ${error.message}`);
         }
     };
+
+
 
 
     const setErrors = (error) => {

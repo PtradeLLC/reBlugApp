@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
@@ -12,7 +12,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const router = useRouter();
+
 
   const handleClick = async () => {
     await signOut({ callbackUrl: "/login" });
