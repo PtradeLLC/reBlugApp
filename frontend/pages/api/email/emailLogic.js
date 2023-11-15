@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
-import prisma from "../../../utils/db";
+import { prisma } from "../../../utils/db";
 
 const saltRounds = 10;
 
