@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         },
       });
 
+
       if (existingUser) {
         return res.status(409).json({ user: null, message: "User already exists, please login." });
       }
