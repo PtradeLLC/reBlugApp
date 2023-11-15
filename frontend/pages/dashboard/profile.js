@@ -1,6 +1,5 @@
-import React from 'react';
 import ProfilePg from "../../components/Profile";
-import withAuth from "../api/withAuth";
+
 
 const Profile = () => {
     return (
@@ -10,4 +9,4 @@ const Profile = () => {
     )
 }
 
-export default withAuth(Profile)
+export default Profile
