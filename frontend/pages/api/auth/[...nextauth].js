@@ -17,6 +17,7 @@ export const authOptions = {
         }),
 
         CredentialsProvider({
+            id: 'credentials',
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "you@company.com" },
