@@ -2,14 +2,14 @@ import 'dotenv/config';
 import bcrypt from "bcrypt";
 import { PrismaClient } from '@prisma/client'
 // import prisma from "../../../utils/db";
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const saltRounds = 10;
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(401).json({ message: "This action is unauthorized." });
-  }
+  // if (req.method !== "POST") {
+  //   return res.status(401).json({ message: "This action is unauthorized." });
+  // }
 
   if (req.method === "POST") {
     try {
