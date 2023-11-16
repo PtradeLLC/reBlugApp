@@ -80,7 +80,7 @@ export const authOptions = {
         signIn: '/login',
         signOut: '/login',
         error: '/404',
-        // dashboard: '/dashboard',
+        dashboard: '/dashboard',
     },
     debug: true,
 };

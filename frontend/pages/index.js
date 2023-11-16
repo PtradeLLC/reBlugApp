@@ -5,7 +5,6 @@ import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
-import LogoOne from "../components/Logo-One";
 import LogoTwo from "../components/LogoTwo";
 
 const Home = () => {

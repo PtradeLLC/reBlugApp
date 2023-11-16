@@ -20,8 +20,6 @@ const SignIn = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Attempting to sign in with:", email, password);
-
             const signInData = await signIn('credentials', {
                 email,
                 password,
@@ -29,16 +27,15 @@ const SignIn = () => {
                 redirect: false,
             });
 
-            console.log("signInData:", signInData);
-
             if (!signInData.ok || signInData.error) {
                 console.log("SignData is falsy");
                 console.log("SignData is falsy", signInData.error);
                 console.log("SignData is falsy", signInData.status);
+                console.log("Sign-in successful!", signInData.ok);
             }
 
-            if (signInData.ok & session) {
-                console.log("Sign-in successful!");
+            if (signInData.ok || session) {
+                console.log("Sign-in successful!", signInData.ok);
                 router.push('/dashboard');
             } else {
                 console.error('Authentication failed:', signInData.error);
