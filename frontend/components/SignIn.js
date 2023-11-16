@@ -25,10 +25,17 @@ const SignIn = () => {
             const signInData = await signIn('Credentials', {
                 email,
                 password,
+                callbackUrl: '/dashboard',
                 // redirect: false,
             });
 
             console.log("signInData:", signInData);
+
+            if (!signInData.ok || signInData.error) {
+                console.log("SignData is falsy");
+                console.log("SignData is falsy", signInData.error);
+                console.log("SignData is falsy", signInData.status);
+            }
 
             if (signInData.ok & session) {
                 console.log("Sign-in successful!");
