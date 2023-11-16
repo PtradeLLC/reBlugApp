@@ -76,9 +76,9 @@ export const authOptions = {
         }),
     ],
     adapter: PrismaAdapter(prisma),
-    session: {
-        strategy: 'jwt',
-    },
+    // session: {
+    //     strategy: 'jwt',
+    // },
 
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
@@ -86,24 +86,17 @@ export const authOptions = {
         },
 
         async session({ session, token }) {
-            return {
-                ...session,
-                user: {
-                    ...session.user,
-                    // brandName: token.brandName
-
-                }
-            }
+            if (session?.user) session.user.role = token.role;
+            return session;
         },
-        // async jwt({ token, user, account, profile, isNewUser }) {
-        //     if (user) {
-        //         return {
-        //             ...token,
-        //             brandName: user.brandName
-        //         }
-        //     }
-        //     return token
-        // }
+        async jwt({ token, user, account, profile, isNewUser }) {
+            if (user) {
+                token.brandName = user.brandName;
+                token.role = user.role;
+            }
+            return token;
+        }
+
 
     },
     secret: process.env.NEXTAUTH_SECRET,
