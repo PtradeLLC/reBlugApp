@@ -22,14 +22,12 @@ export const authOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                let existingUser = null;
-
                 try {
                     if (!credentials?.email || !credentials?.password) {
-                        throw new Error("Missing credentials");
+                        throw new Error("Missing email or password");
                     }
 
-                    existingUser = await prisma.user.findUnique({
+                    const existingUser = await prisma.user.findUnique({
                         where: {
                             email: credentials?.email
                         },
@@ -39,7 +37,7 @@ export const authOptions = {
                         throw new Error("User not found");
                     }
 
-                    const passwordMatch = await compare(credentials?.password, existingUser.password);
+                    const passwordMatch = compare(credentials?.password, existingUser.password);
 
                     if (!passwordMatch) {
                         throw new Error("Invalid password");
@@ -52,9 +50,10 @@ export const authOptions = {
                 } catch (error) {
                     // Log the error or handle it appropriately
                     console.error("Authentication error:", error.message);
-                    return null;
+                    throw new Error("Authentication failed");
                 }
             }
+
         }),
 
         GoogleProvider({
@@ -81,7 +80,7 @@ export const authOptions = {
         signIn: '/login',
         signOut: '/login',
         error: '/404',
-        dashboard: '/dashboard',
+        // dashboard: '/dashboard',
     },
     debug: true,
 };

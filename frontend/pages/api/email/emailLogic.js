@@ -25,7 +25,6 @@ export default async function handler(req, res) {
         where: {
           email,
         },
-        cacheStrategy: { swr: 60, ttl: 60 },
       });
 
 
