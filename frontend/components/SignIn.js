@@ -22,11 +22,11 @@ const SignIn = () => {
         try {
             console.log("Attempting to sign in with:", email, password);
 
-            const signInData = await signIn('Credentials', {
+            const signInData = await signIn('credentials', {
                 email,
                 password,
                 callbackUrl: '/dashboard',
-                // redirect: false,
+                redirect: false,
             });
 
             console.log("signInData:", signInData);
