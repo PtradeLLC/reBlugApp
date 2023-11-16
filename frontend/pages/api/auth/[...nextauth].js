@@ -84,20 +84,26 @@ export const authOptions = {
         async signIn({ user, account, profile, email, credentials }) {
             return true
         },
-
-        async session({ session, token }) {
-            if (session?.user) session.user.role = token.role;
-            return session;
-        },
         async jwt({ token, user, account, profile, isNewUser }) {
-            if (user) {
-                token.brandName = user.brandName;
-                token.role = user.role;
+            if (account && user) {
+                return {
+                    accessToken: account.accessToken,
+                    accessTokenExpires: Date.now() + account.expires_in * 1000,
+                    refreshToken: account.refresh_token,
+                    user,
+                }
             }
             return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.user = token.user
+                session.accessToken = token.accessToken
+                session.error = token.error
+            }
+
+            return session
         }
-
-
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {

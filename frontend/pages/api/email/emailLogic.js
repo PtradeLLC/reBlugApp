@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from '@prisma/client';
 import { authOptions } from "next-auth";
 import { getServerSession } from "next-auth";
+import { withAccelerate } from '@prisma/extension-accelerate'
 
 const saltRounds = 10;
 
@@ -12,7 +13,7 @@ export const prisma =
   (globalForPrisma.prisma ||
     new PrismaClient({
       log: ['query'],
-    }));
+    }).$extends(withAccelerate()));
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
@@ -39,6 +40,7 @@ export default async function handler(req, res) {
         where: {
           email,
         },
+        cacheStrategy: { ttl: 60 },
       });
 
 
@@ -61,6 +63,7 @@ export default async function handler(req, res) {
           provider,
           password: hashedPassword,
         },
+        cacheStrategy: { ttl: 60 },
       });
 
       const { password: newUserPassword, ...rest } = newUser;
