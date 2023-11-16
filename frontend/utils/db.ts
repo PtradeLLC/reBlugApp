@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   // In development, use a global singleton to avoid multiple instances in hot-reloading
   if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient().$extends(withAccelerate());
+    globalForPrisma.prisma = new PrismaClient();
   }
   prisma = globalForPrisma.prisma;
 }
