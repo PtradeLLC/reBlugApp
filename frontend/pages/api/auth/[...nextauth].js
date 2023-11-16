@@ -5,8 +5,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import TwitchProvider from "next-auth/providers/twitch";
 import SlackProvider from "next-auth/providers/slack";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from '../../../utils/db';
 import { compare } from "bcrypt";
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient();
 
 export const authOptions = {
     providers: [
@@ -27,7 +28,7 @@ export const authOptions = {
                         throw new Error("Missing email or password");
                     }
 
-                    const existingUser = await prisma.user.findUnique({
+                    const existingUser = await prisma?.user?.findUnique({
                         where: {
                             email: credentials?.email
                         },
@@ -37,7 +38,8 @@ export const authOptions = {
                         throw new Error("User not found");
                     }
 
-                    const passwordMatch = compare(credentials?.password, existingUser.password);
+                    const passwordMatch = await compare(credentials?.password, existingUser.password);
+
 
                     if (!passwordMatch) {
                         throw new Error("Invalid password");
@@ -45,7 +47,8 @@ export const authOptions = {
 
                     return {
                         id: `${existingUser.id}`,
-                        email: existingUser.email
+                        email: existingUser.email,
+                        brandName: existingUser.brandName
                     };
                 } catch (error) {
                     // Log the error or handle it appropriately
@@ -74,6 +77,33 @@ export const authOptions = {
     adapter: PrismaAdapter(prisma),
     session: {
         strategy: 'jwt',
+    },
+
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            return true
+        },
+
+        async session({ session, token }) {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    // brandName: token.brandName
+
+                }
+            }
+        },
+        // async jwt({ token, user, account, profile, isNewUser }) {
+        //     if (user) {
+        //         return {
+        //             ...token,
+        //             brandName: user.brandName
+        //         }
+        //     }
+        //     return token
+        // }
+
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {

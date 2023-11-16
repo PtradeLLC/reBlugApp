@@ -1,17 +1,29 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
-import { PrismaClient } from '@prisma/client'
-// import prisma from "../../../utils/db";
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client';
+import { authOptions } from "next-auth";
+import { getServerSession } from "next-auth";
 
 const saltRounds = 10;
 
+const globalForPrisma = global;
+
+export const prisma =
+  (globalForPrisma.prisma ||
+    new PrismaClient({
+      log: ['query'],
+    }));
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
 export default async function handler(req, res) {
-  // if (req.method !== "POST") {
-  //   return res.status(401).json({ message: "This action is unauthorized." });
-  // }
+  // const session = await getServerSession(authOptions)
+  if (req.method !== "POST") {
+    return res.status(401).json({ message: "This action is unauthorized." });
+  }
 
   if (req.method === "POST") {
+    console.log(session);
     try {
       const { brandName, firstName, lastName, email, password, provider } = req.body;
 

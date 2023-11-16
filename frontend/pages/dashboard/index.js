@@ -109,6 +109,7 @@ const Dashboard = function ({ children }) {
         setOpenModal(true);
     };
 
+
     useEffect(() => {
         setTeamCount([{ user }]);
     }, [user]);
@@ -264,7 +265,7 @@ const Dashboard = function ({ children }) {
 
     return (
         <>
-            {session && (
+            {session?.user && (
                 <Suspense fallback={<Loading />}>
                     <UserContext.Provider value={user}>
                         <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">

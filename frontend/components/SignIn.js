@@ -27,28 +27,16 @@ const SignIn = () => {
                 redirect: false,
             });
 
-            if (!signInData.ok || signInData.error) {
-                console.log("SignData is falsy");
-                console.log("SignData is falsy", signInData.error);
-                console.log("SignData is falsy", signInData.status);
-                console.log("Sign-in successful!", signInData.ok);
-            }
-
-            if (signInData.ok || session) {
-                console.log("Sign-in successful!", signInData.ok);
-                router.push('/dashboard');
+            if (signInData?.error) {
+                console.log(signInData?.error);
             } else {
-                console.error('Authentication failed:', signInData.error);
-                setErrors(`Authentication failed: ${signInData.error}`);
+                router.push('/dashboard');
             }
         } catch (error) {
             console.error('Authentication error:', error.message);
             setErrors(`Authentication error: ${error.message}`);
         }
     };
-
-
-
 
     const setErrors = (error) => {
         return error.message
