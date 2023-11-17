@@ -20,6 +20,7 @@ const SignIn = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log('After signIn:', session);
             const baseUrl = "/api/email/emailLogic";
 
             const response = await fetch(baseUrl, {
@@ -30,24 +31,27 @@ const SignIn = () => {
                 body: JSON.stringify({ email, password }),
             });
 
+            // Check if the response status is OK
             if (!response.ok) {
                 throw new Error("Failed to fetch data from the server");
             }
 
-            if (!response) {
-                throw new Error("Response is undefined");
-            }
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch data from the server");
-            }
-
+            // Parse the response JSON
             const data = await response.json();
 
+            // Check if data.user is defined
             if (data.user) {
                 console.log(data.user);
-                // User exists or has been created
-                router.push("/dashboard"); // Redirect to the dashboard
+
+                // Use signIn to establish a session
+                await signIn('credentials', {
+                    email: data.user.email,
+                    password: data.user.password, // Adjust based on your user object structure
+                    redirect: false, // Avoids redirection as you are handling it manually
+                });
+
+                // Redirect to the dashboard
+                router.push("/dashboard");
             } else if (data.message === "User already exists, please login.") {
                 // User already exists, display a meaningful message to the user
                 setErrors("User already exists. Please login.");
@@ -63,52 +67,6 @@ const SignIn = () => {
         }
     };
 
-    // const handleOnSubmit = async (e) => {
-    //     e.preventDefault();
-    //     let provider = 'credentials';
-
-    //     try {
-    //         if (provider) {
-    //             const baseUrl = "/api/email/emailLogic";
-
-    //             const response = await fetch(baseUrl, {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                 },
-    //                 body: JSON.stringify({ email, password }),
-    //             });
-
-    //             if (!response.ok) {
-    //                 throw new Error("Failed to fetch data from the server");
-    //             }
-
-    //             const data = await response.json();
-
-    //             if (data.user) {
-    //                 router.push("/dashboard"); // Redirect to the dashboard
-    //             } else if (data.message === "User already exists, please login.") {
-    //                 setErrors("User already exists. Please login."); // Display a meaningful message to the user
-    //             } else {
-    //                 console.error("Authentication failed:", data.message);
-    //                 setErrors(`Authentication failed: ${data.message}`);
-    //             }
-
-
-
-    //             // Assuming the authentication was successful and you have a user object in data
-    //             if (data.user) {
-    //                 router.push("/dashboard"); // Redirect to the dashboard
-    //             } else {
-    //                 // Handle other scenarios as needed
-    //                 console.error("Authentication failed:", data.message);
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Authentication error:', error.message);
-    //         setErrors(`Authentication error: ${error.message}`);
-    //     }
-    // };
 
 
     const setErrors = (error) => {

@@ -10,7 +10,7 @@ import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 // const globalForPrisma = global;
-const prisma = new PrismaClient;
+const prisma = new PrismaClient();
 
 // export const prisma =
 //     (globalForPrisma.prisma ||
@@ -87,6 +87,7 @@ export const authOptions = {
                     user,
                 }
             }
+            console.log('token user account:', token, user, account);
             return token;
         },
         async session({ session, token, user }) {
@@ -96,6 +97,7 @@ export const authOptions = {
                 session.error = token.error
                 session.user.id = user.id;
             }
+            console.log('token user account:', token, user, session);
 
             return session;
         },

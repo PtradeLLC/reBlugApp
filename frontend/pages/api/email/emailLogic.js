@@ -7,17 +7,7 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 
 const saltRounds = 10;
 
-const prisma = new PrismaClient;
-
-// const globalForPrisma = global;
-
-// export const prisma =
-//   (globalForPrisma.prisma ||
-//     new PrismaClient({
-//       log: ['query'],
-//     }).$extends(withAccelerate()));
-
-// if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
