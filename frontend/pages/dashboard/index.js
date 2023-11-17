@@ -12,7 +12,7 @@ import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 const navigation = [
@@ -99,16 +99,11 @@ const Dashboard = function ({ children }) {
     const [dataColor, setDataColor] = useState("");
     const [team, setTeam] = useState("There are no members of your team here");
     const [emailSent, setEmailSent] = useState(false);
-    const { user } = session || {};
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
     const [email, setEmail] = useState({ userId: ``, userEmail: "" });
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/api/auth/signin?callbackUrl=/");
-        }
-    });
+    const { data: session, status } = useSession();
+    const { user } = session || {};
 
     const handleClick = () => {
         setOpenModal(true);

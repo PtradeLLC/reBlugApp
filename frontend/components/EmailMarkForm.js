@@ -23,12 +23,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
     const [isEmailEmpty, setIsEmailEmpty] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [selectedButton, setSelectedButton] = useState(false);
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/api/auth/signin?callbackUrl=/");
-        }
-    });
+    const { data: session, status } = useSession();
 
 
     const initialEmailForm = {
