@@ -13,7 +13,6 @@ import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
-import Error from 'next/error'
 
 
 const navigation = [
@@ -89,18 +88,6 @@ const marketingAction = [
 
 const UserContext = createContext();
 
-// export async function getServerSideProps() {
-//     const result = await fetchSomeData('/dashboard')
-//     const errorCode = result.ok ? false : result.statusCode
-//     const data = await result.json();
-
-//     console.log(errorCode, data);
-
-//     return {
-//         props: { errorCode, data },
-//     }
-// }
-
 const Dashboard = function ({ children }) {
     const [errors, setErrors] = useState('');
     const [selectedComponent, setSelectedComponent] = useState(null);
@@ -117,6 +104,8 @@ const Dashboard = function ({ children }) {
     const [email, setEmail] = useState({ userId: ``, userEmail: "" });
     const { data: session, status } = useSession();
     const { user } = session || {};
+
+    console.log(session, user);
 
     const handleClick = () => {
         setOpenModal(true);
