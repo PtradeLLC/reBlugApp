@@ -9,15 +9,16 @@ import { compare } from "bcrypt";
 import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate';
 
-const globalForPrisma = global;
+// const globalForPrisma = global;
+const prisma = new PrismaClient;
 
-export const prisma =
-    (globalForPrisma.prisma ||
-        new PrismaClient({
-            log: ['query'],
-        }).$extends(withAccelerate()));
+// export const prisma =
+//     (globalForPrisma.prisma ||
+//         new PrismaClient({
+//             log: ['query'],
+//         }));
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export const authOptions = {
     providers: [
@@ -42,7 +43,6 @@ export const authOptions = {
                         where: {
                             email: credentials?.email
                         },
-                        cacheStrategy: { ttl: 60 },
                     });
 
                     if (existingUser) {

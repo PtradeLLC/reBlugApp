@@ -105,8 +105,6 @@ const Dashboard = function ({ children }) {
     const { data: session, status } = useSession();
     const { user } = session || {};
 
-    console.log(session, user);
-
     const handleClick = () => {
         setOpenModal(true);
     };

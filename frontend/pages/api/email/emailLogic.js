@@ -7,15 +7,17 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 
 const saltRounds = 10;
 
-const globalForPrisma = global;
+const prisma = new PrismaClient;
 
-export const prisma =
-  (globalForPrisma.prisma ||
-    new PrismaClient({
-      log: ['query'],
-    }).$extends(withAccelerate()));
+// const globalForPrisma = global;
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// export const prisma =
+//   (globalForPrisma.prisma ||
+//     new PrismaClient({
+//       log: ['query'],
+//     }).$extends(withAccelerate()));
+
+// if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -33,7 +35,6 @@ export default async function handler(req, res) {
         where: {
           email: lowercaseEmail,
         },
-        cacheStrategy: { ttl: 60 },
       });
 
       // Check if User already exists
@@ -49,7 +50,6 @@ export default async function handler(req, res) {
           email: lowercaseEmail,
           password: hashedPassword,
         },
-        cacheStrategy: { ttl: 60 },
       });
 
       // Send any additional information you want to the client
