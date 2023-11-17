@@ -42,6 +42,7 @@ export const authOptions = {
                         where: {
                             email: credentials?.email
                         },
+                        cacheStrategy: { ttl: 60 },
                     });
 
                     if (existingUser) {
@@ -49,7 +50,6 @@ export const authOptions = {
                         if (passwordMatch) {
                             delete existingUser.password;
                             // return user if password matches
-                            console.log(existingUser);
                             return existingUser;
                         }
                     } else {
@@ -73,16 +73,12 @@ export const authOptions = {
             clientSecret: process.env.TWITCH_CLIENT_SECRET,
         }),
 
-        // SlackProvider({
-        //     clientId: process.env.SLACK_CLIENT_ID,
-        //     clientSecret: process.env.SLACK_CLIENT_SECRET,
-        // }),
     ],
     adapter: PrismaAdapter(prisma),
 
     callbacks: {
 
-        async jwt({ token, user, account, profile, isNewUser }) {
+        async jwt({ token, user, account }) {
             if (account && user) {
                 return {
                     accessToken: account.accessToken,
@@ -101,7 +97,7 @@ export const authOptions = {
                 session.user.id = user.id;
             }
 
-            return Promise.resolve(session);
+            return session;
         },
         async redirect({ url, baseUrl }) {
             return url.startsWith(baseUrl) ? url : baseUrl;

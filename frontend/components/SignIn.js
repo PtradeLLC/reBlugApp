@@ -31,6 +31,14 @@ const SignIn = () => {
                 throw new Error("Failed to fetch data from the server");
             }
 
+            if (!response) {
+                throw new Error("Response is undefined");
+            }
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch data from the server");
+            }
+
             const data = await response.json();
 
             if (data.user) {
