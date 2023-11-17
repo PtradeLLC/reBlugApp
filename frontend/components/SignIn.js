@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Loading from './Loading';
 import PasswordReset from './PassReset';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +13,8 @@ const SignIn = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { data: session, status } = useSession();
+    const { user } = session || {};
 
 
     const handleOnSubmit = async (e) => {

@@ -114,6 +114,8 @@ const Dashboard = function ({ children }) {
         setTeamCount([{ user }]);
     }, [user]);
 
+    console.log("From Dashboard:", session);
+
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
     //     if (!isEmailValid(email.userEmail)) {
