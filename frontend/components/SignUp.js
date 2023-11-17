@@ -18,6 +18,11 @@ const SignUp = () => {
 
     const router = useRouter();
 
+    // if (!brandName || !firstName || !lastName || !email || !password || !provider) {
+    //     console.error("Validation error: Brand name, first name, last name, or email is missing");
+    //     return res.status(400).json({ message: "An entry is missing" });
+    //   };
+
     useEffect(() => {
         let isMounted = true;
 
@@ -34,14 +39,23 @@ const SignUp = () => {
                         body: JSON.stringify({ brandName, firstName, lastName, email, password, provider })
                     });
 
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch data from the server");
+                    }
+
                     const data = await response.json();
                     if (isMounted && data) {
                         setIsSuccess(true);
                         setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...')
-                        setTimeout(() => router.push('/api/auth/signin'), 4000);
+                        setTimeout(() => router.push("/api/auth/signin"), 4000);
                     }
                 }
             } catch (error) {
+                if (error instanceof TypeError && error.message === 'Failed to fetch') {
+                    setIsError('Network error. Please check your internet connection.');
+                } else {
+                    setIsError(`An error occurred. Please try again. ${error.message}`);
+                }
                 setIsError(`An error occurred. Please try again. ${error.message}`);
             } finally {
                 if (isMounted) setLoading(false);
@@ -83,7 +97,7 @@ const SignUp = () => {
     return (
         <div className="">
             <div className="">
-                <form onSubmit={handleOnSubmit} className="">
+                <form onSubmit={handleOnSubmit} method='post' className="">
                     <div className="">
                         <label htmlFor="brandName" className="block mt-3 text-sm font-medium leading-6 text-gray-900">
                             Brand Name <span className=' text-xs'>(Optional)</span>

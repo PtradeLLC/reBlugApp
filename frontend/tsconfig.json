@@ -20,7 +20,7 @@
     "**/*.ts",
     "**/*.tsx",
     "../forgedMartchatbot/utils/OpenAIStream.ts",
-    "middleware.ts",
+    "middleware.js",
     "./types/*.d.ts"
   ],
   "exclude": ["node_modules"]

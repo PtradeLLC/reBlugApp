@@ -5,7 +5,12 @@ import { useSession } from "next-auth/react";
 
 export default function EmailCamp({ openModal, setOpenModal }) {
     const [campaignEmail, setCampaignEmail] = useState(null);
-    const { data: session, status, update } = useSession();
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/api/auth/signin?callbackUrl=/");
+        }
+    });
 
     const { user } = session || {};
 

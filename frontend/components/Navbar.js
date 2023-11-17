@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -11,12 +10,17 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
+  if (status === "loading") {
+    // Session data is still loading
+    return null; // or loading indicator
+  }
 
   const handleClick = async () => {
     await signOut({ callbackUrl: "/api/auth/signout?callbackUrl=/" });
   };
+
 
 
   return (

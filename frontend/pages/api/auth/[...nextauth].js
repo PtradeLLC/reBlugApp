@@ -7,7 +7,17 @@ import SlackProvider from "next-auth/providers/slack";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcrypt";
 import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient();
+import { withAccelerate } from '@prisma/extension-accelerate';
+
+const globalForPrisma = global;
+
+export const prisma =
+    (globalForPrisma.prisma ||
+        new PrismaClient({
+            log: ['query'],
+        }).$extends(withAccelerate()));
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export const authOptions = {
     providers: [
@@ -17,11 +27,10 @@ export const authOptions = {
         }),
 
         CredentialsProvider({
-            id: 'credentials',
-            name: "Credentials",
+            name: 'Credentials',
             credentials: {
-                email: { label: "Email", type: "email", placeholder: "you@company.com" },
-                password: { label: "Password", type: "password" }
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
                 try {
@@ -35,29 +44,23 @@ export const authOptions = {
                         },
                     });
 
-                    if (!existingUser) {
-                        throw new Error("User not found");
+                    if (existingUser) {
+                        const passwordMatch = compare(credentials?.password, existingUser.password);
+                        if (passwordMatch) {
+                            delete existingUser.password;
+                            // return user if password matches
+                            console.log(existingUser);
+                            return existingUser;
+                        }
+                    } else {
+                        console.log("There is no user on db");
                     }
-
-                    const passwordMatch = await compare(credentials?.password, existingUser.password);
-
-
-                    if (!passwordMatch) {
-                        throw new Error("Invalid password");
-                    }
-
-                    return {
-                        id: `${existingUser.id}`,
-                        email: existingUser.email,
-                        brandName: existingUser.brandName
-                    };
                 } catch (error) {
-                    // Log the error or handle it appropriately
-                    console.error("Authentication error:", error.message);
-                    throw new Error("Authentication failed");
+                    // Log the error
+                    console.error(`Authentication error:, ${error}`);
                 }
+                return null;
             }
-
         }),
 
         GoogleProvider({
@@ -70,20 +73,15 @@ export const authOptions = {
             clientSecret: process.env.TWITCH_CLIENT_SECRET,
         }),
 
-        SlackProvider({
-            clientId: process.env.SLACK_CLIENT_ID,
-            clientSecret: process.env.SLACK_CLIENT_SECRET,
-        }),
+        // SlackProvider({
+        //     clientId: process.env.SLACK_CLIENT_ID,
+        //     clientSecret: process.env.SLACK_CLIENT_SECRET,
+        // }),
     ],
     adapter: PrismaAdapter(prisma),
-    // session: {
-    //     strategy: 'jwt',
-    // },
 
     callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            return true
-        },
+
         async jwt({ token, user, account, profile, isNewUser }) {
             if (account && user) {
                 return {
@@ -95,22 +93,25 @@ export const authOptions = {
             }
             return token;
         },
-        async session({ session, token }) {
+        async session({ session, token, user }) {
             if (token) {
                 session.user = token.user
                 session.accessToken = token.accessToken
                 session.error = token.error
+                session.user.id = user.id;
             }
 
-            return session
-        }
+            return Promise.resolve(session);
+        },
+        async redirect({ url, baseUrl }) {
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/login',
         signOut: '/login',
         error: '/404',
-        dashboard: '/dashboard',
     },
     debug: true,
 };

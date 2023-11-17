@@ -22,7 +22,12 @@ export default function Session_Email({ openModal, setOpenModal }) {
     productLink: "",
     imageUrl: `${selectedImage}`,
   });
-  const { data: session, status } = useSession({ required: true })
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/api/auth/signin?callbackUrl=/");
+    }
+  });
 
   const url = "/api/email/test-email";
 

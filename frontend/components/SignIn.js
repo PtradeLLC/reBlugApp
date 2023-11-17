@@ -5,38 +5,100 @@ import Link from 'next/link';
 import Loading from './Loading';
 import PasswordReset from './PassReset';
 import { signIn } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { data: session } = useSession();
-
     const router = useRouter();
 
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
-            const signInData = await signIn('credentials', {
-                email,
-                password,
-                callbackUrl: '/dashboard',
-                redirect: false,
+            const baseUrl = "/api/email/emailLogic";
+
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
             });
 
-            if (signInData?.error) {
-                console.log(signInData?.error);
-            } else {
-                router.push('/dashboard');
+            if (!response.ok) {
+                throw new Error("Failed to fetch data from the server");
             }
+
+            const data = await response.json();
+
+            if (data.user) {
+                console.log(data.user);
+                // User exists or has been created
+                router.push("/dashboard"); // Redirect to the dashboard
+            } else if (data.message === "User already exists, please login.") {
+                // User already exists, display a meaningful message to the user
+                setErrors("User already exists. Please login.");
+            } else {
+                // Handle other scenarios as needed
+                console.error("Authentication failed:", data.message);
+                setErrors(`Authentication failed: ${data.message}`);
+            }
+
         } catch (error) {
             console.error('Authentication error:', error.message);
             setErrors(`Authentication error: ${error.message}`);
         }
     };
+
+    // const handleOnSubmit = async (e) => {
+    //     e.preventDefault();
+    //     let provider = 'credentials';
+
+    //     try {
+    //         if (provider) {
+    //             const baseUrl = "/api/email/emailLogic";
+
+    //             const response = await fetch(baseUrl, {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({ email, password }),
+    //             });
+
+    //             if (!response.ok) {
+    //                 throw new Error("Failed to fetch data from the server");
+    //             }
+
+    //             const data = await response.json();
+
+    //             if (data.user) {
+    //                 router.push("/dashboard"); // Redirect to the dashboard
+    //             } else if (data.message === "User already exists, please login.") {
+    //                 setErrors("User already exists. Please login."); // Display a meaningful message to the user
+    //             } else {
+    //                 console.error("Authentication failed:", data.message);
+    //                 setErrors(`Authentication failed: ${data.message}`);
+    //             }
+
+
+
+    //             // Assuming the authentication was successful and you have a user object in data
+    //             if (data.user) {
+    //                 router.push("/dashboard"); // Redirect to the dashboard
+    //             } else {
+    //                 // Handle other scenarios as needed
+    //                 console.error("Authentication failed:", data.message);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error('Authentication error:', error.message);
+    //         setErrors(`Authentication error: ${error.message}`);
+    //     }
+    // };
+
 
     const setErrors = (error) => {
         return error.message

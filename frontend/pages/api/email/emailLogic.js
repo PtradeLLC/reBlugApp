@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from '@prisma/client';
 import { authOptions } from "next-auth";
 import { getServerSession } from "next-auth";
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { withAccelerate } from '@prisma/extension-accelerate';
 
 const saltRounds = 10;
 
@@ -18,78 +18,132 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export default async function handler(req, res) {
-  // const session = await getServerSession(authOptions)
-  if (req.method !== "POST") {
-    return res.status(401).json({ message: "This action is unauthorized." });
-  }
-
   if (req.method === "POST") {
-    console.log(session);
     try {
-      const { brandName, firstName, lastName, email, password, provider } = req.body;
+      const { email, password } = req.body;
 
-      if (!brandName || !firstName || !lastName || !email || !password || !provider) {
-        console.error("Validation error: Brand name, first name, last name, or email is missing");
+      if (!email || !password) {
+        console.error("Validation error: email is missing");
         return res.status(400).json({ message: "An entry is missing" });
-      };
+      }
 
-      // const sentFrom = new Sender("support@forgedmart.com", "Support Team");
+      const lowercaseEmail = email.toLowerCase();
 
-      // Check if the user with the provided email already exists in the database
       const existingUser = await prisma.user.findUnique({
         where: {
-          email,
+          email: lowercaseEmail,
         },
         cacheStrategy: { ttl: 60 },
       });
 
-
+      // Check if User already exists
       if (existingUser) {
-        return res.status(409).json({ user: null, message: "User already exists, please login." });
+        // User already exists, log them in
+        return res.status(200).json({ user: existingUser, message: "User already exists, logging in.", redirect: "/dashboard" });
       }
 
-
-      // Hash user's password
+      // User doesn't exist, create a new account
       const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      const verificationBaseUrl = "";
-
       const newUser = await prisma.user.create({
         data: {
-          brandName,
-          email,
-          firstName,
-          lastName,
-          provider,
+          email: lowercaseEmail,
           password: hashedPassword,
         },
         cacheStrategy: { ttl: 60 },
       });
 
-      const { password: newUserPassword, ...rest } = newUser;
+      // Send any additional information you want to the client
+      return res.status(201).json({ user: newUser, message: "User created successfully.", redirect: "/dashboard" });
 
-      // const emailVerificationResponse = await fetch(verificationBaseUrl, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${token} `,
-      //   },
-      //   body: JSON.stringify({
-      //     email, // Including the email in the request body
-      //   }),
-      // });
-
-      // if (!emailVerificationResponse.ok) {
-      //   throw new Error("Email verification failed");
-      // };
-
-      res.status(201).json({ user: rest, message: "User created successfully. Please check your email to verify." });
     } catch (error) {
-      // Handle errors
       console.error(error);
-      res.status(500).json({ error: `An error occurred during registration :${error}` });
+      return res.status(500).json({ error: `An error occurred during registration: ${error}` });
     } finally {
       await prisma.$disconnect();
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// export default async function handler(req, res) {
+//   // const session = await getServerSession(authOptions)
+//   if (req.method !== "POST") {
+//     return res.status(401).json({ message: "This action is unauthorized." });
+//   }
+
+//   if (req.method === "POST") {
+//     try {
+//       const { brandName, firstName, lastName, email, password, provider } = req.body;
+
+//       // Convert email to lowercase
+//       const lowercaseEmail = email.toLowerCase();
+
+//       // const sentFrom = new Sender("support@forgedmart.com", "Support Team");
+
+//       // Check if the user with the provided email already exists in the database
+//       const existingUser = await prisma.user.findUnique({
+//         where: {
+//           email: lowercaseEmail,
+//         },
+//         cacheStrategy: { ttl: 60 },
+//       });
+
+//       if (existingUser) {
+//         return res.status(409).json({ user: existingUser });
+//       }
+
+
+//       // Hash user's password
+//       const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+//       const verificationBaseUrl = "";
+
+//       const newUser = await prisma.user.create({
+//         data: {
+//           brandName,
+//           email: lowercaseEmail,
+//           firstName,
+//           lastName,
+//           provider,
+//           password: hashedPassword,
+//         },
+//         cacheStrategy: { ttl: 60 },
+//       });
+
+//       const { password: newUserPassword, ...rest } = newUser;
+
+//       // const emailVerificationResponse = await fetch(verificationBaseUrl, {
+//       //   method: "POST",
+//       //   headers: {
+//       //     "Content-Type": "application/json",
+//       //     Authorization: `Bearer ${token} `,
+//       //   },
+//       //   body: JSON.stringify({
+//       //     email, // Including the email in the request body
+//       //   }),
+//       // });
+
+//       // if (!emailVerificationResponse.ok) {
+//       //   throw new Error("Email verification failed");
+//       // };
+
+//       res.status(201).json({ user: rest, message: "User created successfully. Please check your email to verify." });
+//     } catch (error) {
+//       // Handle errors
+//       console.error(error);
+//       res.status(500).json({ error: `An error occurred during registration :${error}` });
+//     } finally {
+//       await prisma.$disconnect();
+//     }
+//   }
+// }

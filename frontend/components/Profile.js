@@ -29,7 +29,12 @@ const UserContext = createContext();
 
 export default function ProfilePg() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const { data: session, status, update } = useSession();
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/api/auth/signin?callbackUrl=/");
+        }
+    });
 
     const { user } = session || {};
 

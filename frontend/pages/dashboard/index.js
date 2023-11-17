@@ -12,7 +12,7 @@ import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 
 const navigation = [
@@ -99,11 +99,16 @@ const Dashboard = function ({ children }) {
     const [dataColor, setDataColor] = useState("");
     const [team, setTeam] = useState("There are no members of your team here");
     const [emailSent, setEmailSent] = useState(false);
-    const { data: session, status } = useSession();
     const { user } = session || {};
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
     const [email, setEmail] = useState({ userId: ``, userEmail: "" });
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/api/auth/signin?callbackUrl=/");
+        }
+    });
 
     const handleClick = () => {
         setOpenModal(true);
@@ -263,9 +268,13 @@ const Dashboard = function ({ children }) {
         }
     };
 
+    // if (!session) {
+    //     redirect("/api/auth/signin?callbackUrl=/");
+    // }
+
     return (
         <>
-            {session?.user && (
+            {session && (
                 <Suspense fallback={<Loading />}>
                     <UserContext.Provider value={user}>
                         <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
