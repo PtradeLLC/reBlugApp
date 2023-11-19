@@ -21,7 +21,7 @@ const SignIn = () => {
         e.preventDefault();
         try {
             console.log('After signIn:', session);
-            const baseUrl = "/api/email/emailLogic";
+            const baseUrl = "/api/userSignin";
 
             const response = await fetch(baseUrl, {
                 method: "POST",
@@ -41,7 +41,6 @@ const SignIn = () => {
 
             // Check if data.user is defined
             if (data.user) {
-                console.log(data.user);
 
                 // Use signIn to establish a session
                 await signIn('credentials', {
@@ -51,7 +50,7 @@ const SignIn = () => {
                 });
 
                 // Redirect to the dashboard
-                router.push("/dashboard");
+                router.push(data.redirect);
             } else if (data.message === "User already exists, please login.") {
                 // User already exists, display a meaningful message to the user
                 setErrors("User already exists. Please login.");

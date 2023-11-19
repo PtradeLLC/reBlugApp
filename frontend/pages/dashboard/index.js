@@ -42,9 +42,6 @@ const teamMembers = [
     },
 ];
 
-
-// absolute inset-0 rounded-xl   Checkout later
-
 const quicklinks = [
     {
         id: 1,
@@ -105,73 +102,32 @@ const Dashboard = function ({ children }) {
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
+    const user = session;
 
     useEffect(() => {
         if (status === 'loading') {
-            // Session is still loading
             return;
         }
 
         if (!session) {
             console.log("There's no session");
+            router.push('/login');
             // Redirect or handle as needed
             return;
         }
 
         const { user } = session;
-        // Rest of your code related to session
+        setTeamCount([{ user }]);
     }, [session, status]);
 
     if (status === 'loading' || !session) {
-        return <div>Loading...</div>; // Adjust this based on your loading component
+        return <div><Loading /></div>;
     }
 
     // Rest of the component body
     const handleClick = () => {
         setOpenModal(true);
     };
-
-    useEffect(() => {
-        if (session) {
-            const { user } = session;
-            setTeamCount([{ user }]);
-        }
-    }, [session]);
-
-    console.log("From Dashboard:", session);
-
-
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     if (!isEmailValid(email.userEmail)) {
-    //         setEmailMessage("Please enter a valid email address.");
-    //         return;
-    //     };
-
-    //     try {
-    //         const baseUrl = "/api/team-members";
-    //         const response = await fetch(baseUrl, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(email)
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-
-    //         console.log("EMAIL", email);
-
-    //         setEmailMessage("Invite sent successfully!");
-    //         setEmailSent(true);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //         setEmailMessage("An error occurred while sending the invite.");
-    //     }
-    // };
 
     const handleModalClick = () => {
         setShow(true);

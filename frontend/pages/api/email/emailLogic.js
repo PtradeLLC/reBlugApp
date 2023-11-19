@@ -12,9 +12,9 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { email, password } = req.body;
+      const { brandName, firstName, lastName, email, password, provider } = req.body;
 
-      if (!email || !password) {
+      if (!email || !password || !firstName || !lastName) {
         console.error("Validation error: email is missing");
         return res.status(400).json({ message: "An entry is missing" });
       }
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       // Check if User already exists
       if (existingUser) {
         // User already exists, log them in
-        return res.status(200).json({ user: existingUser, message: "User already exists, logging in.", redirect: "/dashboard" });
+        return res.status(200).json({ user: existingUser, message: "User already exists, please login.", redirect: "/login" });
       }
 
       // User doesn't exist, create a new account
@@ -39,6 +39,10 @@ export default async function handler(req, res) {
         data: {
           email: lowercaseEmail,
           password: hashedPassword,
+          brandName,
+          firstName,
+          lastName,
+          provider
         },
       });
 

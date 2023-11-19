@@ -21,16 +21,25 @@ const prisma = new PrismaClient();
 // if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export const authOptions = {
+    adapter: PrismaAdapter(prisma),
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
+
+        TwitchProvider({
+            clientId: process.env.TWITCH_CLIENT_ID,
+            clientSecret: process.env.TWITCH_CLIENT_SECRET,
+        }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         }),
-
         CredentialsProvider({
-            name: 'Credentials',
+            name: 'credentials',
             credentials: {
-                email: { label: 'Email', type: 'email' },
+                email: { label: 'Email', type: 'text' },
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
@@ -63,55 +72,32 @@ export const authOptions = {
             }
         }),
 
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
-
-        TwitchProvider({
-            clientId: process.env.TWITCH_CLIENT_ID,
-            clientSecret: process.env.TWITCH_CLIENT_SECRET,
-        }),
-
     ],
-    adapter: PrismaAdapter(prisma),
-
-    callbacks: {
-
-        async jwt({ token, user, account }) {
-            if (account && user) {
-                return {
-                    accessToken: account.accessToken,
-                    accessTokenExpires: Date.now() + account.expires_in * 1000,
-                    refreshToken: account.refresh_token,
-                    user,
-                }
-            }
-            console.log('token user account:', token, user, account);
-            return token;
-        },
-        async session({ session, token, user }) {
-            if (token) {
-                session.user = token.user
-                session.accessToken = token.accessToken
-                session.error = token.error
-                session.user.id = user.id;
-            }
-            console.log('token user account:', token, user, session);
-
-            return session;
-        },
-        async redirect({ url, baseUrl }) {
-            return url.startsWith(baseUrl) ? url : baseUrl;
-        },
+    session: {
+        strategy: "jwt",
     },
+    // callbacks: {
+    //     async session({ session, token, user }) {
+    //         if (token) {
+    //             session.user = token.user
+    //             session.accessToken = token.accessToken
+    //             session.error = token.error
+    //             session.user.id = user.id;
+    //         }
+
+    //         return session;
+    //     },
+    //     async redirect({ url, baseUrl }) {
+    //         return url.startsWith(baseUrl) ? url : baseUrl;
+    //     },
+    // },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/login',
         signOut: '/login',
         error: '/404',
     },
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);
