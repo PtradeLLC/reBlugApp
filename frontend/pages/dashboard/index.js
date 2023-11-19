@@ -121,7 +121,7 @@ const Dashboard = function ({ children }) {
     }, [session, status]);
 
     if (status === 'loading' || !session) {
-        return <div className="flex justify-center items-center "><Loading /></div>;
+        return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
     }
 
     // Rest of the component body
