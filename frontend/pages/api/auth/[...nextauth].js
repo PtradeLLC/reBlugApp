@@ -10,7 +10,7 @@ import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 // const globalForPrisma = global;
-const prisma = new PrismaClient();
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 // export const prisma =
 //     (globalForPrisma.prisma ||
@@ -52,6 +52,7 @@ export const authOptions = {
                         where: {
                             email: credentials?.email
                         },
+                        cacheStrategy: { swr: 60, ttl: 60 },
                     });
 
                     if (existingUser) {
@@ -76,21 +77,6 @@ export const authOptions = {
     session: {
         strategy: "jwt",
     },
-    // callbacks: {
-    //     async session({ session, token, user }) {
-    //         if (token) {
-    //             session.user = token.user
-    //             session.accessToken = token.accessToken
-    //             session.error = token.error
-    //             session.user.id = user.id;
-    //         }
-
-    //         return session;
-    //     },
-    //     async redirect({ url, baseUrl }) {
-    //         return url.startsWith(baseUrl) ? url : baseUrl;
-    //     },
-    // },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/login',

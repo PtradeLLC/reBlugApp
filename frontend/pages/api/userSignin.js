@@ -5,9 +5,7 @@ import { authOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { withAccelerate } from '@prisma/extension-accelerate';
 
-const saltRounds = 10;
-
-const prisma = new PrismaClient();
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
@@ -25,6 +23,7 @@ export default async function handler(req, res) {
                 where: {
                     email: lowercaseEmail,
                 },
+                cacheStrategy: { swr: 60, ttl: 60 },
             });
 
             // Check if User already exists

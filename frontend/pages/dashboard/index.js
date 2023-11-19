@@ -102,7 +102,8 @@ const Dashboard = function ({ children }) {
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
-    const user = session;
+
+    console.log(session);
 
     useEffect(() => {
         if (status === 'loading') {
@@ -116,8 +117,8 @@ const Dashboard = function ({ children }) {
             return;
         }
 
-        const { user } = session;
-        setTeamCount([{ user }]);
+        // const { user } = session;
+        // setTeamCount([{ user }]);
     }, [session, status]);
 
     if (status === 'loading' || !session) {
@@ -132,6 +133,16 @@ const Dashboard = function ({ children }) {
     const handleModalClick = () => {
         setShow(true);
     };
+
+    // Fetch user data
+    const fetchUser = async () => {
+        const baseUrl = "";
+
+    }
+
+
+
+
 
     const kpi = (title) => {
         const renderKpiContent = (action) => (
@@ -198,7 +209,7 @@ const Dashboard = function ({ children }) {
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <UserContext.Provider value={user}>
+                <UserContext.Provider value={session.user}>
                     <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
                         <Popover as="header" className=" pb-24">
                             {({ open }) => (
@@ -287,10 +298,10 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex items-center px-5">
                                                                 <div className="ml-3 min-w-0 flex-1">
                                                                     <div className="truncate text-base font-medium text-gray-800">
-                                                                        Hello {user?.name},
+                                                                        Hello {session.user?.name},
                                                                     </div>
                                                                     <div className="truncate text-sm font-medium text-gray-500">
-                                                                        {user?.email}
+                                                                        {session.user?.email}
                                                                     </div>
                                                                 </div>
                                                                 <button
@@ -342,13 +353,13 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex-shrink-0">
                                                                 <img
                                                                     className="mx-auto h-20 w-20 rounded-full"
-                                                                    src={user?.image}
+                                                                    src={session.user?.image}
                                                                     alt="profile image"
                                                                 />
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {user?.name}
+                                                                    Welcome {session.user?.name}
                                                                 </h2>
                                                                 <Link href={"/profile"}><span className="text-xs">Edit Profile</span></Link>
                                                             </div>

@@ -18,11 +18,6 @@ const SignUp = () => {
 
     const router = useRouter();
 
-    // if (!brandName || !firstName || !lastName || !email || !password || !provider) {
-    //     console.error("Validation error: Brand name, first name, last name, or email is missing");
-    //     return res.status(400).json({ message: "An entry is missing" });
-    //   };
-
     useEffect(() => {
         let isMounted = true;
 
@@ -177,13 +172,6 @@ const SignUp = () => {
 
                     {isError ? <p className="bg-red-200 rounded text-center m-auto px-2">{isError}</p> : null}
                 </form>
-                {/* {needsEmailVerification ? (
-                    <p className='bg-green-200 rounded text-center m-auto px-2'>
-                        Please check your mailbox and follow the verification link to verify your email.
-                    </p>
-                ) : (
-                    
-                )} */}
             </div>
 
             <p className="text-right mt-3">

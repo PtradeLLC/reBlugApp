@@ -1,6 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
 import Email from "../emailfiles/react-email.js";
-// import { MailerSend, EmailParams, Sender, Recipient, Identity, Inbound, InboundFilterType } from "mailersend";
 import ReactDOMServer from "react-dom/server";
 
 
