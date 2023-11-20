@@ -97,21 +97,42 @@ const Dashboard = function ({ children }) {
     const [emailSent, setEmailSent] = useState(false);
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
+
     // const [email, setEmail] = useState("");
     const [data, setData] = useState(null);
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
-    // const { email } = session.user
-
+    const [user, setUser] = useState('');
 
     useEffect(() => {
         if (status === 'loading') {
-            // Check if session is defined before accessing user
-            if (session && session.user) {
-                console.log(session.user.email);
-            }
             return;
+        }
+
+        if (session && session.user) {
+            const baseUrl = "/api/fetchUser";
+            const userData = async () => {
+                try {
+                    const response = await fetch(baseUrl, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUser(data);
+                    } else {
+                        console.error("Error fetching user:", response.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error fetching user:", error.message);
+                }
+            };
+
+            userData();
         }
 
         if (!session) {
@@ -119,8 +140,8 @@ const Dashboard = function ({ children }) {
             router.push('/login');
             return;
         }
-
     }, [status, session, router]);
+
 
     if (status === 'loading' || !session) {
         return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
@@ -288,10 +309,10 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex items-center px-5">
                                                                 <div className="ml-3 min-w-0 flex-1">
                                                                     <div className="truncate text-base font-medium text-gray-800">
-                                                                        Hello {session.user?.name},
+                                                                        Hello {session?.user?.name || user?.brandName},
                                                                     </div>
                                                                     <div className="truncate text-sm font-medium text-gray-500">
-                                                                        {session.user?.email}
+                                                                        {session?.user?.email || user?.email}
                                                                     </div>
                                                                 </div>
                                                                 <button
@@ -343,15 +364,17 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex-shrink-0">
                                                                 <img
                                                                     className="mx-auto h-20 w-20 rounded-full"
-                                                                    src={session.user?.image}
+                                                                    src={session.user?.image || user?.image}
                                                                     alt="profile image"
                                                                 />
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {session.user?.name}
+                                                                    Welcome {session.user?.name || `${user.firstName} ${user.lastName}`}
                                                                 </h2>
-                                                                <Link href={"/profile"}><span className="text-xs">Edit Profile</span></Link>
+                                                                <Link href={"/profile"}> <h4>{session.user.name && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
+                                                                    <span className="text-xs">Edit Profile | image | name</span>
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                         <div className="mt-5 flex justify-center sm:mt-0">

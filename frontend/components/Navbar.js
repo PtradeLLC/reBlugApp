@@ -18,7 +18,7 @@ export default function Navbar() {
   }
 
   const handleClick = async () => {
-    await signOut({ callbackUrl: "/api/auth/signout?callbackUrl=/" });
+    await signOut({ callbackUrl: "/" });
   };
 
 

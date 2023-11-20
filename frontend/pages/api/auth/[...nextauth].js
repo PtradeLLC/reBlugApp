@@ -12,14 +12,6 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 // const globalForPrisma = global;
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-// export const prisma =
-//     (globalForPrisma.prisma ||
-//         new PrismaClient({
-//             log: ['query'],
-//         }));
-
-// if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
