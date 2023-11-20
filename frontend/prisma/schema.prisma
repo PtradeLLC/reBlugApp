@@ -55,16 +55,37 @@ model User {
   role          Role        @default(MANAGER)
   emailVerified DateTime?
   Accounts      Account[]
+  Team          Team[]
   EmailTool     EmailTool[]
   Profile       Profile[]
   Sessions      Session[]
   EmailLists    emailList[]
 }
 
+model Team {
+  id         String      @unique @default(uuid())
+  email      String      @unique
+  name       String?
+  firstName  String?
+  lastName   String?
+  image      String?
+  Profile    Profile[]
+  EmailLists emailList[]
+  EmailTool  EmailTool[]
+  role       Role        @default(USER)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  teamId     String?
+  User       User?       @relation(fields: [userId], references: [id])
+  userId     String?
+}
+
 model Profile {
-  id     String @id @default(cuid())
+  id     String  @id @default(cuid())
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+  Team   Team?   @relation(fields: [teamId], references: [id])
+  teamId String?
 }
 
 model VerificationToken {
@@ -94,6 +115,8 @@ model EmailTool {
   userId              String
   document            Document[]
   user                User       @relation(fields: [userId], references: [id])
+  Team                Team?      @relation(fields: [teamId], references: [id])
+  teamId              String?
 }
 
 model Document {
@@ -116,6 +139,8 @@ model emailList {
   email  String
   userId String?
   User   User?   @relation(fields: [userId], references: [id])
+  Team   Team?   @relation(fields: [teamId], references: [id])
+  teamId String?
 }
 
 model TrialProspectTwo {

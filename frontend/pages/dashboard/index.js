@@ -103,8 +103,10 @@ const Dashboard = function ({ children }) {
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
     const [user, setUser] = useState('');
-    const managerName2 = session?.user?.name || `${user.firstName} ${user.lastName}`;
-    const managerImage2 = session?.user?.image || user.image || "/images/brand.png";
+    const managerName = session?.user?.name || `${user.firstName} ${user.lastName}`;
+    const managerImage = session?.user?.image || user.image || "/images/brand.png";
+    const managerRole = session?.user?.role || user.role || "User";
+
 
 
     useEffect(() => {
@@ -118,9 +120,28 @@ const Dashboard = function ({ children }) {
                 if (response.ok) {
                     const data = await response.json();
 
-                    // Assuming team data is in data.team or a similar property
                     setUser(data);
-                    setTeamCount(data.team || []);
+                    let fetchedTeam = data.team || [];
+
+                    // Check if the current user is not already in the team
+                    const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);
+
+                    // If not in the team, add the current user as the default team member
+                    if (!currentUserInTeam) {
+                        const currentUser = {
+                            user: {
+                                id: user.id,
+                                name: `${user.firstName} ${user.lastName} || ${session.user.name}`,
+                                image: `${user.image} || ${session.user.image}`,
+                            },
+                            role: "Manager",
+                        };
+
+                        // Set the current user as the default team member
+                        fetchedTeam = [currentUser, ...fetchedTeam];
+                    }
+
+                    setTeamCount(fetchedTeam);
                 } else {
                     console.error("Error fetching user:", response.statusText);
                 }
@@ -138,6 +159,7 @@ const Dashboard = function ({ children }) {
     }, [status, session, router]);
 
 
+
     if (status === 'loading' || !session) {
         return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
     }
@@ -153,7 +175,7 @@ const Dashboard = function ({ children }) {
 
     const kpi = (title) => {
         const renderKpiContent = (action) => (
-            <div key={`${action.id}-${title}`} className={classNames(
+            <div key={`${action.id}-${title} `} className={classNames(
                 action.id === 1 ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none" : "",
                 action.id === 2 ? "bg-[#ECECEC]" : "",
                 action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3" : "",
@@ -365,7 +387,7 @@ const Dashboard = function ({ children }) {
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName}`}
+                                                                    Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>Brand: {session?.user?.name && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
@@ -385,9 +407,9 @@ const Dashboard = function ({ children }) {
                                                         {cards.map((card) => (
                                                             <div
                                                                 key={card.id}
-                                                                className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 `}
+                                                                className={`overflow - hidden h - [60px] flex justify - center items - center rounded - lg bg - white px - 3 py - 2 text - sm font - semibold text - gray - 900 shadow - sm ring - 1 ring - inset ring - gray - 300 hover: bg - gray - 50 `}
                                                             >
-                                                                <div className={`px-4 py-3`}>
+                                                                <div className={`px - 4 py - 3`}>
                                                                     <div className="flex text-sm text-center items-center">
                                                                         <button
                                                                             type="button"
@@ -407,9 +429,9 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""}`}>
+                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
                                             {selectedKpi && (
-                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""}`}>
+                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""} `}>
                                                     <h2 className="sr-only">
                                                         Summary
                                                     </h2>
@@ -422,7 +444,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             )}
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""}`}>
+                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
                                             {selectedComponent === "Automate Marketing" && <MarketTabs />}
                                             {selectedComponent === "Messaging Platform" && <MaapTabs />}
@@ -445,47 +467,40 @@ const Dashboard = function ({ children }) {
                                                     </span>
                                                     <div className="mt-6 flow-root">
                                                         <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                            {console.log("Team Count:", teamCount)}
                                                             {teamCount.length > 0 ? (
-                                                                <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                                    {teamCount.map((person, index) => {
-                                                                        console.log("Person at index", index, ":", person);
-                                                                        return (
-                                                                            <li key={index} className="py-4">
-                                                                                <p className="truncate text-sm font-medium text-gray-900">
-                                                                                    {person?.user?.name || "No Name"}
-                                                                                </p>
-                                                                            </li>
-                                                                        );
-                                                                    })}
-                                                                </ul>
+                                                                teamCount.map((person, index) => (
+                                                                    <li key={index} className="py-4">
+                                                                        {person?.user?.name && (
+                                                                            <div className="flex items-center space-x-4">
+                                                                                <div className="flex-shrink-0">
+                                                                                    <img
+                                                                                        className="h-8 w-8 rounded-full"
+                                                                                        src={managerImage}
+                                                                                        alt="profile image"
+                                                                                    />
+                                                                                </div>
+                                                                                <div className="min-w-0 flex-1">
+                                                                                    <p className="truncate text-sm font-medium text-gray-900">
+                                                                                        {managerName} <span className="truncate text-sm text-gray-500"> - {managerRole.toLowerCase()} (You)</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <a
+                                                                                        href={person.user?.href}
+                                                                                        className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                                    >
+                                                                                        View
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </li>
+                                                                ))
                                                             ) : (
                                                                 <div>
                                                                     <span>{team}</span>
                                                                 </div>
                                                             )}
-
-                                                            {teamCount.length > 0 ? (
-                                                                <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                                    {console.log("Before map. Team Count:", teamCount)}
-                                                                    {teamCount.map((person, index) => {
-                                                                        console.log("Person at index", index, ":", person);
-                                                                        return (
-                                                                            <li key={index} className="py-4">
-                                                                                <p className="truncate text-sm font-medium text-gray-900">
-                                                                                    {person?.user?.name || "No Name"}
-                                                                                </p>
-                                                                            </li>
-                                                                        );
-                                                                    })}
-                                                                    {console.log("After map")}
-                                                                </ul>
-                                                            ) : (
-                                                                <div>
-                                                                    <span>{team}</span>
-                                                                </div>
-                                                            )}
-
                                                         </ul>
                                                     </div>
 
