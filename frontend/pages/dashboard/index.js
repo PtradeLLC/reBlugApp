@@ -14,7 +14,6 @@ import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 
-
 const navigation = [
     { id: 1, name: "Home", href: "/", current: true },
     { id: 2, name: "Profile", href: "/profile", current: false },
@@ -98,28 +97,30 @@ const Dashboard = function ({ children }) {
     const [emailSent, setEmailSent] = useState(false);
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
-    const [email, setEmail] = useState("");
+    // const [email, setEmail] = useState("");
+    const [data, setData] = useState(null);
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
+    // const { email } = session.user
 
-    console.log(session);
 
     useEffect(() => {
         if (status === 'loading') {
+            // Check if session is defined before accessing user
+            if (session && session.user) {
+                console.log(session.user.email);
+            }
             return;
         }
 
         if (!session) {
             console.log("There's no session");
             router.push('/login');
-            // Redirect or handle as needed
             return;
         }
 
-        // const { user } = session;
-        // setTeamCount([{ user }]);
-    }, [session, status]);
+    }, [status, session, router]);
 
     if (status === 'loading' || !session) {
         return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
@@ -133,16 +134,6 @@ const Dashboard = function ({ children }) {
     const handleModalClick = () => {
         setShow(true);
     };
-
-    // Fetch user data
-    const fetchUser = async () => {
-        const baseUrl = "";
-
-    }
-
-
-
-
 
     const kpi = (title) => {
         const renderKpiContent = (action) => (
@@ -204,7 +195,6 @@ const Dashboard = function ({ children }) {
             return null;
         }
     };
-
 
     return (
         <>
