@@ -2,9 +2,9 @@ import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 
 const navigation = [
-    { name: "Home", href: "#", current: true },
+    { name: "Home", href: "/", current: true },
     { name: "Profile", href: "/profile", current: false },
-    { name: "Resources", href: "#", current: false },
+    { name: "Resources", href: "/resources", current: false },
 ];
 const userNavigation = [
     { name: "Your Profile", href: "/profile" },

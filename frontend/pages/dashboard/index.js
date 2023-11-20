@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 const navigation = [
     { id: 1, name: "Home", href: "/", current: true },
     { id: 2, name: "Profile", href: "/profile", current: false },
-    { id: 3, name: "Resources", href: "#", current: false },
+    { id: 3, name: "Resources", href: "/resources", current: false },
 ];
 const userNavigation = [
     { id: 1, name: "Your Profile", href: "/profile" },
@@ -98,47 +98,42 @@ const Dashboard = function ({ children }) {
     const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
 
-    // const [email, setEmail] = useState("");
-    const [data, setData] = useState(null);
+    const [email, setEmail] = useState("");
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
     const [user, setUser] = useState('');
+    const managerName2 = session?.user?.name || `${user.firstName} ${user.lastName}`;
+    const managerImage2 = session?.user?.image || user.image || "/images/brand.png";
+
 
     useEffect(() => {
         if (status === 'loading') {
             return;
         }
 
-        if (session && session.user) {
-            const baseUrl = "/api/fetchUser";
-            const userData = async () => {
-                try {
-                    const response = await fetch(baseUrl, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    });
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/fetchUser");
+                if (response.ok) {
+                    const data = await response.json();
 
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUser(data);
-                    } else {
-                        console.error("Error fetching user:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Error fetching user:", error.message);
+                    // Assuming team data is in data.team or a similar property
+                    setUser(data);
+                    setTeamCount(data.team || []);
+                } else {
+                    console.error("Error fetching user:", response.statusText);
                 }
-            };
+            } catch (error) {
+                console.error("Error fetching user:", error.message);
+            }
+        };
 
-            userData();
-        }
-
-        if (!session) {
+        if (session && session.user) {
+            fetchData();
+        } else {
             console.log("There's no session");
             router.push('/login');
-            return;
         }
     }, [status, session, router]);
 
@@ -364,15 +359,15 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex-shrink-0">
                                                                 <img
                                                                     className="mx-auto h-20 w-20 rounded-full"
-                                                                    src={session.user?.image || user?.image}
+                                                                    src={session.user?.image || user?.image || "/images/brand.png"}
                                                                     alt="profile image"
                                                                 />
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {session.user?.name || `${user.firstName} ${user.lastName}`}
+                                                                    Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName}`}
                                                                 </h2>
-                                                                <Link href={"/profile"}> <h4>{session.user.name && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
+                                                                <Link href={"/profile"}> <h4>Brand: {session?.user?.name && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
                                                             </div>
@@ -382,7 +377,7 @@ const Dashboard = function ({ children }) {
                                                                 href={"/profile"}
                                                                 className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
                                                             >
-                                                                <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Use as Brand or Agency
+                                                                <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Integrate with apps
                                                             </Link>
                                                         </div>
                                                     </div>
@@ -439,7 +434,7 @@ const Dashboard = function ({ children }) {
                                                 <div className="p-6">
                                                     <span className="flex">
                                                         <div className="flex">
-                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src="/images/team.png" width={25} height={18} alt="team members" />
+                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
                                                             <h2
                                                                 className="text-base font-medium text-gray-900"
                                                                 id="recent-hires-title"
@@ -450,89 +445,50 @@ const Dashboard = function ({ children }) {
                                                     </span>
                                                     <div className="mt-6 flow-root">
                                                         <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                            {teamCount.length > 0 ? teamCount.map((person, index) => (
-                                                                <li key={index} className="py-4">
-                                                                    {person?.user?.name !== undefined && person.user.image !== undefined && (
-                                                                        <div className="flex items-center space-x-4">
-                                                                            <div className="flex-shrink-0">
-                                                                                <img
-                                                                                    className="h-8 w-8 rounded-full"
-                                                                                    src={person?.user?.image || person.user.image}
-                                                                                    alt="profile image"
-                                                                                />
-                                                                            </div>
-                                                                            <div className="min-w-0 flex-1">
+                                                            {console.log("Team Count:", teamCount)}
+                                                            {teamCount.length > 0 ? (
+                                                                <ul role="list" className="-my-5 divide-y divide-gray-200">
+                                                                    {teamCount.map((person, index) => {
+                                                                        console.log("Person at index", index, ":", person);
+                                                                        return (
+                                                                            <li key={index} className="py-4">
                                                                                 <p className="truncate text-sm font-medium text-gray-900">
-                                                                                    {person?.user?.name || person.user.name}
-                                                                                    {person?.user?.name || person.user.name === user.name && (
-                                                                                        <span className="ml-2 text-xs font-semibold text-slate-500">Manager(You)</span>
-                                                                                    )}
+                                                                                    {person?.user?.name || "No Name"}
                                                                                 </p>
-                                                                                <p className="truncate text-sm text-gray-500">
-                                                                                    {"@" + person?.user?.name?.split(" ").join("_")}
-                                                                                </p>
-                                                                            </div>
-                                                                            <div>
-                                                                                <a
-                                                                                    href={person?.user?.href || person.user.href}
-                                                                                    className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                                >
-                                                                                    View
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-                                                                </li>
-                                                            )) : (
+                                                                            </li>
+                                                                        );
+                                                                    })}
+                                                                </ul>
+                                                            ) : (
                                                                 <div>
                                                                     <span>{team}</span>
                                                                 </div>
                                                             )}
+
+                                                            {teamCount.length > 0 ? (
+                                                                <ul role="list" className="-my-5 divide-y divide-gray-200">
+                                                                    {console.log("Before map. Team Count:", teamCount)}
+                                                                    {teamCount.map((person, index) => {
+                                                                        console.log("Person at index", index, ":", person);
+                                                                        return (
+                                                                            <li key={index} className="py-4">
+                                                                                <p className="truncate text-sm font-medium text-gray-900">
+                                                                                    {person?.user?.name || "No Name"}
+                                                                                </p>
+                                                                            </li>
+                                                                        );
+                                                                    })}
+                                                                    {console.log("After map")}
+                                                                </ul>
+                                                            ) : (
+                                                                <div>
+                                                                    <span>{team}</span>
+                                                                </div>
+                                                            )}
+
                                                         </ul>
                                                     </div>
 
-                                                    {/* <div className="mt-6 flow-root">
-                                                            <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                                {teamCount.length > 0 ? teamCount.map((person, index) => (
-                                                                    <li key={index} className="py-4">
-                                                                        {person?.user?.name !== undefined && person.user.image !== undefined && (
-                                                                            <div className="flex items-center space-x-4">
-                                                                                <div className="flex-shrink-0">
-                                                                                    <img
-                                                                                        className="h-8 w-8 rounded-full"
-                                                                                        src={person?.user?.image}
-                                                                                        alt="profile image"
-                                                                                    />
-                                                                                </div>
-                                                                                <div className="min-w-0 flex-1">
-                                                                                    <p className="truncate text-sm font-medium text-gray-900">
-                                                                                        {person?.user?.name}
-                                                                                        {person?.user?.name === user.name && (
-                                                                                            <span className="ml-2 text-xs font-semibold text-slate-500">Manager</span>
-                                                                                        )}
-                                                                                    </p>
-                                                                                    <p className="truncate text-sm text-gray-500">
-                                                                                        {"@" + person?.user?.name?.split(" ").join("_")}
-                                                                                    </p>
-                                                                                </div>
-                                                                                <div>
-                                                                                    <a
-                                                                                        href={person?.user?.href}
-                                                                                        className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                                    >
-                                                                                        View
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        )}
-                                                                    </li>
-                                                                )) : (
-                                                                    <div>
-                                                                        <span>{team}</span>
-                                                                    </div>
-                                                                )}
-                                                            </ul>
-                                                        </div> */}
                                                     <div className="mt-6">
                                                         <button
                                                             type="button"
@@ -597,9 +553,9 @@ const Dashboard = function ({ children }) {
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                         </main>
-                    </div>
-                </UserContext.Provider>
-            </Suspense>
+                    </div >
+                </UserContext.Provider >
+            </Suspense >
 
 
         </>

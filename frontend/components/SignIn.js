@@ -1,11 +1,10 @@
-//SignIn
+// SignIn.js
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Loading from './Loading';
 import PasswordReset from './PassReset';
-import { signIn } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -13,14 +12,13 @@ const SignIn = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const { user } = session || {};
-
+    const [error, setError] = useState(null);
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log('After signIn:', session);
             const baseUrl = "/api/userSignin";
 
             const response = await fetch(baseUrl, {
@@ -31,45 +29,46 @@ const SignIn = () => {
                 body: JSON.stringify({ email, password }),
             });
 
-            // Check if the response status is OK
             if (!response.ok) {
-                throw new Error("Failed to fetch data from the server");
+                console.log(response.error);
+                const data = await response.json();
+
+                if (response.status === 401 && data.message === "Hm, something went wrong") {
+                    setError("Please review your login credentials or reset your password");
+                } else {
+                    console.log(data.message);
+                    setErrors(`Authentication failed: ${data.message}`);
+                }
+
+                return;
             }
 
-            // Parse the response JSON
             const data = await response.json();
 
-            // Check if data.user is defined
             if (data.user) {
-
-                // Use signIn to establish a session
                 await signIn('credentials', {
                     email: data.user.email,
-                    password: data.user.password, // Adjust based on your user object structure
-                    redirect: false, // Avoids redirection as you are handling it manually
+                    password: data.user.password,
+                    redirect: false,
                 });
 
-                // Redirect to the dashboard
                 router.push(data.redirect);
-            } else if (data.message === "User already exists, please login.") {
-                // User already exists, display a meaningful message to the user
+            } else if (data.message === "Hm, something went wrong") {
                 setErrors("User already exists. Please login.");
             } else {
-                // Handle other scenarios as needed
-                console.error("Authentication failed:", data.message);
                 setErrors(`Authentication failed: ${data.message}`);
             }
-
         } catch (error) {
-            console.error('Authentication error:', error.message);
-            setErrors(`Authentication error: ${error.message}`);
+            setErrors(`Authentication error: ${error}`);
         }
     };
 
-
-
     const setErrors = (error) => {
-        return error.message
+        if (error.includes("401 Unauthorized")) {
+            setError("Please try again.");
+        } else {
+            setError(error);
+        }
     };
 
     const openModal = (e) => {
@@ -117,19 +116,12 @@ const SignIn = () => {
                         )}
 
 
-                        {/* {isError ? <p className="bg-red-200 rounded text-center m-auto px-2">{error?.message}</p> : null} */}
+                        {error && <p className="bg-red-200 rounded text-center m-auto px-2">{error}</p>}
                     </form>
                     <div className='mt-2 text-right'>
                         <button type='button' onClick={openModal} >Reset password</button>
                     </div>
                 </>
-                {/* {needsEmailVerification ? (
-                    <p className="bg-green-200 rounded text-center m-auto px-2">
-                        Please check your mailbox and follow the verification link to verify your email.
-                    </p>
-                ) : (
-                    
-                )} */}
             </div>
             <div>
                 <p className="text-right mt-3">
