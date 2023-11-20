@@ -115,7 +115,6 @@ const SignIn = () => {
                             </button>
                         )}
 
-
                         {error && <p className="bg-red-200 rounded text-center m-auto px-2">{error}</p>}
                     </form>
                     <div className='mt-2 text-right'>
