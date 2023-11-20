@@ -21,7 +21,7 @@
     "@deepgram/sdk": "^2.4.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
-    "@huggingface/inference": "^1.8.0",
+    "@huggingface/inference": "^2.6.4",
     "@neondatabase/serverless": "^0.6.0",
     "@prisma/adapter-neon": "^5.5.2",
     "@prisma/client": "^5.6.0",
