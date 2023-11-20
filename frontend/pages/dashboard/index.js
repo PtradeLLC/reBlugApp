@@ -31,16 +31,6 @@ const cards = [
     { name: "Creators", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072", category: "Creator" }
 ];
 
-const teamMembers = [
-    {
-        id: 1,
-        name: "",
-        handle: "",
-        avatarUrl: "",
-        href: "",
-    },
-];
-
 const quicklinks = [
     {
         id: 1,
@@ -107,8 +97,6 @@ const Dashboard = function ({ children }) {
     const managerImage = session?.user?.image || user.image || "/images/brand.png";
     const managerRole = session?.user?.role || user.role || "User";
 
-
-
     useEffect(() => {
         if (status === 'loading') {
             return;
@@ -157,8 +145,6 @@ const Dashboard = function ({ children }) {
             router.push('/login');
         }
     }, [status, session, router]);
-
-
 
     if (status === 'loading' || !session) {
         return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
@@ -237,7 +223,7 @@ const Dashboard = function ({ children }) {
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <UserContext.Provider value={session.user}>
+                <UserContext.Provider value={user}>
                     <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
                         <Popover as="header" className=" pb-24">
                             {({ open }) => (
@@ -403,29 +389,31 @@ const Dashboard = function ({ children }) {
                                                             </Link>
                                                         </div>
                                                     </div>
+
                                                     <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
                                                         {cards.map((card) => (
-                                                            <div
-                                                                key={card.id}
-                                                                className={`overflow - hidden h - [60px] flex justify - center items - center rounded - lg bg - white px - 3 py - 2 text - sm font - semibold text - gray - 900 shadow - sm ring - 1 ring - inset ring - gray - 300 hover: bg - gray - 50 `}
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
+                                                                className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                             >
-                                                                <div className={`px - 4 py - 3`}>
-                                                                    <div className="flex text-sm text-center items-center">
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                            className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
-                                                                        >
+                                                                <div
+                                                                    key={card.id}
+                                                                    className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
+                                                                >
+                                                                    <div className="px-4 py-3">
+                                                                        <div className="flex text-sm text-center items-center">
+
                                                                             <Image src={card.icon} alt="icon" width={30} height={30} />
                                                                             <span>{card.title}</span>
-                                                                        </button>
+
+                                                                        </div>
+                                                                        <span className="text-xs block text-center">{card.category}</span>
                                                                     </div>
-                                                                    <span className="text-xs block text-center">{card.category}</span>
                                                                 </div>
-                                                            </div>
+                                                            </button>
                                                         ))}
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </section>
