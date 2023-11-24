@@ -4,8 +4,10 @@ import { PrismaClient } from '@prisma/client';
 import { authOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { randomUUID } from 'crypto';
+import { sendNewEmail } from './newUser';
 
-const saltRounds = 10;
+const saltRounds = 12;
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
@@ -46,6 +48,22 @@ export default async function handler(req, res) {
           provider
         },
       });
+
+      // Set the expiration date and time, e.g., 1 hour from now
+      const expires = new Date();
+      expires.setHours(expires.getHours() + 1);
+
+      const token = await prisma.verificationToken.create({
+        data: {
+          token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ''),
+          userId: newUser.id,
+          expires: expires,
+        }
+      });
+
+      if (token) {
+        <sendNewEmail firstName={firstName} email={email} token={token.token} />
+      }
 
       // Send any additional information you want to the client
       return res.status(201).json({ user: newUser, message: "User created successfully.", redirect: "/dashboard" });

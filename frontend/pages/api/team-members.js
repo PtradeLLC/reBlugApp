@@ -1,17 +1,10 @@
-import { Pool, neonConfig } from '@neondatabase/serverless'
-import { PrismaNeon } from '@prisma/adapter-neon'
-import { PrismaClient } from '@prisma/client'
-import dotenv from 'dotenv'
-import ws from 'ws'
+import bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
 
-dotenv.config()
-neonConfig.webSocketConstructor = ws
-const connectionString = `${process.env.DATABASE_URL}`
+const prisma = new PrismaClient().$extends(withAccelerate());
 
-const pool = new Pool({ connectionString })
-const adapter = new PrismaNeon(pool)
 
-const prisma = new PrismaClient({ adapter })
 
 export default async function handler(req, res) {
     // Check if the request method is POST
@@ -22,28 +15,27 @@ export default async function handler(req, res) {
         try {
             // Extract the user data from the request body
             const usersData = req.body;
-            console.log("UData", usersData);
+            console.log("Parsed user data:", usersData);
             // Check if user data is provided
-            if (!usersData || !Array.isArray(usersData)) {
+            // Check if user data is provided
+            if (!usersData || !Array.isArray(usersData.emails)) {
                 return res.status(400).json({ message: "Invalid user data" });
-            };
+            }
 
             const createdUsers = [];
 
-            for (const userData of usersData) {
-                const { email, userId } = userData;
-
+            // Extract the array of emails
+            const emails = usersData.emails;
+            for (const email of emails) {
                 // Check if userId and email are provided
-                if (!userId || !email) {
-                    return res.status(400).json({ message: "UserId and email are required" });
+                if (!email) {
+                    return res.status(400).json({ message: "email is required" });
                 };
-
-                console.log(email, userId);
 
                 const eData = await prisma.user.findMany({
                     where: {
                         email: {
-                            contains: "chrisb@publictrades.com",
+                            contains: email,
                         },
                     },
                     cacheStrategy: { ttl: 60 },
@@ -51,19 +43,26 @@ export default async function handler(req, res) {
 
                 console.log("U-data", eData);
 
-                // Create a new record in the emailList table associated with the user
-                // const emailData = await prisma.emailList.create({
-                //     data: {
-                //         email: email,
-                //         User: {
-                //             connect: { id: userId }
+                // if (!eData) {
+                //     // Create a new record in the emailList table associated with the user
+                //     const emailData = await prisma.emailList.create({
+                //         data: {
+                //             email: email,
+                //             User: {
+                //                 connect: { id: userId }
+                //             }
                 //         }
-                //     }
-                // });
+                //     });
+                //     return emailData;
+                // } else {
+                //     //Associate with the user to the 
+                //     //SEND EMAIL INVITE TO THE USER.
+
+                // }
 
                 // console.log("EMAIL DATA:", emailData);
 
-                // Find the user based on the userId
+                // // Find the user based on the userId
                 // const user = await prisma.user.findUnique({
                 //     where: {
                 //         id: userId

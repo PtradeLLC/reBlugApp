@@ -42,13 +42,16 @@ export default function Team({ show, setShow }) {
     };
 
     const sendInvite = async () => {
+
+        const baseUrl = "/api/team-members"
         try {
             setState((prevState) => ({
                 ...prevState,
                 loading: true,
             }));
 
-            const response = await fetch('/api/team-members', {
+            console.log("TeamMember+sendInvite:", state.emails);  //emails exist as array
+            const response = await fetch(baseUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,11 +60,13 @@ export default function Team({ show, setShow }) {
             });
 
             if (!response.ok) {
+                console.log("Res not Okay:", response.statusText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+
             const data = await response.json();
-            console.log("Response Data:", data);
+            console.log("Response Data:", data, response);
 
             return data;
         } catch (error) {
@@ -101,8 +106,6 @@ export default function Team({ show, setShow }) {
 
             // response.ok
             if (state.emails) {
-                // console.log("InRes", response)
-                // const userData = await response.json();
                 setState((prevState) => ({
                     ...prevState,
                     emailSent: true,

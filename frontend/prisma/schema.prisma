@@ -37,29 +37,31 @@ model Session {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  userId        String?     @unique
-  name          String?
-  externalId    String?
-  brandName     String?     @unique
-  firstName     String?
-  profileImage  String?
-  password      String?
-  image         String?
-  lastName      String?
-  provider      String?
-  email         String      @unique
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  profileId     String?
-  role          Role        @default(MANAGER)
-  emailVerified DateTime?
-  Accounts      Account[]
-  Team          Team[]
-  EmailTool     EmailTool[]
-  Profile       Profile[]
-  Sessions      Session[]
-  EmailLists    emailList[]
+  id                 String              @id @default(cuid())
+  userId             String?             @unique
+  name               String?
+  externalId         String?
+  brandName          String?             @unique
+  firstName          String?
+  profileImage       String?
+  password           String?
+  image              String?
+  lastName           String?
+  isVerified         Boolean?
+  provider           String?
+  email              String              @unique
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  profileId          String?
+  role               Role                @default(MANAGER)
+  emailVerified      DateTime?
+  Accounts           Account[]
+  Team               Team[]
+  EmailTool          EmailTool[]
+  Profile            Profile[]
+  Sessions           Session[]
+  EmailLists         emailList[]
+  VerificationTokens VerificationToken[]
 }
 
 model Team {
@@ -68,6 +70,7 @@ model Team {
   name       String?
   firstName  String?
   lastName   String?
+  isVerified Boolean?
   image      String?
   Profile    Profile[]
   EmailLists emailList[]
@@ -89,11 +92,14 @@ model Profile {
 }
 
 model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+  id      String   @id @default(cuid())
+  userId  String
+  token   String   @unique
+  expires DateTime
 
-  @@unique([identifier, token])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, token])
 }
 
 model Event {
