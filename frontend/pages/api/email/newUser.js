@@ -2,7 +2,7 @@ import sgMail from "@sendgrid/mail";
 import Email from "../emailfiles/new-user";
 import { render } from "@react-email/render";
 
-export async function sendNewEmail({ firstName, token, email }) {
+export default async function SendNewEmail({ firstName, token, email }) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     // Render the Email component with ChatComponent prop set to the Chat component
@@ -28,3 +28,5 @@ export async function sendNewEmail({ firstName, token, email }) {
         }
     }
 }
+
+

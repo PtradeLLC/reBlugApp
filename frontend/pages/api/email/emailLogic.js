@@ -5,7 +5,7 @@ import { authOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { randomUUID } from 'crypto';
-import { sendNewEmail } from './newUser';
+import SendNewEmail from './newUser';
 
 const saltRounds = 12;
 
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       // Check if User already exists
       if (existingUser) {
         // User already exists, log them in
-        return res.status(200).json({ user: existingUser, message: "User already exists, please login.", redirect: "/login" });
+        return res.status(200).json({ user: existingUser, message: "User already exists, please login.", redirect: "/api/auth/signin" });
       }
 
       // User doesn't exist, create a new account
@@ -62,11 +62,11 @@ export default async function handler(req, res) {
       });
 
       if (token) {
-        <sendNewEmail firstName={firstName} email={email} token={token.token} />
+        <SendNewEmail firstName={firstName} email={email} token={token.token} />
       }
 
       // Send any additional information you want to the client
-      return res.status(201).json({ user: newUser, message: "User created successfully.", redirect: "/dashboard" });
+      return res.status(201).json({ user: newUser, message: "User created successfully.", redirect: "/api/auth/signin" });
 
     } catch (error) {
       console.error(error);

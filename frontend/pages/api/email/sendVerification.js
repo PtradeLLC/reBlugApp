@@ -1,4 +1,4 @@
-import { sendNewEmail } from "./newUser";
+import SendNewEmail from "./newUser";
 
 
 async function sendVerificationEmail(email, firstName, verificationLink) {
@@ -6,7 +6,7 @@ async function sendVerificationEmail(email, firstName, verificationLink) {
         body: JSON.stringify({
             to: email,
             subject: "Verify Your Account",
-            html: sendNewEmail({ firstName, verificationLink }),
+            html: SendNewEmail({ firstName, verificationLink }),
         }),
         headers: {
             Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,

@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import { sendNewEmail } from "../email/newUser";
+import SendNewEmail from "../email/newUser";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +17,7 @@ export const authOptions = {
 
                 // Include the verificationToken in the email template
                 const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
-                    body: JSON.stringify(sendNewEmail({ firstName: 'John', verificationToken })),
+                    body: JSON.stringify(SendNewEmail({ firstName: 'John', verificationToken })),
                     headers: {
                         Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
                         "Content-Type": "application/json",

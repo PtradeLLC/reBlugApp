@@ -12,13 +12,20 @@ export default function Team({ show, setShow }) {
             emailSent: false,
             loading: false,
         });
+    const [emptyField, setEmptyField] = useState('');
 
     const addEmailField = () => {
-        setState((prevState) => ({
-            ...prevState,
-            emails: [...prevState.emails, ''],
-        }));
+        // Check if at least one email in the array is truthy
+        if (state.emails.some(email => email && email.trim() !== '')) {
+            setState((prevState) => ({
+                ...prevState,
+                emails: [...prevState.emails, ''],
+            }));
+        } else {
+            setEmptyField("Please enter an email address to proceed.")
+        }
     };
+
 
     const isEmailValid = (emails) => {
         const emailArray = emails.split(',').map((email) => email.trim());
@@ -50,7 +57,6 @@ export default function Team({ show, setShow }) {
                 loading: true,
             }));
 
-            console.log("TeamMember+sendInvite:", state.emails);  //emails exist as array
             const response = await fetch(baseUrl, {
                 method: 'POST',
                 headers: {
@@ -209,6 +215,7 @@ export default function Team({ show, setShow }) {
                                                             Add Another Email
                                                         </button>
                                                     )}
+                                                    <p className='text-red-400'>{emptyField}</p>
                                                 </div>
                                             ))}
                                             <button

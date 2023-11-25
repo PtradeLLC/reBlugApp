@@ -9,7 +9,7 @@ export default function Email({ firstName, token }) {
         <p>Hello {firstName},</p>
         <p>Hope this email finds you well.</p>
         <p>Thanks for signing up. Please verify your account by clicking this link:</p>
-        <p><a href={`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/verify?token=${token}`}>Verify your account</a></p>
+        <p><a href={`http://localhost:3000/api/verify/${token}`}>Verify your account</a></p>
       </Body>
     </Html>
   );

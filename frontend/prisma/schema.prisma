@@ -75,11 +75,11 @@ model Team {
   Profile    Profile[]
   EmailLists emailList[]
   EmailTool  EmailTool[]
-  role       Role        @default(USER)
+  member     User?       @relation(fields: [teamId], references: [id])
+  role       Role        @default(MEMBER)
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   teamId     String?
-  User       User?       @relation(fields: [userId], references: [id])
   userId     String?
 }
 
@@ -216,5 +216,6 @@ model Marketing_Creatives_Document {
 enum Role {
   USER
   MANAGER
+  MEMBER
   ADMIN
 }
