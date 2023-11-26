@@ -33,8 +33,11 @@ export default async function handler(req, res) {
       // Check if User already exists
       if (existingUser) {
         // User already exists, log them in
-        return res.status(200).json({ user: existingUser, message: "User already exists, please login.", redirect: "/api/auth/signin" });
+        console.log("ExistingUser from emailLogic:", existingUser)
+        return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
       }
+
+
 
       // User doesn't exist, create a new account
       const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -62,11 +65,13 @@ export default async function handler(req, res) {
       });
 
       if (token) {
-        <SendNewEmail firstName={firstName} email={email} token={token.token} />
+        // Send email here (assuming SendNewEmail is properly implemented)
+        await SendNewEmail({ firstName, email, token: token.token, userId: token.userId });
       }
 
+
       // Send any additional information you want to the client
-      return res.status(201).json({ user: newUser, message: "User created successfully.", redirect: "/api/auth/signin" });
+      return res.status(201).json({ user: newUser, message: "User created successfully Please check your email to proceed.", redirect: "/api/auth/signin" });
 
     } catch (error) {
       console.error(error);
@@ -75,88 +80,5 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   }
+  return res.status(405).end();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// export default async function handler(req, res) {
-//   // const session = await getServerSession(authOptions)
-//   if (req.method !== "POST") {
-//     return res.status(401).json({ message: "This action is unauthorized." });
-//   }
-
-//   if (req.method === "POST") {
-//     try {
-//       const { brandName, firstName, lastName, email, password, provider } = req.body;
-
-//       // Convert email to lowercase
-//       const lowercaseEmail = email.toLowerCase();
-
-//       // const sentFrom = new Sender("support@forgedmart.com", "Support Team");
-
-//       // Check if the user with the provided email already exists in the database
-//       const existingUser = await prisma.user.findUnique({
-//         where: {
-//           email: lowercaseEmail,
-//         },
-//         cacheStrategy: { ttl: 60 },
-//       });
-
-//       if (existingUser) {
-//         return res.status(409).json({ user: existingUser });
-//       }
-
-
-//       // Hash user's password
-//       const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-//       const verificationBaseUrl = "";
-
-//       const newUser = await prisma.user.create({
-//         data: {
-//           brandName,
-//           email: lowercaseEmail,
-//           firstName,
-//           lastName,
-//           provider,
-//           password: hashedPassword,
-//         },
-//         cacheStrategy: { ttl: 60 },
-//       });
-
-//       const { password: newUserPassword, ...rest } = newUser;
-
-//       // const emailVerificationResponse = await fetch(verificationBaseUrl, {
-//       //   method: "POST",
-//       //   headers: {
-//       //     "Content-Type": "application/json",
-//       //     Authorization: `Bearer ${token} `,
-//       //   },
-//       //   body: JSON.stringify({
-//       //     email, // Including the email in the request body
-//       //   }),
-//       // });
-
-//       // if (!emailVerificationResponse.ok) {
-//       //   throw new Error("Email verification failed");
-//       // };
-
-//       res.status(201).json({ user: rest, message: "User created successfully. Please check your email to verify." });
-//     } catch (error) {
-//       // Handle errors
-//       console.error(error);
-//       res.status(500).json({ error: `An error occurred during registration :${error}` });
-//     } finally {
-//       await prisma.$disconnect();
-//     }
-//   }
-// }

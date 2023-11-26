@@ -40,9 +40,15 @@ const SignUp = () => {
 
                     const data = await response.json();
                     if (isMounted && data) {
+                        console.log("There is Data - Data from SignUp", data);
                         setIsSuccess(true);
-                        setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...')
-                        setTimeout(() => router.push("/api/auth/signin"), 4000);
+                        if (data.user) {
+                            setRedirect(data.message);
+                            setTimeout(() => router.push("/api/auth/signin"), 4000);
+                        } else {
+                            setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...');
+                            setTimeout(() => router.push("/api/auth/signin"), 4000);
+                        }
                     }
                 }
             } catch (error) {

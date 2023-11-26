@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+CREATE TYPE "Role" AS ENUM ('USER', 'MANAGER', 'MEMBER', 'ADMIN');
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -8,7 +8,6 @@ CREATE TABLE "Account" (
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
-    "api_domain" TEXT,
     "refresh_token" TEXT,
     "access_token" TEXT,
     "expires_at" INTEGER,
@@ -16,6 +15,7 @@ CREATE TABLE "Account" (
     "scope" TEXT,
     "id_token" TEXT,
     "session_state" TEXT,
+    "api_domain" TEXT,
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
@@ -36,34 +36,62 @@ CREATE TABLE "User" (
     "userId" TEXT,
     "name" TEXT,
     "externalId" TEXT,
-    "Username" TEXT,
+    "brandName" TEXT,
     "firstName" TEXT,
-    "lastName" TEXT,
     "profileImage" TEXT,
-    "role" "Role" NOT NULL DEFAULT 'USER',
+    "password" TEXT,
     "image" TEXT,
-    "emailVerified" TIMESTAMP(3),
+    "lastName" TEXT,
+    "isVerified" BOOLEAN,
+    "provider" TEXT,
     "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "profileId" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'MANAGER',
+    "emailVerified" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Team" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "isVerified" BOOLEAN,
+    "image" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'MEMBER',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "teamId" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Profile" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "teamId" TEXT,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "VerificationToken" (
-    "identifier" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL
+    "expires" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "activatedAt" TIMESTAMP(3),
+
+    CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -84,7 +112,8 @@ CREATE TABLE "EmailTool" (
     "productUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT NOT NULL
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
@@ -112,6 +141,7 @@ CREATE TABLE "emailList" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "userId" TEXT,
+    "teamId" TEXT,
 
     CONSTRAINT "emailList_pkey" PRIMARY KEY ("id")
 );
@@ -146,6 +176,11 @@ CREATE TABLE "Contact" (
     "company" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "message" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "MaaP" (
+    "id" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -188,13 +223,22 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 CREATE UNIQUE INDEX "User_userId_key" ON "User"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_brandName_key" ON "User"("brandName");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Team_id_key" ON "Team"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Team_email_key" ON "Team"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
+CREATE UNIQUE INDEX "VerificationToken_userId_token_key" ON "VerificationToken"("userId", "token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Event_id_key" ON "Event"("id");
@@ -207,6 +251,9 @@ CREATE UNIQUE INDEX "ForgedAI_id_key" ON "ForgedAI"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Contact_id_key" ON "Contact"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MaaP_id_key" ON "MaaP"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Trends_Document_id_key" ON "Trends_Document"("id");
@@ -224,16 +271,31 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Team" ADD CONSTRAINT "Team_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "VerificationToken" ADD CONSTRAINT "VerificationToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Document" ADD CONSTRAINT "Document_emailToolId_fkey" FOREIGN KEY ("emailToolId") REFERENCES "EmailTool"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "emailList" ADD CONSTRAINT "emailList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "emailList" ADD CONSTRAINT "emailList_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Trends_Document" ADD CONSTRAINT "Trends_Document_iaId_fkey" FOREIGN KEY ("iaId") REFERENCES "ForgedAI"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -2,7 +2,7 @@ import sgMail from "@sendgrid/mail";
 import Email from "../emailfiles/new-user";
 import { render } from "@react-email/render";
 
-export default async function SendNewEmail({ firstName, token, email }) {
+export default async function SendNewEmail({ firstName, token, email, userId }) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     // Render the Email component with ChatComponent prop set to the Chat component
@@ -19,9 +19,11 @@ export default async function SendNewEmail({ firstName, token, email }) {
 
     try {
         await sgMail.send(msg);
-        console.log("MSG FROM newUser:", msg, "token:", token, "email:", email);
+        if (msg) {
+            //PERHAPS DO SOMETHING HERE IF MSG EXISTS
+            console.log("MSG FROM newUser:", msg, "token:", token, "email:", email);
+        }
     } catch (error) {
-        console.log("MSG FROM newUser-Error:", msg, "token:", token, "email:", email);
         console.error("Error sending email:", error);
         if (error.response) {
             console.error("SendGrid API response:", error.response.body);
