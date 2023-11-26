@@ -61,7 +61,7 @@ export default async function handler(req, res) {
             await prisma.$disconnect();
 
             // Redirect immediately
-            res.writeHead(302, { Location: 'https://my-web-app.com/api/auth/signin' });
+            res.writeHead(302, { Location: 'https://forgedmart.com/api/auth/signin' });
             res.end();
         } catch (error) {
             console.error(error);
