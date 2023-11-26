@@ -57,12 +57,12 @@ export default async function handler(req, res) {
                 },
             });
 
-            // Redirect immediately
-            res.writeHead(302, { Location: 'https://forgedmart.com/api/auth/signin' });
-            res.end();
-
-            // Disconnect Prisma client after the response has been sent
+            // Disconnect Prisma client before sending the response
             await prisma.$disconnect();
+
+            // Redirect immediately
+            res.writeHead(302, { Location: 'https://my-web-app.com/api/auth/signin' });
+            res.end();
         } catch (error) {
             console.error(error);
             if (error.message === 'Token is invalid or expired') {
@@ -75,7 +75,6 @@ export default async function handler(req, res) {
 
     return res.status(404).json({ message: "Not Found" });
 }
-
 
 
 // // Example verification API route
