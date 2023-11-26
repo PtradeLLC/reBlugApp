@@ -62,7 +62,11 @@ export default async function handler(req, res) {
             res.end();
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: `An error occurred during verification: ${error.message}` });
+            if (error.message === 'Token is invalid or expired') {
+                return res.status(400).json({ error: 'Token is invalid or expired' });
+            } else {
+                return res.status(500).json({ error: `An error occurred during verification: ${error.message}` });
+            }
         } finally {
             await prisma.$disconnect();
         }
