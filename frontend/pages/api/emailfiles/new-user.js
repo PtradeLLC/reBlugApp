@@ -2,6 +2,7 @@ import { Html } from "@react-email/html";
 import { Body } from "@react-email/body";
 
 export default function Email({ firstName, token }) {
+  console.log("new-userJS", token);
   return (
     <Html>
       <Body>

@@ -18,15 +18,14 @@ export default async function SendNewEmail({ firstName, token, email, userId }) 
     };
 
     try {
-        await sgMail.send(msg);
+
         if (msg) {
-            //PERHAPS DO SOMETHING HERE IF MSG EXISTS
-            console.log("MSG FROM newUser:", msg, "token:", token, "email:", email);
+            await sgMail.send(msg);
         }
     } catch (error) {
         console.error("Error sending email:", error);
         if (error.response) {
-            console.error("SendGrid API response:", error.response.body);
+            console.error("API response:", error.response.body);
         }
     }
 }

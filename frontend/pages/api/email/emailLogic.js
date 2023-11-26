@@ -61,12 +61,8 @@ export default async function handler(req, res) {
       });
 
       if (token) {
-        console.log("TOKENEXPIRES emailLogic:", token.expires);
-        // Send email here (assuming SendNewEmail is properly implemented)
         await SendNewEmail({ firstName, email, token: token.token, userId: token.userId });
       }
-
-      // Send any additional information you want to the client
       return res.status(201).json({ user: newUser, message: "User created successfully. Please check your email to proceed.", redirect: "/api/auth/signin" });
 
     } catch (error) {
