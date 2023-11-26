@@ -1,11 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-export const GET = async (_request, { params }) => {
+export default async function handler(_request, { params }) {
     const { token } = params;
 
     const user = await prisma.user.findFirst({
@@ -53,7 +52,7 @@ export const GET = async (_request, { params }) => {
     });
 
     redirect('/api/auth/signin');
-};
+}
 
 
 
