@@ -1,6 +1,9 @@
-import { prisma } from '@/lib/prisma';
+import { PrismaClient } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
+import { withAccelerate } from '@prisma/extension-accelerate';
+
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 export const GET = async (_request, { params }) => {
     const { token } = params;
