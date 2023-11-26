@@ -1,10 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { redirect } from 'next/navigation';
+import { NextRequest } from 'next/server';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
 export default async function handler(_request, { params }) {
+    // Check if params is defined and has the expected structure
+    if (!params || !params.token) {
+        throw new Error('Invalid parameters. Token is missing.');
+    }
+
     const { token } = params;
 
     const user = await prisma.user.findFirst({
@@ -53,6 +59,8 @@ export default async function handler(_request, { params }) {
 
     redirect('/api/auth/signin');
 }
+
+
 
 
 
