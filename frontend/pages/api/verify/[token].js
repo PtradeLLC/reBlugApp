@@ -38,7 +38,7 @@ export default async function handler(req, { query }) {
     }
 
     // Check if the user is already verified
-    if (!user.isVerified) {
+    if (user.isVerified !== undefined && !user.isVerified) {
         await prisma.user.update({
             where: {
                 id: user.id,
@@ -49,8 +49,11 @@ export default async function handler(req, { query }) {
         });
     }
 
-    // Check if activatedAt is not set
-    if (!user.verificationTokens.some((t) => t.token === token && t.activatedAt)) {
+    // Check if verificationTokens is defined and activatedAt is not set
+    if (
+        user.verificationTokens !== undefined &&
+        user.verificationTokens.some((t) => t.token === token && t.activatedAt === null)
+    ) {
         await prisma.verificationToken.update({
             where: {
                 token,
