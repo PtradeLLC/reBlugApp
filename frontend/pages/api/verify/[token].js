@@ -64,5 +64,7 @@ export default async function handler(req, { query }) {
         });
     }
 
-    return NextResponse.redirect('/api/auth/signin');
+    const absoluteRedirectUrl = resolve(req.headers.host, 'https://forgedmart.com/api/auth/signin');
+
+    return NextResponse.redirect(absoluteRedirectUrl);
 }
