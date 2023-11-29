@@ -43,21 +43,34 @@ const SignUp = () => {
                         console.log("There is Data - Data from SignUp", data);
                         setIsSuccess(true);
                         if (data.user) {
-                            setRedirect(data.message);
-                            setTimeout(() => router.push("/api/auth/signin"), 4000);
+                            if (isMounted) {
+                                setRedirect(data.message);
+                                setTimeout(() => {
+                                    if (isMounted) {
+                                        router.push("/api/auth/signin");
+                                    }
+                                }, 4000);
+                            }
                         } else {
-                            setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...');
-                            setTimeout(() => router.push("/api/auth/signin"), 4000);
+                            if (isMounted) {
+                                setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...');
+                                setTimeout(() => {
+                                    if (isMounted) {
+                                        router.push("/api/auth/signin");
+                                    }
+                                }, 4000);
+                            }
                         }
                     }
                 }
             } catch (error) {
-                if (error instanceof TypeError && error.message === 'Failed to fetch') {
-                    setIsError('Network error. Please check your internet connection.');
-                } else {
-                    setIsError(`An error occurred. Please try again. ${error.message}`);
+                if (isMounted) {
+                    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+                        setIsError('Network error. Please check your internet connection.');
+                    } else {
+                        setIsError(`An error occurred. Please try again. ${error.message}`);
+                    }
                 }
-                setIsError(`An error occurred. Please try again. ${error.message}`);
             } finally {
                 if (isMounted) setLoading(false);
             }
@@ -68,7 +81,60 @@ const SignUp = () => {
         return () => {
             isMounted = false;
         };
-    }, [provider]);
+    }, [provider, router]);
+
+
+    // useEffect(() => {
+    //     let isMounted = true;
+
+    //     const fetchData = async () => {
+    //         try {
+    //             if (provider !== '') {
+    //                 const baseUrl = "/api/email/emailLogic";
+
+    //                 const response = await fetch(baseUrl, {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "Content-Type": "application/json",
+    //                     },
+    //                     body: JSON.stringify({ brandName, firstName, lastName, email, password, provider })
+    //                 });
+
+    //                 if (!response.ok) {
+    //                     throw new Error("Failed to fetch data from the server");
+    //                 }
+
+    //                 const data = await response.json();
+    //                 if (isMounted && data) {
+    //                     console.log("There is Data - Data from SignUp", data);
+    //                     setIsSuccess(true);
+    //                     if (data.user) {
+    //                         setRedirect(data.message);
+    //                         setTimeout(() => router.push("/api/auth/signin"), 4000);
+    //                     } else {
+    //                         setRedirect('Account successfully created. Please check your email to verify. Redirecting to login...');
+    //                         setTimeout(() => router.push("/api/auth/signin"), 4000);
+    //                     }
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             if (error instanceof TypeError && error.message === 'Failed to fetch') {
+    //                 setIsError('Network error. Please check your internet connection.');
+    //             } else {
+    //                 setIsError(`An error occurred. Please try again. ${error.message}`);
+    //             }
+    //             setIsError(`An error occurred. Please try again. ${error.message}`);
+    //         } finally {
+    //             if (isMounted) setLoading(false);
+    //         }
+    //     };
+
+    //     fetchData();
+
+    //     return () => {
+    //         isMounted = false;
+    //     };
+    // }, [provider]);
 
 
 
