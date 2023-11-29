@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { resolve } from 'url';
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
