@@ -32,7 +32,6 @@ export default async function handler(req, res) {
                 include: {
                     VerificationTokens: true,
                 },
-                // cacheStrategy: { swr: 60, ttl: 60 },
             });
 
             // Getting User Tokens

@@ -38,7 +38,6 @@ export default async function handler(req, res) {
                             contains: email,
                         },
                     },
-                    // cacheStrategy: { ttl: 60 },
                 });
 
                 console.log("U-data", eData);
