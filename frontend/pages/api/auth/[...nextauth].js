@@ -44,7 +44,6 @@ export const authOptions = {
                         where: {
                             email: credentials?.email
                         },
-                        cacheStrategy: { swr: 60, ttl: 60 },
                     });
 
                     if (existingUser) {
