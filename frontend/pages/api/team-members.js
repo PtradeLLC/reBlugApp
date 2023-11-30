@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
-const prisma = new PrismaClient().$extends(withAccelerate());
-
+// const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = new PrismaClient();
 
 
 export default async function handler(req, res) {
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                             contains: email,
                         },
                     },
-                    cacheStrategy: { ttl: 60 },
+                    // cacheStrategy: { ttl: 60 },
                 });
 
                 console.log("U-data", eData);

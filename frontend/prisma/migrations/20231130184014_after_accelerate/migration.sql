@@ -313,4 +313,3 @@ ALTER TABLE "Marketing_Plan_Document" ADD CONSTRAINT "Marketing_Plan_Document_pl
 
 -- AddForeignKey
 ALTER TABLE "Marketing_Creatives_Document" ADD CONSTRAINT "Marketing_Creatives_Document_creativesId_fkey" FOREIGN KEY ("creativesId") REFERENCES "ForgedAI"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-

@@ -5,8 +5,8 @@ import { authOptions } from "./auth/[...nextauth]"
 import { error } from 'console';
 
 
-const prisma = new PrismaClient().$extends(withAccelerate());
-
+// const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = new PrismaClient();
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions)
 

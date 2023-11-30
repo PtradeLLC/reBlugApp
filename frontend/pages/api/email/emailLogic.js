@@ -7,7 +7,8 @@ import SendNewEmail from './newUser';
 
 const saltRounds = 12;
 
-const prisma = new PrismaClient().$extends(withAccelerate());
+// const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -26,7 +27,7 @@ export default async function handler(req, res) {
         where: {
           email: lowercaseEmail,
         },
-        cacheStrategy: { swr: 60, ttl: 60 },
+        // cacheStrategy: { swr: 60, ttl: 60 },
       });
 
       if (existingUser) {

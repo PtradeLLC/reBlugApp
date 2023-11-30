@@ -10,8 +10,8 @@ import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 // const globalForPrisma = global;
-const prisma = new PrismaClient().$extends(withAccelerate());
-
+// const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = new PrismaClient();
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
