@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import Loading from './Loading';
 
 
@@ -13,6 +14,7 @@ export default function Team({ show, setShow }) {
             loading: false,
         });
     const [emptyField, setEmptyField] = useState('');
+    const [message, setMessage] = useState('');
 
     const addEmailField = () => {
         // Check if at least one email in the array is truthy
@@ -66,13 +68,9 @@ export default function Team({ show, setShow }) {
             });
 
             if (!response.ok) {
-                console.log("Res not Okay:", response.statusText);
                 throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-
+            };
             const data = await response.json();
-            console.log("Response Data:", data, response);
 
             return data;
         } catch (error) {
@@ -108,7 +106,6 @@ export default function Team({ show, setShow }) {
 
         try {
             const response = await sendInvite();
-            console.log("SubmitResponse:", response);
 
             // response.ok
             if (state.emails) {
@@ -117,7 +114,8 @@ export default function Team({ show, setShow }) {
                     emailSent: true,
                 }));
             } else {
-                throw new Error('Error sending invite');
+                setMessage(response.error);
+                throw new Error(`Error sending invite: ${response.error}`);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -218,12 +216,20 @@ export default function Team({ show, setShow }) {
                                                     <p className='text-red-400'>{emptyField}</p>
                                                 </div>
                                             ))}
-                                            <button
-                                                type="submit"
-                                                className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                                            >
-                                                Submit
-                                            </button>
+                                            {state.loading && (
+                                                <button type="submit" className="flex w-full mt-3 items-center justify-center gap-3 rounded-md bg-slate-200 px-3 py-1.5 text-black border shadow-md outline-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494a4a]">
+                                                    <Loading size="sm" />
+                                                </button>
+                                            )}
+                                            {!state.loading && (
+                                                <button
+                                                    type="submit"
+                                                    className="inline-flex mt-3 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                                                >
+                                                    Submit
+                                                </button>
+                                            )
+                                            }
                                         </form>
                                     )}
                                 </div>

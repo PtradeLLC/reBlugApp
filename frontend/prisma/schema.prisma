@@ -154,7 +154,7 @@ model emailList {
   userId String?
   User   User?   @relation(fields: [userId], references: [id])
   Team   Team?   @relation(fields: [teamId], references: [id])
-  teamId String?
+  teamId String
 }
 
 model TrialProspectTwo {

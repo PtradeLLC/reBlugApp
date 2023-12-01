@@ -1,12 +1,18 @@
-import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { randomUUID } from 'crypto';
+import SendMemberInvite from './email/membersInvite';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]"
 
 // const prisma = new PrismaClient().$extends(withAccelerate());
 const prisma = new PrismaClient();
 
 
 export default async function handler(req, res) {
+    const session = await getServerSession(req, res, authOptions);
+    const managerEmail = session.user.email;
+
     // Check if the request method is POST
     if (req.method !== "POST") {
         throw new Error('Invalid HTTP method');
@@ -15,8 +21,6 @@ export default async function handler(req, res) {
         try {
             // Extract the user data from the request body
             const usersData = req.body;
-            console.log("Parsed user data:", usersData);
-            // Check if user data is provided
             // Check if user data is provided
             if (!usersData || !Array.isArray(usersData.emails)) {
                 return res.status(400).json({ message: "Invalid user data" });
@@ -24,58 +28,106 @@ export default async function handler(req, res) {
 
             const createdUsers = [];
 
+            //Fetch Manager's data
+            const manager = await prisma.user.findUnique({
+                where: {
+                    email: managerEmail,
+                },
+            });
+
             // Extract the array of emails
-            const emails = usersData.emails;
+            const emails = usersData.emails.map((email) => email.trim());
+
             for (const email of emails) {
-                // Check if userId and email are provided
-                if (!email) {
-                    return res.status(400).json({ message: "email is required" });
-                };
+                try {
+                    // Check if email is provided
+                    if (!email) {
+                        console.error('Email is required for user:', email);
+                        return res.status(400).json({ message: "email is required" });
+                    }
 
-                const eData = await prisma.user.findMany({
-                    where: {
-                        email: {
-                            contains: email,
+                    const eData = await prisma.user.findMany({
+                        where: {
+                            email: {
+                                contains: email,
+                            },
                         },
-                    },
-                });
+                    });
 
-                console.log("U-data", eData);
+                    if (eData.length === 0) {
+                        // Check if a team entry with the same email already exists
+                        const existingTeamEntry = await prisma.team.findUnique({
+                            where: {
+                                email: email,
+                            },
+                        });
 
-                // if (!eData) {
-                //     // Create a new record in the emailList table associated with the user
-                //     const emailData = await prisma.emailList.create({
-                //         data: {
-                //             email: email,
-                //             User: {
-                //                 connect: { id: userId }
-                //             }
-                //         }
-                //     });
-                //     return emailData;
-                // } else {
-                //     //Associate with the user to the 
-                //     //SEND EMAIL INVITE TO THE USER.
+                        if (existingTeamEntry) {
+                            res.status(200).json({ message: `User found. Already exists on this team. ${existingTeamEntry.email}` })
+                        } else {
+                            // Create a new record in the team table associated with the user
+                            const emailData = await prisma.team.create({
+                                data: {
+                                    email: email,
+                                    isVerified: false,
+                                    member: {
+                                        connect: { email: managerEmail }
+                                    }
+                                }
+                            });
 
-                // }
+                            // Add the created team entry to the list
+                            createdUsers.push(emailData);
+                        }
+                    } else {
+                        console.log("User already existed");
+                    }
 
-                // console.log("EMAIL DATA:", emailData);
+                    // Check if a verification token already exists for the given email
+                    const existingToken = await prisma.verificationToken.findFirst({
+                        where: {
+                            email: email,
+                        },
+                    });
 
-                // // Find the user based on the userId
-                // const user = await prisma.user.findUnique({
-                //     where: {
-                //         id: userId
-                //     }
-                // });
+                    if (existingToken) {
+                        const expires = new Date();
+                        expires.setHours(expires.getHours() + 1);
 
-                // if (!user) {
-                //     return res.status(404).json({ message: "User not found" });
-                // }
-                // createdUsers.push(user);
+                        await prisma.verificationToken.update({
+                            where: {
+                                id: existingToken.id,
+                            },
+                            data: {
+                                token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ''),
+                                expires: expires,
+                            },
+                        });
+                    } else {
+                        // Create a new verification token
+                        const expires = new Date();
+                        expires.setHours(expires.getHours() + 1);
+                        const token = await prisma.verificationToken.create({
+                            data: {
+                                token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ''),
+                                email: email,
+                                userId: manager.id,
+                                expires: expires,
+                            }
+                        });
+
+                        if (token) {
+                            await SendMemberInvite({ email, token: token.token, manager, createdUsers });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error processing email:', email, 'Error:', error);
+                    return res.status(500).json({ message: "Failed to process email" });
+                };
             }
-            // Respond with the created users
-            // res.status(200).json(createdUsers);
-            res.status(200).json({ success: true });
+
+            // Respond with the created users after processing all emails
+            return res.status(200).json({ success: true, createdUsers });
         } catch (error) {
             console.error('Error processing request:', error);
             res.status(400).json({ success: false, error: 'Invalid request data' });
@@ -83,5 +135,4 @@ export default async function handler(req, res) {
     } else {
         res.status(405).json({ success: false, error: 'Method not allowed' });
     }
-
 }

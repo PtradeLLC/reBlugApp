@@ -1,8 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import { error } from 'console';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 
 
 // const prisma = new PrismaClient().$extends(withAccelerate());

@@ -31,7 +31,6 @@ export default async function handler(req, res) {
 
       if (existingUser) {
         // User already exists, log them in
-        console.log("ExistingUser from emailLogic:", existingUser)
         return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
       }
 

@@ -16,8 +16,6 @@ export default async function handler(req, res) {
             return res.status(400).json({ message: 'An entry is missing' });
         };
 
-        console.log(req.body);
-
         if (req.method === 'POST') {
             // Look for an existing user with verified status
             const existingUser = await prisma.user.findFirst({
