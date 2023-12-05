@@ -456,7 +456,7 @@ const Dashboard = function ({ children }) {
                                                         <div className="flex items-center">
                                                             <span className="flex truncate text-sm font-medium text-gray-900">
                                                                 <Image src={managerImage} width={25} height={25} alt="profile image" />
-                                                                <span className="truncate mx-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()} (You)</span>
+                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()} (You)</span>
                                                             </span>
                                                         </div>
                                                         <TeamComponent />
