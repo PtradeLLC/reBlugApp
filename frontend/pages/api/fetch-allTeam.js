@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 
-
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
 
     if (!managerEmail || !session) {
         throw new Error('There is no session or email');
-    };
+    }
 
     if (req.method === 'GET') {
         try {
@@ -30,11 +29,10 @@ export default async function handler(req, res) {
                 res.status(404).json({ message: 'Team not found for the manager' });
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             res.status(500).json({ message: `There is an error: ${error}` });
         }
+    } else {
+        console.log("Request not valid");
     }
-    res.status(200).json({ name: 'John Doe' })
 }
-
-
