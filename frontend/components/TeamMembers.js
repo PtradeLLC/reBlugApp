@@ -28,7 +28,6 @@ export default function Team({ show, setShow }) {
         }
     };
 
-
     const isEmailValid = (emails) => {
         const emailArray = emails.split(',').map((email) => email.trim());
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,7 +50,6 @@ export default function Team({ show, setShow }) {
     };
 
     const sendInvite = async () => {
-
         const baseUrl = "/api/team-members"
         try {
             setState((prevState) => ({
@@ -107,6 +105,8 @@ export default function Team({ show, setShow }) {
         try {
             const response = await sendInvite();
 
+            console.log("addedTeam Member", response); //TEAM MIGHT BE A BETTER TO USE - Like returning response for the added members
+
             // response.ok
             if (state.emails) {
                 setState((prevState) => ({
@@ -125,8 +125,6 @@ export default function Team({ show, setShow }) {
             }));
         }
     };
-
-
 
     return (
         <Transition.Root show={show} as={Fragment}>

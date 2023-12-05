@@ -13,6 +13,7 @@ import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
+import TeamComponent from "../../components/TeamComponent";
 
 const navigation = [
     { id: 1, name: "Home", href: "/", current: true },
@@ -83,9 +84,7 @@ const Dashboard = function ({ children }) {
     const [show, setShow] = useState(false);
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
-    const [team, setTeam] = useState("There are no members of your team here");
     const [emailSent, setEmailSent] = useState(false);
-    const [teamCount, setTeamCount] = useState([]);
     const router = useRouter();
 
     const [email, setEmail] = useState("");
@@ -129,7 +128,7 @@ const Dashboard = function ({ children }) {
                         fetchedTeam = [currentUser, ...fetchedTeam];
                     }
 
-                    setTeamCount(fetchedTeam);
+                    // setTeamCount(fetchedTeam);
                 } else {
                     console.error("Error fetching user:", response.statusText);
                 }
@@ -454,42 +453,13 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     </span>
                                                     <div className="mt-6 flow-root">
-                                                        <ul role="list" className="-my-5 divide-y divide-gray-200">
-                                                            {teamCount.length > 0 ? (
-                                                                teamCount.map((person, index) => (
-                                                                    <li key={index} className="py-4">
-                                                                        {person?.user?.name && (
-                                                                            <div className="flex items-center space-x-4">
-                                                                                <div className="flex-shrink-0">
-                                                                                    <img
-                                                                                        className="h-8 w-8 rounded-full"
-                                                                                        src={managerImage}
-                                                                                        alt="profile image"
-                                                                                    />
-                                                                                </div>
-                                                                                <div className="min-w-0 flex-1">
-                                                                                    <p className="truncate text-sm font-medium text-gray-900">
-                                                                                        {managerName} <span className="truncate text-sm text-gray-500"> - {managerRole.toLowerCase()} (You)</span>
-                                                                                    </p>
-                                                                                </div>
-                                                                                <div>
-                                                                                    <a
-                                                                                        href={person.user?.href}
-                                                                                        className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                                    >
-                                                                                        View
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        )}
-                                                                    </li>
-                                                                ))
-                                                            ) : (
-                                                                <div>
-                                                                    <span>{team}</span>
-                                                                </div>
-                                                            )}
-                                                        </ul>
+                                                        <div className="flex items-center">
+                                                            <span className="flex truncate text-sm font-medium text-gray-900">
+                                                                <Image src={managerImage} width={25} height={25} alt="profile image" />
+                                                                <span className="truncate mx-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()} (You)</span>
+                                                            </span>
+                                                        </div>
+                                                        <TeamComponent />
                                                     </div>
 
                                                     <div className="mt-6">
