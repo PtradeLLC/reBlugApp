@@ -1,13 +1,11 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
 import { PrismaClient } from '@prisma/client';
-import { withAccelerate } from '@prisma/extension-accelerate';
 import { randomUUID } from 'crypto';
 import SendNewEmail from './newUser';
 
 const saltRounds = 12;
 
-// const prisma = new PrismaClient().$extends(withAccelerate());
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
