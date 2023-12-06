@@ -442,7 +442,7 @@ const Dashboard = function ({ children }) {
                                             {selectedComponent === "Messaging Platform" && <MaapTabs />}
                                         </section>
                                     </div>
-                                    <div className="grid grid-cols-1 gap-4">
+                                    <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
                                         <section aria-labelledby="recent-hires-title">
                                             <div className="overflow-hidden rounded-lg bg-white shadow">
                                                 <div className="p-6">

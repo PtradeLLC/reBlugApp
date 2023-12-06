@@ -54,7 +54,7 @@ const TeamComponent = ({ refreshList }) => {
         fetchTeam();
     }, [updateTeamMembers, refreshList]);
 
-    const handleModal = () => {
+    const handleRemove = () => {
         console.log('modal');
     };
 
@@ -74,13 +74,36 @@ const TeamComponent = ({ refreshList }) => {
                                             alt="profile image"
                                         />
                                         <p className='mx-1 truncate'>{person?.email || person?.firstName || person?.name}</p>
-                                        <button
-                                            type='button'
-                                            onClick={handleModal}
-                                            className="inline-flex items-center rounded-md bg-white px-2.5 py-1 text-xs font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                        >
-                                            {person.isVerified === false ? 'Inactive' : 'View'}
-                                        </button>
+                                        {person.isVerified === false ? <div className="min-w-0 flex-1">
+                                            <p
+                                                className="inline-flex items-center bg-white px-2.5 py-1 text-xs font-semibold text-red-700"
+                                            >
+                                                Inactive
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleRemove(person.id)}
+                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div> : <div className="min-w-0 flex-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleView(person.id)}
+                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            >
+                                                View
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleRemove(person.id)}
+                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>}
+
                                     </div>
                                 </div>
                             )}
