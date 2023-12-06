@@ -23,6 +23,8 @@ export default async function handler(req, res) {
                 },
             });
 
+            console.log(prisma.$queryRaw`SELECT * FROM "User" WHERE ...`);
+
             if (user && user.Team) {
                 res.status(200).json({ message: 'Successful', user, team: user.Team });
             } else {
@@ -30,7 +32,7 @@ export default async function handler(req, res) {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: `There is an error: ${error}` });
+            res.status(500).json({ message: `There is an error: ${error.message || error}` });
         }
     } else {
         console.log("Request not valid");
