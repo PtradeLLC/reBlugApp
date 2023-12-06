@@ -1,6 +1,58 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const AuthPro = () => {
+    const { data: session } = useSession();
+
+    const providerSession = async (provider) => {
+        const baseUrl = '/api/email/newUser';
+
+        if (session) {
+            console.log("User is authenticated:", session.user);
+
+            try {
+                // Trigger signIn with the selected provider
+                await signIn(provider, { callbackUrl: "/dashboard" });
+
+                // Once signIn is successful, execute the logic in providerSession
+                const proInfo = await fetch(baseUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Pass the session token in the Authorization header
+                        'Authorization': `Bearer ${session.accessToken}`,
+                    },
+                    body: JSON.stringify({
+                        // Include any other data you want to send to the server
+                        // e.g., firstName, token, email, userId, provider
+                        firstName: 'John',
+                        token: 'someToken',
+                        email: 'john@example.com',
+                        userId: '123',
+                        provider: provider, // Pass the selected provider to the server
+                    }),
+                });
+
+                // Handle the response from the server
+                if (proInfo.ok) {
+                    console.log("Email sent successfully");
+                } else {
+                    console.error("Failed to send email");
+                }
+
+            } catch (error) {
+                console.error("Error sending email:", error);
+            }
+        } else {
+            console.log("User is not authenticated");
+            // Perform actions for non-authenticated users
+        }
+    };
+
+    const handleGoogleSignIn = () => {
+        // Call both providerSession and signIn functions for Google
+        providerSession('google');
+    };
+
     return (
         <div className='mt-6 grid grid-cols-3 gap-4'>
             <span className="flex h-[35px] border rounded-[5px] shadow-gray-100 bg-white justify-center text-base items-center ">

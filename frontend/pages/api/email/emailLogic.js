@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
       const lowercaseEmail = email.toLowerCase();
 
-      // Check if User already exists (including unverified emails)
+      // if User already exists (including unverified emails)
       const existingUser = await prisma.user.findFirst({
         where: {
           email: lowercaseEmail,
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       });
 
       if (token) {
-        await SendNewEmail({ firstName, email, token: token.token, userId: token.userId });
+        await SendNewEmail({ firstName, email, token: token.token, userId: token.userId, provider });
       }
       return res.status(201).json({ user: newUser, message: "User created successfully. Please check your email to proceed.", redirect: "/api/auth/signin" });
 

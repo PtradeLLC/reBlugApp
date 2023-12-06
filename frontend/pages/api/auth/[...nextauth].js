@@ -73,7 +73,7 @@ export const authOptions = {
         signOut: '/login',
         error: '/404',
     },
-    debug: process.env.NODE_ENV === 'development',
+    // debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);

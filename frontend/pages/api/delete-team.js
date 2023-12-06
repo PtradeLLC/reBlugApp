@@ -13,7 +13,6 @@ const deleteTeamMember = async (req, res) => {
 
     const managerEmail = session.user.email;
     const { memberId } = req.body;
-    console.log("MemID", memberId);
 
     try {
         const user = await prisma.user.findUnique({
@@ -41,7 +40,6 @@ const deleteTeamMember = async (req, res) => {
         }
 
         if (user && user.Team) {
-            console.log("User Role:", user);
             // Check if the memberId exists in the team
             const isMemberInTeam = user.Team.some(member => member.id === memberId);
 

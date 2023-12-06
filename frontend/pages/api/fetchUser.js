@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             const user = await prisma.user.findUnique({
                 where: { email },
             });
-            res.status(200).json(user);
+            res.status(200).json({ message: `${user}` });
         } catch (error) {
             console.error("Error fetching user data:", error);
             res.status(500).json({ message: `There is an error ${error.message || 'unknown'}` });

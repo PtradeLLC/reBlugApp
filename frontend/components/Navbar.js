@@ -102,7 +102,7 @@ export default function Navbar() {
                 Contact
               </Disclosure.Button>
               <Disclosure.Button as="button">
-                {session ? <button onClick={handleClick}>Sign out</button> : <Link href={"/api/auth/signin"}>Sign In | Register</Link>}
+                {session ? <button className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}>Sign out</button> : <Link className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Link>}
               </Disclosure.Button >
             </div >
           </Disclosure.Panel >
