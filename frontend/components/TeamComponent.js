@@ -10,53 +10,77 @@ const TeamComponent = ({ refreshList }) => {
 
     const latestTeamMembers = useRef(teamMembers);
 
-    useEffect(() => {
-        const fetchTeam = async () => {
-            try {
-                const baseUrl = "/api/fetch-allTeam";
+    const fetchTeam = async () => {
+        try {
+            const baseUrl = "/api/fetch-allTeam";
 
-                const response = await fetch(baseUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+            const response = await fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-                if (!response.ok) {
-                    console.error('There is an error', response);
-                    throw new Error("Failed to fetch data from the server");
-                }
-
-                const data = await response.json();
-
-                if (data) {
-                    const fetchedTeamMembers = data.user.Team;
-
-                    if (JSON.stringify(fetchedTeamMembers) !== JSON.stringify(latestTeamMembers.current)) {
-                        // Update the team members and set the team count
-                        updateTeamMembers(fetchedTeamMembers);
-                        setTeamCount(fetchedTeamMembers);
-
-                        // Update the latest team members reference
-                        latestTeamMembers.current = fetchedTeamMembers;
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching team data:', error);
-                setTeam("Failed to fetch team data"); // Set an error message or handle error state
-            } finally {
-                // Set loading to false after the try-catch block
-                setLoading(false);
+            if (!response.ok) {
+                console.error('There is an error', response);
+                throw new Error("Failed to fetch data from the server");
             }
-        };
 
+            const data = await response.json();
+
+            if (data) {
+                const fetchedTeamMembers = data.user.Team;
+
+                if (JSON.stringify(fetchedTeamMembers) !== JSON.stringify(latestTeamMembers.current)) {
+                    // Update the team members and set the team count
+                    updateTeamMembers(fetchedTeamMembers);
+                    setTeamCount(fetchedTeamMembers);
+
+                    // Update the latest team members reference
+                    latestTeamMembers.current = fetchedTeamMembers;
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching team data:', error);
+            setTeam("Failed to fetch team data");
+        } finally {
+            // Set loading to false after the try-catch block
+            setLoading(false);
+        }
+    };
+
+    const handleRemove = async (teamId) => {
+        try {
+            const baseUrl = "/api/delete-team";
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ memberId: teamId }),
+            });
+
+            if (!response.ok) {
+                console.error('There is an error', response);
+                throw new Error("Failed to remove team member");
+            }
+
+            // If the removal was successful, update the team members
+            const updatedTeamMembers = teamCount.filter(person => person.id !== teamId);
+            setTeamCount(updatedTeamMembers);
+        } catch (error) {
+            console.error('Error removing team member:', error);
+            setTeam("Failed to remove team member");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         // Call the fetchTeam function
         fetchTeam();
     }, [updateTeamMembers, refreshList]);
 
-    const handleRemove = () => {
-        console.log('modal');
-    };
 
     return (
         <div className='overflow-y-auto overflow-x-hidden h-44'>
@@ -87,6 +111,7 @@ const TeamComponent = ({ refreshList }) => {
                                             >
                                                 Remove
                                             </button>
+
                                         </div> : <div className="min-w-0 flex-1">
                                             <button
                                                 type="button"
@@ -102,6 +127,7 @@ const TeamComponent = ({ refreshList }) => {
                                             >
                                                 Remove
                                             </button>
+
                                         </div>}
 
                                     </div>
