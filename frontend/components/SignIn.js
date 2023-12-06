@@ -19,6 +19,7 @@ const SignIn = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const baseUrl = "/api/userSignin";
 
             const response = await fetch(baseUrl, {
@@ -29,6 +30,8 @@ const SignIn = () => {
                 body: JSON.stringify({ email, password }),
             });
 
+            setLoading(false);
+
             if (!response.ok) {
                 console.log(response.error);
                 const data = await response.json();
@@ -37,7 +40,7 @@ const SignIn = () => {
                     setError("Please review your login credentials or reset your password");
                 } else {
                     console.log(data.message);
-                    setErrors(`Authentication failed: ${data.message}`);
+                    setError(`Authentication failed: ${data.message}`);
                 }
 
                 return;
@@ -59,6 +62,7 @@ const SignIn = () => {
                 setErrors(`Authentication failed: ${data.message}`);
             }
         } catch (error) {
+            setLoading(false);
             setErrors(`Authentication error: ${error}`);
         }
     };
