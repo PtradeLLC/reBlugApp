@@ -10,7 +10,6 @@ import LogoTwo from "../components/LogoTwo";
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
 
-
   return (
     <div>
       <Head>

@@ -95,6 +95,11 @@ const Dashboard = function ({ children }) {
     const managerName = session?.user?.name || `${user.firstName} ${user.lastName}`;
     const managerImage = session?.user?.image || user.image || "/images/brand.png";
     const managerRole = session?.user?.role || user.role || "User";
+    const [refreshList, setRefreshList] = useState(false);
+
+    const handleRefreshList = () => {
+        setRefreshList(!refreshList);
+    };
 
     useEffect(() => {
         if (status === 'loading') {
@@ -364,11 +369,11 @@ const Dashboard = function ({ children }) {
                                                     <div className="sm:flex sm:items-center sm:justify-between">
                                                         <div className="sm:flex sm:space-x-5">
                                                             <div className="flex-shrink-0">
-                                                                <img
+                                                                {loading ? <Loading /> : <img
                                                                     className="mx-auto h-20 w-20 rounded-full"
                                                                     src={session.user?.image || user?.image || "/images/brand.png"}
                                                                     alt="profile image"
-                                                                />
+                                                                />}
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -389,12 +394,12 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3">
+                                                    <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center">
                                                         {cards.map((card) => (
                                                             <button
                                                                 type="button"
                                                                 onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                className="font-medium text-[#0f172a] hover:text-black flex items-center space-x-1"
+                                                                className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                             >
                                                                 <div
                                                                     key={card.id}
@@ -444,22 +449,24 @@ const Dashboard = function ({ children }) {
                                                     <span className="flex">
                                                         <div className="flex">
                                                             <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
-                                                            <h2
-                                                                className="text-base font-medium text-gray-900"
-                                                                id="recent-hires-title"
-                                                            >
-                                                                Team Members
-                                                            </h2>
+                                                            <h2 className="text-base font-medium text-gray-900" id="recent-hires-title"> Team Members </h2>
                                                         </div>
                                                     </span>
                                                     <div className="mt-6 flow-root">
                                                         <div className="flex items-center">
-                                                            <span className="flex truncate text-sm font-medium text-gray-900">
+                                                            <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
                                                                 <Image src={managerImage} width={25} height={25} alt="profile image" />
-                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()} (You)</span>
+                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()}</span>
+                                                                {/* Hide on condition */}
+                                                                <span className="flex mx-1 items-center">
+                                                                    <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                                    </svg>
+                                                                </span>
                                                             </span>
                                                         </div>
-                                                        <TeamComponent />
+                                                        <TeamComponent refreshList={refreshList} />
                                                     </div>
 
                                                     <div className="mt-6">
