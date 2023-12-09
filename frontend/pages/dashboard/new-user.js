@@ -8,18 +8,19 @@ const NewUser = () => {
     const { data: session } = useSession();
     const router = useRouter();
 
-    const isUserVerified = session?.user?.isVerified;
+    console.log("Session from NU");
 
-    // If the user is verified, redirect to the dashboard
-    useEffect(() => {
-        if (isUserVerified) {
-            router.push('/dashboard');
-        }
-    }, [isUserVerified]);
+    // const isUserVerified = session?.user?.isVerified;
+    // DELETE FILE IF NOT NEEDED...If the user is verified, redirect to the dashboard
+    // useEffect(() => {
+    //     if (isUserVerified) {
+    //         router.push('/dashboard');
+    //     }
+    // }, [isUserVerified]);
 
     return (
         <div>
-            <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} />
+            {/* <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} /> */}
         </div>
     );
 }
