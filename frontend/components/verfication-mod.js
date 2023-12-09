@@ -9,66 +9,30 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
     const cancelButtonRef = useRef(null);
     const { data: session } = useSession();
     const router = useRouter();
-    const [formInput, setFormInput] = useState({
-        email: '',
-        verification: '',
-    });
+    const user = session.user;
+    const name = user.name;
+    const email = user.email;
 
-    const [success, setSuccess] = useState("");
-
-    useEffect(() => {
-        if (success === 'User is verified') {
-            const redirectTimer = setTimeout(() => {
-                router.push('/dashboard');
-            }, 1000); // Redirect after 1 second
-
-            return () => clearTimeout(redirectTimer); // Clear the timeout if the component unmounts
-        }
-    }, [success, router]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormInput((prev) => ({ ...prev, [name]: value }));
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleClick = async () => {
+        const baseUrl = '/api/auth/authVerificationset';
         try {
-            const response = await fetch("/api/new-user-verify", {
-                method: "POST",
+            const response = await fetch(baseUrl, {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session.accessToken}`,
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formInput.email, verification: formInput.verification, verifiedUser: false }),
+                body: JSON.stringify({ email: email })
             });
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            const responseData = await response.json();
-            console.log("resData", responseData);
-
-            // Check for existingUser or unverifiedUser
-            const existingUser = responseData.user;
-            const verifiedUser = responseData.user;
-
-
-            if (existingUser) {
-                // User already verified, log them in
-                setSuccess(existingUser.message);
-                router.push(existingUser.redirect);
-            } else if (verifiedUser) {
-                // Update the user's verification status to true
-                setSuccess(verifiedUser.message);
-                router.push(verifiedUser.redirect);
+            const data = await response.json();
+            if (data.message === 'success') {
+                setOpen(false);
             } else {
-                setSuccess('Verification failed. Please try again.');
+                console.error('There was an error:', JSON.stringify(data, null, 2));
             }
 
         } catch (error) {
-            setSuccess('An error occurred. Please try again.');
+            console.error('Fetch failed:', error);
         }
     };
 
@@ -76,11 +40,13 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
         <Transition.Root show={open} as={React.Fragment}>
             <Dialog
                 as="div"
-                className="fixed inset-0 z-10 overflow-y-auto"
+                className="fixed inset-0 z-10 overflow-y-auto bg-slate-500 bg-opacity-75"
                 initialFocus={cancelButtonRef}
-                onClose={() => setOpenModal(false)}
+                onClose={() => {
+                    setOpenModal(false);
+                }}
             >
-                <div className="fixed inset-0 z-10 overflow-y-auto">
+                <div className="fixed bg-opacity-75 inset-0 z-10 overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <Transition.Child
                             as={Fragment}
@@ -106,68 +72,17 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
                                             as="h3"
                                             className="text-base font-semibold leading-6 text-gray-900"
                                         >
-                                            Welcome to ForgedMart
+                                            Welcome to ForgedMart {name}
                                         </Dialog.Title>
                                         <div className="mt-2">
-                                            {success ? (
-                                                <p>Awesome! Enjoy ForgedMart </p>
-                                            ) : (
-                                                <p className="text-sm text-gray-500">
-                                                    We are exited to see you here. Please verify your
-                                                    account by entering your email address, and paste the
-                                                    verification code that was included in your welcome email.
-                                                </p>
-                                            )}
+                                            <p className="text-sm text-gray-500">
+                                                We are exited to see you here. Please verify your
+                                                account by entering your email address, and paste the
+                                                verification code that was included in your welcome email.
+                                            </p>
+                                            <button onClick={handleClick} type="button" className="text-white mt-2 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Proceed to Dashboard</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="mt-5 m-auto sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-1 justify-center items-center w-4/5 sm:gap-3">
-                                    <form onSubmit={handleSubmit}>
-                                        <div className="">
-                                            <label htmlFor="email-address" className="sr-only">
-                                                Email address
-                                            </label>
-                                            <label htmlFor="verification" className="sr-only">
-                                                Verification Code
-                                            </label>
-                                            {!success ? (
-                                                <>
-                                                    <input
-                                                        id="email-address"
-                                                        name="email"
-                                                        type="email"
-                                                        onChange={handleChange}
-                                                        autoComplete="email"
-                                                        value={formInput.email}
-                                                        required
-                                                        className="relative px-1 mt-4 block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                        placeholder="Email address"
-                                                    />
-                                                    <input
-                                                        id="verification"
-                                                        name="verification"
-                                                        type="text"
-                                                        onChange={handleChange}
-                                                        autoComplete="text"
-                                                        value={formInput.verification}
-                                                        required
-                                                        className="relative px-1 mt-4 block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                        placeholder="Enter code to verify"
-                                                    />
-                                                </>
-                                            ) : null}
-                                            <div className="flex mt-5">
-                                                {!success ? (
-                                                    <button
-                                                        type="submit"
-                                                        className="inline-flex mx-4 w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
-                                                    >
-                                                        Submit
-                                                    </button>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

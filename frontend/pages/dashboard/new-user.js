@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 const NewUser = () => {
     const [openModal, setOpenModal] = useState(true);
     const { data: session } = useSession();
+    const router = useRouter();
 
     const isUserVerified = session?.user?.isVerified;
 

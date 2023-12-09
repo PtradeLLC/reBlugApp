@@ -14,6 +14,7 @@ import Team from "../../components/TeamMembers";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import TeamComponent from "../../components/TeamComponent";
+import WelcomeModal from "../../components/verfication-mod";
 
 const navigation = [
     { id: 1, name: "Home", href: "/", current: true },
@@ -85,8 +86,8 @@ const Dashboard = function ({ children }) {
     const [dataChange, setDataChange] = useState("");
     const [dataColor, setDataColor] = useState("");
     const [emailSent, setEmailSent] = useState(false);
+    const [open, setOpen] = useState(false);
     const router = useRouter();
-
     const [email, setEmail] = useState("");
 
     // Retrieve session information using useSession
@@ -100,6 +101,12 @@ const Dashboard = function ({ children }) {
     const handleRefreshList = () => {
         setRefreshList(!refreshList);
     };
+
+    useEffect(() => {
+        if (session) {
+            setOpen(true);
+        }
+    }, [session]);
 
     useEffect(() => {
         if (status === 'loading') {
@@ -260,7 +267,7 @@ const Dashboard = function ({ children }) {
                                         </div>
                                     </div>
 
-                                    <Transition.Root as={Fragment}>
+                                    <Transition.Root show={open} as={Fragment}>
                                         <div className="lg:hidden">
                                             <Transition.Child
                                                 as={Fragment}
@@ -270,6 +277,7 @@ const Dashboard = function ({ children }) {
                                                 leave="duration-150 ease-in"
                                                 leaveFrom="opacity-100"
                                                 leaveTo="opacity-0"
+
                                             >
                                                 <Popover.Overlay className="fixed inset-0 z-20 bg-black bg-opacity-25" />
                                             </Transition.Child>
@@ -532,18 +540,19 @@ const Dashboard = function ({ children }) {
                             <span>
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
+                            <span>
+                                {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
+                            </span>
+                            <span>
+                                <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} />
+                            </span>
                         </main>
                     </div >
                 </UserContext.Provider >
             </Suspense >
-
-
         </>
-
     );
 }
-
-
 export default Dashboard;
 
 

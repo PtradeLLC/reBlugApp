@@ -12,8 +12,6 @@ export default async function SendNewEmail(req, res, { firstName, token, email, 
         return res.status(401).json({ error: "Unauthorized" });
     }
 
-    console.log('SESSION FROM EMAIL', session);
-
 
     const emailHtml = render(
         <Email firstName={firstName} token={token} />

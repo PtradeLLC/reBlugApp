@@ -1,24 +1,21 @@
 {
-  "name": "nextjs",
+  "name": "ForgedMart",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate --no-engine && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate",
-    "server": "start-server-and-test dev 3000 test"
+    "lint": "next lint"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@alan-ai/alan-sdk-web": "^1.8.47",
     "@auth/prisma-adapter": "^1.0.6",
     "@cloudinary/url-gen": "^1.10.2",
     "@deepgram/sdk": "^2.4.0",
-    "@headlessui/react": "^1.7.16",
+    "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@huggingface/inference": "^2.6.4",
     "@neondatabase/serverless": "^0.6.0",
@@ -59,6 +56,8 @@
     "dotenv": "^16.3.1",
     "eslint-plugin-jsdoc": "^46.9.0",
     "express": "^4.18.2",
+    "flowbite": "^2.2.0",
+    "flowbite-react": "^0.7.0",
     "graphql": "^16.8.0",
     "langchain": "^0.0.194",
     "net": "^1.0.2",
