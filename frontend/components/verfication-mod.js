@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
     const [open, setOpen] = useState(true);
@@ -12,29 +13,32 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
     const user = session.user;
     const name = user.name;
     const email = user.email;
+    const question = 'What is the percentage of email marketing open and click rates for non-profit and for profit organizations based on data?';
+    const first_word = name.split(' ')[0];
 
     const handleClick = async () => {
-        const baseUrl = '/api/auth/authVerificationset';
+        const baseUrl = '/api/auth/authVerificationset'
         try {
             const response = await fetch(baseUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email })
+                body: JSON.stringify({ email: email, question: question })
             });
 
             const data = await response.json();
-            if (data.message === 'success') {
+            if (data.message === 'User is verified') {
                 setOpen(false);
+                console.log('Data:', data);
             } else {
                 console.error('There was an error:', JSON.stringify(data, null, 2));
             }
-
         } catch (error) {
             console.error('Fetch failed:', error);
         }
     };
+
 
     return (
         <Transition.Root show={open} as={React.Fragment}>
@@ -70,17 +74,32 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
                                     <div className="mt-3 text-center sm:mt-5">
                                         <Dialog.Title
                                             as="h3"
-                                            className="text-base font-semibold leading-6 text-gray-900"
+                                            className="text-base flex justify-start text-left font-semibold leading-6 text-gray-700"
                                         >
-                                            Welcome to ForgedMart {name}
+                                            {first_word}, did you know the average email open rates is this low?
                                         </Dialog.Title>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
-                                                We are exited to see you here. Please verify your
-                                                account by entering your email address, and paste the
-                                                verification code that was included in your welcome email.
-                                            </p>
-                                            <button onClick={handleClick} type="button" className="text-white mt-2 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Proceed to Dashboard</button>
+                                            <ul className="list-disc">
+                                                {<>
+                                                    <li className="text-sm flex justify-start text-left text-gray-500">Non-Profit:<br />
+                                                        Open Rate: Average open rate is 28.59%, significantly higher than for-profit organizations.<br />
+                                                        Click Rate: Average click rate is 3.29%.<br /><br /></li>
+                                                    <li className="text-sm flex justify-start text-left text-gray-500">
+                                                        For-Profit:<br />
+                                                        Open Rate: Average open rate varies depending on industry, but generally falls between 21% and 21.5%.<br />
+                                                        Click Rate: Average click rate across all industries is around 2.4%.
+                                                    </li>
+                                                </>
+                                                }
+                                            </ul>
+                                            <span className="text-sm my-2 flex justify-start text-left text-gray-500">
+                                                <p>Sources:</p>
+                                                <Link className="mx-1" href="https://neonone.com/resources/nonprofit-email-report/" target="_blank">Neon One |</Link>
+                                                <Link className="mx-1" href="https://www.campaignmonitor.com/resources/guides/email-marketing-benchmarks/" target="_blank">Campaign Monitor |</Link>
+                                                <Link className="mx-1" href="https://mailchimp.com/resources/email-marketing-benchmarks/" target="_blank">Mailchimp</Link>
+                                            </span>
+                                            <p className="text-sm mt-1 mb-2 flex justify-start text-left text-gray-900">We aim to improve these statistics and transform email into an effective communication tool.</p>
+                                            <button onClick={handleClick} type="button" className="text-white mt-3 bg-gradient-to-br from-pink-500 to-orange-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Proceed to Dashboard to see how</button>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +111,6 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
         </Transition.Root>
     )
 };
-
 export default WelcomeModal;
 
 
