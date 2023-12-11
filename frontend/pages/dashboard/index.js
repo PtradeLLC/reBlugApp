@@ -15,6 +15,13 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import TeamComponent from "../../components/TeamComponent";
 import WelcomeModal from "../../components/verfication-mod";
+import { Avatar } from 'flowbite-react';
+import dynamic from 'next/dynamic';
+
+const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
+const CircleChart = dynamic(() => import('../../components/Charts/Delivered'), {
+    ssr: false,
+});
 
 const navigation = [
     { id: 1, name: "Home", href: "/", current: true },
@@ -77,6 +84,7 @@ const marketingAction = [
 const UserContext = createContext();
 
 const Dashboard = function ({ children }) {
+
     const [errors, setErrors] = useState('');
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("undefined");
@@ -97,6 +105,7 @@ const Dashboard = function ({ children }) {
     const managerImage = session?.user?.image || user.image || "/images/brand.png";
     const managerRole = session?.user?.role || user.role || "User";
     const [refreshList, setRefreshList] = useState(false);
+    const [isVerified, setIsVerified] = useState(true);
 
     const handleRefreshList = () => {
         setRefreshList(!refreshList);
@@ -122,10 +131,10 @@ const Dashboard = function ({ children }) {
                     setUser(data);
                     let fetchedTeam = data.team || [];
 
-                    // Check if the current user is not already in the team
+                    // Check if the current user is not already in the team.
                     const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);
 
-                    // If not in the team, add the current user as the default team member
+                    // If not in the team, add the current user as the default team member.
                     if (!currentUserInTeam) {
                         const currentUser = {
                             user: {
@@ -139,7 +148,6 @@ const Dashboard = function ({ children }) {
                         // Set the current user as the default team member
                         fetchedTeam = [currentUser, ...fetchedTeam];
                     }
-
                     // setTeamCount(fetchedTeam);
                 } else {
                     console.error("Error fetching user:", response.statusText);
@@ -204,21 +212,23 @@ const Dashboard = function ({ children }) {
                     )}
                 </h3>
                 <div>
+                    {/*  */}
                     {action.name === "Processed" && (
                         <span className="w-full">
-                            <Kpi name={action.name} />
+                            <MixedChart />
                             <button className="flex justify-end items-end" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                         </span>
                     )}
                     {action.name === "Delivered" && (
                         <span className="w-full">
-                            <Kpi name={action.name} />
+                            <CircleChart />
                             <button type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                         </span>
                     )}
                 </div>
             </div>
         );
+
 
         if (title === "Email Conversational") {
             return emailAction.map((action) => renderKpiContent(action));
@@ -361,7 +371,7 @@ const Dashboard = function ({ children }) {
                         </Popover>
                         <main className="-mt-24 pb-8">
 
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
                                 <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
@@ -378,10 +388,11 @@ const Dashboard = function ({ children }) {
                                                         <div className="sm:flex sm:space-x-5">
                                                             <div className="flex-shrink-0">
                                                                 {loading ? <Loading /> : <img
-                                                                    className="mx-auto h-20 w-20 rounded-full"
+                                                                    className="mx-auto h-20 w-20 border rounded-full"
                                                                     src={session.user?.image || user?.image || "/images/brand.png"}
                                                                     alt="profile image"
                                                                 />}
+                                                                {/* {loading ? <Loading /> : <Avatar className="mx-auto h-20 w-20 rounded-full" img={session.user?.image || user?.image || "/images/brand.png"} rounded bordered />} */}
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -463,10 +474,11 @@ const Dashboard = function ({ children }) {
                                                     <div className="mt-6 flow-root">
                                                         <div className="flex items-center">
                                                             <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
-                                                                <Image src={managerImage} width={25} height={25} alt="profile image" />
+                                                                {/* <Image src={managerImage} width={25} height={25} alt="profile image" /> */}
+                                                                {loading ? <Loading /> : <Avatar className="mx-auto h-25 w-25 rounded-full" img={managerImage} rounded bordered />}
                                                                 <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()}</span>
                                                                 {/* Hide on condition */}
-                                                                <span className="flex mx-1 items-center">
+                                                                <span className="mx-1 flex items-center">
                                                                     <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -544,7 +556,7 @@ const Dashboard = function ({ children }) {
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                             <span>
-                                <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} />
+                                {/* <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} /> */}
                             </span>
                         </main>
                     </div >

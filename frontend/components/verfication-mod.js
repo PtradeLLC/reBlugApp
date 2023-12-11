@@ -9,15 +9,15 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
     const [open, setOpen] = useState(true);
     const cancelButtonRef = useRef(null);
     const { data: session } = useSession();
-    const router = useRouter();
     const user = session.user;
     const name = user.name;
     const email = user.email;
     const question = 'What is the percentage of email marketing open and click rates for non-profit and for profit organizations based on data?';
     const first_word = name.split(' ')[0];
+    const [verifyUser, setVerifyUser] = useState();
 
     const handleClick = async () => {
-        const baseUrl = '/api/auth/authVerificationset'
+        const baseUrl = '/api/auth/authVerificationset';
         try {
             const response = await fetch(baseUrl, {
                 method: 'POST',
@@ -28,9 +28,10 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
             });
 
             const data = await response.json();
+
             if (data.message === 'User is verified') {
                 setOpen(false);
-                console.log('Data:', data);
+                setVerifyUser(data.user.isVerified);
             } else {
                 console.error('There was an error:', JSON.stringify(data, null, 2));
             }
@@ -38,7 +39,6 @@ const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
             console.error('Fetch failed:', error);
         }
     };
-
 
     return (
         <Transition.Root show={open} as={React.Fragment}>

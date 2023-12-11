@@ -30,8 +30,83 @@ const UserContext = createContext();
 export default function ProfilePg() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { data: session, status } = useSession();
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: ''
+    });
+    const [passwordData, setPasswordData] = useState({
+        newPassword: '',
+        confirmPassword: '',
+    });
+
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target;
+        setPasswordData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        const baseUrl = '/api/changepassword';
+
+        try {
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(passwordData),
+            });
+
+            if (response.ok) {
+                // Optionally, you can handle success here
+                console.log('Password changed successfully');
+            } else {
+                // Handle errors
+                console.error('Error changing password');
+            }
+        } catch (error) {
+            console.error('Error changing password', error);
+        }
+    };
 
     const { user } = session || {};
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const baseUrl = '/api/profileupdate';
+
+        try {
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                // Optionally, you can handle success here
+                console.log('Profile updated successfully');
+            } else {
+                // Handle errors
+                console.error('Error updating profile');
+            }
+        } catch (error) {
+            console.error('Error updating profile', error);
+        }
+    };
 
     return (
         <UserContext.Provider value={user}>
@@ -209,7 +284,7 @@ export default function ProfilePg() {
                                     </p>
                                 </div>
 
-                                <form className="md:col-span-2">
+                                <form className="md:col-span-2" onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-full flex items-center gap-x-8">
                                             <img
@@ -229,32 +304,32 @@ export default function ProfilePg() {
                                         </div>
 
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-black">
+                                            <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-black">
                                                 First name
                                             </label>
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="first-name"
-                                                    id="first-name"
-                                                    placeholder='change first name'
-                                                    autoComplete="given-name"
+                                                    name="firstName"
+                                                    id="firstName"
+                                                    placeholder='Updated your first name'
+                                                    autoComplete="first-name"
                                                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="sm:col-span-3">
-                                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-black">
+                                            <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-black">
                                                 Last name
                                             </label>
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="last-name"
-                                                    id="last-name"
-                                                    placeholder='change last name'
-                                                    autoComplete="family-name"
+                                                    name="lastName"
+                                                    id="lastName"
+                                                    placeholder='Updated your last name'
+                                                    autoComplete="last-name"
                                                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
@@ -288,9 +363,9 @@ export default function ProfilePg() {
                                                     </span>
                                                     <input
                                                         type="text"
-                                                        name="brandname"
-                                                        id="brandname"
-                                                        autoComplete="brandname"
+                                                        name="brandName"
+                                                        id="brandName"
+                                                        autoComplete="brandName"
                                                         className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
                                                         placeholder="edit-brand-name"
                                                     />
@@ -334,8 +409,53 @@ export default function ProfilePg() {
                                     </p>
                                 </div>
 
-                                <form className="md:col-span-2">
+                                <form className="md:col-span-2" onSubmit={handlePasswordSubmit}>
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+                                        <div className="col-span-full">
+                                            <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
+                                                New password
+                                            </label>
+                                            <div className="mt-2">
+                                                <input
+                                                    id="new-password"
+                                                    name="newPassword"
+                                                    type="password"
+                                                    placeholder="Your new password"
+                                                    autoComplete="new-password"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    onChange={handlePasswordChange}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="col-span-full">
+                                            <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-black">
+                                                Confirm password
+                                            </label>
+                                            <div className="mt-2">
+                                                <input
+                                                    id="confirm-password"
+                                                    name="confirmPassword"
+                                                    type="password"
+                                                    placeholder="Confirm password"
+                                                    autoComplete="new-password"
+                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    onChange={handlePasswordChange}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-8 flex">
+                                            <button
+                                                type="submit"
+                                                className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                            >
+                                                Save Password
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-full">
                                             <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
                                                 New password
@@ -376,7 +496,7 @@ export default function ProfilePg() {
                                         >
                                             Save
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
 

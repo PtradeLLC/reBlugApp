@@ -1,6 +1,8 @@
 import React from 'react';
 import ProfilePg from '../components/Profile';
 
+
+
 const Profile = () => {
     return (
         <div>
