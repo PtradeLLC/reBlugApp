@@ -3,7 +3,6 @@ import { Body } from "@react-email/body";
 
 export default function TeamEmail({ firstName, lastName, email, token, teamManager, createdUsers, brandName }) {
 
-    console.log("TOKEN FROM TEAM MEMBER INVITE", token);
 
     return (
         <Html>

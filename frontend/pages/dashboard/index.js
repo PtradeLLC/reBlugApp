@@ -129,8 +129,6 @@ const Dashboard = function ({ children }) {
 
                     const data = await response.json();
 
-                    console.log('Data from Index', data);
-
                     setUser(data);
                     let fetchedTeam = data.team || [];
 
@@ -400,7 +398,7 @@ const Dashboard = function ({ children }) {
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
                                                                     Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
                                                                 </h2>
-                                                                <Link href={"/profile"}> <h4>Brand: {session?.user?.name && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
+                                                                <Link href={"/profile"}> <h4>Brand: {session?.user?.name || `${user?.firstName} ${user?.lastName} ` && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
                                                             </div>
