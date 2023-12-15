@@ -10,6 +10,7 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
     const managerEmail = session.user.email;
+    const managerName = session.user.name;
 
     // Check if the request method is POST
     if (req.method !== "POST") {
@@ -115,7 +116,7 @@ export default async function handler(req, res) {
                         });
 
                         if (token) {
-                            await SendMemberInvite({ email, token: token.token, manager, createdUsers });
+                            await SendMemberInvite({ email, token: token.token, manager, createdUsers, managerName });
                         }
                     }
                 } catch (error) {

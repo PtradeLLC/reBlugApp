@@ -49,7 +49,7 @@ export default function Team({ show, setShow }) {
             });
         }
 
-        e.stopPropagation();
+        // e.stopPropagation();
     };
 
     const sendInvite = async () => {
