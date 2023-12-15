@@ -41,6 +41,9 @@ export default async function handler(req, res) {
                 },
             });
 
+            const firstName = manager.firstName;
+            const lastName = manager.lastName;
+
             // Extract the array of emails
             const emails = usersData.emails.map((email) => email.trim());
 
@@ -125,8 +128,7 @@ export default async function handler(req, res) {
                         });
 
                         if (token) {
-
-                            await SendMemberInvite({ email, token: token.token, manager, createdUsers, managerName });
+                            await SendMemberInvite({ email, token: token.token, manager, createdUsers, firstName, lastName });
                         } else {
                             console.log('No token was generated');
                         }

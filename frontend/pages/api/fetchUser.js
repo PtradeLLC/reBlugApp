@@ -8,13 +8,26 @@ export default async function handler(req, res) {
 
     if (session) {
         const { email } = session?.user;
+        const name = session.user.name;
+        const full_name = name.split(' ');
+        const first_name = full_name[0];
+        const last_name = full_name[1];
+
         try {
-            const user = await prisma.user.findUnique({
+            // Directly create the user using the email from the session
+            const user = await prisma.user.upsert({
                 where: { email },
-                include: {
-                    Team: true,
+                update: {
+                    firstName: first_name,
+                    lastName: last_name,
+                },
+                create: {
+                    email,
+                    firstName: first_name,
+                    lastName: last_name,
                 },
             });
+
             res.status(200).json(user);
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -24,4 +37,3 @@ export default async function handler(req, res) {
         console.log("Session not found on the server side");
     }
 }
-
