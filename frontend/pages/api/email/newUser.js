@@ -3,14 +3,14 @@ import Email from "../emailfiles/new-user";
 import { render } from "@react-email/render";
 import { getSession } from "next-auth/react";
 
-export default async function SendNewEmail(req, res, { firstName, token, email, userId, provider }) {
+export default async function SendNewEmail({ firstName, token, email, userId, provider }) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-    const session = await getSession({ req });
+    // const session = await getSession({ req });
 
-    if (!session) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
+    // if (!session) {
+    //     return res.status(401).json({ error: "Unauthorized" });
+    // }
 
 
     const emailHtml = render(

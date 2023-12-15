@@ -41,7 +41,7 @@ model User {
   userId             String?             @unique
   name               String?
   externalId         String?
-  brandName          String?             @unique
+  brandName          String?
   firstName          String?
   profileImage       String?
   brandLogo          String?

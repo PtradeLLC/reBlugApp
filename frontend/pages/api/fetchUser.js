@@ -15,20 +15,34 @@ export default async function handler(req, res) {
 
         try {
             // Directly create the user using the email from the session
-            const user = await prisma.user.upsert({
-                where: { email },
-                update: {
-                    firstName: first_name,
-                    lastName: last_name,
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: email,
                 },
-                create: {
-                    email,
-                    firstName: first_name,
-                    lastName: last_name,
-                },
+                select: {
+                    firstName: true,
+                    lastName: true,
+                }
             });
 
-            res.status(200).json(user);
+            if (!user.firstName && user.lastName) {
+                const user = await prisma.user.upsert({
+                    where: { email },
+                    update: {
+                        firstName: first_name,
+                        lastName: last_name,
+                    },
+                    create: {
+                        email,
+                        firstName: first_name,
+                        lastName: last_name,
+                    },
+                });
+
+                res.status(200).json(user);
+            } else {
+                res.status(200).json(user);
+            }
         } catch (error) {
             console.error("Error fetching user data:", error);
             res.status(500).json({ message: `There is an error ${error.message || 'unknown'}` });

@@ -129,6 +129,8 @@ const Dashboard = function ({ children }) {
 
                     const data = await response.json();
 
+                    console.log('Data from Index', data);
+
                     setUser(data);
                     let fetchedTeam = data.team || [];
 
@@ -160,7 +162,6 @@ const Dashboard = function ({ children }) {
         };
 
         if (session && session.user) {
-            console.log(session.user);
             fetchData();
         } else {
             console.log("There's no session");

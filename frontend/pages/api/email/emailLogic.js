@@ -24,11 +24,22 @@ export default async function handler(req, res) {
       const existingUser = await prisma.user.findFirst({
         where: {
           email: lowercaseEmail,
+          OR: [
+            { isVerified: true },
+            { VerificationTokens: { some: { activatedAt: null } } },
+          ],
         },
       });
 
       if (existingUser) {
         // User already exists, log them in
+        if (!existingUser.isVerified && existingUser.verificationToken) {
+          // If the user is not verified but has a verification token, update the isVerified field
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: { isVerified: true },
+          });
+        }
         return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
       }
 

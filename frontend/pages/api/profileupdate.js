@@ -28,18 +28,13 @@ export default async function handler(req, res) {
             const formData = req.body;
 
             // Log the entire formData object
-            console.log('FormData:', formData);
 
             // Your existing code...
             for (const pair of formData.entries()) {
                 console.log(pair);
             }
 
-            console.log('Server file loaded with: ', formData);
-
             try {
-                console.log('Before Cloudinary upload for brandLogoTRY', formData);
-
                 // Respond with success
                 return res.status(200).json({ message: 'Profile updated successfully' });
             } catch (error) {
