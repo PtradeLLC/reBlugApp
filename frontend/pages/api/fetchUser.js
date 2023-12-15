@@ -11,8 +11,11 @@ export default async function handler(req, res) {
         try {
             const user = await prisma.user.findUnique({
                 where: { email },
+                include: {
+                    Team: true,
+                },
             });
-            res.status(200).json({ message: `${user}` });
+            res.status(200).json(user);
         } catch (error) {
             console.error("Error fetching user data:", error);
             res.status(500).json({ message: `There is an error ${error.message || 'unknown'}` });
@@ -21,3 +24,4 @@ export default async function handler(req, res) {
         console.log("Session not found on the server side");
     }
 }
+

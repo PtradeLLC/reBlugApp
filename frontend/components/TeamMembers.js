@@ -48,8 +48,6 @@ export default function Team({ show, setShow }) {
                 return { ...prevState, emails: updatedEmails };
             });
         }
-
-        // e.stopPropagation();
     };
 
     const sendInvite = async () => {
@@ -72,7 +70,6 @@ export default function Team({ show, setShow }) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             };
             const data = await response.json();
-
             return data;
         } catch (error) {
             console.error('Error sending invite:', error);

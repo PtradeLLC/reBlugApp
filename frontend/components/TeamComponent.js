@@ -81,6 +81,10 @@ const TeamComponent = ({ refreshList }) => {
         fetchTeam();
     }, [updateTeamMembers, refreshList]);
 
+    const handleView = () => {
+        console.log('viewd');
+    }
+
 
     return (
         <div className='overflow-y-auto overflow-x-hidden h-44'>
@@ -127,9 +131,7 @@ const TeamComponent = ({ refreshList }) => {
                                             >
                                                 Remove
                                             </button>
-
                                         </div>}
-
                                     </div>
                                 </div>
                             )}

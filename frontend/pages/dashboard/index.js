@@ -126,10 +126,13 @@ const Dashboard = function ({ children }) {
             try {
                 const response = await fetch("/api/fetchUser");
                 if (response.ok) {
+
                     const data = await response.json();
+
 
                     setUser(data);
                     let fetchedTeam = data.team || [];
+                    console.log(fetchedTeam);
 
                     // Check if the current user is not already in the team.
                     const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);

@@ -6,7 +6,6 @@ import { authOptions } from "./auth/[...nextauth]"
 
 const prisma = new PrismaClient();
 
-
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
     const managerEmail = session.user.email;
@@ -16,6 +15,7 @@ export default async function handler(req, res) {
     if (req.method !== "POST") {
         throw new Error('Invalid HTTP method');
     };
+
     if (req.method === "POST") {
         try {
             // Extract the user data from the request body
@@ -27,10 +27,17 @@ export default async function handler(req, res) {
 
             const createdUsers = [];
 
-            //Fetch Manager's data
             const manager = await prisma.user.findUnique({
                 where: {
                     email: managerEmail,
+                },
+                include: {
+                    Team: {
+                        select: {
+                            id: true,
+                            name: true,
+                        },
+                    },
                 },
             });
 
@@ -45,6 +52,7 @@ export default async function handler(req, res) {
                         return res.status(400).json({ message: "email is required" });
                     }
 
+                    // Check if member exists
                     const eData = await prisma.user.findMany({
                         where: {
                             email: {
@@ -62,7 +70,7 @@ export default async function handler(req, res) {
                         });
 
                         if (existingTeamEntry) {
-                            res.status(200).json({ message: `User found. Already exists on this team. ${existingTeamEntry.email}` })
+                            res.status(200).json({ message: `User found. Already exists on this team. ${existingTeamEntry.email}`, existingTeamEntry },)
                         } else {
                             // Create a new record in the team table associated with the user
                             const emailData = await prisma.team.create({
@@ -77,6 +85,7 @@ export default async function handler(req, res) {
 
                             // Add the created team entry to the list
                             createdUsers.push(emailData);
+
                         }
                     } else {
                         console.log("User already existed");
@@ -116,7 +125,10 @@ export default async function handler(req, res) {
                         });
 
                         if (token) {
+
                             await SendMemberInvite({ email, token: token.token, manager, createdUsers, managerName });
+                        } else {
+                            console.log('No token was generated');
                         }
                     }
                 } catch (error) {
