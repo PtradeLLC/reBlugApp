@@ -132,7 +132,7 @@ const Dashboard = function ({ children }) {
 
                     setUser(data);
                     let fetchedTeam = data.team || [];
-                    console.log(fetchedTeam);
+
 
                     // Check if the current user is not already in the team.
                     const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);

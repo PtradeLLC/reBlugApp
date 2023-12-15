@@ -8,8 +8,8 @@ export default function TeamEmail({ managerName, email, token, teamManager, crea
             <Body>
                 <p>Hello,</p>
                 <p>
-                    Hope this email finds you well. {teamManager !== undefined || teamManager !== null ? teamManager : managerName} is sending you an invite to join{' '}
-                    {brandName ? `${brandName}'s team` : "their brand's team"} on ForgedMart.
+                    Hope this email finds you well. {teamManager !== undefined && teamManager !== null ? teamManager : managerName} is sending you an invite to join{' '}
+                    {brandName !== null ? `${brandName}'s team` : "their brand's team"} on ForgedMart.
                 </p>
                 {/* <p><a href={`http://localhost:3000/api/verify/${token}`}>Please verify your account(Local)</a></p> */}
                 <p><a href={`https://forgedmart.com/api/verify/${token}`}>Please join us to accept the invite.</a></p>

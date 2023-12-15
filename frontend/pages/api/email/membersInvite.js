@@ -16,7 +16,7 @@ export default async function SendMemberInvite({ email, token, manager, createdU
     const msg = {
         to: email, // Change to your recipient
         from: "support@forgedmart.com", // Change to your verified sender
-        subject: `${teamManager || managerName} invites you to join ForgedMart`, //"🎉 Welcome to ForgedMart✨",
+        subject: `${teamManager !== null ? teamManager : managerName} invites you to join his team`,
         html: emailHtml,
     };
 
