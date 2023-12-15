@@ -1,4 +1,4 @@
-import { Fragment, useState, createContext } from 'react'
+import { Fragment, useState, createContext, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
     UserCircleIcon,
@@ -7,7 +7,7 @@ import {
     IdentificationIcon
 } from '@heroicons/react/24/outline';
 import { useSession } from "next-auth/react";
-
+import { upload } from "@vercel/blob/client";
 
 const navigation = [
     { name: 'Profile Information', href: '#personal', icon: IdentificationIcon, current: false },
@@ -30,15 +30,20 @@ const UserContext = createContext();
 export default function ProfilePg() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { data: session, status } = useSession();
+    const inputFileRef = useRef(null);
+    const [blob, setBlob] = useState(null);
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
-        email: ''
+        profileImage: null,
+        brandName: '',
+        brandLogo: null
     });
     const [passwordData, setPasswordData] = useState({
         newPassword: '',
         confirmPassword: '',
     });
+    const [imageTag, setImageTag] = useState({ brandLogo: null, profileImage: null });
 
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
@@ -48,6 +53,8 @@ export default function ProfilePg() {
         }));
     };
 
+
+    //Password Updates
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         const baseUrl = '/api/changepassword';
@@ -83,30 +90,86 @@ export default function ProfilePg() {
         }));
     };
 
+    // File Change
+    const handleFileChange = (e, fieldName) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [fieldName]: file,
+        }));
+
+        reader.onload = (readerEvent) => {
+            setImageTag((prevTags) => ({
+                ...prevTags,
+                [fieldName]: readerEvent.target.result,
+            }));
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+
+    //Form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
         const baseUrl = '/api/profileupdate';
 
+        //Get images from formData
+        const pImage = formData.profileImage;
+        const bLogo = formData.brandLogo;
+
+        const userProfileImages = {
+            profileImage: pImage,
+            brandLogo: bLogo
+        }
+
+        const response = await fetch(
+            `/api/avatar/upload?filename=${file.name}`,
+            {
+                method: 'POST',
+                body: file,
+            },
+        );
+
+        const newBlob = await response.json()
+
+        setBlob(newBlob);
+
         try {
             const response = await fetch(baseUrl, {
                 method: 'POST',
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                 },
-                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                // Optionally, you can handle success here
-                console.log('Profile updated successfully');
+                const data = await response.json();
+
+                // Log the entire response object for debugging
+                console.log('Response from server:', data);
+
+                // Check the 'message' property in the response
+                if (data && data.message === 'Profile updated successfully') {
+                    // Optionally, you can handle success here
+                    console.log('Profile updated successfully');
+                } else {
+                    // Handle unexpected response format
+                    console.error('Unexpected response format:', data);
+                }
             } else {
-                // Handle errors
-                console.error('Error updating profile');
+                // Handle HTTP error status
+                console.error('Error updating profile', await response.text());
             }
         } catch (error) {
             console.error('Error updating profile', error);
         }
     };
+
 
     return (
         <UserContext.Provider value={user}>
@@ -154,13 +217,6 @@ export default function ProfilePg() {
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
                                     <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 ring-1 ring-white/10">
-                                        {/* <div className="flex h-16 shrink-0 items-center">
-                                            <img
-                                                className="h-8 w-auto"
-                                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                                alt="Your Company"
-                                            />
-                                        </div> */}
                                         <nav className="flex flex-1 flex-col">
                                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                                 <li>
@@ -278,7 +334,7 @@ export default function ProfilePg() {
                         <div id='personal' className="divide-y divide-white/5">
                             <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 bg-white lg:px-8">
                                 <div>
-                                    <h2 className="text-base font-semibold leading-7 text-black">Personal Information</h2>
+                                    <h2 className="text-base font-semibold leading-7 text-black">Profile Information</h2>
                                     <p className="mt-1 text-sm leading-6 text-slate-400">
                                         Update your personal information.
                                     </p>
@@ -286,19 +342,14 @@ export default function ProfilePg() {
 
                                 <form className="md:col-span-2" onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full flex items-center gap-x-8">
-                                            <img
-                                                src={user?.image}
-                                                alt={user?.name}
-                                                className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
-                                            />
+                                        <div className="col-span-full flex flex-col gap-x-8">
+                                            {imageTag.profileImage
+                                                ? <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.profileImage} alt="Profile Image" />
+                                                : <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Profile Image" />
+                                            }
+                                            <span className='mt-1'><input type="file" className='w-full h-10' accept="image/*" onChange={(e) => handleFileChange(e, 'profileImage')} /></span>
+                                            <span className='text-xs'>Edit image</span>
                                             <div>
-                                                <button
-                                                    type="button"
-                                                    className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
-                                                >
-                                                    Change avatar
-                                                </button>
                                                 <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
                                             </div>
                                         </div>
@@ -311,10 +362,13 @@ export default function ProfilePg() {
                                                 <input
                                                     type="text"
                                                     name="firstName"
+                                                    value={formData.firstName}
+                                                    onChange={handleChange}
+                                                    required
                                                     id="firstName"
                                                     placeholder='Updated your first name'
                                                     autoComplete="first-name"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
@@ -328,9 +382,12 @@ export default function ProfilePg() {
                                                     type="text"
                                                     name="lastName"
                                                     id="lastName"
+                                                    onChange={handleChange}
+                                                    required
+                                                    value={formData.lastName}
                                                     placeholder='Updated your last name'
                                                     autoComplete="last-name"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
                                         </div>
@@ -340,16 +397,6 @@ export default function ProfilePg() {
                                                 Email address
                                             </label>
                                             <span className='text-slate-500'>current email: {user?.email}</span>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="email"
-                                                    name="email"
-                                                    type="email"
-                                                    placeholder='change email'
-                                                    autoComplete="email"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
                                         </div>
 
                                         <div id="brandCompany" className="col-span-full">
@@ -358,45 +405,42 @@ export default function ProfilePg() {
                                             </label>
                                             <div className="mt-2">
                                                 <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                                                    <span className="flex select-none items-center pl-3 text-slate-400 sm:text-sm">
-                                                        forgedmart.com/
-                                                    </span>
                                                     <input
                                                         type="text"
                                                         name="brandName"
                                                         id="brandName"
+                                                        onChange={handleChange}
+                                                        required
+                                                        value={formData.brandName}
                                                         autoComplete="brandName"
-                                                        className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
-                                                        placeholder="edit-brand-name"
+                                                        className="flex-1 rounded-md border bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
+                                                        placeholder="Update your Brand name"
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-span-full flex items-center gap-x-8">
-                                                <img
-                                                    src={user?.image}
-                                                    alt={user?.name}
-                                                    className="h-24 w-24 flex-none rounded-lg bg-white object-cover"
-                                                />
+                                            <div className="col-span-full mt-3 flex items-center gap-x-8">
+
                                                 <div>
-                                                    <button
-                                                        type="button"
-                                                        className="rounded-md bg-white/10 px-3 py-2 border border-gray-400 text-sm font-semibold text-black shadow-sm hover:bg-white/20"
-                                                    >
-                                                        Update logo
-                                                    </button>
-                                                    <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
+                                                    {imageTag.brandLogo
+                                                        ? <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.brandLogo} alt="Brand Logo" />
+                                                        : <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Brand Logo" />
+                                                    }
+                                                    <span className='flex mt-2 flex-col text-sm'><input className='w-full h-10' type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'brandLogo')} />112px by 112px</span>
+                                                    <span className='text-xs'>Edit image</span>
+                                                    <div>
+                                                        <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="mt-8 flex">
-                                        <button
-                                            type="submit"
-                                            className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                                        >
-                                            Save Logo
-                                        </button>
+                                        <div className="mt-4 flex w-44">
+                                            <button type="submit" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                Update Profile
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -422,7 +466,8 @@ export default function ProfilePg() {
                                                     type="password"
                                                     placeholder="Your new password"
                                                     autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    required
+                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                     onChange={handlePasswordChange}
                                                 />
                                             </div>
@@ -438,72 +483,27 @@ export default function ProfilePg() {
                                                     name="confirmPassword"
                                                     type="password"
                                                     placeholder="Confirm password"
+                                                    required
                                                     autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                                     onChange={handlePasswordChange}
                                                 />
                                             </div>
                                         </div>
 
-                                        <div className="mt-8 flex">
-                                            <button
-                                                type="submit"
-                                                className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                                            >
-                                                Save Password
+                                        <div className="mt-4 flex w-44">
+                                            <button type="submit" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                Save Information
                                             </button>
                                         </div>
                                     </div>
-
-                                    {/* <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full">
-                                            <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
-                                                New password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="new-password"
-                                                    name="new_password"
-                                                    type="password"
-                                                    placeholder='your new password'
-                                                    autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="col-span-full">
-                                            <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-black">
-                                                Confirm password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="confirm-password"
-                                                    name="confirm_password"
-                                                    type="password"
-                                                    placeholder='confirm password'
-                                                    autoComplete="new-password"
-                                                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-8 flex">
-                                        <button
-                                            type="submit"
-                                            className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
-                                        >
-                                            Save
-                                        </button>
-                                    </div> */}
                                 </form>
                             </div>
 
-                            <div id='account' className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                            <div id='account' className="bg-slate-300 border border-b-slate-700 ring-neutral-600 rounded-md grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                                 <div>
                                     <h2 className="text-base font-semibold leading-7 text-black">Delete account</h2>
-                                    <p className="mt-1 text-sm leading-6 text-slate-400">
+                                    <p className="mt-1 text-sm leading-6 text-slate-900">
                                         You can delete your account here. This action is not reversible.
                                         All information related to this account will be deleted permanently.
                                     </p>

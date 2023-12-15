@@ -1,4 +1,10 @@
 {
-  "extends": ["next/babel", "next/core-web-vitals", "next"],
+  "extends": [
+    "next/babel",
+    "next/core-web-vitals",
+    "next",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "parser": "@babel/eslint-parser"
 }

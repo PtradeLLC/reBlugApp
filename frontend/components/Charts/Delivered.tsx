@@ -61,6 +61,7 @@ interface ChartData {
     options: {
       legend: {
         show: boolean;
+        offsetX: number;
       };
     };
   }[];
@@ -71,7 +72,7 @@ const CircleChart: React.FC = () => {
   const [chartData, setChartData] = useState<ChartData>({
     series: [0, 0, 0, 0],
     chart: {
-      height: 390,
+      height: 320,
       type: "radialBar",
     },
     plotOptions: {
@@ -100,9 +101,9 @@ const CircleChart: React.FC = () => {
     legend: {
       show: true,
       floating: true,
-      fontSize: "14px",
+      fontSize: "12px",
       position: "right",
-      offsetX: 160,
+      offsetX: 100,
       offsetY: 15,
       labels: {
         useSeriesColors: true,
@@ -120,10 +121,11 @@ const CircleChart: React.FC = () => {
     },
     responsive: [
       {
-        breakpoint: 480,
+        breakpoint: 490,
         options: {
           legend: {
             show: false,
+            offsetX: 0,
           },
         },
       },
@@ -132,27 +134,54 @@ const CircleChart: React.FC = () => {
   });
 
   useEffect(() => {
-    const chartElement = document.querySelector("#chart");
+    const updateChart = () => {
+      const chartElement = document.querySelector("#chart");
 
-    if (chartElement) {
-      const chart = new ApexCharts(chartElement, {
-        ...chartData,
-        options: {
-          ...chartData.options,
-          chart: {
-            ...chartData.options?.chart,
-            ...chartData.chart,
+      if (chartElement) {
+        const chart = new ApexCharts(chartElement, {
+          ...chartData,
+          options: {
+            ...chartData.options,
+            chart: {
+              ...chartData.options?.chart,
+              ...chartData.chart,
+            },
+            plotOptions: {
+              ...chartData.options?.plotOptions,
+              ...chartData.plotOptions,
+            },
+            // Add other options as needed
           },
-          plotOptions: {
-            ...chartData.options?.plotOptions,
-            ...chartData.plotOptions,
-          },
-          // Add other options as needed
+        });
+
+        chart.render();
+      }
+    };
+
+    // updateChart();
+
+    const handleResize = () => {
+      let offsetX =
+        window.innerWidth <= chartData.responsive[0].breakpoint ? 0 : 123;
+      if (window.innerWidth <= 500) {
+        offsetX = 230;
+      } else if (window.innerWidth >= 501) {
+        offsetX = 108;
+      }
+      setChartData((prevData) => ({
+        ...prevData,
+        legend: {
+          ...prevData.legend,
+          offsetX,
         },
-      });
+      }));
+    };
 
-      chart.render();
-    }
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [chartData]);
 
   return (

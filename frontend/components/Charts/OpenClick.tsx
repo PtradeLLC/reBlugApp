@@ -33,7 +33,7 @@ const MixedChart = () => {
       width: [1, 1, 4],
     },
     title: {
-      text: "Live data (Open & Click rate)",
+      text: "Live (Open & Click rate)",
       align: "left",
       offsetX: 110,
     },

@@ -37,6 +37,7 @@ export default function Team({ show, setShow }) {
 
     const handleChange = (e, index) => {
         e.preventDefault();
+
         const { name, value } = e.target;
 
         // Check if the name is 'email' and update the corresponding index in the emails array
@@ -47,6 +48,8 @@ export default function Team({ show, setShow }) {
                 return { ...prevState, emails: updatedEmails };
             });
         }
+
+        e.stopPropagation();
     };
 
     const sendInvite = async () => {
@@ -105,8 +108,6 @@ export default function Team({ show, setShow }) {
         try {
             const response = await sendInvite();
 
-            console.log("addedTeam Member", response); //TEAM MIGHT BE A BETTER TO USE - Like returning response for the added members
-
             // response.ok
             if (state.emails) {
                 setState((prevState) => ({
@@ -126,9 +127,10 @@ export default function Team({ show, setShow }) {
         }
     };
 
+
     return (
         <Transition.Root show={show} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setShow}>
+            <Dialog as="div" className="relative z-50" onClose={setShow}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -138,10 +140,10 @@ export default function Team({ show, setShow }) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setShow(false)} />
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-50" onClick={() => setShow(false)} />
                 </Transition.Child>
 
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <Transition.Child
                             as={Fragment}
@@ -152,7 +154,7 @@ export default function Team({ show, setShow }) {
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg z-50 bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                                 <div>
                                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full">
                                         <Image
@@ -239,3 +241,5 @@ export default function Team({ show, setShow }) {
         </Transition.Root>
     )
 }
+
+// You may review now

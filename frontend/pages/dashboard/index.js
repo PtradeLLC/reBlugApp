@@ -56,10 +56,10 @@ function classNames(...classes) {
 
 // emailCharts
 const emailAction = [
-    { id: 1, name: "Processed", num: 0, change: '12%', changeType: 'increase', icon: "" },
-    { id: 2, name: "Delivered", num: 0, change: '2%', changeType: 'increase', icon: "" },
-    { id: 3, name: "Opened", num: 0, change: '9%', changeType: 'increase', icon: "/images/barchart.png" },
-    { id: 4, name: "Clicked", num: 0, change: '2%', changeType: 'increase', icon: "/images/piechart.png" },
+    { id: 1, name: "Processed", num: 0, change: '0%', changeType: 'increase', icon: "" },
+    { id: 2, name: "Delivered", num: 0, change: '0%', changeType: 'increase', icon: "" },
+    { id: 3, name: "Opened", num: 0, change: '0%', changeType: 'increase', icon: "/images/barchart.png" },
+    { id: 4, name: "Clicked", num: 0, change: '0%', changeType: 'increase', icon: "/images/piechart.png" },
     { id: 5, name: "Start your campaign" },
 ];
 
@@ -182,12 +182,12 @@ const Dashboard = function ({ children }) {
         const renderKpiContent = (action) => (
             <div key={`${action.id}-${title} `} className={classNames(
                 action.id === 1 ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none" : "",
-                action.id === 2 ? "bg-[#ECECEC]" : "",
+                action.id === 2 ? "bg-[#ECECEC] p-0" : "",
                 action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3" : "",
                 action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3" : "",
                 "group relative p-6"
             )}>
-                <h3 className="text-lg font-medium">
+                <h3 className="text-lg font-medium p-1">
                     {action.name === "Start your campaign" ? (
                         <button type="button" onClick={handleClick}>
                             {action.name}
@@ -216,13 +216,13 @@ const Dashboard = function ({ children }) {
                     {action.name === "Processed" && (
                         <span className="w-full">
                             <MixedChart />
-                            <button className="flex justify-end items-end" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
+                            <button className="flex justify-end items-end p-1" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                         </span>
                     )}
                     {action.name === "Delivered" && (
                         <span className="w-full">
                             <CircleChart />
-                            <button type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
+                            <button type="button" onClick={handleClick}><p className="text-sm text-right p-1">Expand to get insight</p></button>
                         </span>
                     )}
                 </div>
@@ -370,7 +370,6 @@ const Dashboard = function ({ children }) {
                             )}
                         </Popover>
                         <main className="-mt-24 pb-8">
-
                             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
@@ -388,11 +387,10 @@ const Dashboard = function ({ children }) {
                                                         <div className="sm:flex sm:space-x-5">
                                                             <div className="flex-shrink-0">
                                                                 {loading ? <Loading /> : <img
-                                                                    className="mx-auto h-20 w-20 border rounded-full"
+                                                                    className="mx-auto h-20 w-20 rounded-full border"
                                                                     src={session.user?.image || user?.image || "/images/brand.png"}
                                                                     alt="profile image"
                                                                 />}
-                                                                {/* {loading ? <Loading /> : <Avatar className="mx-auto h-20 w-20 rounded-full" img={session.user?.image || user?.image || "/images/brand.png"} rounded bordered />} */}
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -440,7 +438,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
+                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
                                             {selectedKpi && (
                                                 <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""} `}>
                                                     <h2 className="sr-only">
@@ -553,10 +551,7 @@ const Dashboard = function ({ children }) {
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                             <span>
-                                {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
-                            </span>
-                            <span>
-                                {/* <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} /> */}
+                                <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                         </main>
                     </div >
