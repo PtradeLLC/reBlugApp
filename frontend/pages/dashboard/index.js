@@ -184,9 +184,9 @@ const Dashboard = function ({ children }) {
         const renderKpiContent = (action) => (
             <div key={`${action.id}-${title} `} className={classNames(
                 action.id === 1 ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none" : "",
-                action.id === 2 ? "bg-[#ECECEC] p-0" : "",
-                action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3" : "",
-                action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3" : "",
+                action.id === 2 ? "bg-[#ECECEC] p-0 mt-1" : "",
+                action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3 mt-3" : "",
+                action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3 mt-1" : "",
                 "group relative p-6"
             )}>
                 <h3 className="text-lg font-medium p-1">
@@ -217,13 +217,13 @@ const Dashboard = function ({ children }) {
                     {/*  */}
                     {action.name === "Processed" && (
                         <span className="w-full">
-                            <MixedChart />
+                            <MixedChart className="w-full" />
                             <button className="flex justify-end items-end p-1" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
                         </span>
                     )}
                     {action.name === "Delivered" && (
                         <span className="w-full">
-                            <CircleChart />
+                            <CircleChart className="w-full" />
                             <button type="button" onClick={handleClick}><p className="text-sm text-right p-1">Expand to get insight</p></button>
                         </span>
                     )}
@@ -248,7 +248,7 @@ const Dashboard = function ({ children }) {
             <Suspense fallback={<Loading />}>
                 <UserContext.Provider value={user}>
                     <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
-                        <Popover as="header" className=" pb-24">
+                        <Popover as="header" className=" pb-4">
                             {({ open }) => (
                                 <>
                                     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -371,7 +371,7 @@ const Dashboard = function ({ children }) {
                                 </>
                             )}
                         </Popover>
-                        <main className="-mt-24 pb-8">
+                        <main className="index-main pb-8 lg:mt-8">
                             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
@@ -398,7 +398,7 @@ const Dashboard = function ({ children }) {
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
                                                                     Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
                                                                 </h2>
-                                                                <Link href={"/profile"}> <h4>Brand: {session?.user?.name || `${user?.firstName} ${user?.lastName} ` && !user.brandName ? 'Want to use as brand or agency?' : user.brandName}</h4>
+                                                                <Link href={"/profile"}> <h4>Brand: {`${user.brandName}` || 'Want to use as brand or agency?'}</h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
                                                             </div>

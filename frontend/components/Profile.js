@@ -347,7 +347,7 @@ export default function ProfilePg() {
                                                 ? <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.profileImage} alt="Profile Image" />
                                                 : <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Profile Image" />
                                             }
-                                            <span className='mt-1'><input type="file" className='w-full h-10' accept="image/*" onChange={(e) => handleFileChange(e, 'profileImage')} /></span>
+                                            <span className='mt-1 mx-1'><input type="file" className='w-full h-10' accept="image/*" onChange={(e) => handleFileChange(e, 'profileImage')} /></span>
                                             <span className='text-xs'>Edit image</span>
                                             <div>
                                                 <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
@@ -425,7 +425,7 @@ export default function ProfilePg() {
                                                         ? <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.brandLogo} alt="Brand Logo" />
                                                         : <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Brand Logo" />
                                                     }
-                                                    <span className='flex mt-2 flex-col text-sm'><input className='w-full h-10' type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'brandLogo')} />112px by 112px</span>
+                                                    <span className='flex mt-2 mx-1 flex-col text-sm'><input className='w-full h-10' type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'brandLogo')} />112px by 112px</span>
                                                     <span className='text-xs'>Edit image</span>
                                                     <div>
                                                         <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>

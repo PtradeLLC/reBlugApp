@@ -21,14 +21,15 @@ export default async function handler(req, res) {
                     firstName: true,
                     lastName: true,
                     provider: true,
+                    brandName: true,
+                    brandLogo: true,
+                    role: true,
                 },
             });
 
             if (user.provider !== 'Email') {
                 [first_name, last_name] = session.user.name.split(' ');
 
-                // Log inside the block where variables are assigned
-                console.log('log from fetchUser', first_name, last_name);
 
                 res.status(200).json({ first_name, last_name });
                 return; // Important: stop execution here to prevent further code execution
@@ -53,6 +54,9 @@ export default async function handler(req, res) {
                         firstName: true,
                         lastName: true,
                         provider: true,
+                        brandLogo: true,
+                        brandName: true,
+                        role: true,
                     },
                 });
 
