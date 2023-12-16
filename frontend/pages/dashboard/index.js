@@ -184,9 +184,9 @@ const Dashboard = function ({ children }) {
         const renderKpiContent = (action) => (
             <div key={`${action.id}-${title} `} className={classNames(
                 action.id === 1 ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none" : "",
-                action.id === 2 ? "bg-[#ECECEC] p-0 mt-1" : "",
+                action.id === 2 ? "bg-[#ECECEC] p-0" : "",
                 action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3 mt-3" : "",
-                action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3 mt-1" : "",
+                action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3 mt-3" : "",
                 "group relative p-6"
             )}>
                 <h3 className="text-lg font-medium p-1">
