@@ -88,7 +88,7 @@ const TeamComponent = ({ refreshList }) => {
 
     return (
         <div className='overflow-y-auto overflow-x-hidden h-44'>
-            {loading && <Loading />}
+            {loading && <Loading className="ml-2" />}
             <ul role="list" className="-my-5 mt-1 divide-y divide-gray-200">
                 {teamCount.length > 0 ? (
                     [...teamCount].reverse().map((person) => ( // Create a reversed copy before mapping

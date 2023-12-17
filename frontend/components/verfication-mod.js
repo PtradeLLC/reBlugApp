@@ -1,21 +1,47 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+import { Fragment, useState, useEffect } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import Loading from "./Loading";
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ');
 }
 
-export default function WelcomeModal({ setOpenModal }) {
-    const [open, setOpen] = useState(true)
+export default function WelcomeModal({ setOpenModal, email, firstName, lastName, managerRole, image }) {
+    const [open, setOpen] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const { data: session, status } = useSession();
+    const [summary, setSummary] = useState(null);
+    const [history, setHistory] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
+
+    useEffect(() => {
+        // Check if the modal has been opened before in this session
+        const hasModalBeenOpened = localStorage.getItem('hasModalBeenOpened');
+
+        if (hasModalBeenOpened) {
+            // Modal has been opened before, close it
+            setOpen(false);
+        }
+    }, []);
+
+    const closeModal = () => {
+        setOpenModal(false);
+
+        // Flag in localStorage to indicate that the modal has been opened
+        localStorage.setItem('hasModalBeenOpened', 'true');
+    };
 
     return (
         <Transition.Root show={open} as={Fragment}>
+
             <Dialog as="div" className="relative z-10"
-                onClose={() => {
-                    setOpenModal(false);
-                }}
+                onClose={closeModal}
+            // onClose={() => {
+            //     setOpenModal(false);
+            // }}
             >
                 <div className="fixed inset-0" />
 
@@ -41,7 +67,7 @@ export default function WelcomeModal({ setOpenModal }) {
                                                 <div className="ml-3 flex h-7 items-center">
                                                     <button
                                                         type="button"
-                                                        className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500"
+                                                        className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-red-500"
                                                         onClick={() => setOpen(false)}
                                                     >
                                                         <span className="absolute -inset-2.5" />
@@ -56,85 +82,32 @@ export default function WelcomeModal({ setOpenModal }) {
                                             <div className="pb-1 sm:pb-6">
                                                 <div>
                                                     <div className="relative h-40 sm:h-56">
-                                                        <img
+                                                        {loading ? <Loading /> : <img
                                                             className="absolute h-full w-full object-cover"
-                                                            src="https://images.unsplash.com/photo-1501031170107-cfd33f0cbdcc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&h=600&q=80"
-                                                            alt=""
-                                                        />
+                                                            src={session.user?.image || image || "/images/brand.png"}
+                                                            alt="profile image"
+                                                        />}
                                                     </div>
                                                     <div className="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
                                                         <div className="sm:flex-1">
                                                             <div>
                                                                 <div className="flex items-center">
-                                                                    <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">Ashley Porter</h3>
+                                                                    <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">{firstName}{' '}{lastName}</h3>
                                                                     <span className="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-400">
                                                                         <span className="sr-only">Online</span>
                                                                     </span>
                                                                 </div>
-                                                                <p className="text-sm text-gray-500">@ashleyporter</p>
+                                                                <p className="text-sm text-gray-500">{managerRole}</p>
                                                             </div>
                                                             <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
-                                                                <button
-                                                                    type="button"
-                                                                    className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1"
-                                                                >
-                                                                    Message
-                                                                </button>
-                                                                <button
-                                                                    type="button"
+                                                                <Link href={"/profile"} type="button" className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1">
+                                                                    Update Profile
+                                                                </Link>
+                                                                <button type="button" onClose={closeModal}
                                                                     className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                 >
-                                                                    Call
+                                                                    Go to Dashboard
                                                                 </button>
-                                                                <div className="ml-3 inline-flex sm:ml-0">
-                                                                    <Menu as="div" className="relative inline-block text-left">
-                                                                        <Menu.Button className="relative inline-flex items-center rounded-md bg-white p-2 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                                                            <span className="absolute -inset-1" />
-                                                                            <span className="sr-only">Open options menu</span>
-                                                                            <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
-                                                                        </Menu.Button>
-                                                                        <Transition
-                                                                            as={Fragment}
-                                                                            enter="transition ease-out duration-100"
-                                                                            enterFrom="transform opacity-0 scale-95"
-                                                                            enterTo="transform opacity-100 scale-100"
-                                                                            leave="transition ease-in duration-75"
-                                                                            leaveFrom="transform opacity-100 scale-100"
-                                                                            leaveTo="transform opacity-0 scale-95"
-                                                                        >
-                                                                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                                                <div className="py-1">
-                                                                                    <Menu.Item>
-                                                                                        {({ active }) => (
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className={classNames(
-                                                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                    'block px-4 py-2 text-sm'
-                                                                                                )}
-                                                                                            >
-                                                                                                View profile
-                                                                                            </a>
-                                                                                        )}
-                                                                                    </Menu.Item>
-                                                                                    <Menu.Item>
-                                                                                        {({ active }) => (
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className={classNames(
-                                                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                                                    'block px-4 py-2 text-sm'
-                                                                                                )}
-                                                                                            >
-                                                                                                Copy profile link
-                                                                                            </a>
-                                                                                        )}
-                                                                                    </Menu.Item>
-                                                                                </div>
-                                                                            </Menu.Items>
-                                                                        </Transition>
-                                                                    </Menu>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -143,29 +116,56 @@ export default function WelcomeModal({ setOpenModal }) {
                                             <div className="px-4 pb-5 pt-5 sm:px-0 sm:pt-0">
                                                 <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                                                     <div>
-                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Bio</dt>
+                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 font-bold sm:flex-shrink-0">Since your last visit</dt>
                                                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                                            <p>
-                                                                Enim feugiat ut ipsum, neque ut. Tristique mi id elementum praesent. Gravida in tempus
-                                                                feugiat netus enim aliquet a, quam scelerisque. Dictumst in convallis nec in bibendum
-                                                                aenean arcu.
-                                                            </p>
+                                                            {summary ?
+                                                                <p className="font-semibold">
+                                                                    Summary
+                                                                </p> : "You have no recent summary"
+                                                            }
                                                         </dd>
                                                     </div>
                                                     <div>
-                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Location</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">New York, NY, USA</dd>
+                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Campaign History</dt>
+                                                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                                            {history ?
+                                                                <p className="font-semibold">
+                                                                    History
+                                                                </p> : "You have no recent history"
+                                                            }
+                                                        </dd>
                                                     </div>
                                                     <div>
-                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Website</dt>
-                                                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">ashleyporter.com</dd>
+                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">My Number</dt>
+                                                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                                            {phoneNumber ?
+                                                                <p className="font-semibold">
+                                                                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
+                                                                    </svg>
+                                                                    Number
+                                                                </p> :
+                                                                <>
+                                                                    <span className='flex'>
+                                                                        <svg class="w-[15px] h-[15px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
+                                                                        </svg>
+                                                                        <p>You have no number</p>
+                                                                    </span>
+                                                                    <button type="button" class="text-gray-900 mx-1 mt-1 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-800 dark:bg-white dark:border-gray-700 dark:text-gray-900 dark:hover:bg-gray-200 me-2 mb-2">
+
+                                                                        Claim your number now
+                                                                    </button>
+                                                                </>
+                                                            }
+                                                        </dd>
                                                     </div>
-                                                    <div>
+                                                    {/* <div>
                                                         <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Birthday</dt>
                                                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                                                             <time dateTime="1988-06-23">June 23, 1988</time>
                                                         </dd>
-                                                    </div>
+                                                    </div> */}
                                                 </dl>
                                             </div>
                                         </div>
@@ -179,123 +179,3 @@ export default function WelcomeModal({ setOpenModal }) {
         </Transition.Root>
     )
 }
-
-
-
-// import React, { useState, useRef, useEffect, Fragment } from "react";
-// import { Dialog, Transition } from "@headlessui/react";
-// import Image from "next/image";
-// import { useRouter } from 'next/router';
-// import { useSession } from 'next-auth/react';
-// import Link from 'next/link';
-
-// const WelcomeModal = ({ setOpenModal, verifiedUser }) => {
-//     const [open, setOpen] = useState(true);
-//     const cancelButtonRef = useRef(null);
-//     const { data: session } = useSession();
-//     const user = session.user;
-//     const name = user.name;
-//     const email = user.email;
-//     const question = 'What is the percentage of email marketing open and click rates for non-profit and for profit organizations based on data?';
-//     const first_word = name.split(' ')[0];
-//     const [verifyUser, setVerifyUser] = useState();
-
-//     const handleClick = async () => {
-//         const baseUrl = '/api/auth/authVerificationset';
-//         try {
-//             const response = await fetch(baseUrl, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({ email: email, question: question })
-//             });
-
-//             const data = await response.json();
-
-//             if (data.message === 'User is verified') {
-//                 setOpen(false);
-//                 setVerifyUser(data.user.isVerified);
-//             } else {
-//                 console.error('There was an error:', JSON.stringify(data, null, 2));
-//             }
-//         } catch (error) {
-//             console.error('Fetch failed:', error);
-//         }
-//     };
-
-//     return (
-//         <Transition.Root show={open} as={React.Fragment}>
-//             <Dialog
-//                 as="div"
-//                 className="fixed inset-0 z-10 overflow-y-auto bg-slate-500 bg-opacity-75"
-//                 initialFocus={cancelButtonRef}
-//                 onClose={() => {
-//                     setOpenModal(false);
-//                 }}
-//             >
-//                 <div className="fixed bg-opacity-75 inset-0 z-10 overflow-y-auto">
-//                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-//                         <Transition.Child
-//                             as={Fragment}
-//                             enter="ease-out duration-300"
-//                             enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-//                             enterTo="opacity-100 translate-y-0 sm:scale-100"
-//                             leave="ease-in duration-200"
-//                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-//                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-//                         >
-//                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-//                                 <div>
-//                                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100">
-//                                         <Image
-//                                             src={"/images/Marttwainxyz.png"}
-//                                             alt="logo"
-//                                             width={50}
-//                                             height={50}
-//                                         />
-//                                     </div>
-//                                     <div className="mt-3 text-center sm:mt-5">
-//                                         <Dialog.Title
-//                                             as="h3"
-//                                             className="text-base flex justify-start text-left font-semibold leading-6 text-gray-700"
-//                                         >
-//                                             {first_word}, did you know the average email open rates is this low?
-//                                         </Dialog.Title>
-//                                         <div className="mt-2">
-//                                             <ul className="list-disc">
-//                                                 {<>
-//                                                     <li className="text-sm flex justify-start text-left text-gray-500">Non-Profit:<br />
-//                                                         Open Rate: Average open rate is 28.59%, significantly higher than for-profit organizations.<br />
-//                                                         Click Rate: Average click rate is 3.29%.<br /><br /></li>
-//                                                     <li className="text-sm flex justify-start text-left text-gray-500">
-//                                                         For-Profit:<br />
-//                                                         Open Rate: Average open rate varies depending on industry, but generally falls between 21% and 21.5%.<br />
-//                                                         Click Rate: Average click rate across all industries is around 2.4%.
-//                                                     </li>
-//                                                 </>
-//                                                 }
-//                                             </ul>
-//                                             <span className="text-sm my-2 flex justify-start text-left text-gray-500">
-//                                                 <p>Sources:</p>
-//                                                 <Link className="mx-1" href="https://neonone.com/resources/nonprofit-email-report/" target="_blank">Neon One |</Link>
-//                                                 <Link className="mx-1" href="https://www.campaignmonitor.com/resources/guides/email-marketing-benchmarks/" target="_blank">Campaign Monitor |</Link>
-//                                                 <Link className="mx-1" href="https://mailchimp.com/resources/email-marketing-benchmarks/" target="_blank">Mailchimp</Link>
-//                                             </span>
-//                                             <p className="text-sm mt-1 mb-2 flex justify-start text-left text-gray-900">We aim to improve these statistics and transform email into an effective communication tool.</p>
-//                                             <button onClick={handleClick} type="button" className="text-white mt-3 bg-gradient-to-br from-pink-500 to-orange-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Proceed to Dashboard to see how</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </Dialog.Panel>
-//                         </Transition.Child>
-//                     </div>
-//                 </div>
-//             </Dialog>
-//         </Transition.Root>
-//     )
-// };
-// export default WelcomeModal;
-
-
-

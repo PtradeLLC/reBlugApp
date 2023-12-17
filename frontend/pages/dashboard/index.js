@@ -102,10 +102,11 @@ const Dashboard = function ({ children }) {
     const { data: session, status } = useSession();
     const [user, setUser] = useState('');
     const managerName = session?.user?.name || `${user.firstName} ${user.lastName}`;
-    const managerImage = session?.user?.image || user.image || "/images/brand.png";
-    const managerRole = session?.user?.role || user.role || "User";
+    const managerImage = session?.user?.image || "/images/brand.png";
+    const managerRole = session?.user?.role || user.role || "Manager";
     const [refreshList, setRefreshList] = useState(false);
     const [isVerified, setIsVerified] = useState(true);
+
 
     const handleRefreshList = () => {
         setRefreshList(!refreshList);
@@ -126,12 +127,18 @@ const Dashboard = function ({ children }) {
             try {
                 const response = await fetch("/api/fetchUser");
                 if (response.ok) {
-
                     const data = await response.json();
 
-                    setUser(data);
-                    let fetchedTeam = data.team || [];
+                    setUser({
+                        firstName: data.first_name,
+                        lastName: data.last_name,
+                        provider: data.provider,
+                        brandLogo: data.brandLogo,
+                        brandName: data.brandName,
+                        role: data.role,
+                    });
 
+                    let fetchedTeam = data.team || [];
 
                     // Check if the current user is not already in the team.
                     const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);
@@ -143,8 +150,8 @@ const Dashboard = function ({ children }) {
                                 id: user.id,
                                 name: `${user.firstName} ${user.lastName} || ${session.user.name}`,
                                 image: `${user.image} || ${session.user.image}`,
+                                role: `${user.role}`,
                             },
-                            role: "Manager",
                         };
 
                         // Set the current user as the default team member
@@ -218,13 +225,27 @@ const Dashboard = function ({ children }) {
                     {action.name === "Processed" && (
                         <span className="w-full">
                             <MixedChart className="w-full" />
-                            <button className="flex justify-end items-end p-1" type="button" onClick={handleClick}><p className="text-sm text-right">Expand to get insight</p></button>
+                            <button className="flex justify-end items-end p-1" type="button" onClick={handleClick}><p className=" flex justify-center items-center mx-2 text-sm text-right p-1">
+                                <span className="relative mx-1 flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
+                                    </span>
+                                </span>
+                                Expand to get insight
+                            </p></button>
                         </span>
                     )}
                     {action.name === "Delivered" && (
                         <span className="w-full">
                             <CircleChart className="w-full" />
-                            <button type="button" onClick={handleClick}><p className="text-sm text-right p-1">Expand to get insight</p></button>
+                            <button type="button" onClick={handleClick}>
+                                <p className=" flex justify-center items-center mx-2 text-sm text-right p-1">
+                                    <span className="relative mx-1 flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
+                                        </span>
+                                    </span>
+                                    Expand to get insight
+                                </p>
+                            </button>
                         </span>
                     )}
                 </div>
@@ -336,10 +357,10 @@ const Dashboard = function ({ children }) {
                                                             <div className="flex items-center px-5">
                                                                 <div className="ml-3 min-w-0 flex-1">
                                                                     <div className="truncate text-base font-medium text-gray-800">
-                                                                        Hello {session?.user?.name || user?.brandName},
+                                                                        Hello {user?.firstName || user?.brandName},
                                                                     </div>
                                                                     <div className="truncate text-sm font-medium text-gray-500">
-                                                                        {session?.user?.email || user?.email}
+                                                                        {user?.firstName || user?.email}
                                                                     </div>
                                                                 </div>
                                                                 <button
@@ -398,7 +419,10 @@ const Dashboard = function ({ children }) {
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
                                                                     Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
                                                                 </h2>
-                                                                <Link href={"/profile"}> <h4>Brand: {`${user.brandName}` || 'Want to use as brand or agency?'}</h4>
+                                                                <Link href={"/profile"}> <h4>
+                                                                    Brand: {user.brandName && `${user.brandName}`}{' '}
+                                                                    {!user.brandName && 'Want to use as brand or agency?'}
+                                                                </h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
                                                             </div>
@@ -474,9 +498,9 @@ const Dashboard = function ({ children }) {
                                                     <div className="mt-6 flow-root">
                                                         <div className="flex items-center">
                                                             <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
-                                                                {/* <Image src={managerImage} width={25} height={25} alt="profile image" /> */}
-                                                                {loading ? <Loading /> : <Avatar className="mx-auto h-25 w-25 rounded-full" img={managerImage} rounded bordered />}
-                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole.toLowerCase()}</span>
+
+                                                                {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-25 w-25 flex justify-center rounded-full" img={managerImage} rounded bordered />}
+                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
                                                                 {/* Hide on condition */}
                                                                 <span className="mx-1 flex items-center">
                                                                     <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
@@ -493,7 +517,7 @@ const Dashboard = function ({ children }) {
                                                         <button
                                                             type="button"
                                                             onClick={handleModalClick}
-                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                         >
                                                             Add Team Member
                                                         </button>
@@ -553,7 +577,7 @@ const Dashboard = function ({ children }) {
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                             <span>
-                                <WelcomeModal openModal={openModal} setOpenModal={setOpenModal} />
+                                <WelcomeModal brandName={user.brandName} managerRole={managerRole} brandLogo={user.brandLogo} image={managerImage} email={email} firstName={user.firstName} lastName={user.lastName} openModal={openModal} setOpenModal={setOpenModal} />
                             </span>
                         </main>
                     </div >
