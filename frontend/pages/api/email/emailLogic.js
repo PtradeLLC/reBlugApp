@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       const { brandName, firstName, lastName, email, password, provider } = req.body;
 
       if (!email || !password || !firstName || !lastName) {
-        console.error("Validation error: email is missing");
+        console.error("Validation error: signup form is missing a field");
         return res.status(400).json({ message: "An entry is missing" });
       }
 
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
           brandName,
           firstName,
           lastName,
-          provider
+          provider,
         },
       });
 
@@ -66,17 +66,50 @@ export default async function handler(req, res) {
           email: lowercaseEmail,
           userId: newUser.id,
           expires: expires,
-        }
+        },
       });
 
       if (token) {
         await SendNewEmail({ firstName, email, token: token.token, userId: token.userId, provider });
       }
-      return res.status(201).json({ user: newUser, message: "User created successfully. Please check your email to proceed.", redirect: "/api/auth/signin" });
+
+      // Create a new session for the user
+      const sessionToken = randomUUID().replace(/-/g, '');
+      const sessionExpires = new Date();
+      sessionExpires.setHours(sessionExpires.getHours() + 1);
+
+      const newSession = await prisma.session.create({
+        data: {
+          sessionToken,
+          userId: newUser.id,
+          expires: sessionExpires,
+        },
+      });
+
+      // Create a new account for the user
+      const newAccount = await prisma.account.create({
+        data: {
+          userId: newUser.id,
+          type: 'free-tier',
+          provider: newUser.provider,
+          providerAccountId: email,
+          // Add other account-related data as needed
+        },
+      });
+
+      return res.status(201).json({
+        user: newUser,
+        session: newSession,
+        account: newAccount,
+        message: "User created successfully. Please check your email to proceed.",
+        redirect: "/api/auth/signin",
+      });
 
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: `An error occurred during registration: ${error.message || error}` });
+      return res
+        .status(500)
+        .json({ error: `An error occurred during registration: ${error.message || error}` });
     } finally {
       await prisma.$disconnect();
     }

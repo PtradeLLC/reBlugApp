@@ -17,21 +17,8 @@ export default function WelcomeModal({ setOpenModal, email, firstName, lastName,
     const [history, setHistory] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
 
-    useEffect(() => {
-        // Check if the modal has been opened before in this session
-        const hasModalBeenOpened = localStorage.getItem('hasModalBeenOpened');
-
-        if (hasModalBeenOpened) {
-            // Modal has been opened before, close it
-            setOpen(false);
-        }
-    }, []);
-
     const closeModal = () => {
         setOpenModal(false);
-
-        // Flag in localStorage to indicate that the modal has been opened
-        localStorage.setItem('hasModalBeenOpened', 'true');
     };
 
     return (
@@ -39,9 +26,6 @@ export default function WelcomeModal({ setOpenModal, email, firstName, lastName,
 
             <Dialog as="div" className="relative z-10"
                 onClose={closeModal}
-            // onClose={() => {
-            //     setOpenModal(false);
-            // }}
             >
                 <div className="fixed inset-0" />
 

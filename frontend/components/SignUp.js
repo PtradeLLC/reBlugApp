@@ -42,7 +42,7 @@ const SignUp = () => {
 
                     const data = await response.json();
                     if (isMounted && data) {
-                        console.log("There is Data - Data from SignUp", data);
+
                         setIsSuccess(true);
                         if (data.user) {
                             if (isMounted) {

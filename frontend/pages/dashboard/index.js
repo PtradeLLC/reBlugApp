@@ -84,7 +84,6 @@ const marketingAction = [
 const UserContext = createContext();
 
 const Dashboard = function ({ children }) {
-
     const [errors, setErrors] = useState('');
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [selectedKpi, setSelectedKpi] = useState("undefined");
@@ -100,7 +99,15 @@ const Dashboard = function ({ children }) {
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        profileImage: "",
+        provider: "Email",
+        brandLogo: null,
+        brandName: "",
+        role: "MANAGER"
+    });
     const managerName = session?.user?.name || `${user.firstName} ${user.lastName}`;
     const managerImage = session?.user?.image || "/images/brand.png";
     const managerRole = session?.user?.role || user.role || "Manager";
@@ -119,9 +126,9 @@ const Dashboard = function ({ children }) {
     }, [session]);
 
     useEffect(() => {
-        if (status === 'loading') {
-            return;
-        }
+        // if (status === 'loading') {
+        //     return;
+        // }
 
         const fetchData = async () => {
             try {
@@ -129,33 +136,39 @@ const Dashboard = function ({ children }) {
                 if (response.ok) {
                     const data = await response.json();
 
-                    setUser({
-                        firstName: data.first_name || firstName,
-                        lastName: data.last_name || lastName,
+                    setUser((prevUser) => ({
+                        ...prevUser,
+                        firstName: data.first_name || prevUser.firstName,
+                        lastName: data.last_name || prevUser.lastName,
                         provider: data.provider,
                         brandLogo: data.brandLogo,
                         brandName: data.brandName,
+                        profileImage: data.profileImage,
                         role: data.role,
-                    });
+                    }));
 
-                    let fetchedTeam = data.team || [];
+                    console.log('Response from server:', data.first_name);
+
+                    const fetchedTeam = data.team ?? [];
 
                     // Check if the current user is not already in the team.
-                    const currentUserInTeam = fetchedTeam.some(member => member.user.id === user?.id);
+                    const currentUserInTeam = fetchedTeam.some(
+                        (member) => member.user.id === user?.id
+                    );
 
                     // If not in the team, add the current user as the default team member.
                     if (!currentUserInTeam) {
                         const currentUser = {
                             user: {
-                                id: user.id,
-                                name: `${user.firstName} ${user.lastName} || ${session.user.name}`,
-                                image: `${user.image} || ${session.user.image}`,
-                                role: `${user.role}`,
+                                id: user?.id,
+                                name: `${user?.firstName} ${user?.lastName} || ${session?.user?.name}`,
+                                image: `${user?.image} || ${session?.user?.image}`,
+                                role: `${user?.role}`,
                             },
                         };
 
                         // Set the current user as the default team member
-                        fetchedTeam = [currentUser, ...fetchedTeam];
+                        fetchedTeam.unshift(currentUser);
                     }
                     // setTeamCount(fetchedTeam);
                 } else {
@@ -263,6 +276,8 @@ const Dashboard = function ({ children }) {
             return null;
         }
     };
+
+
 
     return (
         <>
