@@ -9,6 +9,7 @@ export default async function handler(req, res) {
 
     if (session) {
         const { email } = session?.user;
+
         let first_name, last_name;
 
         try {
@@ -41,6 +42,17 @@ export default async function handler(req, res) {
                 });
 
                 return;
+            } else if (user.provider === "Email") {
+                res.status(200).json({
+                    // firstName,
+                    // lastName,
+                    profileImage,
+                    provider,  // Assuming you want to set the provider as 'OAuth'
+                    brandLogo: null,    // Adjust based on your data structure
+                    brandName: null,    // Adjust based on your data structure
+                    role: null,         // Adjust based on your data structure
+                });
+                return;
             }
 
             if (user.firstName === null && user.lastName === null) {
@@ -49,13 +61,13 @@ export default async function handler(req, res) {
                     update: {
                         firstName: user.firstName || first_name,
                         lastName: user.lastName || last_name,
-                        provider: 'OAuth',
+                        provider: `${user.firstName || user.lastName ? "Email" : first_name || last_name ? 'OAuth' : null}`,
                     },
                     create: {
                         email,
                         firstName: user.firstName || first_name,
                         lastName: user.lastName || last_name,
-                        provider: 'OAuth',
+                        provider: `${user.firstName || user.lastName ? "Email" : first_name || last_name ? 'OAuth' : null}`,
                     },
                     select: {
                         firstName: true,
@@ -67,6 +79,8 @@ export default async function handler(req, res) {
                         role: true,
                     },
                 });
+
+                console.log("UpdateUser", updatedUser);
 
                 res.status(200).json(updatedUser);
             } else {

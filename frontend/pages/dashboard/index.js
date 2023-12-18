@@ -130,8 +130,8 @@ const Dashboard = function ({ children }) {
                     const data = await response.json();
 
                     setUser({
-                        firstName: data.first_name,
-                        lastName: data.last_name,
+                        firstName: data.first_name || firstName,
+                        lastName: data.last_name || lastName,
                         provider: data.provider,
                         brandLogo: data.brandLogo,
                         brandName: data.brandName,
