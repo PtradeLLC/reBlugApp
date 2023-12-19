@@ -33,7 +33,7 @@ const MixedChart = () => {
       width: [1, 1, 4],
     },
     title: {
-      text: "Live feed",
+      text: "", //You can add text here.
       align: "left",
       offsetX: 110,
     },

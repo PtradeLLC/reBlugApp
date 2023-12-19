@@ -1,21 +1,34 @@
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
+import { signOut } from 'next-auth/react';
 import { authOptions } from './auth/[...nextauth]';
 import { Session } from 'inspector';
 import Oauth from 'twilio/lib/rest/Oauth';
 
 const prisma = new PrismaClient();
 
+
+// TO CLOSE ACCOUNT:
+// await prisma.user.update({
+//     where: {
+//         email: trimmedEmail,
+//     },
+//     data: {
+//         isActive: false,
+//     },
+// });
+
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
 
     if (session) {
         const { email } = session?.user;
+        const trimmedEmail = email.trim();
 
         try {
             const user = await prisma.user.findUnique({
                 where: {
-                    email,
+                    email: trimmedEmail,
                 },
                 select: {
                     firstName: true,
@@ -25,56 +38,76 @@ export default async function handler(req, res) {
                     brandLogo: true,
                     brandName: true,
                     role: true,
-                    Sessions: true,
-                    Accounts: true,
+                    isActive: true,
+                    image: true,
                 },
             });
 
-            let first_name, last_name;
+            if (user) {
+                let first_name, last_name;
+                if (user.provider !== 'Email') {
+                    [first_name, last_name] = session.user.name.split(' ');
 
-            if (user.provider !== 'Email') {
-                [first_name, last_name] = session.user.name.split(' ');
+                    await prisma.user.upsert({
+                        where: {
+                            email,
+                        },
+                        update: {
+                            firstName: first_name,
+                            lastName: last_name,
+                            provider: 'OAuth',
+                            isActive: true,
+                            profileImage: user.image,
+                        },
+                        create: {
+                            email,
+                            firstName: first_name,
+                            lastName: last_name,
+                            provider: 'OAuth',
+                            isActive: true,
+                            profileImage: user.image,
+                        },
+                    });
 
-                await prisma.user.upsert({
-                    where: {
-                        email,
-                    },
-                    update: {
-                        provider: 'OAuth',
-                    },
-                    create: {
-                        email,
+                    res.status(200).json({
                         firstName: first_name,
                         lastName: last_name,
-                        provider: 'OAuth',
-                    },
-                });
+                        profileImage: user.profileImage,
+                        provider: user.provider,
+                        brandLogo: user.brandLogo,
+                        brandName: user.brandName,
+                        role: user.role,
+                        isActive: user.isActive,
+                    });
 
+                    return;
+                } else {
+                    res.status(200).json({
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        profileImage: user.profileImage,
+                        provider: user.provider,
+                        brandLogo: user.brandLogo,
+                        brandName: user.brandName,
+                        role: user.role,
+                        isActive: user.isActive,
+                    });
 
-                res.status(200).json({
-                    firstName: first_name,
-                    lastName: last_name,
-                    profileImage: user.profileImage,
-                    provider: user.provider,
-                    brandLogo: user.brandLogo,
-                    brandName: user.brandName,
-                    role: user.role,
-                });
-
-                return;
+                    return;
+                }
             } else {
-                res.status(200).json({
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    profileImage: user.profileImage,
-                    provider: user.provider,
-                    brandLogo: user.brandLogo,
-                    brandName: user.brandName,
-                    role: user.role,
-                    Sessions: user.Sessions
-                });
+                console.log('User not found in the database');
+                // Clear the session cookie
+                res.setHeader('Set-Cookie', 'next-auth.session-token=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/; HttpOnly');
 
-                return;
+                // Sign out the user
+                if (!user || !session) {
+                    await signOut({ callbackUrl: '/' });
+                } else {
+                    req.session = null;
+                }
+                console.log('User not found in the database');
+                res.status(404).json({ message: 'User not found in the database' });
             }
         } catch (error) {
             console.error('Error fetching user data:', error);

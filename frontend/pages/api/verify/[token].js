@@ -10,8 +10,6 @@ export default async function handler(req, res) {
 
     const { token } = req.query;
 
-    console.log(token);
-
     if (!token) {
         return res.status(400).json({ error: 'Invalid parameters. Token is missing.' });
     }
@@ -51,6 +49,7 @@ export default async function handler(req, res) {
                 },
                 data: {
                     isVerified: true,
+                    isActive: true,
                 },
             });
         }

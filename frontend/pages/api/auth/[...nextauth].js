@@ -3,14 +3,12 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import TwitchProvider from "next-auth/providers/twitch";
-import SlackProvider from "next-auth/providers/slack";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcrypt";
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-
-// const globalForPrisma = global;
 const prisma = new PrismaClient();
+
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -35,37 +33,47 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 try {
-                    if (!credentials?.email || !credentials?.password) {
-                        throw new Error("Missing email or password");
+                    const { email } = credentials;
+
+                    if (!email) {
+                        throw new Error("Missing email");
                     }
 
                     const existingUser = await prisma?.user?.findUnique({
                         where: {
-                            email: credentials?.email
+                            email
+                        },
+                        include: {
+                            Accounts: true, // Include the related accounts
                         },
                     });
 
                     if (existingUser) {
-                        const passwordMatch = compare(credentials?.password, existingUser.password);
-                        if (passwordMatch) {
+                        const isActive = existingUser.Accounts.every(account => account.isActive);
+
+                        if (isActive) {
+                            // Delete sensitive data before returning user
                             delete existingUser.password;
-                            // return user if password matches
+
+                            // return user if all accounts are active
                             return existingUser;
+                        } else {
+                            console.log("User account is not active");
                         }
                     } else {
                         console.log("There is no user on db");
                     }
                 } catch (error) {
                     // Log the error
-                    console.error(`Authentication error:, ${error}`);
+                    console.error(`Authentication error: ${error}`);
                 }
                 return null;
             }
         }),
-
     ],
     session: {
         strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
@@ -73,7 +81,6 @@ export const authOptions = {
         signOut: '/login',
         error: '/404',
     },
-    // debug: process.env.NODE_ENV === 'development',
 };
 
 export default NextAuth(authOptions);

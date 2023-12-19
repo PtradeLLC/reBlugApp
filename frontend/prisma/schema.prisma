@@ -44,6 +44,7 @@ model User {
   brandName          String?
   firstName          String?
   profileImage       String?
+  isActive           Boolean             @default(false)
   brandLogo          String?
   password           String?
   image              String? //Auth

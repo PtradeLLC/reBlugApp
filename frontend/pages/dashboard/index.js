@@ -7,7 +7,7 @@ import MaapTabs from "../../components/MaapTabs";
 import MarketTabs from "../../components/MarketCampTab";
 import Image from "next/image";
 import Kpi from "../../components/Kpi";
-import Loading from "./loading";
+import Loading from "../../components/Loading";
 import DashConvTool from "../../components/EmailMarkForm";
 import CampaignSummary from "../../components/CampaignSummary";
 import Team from "../../components/TeamMembers";
@@ -18,13 +18,14 @@ import WelcomeModal from "../../components/verfication-mod";
 import { Avatar } from 'flowbite-react';
 import dynamic from 'next/dynamic';
 
+
 const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
 const CircleChart = dynamic(() => import('../../components/Charts/Delivered'), {
     ssr: false,
 });
 
 const navigation = [
-    { id: 1, name: "Home", href: "/", current: true },
+    { id: 1, name: "Home", href: "/dashboard", current: true },
     { id: 2, name: "Profile", href: "/profile", current: false },
     { id: 3, name: "Resources", href: "/resources", current: false },
 ];
@@ -125,7 +126,7 @@ const Dashboard = function ({ children }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!session || session.status === 'loading') {
+            if (!session && !user || session.status === 'loading') {
                 return <div className="flex justify-center items-center"><Loading /></div>;
             };
 
@@ -197,15 +198,11 @@ const Dashboard = function ({ children }) {
 
 
     if (status === 'loading') {
-        return <p>Loading...</p>;
+        return <div className="flex justify-center items-center h-screen"><Loading size="lg" /></div>;
     }
 
-    if (!session) {
-        return <div><Loading /></div>;
-    }
-
-    if (!user) {
-        return <p>Loading user data...</p>;
+    if (!session || session.user === null) {
+        router.push('/')
     }
 
     const handleClick = () => {
@@ -259,7 +256,7 @@ const Dashboard = function ({ children }) {
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
                                     </span>
                                 </span>
-                                Expand to get insight
+                                Get Live analytics/insight
                             </p></button>
                         </span>
                     )}
@@ -272,7 +269,7 @@ const Dashboard = function ({ children }) {
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
                                         </span>
                                     </span>
-                                    Expand to get insight
+                                    Get Live analytics/insight
                                 </p>
                             </button>
                         </span>
@@ -296,335 +293,242 @@ const Dashboard = function ({ children }) {
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <UserContext.Provider value={session.user || userData}>
-                    <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
-                        <Popover as="header" className=" pb-4">
-                            {({ open }) => (
-                                <>
-                                    <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                                        <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
+                <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
+                    <Popover as="header" className=" pb-4">
+                        {({ open }) => (
+                            <>
+                                <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                                    <div className="relative flex flex-wrap items-center justify-center lg:justify-between">
 
-                                            <div className="w-full py-5 lg:border-t lg:border-white lg:border-opacity-20">
-                                                <div className="lg:grid lg:grid-cols-3 lg:items-center lg:gap-8">
+                                        <div className="w-full py-5 lg:border-t lg:border-white lg:border-opacity-20">
+                                            <div className="lg:grid lg:grid-cols-3 lg:items-center lg:gap-8">
 
-                                                    <div className="hidden lg:col-span-2 lg:block">
-                                                        <nav className="flex space-x-4">
-                                                            {navigation.map((item) => (
-                                                                <a
-                                                                    key={item.name}
-                                                                    href={item.href}
-                                                                    className={classNames(
-                                                                        item.current ? "text-black" : "text-black",
-                                                                        "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
-                                                                    )}
-                                                                    aria-current={item.current ? "page" : undefined}
-                                                                >
-                                                                    {item.name}
-                                                                </a>
-                                                            ))}
-                                                        </nav>
-                                                    </div>
+                                                <div className="hidden lg:col-span-2 lg:block">
+                                                    <nav className="flex space-x-4">
+                                                        {navigation.map((item) => (
+                                                            <a
+                                                                key={item.name}
+                                                                href={item.href}
+                                                                className={classNames(
+                                                                    item.current ? "text-black" : "text-black",
+                                                                    "rounded-md bg-white bg-opacity-0 px-3 py-2 text-sm font-medium hover:bg-opacity-10"
+                                                                )}
+                                                                aria-current={item.current ? "page" : undefined}
+                                                            >
+                                                                {item.name}
+                                                            </a>
+                                                        ))}
+                                                    </nav>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </>
+                        )}
+                    </Popover>
+                    <main className="index-main pb-8 lg:mt-8">
+                        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
+                            <h1 className="sr-only">Profile</h1>
 
-                                    {/* <Transition.Root show={open} as={Fragment}>
-                                        <div className="lg:hidden">
-                                            <Transition.Child
-                                                as={Fragment}
-                                                enter="duration-150 ease-out"
-                                                enterFrom="opacity-0"
-                                                enterTo="opacity-100"
-                                                leave="duration-150 ease-in"
-                                                leaveFrom="opacity-100"
-                                                leaveTo="opacity-0"
+                            <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
 
-                                            >
-                                                <Popover.Overlay className="fixed inset-0 z-20 bg-black bg-opacity-25" />
-                                            </Transition.Child>
+                                <div className="grid grid-cols-1 gap-4 lg:col-span-2">
 
-                                            <Transition.Child
-                                                as={Fragment}
-                                                enter="duration-150 ease-out"
-                                                enterFrom="opacity-0 scale-95"
-                                                enterTo="opacity-100 scale-100"
-                                                leave="duration-150 ease-in"
-                                                leaveFrom="opacity-100 scale-100"
-                                                leaveTo="opacity-0 scale-95"
-                                            >
-                                                <Popover.Panel
-                                                    focus
-                                                    className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-3xl origin-top transform p-2 transition"
-                                                >
-                                                    <div className="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                                                        <div className="pb-2 pt-3">
-                                                            <div className="flex items-center justify-between px-4">
-                                                                <div>
-                                                                    <Image
-                                                                        src="/images/Mart.png"
-                                                                        alt="ForgedMart Logo"
-                                                                        width={100}
-                                                                        // height={24}
-                                                                        priority
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="mt-3 space-y-1 px-2">
-                                                                {navigation.map((item) => (
-                                                                    <a
-                                                                        key={item.name}
-                                                                        href={item.href}
-                                                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                                                                    >
-                                                                        {item.name}
-                                                                    </a>
-                                                                ))}
-                                                            </div>
+                                    <section aria-labelledby="profile-overview-title">
+                                        <div className="overflow-hidden rounded-lg bg-white shadow">
+                                            <h2 className="sr-only" id="profile-overview-title">
+                                                Profile Overview
+                                            </h2>
+                                            <div className="bg-[#f4f4f4] p-6">
+                                                <div className="sm:flex sm:items-center sm:justify-between">
+                                                    <div className="sm:flex sm:space-x-5">
+                                                        <div className="flex-shrink-0">
+                                                            {loading ? <Loading /> : <img
+                                                                className="mx-auto h-20 w-20 rounded-full border"
+                                                                src={session?.user?.image || user?.image || "/images/brand.png"}
+                                                                alt="profile image"
+                                                            />}
                                                         </div>
-                                                        <div className="pb-2 pt-4">
-                                                            <div className="flex items-center px-5">
-                                                                <div className="ml-3 min-w-0 flex-1">
-                                                                    <div className="truncate text-base font-medium text-gray-800">
-                                                                        Hello {user?.firstName || user?.brandName},
-                                                                    </div>
-                                                                    <div className="truncate text-sm font-medium text-gray-500">
-                                                                        {user?.firstName || user?.email}
-                                                                    </div>
-                                                                </div>
-                                                                <button
-                                                                    type="button"
-                                                                    className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                                                                >
-                                                                    <span className="sr-only">
-                                                                        View notifications
-                                                                    </span>
-                                                                </button>
-                                                            </div>
-                                                            <div className="mt-3 space-y-1 px-2">
-                                                                {userNavigation.map((item) => (
-                                                                    <a
-                                                                        key={item.name}
-                                                                        href={item.href}
-                                                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                                                                    >
-                                                                        {item.name}
-                                                                    </a>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </Popover.Panel>
-                                            </Transition.Child>
-                                        </div>
-                                    </Transition.Root> */}
-                                </>
-                            )}
-                        </Popover>
-                        <main className="index-main pb-8 lg:mt-8">
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
-                                <h1 className="sr-only">Profile</h1>
-
-                                <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-
-                                    <div className="grid grid-cols-1 gap-4 lg:col-span-2">
-
-                                        <section aria-labelledby="profile-overview-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <h2 className="sr-only" id="profile-overview-title">
-                                                    Profile Overview
-                                                </h2>
-                                                <div className="bg-[#f4f4f4] p-6">
-                                                    <div className="sm:flex sm:items-center sm:justify-between">
-                                                        <div className="sm:flex sm:space-x-5">
-                                                            <div className="flex-shrink-0">
-                                                                {loading ? <Loading /> : <img
-                                                                    className="mx-auto h-20 w-20 rounded-full border"
-                                                                    src={session.user?.image || user?.image || "/images/brand.png"}
-                                                                    alt="profile image"
-                                                                />}
-                                                            </div>
-                                                            <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                                                                <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
-                                                                </h2>
-                                                                <Link href={"/profile"}> <h4>
-                                                                    Brand: {user.brandName && `${user.brandName}`}{' '}
-                                                                    {!user.brandName && 'Not set. Want to use as brand or agency?'}
-                                                                </h4>
-                                                                    <span className="text-xs">Edit Profile | image | name</span>
-                                                                </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="mt-5 flex justify-center sm:mt-0">
-                                                            <Link
-                                                                href={"/profile"}
-                                                                className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
-                                                            >
-                                                                <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Integrate with apps
+                                                        <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                                                            <h2 className="text-2xl font-semibold text-gray-900">
+                                                                Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
+                                                            </h2>
+                                                            <Link href={"/profile"}> <h4>
+                                                                Brand: {user?.brandName && `${user?.brandName}`}{' '}
+                                                                {!user?.brandName && 'Not set. Want to use as brand or agency?'}
+                                                            </h4>
+                                                                <span className="text-xs">Edit Profile | image | name</span>
                                                             </Link>
                                                         </div>
                                                     </div>
+                                                    <div className="mt-5 flex justify-center sm:mt-0">
+                                                        <Link
+                                                            href={"/profile"}
+                                                            className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
+                                                        >
+                                                            <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Integrate with apps
+                                                        </Link>
+                                                    </div>
+                                                </div>
 
-                                                    <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center">
-                                                        {cards.map((card) => (
-                                                            <button
-                                                                key={card.id}
-                                                                type="button"
-                                                                onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
+                                                <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center">
+                                                    {cards.map((card) => (
+                                                        <button
+                                                            key={card.id}
+                                                            type="button"
+                                                            onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
+                                                            className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
+                                                        >
+                                                            <div
+                                                                className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                                                             >
-                                                                <div
-                                                                    className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
-                                                                >
-                                                                    <div className="px-4 py-3">
-                                                                        <div className="flex text-sm text-center items-center">
+                                                                <div className="px-4 py-3">
+                                                                    <div className="flex text-sm text-center items-center">
 
-                                                                            <Image src={card.icon} alt="icon" width={30} height={30} />
-                                                                            <span>{card.title}</span>
+                                                                        <Image src={card.icon} alt="icon" width={30} height={30} />
+                                                                        <span>{card.title}</span>
 
-                                                                        </div>
-                                                                        <span className="text-xs block text-center">{card.category}</span>
+                                                                    </div>
+                                                                    <span className="text-xs block text-center">{card.category}</span>
+                                                                </div>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
+                                        {selectedKpi && (
+                                            <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""} `}>
+                                                <h2 className="sr-only">
+                                                    Summary
+                                                </h2>
+                                                {selectedComponent ? kpi(selectedComponent)
+                                                    :
+                                                    <div>
+                                                        <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
+                                                    </div>
+                                                }
+                                            </div>
+                                        )}
+                                    </section>
+                                    <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
+                                        {selectedComponent === "Email Conversational" && <EmailTabs />}
+                                        {selectedComponent === "Automate Marketing" && <MarketTabs />}
+                                        {selectedComponent === "Messaging Platform" && <MaapTabs />}
+                                    </section>
+                                </div>
+                                <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
+                                    <section aria-labelledby="recent-hires-title">
+                                        <div className="overflow-hidden rounded-lg bg-white shadow">
+                                            <div className="p-6">
+                                                <span className="flex">
+                                                    <div className="flex">
+                                                        <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
+                                                        <h2 className="text-base font-medium text-gray-900" id="recent-hires-title"> Team Members </h2>
+                                                    </div>
+                                                </span>
+                                                <div className="mt-6 flow-root">
+                                                    <div className="flex items-center">
+                                                        <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
+                                                            {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-35 w-35 flex justify-center rounded-full" img={managerImage} rounded bordered />}
+                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
+                                                            {/* Hide on condition */}
+                                                            <span className="mx-1 flex items-center">
+                                                                <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                                </svg>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <TeamComponent refreshList={refreshList} />
+                                                </div>
+
+                                                <div className="mt-6">
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleModalClick}
+                                                        className="flex w-full items-center justify-center rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                    >
+                                                        Add Team Member
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section aria-labelledby="quicklinks-title">
+                                        <div className="overflow-hidden rounded-lg bg-white shadow">
+                                            <div className="p-6">
+                                                <span className="flex">
+                                                    <div className="flex space-x-1">
+                                                        <Image src="/images/link.png" width={15} height={15} alt="quick links" />
+                                                        <h2 className="text-base font-medium text-gray-900" id="quicklinks-title">
+                                                            Quick Link
+                                                        </h2>
+                                                    </div>
+                                                </span>
+
+                                                <div className="mt-6 flow-root">
+                                                    <ul
+                                                        role="list"
+                                                        className="-my-5 divide-y divide-gray-200"
+                                                    >
+                                                        {quicklinks.map((quicklink) => (
+                                                            <li key={quicklink.id} className="py-5">
+                                                                <div className="relative">
+                                                                    <h3 className="text-sm font-semibold text-gray-800">
+                                                                        {quicklink.title}
+                                                                    </h3>
+                                                                    <p className="mt-1  text-sm text-gray-600">
+                                                                        {quicklink.preview}
+                                                                    </p>
+                                                                    <div className="mt-6">
+                                                                        <button
+                                                                            onClick={handleClick}
+                                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                        >
+                                                                            Get Started
+                                                                        </button>
                                                                     </div>
                                                                 </div>
-                                                            </button>
+                                                            </li>
                                                         ))}
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                        </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
-                                            {selectedKpi && (
-                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""} `}>
-                                                    <h2 className="sr-only">
-                                                        Summary
-                                                    </h2>
-                                                    {selectedComponent ? kpi(selectedComponent)
-                                                        :
-                                                        <div>
-                                                            <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                        </div>
-                                                    }
-                                                </div>
-                                            )}
-                                        </section>
-                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
-                                            {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                            {selectedComponent === "Automate Marketing" && <MarketTabs />}
-                                            {selectedComponent === "Messaging Platform" && <MaapTabs />}
-                                        </section>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
-                                        <section aria-labelledby="recent-hires-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <span className="flex">
-                                                        <div className="flex">
-                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
-                                                            <h2 className="text-base font-medium text-gray-900" id="recent-hires-title"> Team Members </h2>
-                                                        </div>
-                                                    </span>
-                                                    <div className="mt-6 flow-root">
-                                                        <div className="flex items-center">
-                                                            <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
-                                                                {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-35 w-35 flex justify-center rounded-full" img={managerImage} rounded bordered />}
-                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
-                                                                {/* Hide on condition */}
-                                                                <span className="mx-1 flex items-center">
-                                                                    <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                                                    </svg>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                        <TeamComponent refreshList={refreshList} />
-                                                    </div>
-
-                                                    <div className="mt-6">
-                                                        <button
-                                                            type="button"
-                                                            onClick={handleModalClick}
-                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            Add Team Member
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <section aria-labelledby="quicklinks-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <span className="flex">
-                                                        <div className="flex space-x-1">
-                                                            <Image src="/images/link.png" width={15} height={15} alt="quick links" />
-                                                            <h2 className="text-base font-medium text-gray-900" id="quicklinks-title">
-                                                                Quick Link
-                                                            </h2>
-                                                        </div>
-                                                    </span>
-
-                                                    <div className="mt-6 flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-5 divide-y divide-gray-200"
-                                                        >
-                                                            {quicklinks.map((quicklink) => (
-                                                                <li key={quicklink.id} className="py-5">
-                                                                    <div className="relative">
-                                                                        <h3 className="text-sm font-semibold text-gray-800">
-                                                                            {quicklink.title}
-                                                                        </h3>
-                                                                        <p className="mt-1  text-sm text-gray-600">
-                                                                            {quicklink.preview}
-                                                                        </p>
-                                                                        <div className="mt-6">
-                                                                            <button
-                                                                                onClick={handleClick}
-                                                                                className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                                            >
-                                                                                Get Started
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
-                            <span className="mt-3 px-2">
-                                <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
-                            </span>
-                            <span>
-                                {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
-                            </span>
-                            <span>
-                                {recentUpdates && recentUpdates.length > 0 && (
-                                    <WelcomeModal
-                                        session={session}
-                                        brandName={user?.brandName}
-                                        managerRole={managerRole}
-                                        brandLogo={user.brandLogo}
-                                        image={managerImage}
-                                        email={email}
-                                        firstName={user?.firstName}
-                                        lastName={user?.lastName}
-                                        openModal={openModal}
-                                        setOpenModal={setOpenModal}
-                                        recentUpdates={recentUpdates}
-                                    />
-                                )}
-                                {/* {session && <WelcomeModal session={session} brandName={user?.brandName} managerRole={managerRole} brandLogo={user.brandLogo} image={managerImage} email={email} firstName={user?.firstName} lastName={user?.lastName} openModal={openModal} setOpenModal={setOpenModal} />} */}
-                            </span>
-                        </main>
-                    </div >
-                </UserContext.Provider >
+                        </div>
+                        <span className="mt-3 px-2">
+                            <DashConvTool openModal={openModal} setOpenModal={setOpenModal} />
+                        </span>
+                        <span>
+                            {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
+                        </span>
+                        <span>
+                            {recentUpdates && recentUpdates.length > 0 && (
+                                <WelcomeModal
+                                    session={session}
+                                    brandName={user?.brandName}
+                                    managerRole={managerRole}
+                                    brandLogo={user.brandLogo}
+                                    image={managerImage}
+                                    email={email}
+                                    firstName={user?.firstName}
+                                    lastName={user?.lastName}
+                                    openModal={openModal}
+                                    setOpenModal={setOpenModal}
+                                    recentUpdates={recentUpdates}
+                                />
+                            )}
+                        </span>
+                    </main>
+                </div >
             </Suspense >
         </>
     );
