@@ -35,6 +35,8 @@ export const authOptions = {
                 try {
                     const { email } = credentials;
 
+                    console.log("EMAIL FROM [NEXTAUTH]", email);
+
                     if (!email) {
                         throw new Error("Missing email");
                     }
@@ -48,17 +50,31 @@ export const authOptions = {
                         },
                     });
 
+                    console.log('existing user from [nextauth]', existingUser);
+
                     if (existingUser) {
                         const isActive = existingUser.Accounts.every(account => account.isActive);
 
-                        if (isActive) {
+                        if (!isActive) {
+                            // Update the user's isActive status to true
+                            await prisma.user.update({
+                                where: {
+                                    id: existingUser.id,
+                                },
+                                data: {
+                                    isActive: true,
+                                },
+                            });
+
+
                             // Delete sensitive data before returning user
                             delete existingUser.password;
 
                             // return user if all accounts are active
                             return existingUser;
+
                         } else {
-                            console.log("User account is not active");
+                            console.log("User account is already active");
                         }
                     } else {
                         console.log("There is no user on db");
