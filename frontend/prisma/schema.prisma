@@ -56,6 +56,8 @@ model User {
   profileId          String?
   role               Role                @default(MANAGER)
   emailVerified      DateTime?
+  RecentUpdates      RecentUpdates[]
+  CampaignHistory    CampaignHistory[]
   Accounts           Account[]
   Team               Team[]
   EmailTool          EmailTool[]
@@ -63,6 +65,37 @@ model User {
   Sessions           Session[]
   EmailLists         emailList[]
   VerificationTokens VerificationToken[]
+}
+
+model RecentUpdates {
+  id      String    @unique @default(uuid())
+  Updates Update[]
+  User    User?     @relation(fields: [userId], references: [id])
+  userId  String?
+  History History[]
+}
+
+model CampaignHistory {
+  id      String    @unique @default(uuid())
+  History History[]
+  User    User?     @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model Update {
+  id              String         @unique @default(uuid())
+  Update          String?
+  RecentUpdates   RecentUpdates? @relation(fields: [recentUpdatesId], references: [id])
+  recentUpdatesId String?
+}
+
+model History {
+  id                String           @unique @default(uuid())
+  History           String?
+  CampaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
+  campaignHistoryId String?
+  RecentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
+  recentUpdatesId   String?
 }
 
 model Team {

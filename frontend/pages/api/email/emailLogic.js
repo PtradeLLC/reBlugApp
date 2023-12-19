@@ -90,7 +90,7 @@ export default async function handler(req, res) {
       const newAccount = await prisma.account.create({
         data: {
           userId: newUser.id,
-          type: 'free-tier',
+          type: 'email',
           provider: newUser.provider,
           providerAccountId: email,
           // Add other account-related data as needed

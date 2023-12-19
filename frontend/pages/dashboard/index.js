@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, createContext, Suspense } from "react";
+import { Fragment, useState, useEffect, createContext, Suspense, useRef } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { useSession } from 'next-auth/react';
 import Link from "next/link";
@@ -99,20 +99,18 @@ const Dashboard = function ({ children }) {
 
     // Retrieve session information using useSession
     const { data: session, status } = useSession();
-    const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
-        profileImage: "",
-        provider: "Email",
-        brandLogo: null,
-        brandName: "",
-        role: "MANAGER"
-    });
-    const managerName = session?.user?.name || `${user.firstName} ${user.lastName}`;
-    const managerImage = session?.user?.image || "/images/brand.png";
-    const managerRole = session?.user?.role || user.role || "Manager";
+    const [userData, setUserData] = useState(null);
+    const [user, setUser] = useState(null);
+    const [userSession, setUserSession] = useState(null);
+    const managerName = session?.user?.name || `${user?.firstName} ${user?.lastName}`;
+    const managerImage = session?.user?.image ?? (user?.profileImage ?? "/images/brand.png");
+    const managerRole = session?.user?.role || `${user?.role}` || "Manager";
     const [refreshList, setRefreshList] = useState(false);
     const [isVerified, setIsVerified] = useState(true);
+    const prevSessionRef = useRef(session);
+    const [userFirstName, setUserFirstName] = useState('');
+    const [recentUpdates, setRecentUpdates] = useState([]);
+    const [prevRecentUpdatesLength, setPrevRecentUpdatesLength] = useState(0);
 
 
     const handleRefreshList = () => {
@@ -126,72 +124,90 @@ const Dashboard = function ({ children }) {
     }, [session]);
 
     useEffect(() => {
-        // if (status === 'loading') {
-        //     return;
-        // }
-
         const fetchData = async () => {
-            try {
-                const response = await fetch("/api/fetchUser");
-                if (response.ok) {
+            if (!session || session.status === 'loading') {
+                return <div className="flex justify-center items-center"><Loading /></div>;
+            };
+
+            if (session) {
+                try {
+                    const response = await fetch("/api/fetchUser");
                     const data = await response.json();
 
-                    setUser((prevUser) => ({
-                        ...prevUser,
-                        firstName: data.first_name || prevUser.firstName,
-                        lastName: data.last_name || prevUser.lastName,
-                        provider: data.provider,
-                        brandLogo: data.brandLogo,
-                        brandName: data.brandName,
-                        profileImage: data.profileImage,
-                        role: data.role,
-                    }));
+                    setUserData(data);
+                    setUser(data);
 
-                    console.log('Response from server:', data.first_name);
 
-                    const fetchedTeam = data.team ?? [];
+                    const updatedUser = {
+                        firstName: data?.first_name || user?.firstName,
+                        lastName: data?.last_name || user?.lastName,
+                        provider: data?.provider,
+                        brandLogo: data?.brandLogo,
+                        brandName: data?.brandName,
+                        profileImage: data?.profileImage,
+                        session: data?.session || [],
+                        role: data?.role,
+                    };
 
-                    // Check if the current user is not already in the team.
+                    const firstSession = user?.session && user?.session.length > 0 ? user?.session[0] : null;
+                    setUserData(firstSession ? firstSession.sessionToken : null);
+
+                    const fetchedTeam = user?.team ?? [];
+
                     const currentUserInTeam = fetchedTeam.some(
-                        (member) => member.user.id === user?.id
+                        (member) => member.user.id === updatedUser?.id
                     );
 
-                    // If not in the team, add the current user as the default team member.
                     if (!currentUserInTeam) {
                         const currentUser = {
                             user: {
-                                id: user?.id,
-                                name: `${user?.firstName} ${user?.lastName} || ${session?.user?.name}`,
-                                image: `${user?.image} || ${session?.user?.image}`,
-                                role: `${user?.role}`,
+                                id: updatedUser?.id,
+                                name: `${updatedUser?.firstName} ${updatedUser?.lastName} || ${session?.user?.name}`,
+                                image: `${updatedUser?.image} || ${session?.user?.image}`,
+                                role: `${updatedUser?.role}`,
                             },
                         };
 
-                        // Set the current user as the default team member
                         fetchedTeam.unshift(currentUser);
                     }
                     // setTeamCount(fetchedTeam);
-                } else {
-                    console.error("Error fetching user:", response.statusText);
+
+                    if (data?.recentUpdates) {
+                        setPrevRecentUpdatesLength(data.recentUpdates);
+                    }
+
+                } catch (error) {
+                    console.error("Error fetching user:", error.message);
                 }
-            } catch (error) {
-                console.error("Error fetching user:", error.message);
+
             }
+
         };
 
-        if (session && session.user) {
-            fetchData();
-        } else {
-            console.log("There's no session");
-            router.push('/login');
-        }
-    }, [status, session, router]);
+        fetchData();
+    }, [status, session, router, refreshList]);
 
-    if (status === 'loading' || !session) {
-        return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
+    useEffect(() => {
+        // Check if there are new updates in the recentUpdates array
+        if (recentUpdates.length > prevRecentUpdatesLength) {
+            setOpenModal(true);
+            setPrevRecentUpdatesLength(recentUpdates.length);
+        }
+    }, [recentUpdates]);
+
+
+    if (status === 'loading') {
+        return <p>Loading...</p>;
     }
 
-    // Rest of the component body
+    if (!session) {
+        return <div><Loading /></div>;
+    }
+
+    if (!user) {
+        return <p>Loading user data...</p>;
+    }
+
     const handleClick = () => {
         setOpenModal(true);
     };
@@ -277,12 +293,10 @@ const Dashboard = function ({ children }) {
         }
     };
 
-
-
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <UserContext.Provider value={user}>
+                <UserContext.Provider value={session.user || userData}>
                     <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
                         <Popover as="header" className=" pb-4">
                             {({ open }) => (
@@ -315,7 +329,7 @@ const Dashboard = function ({ children }) {
                                         </div>
                                     </div>
 
-                                    <Transition.Root show={open} as={Fragment}>
+                                    {/* <Transition.Root show={open} as={Fragment}>
                                         <div className="lg:hidden">
                                             <Transition.Child
                                                 as={Fragment}
@@ -351,7 +365,7 @@ const Dashboard = function ({ children }) {
                                                                         src="/images/Mart.png"
                                                                         alt="ForgedMart Logo"
                                                                         width={100}
-                                                                        height={24}
+                                                                        // height={24}
                                                                         priority
                                                                     />
                                                                 </div>
@@ -403,7 +417,7 @@ const Dashboard = function ({ children }) {
                                                 </Popover.Panel>
                                             </Transition.Child>
                                         </div>
-                                    </Transition.Root>
+                                    </Transition.Root> */}
                                 </>
                             )}
                         </Popover>
@@ -436,7 +450,7 @@ const Dashboard = function ({ children }) {
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>
                                                                     Brand: {user.brandName && `${user.brandName}`}{' '}
-                                                                    {!user.brandName && 'Want to use as brand or agency?'}
+                                                                    {!user.brandName && 'Not set. Want to use as brand or agency?'}
                                                                 </h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
@@ -455,12 +469,12 @@ const Dashboard = function ({ children }) {
                                                     <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center">
                                                         {cards.map((card) => (
                                                             <button
+                                                                key={card.id}
                                                                 type="button"
                                                                 onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
                                                                 className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                             >
                                                                 <div
-                                                                    key={card.id}
                                                                     className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                                                                 >
                                                                     <div className="px-4 py-3">
@@ -513,8 +527,7 @@ const Dashboard = function ({ children }) {
                                                     <div className="mt-6 flow-root">
                                                         <div className="flex items-center">
                                                             <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
-
-                                                                {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-25 w-25 flex justify-center rounded-full" img={managerImage} rounded bordered />}
+                                                                {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-35 w-35 flex justify-center rounded-full" img={managerImage} rounded bordered />}
                                                                 <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
                                                                 {/* Hide on condition */}
                                                                 <span className="mx-1 flex items-center">
@@ -592,7 +605,22 @@ const Dashboard = function ({ children }) {
                                 {show && <Team email={email} setEmail={setEmail} show={show} setShow={setShow} setEmailSent={setEmailSent} emailSent={emailSent} />}
                             </span>
                             <span>
-                                <WelcomeModal brandName={user.brandName} managerRole={managerRole} brandLogo={user.brandLogo} image={managerImage} email={email} firstName={user.firstName} lastName={user.lastName} openModal={openModal} setOpenModal={setOpenModal} />
+                                {recentUpdates && recentUpdates.length > 0 && (
+                                    <WelcomeModal
+                                        session={session}
+                                        brandName={user?.brandName}
+                                        managerRole={managerRole}
+                                        brandLogo={user.brandLogo}
+                                        image={managerImage}
+                                        email={email}
+                                        firstName={user?.firstName}
+                                        lastName={user?.lastName}
+                                        openModal={openModal}
+                                        setOpenModal={setOpenModal}
+                                        recentUpdates={recentUpdates}
+                                    />
+                                )}
+                                {/* {session && <WelcomeModal session={session} brandName={user?.brandName} managerRole={managerRole} brandLogo={user.brandLogo} image={managerImage} email={email} firstName={user?.firstName} lastName={user?.lastName} openModal={openModal} setOpenModal={setOpenModal} />} */}
                             </span>
                         </main>
                     </div >

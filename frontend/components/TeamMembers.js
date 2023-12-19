@@ -158,8 +158,8 @@ export default function Team({ show, setShow }) {
                                             className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
                                             src="/images/Marttwainxyz.png"
                                             alt="logo"
-                                            width={400}
-                                            height={400}
+                                            width={50}
+                                            height={50}
                                         />
                                     </div>
                                     <div className="mt-3 text-center sm:mt-5">

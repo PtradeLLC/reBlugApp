@@ -9,10 +9,9 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function WelcomeModal({ setOpenModal, email, firstName, lastName, managerRole, image }) {
+export default function WelcomeModal({ setOpenModal, recentUpdates, email, firstName, lastName, managerRole, image, session }) {
     const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
-    const { data: session, status } = useSession();
     const [summary, setSummary] = useState(null);
     const [history, setHistory] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
@@ -63,15 +62,17 @@ export default function WelcomeModal({ setOpenModal, email, firstName, lastName,
                                         </div>
                                         {/* Main */}
                                         <div>
-                                            <div className="pb-1 sm:pb-6">
+                                            <div className="pb-1  sm:pb-6">
                                                 <div>
-                                                    <div className="relative h-40 sm:h-56">
-                                                        {loading ? <Loading /> : <img
-                                                            className="absolute h-full w-full object-cover"
-                                                            src={session.user?.image || image || "/images/brand.png"}
-                                                            alt="profile image"
-                                                        />}
-                                                    </div>
+                                                    <span className='bg-[#ECFCFF] flex py-2 flex-col justify-center items-center'>
+                                                        <div className="relative  w-[200px] h-[200px]">
+                                                            {loading ? <Loading /> : <img
+                                                                className="absolute h-full w-full border ring-2 ring-gray-300 dark:ring-gray-500 rounded-full object-cover"
+                                                                src={session.user?.image || image || "/images/brand.png"}
+                                                                alt="profile image"
+                                                            />}
+                                                        </div>
+                                                    </span>
                                                     <div className="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
                                                         <div className="sm:flex-1">
                                                             <div>
@@ -87,7 +88,7 @@ export default function WelcomeModal({ setOpenModal, email, firstName, lastName,
                                                                 <Link href={"/profile"} type="button" className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-1">
                                                                     Update Profile
                                                                 </Link>
-                                                                <button type="button" onClose={closeModal}
+                                                                <button type="button" onClick={() => setOpen(false)}
                                                                     className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                                 >
                                                                     Go to Dashboard
@@ -125,14 +126,14 @@ export default function WelcomeModal({ setOpenModal, email, firstName, lastName,
                                                             {phoneNumber ?
                                                                 <p className="font-semibold">
                                                                     <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
+                                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
                                                                     </svg>
                                                                     Number
                                                                 </p> :
                                                                 <>
                                                                     <span className='flex'>
                                                                         <svg class="w-[15px] h-[15px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
+                                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m16.344 12.168-1.4-1.4a1.98 1.98 0 0 0-2.8 0l-.7.7a1.98 1.98 0 0 1-2.8 0l-2.1-2.1a1.98 1.98 0 0 1 0-2.8l.7-.7a1.981 1.981 0 0 0 0-2.8l-1.4-1.4a1.828 1.828 0 0 0-2.8 0C-.638 5.323 1.1 9.542 4.78 13.22c3.68 3.678 7.9 5.418 11.564 1.752a1.828 1.828 0 0 0 0-2.804Z" />
                                                                         </svg>
                                                                         <p>You have no number</p>
                                                                     </span>

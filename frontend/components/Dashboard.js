@@ -146,13 +146,13 @@ export default function Dashboard() {
                                             <div className="divide-y divide-gray-200 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div className="pb-2 pt-3">
                                                     <div className="flex items-center justify-between px-4">
-                                                        <div>
+                                                        {/* <div>
                                                             <img
                                                                 className="h-8 w-auto"
                                                                 src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=600"
                                                                 alt="Your Company"
                                                             />
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                     <div className="mt-3 space-y-1 px-2">
                                                         {navigation.map((item) => (

@@ -41,8 +41,6 @@ export default async function handler(req, res) {
                 },
             });
 
-            console.log(manager);
-
             const firstName = manager.firstName;
             const lastName = manager.lastName;
 
