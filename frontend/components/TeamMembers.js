@@ -238,5 +238,3 @@ export default function Team({ show, setShow }) {
         </Transition.Root>
     )
 }
-
-// You may review now
