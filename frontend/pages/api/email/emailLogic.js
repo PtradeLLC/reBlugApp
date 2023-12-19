@@ -9,6 +9,13 @@ const saltRounds = 12;
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
+  // Check if there is no session, user, or account
+  if (!req.session || !req.session.user || !req.session.account) {
+    return res.status(401).json({ message: "User is not authenticated or has been signed out." });
+  }
+
+  console.log("Session from elOGIC:", req.session);
+
   if (req.method === "POST") {
     try {
       const { brandName, firstName, lastName, email, password, provider } = req.body;
