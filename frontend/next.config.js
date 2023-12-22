@@ -12,7 +12,6 @@ const nextConfig = {
 
     return config;
   },
-
   images: {
     domains: ["images.unsplash.com", "lh3.googleusercontent.com", "res.cloudinary.com"],
     remotePatterns: [
@@ -26,6 +25,10 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    // @see https://github.com/facebookexperimental/Recoil/issues/2135#issuecomment-1362197710
+    RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED: "false",
+  }
 };
 
 module.exports = nextConfig;

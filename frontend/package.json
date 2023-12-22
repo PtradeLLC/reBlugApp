@@ -88,7 +88,6 @@
     "reactjs-popup": "^2.0.5",
     "recharts": "^2.9.0",
     "recoil": "^0.7.7",
-    "recoilize": "^3.2.0",
     "sendgrid": "^5.2.3",
     "server": "^1.0.38",
     "svelte": "^4.0.5",
