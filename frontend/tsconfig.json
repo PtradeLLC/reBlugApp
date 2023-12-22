@@ -5,15 +5,15 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": false, // Set this to false (REMOVE THIS COMMENT LINE)
+    "incremental": false,
     "esModuleInterop": true,
-    "module": "esnext", //"module": "CommonJS",
+    "module": "esnext", // Change to "esnext" if using React, otherwise leave as "CommonJS"
     "moduleResolution": "node",
     "typeRoots": ["./node_modules/@types", "./types"],
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "noEmit": false // Set this to false or remove it to emit JavaScript output
+    "jsx": "preserve", // Change to "react" if using React
+    "noEmit": false
   },
   "include": [
     "next-env.d.ts",
