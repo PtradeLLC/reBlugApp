@@ -45,6 +45,9 @@ export default async function handler(req, res) {
                 },
             });
 
+            console.log(user, 'from fetchUser');
+            console.log(session, 'from fetchUser');
+
             if (user) {
                 let first_name, last_name;
                 if (user.provider !== 'Email') {
@@ -72,6 +75,9 @@ export default async function handler(req, res) {
                             userType: 'creator',
                         },
                     });
+
+                    console.log(user, 'from fetchUser');
+                    console.log(session, 'from fetchUser');
 
                     res.status(200).json({
                         firstName: first_name,

@@ -24,7 +24,7 @@ model Account {
   session_state     String?
   api_domain        String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  UserType          String
+  UserType          String?
 
   @@unique([provider, providerAccountId])
 }
@@ -68,7 +68,7 @@ model User {
   EmailLists         emailList[]
   VerificationTokens VerificationToken[]
   social             Social[]
-  userType           String
+  userType           String?
 }
 
 model RecentUpdates {

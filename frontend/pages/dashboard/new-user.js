@@ -8,8 +8,6 @@ const NewUser = () => {
     const { data: session } = useSession();
     const router = useRouter();
 
-    console.log("Session from NU");
-
     // const isUserVerified = session?.user?.isVerified;
     // DELETE FILE IF NOT NEEDED...If the user is verified, redirect to the dashboard
     // useEffect(() => {
