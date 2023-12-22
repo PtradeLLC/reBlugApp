@@ -11,10 +11,10 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { brandName, firstName, lastName, email, password, provider } = req.body;
+      const { userType, brandName, firstName, lastName, email, password, provider } = req.body;
 
-      if (!email || !password || !firstName || !lastName) {
-        console.error("Validation error: signup form is missing a field");
+      if (!email || !password || !firstName || !lastName || provider === '' || userType === '') {
+        console.error("Validation error: signup form is missing a field", req.body);
         return res.status(400).json({ message: "An entry is missing" });
       }
 
@@ -30,6 +30,7 @@ export default async function handler(req, res) {
           ],
         },
       });
+
 
       if (existingUser) {
         // User already exists, log them in
@@ -53,6 +54,7 @@ export default async function handler(req, res) {
           firstName,
           lastName,
           provider,
+          userType,
         },
       });
 
@@ -93,6 +95,7 @@ export default async function handler(req, res) {
           type: 'email',
           provider: newUser.provider,
           providerAccountId: email,
+          UserType: newUser.userType,
           // Add other account-related data as needed
         },
       });

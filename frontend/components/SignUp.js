@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Loading from './Loading';
@@ -15,6 +15,8 @@ const SignUp = ({ handleRadioChange }) => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [isError, setIsError] = useState('');
     const [redirect, setRedirect] = useState('');
+    const [userType, setUserType] = useState('');
+    let ref = useRef(null);
 
     const router = useRouter();
 
@@ -32,7 +34,7 @@ const SignUp = ({ handleRadioChange }) => {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ brandName, firstName, lastName, email, password, provider })
+                        body: JSON.stringify({ userType, brandName, firstName, lastName, email, password, provider })
                     });
                     setLoading(false);
 
@@ -85,6 +87,7 @@ const SignUp = ({ handleRadioChange }) => {
         };
     }, [provider, router]);
 
+
     const handleOnSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -107,27 +110,46 @@ const SignUp = ({ handleRadioChange }) => {
         );
     }
 
+    const setRadioCheck = (e, id) => {
+        ref.current = e.target;
+
+        const targetRadio = e.target.value;
+
+        if (id === "bordered-radio-1" && targetRadio === 'brand') {
+            setUserType(targetRadio);
+        } else if (id = "bordered-radio-2" && targetRadio === 'creator') {
+            setUserType(targetRadio);
+        }
+    }
+
     return (
         <div className="">
             <div className="">
-                <form onSubmit={handleOnSubmit} method='post' className="">
+                <form onSubmit={handleOnSubmit} className="">
                     <div className="flex items-center ps-4 border border-gray-200 rounded-md dark:border-gray-700">
-                        <input onChange={handleRadioChange} checked id="bordered-radio-1" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                        <label htmlFor="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Brand</label>
+                        <input onChange={(e) => {
+                            handleRadioChange(e);
+                            setRadioCheck(e, "bordered-radio-1");
+                        }} checked={userType === 'brand'} required id="bordered-radio-1" type="radio" value="brand" name="bordered-radio" className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Brand</label>
                     </div>
                     <div className="flex mt-3 items-center ps-4 border border-gray-200 rounded-md dark:border-gray-700">
-                        <input onChange={handleRadioChange} id="bordered-radio-2" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                        <label htmlFor="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Creator</label>
+                        <input onChange={(e) => {
+                            handleRadioChange(e);
+                            setRadioCheck(e, "bordered-radio-2");
+                        }} checked={userType === 'creator'} required id="bordered-radio-2" type="radio" value="creator" name="bordered-radio" className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Creator</label>
                     </div>
                     <span className="form-input2">
                         <div className="">
                             <label htmlFor="brandName" className="block mt-3 text-sm font-medium leading-6 text-gray-900">
-                                Brand Name <span className=' text-xs'>(Optional)</span>
+                                Brand Name
                             </label>
                             <input
                                 label="Brand Name"
                                 value={brandName}
                                 onChange={(e) => setBrandName(e.target.value)}
+                                required
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             />
                             <label htmlFor="firstName" className="block mt-3 text-sm font-medium leading-6 text-gray-900">
@@ -212,5 +234,6 @@ const SignUp = ({ handleRadioChange }) => {
         </div>
     )
 }
+
 
 export default SignUp;

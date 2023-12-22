@@ -24,6 +24,7 @@ model Account {
   session_state     String?
   api_domain        String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  UserType          String
 
   @@unique([provider, providerAccountId])
 }
@@ -66,6 +67,8 @@ model User {
   Sessions           Session[]
   EmailLists         emailList[]
   VerificationTokens VerificationToken[]
+  social             Social[]
+  userType           String
 }
 
 model RecentUpdates {
@@ -231,9 +234,11 @@ model Social {
   twitch    String?
   tiktok    String?
   google    String?
-  twiter    String?
+  twitter   String?
   Creator   Creator? @relation(fields: [creatorId], references: [id])
   creatorId String?
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Contact {
