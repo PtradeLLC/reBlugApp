@@ -1,10 +1,9 @@
-// import cloudinary from '../../utils/cloudinary';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
-import { Cloudinary } from "@cloudinary/url-gen";
+
 
 
 const prisma = new PrismaClient();
@@ -38,7 +37,7 @@ export default async function handler(req, res) {
                 // Respond with success
                 return res.status(200).json({ message: 'Profile updated successfully' });
             } catch (error) {
-                console.error('Error uploading to Cloudinary:', error);
+
                 console.error('Error processing request:', error);
 
                 // Respond with an error status

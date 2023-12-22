@@ -13,7 +13,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["images.unsplash.com", "lh3.googleusercontent.com", "res.cloudinary.com"],
+    domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
     remotePatterns: [
       {
         protocol: "https",
