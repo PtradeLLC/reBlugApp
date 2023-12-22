@@ -4,6 +4,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Loading from "./Loading";
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { recapEventState } from '../atoms/recapState';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -12,13 +14,23 @@ function classNames(...classes) {
 export default function WelcomeModal({ setOpenModal, recentUpdates, email, firstName, lastName, managerRole, image, session }) {
     const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [summary, setSummary] = useState(null);
     const [history, setHistory] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
+    const [recap, setRecap] = useRecoilState(recapEventState);
+
+    // Example function that adds recap
+    const addRecap = () => {
+        setRecap((prev) => [...prev, `someRecapContent`])
+    }
 
     const closeModal = () => {
         setOpenModal(false);
     };
+
+    // Check if there are any events in the recap array
+    if (recap.length === 0) {
+        return <p>You haeve no recent summary</p>;
+    }
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -103,11 +115,12 @@ export default function WelcomeModal({ setOpenModal, recentUpdates, email, first
                                                     <div>
                                                         <dt className="text-sm font-medium text-gray-500 sm:w-40 font-bold sm:flex-shrink-0">Since your last visit</dt>
                                                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                                            {summary ?
-                                                                <p className="font-semibold">
-                                                                    Summary
-                                                                </p> : "You have no recent summary"
-                                                            }
+                                                            {/* {recap.map((event, index) => (
+                                                                <div key={index}>
+                                                                    <h2>Event Name: {event.eventName}</h2>
+                                                                    <p>Event Description: {event.eventDesc}</p>
+                                                                </div>
+                                                            ))} */}
                                                         </dd>
                                                     </div>
                                                     <div>

@@ -213,6 +213,29 @@ model ForgedAI {
   trends              Trends_Document[]
 }
 
+model Brand {
+  id        String @unique @default(uuid())
+  brandName String
+  email     String
+}
+
+model Creator {
+  id     String   @unique @default(uuid())
+  social Social[]
+  email  String
+}
+
+model Social {
+  id        String   @unique @default(uuid())
+  facebook  String?
+  twitch    String?
+  tiktok    String?
+  google    String?
+  twiter    String?
+  Creator   Creator? @relation(fields: [creatorId], references: [id])
+  creatorId String?
+}
+
 model Contact {
   id        String @unique @default(uuid())
   firstName String
@@ -261,4 +284,5 @@ enum Role {
   MANAGER
   MEMBER
   ADMIN
+  CREATOR
 }

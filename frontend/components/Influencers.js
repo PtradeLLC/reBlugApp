@@ -4,7 +4,7 @@ import MobilePlatform from "./MobilePlatform";
 
 export default function Influencer({ openModal, setOpenModal }) {
   return (
-    <>
+    <div>
       <div className="overflow-hidden flex justify-center items-center flex-col bg-white py-2 lg:w-[93%]">
         <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-4 lg:max-w-full ">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-full lg:flex-none lg:gap-y-8">
@@ -18,21 +18,22 @@ export default function Influencer({ openModal, setOpenModal }) {
                 followers, growing & monetizing contents, but not on any social
                 media platform?
                 <br /> Escape the constraints of platform algorithms and connect
-                with your audience on a local level through text messaging.
+                with your audience on a local level through Creator as a Platform.
                 Manage audience growth, content monetization while maintaining
                 fruitful relationships with audience and brand sponsors.
               </p>
               <p className="mt-3 leading-7 text-xl font-bold">
-                Messaging as a Platform
+                Creator as a Platform
               </p>
               <ul className="mt-3 text-base leading-7 text-gray-600 list-disc ml-3">
+                <li>Combine and engage your followers across platforms.</li>
                 <li>Take complete control of your platform.</li>
                 <li>Monetize content on your own terms.</li>
                 <li>Represent brand partners through subtle promotions.</li>
-                <li>Your content view and subscription is NEVER based on platform algorithm.</li>
-                <li>Never again beg for likes or subscriptions.</li>
-                <li>Train and activate your personal AI assistant.</li>
-                <li>No app to download, just your regular text redesigned & configured as a platform.</li>
+                <li>Collab with other Creators and combine followers to gain new ones.</li>
+                <li>Train & activate your personal AI assistant to engage on your behalf.</li>
+                <li>No app to download, just redesigned skin configured as a platform.</li>
+                <li>Customize and maintain the same design for your brand and followers across all platforms.</li>
                 <li>We help you launch your own consumer brand products or promote affiliate products from leading brands.</li><br />
                 <span className="list-none"><li>We hope you see the value in this amazing tool, and thanks for scrolling to this section.</li></span>
                 <span className="list-none"><li>Sincerely, <br /> ForgedMart Team</li></span>
@@ -63,6 +64,6 @@ export default function Influencer({ openModal, setOpenModal }) {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }

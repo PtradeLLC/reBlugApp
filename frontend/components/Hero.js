@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HeroCarousel from "./HeroCarousel";
 
 export default function Hero() {
   return (
@@ -27,27 +28,8 @@ export default function Hero() {
                     that your brand can reach more customers and sell more products or services through messaging,
                     social media and AI.
                   </h1>
-                  <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
-                    <span className="font-extrabold text-red-500">Just Launched!: </span>
-                    Email Conversational Tool, an AI powered marketing tool that
-                    enhances communication between brand Marketers, Sales
-                    professionals and their clients/customers by injecting
-                    'conversational AI chatbot' into the body of an email
-                    and/or newsletter.
-                  </p>
-                  <div className="mt-10 flex items-center gap-x-6 width-[250px]">
-                    <Link
-                      href="/tools"
-                      className="text-sm font-semibold leading-6 text-gray-900"
-                    >
-                      How it works <span aria-hidden="true">→</span>
-                    </Link>
-                    <Link
-                      href="/tools"
-                      className="flex justify-center items-center rounded-md bg-red-600 px-3.5 text-center w-[200px] h-[52px] py-2.5 sm:text-sm items-center font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                    >
-                      Conversational Tool
-                    </Link>
+                  <div>
+                    <HeroCarousel />
                   </div>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
