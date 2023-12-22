@@ -12,7 +12,7 @@
     "typeRoots": ["./node_modules/@types", "./types"],
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve", // Change to "react" if using React
+    "jsx": "react",
     "noEmit": false
   },
   "include": [
