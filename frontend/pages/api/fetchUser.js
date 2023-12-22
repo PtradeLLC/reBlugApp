@@ -40,6 +40,8 @@ export default async function handler(req, res) {
                     role: true,
                     isActive: true,
                     image: true,
+                    social: true,
+                    userType: true,
                 },
             });
 
@@ -58,6 +60,7 @@ export default async function handler(req, res) {
                             provider: 'OAuth',
                             isActive: true,
                             profileImage: user.image,
+                            userType: 'creator',
                         },
                         create: {
                             email,
@@ -66,6 +69,7 @@ export default async function handler(req, res) {
                             provider: 'OAuth',
                             isActive: true,
                             profileImage: user.image,
+                            userType: 'creator',
                         },
                     });
 
@@ -78,6 +82,8 @@ export default async function handler(req, res) {
                         brandName: user.brandName,
                         role: user.role,
                         isActive: user.isActive,
+                        social: user.social,
+                        userType: user.userType
                     });
 
                     return;
@@ -91,6 +97,8 @@ export default async function handler(req, res) {
                         brandName: user.brandName,
                         role: user.role,
                         isActive: user.isActive,
+                        social: user.social,
+                        userType: user.userType
                     });
 
                     return;

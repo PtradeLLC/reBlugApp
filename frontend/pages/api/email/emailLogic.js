@@ -29,6 +29,9 @@ export default async function handler(req, res) {
             { VerificationTokens: { some: { activatedAt: null } } },
           ],
         },
+        select: {
+          userType: true,
+        }
       });
 
 
