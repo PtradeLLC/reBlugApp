@@ -107,7 +107,7 @@
     "kill-port": "^2.0.1",
     "postcss": "^8.4.25",
     "prettier-plugin-prisma": "^5.0.0",
-    "prisma": "^5.7.0",
+    "prisma": "^5.7.1",
     "raw-loader": "^4.0.2",
     "replicate": "^0.18.1",
     "start-server-and-test": "^2.0.3",
