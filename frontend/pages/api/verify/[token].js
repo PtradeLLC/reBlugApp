@@ -40,10 +40,15 @@ export default async function handler(req, res) {
         // if User already exists (including unverified emails)
         const existingUser = await prisma.user.findFirst({
             where: {
-                id: user.email,
                 OR: [
-                    { isVerified: true },
-                    { VerificationTokens: { some: { activatedAt: null } } },
+                    {
+                        email: user.email,
+                        isVerified: true,
+                    },
+                    {
+                        email: user.email,
+                        VerificationTokens: { some: { activatedAt: null } },
+                    },
                 ],
             },
             select: {
@@ -56,21 +61,31 @@ export default async function handler(req, res) {
             if (!existingUser.isVerified && existingUser.verificationToken) {
                 // If the user is not verified but has a verification token, update the isVerified field
                 await prisma.user.update({
-                    where: { id: existingUser.id },
+                    where: { email: existingUser.email },
                     data: { isVerified: true },
                 });
             }
             return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
         }
 
+        // Check if a user with the same email already exists
+        const userWithEmail = await prisma.user.findUnique({
+            where: { email: user.email },
+        });
+
+        if (userWithEmail) {
+            // Handle the case where a user with the same email already exists
+            return res.status(409).json({ error: 'User with this email already exists.' });
+        }
+
         // User creation logic here
-        const temporaryPassword = ''; //  logic for generating a temporary password
+        const temporaryPassword = ''; // Replace with your logic for generating a temporary password
 
         const newUser = await prisma.user.create({
             data: {
                 email: user.email,
-                isVerified: true, // the user is verified
-                isActive: true, // the user is active
+                isVerified: true,
+                isActive: true,
                 password: temporaryPassword,
             },
         });
@@ -95,4 +110,3 @@ export default async function handler(req, res) {
         await prisma.$disconnect();
     }
 }
-
