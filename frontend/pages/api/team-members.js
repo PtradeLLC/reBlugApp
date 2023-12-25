@@ -1,10 +1,8 @@
-
 import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import SendMemberInvite from './email/membersInvite';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "./auth/[...nextauth]"
-
+import { authOptions } from "./auth/[...nextauth]";
 
 const prisma = new PrismaClient();
 
@@ -14,15 +12,29 @@ export default async function handler(req, res) {
         const managerEmail = session.user.email;
         const managerName = session.user.name;
 
+        // Generating random strings
+        function generateRandomString(length) {
+            const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let result = "";
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                result += charset.charAt(randomIndex);
+            }
+
+            return result;
+        }
+
         if (req.method !== "POST") {
             throw new Error('Invalid HTTP method');
-        };
+        }
 
         if (req.method === "POST") {
             try {
-                const usersData = req.body;
-                if (!usersData || !Array.isArray(usersData.emails)) {
-                    return res.status(400).json({ message: "Invalid user data" });
+                const { emails } = req.body;
+
+                if (!emails || !Array.isArray(emails) || emails.length === 0) {
+                    return res.status(400).json({ error: 'Invalid input: emails must be an array with at least one email address.' });
                 }
 
                 const createdUsers = [];
@@ -36,6 +48,9 @@ export default async function handler(req, res) {
                             select: {
                                 id: true,
                                 name: true,
+                                firstName: true,
+                                lastName: true,
+                                password: true,
                             },
                         },
                     },
@@ -44,25 +59,26 @@ export default async function handler(req, res) {
                 const firstName = manager.firstName;
                 const lastName = manager.lastName;
 
-                const emails = usersData.emails.map((email) => email.trim());
-
-                for (const email of emails) {
+                for (const emailObj of emails) {
                     try {
-                        if (!email) {
-                            console.error('Email is required for user:', email);
+                        if (!emailObj.email) {
+                            console.error('Email is required for user:', emailObj.email);
                             return res.status(400).json({ message: "email is required" });
                         }
 
+                        // Generate a unique password for each team member
+                        const password = generateRandomString(9);
+
                         const existingUser = await prisma.user.findUnique({
                             where: {
-                                email: email,
+                                email: emailObj.email,
                             },
                         });
 
                         if (!existingUser) {
                             const existingTeamEntry = await prisma.team.findUnique({
                                 where: {
-                                    email: email,
+                                    email: emailObj.email,
                                 },
                             });
 
@@ -74,15 +90,16 @@ export default async function handler(req, res) {
                             } else {
                                 const emailData = await prisma.team.create({
                                     data: {
-                                        email: email,
+                                        email: emailObj.email,
                                         isVerified: false,
+                                        password: password,
                                         member: {
                                             connect: { email: managerEmail },
                                         },
                                     },
                                 });
 
-                                createdUsers.push(emailData);
+                                createdUsers.push({ ...emailData, password });
                             }
                         } else {
                             const userOnTeam = await prisma.team.findFirst({
@@ -97,21 +114,22 @@ export default async function handler(req, res) {
                                 // Create a new record in the team table associated with the user
                                 const emailData = await prisma.team.create({
                                     data: {
-                                        email: email,
+                                        email: emailObj.email,
                                         isVerified: false,
+                                        password: password,
                                         member: {
                                             connect: { email: managerEmail },
                                         },
                                     },
                                 });
 
-                                createdUsers.push(emailData);
+                                createdUsers.push({ ...emailData, password });
                             }
                         }
 
                         const existingToken = await prisma.verificationToken.findFirst({
                             where: {
-                                email: email,
+                                email: emailObj.email,
                             },
                         });
 
@@ -134,22 +152,30 @@ export default async function handler(req, res) {
                             const token = await prisma.verificationToken.create({
                                 data: {
                                     token: `${randomUUID()}${randomUUID()}`.replace(/-/g, ''),
-                                    email: email,
+                                    email: emailObj.email,
                                     userId: manager.id,
                                     expires: expires,
                                 },
                             });
 
                             if (token) {
-                                await SendMemberInvite({ email, token: token.token, manager, createdUsers, firstName, lastName });
+                                await SendMemberInvite({
+                                    email: emailObj.email,
+                                    token: token.token,
+                                    manager,
+                                    createdUsers,
+                                    firstName,
+                                    lastName,
+                                    password,
+                                });
                             } else {
                                 console.log('No token was generated');
                             }
                         }
                     } catch (error) {
-                        console.error('Error processing email:', email, 'Error:', error);
+                        console.error('Error processing email:', emailObj.email, 'Error:', error);
                         return res.status(500).json({ message: "Failed to process email" });
-                    };
+                    }
                 }
 
                 return res.status(200).json({ success: true, createdUsers });

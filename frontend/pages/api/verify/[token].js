@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { resolve } from 'url';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -15,6 +16,39 @@ export default async function handler(req, res) {
     }
 
     try {
+        // if User already exists (including unverified emails)
+        const existingUser = await prisma.user.findFirst({
+            where: {
+                id: user.email,
+                OR: [
+                    { isVerified: true },
+                    { VerificationTokens: { some: { activatedAt: null } } },
+                ],
+            },
+            select: {
+                password: true,
+            }
+        });
+
+        if (existingUser) {
+            // User already exists, log them in
+            if (!existingUser.isVerified && existingUser.verificationToken) {
+                // If the user is not verified but has a verification token, update the isVerified field
+                await prisma.user.update({
+                    where: { id: existingUser.id },
+                    data: { isVerified: true },
+                });
+            }
+            return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
+        };
+
+        if (user.isVerified !== null && !user.isVerified) {
+            const temporaryPassword = '';
+
+
+        }
+
+
         const user = await prisma.user.findFirst({
             where: {
                 VerificationTokens: {
@@ -50,6 +84,7 @@ export default async function handler(req, res) {
                 data: {
                     isVerified: true,
                     isActive: true,
+                    password: true,
                 },
             });
         }
@@ -69,8 +104,7 @@ export default async function handler(req, res) {
             });
         }
 
-        // const absoluteRedirectUrl = resolve(req.headers.host, '/api/auth/signin');
-        const absoluteRedirectUrl = resolve(req.headers.host, '/register');
+        const absoluteRedirectUrl = resolve(req.headers.host, '/api/auth/signin');
         res.redirect(absoluteRedirectUrl);
     } catch (error) {
         console.error('Error during verification:', error);

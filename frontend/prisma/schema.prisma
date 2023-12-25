@@ -109,6 +109,7 @@ model Team {
   firstName          String?
   lastName           String?
   isVerified         Boolean?
+  password           String?
   image              String?
   Profile            Profile[]
   EmailLists         emailList[]

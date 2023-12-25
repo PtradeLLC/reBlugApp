@@ -28,11 +28,16 @@ export default function Team({ show, setShow }) {
         }
     };
 
-    const isEmailValid = (emails) => {
-        const emailArray = emails.split(',').map((email) => email.trim());
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // const isEmailValid = (emails) => {
+    //     const emailArray = emails.split(',').map((email) => email.trim());
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        return emailArray.every((email) => emailRegex.test(email));
+    //     return emailArray.every((email) => emailRegex.test(email));
+    // };
+
+    const isEmailValid = (emails) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emails.every((email) => emailRegex.test(email));
     };
 
     const handleChange = (e, index) => {
@@ -50,8 +55,12 @@ export default function Team({ show, setShow }) {
         }
     };
 
+
+
     const sendInvite = async () => {
-        const baseUrl = "/api/team-members"
+        const baseUrl = "/api/team-members";
+
+
         try {
             setState((prevState) => ({
                 ...prevState,
@@ -63,7 +72,7 @@ export default function Team({ show, setShow }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ emails: state.emails }),
+                body: JSON.stringify({ emails: state.emails.map(email => ({ email })) }),
             });
 
             if (!response.ok) {
@@ -73,11 +82,10 @@ export default function Team({ show, setShow }) {
             return data;
         } catch (error) {
             console.error('Error sending invite:', error);
-            throw error;
-        } finally {
             setState((prevState) => ({
                 ...prevState,
                 loading: false,
+                emailMessage: 'An error occurred while sending the invite.',
             }));
         }
     };
@@ -93,7 +101,10 @@ export default function Team({ show, setShow }) {
             return;
         }
 
-        const validEmails = isEmailValid(state.emails.join(','));
+        // const validEmails = isEmailValid(state.emails.join(','));
+        const validEmails = isEmailValid(state.emails);
+
+
         if (!validEmails) {
             setState((prevState) => ({
                 ...prevState,
@@ -119,7 +130,7 @@ export default function Team({ show, setShow }) {
             console.error('Error fetching data:', error);
             setState((prevState) => ({
                 ...prevState,
-                emailMessage: 'An error occurred while sending the invite.',
+                emailMessage: `An error occurred while sending the invite. ${error}`,
             }));
         }
     };
