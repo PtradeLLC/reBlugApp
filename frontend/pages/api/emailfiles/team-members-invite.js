@@ -13,7 +13,7 @@ export default function TeamEmail({ firstName, lastName, email, token, teamManag
                     Hope this email finds you well. {firstName} {lastName}'s marketing team is
                     on ForgedMart, and {firstName} is sending you an invite to join.
                 </p>
-                <p><a href={`http://localhost:3000/api/verify/${token}`}>Please verify your account(Local)</a></p>
+                {/* <p><a href={`http://localhost:3000/api/verify/${token}`}>Please verify your account(Local)</a></p> */}
                 <p><a href={invitedMembers}>Please join us to accept the invite.</a> 🎉 Welcome to ForgedMart✨</p>
 
                 <p>Sincerely,</p>

@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 const recapEventState = atom({
-    key: "",
+    key: "recapEventState",
     default: []
 });
 
