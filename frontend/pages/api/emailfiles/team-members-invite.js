@@ -30,7 +30,7 @@ const LinearLoginCodeEmail = ({ firstName, lastName, token, password }) => {
                         alt="ForgedMart"
                         style={logo}
                     />
-                    <Heading style={heading}>{firstName} {lastName} is inviting you</Heading>
+                    <Heading style={heading}>{firstName} {lastName} is invites you to join his team</Heading>
                     <Section style={buttonContainer}>
                         <Button pY={11} pX={23} style={button} href={invitedMembers}>
                             Sign up to Join
@@ -40,7 +40,7 @@ const LinearLoginCodeEmail = ({ firstName, lastName, token, password }) => {
                         Hope this email finds you well. {firstName} {lastName}'s marketing team is
                         on ForgedMart, and {firstName} is sending you an invite to join. Please use the following as your temporary password, but be sure to update it once you are signed into your account:
                     </Text>
-                    <code style={code}>{password}</code><br />
+                    <code style={code}>{password}</code>
                     <Text style={paragraph}>
                         🎉 Welcome to ForgedMart✨
                     </Text>
@@ -122,7 +122,7 @@ const hr = {
 const code = {
     fontFamily: 'monospace',
     fontWeight: '700',
-    padding: '1px 4px',
+    padding: '15px 4px',
     backgroundColor: '#dfe1e4',
     letterSpacing: '-0.3px',
     fontSize: '21px',
