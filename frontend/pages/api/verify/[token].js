@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { resolve } from 'url';
-import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -16,39 +15,6 @@ export default async function handler(req, res) {
     }
 
     try {
-        // if User already exists (including unverified emails)
-        const existingUser = await prisma.user.findFirst({
-            where: {
-                id: user.email,
-                OR: [
-                    { isVerified: true },
-                    { VerificationTokens: { some: { activatedAt: null } } },
-                ],
-            },
-            select: {
-                password: true,
-            }
-        });
-
-        if (existingUser) {
-            // User already exists, log them in
-            if (!existingUser.isVerified && existingUser.verificationToken) {
-                // If the user is not verified but has a verification token, update the isVerified field
-                await prisma.user.update({
-                    where: { id: existingUser.id },
-                    data: { isVerified: true },
-                });
-            }
-            return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
-        };
-
-        if (user.isVerified !== null && !user.isVerified) {
-            const temporaryPassword = '';
-
-
-        }
-
-
         const user = await prisma.user.findFirst({
             where: {
                 VerificationTokens: {
@@ -71,38 +37,54 @@ export default async function handler(req, res) {
             },
         });
 
-        if (!user) {
-            return res.status(400).json({ error: 'Token is invalid or expired.' });
+        // if User already exists (including unverified emails)
+        const existingUser = await prisma.user.findFirst({
+            where: {
+                id: user.email,
+                OR: [
+                    { isVerified: true },
+                    { VerificationTokens: { some: { activatedAt: null } } },
+                ],
+            },
+            select: {
+                password: true,
+            },
+        });
+
+        if (existingUser) {
+            // User already exists, log them in
+            if (!existingUser.isVerified && existingUser.verificationToken) {
+                // If the user is not verified but has a verification token, update the isVerified field
+                await prisma.user.update({
+                    where: { id: existingUser.id },
+                    data: { isVerified: true },
+                });
+            }
+            return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
         }
 
-        // Check if the user is already verified
-        if (user.isVerified !== null && !user.isVerified) {
-            await prisma.user.update({
-                where: {
-                    id: user.email,
-                },
-                data: {
-                    isVerified: true,
-                    isActive: true,
-                    password: true,
-                },
-            });
-        }
+        // User creation logic here
+        const temporaryPassword = ''; // Replace with your logic for generating a temporary password
 
-        // Check if verificationTokens is defined and activatedAt is not set
-        if (
-            user.verificationTokens !== undefined &&
-            user.verificationTokens.some((t) => t.token === token && t.activatedAt === null)
-        ) {
-            await prisma.verificationToken.update({
-                where: {
-                    token,
-                },
-                data: {
-                    activatedAt: new Date(),
-                },
-            });
-        }
+        const newUser = await prisma.user.create({
+            data: {
+                email: user.email, // Assuming email should be set here
+                isVerified: true, // Assuming the user is verified
+                isActive: true, // Assuming the user is active
+                password: temporaryPassword,
+            },
+        });
+
+        // VerificationTokens update logic here
+        await prisma.verificationToken.updateMany({
+            where: {
+                token,
+                activatedAt: null,
+            },
+            data: {
+                activatedAt: new Date(),
+            },
+        });
 
         const absoluteRedirectUrl = resolve(req.headers.host, '/api/auth/signin');
         res.redirect(absoluteRedirectUrl);
@@ -113,3 +95,4 @@ export default async function handler(req, res) {
         await prisma.$disconnect();
     }
 }
+
