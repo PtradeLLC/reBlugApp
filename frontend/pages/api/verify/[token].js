@@ -37,6 +37,8 @@ export default async function handler(req, res) {
             },
         });
 
+        console.log("User from token", user)
+
         // if User already exists (including unverified emails)
         const existingUser = await prisma.user.findFirst({
             where: {
@@ -57,6 +59,7 @@ export default async function handler(req, res) {
         });
 
         if (existingUser) {
+            console.log("User from token", existingUser);
             // User already exists, log them in
             if (!existingUser.isVerified && existingUser.verificationToken) {
                 // If the user is not verified but has a verification token, update the isVerified field
