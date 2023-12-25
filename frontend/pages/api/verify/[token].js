@@ -70,7 +70,7 @@ export default async function handler(req, res) {
         }
 
         // const absoluteRedirectUrl = resolve(req.headers.host, '/api/auth/signin');
-        const absoluteRedirectUrl = resolve(req.headers.host, '/dashboard/profile');
+        const absoluteRedirectUrl = resolve(req.headers.host, '/register');
         res.redirect(absoluteRedirectUrl);
     } catch (error) {
         console.error('Error during verification:', error);
