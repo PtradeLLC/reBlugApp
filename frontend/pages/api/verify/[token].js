@@ -15,7 +15,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        const user = await prisma.user.findFirst({
+        // Find the team member with the given token
+        const teamMember = await prisma.teamMember.findFirst({
             where: {
                 VerificationTokens: {
                     some: {
@@ -37,78 +38,49 @@ export default async function handler(req, res) {
             },
         });
 
-        console.log("User from token", user)
-
-        // if User already exists (including unverified emails)
-        const existingUser = await prisma.user.findFirst({
-            where: {
-                OR: [
-                    {
-                        email: user.email,
-                        isVerified: true,
-                    },
-                    {
-                        email: user.email,
-                        VerificationTokens: { some: { activatedAt: null } },
-                    },
-                ],
-            },
-            select: {
-                password: true,
-            },
-        });
-
-        if (existingUser) {
-            console.log("User from token", existingUser);
-            // User already exists, log them in
-            if (!existingUser.isVerified && existingUser.verificationToken) {
-                // If the user is not verified but has a verification token, update the isVerified field
-                await prisma.user.update({
-                    where: { email: existingUser.email },
-                    data: { isVerified: true },
-                });
-            }
-            return res.status(200).json({ user: existingUser, message: "User already exists, please login." });
+        if (!teamMember) {
+            return res.status(400).json({ error: 'Token is invalid or expired.' });
         }
 
-        // Check if a user with the same email already exists
-        const userWithEmail = await prisma.user.findUnique({
-            where: { email: user.email },
-        });
-
-        if (userWithEmail) {
-            // Handle the case where a user with the same email already exists
-            return res.status(409).json({ error: 'User with this email already exists.' });
+        // Check if the team member is already verified
+        if (teamMember.isVerified !== null && !teamMember.isVerified) {
+            await prisma.teamMember.update({
+                where: {
+                    id: teamMember.id,
+                },
+                data: {
+                    isVerified: true,
+                },
+            });
         }
 
-        // User creation logic here
-        const temporaryPassword = ''; // Replace with your logic for generating a temporary password
+        // Check if verificationTokens is defined and activatedAt is not set
+        if (
+            teamMember.verificationTokens !== undefined &&
+            teamMember.verificationTokens.some((t) => t.token === token && t.activatedAt === null)
+        ) {
+            await prisma.verificationToken.update({
+                where: {
+                    token,
+                },
+                data: {
+                    activatedAt: new Date(),
+                },
+            });
+        }
 
-        const newUser = await prisma.user.create({
-            data: {
-                email: user.email,
-                isVerified: true,
-                isActive: true,
-                password: temporaryPassword,
-            },
-        });
+        // Return the relevant information for the login
+        const loginResponse = {
+            teamMemberId: teamMember.id,
+            // Include any other relevant information you want to return
+        };
 
-        // VerificationTokens update logic here
-        await prisma.verificationToken.updateMany({
-            where: {
-                token,
-                activatedAt: null,
-            },
-            data: {
-                activatedAt: new Date(),
-            },
-        });
-
-        const absoluteRedirectUrl = resolve(req.headers.host, '/api/auth/signin');
-        res.redirect(absoluteRedirectUrl);
+        return res.status(200).json({ user: loginResponse, message: 'Login successful.' });
     } catch (error) {
         console.error('Error during verification:', error);
-        return res.status(500).json({ error: `An error occurred during verification: ${error.message || error}` });
+        return res.status(500).json({
+            error: `An error occurred during verification: ${error.message || error}`,
+        });
     } finally {
         await prisma.$disconnect();
     }
