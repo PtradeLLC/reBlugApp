@@ -64,13 +64,13 @@ export default async function handler(req, res) {
         }
 
         // User creation logic here
-        const temporaryPassword = ''; // Replace with your logic for generating a temporary password
+        const temporaryPassword = ''; //  logic for generating a temporary password
 
         const newUser = await prisma.user.create({
             data: {
-                email: user.email, // Assuming email should be set here
-                isVerified: true, // Assuming the user is verified
-                isActive: true, // Assuming the user is active
+                email: user.email,
+                isVerified: true, // the user is verified
+                isActive: true, // the user is active
                 password: temporaryPassword,
             },
         });
