@@ -24,13 +24,13 @@ const LinearLoginCodeEmail = ({ firstName, lastName, token, password }) => {
             <Body style={main}>
                 <Container style={container}>
                     <Img
-                        src={`${baseUrl}/images/Mart.png`}
-                        width="42"
-                        height="42"
-                        alt="Linear"
+                        src={`https://forgedmart.com/images/Mart.png`}
+                        width="100"
+                        height="36"
+                        alt="ForgedMart"
                         style={logo}
                     />
-                    <Heading style={heading}>Your login code for Linear</Heading>
+                    <Heading style={heading}>{firstName} {lastName} is inviting you</Heading>
                     <Section style={buttonContainer}>
                         <Button pY={11} pX={23} style={button} href={invitedMembers}>
                             Sign up to Join
@@ -38,9 +38,9 @@ const LinearLoginCodeEmail = ({ firstName, lastName, token, password }) => {
                     </Section>
                     <Text style={paragraph}>
                         Hope this email finds you well. {firstName} {lastName}'s marketing team is
-                        on ForgedMart, and {firstName} is sending you an invite to join. Please use the following as your temporary, but be sure to update it once you are signed into your account:
+                        on ForgedMart, and {firstName} is sending you an invite to join. Please use the following as your temporary password, but be sure to update it once you are signed into your account:
                     </Text>
-                    <code style={code}>{password}</code>
+                    <code style={code}>{password}</code><br />
                     <Text style={paragraph}>
                         🎉 Welcome to ForgedMart✨
                     </Text>
@@ -130,40 +130,3 @@ const code = {
     color: '#3c4149',
 };
 
-
-
-
-
-
-
-
-
-
-
-// import { Html } from "@react-email/html";
-// import { Body } from "@react-email/body";
-
-// export default function TeamEmail({ firstName, lastName, token, password }) {
-//     const invitedMembers = `https://forgedmart.com/api/verify/${token}`
-
-
-//     return (
-//         <Html>
-//             <Body>
-//                 <p>Hello,</p>
-//                 <p>
-//                     Hope this email finds you well. {firstName} {lastName}'s marketing team is
-//                     on ForgedMart, and {firstName} is sending you an invite to join.
-//                 </p>
-//                
-//                 <p><a href={invitedMembers}>Please join us to accept the invite.</a></p>
-
-//                 <p>Please use the following as your temporary password: <span className="">{password}</span>, but be sure to update it once you are signed into your account.</p>
-//                 <p></p>
-
-//                 <p>Sincerely,</p>
-//                 <p>ForgedMart Team</p>
-//             </Body>
-//         </Html>
-//     );
-// }
