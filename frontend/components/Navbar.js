@@ -2,7 +2,8 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useEffect } from "react";
 
 
 function classNames(...classes) {
@@ -20,6 +21,8 @@ export default function Navbar() {
   const handleClick = async () => {
     await signOut({ callbackUrl: "/" });
   };
+
+
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">

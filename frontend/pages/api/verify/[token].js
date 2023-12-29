@@ -9,8 +9,10 @@ export default async function handler(req, res) {
     }
 
     const { token } = req.query;
+    console.log('Token from token:', token);
 
     if (!token) {
+        console.log('No tokenfrom token');
         return res.status(400).json({ error: 'Invalid parameters. Token is missing.' });
     }
 
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
                             },
                             {
                                 createdAt: {
-                                    gt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 24 hours ago
+                                    gt: new Date(Date.now() - 24 * 60 * 60 * 1000),
                                 },
                             },
                             {
@@ -38,8 +40,11 @@ export default async function handler(req, res) {
             },
         });
 
+        console.log('Found team member:', teamMember);
+
         if (!teamMember) {
-            return res.status(400).json({ error: 'Token is invalid or expired.' });
+            console.log('Token not found or expired.'); // Add this line for debugging
+            return res.status(400).json({ error: 'Team member does not exist.' });
         }
 
         // Check if the team member is already verified

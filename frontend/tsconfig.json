@@ -21,7 +21,9 @@
     "**/*.tsx",
     "../forgedMartchatbot/utils/OpenAIStream.ts",
     "middleware.js",
-    "./types/*.d.ts"
+    "./types/*.d.ts",
+    "components/IntegrationModal.js",
+    "pages/api/auth/prismaticjwt.js"
   ],
   "exclude": ["node_modules", "node_modules/react-native/**/*"]
 }

@@ -17,6 +17,7 @@ import TeamComponent from "../../components/TeamComponent";
 import WelcomeModal from "../../components/verfication-mod";
 import { Avatar } from 'flowbite-react';
 import dynamic from 'next/dynamic';
+import IntegrationsCatalog from "../../components/integrations";
 
 
 const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
@@ -112,10 +113,15 @@ const Dashboard = function ({ children }) {
     const [userFirstName, setUserFirstName] = useState('');
     const [recentUpdates, setRecentUpdates] = useState([]);
     const [prevRecentUpdatesLength, setPrevRecentUpdatesLength] = useState(0);
+    const [isIntegrationsCatalogVisible, setIsIntegrationsCatalogVisible] = useState(false);
 
 
     const handleRefreshList = () => {
         setRefreshList(!refreshList);
+    };
+
+    const handleIntegrateButtonClick = () => {
+        setIsIntegrationsCatalogVisible(true);
     };
 
     useEffect(() => {
@@ -363,12 +369,12 @@ const Dashboard = function ({ children }) {
                                                         </div>
                                                     </div>
                                                     <div className="mt-5 flex justify-center sm:mt-0">
-                                                        <Link
-                                                            href={"/profile"}
+                                                        <button
+                                                            onClick={handleIntegrateButtonClick}
                                                             className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
                                                         >
                                                             <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Integrate with apps
-                                                        </Link>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -412,6 +418,7 @@ const Dashboard = function ({ children }) {
                                                     </div>
                                                 }
                                             </div>
+
                                         )}
                                     </section>
                                     <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
@@ -421,7 +428,10 @@ const Dashboard = function ({ children }) {
                                     </section>
                                 </div>
                                 <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
-                                    <section aria-labelledby="recent-hires-title">
+
+                                    {/* REVISIT THIS SECTION */}
+
+                                    {/* <section aria-labelledby="recent-hires-title">
                                         <div className="overflow-hidden rounded-lg bg-white shadow">
                                             <div className="p-6">
                                                 <span className="flex">
@@ -435,7 +445,7 @@ const Dashboard = function ({ children }) {
                                                         <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
                                                             {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-35 w-35 flex justify-center rounded-full" img={managerImage} rounded bordered />}
                                                             <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
-                                                            {/* Hide on condition */}
+                                                           
                                                             <span className="mx-1 flex items-center">
                                                                 <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -458,7 +468,7 @@ const Dashboard = function ({ children }) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
+                                    </section> */}
                                     <section aria-labelledby="quicklinks-title">
                                         <div className="overflow-hidden rounded-lg bg-white shadow">
                                             <div className="p-6">
@@ -527,6 +537,9 @@ const Dashboard = function ({ children }) {
                                 />
                             )}
                         </span>
+                        {isIntegrationsCatalogVisible && (
+                            <IntegrationsCatalog onClose={() => setIsIntegrationsCatalogVisible(false)} />
+                        )}
                     </main>
                 </div >
             </Suspense >

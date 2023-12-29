@@ -10,6 +10,7 @@ import SalesforceProvider from "next-auth/providers/salesforce";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import { compare } from "bcrypt";
 import { PrismaClient } from '@prisma/client';
+import { generateParagonToken } from "./paragonToken";
 
 const prisma = new PrismaClient();
 
@@ -68,7 +69,17 @@ export const authOptions = {
                     });
 
                     if (existingUser) {
+                        // Log the user object to check its structure
+
+                        // Attach user information to the session
+                        req.session.user = {
+                            name: existingUser.name,
+                            email: existingUser.email,
+                            image: existingUser.image,
+                        };
+
                         const isActive = existingUser.Accounts.every(account => account.isActive);
+
 
                         if (!isActive) {
                             // Update the user's isActive status to true
@@ -107,6 +118,7 @@ export const authOptions = {
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     secret: process.env.NEXTAUTH_SECRET,
+
     pages: {
         signIn: '/login',
         signOut: '/login',
