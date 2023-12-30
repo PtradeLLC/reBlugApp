@@ -1,11 +1,11 @@
-import { Client } from 'superagi_client';
+import { Client } from 'superagi-client';
 
 const client = new Client({
     apiKey: process.env.SUPER_AGI_KEY,
 });
 
 // Import AgentConfig
-const { AgentConfig } = require('superagi_client');
+const { AgentConfig } = require('superagi-client');
 
 
 // Create an AgentConfig
