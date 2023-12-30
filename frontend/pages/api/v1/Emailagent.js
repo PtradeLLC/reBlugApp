@@ -1,5 +1,5 @@
 // Import the SuperAGI Client instance
-import client from '../utils/superagi';
+import client from '../../../utils/superagi';
 
 // Import AgentConfig
 const { AgentConfig } = require('superagi_client');

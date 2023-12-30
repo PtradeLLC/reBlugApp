@@ -19,7 +19,7 @@ const campaignsProducts = [
         id: 2,
         Name: 'Raise awareness',
         icon: EnvelopeIcon,
-        type: 'raiseAwareness',
+        type: 'Awareness',
         span: 1,
         buttonClick: (type) => {
             setCampaignEmail(type);
@@ -39,7 +39,7 @@ const campaignsProducts = [
         id: 4,
         Name: 'Fund Raise',
         icon: EnvelopeIcon,
-        type: 'fundRaise',
+        type: 'FundRaise',
         span: 1,
         buttonClick: (type) => {
             setCampaignEmail(type);
@@ -93,6 +93,9 @@ export default function EmailCamp({ openModal, setOpenModal }) {
         }
     }, [status, session]);
 
+    const handleButtonClick = (type) => {
+        setCampaignEmail(type);
+    };
 
     if (status === 'loading' || !session) {
         return <div className="flex justify-center items-center w-full h-full"><Loading /></div>;
@@ -107,8 +110,15 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                             <button
                                 key={item.id}
                                 type="button"
-                                onClick={() => item.buttonClick(item.type)}
-                                className={`relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 col-span-${item.span}`}
+                                onClick={() => handleButtonClick(item.type)}
+                                className={`
+    relative inline-flex items-center rounded-md hover:bg-slate-200
+    ${campaignEmail === item.type ? 'bg-slate-300/50 hover:bg-slate-300/50 shadow-lg' : 'bg-white'}
+    px-3 py-2 text-sm font-semibold
+    ${campaignEmail === item.type ? 'text-gray-700' : 'text-gray-900'}
+    shadow-sm ring-1 ring-inset ring-gray-300
+    col-span-${item.span}
+`}
                             >
                                 {item.icon && <item.icon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />}
                                 <span className='text-sm inline-flex'>{item.Name}</span>
@@ -121,5 +131,5 @@ export default function EmailCamp({ openModal, setOpenModal }) {
                 <EmailForm user={user} campaignEmail={campaignEmail} />
             </div>
         </>
-    )
+    );
 }
