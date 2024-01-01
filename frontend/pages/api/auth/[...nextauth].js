@@ -51,7 +51,8 @@ export const authOptions = {
                 email: { label: 'Email', type: 'text' },
                 password: { label: 'Password', type: 'password' },
             },
-            async authorize(credentials) {
+            async authorize(credentials, req) {
+                console.log('Received credentials:', credentials);
                 try {
                     const { email } = credentials;
 

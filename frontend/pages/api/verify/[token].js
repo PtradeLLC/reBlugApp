@@ -40,8 +40,6 @@ export default async function handler(req, res) {
             },
         });
 
-        console.log('Found team member:', teamMember);
-
         if (!teamMember) {
             console.log('Token not found or expired.'); // Add this line for debugging
             return res.status(400).json({ error: 'Team member does not exist.' });

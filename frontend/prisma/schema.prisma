@@ -4,9 +4,10 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
 }
 
 model Account {
@@ -69,6 +70,8 @@ model User {
   VerificationTokens VerificationToken[]
   social             Social[]
   userType           String?
+
+  embedding Unsupported("vector(1536)")?
 }
 
 model RecentUpdates {
@@ -170,12 +173,15 @@ model EmailTool {
   user                User       @relation(fields: [userId], references: [id])
   Team                Team?      @relation(fields: [teamId], references: [id])
   teamId              String?
+
+  embedding Unsupported("vector(1536)")?
 }
 
 model Document {
-  id          Int        @id @default(autoincrement())
+  id          Int                          @id @default(autoincrement())
   emailToolId String?
-  EmailTool   EmailTool? @relation(fields: [emailToolId], references: [id])
+  EmailTool   EmailTool?                   @relation(fields: [emailToolId], references: [id])
+  embedding   Unsupported("vector(1536)")?
 }
 
 model TrialProspect {
@@ -188,12 +194,13 @@ model TrialProspect {
 }
 
 model emailList {
-  id     Int     @id @default(autoincrement())
-  email  String
-  userId String?
-  User   User?   @relation(fields: [userId], references: [id])
-  Team   Team?   @relation(fields: [teamId], references: [id])
-  teamId String
+  id        Int                          @id @default(autoincrement())
+  email     String
+  userId    String?
+  User      User?                        @relation(fields: [userId], references: [id])
+  Team      Team?                        @relation(fields: [teamId], references: [id])
+  teamId    String
+  embedding Unsupported("vector(1536)")?
 }
 
 model TrialProspectTwo {
@@ -256,33 +263,36 @@ model MaaP {
 }
 
 model Trends_Document {
-  id        String   @unique @default(uuid())
+  id        String                       @unique @default(uuid())
   content   String
   url       String?
   iaId      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  aiTools   ForgedAI @relation(fields: [iaId], references: [id])
+  createdAt DateTime                     @default(now())
+  updatedAt DateTime                     @updatedAt
+  aiTools   ForgedAI                     @relation(fields: [iaId], references: [id])
+  embedding Unsupported("vector(1536)")?
 }
 
 model Marketing_Plan_Document {
-  id            String   @unique @default(uuid())
+  id            String                       @unique @default(uuid())
   content       String
   url           String?
   planId        String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  marketingPlan ForgedAI @relation(fields: [planId], references: [id])
+  createdAt     DateTime                     @default(now())
+  updatedAt     DateTime                     @updatedAt
+  marketingPlan ForgedAI                     @relation(fields: [planId], references: [id])
+  embedding     Unsupported("vector(1536)")?
 }
 
 model Marketing_Creatives_Document {
-  id          String   @unique @default(uuid())
+  id          String                       @unique @default(uuid())
   content     String
   url         String?
   creativesId String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  creatives   ForgedAI @relation(fields: [creativesId], references: [id])
+  createdAt   DateTime                     @default(now())
+  updatedAt   DateTime                     @updatedAt
+  creatives   ForgedAI                     @relation(fields: [creativesId], references: [id])
+  embedding   Unsupported("vector(1536)")?
 }
 
 enum Role {

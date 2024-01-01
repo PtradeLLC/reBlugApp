@@ -18,6 +18,7 @@ import WelcomeModal from "../../components/verfication-mod";
 import { Avatar } from 'flowbite-react';
 import dynamic from 'next/dynamic';
 import IntegrationsCatalog from "../../components/integrations";
+import Integration from "../../components/integrations";
 
 
 const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
@@ -537,8 +538,20 @@ const Dashboard = function ({ children }) {
                                 />
                             )}
                         </span>
-                        {isIntegrationsCatalogVisible && (
+                        {isIntegrationsCatalogVisible && (<>
                             <IntegrationsCatalog onClose={() => setIsIntegrationsCatalogVisible(false)} />
+                            <Integration
+                                user
+                                brandName={user?.brandName}
+                                managerRole={managerRole}
+                                brandLogo={user?.brandLogo}
+                                image={managerImage}
+                                email={email}
+                                firstName={user?.firstName}
+                                lastName={user?.lastName}
+                            />
+                        </>
+
                         )}
                     </main>
                 </div >
