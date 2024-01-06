@@ -70,8 +70,13 @@ model User {
   VerificationTokens VerificationToken[]
   social             Social[]
   userType           String?
+  Campaign           Campaign[]
+  Connectors         Connectors[]
+  Document           Document[]
 
-  embedding Unsupported("vector(1536)")?
+  embedding     Unsupported("vector(1536)")?
+  KnowledgeBase KnowledgeBase[]
+  ContactList   ContactList[]
 }
 
 model RecentUpdates {
@@ -124,6 +129,10 @@ model Team {
   teamId             String?
   userId             String?
   VerificationTokens VerificationToken[]
+  Campaign           Campaign[]
+  Connectors         Connectors[]
+  KnowledgeBase      KnowledgeBase[]
+  ContactList        ContactList[]
 }
 
 model Profile {
@@ -177,11 +186,93 @@ model EmailTool {
   embedding Unsupported("vector(1536)")?
 }
 
+model Campaign {
+  id                  String  @unique @default(uuid())
+  email               String
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  document  Document[]
+  user      User       @relation(fields: [userId], references: [id])
+  Team      Team?      @relation(fields: [teamId], references: [id])
+  teamId    String?
+
+  embedding Unsupported("vector(1536)")?
+}
+
+model KnowledgeBase {
+  id        String     @unique @default(uuid())
+  url       String?
+  type      String?
+  email     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  document  Document[]
+  user      User       @relation(fields: [userId], references: [id])
+  Team      Team?      @relation(fields: [teamId], references: [id])
+  teamId    String?
+
+  embedding Unsupported("vector(1536)")?
+}
+
+// Uploaded
+model ContactList {
+  id        String     @unique @default(uuid())
+  url       String?
+  type      String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  document  Document[]
+  user      User       @relation(fields: [userId], references: [id])
+  Team      Team?      @relation(fields: [teamId], references: [id])
+  teamId    String?
+
+  embedding Unsupported("vector(1536)")?
+}
+
+model Connectors {
+  id                  String     @unique @default(uuid())
+  email               String
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  userId              String
+  document            Document[]
+  user                User       @relation(fields: [userId], references: [id])
+  Team                Team?      @relation(fields: [teamId], references: [id])
+  teamId              String?
+
+  embedding Unsupported("vector(1536)")?
+}
+
 model Document {
-  id          Int                          @id @default(autoincrement())
-  emailToolId String?
-  EmailTool   EmailTool?                   @relation(fields: [emailToolId], references: [id])
-  embedding   Unsupported("vector(1536)")?
+  id              Int                          @id @default(autoincrement())
+  emailToolId     String?
+  EmailTool       EmailTool?                   @relation(fields: [emailToolId], references: [id])
+  embedding       Unsupported("vector(1536)")?
+  Campaign        Campaign?                    @relation(fields: [campaignId], references: [id])
+  campaignId      String?
+  Connectors      Connectors?                  @relation(fields: [connectorsId], references: [id])
+  connectorsId    String?
+  filename        String?
+  KnowledgeBase   KnowledgeBase?               @relation(fields: [knowledgeBaseId], references: [id])
+  knowledgeBaseId String?
+  ContactList     ContactList?                 @relation(fields: [contactListId], references: [id])
+  contactListId   String?
+  User            User?                        @relation(fields: [userId], references: [id])
+  userId          String?
 }
 
 model TrialProspect {

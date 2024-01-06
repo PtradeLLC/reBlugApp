@@ -8,9 +8,6 @@ import { UserProvider } from "../components/UserProvider";
 import { RecoilRoot } from 'recoil';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  console.log('Session:', session);
-
-
 
   return (
     <SessionProvider session={session}>
