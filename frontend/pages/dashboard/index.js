@@ -221,87 +221,10 @@ const Dashboard = function ({ children }) {
         setShow(true);
     };
 
-    const kpi = (title) => {
-        const renderKpiContent = (action) => (
-            <div key={`${action.id}-${title} `} className={classNames(
-                action.id === 1 ? "rounded-tl-lg grid col-span-2 bg-[#F1F6F9] sm:rounded-tr-none" : "",
-                action.id === 2 ? "bg-[#ECECEC] p-0" : "",
-                action.id === emailAction.length - 2 ? "sm:rounded-bl-lg bg-[#EEEEEE] text-black pt-3 pb-3 mt-3" : "",
-                action.id === emailAction.length - 1 ? " bg-[#F0F0F0] sm:rounded-bl-none pt-3 pb-3 mt-3" : "",
-                "group relative p-6"
-            )}>
-                <h3 className="text-lg font-medium p-1">
-                    {action.name === "Start your campaign" ? (
-                        <button type="button" onClick={handleClick}>
-                            {action.name}
-                        </button>
-                    ) : (
-                        <span>
-                            {action.name !== "Start your campaign" && <span className="flex justify-end items-end"> {action.icon && <Image src={action.icon} alt="chart icon" width={24} height={24} />}</span>}
-                            {action.name}: <span className="font-bold text-4xl">{action.num}</span>
-                            <p className={classNames(
-                                action.num > 0 && action.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
-                                'ml-2 flex items-baseline text-sm font-semibold text-end'
-                            )}>
-                                {action.num > 0 && action.changeType === 'increase' ? (
-                                    <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-green-500" aria-hidden="true" />
-                                ) : (
-                                    <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-end text-red-500" aria-hidden="true" />
-                                )}
-                                <span className="sr-only"> {action.num > 0 && action.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
-                                {action.change}
-                            </p>
-                        </span>
-                    )}
-                </h3>
-                <div>
-                    {/*  */}
-                    {action.name === "Processed" && (
-                        <span className="w-full">
-                            <MixedChart className="w-full" />
-                            <button className="flex justify-end items-end p-1" type="button" onClick={handleClick}><p className=" flex justify-center items-center mx-2 text-sm text-right p-1">
-                                <span className="relative mx-1 flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
-                                    </span>
-                                </span>
-                                Get Live analytics/insight
-                            </p></button>
-                        </span>
-                    )}
-                    {action.name === "Delivered" && (
-                        <span className="w-full">
-                            <CircleChart className="w-full" />
-                            <button type="button" onClick={handleClick}>
-                                <p className=" flex justify-center items-center mx-2 text-sm text-right p-1">
-                                    <span className="relative mx-1 flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75">
-                                        </span>
-                                    </span>
-                                    Get Live analytics/insight
-                                </p>
-                            </button>
-                        </span>
-                    )}
-                </div>
-            </div>
-        );
-
-
-        if (title === "Email Conversational") {
-            return emailAction.map((action) => renderKpiContent(action));
-        } else if (title === "Automate Marketing") {
-            return automationAction.map((action) => renderKpiContent(action));
-        } else if (title === "Messaging Platform") {
-            return marketingAction.map((action) => renderKpiContent(action));
-        } else {
-            return null;
-        }
-    };
-
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <div className="min-h-full overflow-hidden bg-white py-16 sm:py-16">
+                <div className="min-h-full overflow-hidden flex justify-center bg-white py-16 sm:py-16">
                     <DashLay />
                 </div >
             </Suspense >

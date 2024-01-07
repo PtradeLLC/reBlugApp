@@ -145,13 +145,18 @@ a {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .index-main {
-    margin-top: -54px !important;
+    /* margin-top: -54px !important; */
   }
   .apexcharts-legend.apexcharts-align-center.apx-legend-position-right {
     left: auto;
     top: 35px;
     right: 211px !important;
   }
+}
+
+.mobile-main{
+  margin-top: 4px !important;
+
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {

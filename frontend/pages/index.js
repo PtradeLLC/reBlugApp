@@ -6,6 +6,7 @@ import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
 import LogoTwo from "../components/LogoTwo";
 import { useState } from "react";
+import Blog from "../components/Blog"
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -32,7 +33,10 @@ const Home = () => {
         <div className="flex justify-center content-center mt-3">
           <Influencer openModal={openModal} setOpenModal={setOpenModal} />
         </div>
-        <div className="mt-3">
+        <div className="flex justify-center content-center mt-3">
+          <Blog />
+        </div>
+        <div className="mt-3 w-full">
           <Affiliate openModal={openModal} setOpenModal={setOpenModal} />
         </div>
       </main>
