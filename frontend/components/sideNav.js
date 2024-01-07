@@ -258,12 +258,12 @@ export default function DashLay() {
                                                             </div>
                                                         </div>
                                                         <div className="mt-5 flex justify-center sm:mt-0">
-                                                            <button
-                                                                onClick={handleIntegrateButtonClick}
+                                                            <Link
+                                                                href={'/dashboard/userdb'}
                                                                 className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
                                                             >
                                                                 <Image className="mx-1" src="/images/brand.png" width={20} height={20} alt="as brand" />Integrate with apps
-                                                            </button>
+                                                            </Link>
                                                         </div>
                                                     </div>
 

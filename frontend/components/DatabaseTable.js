@@ -3,20 +3,38 @@ import { useLayoutEffect, useEffect, useRef, useState } from 'react'
 
 const data = [
     {
-        id: '',
-        title: '',
-        email: '',
-        subjectLine: '',
-        message: '',
-        product: '',
-        productName: '',
-        productUrl: '',
-        role: '',
-        goal: '',
-        knowledgeBase: '',
+        id: 'Id',
+        title: 'Title',
+        email: 'Email',
+        subjectLine: 'Subject Line',
+        category: 'Category',
+        message: 'Message',
+        product: 'Product',
+        productName: 'Product Name',
+        productUrl: 'Product Url',
+        role: 'Manager',
+        goal: 'Goal',
+        knowledgeBase: 'Knowledge Bame',
         contact: ''
     },
     // More data...
+]
+
+const campaignData = [
+    {
+        id: '1',
+        title: 'Sample data',
+        email: 'email@sample.com',
+        subjectLine: 'This is a default message',
+        category: 'SaaS',
+        message: "This only display if there's no data uploaded",
+        product: 'SaaS product',
+        productName: 'Saas prod name',
+        productUrl: 'www.saas.com',
+        role: 'Manager',
+        goal: 'To sell alot',
+        knowledgeBase: '/doc/test.txt',
+    },
 ]
 
 function classNameNames(...classNamees) {
@@ -49,23 +67,48 @@ export default function Example() {
     return (
         <>
             <main className="p-4 md:ml-20 h-auto pt-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                <div>
+                    <h1 className='text-7xl'>Database</h1>
+                </div>
+                <div className='m-10'>
+                    <figure className="max-w-screen-md mx-auto text-center">
+                        <svg className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
+                            <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
+                        </svg>
+                        <blockquote>
+                            <p className="text-2xl italic font-medium text-gray-900 dark:text-white"> ForgedMart prioritizes the security and privacy of your sensitive information. From your campaign emails to supporting documents. Rather than saving data in our database, you can seamlessly connect your data through trusted sources like Google Sheets. Your data flows through our app to provide you with a secure and efficient way to enhance your user experience while maintaining the utmost confidentiality of your valuable data.</p>
+                        </blockquote>
+                        <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
+                            <img className="w-6 h-6 rounded-full" src="/images/pete.jpg" alt="profile picture" />
+                            <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
+                                <cite className="pe-3 font-medium text-gray-900 dark:text-white">Peter B.</cite>
+                                <cite className="ps-3 text-sm text-gray-500 dark:text-gray-400">ForgedMart Team</cite>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <div
-                        className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
+                        className="border-2 text-2xl flex justify-center items-center border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"
                     >
-                        Campaign
+                        Campaign Data
                     </div>
                     <div
-                        className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
+                        className="border-2 text-2xl flex justify-center items-center border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
                     >
-                        Storage
+                        Knowledge Base Data
                     </div>
                     <div
-                        className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
-                    ></div>
-                    {/* <div
-                        className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
-                    ></div> */}
+                        className="border-2 text-2xl flex justify-center items-center border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
+                    >
+                        Contact List Data
+                    </div>
+                    <div
+                        className="border-2 text-2xl flex justify-center items-center border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"
+                    >
+                        Blog Data
+                    </div>
                 </div>
                 <div className="border-2 border-dashed rounded-lg border-gray-300 h-full w-full dark:border-gray-600 h-96 mb-4">
                     <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5 ">
@@ -75,7 +118,7 @@ export default function Example() {
                                     <div class="flex items-center flex-1 space-x-4">
                                         <h5>
                                             <span class="text-gray-500">Campaign Data:</span>
-                                            <span class="dark:text-white">0</span>
+                                            <span class="dark:text-white">{' '}1</span>
                                         </h5>
                                         {/* <h5>
                                             <span class="text-gray-500">Total sales:</span>
@@ -110,73 +153,43 @@ export default function Example() {
                                                 <th scope="col" class="p-4">
                                                     <div class="flex items-center">
                                                         <input id="checkbox-all" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-red-600 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                                        <label for="checkbox-all" class="sr-only">checkbox</label>
+                                                        <label for="checkbox-all" class="sr-only">Select All</label>
                                                     </div>
                                                 </th>
-                                                <th scope="col" class="px-4 py-3">Product</th>
-                                                <th scope="col" class="px-4 py-3">Category</th>
-                                                <th scope="col" class="px-4 py-3">Stock</th>
-                                                <th scope="col" class="px-4 py-3">Sales/Day</th>
-                                                <th scope="col" class="px-4 py-3">Sales/Month</th>
-                                                <th scope="col" class="px-4 py-3">Rating</th>
-                                                <th scope="col" class="px-4 py-3">Sales</th>
-                                                <th scope="col" class="px-4 py-3">Revenue</th>
-                                                <th scope="col" class="px-4 py-3">Last Update</th>
+                                                {Object.keys(campaignData[0]).map((key) => (
+                                                    <th key={key} scope="col" class="px-4 py-3">
+                                                        {key}
+                                                    </th>
+                                                ))}
+                                                <th scope="col" class="px-4 py-3">Timestamp</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <td class="w-4 px-4 py-3">
-                                                    <div class="flex items-center">
-                                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                    </div>
-                                                </td>
-                                                <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png" alt="iMac Front Image" class="w-auto h-8 mr-3" />
-                                                    Apple iMac 27&#34;
-                                                </th>
-                                                <td class="px-4 py-2">
-                                                    <span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Desktop PC</span>
-                                                </td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
-                                                        <div class="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
-                                                        95
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">1.47</td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">0.47</td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
-                                                        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
-                                                        <span class="ml-1 text-gray-500 dark:text-gray-400">5.0</span>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <div class="flex items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2 text-gray-400" aria-hidden="true">
-                                                            <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
-                                                        </svg>
-                                                        1.6M
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-2">$3.2M</td>
-                                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Just now</td>
-                                            </tr>
+                                            {campaignData.map((data) => (
+                                                <tr key={data.id} class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    <td class="w-4 px-4 py-3">
+                                                        <div class="flex items-center">
+                                                            <input id={`checkbox-${data.id}`} type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-red-600 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                                            <label for={`checkbox-${data.id}`} class="sr-only">Select Row</label>
+                                                        </div>
+                                                    </td>
+                                                    {Object.values(data).map((value, index) => (
+                                                        <td key={index} class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                            {value}
+                                                        </td>
+                                                    ))}
+                                                    {/* <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <div class="flex items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2 text-gray-400" aria-hidden="true">
+                                                                <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
+                                                            </svg>
+                                                            1.6M
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-4 py-2">$3.2M</td> */}
+                                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Just now</td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -185,7 +198,7 @@ export default function Example() {
                                         Showing
                                         <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
                                         of
-                                        <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+                                        <span class="font-semibold text-gray-900 dark:text-white">10</span>
                                     </span>
                                     <ul class="inline-flex items-stretch -space-x-px">
                                         <li>

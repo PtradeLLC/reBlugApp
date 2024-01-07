@@ -187,21 +187,21 @@ model EmailTool {
 }
 
 model Campaign {
-  id                  String  @unique @default(uuid())
+  id                  String     @unique @default(uuid())
   email               String
   subjectLine         String?
   emailBody           String?
   productImage        String?
   productDescritption String?
   productUrl          String?
-
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  userId    String
-  document  Document[]
-  user      User       @relation(fields: [userId], references: [id])
-  Team      Team?      @relation(fields: [teamId], references: [id])
-  teamId    String?
+  category            String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  userId              String
+  document            Document[]
+  user                User       @relation(fields: [userId], references: [id])
+  Team                Team?      @relation(fields: [teamId], references: [id])
+  teamId              String?
 
   embedding Unsupported("vector(1536)")?
 }
