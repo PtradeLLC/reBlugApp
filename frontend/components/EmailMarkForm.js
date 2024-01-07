@@ -132,7 +132,7 @@ export default function DashConvTool({ openModal, setOpenModal }) {
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                     {/* Add a title here later */}
                                                 </Dialog.Title>
-                                                <span className="close font-medium h-2 w-2 text-lg" onClick={handleClose}>
+                                                <span className="close font-medium h-4 w-4 text-lg cursor-pointer" onClick={handleClose}>
                                                     &times;
                                                 </span>
                                             </div>

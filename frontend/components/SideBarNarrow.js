@@ -22,47 +22,48 @@ function classNames(...classes) {
 
 const SideBarNarrow = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const currentPath = window.location.pathname; // Get the current path
+
     const sidebarNavigation = [
-        { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-        { name: 'Database', href: '/dashboard/userdb', icon: ServerStackIcon, current: false },
-        { name: 'Marketing', href: '#', icon: MegaphoneIcon, current: false },
-        { name: 'Creators', href: '#', icon: UserGroupIcon, current: false },
-        { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon, current: false },
-        { name: 'Resources', href: '#', icon: RectangleStackIcon, current: false },
-        { name: 'Profile', href: '/profile', icon: CogIcon, current: false },
-    ]
+        { name: 'Home', href: '/dashboard', icon: HomeIcon },
+        { name: 'Database', href: '/dashboard/userdb', icon: ServerStackIcon },
+        { name: 'Marketing', href: '#', icon: MegaphoneIcon },
+        { name: 'Creators', href: '#', icon: UserGroupIcon },
+        { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
+        { name: 'Resources', href: '#', icon: RectangleStackIcon },
+        { name: 'Profile', href: '/profile', icon: CogIcon },
+    ].map(item => ({
+        ...item,
+        current: item.href === currentPath,
+    }));
 
 
     return (
         <div>
             {/* Narrow sidebar */}
             <div>
-                <div className="hidden w-28 overflow-y-auto bg-white border border-l-0 border-gray-200 md:block">
+                <div className="hidden w-28 overflow-y-auto border border-l-0 border-gray-200 md:block">
                     <div className="flex w-full flex-col items-center py-6">
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {sidebarNavigation.map((item) => (
-                                <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className={classNames(
-                                        item.current ? 'bg-slate-700 text-white' : 'text-slate-600 hover:bg-slate-400 hover:text-white',
-                                        'group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium'
-                                    )}
+                                <a key={item.name} href={item.href} className={classNames(
+                                    item.current ? 'bg-[#2D3250] text-white' : 'text-[#424769] hover:bg-[#7077A1] hover:text-white',
+                                    'group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium'
+                                )}
                                     aria-current={item.current ? 'page' : undefined}
                                 >
-                                    <item.icon
-                                        className={classNames(
-                                            item.current ? 'text-white' : 'text-slate-600 group-hover:text-white',
-                                            'h-6 w-6'
-                                        )}
-                                        aria-hidden="true"
-                                    />
+                                    <item.icon className={classNames(
+                                        item.current ? 'text-white' : 'text-[#232D3F] group-hover:text-white',
+                                        'h-6 w-6'
+                                    )} aria-hidden="true" />
                                     <span className="mt-2">{item.name}</span>
                                 </a>
                             ))}
+
                         </div>
                     </div>
                 </div>
+
 
                 {/* Mobile menu */}
                 <Transition.Root show={mobileMenuOpen} as={Fragment}>
@@ -110,13 +111,6 @@ const SideBarNarrow = () => {
                                             </button>
                                         </div>
                                     </Transition.Child>
-                                    <div className="flex flex-shrink-0 items-center px-4">
-                                        <img
-                                            className="h-8 w-auto"
-                                            src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                                            alt="Your Company"
-                                        />
-                                    </div>
                                     <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                                         <nav className="flex h-full flex-col">
                                             <div className="space-y-1">

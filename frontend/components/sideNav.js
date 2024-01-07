@@ -216,7 +216,7 @@ export default function DashLay() {
     };
 
     return (
-        <div className='md:w-full flex sm:justify-center md:justify-center '>
+        <div className='md:w-full flex sm:justify-center md:justify-start lg:justify-start '>
             <div className="">
                 {/* Content area */}
                 <div className="flex flex-col overflow-hidden">

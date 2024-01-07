@@ -11,25 +11,26 @@ import {
     XMarkIcon,
 } from '@heroicons/react/20/solid'
 import { Listbox, Transition } from '@headlessui/react'
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const activity = [
-    { id: 1, type: 'created', person: { name: 'Chelsea Hagon' }, date: '7d ago', dateTime: '2023-01-23T10:32' },
-    { id: 2, type: 'edited', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:03' },
-    { id: 3, type: 'sent', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:24' },
+    { id: 1, type: 'Launched', person: { tool: 'Email Conversational Tool:' }, date: '7d ago', projColor: "text-green-600" },
+    { id: 2, type: 'In Progress', person: { tool: 'Marketing Automation:' }, date: '6d ago', projColor: "text-orange-300" },
+    { id: 3, type: 'In Progress', person: { tool: 'Messaging Platform:' }, date: '6d ago', projColor: "text-orange-300" },
     {
         id: 4,
         type: 'commented',
         person: {
-            name: 'Chelsea Hagon',
+            tool: 'Email Conversational Tool',
             imageUrl:
                 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
-        comment: 'Called client, they reassured me the invoice would be paid by the 25th.',
-        date: '3d ago',
+        comment: 'This tool has totally changed the way I run my campaigns. Email is fun again!',
+        date: '12d ago',
         dateTime: '2023-01-23T15:56',
     },
-    { id: 5, type: 'viewed', person: { name: 'Alex Curren' }, date: '2d ago', dateTime: '2023-01-24T09:12' },
-    { id: 6, type: 'paid', person: { name: 'Alex Curren' }, date: '1d ago', dateTime: '2023-01-24T09:20' },
+    { id: 5, type: 'Scheduled', person: { tool: 'AI Blogger:' }, date: '17d ago', projColor: "text-red-500" },
+    // { id: 6, type: 'paid', person: { tool: 'Alex Curren' }, date: '1d ago', dateTime: '2023-01-24T09:20' },
 ]
 const moods = [
     { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
@@ -45,12 +46,14 @@ function classNames(...classes) {
 }
 
 export default function Roadmap() {
-    const [selected, setSelected] = useState(moods[5])
+    const [selected, setSelected] = useState(moods[5]);
+    const { data: session, status } = useSession();
+    const { user } = session;
 
     return (
         <div className="px-6">
-            <div className='hidden overflow-y-auto border-l border-gray-200 bg-white lg:block'>
-                <p className="text-base font-medium text-gray-900">Roadmap</p>
+            <div className='hidden overflow-y-auto border-l border-gray-200 mb-3 bg-white lg:block'>
+                <p className="text-base font-medium text-gray-900">Product Roadmap</p>
             </div>
             <div className='px-2'>
                 <ul role="list" className="space-y-6">
@@ -74,7 +77,7 @@ export default function Roadmap() {
                                     <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200">
                                         <div className="flex justify-between gap-x-4">
                                             <div className="py-0.5 text-xs leading-5 text-gray-500">
-                                                <span className="font-medium text-gray-900">{activityItem.person.name}</span> commented
+                                                <span className="font-medium text-gray-900">{activityItem.person.tool}</span>
                                             </div>
                                             <time dateTime={activityItem.dateTime} className="flex-none py-0.5 text-xs leading-5 text-gray-500">
                                                 {activityItem.date}
@@ -86,19 +89,22 @@ export default function Roadmap() {
                             ) : (
                                 <>
                                     <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
-                                        {activityItem.type === 'paid' ? (
-                                            <CheckCircleIcon className="h-6 w-6 text-indigo-600" aria-hidden="true" />
+                                        {activityItem.type === 'completed' || activityItem.type === 'Launched' ? (
+                                            <CheckCircleIcon className={`{h-6 w-6 ${activityItem.projColor}`} aria-hidden="true" />
+                                        ) : activityItem.type === 'In Progress' ? (
+                                            <CheckCircleIcon className={`{h-6 w-6 ${activityItem.projColor}`} aria-hidden="true" />
+                                        ) : activityItem.type === 'Scheduled' ? (
+                                            <CheckCircleIcon className={`{h-6 w-6 ${activityItem.projColor}`} aria-hidden="true" />
                                         ) : (
                                             <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
                                         )}
                                     </div>
                                     <p className="flex-auto py-0.5 text-xs leading-5 text-gray-500">
-                                        <span className="font-medium text-gray-900">{activityItem.person.name}</span> {activityItem.type} the
-                                        invoice.
+                                        <span className="font-medium text-gray-900">{activityItem.person.tool}</span> {activityItem.type}.
                                     </p>
-                                    <time dateTime={activityItem.dateTime} className="flex-none py-0.5 text-xs leading-5 text-gray-500">
+                                    {/* <time dateTime={activityItem.dateTime} className="flex-none py-0.5 text-xs leading-5 text-gray-500">
                                         {activityItem.date}
-                                    </time>
+                                    </time> */}
                                 </>
                             )}
                         </li>
@@ -108,21 +114,21 @@ export default function Roadmap() {
                 {/* New comment form */}
                 <div className="mt-6 flex gap-x-3">
                     <img
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
+                        src={user?.image}
+                        alt="profile-image"
                         className="h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
                     <form action="#" className="relative flex-auto">
                         <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
                             <label htmlFor="comment" className="sr-only">
-                                Add your comment
+                                Give us your feedback
                             </label>
                             <textarea
                                 rows={2}
                                 name="comment"
                                 id="comment"
                                 className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                placeholder="Add your comment..."
+                                placeholder="Give us your feedback ..."
                                 defaultValue={''}
                             />
                         </div>

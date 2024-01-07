@@ -6,54 +6,54 @@ const posts = [
         description:
             'Discover why email marketing is the secret weapon for modern marketers, driving engagement, conversions, and customer loyalty.  Don`t miss out on the inbox goldmine.',
         imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
+            '/images/blog.jpg',
         date: 'Jan 6, 2024',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'Marketing(AI tools)', href: '#' },
         author: {
-            name: 'Michael Foster',
+            name: 'Michael Adedoke',
             role: 'Brand Marketer',
             href: '#',
             imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                '/images/blkcreators.jpg',
         },
     },
     {
         id: 1,
-        title: 'Boost your conversion rate',
+        title: 'Crafting Your Personal Brand: A Guide for Creators and Influencers',
         href: '#',
         description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+            ' Let`s explore the essential steps for creators and influencers to transform themselves into powerful brands. Discover strategies, tips, and insights to establish a unique and memorable identity in the digital landscape.',
         imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
+            '/images/creatememe.jpg',
+        date: 'Dec 24, 2023',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'Creators', href: '#' },
         author: {
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
+            name: 'Jody Petite',
+            role: 'Creator',
             href: '#',
             imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                '/images/creatorprofile.jpg',
         },
     },
     {
         id: 1,
-        title: 'Boost your conversion rate',
+        title: 'Navigating the E-commerce Landscape: Proven Marketing Strategies for 2024',
         href: '#',
         description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+            ' Dive into the latest trends and strategies shaping the e-commerce landscape in 2024. Factual use cases and sourced insights, to help businesses thrive in the ever-evolving world of online retail. ',
         imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
+            '/images/ecommer.jpg',
+        date: 'Dec 16, 2023',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'Marketing(AI tools)', href: '#' },
         author: {
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
+            name: 'Zayn Mollapur',
+            role: 'Brand Manager',
             href: '#',
             imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                '/images/ecommercez.jpg',
         },
     },
     // More posts...
@@ -64,9 +64,9 @@ export default function Blog() {
         <div className="bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Conversational Blog</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the AI Blog</h2>
                     <p className="mt-2 text-lg leading-8 text-gray-600">
-                        Have a conversation while reading our weekly blog
+                        Research the subject further by having a conversation and asking questions related to the articles with the content.
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
