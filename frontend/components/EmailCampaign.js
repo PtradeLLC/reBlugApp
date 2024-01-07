@@ -105,23 +105,21 @@ export default function EmailCamp({ openModal, setOpenModal }) {
         <>
             <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
                 <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                    <div className="ml-6 mt-4 grid grid-cols-3 gap-2">
+                    <div className="sm:grid-cols-2 sm:w-full ml-6 mt-4 grid grid-cols-3 gap-2 lg:w-full ">
                         {campaignsProducts.map((item) => (
                             <button
                                 key={item.id}
                                 type="button"
                                 onClick={() => handleButtonClick(item.type)}
-                                className={`
-    relative inline-flex items-center rounded-md hover:bg-slate-200
-    ${campaignEmail === item.type ? 'bg-slate-300/50 hover:bg-slate-300/50 shadow-lg' : 'bg-white'}
-    px-3 py-2 text-sm font-semibold
+                                className={`flex justify-between items-center rounded-md hover:bg-slate-200 ${campaignEmail === item.type ? 'bg-slate-300/50 hover:bg-slate-300/50 shadow-lg ' : 'bg-white'}
+    px-3 py-2 sm:text-lg font-semibold
     ${campaignEmail === item.type ? 'text-gray-700' : 'text-gray-900'}
     shadow-sm ring-1 ring-inset ring-gray-300
     col-span-${item.span}
 `}
                             >
-                                {item.icon && <item.icon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />}
-                                <span className='text-sm inline-flex'>{item.Name}</span>
+                                {/* {item.icon && <item.icon className="-ml-0.5 flex mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />} */}
+                                <span className='sm:text-sm m-auto text-center md:text-base inline-flex'>{item.Name}</span>
                             </button>
                         ))}
                     </div>
