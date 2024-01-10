@@ -43,7 +43,7 @@ const SideBarNarrow = () => {
             {/* Narrow sidebar */}
             <div>
                 <div className="hidden w-28 overflow-y-auto border border-l-0 border-gray-200 md:block">
-                    <div className="flex w-full flex-col items-center py-6">
+                    <div className="flex w-full flex-col py-6">
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {sidebarNavigation.map((item) => (
                                 <a key={item.name} href={item.href} className={classNames(

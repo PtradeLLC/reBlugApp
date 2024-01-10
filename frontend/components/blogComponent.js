@@ -6,7 +6,7 @@ const BlogComponent = () => {
     return (
         <div id='blog-tool' className='bg-slate-50 w-fit'>
 
-            <div class="max-w-[85rem] px-4 mt-16 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <div class="max-w-[85rem] px-4 mt-1 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 
                 <div class="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
                     <div class="lg:col-span-7">
@@ -15,22 +15,14 @@ const BlogComponent = () => {
                             <div class="col-span-4 ml-2 pl-2">
                                 <img class="rounded-xl" src="/images/AIblogger4.jpg" alt="Image Description" />
                             </div>
-
-
                             <div class="col-span-3">
                                 <img class="rounded-xl" src="/images/blogger1.jpg" alt="Image Description" />
                             </div>
-
-
                             <div class="col-span-5">
                                 <img class="rounded-xl" src="/images/AIblogger2.jpg" alt="Image Description" />
                             </div>
-
                         </div>
-
                     </div>
-
-
                     <div class="mt-5 sm:mt-10 lg:mt-0 lg:col-span-5 ">
                         <div class="space-y-6 sm:space-y-8">
 
