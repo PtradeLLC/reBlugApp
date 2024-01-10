@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const BlogComponent = () => {
     return (
-        <div className='bg-slate-50 w-fit'>
+        <div id='blog-tool' className='bg-slate-50 w-fit'>
 
             <div class="max-w-[85rem] px-4 mt-16 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 

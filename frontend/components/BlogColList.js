@@ -23,7 +23,7 @@ const posts = [
 
 export default function AllBlogs() {
     return (
-        <div className="bg-white py-24 sm:py-32">
+        <div className="bg-white py-18 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
                     <div>
@@ -53,7 +53,7 @@ export default function AllBlogs() {
                                         <div className="border-t sm:border-t-0 sm:border-s border-gray-200 w-32 h-px sm:w-auto sm:h-full mx-auto sm:mx-0"></div>
                                         <div className="pt-5 sm:pt-0 sm:ps-5">
                                             <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">Bloggers Tool</div>
-                                            <div className="text-sm text-gray-500">AI-Powered</div>
+                                            <div className="text-sm text-gray-500">AI-Powered marketing tool</div>
                                         </div>
                                     </div>
                                     <div className="mx-auto max-w-2xl sm:flex sm:space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2]">
