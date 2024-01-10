@@ -1,0 +1,42 @@
+Specification:
+
+1. Core Classes and Functions:
+   a. GrabAndInstallScript:
+      - Purpose: This class will handle the functionality of grabbing and installing the script on external websites.
+      - Methods:
+        - grabScript(): This method will be responsible for grabbing the script from the app users.
+        - installScript(): This method will install the grabbed script on the external website.
+
+   b. ContentReader:
+      - Purpose: This class will handle the functionality of reading the content of websites.
+      - Methods:
+        - readContent(url): This method will read the content of the given URL and return it.
+
+   c. KnowledgeBase:
+      - Purpose: This class will handle the storage of contents as embeddings in the knowledgeBase directory.
+      - Methods:
+        - storeContent(content): This method will store the given content as an embedding in the knowledgeBase directory.
+
+   d. ChatbotWidget:
+      - Purpose: This class will handle the frontend logic of the AI-enabled conversational chatbot widget.
+      - Methods:
+        - initialize(): This method will initialize the chatbot widget on the website.
+        - showChatWindow(): This method will show the chat window to the users.
+        - hideChatWindow(): This method will hide the chat window from the users.
+        - sendMessage(message): This method will send the user's message to the backend server for processing.
+        - receiveMessage(message): This method will receive the response from the backend server and display it to the user.
+
+   e. BackendServer:
+      - Purpose: This class will handle the backend logic of the AI-enabled conversational chatbot widget.
+      - Methods:
+        - processMessage(message): This method will process the user's message and generate a response using the LLM model.
+        - citeSources(response): This method will cite the sources used in the response.
+        - provideSupport(response): This method will provide additional support to the readers in the response.
+
+2. Non-standard Dependencies:
+   - None. The program will be built using vanilla Javascript, without any external libraries or frameworks.
+
+3. Directory Structure:
+   - The frontend logic and contents will be saved in the `/pages/blog/` directory.
+   - The backend logic will be saved in the `/api/blog-server/` directory.
+   - The contents will be stored as embeddings in the `/knowledgeBase/` directory.

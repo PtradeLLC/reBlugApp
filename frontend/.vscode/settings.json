@@ -12,5 +12,6 @@
     "SERPAPI",
     "superagi",
     "vectorstores"
-  ]
+  ],
+  "docwriter.style": "Google"
 }

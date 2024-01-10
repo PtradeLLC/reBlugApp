@@ -4,6 +4,7 @@ import Tools from "../components/Tools";
 import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
+import AIBlog from "../components/blogSection";
 import LogoTwo from "../components/LogoTwo";
 import { useState } from "react";
 import Blog from "../components/Blog"
@@ -20,25 +21,30 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div>
-          <Hero />
-        </div>
+      <main className="flex flex-col justify-center items-center">
+        <span className="">
+          <div className="flex justify-center content-center">
+            <Hero />
+          </div>
+          <div className="flex justify-center content-center mb-10">
+            <Tools openModal={openModal} setOpenModal={setOpenModal} />
+          </div>
+        </span>
         <div className="flex justify-center content-center">
-          <Tools openModal={openModal} setOpenModal={setOpenModal} />
+          <AIBlog />
         </div>
-        <div className="flex mt-3 mb-2 w-full justify-center content-center">
+        <div className="flex mt-1 w-full justify-center content-center">
           <LogoTwo />
         </div>
-        <div className="flex justify-center content-center mt-3">
-          <Influencer openModal={openModal} setOpenModal={setOpenModal} />
-        </div>
-        <div className="flex justify-center content-center mt-3">
+        <div className="flex justify-center content-center">
           <Blog />
         </div>
         <div className="mt-3 w-full">
           <Affiliate openModal={openModal} setOpenModal={setOpenModal} />
         </div>
+        {/* <div className="flex justify-center content-center mt-3">
+          <Influencer openModal={openModal} setOpenModal={setOpenModal} />
+        </div> */}
       </main>
       <span className="mt-3">
         {openModal && <WaitingList setOpenModal={setOpenModal} />}

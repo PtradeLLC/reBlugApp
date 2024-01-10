@@ -1,45 +1,82 @@
 const posts = [
     {
         id: 1,
-        title: 'Boost your conversion rate',
-        href: '#',
+        title: 'AI-powered Article Assistant',
+        href: '/blogSignupInfo',
         description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel iusto corrupti dicta laboris incididunt.',
+            'In the ever-evolving landscape of the digital age, technology continues to reshape the way we interact with information. One such revolutionary advancement is the integration of artificial intelligence (AI) into the realm of content creation. The AI-powered Article Assistant is a cutting-edge tool that not only empowers bloggers but also enhances the overall experience for readers. In this article, we will explore the multifaceted features of this innovative tool and how it can be a game-changer for the blogging community.',
         imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
+            '/images/deepaiblogger.jpg',
+        date: 'Just Posted',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'Marketing', href: '/blogSignupInfo' },
         author: {
-            name: 'Michael Foster',
-            role: 'Co-Founder / CTO',
+            name: 'Johnny Doh',
+            role: 'Blogger at Large',
             href: '#',
             imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                '/images/bloggerin.jpg',
         },
     },
     // More posts...
 ]
 
-export default function Example() {
+export default function AllBlogs() {
     return (
         <div className="bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
-                    <p className="mt-2 text-lg leading-8 text-gray-600">
-                        Learn how to grow your business with our expert advice.
-                    </p>
+                    <div>
+                        <div className="overflow-hidden">
+                            <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                                <div className="relative mx-auto max-w-4xl grid space-y-5 sm:space-y-10">
+                                    <div className="text-center">
+                                        <p className="text-xs font-semibold text-gray-500 tracking-wide uppercase mb-3 dark:text-gray-200">
+                                            How it works
+                                        </p>
+                                        <h1 className="text-3xl text-gray-800 font-bold sm:text-5xl lg:text-6xl lg:leading-tight dark:text-gray-200">
+                                            Transform your blog into a<span className="text-green-500"> thriving brand!</span>
+                                        </h1>
+                                    </div>
+                                    <div className="sm:flex sm:justify-center sm:items-center text-center sm:text-start">
+                                        <div className="flex-shrink-0 pb-5 sm:flex sm:pb-0 sm:pe-5">
+                                            <div class="flex justify-center -space-x-3">
+                                                <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description" />
+                                                <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description" />
+                                                <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80" alt="Image Description" />
+                                                <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description" />
+                                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-gray-800 dark:bg-gray-900 dark:ring-gray-800">
+                                                    <span class="text-xs font-medium leading-none text-white uppercase">7k+</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="border-t sm:border-t-0 sm:border-s border-gray-200 w-32 h-px sm:w-auto sm:h-full mx-auto sm:mx-0"></div>
+                                        <div className="pt-5 sm:pt-0 sm:ps-5">
+                                            <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">Bloggers Tool</div>
+                                            <div className="text-sm text-gray-500">AI-Powered</div>
+                                        </div>
+                                    </div>
+                                    <div className="mx-auto max-w-2xl sm:flex sm:space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2]">
+                                        Click the article below to see how it works
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
                         {posts.map((post) => (
                             <article key={post.id} className="relative isolate flex flex-col gap-8 lg:flex-row">
                                 <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-                                    <img
-                                        src={post.imageUrl}
-                                        alt=""
-                                        className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
-                                    />
-                                    <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                                    <a
+                                        href={post.category.href}>
+                                        <img
+                                            src={post.imageUrl}
+                                            alt=""
+                                            className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
+                                        />
+                                        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+
+                                    </a>
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-x-4 text-xs">

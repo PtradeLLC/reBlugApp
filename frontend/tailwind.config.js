@@ -6,6 +6,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./features/**/*.{js,ts,jsx,tsx}",
     "./node_modules/flowbite-react/lib/**/*.js",
+    './node_modules/preline/preline.js',
 
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
@@ -55,6 +56,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require('preline/plugin'),
     require('flowbite/plugin')({
       charts: true,
     }),
