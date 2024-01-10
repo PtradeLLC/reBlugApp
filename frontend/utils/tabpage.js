@@ -23,6 +23,6 @@ export { emailTab, marketing_tab, outcomes_tab }
 // Here is an example of how Email Conversational Tool can be used:
 // A non-profit organization could use Email Conversational Tool to embed a chatbot into their donation email. The chatbot could answer questions about the organization's mission and programs, and help donors make a donation.
 // An e-commerce company could use Email Conversational Tool to embed a chatbot into their product newsletter. The chatbot could answer questions about the company's products, help customers place an order, and track their shipments.
-// A Creator could use this tool to connect with audience, answer questions, and to promote products or service.
+// A Blogger could use this tool to connect with audience, answer questions, and to promote products or service.
 // A software company could use Email Conversational Tool to embed a chatbot into their customer support email. The chatbot could answer questions about the company's software, help customers troubleshoot problems, and create support tickets.
 // Email Conversational Tool is a powerful tool that can help businesses of all sizes improve their email communication and achieve their marketing goals.

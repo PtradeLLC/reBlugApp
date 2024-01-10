@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Creators() {
+export default function Bloggers() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -9,11 +9,11 @@ export default function Creators() {
         <div className="mx-auto mt-32 max-w-7xl sm:mt-40 sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-white/5  px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
             <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-black sm:text-4xl">
-              Why Creator as a Platform?
+              Why Blogger as a Platform?
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-900">
               Messaging has evolved far beyond simple text conversations; it has
-              become a powerful tool for content creators to connect with their
+              become a powerful tool for content Bloggers to connect with their
               followers in a more personalized and interactive way.
             </p>
             <div className="mx-auto mt-20 grid max-w-lg grid-cols-3 justify-center items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-3 sm:gap-x-10 sm:gap-y-14 lg:max-w-4xl lg:grid-cols-3">

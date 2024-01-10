@@ -117,7 +117,7 @@ const SignUp = ({ handleRadioChange }) => {
 
         if (id === "bordered-radio-1" && targetRadio === 'brand') {
             setUserType(targetRadio);
-        } else if (id = "bordered-radio-2" && targetRadio === 'creator') {
+        } else if (id = "bordered-radio-2" && targetRadio === 'Blogger') {
             setUserType(targetRadio);
         }
     }
@@ -137,8 +137,8 @@ const SignUp = ({ handleRadioChange }) => {
                         <input onChange={(e) => {
                             handleRadioChange(e);
                             setRadioCheck(e, "bordered-radio-2");
-                        }} checked={userType === 'creator'} required id="bordered-radio-2" type="radio" value="creator" name="bordered-radio" className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                        <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Creator</label>
+                        }} checked={userType === 'Blogger'} required id="bordered-radio-2" type="radio" value="Blogger" name="bordered-radio" className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I'm a Blogger</label>
                     </div>
                     <span className="form-input2">
                         <div className="">

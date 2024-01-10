@@ -12,7 +12,7 @@ export default function Layout({ children }) {
   const { data: session, status } = useSession();
   return (
     <>
-      <div className="flex justify-center items-center px-1 m-auto">
+      <div className="flex justify-center px-1 m-auto">
         {session && (
           <div className="w-1/30 h-2/5 flex-none ">
             <SideBarNarrow />

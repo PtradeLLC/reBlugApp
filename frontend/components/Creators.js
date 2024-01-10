@@ -7,18 +7,18 @@ const features = [
     { name: 'Monetizing your Platform', description: 'Monetize your platform by representing brands, Accept donations for contents well done, Affiliate partnerships. With Mobile Commerce enabled you can present and sell products & services.' },
 ]
 
-export default function Creators() {
+export default function Bloggers() {
 
     return (
         <div className="bg-white">
             <div className="apply-margin mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                 <div id="maap">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Creator as a Platform?</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Blogger as a Platform?</h2>
                     <h3 className="mt-4 text-gray-500">
-                        Social Media has evolved far beyond growing and engaging followers; it has become a powerful medium for content creators to connect with their followers and brands to source customers.
+                        Social Media has evolved far beyond growing and engaging followers; it has become a powerful medium for content Bloggers to connect with their followers and brands to source customers.
                     </h3>
                     <p className="mt-4 text-gray-500">
-                        With Creator as a Platform, you can transform your social media presence into a personalized, immersive experience that keeps your audience engaged on a deeper level.
+                        With Blogger as a Platform, you can transform your social media presence into a personalized, immersive experience that keeps your audience engaged on a deeper level.
                     </p>
 
                     <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">

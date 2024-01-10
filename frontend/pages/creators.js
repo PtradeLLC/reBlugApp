@@ -1,14 +1,14 @@
 import { useState } from "react";
-import Creators from "../components/Creators";
+import Bloggers from "../components/Bloggers";
 import Link from "next/link";
 
-export default function CreatorsPage() {
+export default function BloggersPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="bg-white ">
-      <Creators />
+      <Bloggers />
       <div className="mx-auto mt-4">
         <div className="mx-auto flex justify-center items-center">
           <div className="">

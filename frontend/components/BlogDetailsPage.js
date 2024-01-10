@@ -65,7 +65,7 @@ const BlogDetailsPage = () => {
                                     <span className='text-xl font-semibold '>
                                         Conclusion:
                                     </span><br />
-                                    The AI-powered Article Assistant is a game-changing tool that redefines the blogging experience for both creators and consumers. With features like the Research Tool and Meaningful Reference, it transforms articles into dynamic, interactive knowledge hubs. For bloggers, it opens up new avenues for growth in readership, while the option for automation revolutionizes the content creation process. As we embrace the era of AI in content creation, the Article Assistant stands out as a powerful ally, propelling the blogging community into a future of enhanced creativity and efficiency.
+                                    The AI-powered Article Assistant is a game-changing tool that redefines the blogging experience for both Bloggers and consumers. With features like the Research Tool and Meaningful Reference, it transforms articles into dynamic, interactive knowledge hubs. For bloggers, it opens up new avenues for growth in readership, while the option for automation revolutionizes the content creation process. As we embrace the era of AI in content creation, the Article Assistant stands out as a powerful ally, propelling the blogging community into a future of enhanced creativity and efficiency.
                                 </div>
                                 <div>
                                     <a

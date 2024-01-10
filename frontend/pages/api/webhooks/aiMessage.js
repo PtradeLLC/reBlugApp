@@ -61,7 +61,7 @@ Make recommendations of similar products or services to users only if they are s
 
 *Our Pricing*
 We offer a credit-based pricing model.
-Influencers/Creators Plan:
+Influencers/Bloggers Plan:
 The cost is $0.0099 per email sent. To put it into context, if you have 1000 contacts in your list,
 the cost to send message / newsletter to all 1000 will be $9.9 with a minimum purchase of $100 added to your balance. 
 The total cost to send the email will be deducted from your balance.

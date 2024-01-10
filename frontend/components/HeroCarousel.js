@@ -12,9 +12,9 @@ const HeroCarousel = () => {
             tag: '🎉 Just Launched!'
         },
         {
-            title: "Creator as a Platform",
-            text: "Embrace the Creator economy's unstoppable wave. Elevate your brand, whether starting out or established. Use this AI-powered tool to redefine your impact and amplify your influence. Combine and Engage your on one platform",
-            href: '/#creator-as-platform',
+            title: "Blogger as a Platform",
+            text: "Embrace the Blogger economy's unstoppable wave. Elevate your brand, whether starting out or established. Use this AI-powered tool to redefine your impact and amplify your influence. Combine and Engage your on one platform",
+            href: '/#Blogger-as-platform',
             tag: 'Join the Waiting list'
         },
     ];

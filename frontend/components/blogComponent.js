@@ -90,7 +90,7 @@ const BlogComponent = () => {
                 <div className='w-full mt-7'>
                     <BlogListGroup />
                 </div>
-                <div id="creator-as-platform" className="mt-8 flex justify-end items-center gap-x-6">
+                <div id="Blogger-as-platform" className="mt-8 flex justify-end items-center gap-x-6">
                     <Link href="/blogSignUp" className="text-sm font-semibold text-gray-900">
                         How it works <span aria-hidden="true">&rarr;</span>
                     </Link>

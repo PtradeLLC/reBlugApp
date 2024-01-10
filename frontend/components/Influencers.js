@@ -10,7 +10,7 @@ export default function Influencer({ openModal, setOpenModal }) {
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-full lg:flex-none lg:gap-y-8">
             <div className="lg:col-end-1  lg:w-full lg:max-w-lg lg:pb-8">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Dear Creators & Influencers,
+                Dear Bloggers & Influencers,
               </h2>
               <p className="mt-6 text-xl leading-8 text-gray-600"></p>
               <p className="mt-6 text-base leading-7 text-gray-600">
@@ -18,19 +18,19 @@ export default function Influencer({ openModal, setOpenModal }) {
                 followers, growing & monetizing contents, but not on any social
                 media platform?
                 <br /> Escape the constraints of platform algorithms and connect
-                with your audience on a local level through Creator as a Platform.
+                with your audience on a local level through Blogger as a Platform.
                 Manage audience growth, content monetization while maintaining
                 fruitful relationships with audience and brand sponsors.
               </p>
               <p className="mt-3 leading-7 text-xl font-bold">
-                Creator as a Platform
+                Blogger as a Platform
               </p>
               <ul className="mt-3 text-base leading-7 text-gray-600 list-disc ml-3">
                 <li>Combine and engage your followers across platforms.</li>
                 <li>Take complete control of your platform.</li>
                 <li>Monetize content on your own terms.</li>
                 <li>Represent brand partners through subtle promotions.</li>
-                <li>Collab with other Creators and combine followers to gain new ones.</li>
+                <li>Collab with other Bloggers and combine followers to gain new ones.</li>
                 <li>Train & activate your personal AI assistant to engage on your behalf.</li>
                 <li>No app to download, just redesigned skin configured as a platform.</li>
                 <li>Customize and maintain the same design for your brand and followers across all platforms.</li>
@@ -57,7 +57,7 @@ export default function Influencer({ openModal, setOpenModal }) {
         </div>
         <div className="mt-2 flex justify-center text-center w-full">
           <Link
-            href="/creators"
+            href="/Bloggers"
             className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
           >
             Find out more<span aria-hidden="true">&rarr;</span>

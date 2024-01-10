@@ -44,10 +44,10 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   <Link
-                    href={"/creators"}
+                    href={"/Bloggers"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    Creators
+                    Bloggers
                   </Link>
                   <Link
                     href="/contact"
@@ -92,10 +92,10 @@ export default function Navbar() {
             <div className="space-y-1 pb-3 pt-2">
               <Disclosure.Button
                 as="a"
-                href="/creators"
+                href="/Bloggers"
                 className="block border-l-4 border-red-500 bg-red-50 py-2 pl-3 pr-4 text-base font-medium text-red-700"
               >
-                Creators
+                Bloggers
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"

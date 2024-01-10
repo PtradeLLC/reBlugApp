@@ -15,7 +15,7 @@ const userNavigation = [
 const cards = [
     { name: "Email", href: "#", amount: "Conversational Tool", id: 1 },
     { name: "Marketing", href: "#", amount: "Automation", id: 2 },
-    { name: "Creators", href: "#", amount: "Messaging Platform", id: 3 },
+    { name: "Bloggers", href: "#", amount: "Messaging Platform", id: 3 },
 ];
 
 const recentHires = [
@@ -67,7 +67,7 @@ const quicklinks = [
         id: 3,
         title: "Messaging as a Platform",
         href: "#",
-        preview: "Creators can ....",
+        preview: "Bloggers can ....",
     },
 ];
 

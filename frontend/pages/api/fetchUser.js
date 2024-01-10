@@ -47,7 +47,7 @@ export default async function handler(req, res) {
                                 provider: 'OAuth',
                                 isActive: true,
                                 profileImage: user.image,
-                                userType: 'creator',
+                                userType: 'Blogger',
                             },
                             create: {
                                 email,
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
                                 provider: 'OAuth',
                                 isActive: true,
                                 profileImage: user.image,
-                                userType: 'creator',
+                                userType: 'Blogger',
                             },
                         });
 

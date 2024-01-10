@@ -6,7 +6,7 @@ const features = [
     { name: 'Reporting', description: ' It`s important to track the results of your email marketing campaigns so you can see what`s working and what`s not. Via our dashboard you can track open rates, click-through rates, and conversion rates and other metrics even in real time. ' },
     { name: 'Advantages of Chatbot', description: 'Our tool offer a number of advantages over traditional customer service channels, such as 24/7 availability, scalability, SMS marketing, cross promotion, and cost-effectiveness.' },
     { name: 'Cross Marketing', description: 'If this feature is enabled, our chatbot will recommend your product/services (within same category) to email recipients on page exit. This helps boost sales and subscriptions.' },
-    { name: 'Who is this for', description: 'Businesses, Startup companies, eCommerce brands, Social media Influencers and Creators.' },
+    { name: 'Who is this for', description: 'Businesses, Startup companies, eCommerce brands, Social media Influencers and Bloggers.' },
 ]
 
 export default function Features() {
@@ -76,7 +76,7 @@ export default function Features() {
                 </div>
                 <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8 lg:mt-[-1356px]">
                     <img
-                        src="/images/creatorplat.jpg"
+                        src="/images/Bloggerplat.jpg"
                         alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
                         className="rounded-lg bg-gray-100"
                     />

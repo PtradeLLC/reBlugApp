@@ -15,26 +15,26 @@ const posts = [
             role: 'Brand Marketer',
             href: '#',
             imageUrl:
-                '/images/blkcreators.jpg',
+                '/images/blkBloggers.jpg',
         },
     },
     {
         id: 1,
-        title: 'Crafting Your Personal Brand: A Guide for Creators and Influencers',
+        title: 'Crafting Your Personal Brand: A Guide for Bloggers and Influencers',
         href: '#',
         description:
-            ' Let`s explore the essential steps for creators and influencers to transform themselves into powerful brands. Discover strategies, tips, and insights to establish a unique and memorable identity in the digital landscape.',
+            ' Let`s explore the essential steps for Bloggers and influencers to transform themselves into powerful brands. Discover strategies, tips, and insights to establish a unique and memorable identity in the digital landscape.',
         imageUrl:
             '/images/creatememe.jpg',
         date: 'Dec 24, 2023',
         datetime: '2020-03-16',
-        category: { title: 'Creators', href: '#' },
+        category: { title: 'Bloggers', href: '#' },
         author: {
             name: 'Jody Petite',
-            role: 'Creator',
+            role: 'Blogger',
             href: '#',
             imageUrl:
-                '/images/creatorprofile.jpg',
+                '/images/Bloggerprofile.jpg',
         },
     },
     {

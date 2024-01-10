@@ -1,5 +1,5 @@
 -- AlterEnum
-ALTER TYPE "Role" ADD VALUE 'CREATOR';
+ALTER TYPE "Role" ADD VALUE 'Blogger';
 
 -- CreateTable
 CREATE TABLE "Brand" (
@@ -9,7 +9,7 @@ CREATE TABLE "Brand" (
 );
 
 -- CreateTable
-CREATE TABLE "Creator" (
+CREATE TABLE "Blogger" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL
 );
@@ -22,17 +22,17 @@ CREATE TABLE "Social" (
     "tiktok" TEXT,
     "google" TEXT,
     "twiter" TEXT,
-    "creatorId" TEXT
+    "BloggerId" TEXT
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Brand_id_key" ON "Brand"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Creator_id_key" ON "Creator"("id");
+CREATE UNIQUE INDEX "Blogger_id_key" ON "Blogger"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Social_id_key" ON "Social"("id");
 
 -- AddForeignKey
-ALTER TABLE "Social" ADD CONSTRAINT "Social_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "Creator"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Social" ADD CONSTRAINT "Social_BloggerId_fkey" FOREIGN KEY ("BloggerId") REFERENCES "Blogger"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -321,7 +321,7 @@ model Brand {
   email     String
 }
 
-model Creator {
+model Blogger {
   id     String   @unique @default(uuid())
   social Social[]
   email  String
@@ -334,8 +334,8 @@ model Social {
   tiktok    String?
   google    String?
   twitter   String?
-  Creator   Creator? @relation(fields: [creatorId], references: [id])
-  creatorId String?
+  Blogger   Blogger? @relation(fields: [BloggerId], references: [id])
+  BloggerId String?
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
 }
@@ -391,5 +391,5 @@ enum Role {
   MANAGER
   MEMBER
   ADMIN
-  CREATOR
+  Blogger
 }
