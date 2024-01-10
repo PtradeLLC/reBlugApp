@@ -26,13 +26,14 @@ const Home = () => {
           <div className="flex justify-center content-center">
             <Hero />
           </div>
+          <div className="flex justify-center content-center">
+            <AIBlog />
+          </div>
           <div className="flex justify-center content-center mb-10">
             <Tools openModal={openModal} setOpenModal={setOpenModal} />
           </div>
         </span>
-        <div className="flex justify-center content-center">
-          <AIBlog />
-        </div>
+
         <div className="flex mt-1 w-full justify-center content-center">
           <LogoTwo />
         </div>
