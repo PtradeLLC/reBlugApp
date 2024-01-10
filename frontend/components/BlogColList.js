@@ -57,7 +57,7 @@ export default function AllBlogs() {
                                         </div>
                                     </div>
                                     <div className="mx-auto max-w-2xl sm:flex sm:space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2]">
-                                        Click the article below to see how it works
+                                        👆🏻Click the article below to see a demo
                                     </div>
                                 </div>
                             </div>
