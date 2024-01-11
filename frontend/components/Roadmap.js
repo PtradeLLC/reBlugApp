@@ -15,8 +15,8 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 const activity = [
     { id: 1, type: 'Launched', person: { tool: 'Email Conversational Tool:' }, date: '7d ago', projColor: "text-green-600" },
+    { id: 3, type: 'Launched', person: { tool: 'Article Assistant:' }, date: '6d ago', projColor: "text-green-600" },
     { id: 2, type: 'In Progress', person: { tool: 'Marketing Automation:' }, date: '6d ago', projColor: "text-orange-300" },
-    { id: 3, type: 'In Progress', person: { tool: 'Messaging Platform:' }, date: '6d ago', projColor: "text-orange-300" },
     {
         id: 4,
         type: 'commented',
@@ -29,7 +29,7 @@ const activity = [
         date: '12d ago',
         dateTime: '2023-01-23T15:56',
     },
-    { id: 5, type: 'Scheduled', person: { tool: 'AI Blogger:' }, date: '17d ago', projColor: "text-red-500" },
+    // { id: 5, type: 'Scheduled', person: { tool: 'AI Blogger:' }, date: '17d ago', projColor: "text-red-500" },
     // { id: 6, type: 'paid', person: { tool: 'Alex Curren' }, date: '1d ago', dateTime: '2023-01-24T09:20' },
 ]
 const moods = [

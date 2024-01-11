@@ -20,6 +20,7 @@ import dynamic from 'next/dynamic';
 import IntegrationsCatalog from "./integrations";
 import Integration from "./integrations";
 import Roadmap from './Roadmap';
+import BlogTabs from './BlogTab';
 
 
 const MixedChart = dynamic(() => import('./Charts/OpenClick'), { ssr: false });
@@ -40,8 +41,8 @@ const userNavigation = [
 
 const cards = [
     { name: "Tool", href: "#", title: "Email Conversational", id: 1, icon: "/images/convotool.png", bground: "#A18072", category: "Tool" },
-    { name: "Marketing", href: "#", title: "Automate Marketing", id: 2, icon: "/images/automate.png", bground: "#A18072", category: "Marketing" },
-    { name: "Bloggers", href: "#", title: "Messaging Platform", id: 3, icon: "/images/creators.png", bground: "#A18072", category: "Blogger" }
+    { name: "Bloggers", href: "#", title: "Bloggers Panel", id: 3, icon: "/images/creators.png", bground: "#A18072", category: "Tool" },
+    { name: "Marketing", href: "#", title: "Automate Marketing", id: 2, icon: "/images/automate.png", bground: "#A18072", category: "Marketing" }
 ];
 
 const quicklinks = [
@@ -78,11 +79,13 @@ const automationAction = [
 
 //marketing charts
 const marketingAction = [
-    { id: 1, name: "Processed", num: 0 },
-    { id: 2, name: "Delivered", num: 0 },
-    { id: 3, name: "Opened", num: 0 },
-    { id: 4, name: "Clicked", num: 0 },
-    { id: 5, name: "Received", num: 0 },
+    { id: 1, name: "Distributions", num: 0 },
+    { id: 2, name: "Total Upvote", num: 0 },
+    { id: 3, name: "Total reBlog", num: 0 },
+    { id: 4, name: "New SignUp", num: 0 },
+    { id: 5, name: "Sponsorship", num: 0 },
+    // { id: 5, name: "Sponsorship", num: 0 },
+    // { id: 5, name: "Sponsorship", num: 0 },
 ]
 
 const UserContext = createContext();
@@ -208,7 +211,7 @@ export default function DashLay() {
             return emailAction.map((action) => renderKpiContent(action));
         } else if (title === "Automate Marketing") {
             return automationAction.map((action) => renderKpiContent(action));
-        } else if (title === "Messaging Platform") {
+        } else if (title === "Bloggers Panel") {
             return marketingAction.map((action) => renderKpiContent(action));
         } else {
             return null;
@@ -223,7 +226,8 @@ export default function DashLay() {
                     {/* Main content */}
                     <div className="mobile-main flex overflow-hidden">
                         <main className="index-main pb-8 lg:mt-8">
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-[110rem] lg:px-8">
+                            {/* lg:max-w-[110rem] */}
+                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
                                 <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols- lg:gap-8">
@@ -276,9 +280,9 @@ export default function DashLay() {
                                                                 className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                             >
                                                                 <div
-                                                                    className={`overflow-hidden h-[60px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
+                                                                    className={`overflow-hidden h-[50px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                                                                 >
-                                                                    <div className="px-4 py-3">
+                                                                    <div className="">
                                                                         <div className="flex text-sm text-center items-center">
 
                                                                             <Image src={card.icon} alt="icon" width={30} height={30} />
@@ -294,9 +298,9 @@ export default function DashLay() {
                                                 </div>
                                             </div>
                                         </section>
-                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
+                                        <section className={`mt-4 ${selectedComponent === "Automate Marketing" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
                                             {selectedKpi && (
-                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3 lg:gap-4 sm:gap-px sm:divide-y-0` : ""} `}>
+                                                <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3  sm:gap-px sm:divide-y-0` : ""} `}>
                                                     <h2 className="sr-only">
                                                         Summary
                                                     </h2>
@@ -310,10 +314,10 @@ export default function DashLay() {
 
                                             )}
                                         </section>
-                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" || selectedComponent === "Messaging Platform" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
+                                        <section className={`mt - 4 ${selectedComponent === "Automate Marketing" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
                                             {selectedComponent === "Email Conversational" && <EmailTabs />}
                                             {selectedComponent === "Automate Marketing" && <MarketTabs />}
-                                            {selectedComponent === "Messaging Platform" && <MaapTabs />}
+                                            {selectedComponent === "Bloggers Panel" && <BlogTabs />}
                                         </section>
                                     </div>
                                     {/* <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
