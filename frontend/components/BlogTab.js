@@ -79,7 +79,7 @@ export default function BlogTabs() {
                                 <button className='bg-green-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
                             </div>
                         ) : (<div className=''>
-                            <p className='font-semibold'>{item.name} is not enable yet. Select tool from the list below to install and enable:</p>
+                            <p className='font-semibold'>Select available tool from the list below to install and enable:</p>
                             <button className='bg-red-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
                         </div>)
                     ))
