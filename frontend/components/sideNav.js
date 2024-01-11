@@ -241,7 +241,7 @@ export default function DashLay() {
                                                 </h2>
                                                 <div className="bg-[#f4f4f4] p-6">
                                                     <div className="sm:flex sm:items-center sm:justify-between">
-                                                        <div className="sm:flex sm:space-x-5">
+                                                        <div className="sm:flex mr-1 sm:space-x-5">
                                                             <div className="flex-shrink-0">
                                                                 {loading ? <Loading /> : <img
                                                                     className="mx-auto h-20 w-20 rounded-full border"
