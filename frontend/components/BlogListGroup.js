@@ -32,9 +32,9 @@ const clients = [
     },
     {
         id: 6,
-        name: 'Tool is Great For',
+        name: 'Social Blogging',
         imageUrl: '/images/platformblog.png',
-        description: 'Blogging websites and article pages, Blogging Platforms, News related websites and articles.',
+        description: 'Your blog articles are formatted for various media (e.g: Blogs, Newsletters, and Social Media) by AI tool as you click to publish.',
     },
 ]
 

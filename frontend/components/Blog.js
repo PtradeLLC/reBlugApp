@@ -15,7 +15,7 @@ const posts = [
             role: 'Brand Marketer',
             href: '#',
             imageUrl:
-                '/images/blkBloggers.jpg',
+                '/images/blkcreators.jpg',
         },
     },
     {
@@ -34,7 +34,7 @@ const posts = [
             role: 'Blogger',
             href: '#',
             imageUrl:
-                '/images/Bloggerprofile.jpg',
+                '/images/creatorprofile.jpg',
         },
     },
     {

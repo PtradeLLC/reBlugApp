@@ -1,10 +1,8 @@
 const features = [
-    { name: 'As a Platform', description: 'Designed to be intuitive and user-friendly, manage your messaging platform efficiently with more time to focus on creating exceptional content.' },
-    { name: 'Get a personal SMS number', description: 'Sign up for a ForgedMart account and get a free SMS number. You can use this number instead of your real mobile phone number to engage followers.' },
-    { name: 'Invite everyone', description: 'Your free SMS number is one you can publicly share on social media with your audience, and it`s equipped with all the features any mobile number has.' },
-    { name: 'Audience as a Group', description: 'Combine your followers on Facebook, WhatsApp, Instagram, YouTube, X, TikTok into one collective fan base and monetize contents, represent brands, launch/promote products or engage them on individual platform.' },
-    { name: 'SMS Features', description: 'Using this number you can connect by sending messages, share media assets, broadcast live, and if you prefer at any point in time - put it on silent. Your personalized AI assistant would take over on your behalf.' },
-    { name: 'Monetizing your Platform', description: 'Monetize your platform by representing brands, Accept donations for contents well done, Affiliate partnerships. With Mobile Commerce enabled you can present and sell products & services.' },
+    { name: 'Knowledge Base Functionality', description: 'Your blog articles become a knowledge base, empowering Article Assistant to conduct research, look up sources, and provide accurate information based on reader queries. This not only enhances the credibility of your content but also positions you as a go-to source for valuable insights.' },
+    { name: 'Conversational Chatbot', description: 'Imagine having intelligent conversational chatbot seamlessly integrated into your blog articles. Article Assistant allows you to install and enable these chatbot, providing your readers with an interactive and personalized experience. Engage your audience, answer their queries, and register new readers effortlessly.' },
+    { name: 'Brand Sponsorship Opportunities', description: 'Monetize your blog with ease by enabling brand sponsorship features. Article Assistant facilitates seamless engagement between you and potential sponsors, opening up new revenue streams for your blog. Build strategic partnerships and enhance your brand collaborations effortlessly.' },
+    { name: 'Discover Like-minded Bloggers', description: 'Leverage the power of community collaboration by engaging with fellow bloggers in the directory. Explore opportunities for guest posts, collaborative projects, and cross-promotions, amplifying your content and reaching a wider audience.' },
 ]
 
 export default function Bloggers() {
@@ -13,12 +11,12 @@ export default function Bloggers() {
         <div className="bg-white">
             <div className="apply-margin mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                 <div id="maap">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Blogger as a Platform?</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Unleash the Potential of Article Assistant </h2>
                     <h3 className="mt-4 text-gray-500">
-                        Social Media has evolved far beyond growing and engaging followers; it has become a powerful medium for content Bloggers to connect with their followers and brands to source customers.
+                        Imagine having a powerful ally by your side, one that not only enhances the user experience on your blog but also empowers you with cutting-edge tools to streamline your content creation and engagement strategies.
                     </h3>
                     <p className="mt-4 text-gray-500">
-                        With Blogger as a Platform, you can transform your social media presence into a personalized, immersive experience that keeps your audience engaged on a deeper level.
+                        Article Assistant is not just a tool; it's your virtual companion in the world of blogging, enriching your content and engaging your audience in ways you never thought possible. Here's how it can transform your blogging experience:
                     </p>
 
                     <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">

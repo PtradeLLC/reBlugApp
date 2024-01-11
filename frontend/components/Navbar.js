@@ -44,11 +44,29 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   <Link
-                    href={"/Bloggers"}
+                    href={"/creators"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
                     Bloggers
                   </Link>
+                  <Link
+                    href={"/brands"}
+                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
+                  >
+                    Brands
+                  </Link>
+                  {/* <Link
+                    href={"/bloggers-platforms"}
+                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
+                  >
+                    Platforms
+                  </Link> */}
+                  {/* <Link
+                    href={"/social"}
+                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
+                  >
+                    Social Media Groups
+                  </Link> */}
                   <Link
                     href="/contact"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -92,11 +110,32 @@ export default function Navbar() {
             <div className="space-y-1 pb-3 pt-2">
               <Disclosure.Button
                 as="a"
-                href="/Bloggers"
-                className="block border-l-4 border-red-500 bg-red-50 py-2 pl-3 pr-4 text-base font-medium text-red-700"
+                href="/creators"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
                 Bloggers
               </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                href="/brands"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              >
+                Brands
+              </Disclosure.Button>
+              {/* <Disclosure.Button
+                as="a"
+                href="/bloggers-platforms"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              >
+                Platforms
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                href="/social"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              >
+                Social Media Groups
+              </Disclosure.Button> */}
               <Disclosure.Button
                 as="a"
                 href="/contact"
@@ -104,10 +143,10 @@ export default function Navbar() {
               >
                 Contact
               </Disclosure.Button>
-              <Disclosure.Button as="button">
-                {session && <button className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}>Sign out</button>}
-                {!session && <Link className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Link>}
-              </Disclosure.Button >
+              {!session ? <Disclosure.Button as="a" className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Disclosure.Button> : <Disclosure.Button as="button"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}
+              >Sign out
+              </Disclosure.Button >}
             </div >
           </Disclosure.Panel >
         </>
