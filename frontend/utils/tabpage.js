@@ -21,10 +21,19 @@ Features:
 6. Research Tool: Enable tool for readers to interact with AI and conduct further research on your articles in real time while they are on the page.
 `;
 
+const toolsArray = [
+    {
+        name: "Article Assistant ",
+        category: "Tool",
+        isActive: false,
+        content: "Article Assistant is not enable yet.",
+    },
+];
+
 const marketing_tab = `There are no campaigns to track. Please start a campaign.`;
-const tools_tab = `There are no tools enabled`;
+const tools_tab = toolsArray;
 const outcomes_tab = `There are no campaigns to track. Please start a campaign.`;
 const articles_tab = `You have not written an article yet.`;
 const sposorship_tab = `You currently have no sponsorship inquiry.`;
 
-export { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab }
+export { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray }

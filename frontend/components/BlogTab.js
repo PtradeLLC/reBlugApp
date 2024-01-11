@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab } from "../utils/tabpage";
+import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray } from "../utils/tabpage";
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: blogTab },
@@ -18,6 +18,10 @@ export default function BlogTabs() {
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
     };
+
+    const handleClick = (e) => {
+        console.log("AI is active");
+    }
 
     return (
         <div>
@@ -67,8 +71,22 @@ export default function BlogTabs() {
                 </nav>
             </div>
             <div className="mt-4">
-                {selectedTab.content.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                {selectedTab.name === "Tools" ? (
+                    selectedTab.content.map((item, index) => (
+                        item.isActive ? (
+                            <div className=''>
+                                <p className='font-semibold'>Enabled Tools</p>
+                                <button className='bg-green-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
+                            </div>
+                        ) : (<div className=''>
+                            <p className='font-semibold'>{item.name} is not enable yet. Select tool from the list below to install and enable:</p>
+                            <button className='bg-red-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
+                        </div>)
+                    ))
+                ) : selectedTab.content.split('\n').map((str, index) => <p key={index}>{str}</p>)}
             </div>
+
+
         </div>
     );
 }
