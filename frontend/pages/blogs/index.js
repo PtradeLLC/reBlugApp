@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import getPosts from '../ghost-config';
+import GhostContentApi from '@tryghost/content-api';
 import { Image } from 'next/image'
 
 const Posts = () => {
@@ -7,20 +7,21 @@ const Posts = () => {
 
     //featured_image, title, author, name, 
 
+    const api = new GhostContentApi({
+        url: 'http://localhost:2368',
+        key: `${process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY}`,
+        version: 'v5.0'
+    })
 
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const postsData = await getPosts();
-                setPosts(postsData);
-            } catch (error) {
-                console.error("Error fetching posts:", error.message);
-            }
-        };
-
-        fetchPosts();
-    }, []);
+    async function getPosts() {
+        return await api.posts
+            .browse({
+                include: ['tags, authors'],
+                limit: 10
+            }).catch(err => {
+                throw new Error(err);
+            });
+    }
 
     return (
         <div className='mt-36' >
