@@ -35,10 +35,10 @@ export default function Example() {
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Use software and technologies to streamline and automate marketing tasks
+            A platform where brands, bloggers, and marketers connect...
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Your brand can target more customers precisely and sell more products or services through messaging, social blogging and AI tools.
+            ...Through the use of software and AI-powered technologies, social blogging and automation tools.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <a

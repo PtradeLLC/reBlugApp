@@ -11,6 +11,7 @@
     "Serp",
     "SERPAPI",
     "superagi",
+    "tryghost",
     "vectorstores"
   ],
   "docwriter.style": "Google"
