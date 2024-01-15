@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPosts } from '../pages/ghost-config';
+import getPosts from '../pages/ghost-config';
 import Image from 'next/image';
 import Link from 'next/link'
 

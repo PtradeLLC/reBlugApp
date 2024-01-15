@@ -7,7 +7,7 @@ const api = new GhostContentApi({
     version: 'v5.0'
 })
 
-export async function getPosts() {
+export default async function getPosts() {
     return await api.posts
         .browse({
             include: ['tags, authors'],

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPosts } from '../ghost-config';
+import getPosts from '../ghost-config';
 import { Image } from 'next/image'
 
 const Posts = () => {
