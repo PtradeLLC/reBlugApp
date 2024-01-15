@@ -392,5 +392,5 @@ enum Role {
   MANAGER
   MEMBER
   ADMIN
-  Blogger
+  BLOGGER
 }
