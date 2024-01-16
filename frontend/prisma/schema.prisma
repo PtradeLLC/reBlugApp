@@ -72,7 +72,7 @@ model User {
   userType           String?
   Campaign           Campaign[]
   Connectors         Connectors[]
-  Document           Document[]
+  files              files[]
 
   embedding     Unsupported("vector(1536)")?
   KnowledgeBase KnowledgeBase[]
@@ -168,55 +168,56 @@ model Event {
 }
 
 model EmailTool {
-  id                  String     @unique @default(uuid())
+  id                  String   @unique @default(uuid())
   email               String
   subjectLine         String?
   emailBody           String?
   productImage        String?
   productDescritption String?
   productUrl          String?
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   userId              String
-  document            Document[]
-  user                User       @relation(fields: [userId], references: [id])
-  Team                Team?      @relation(fields: [teamId], references: [id])
+  files               files[]
+  user                User     @relation(fields: [userId], references: [id])
+  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
 
   embedding Unsupported("vector(1536)")?
 }
 
 model Campaign {
-  id                  String     @unique @default(uuid())
+  id                  String   @unique @default(uuid())
   email               String
+  title               String?
   subjectLine         String?
   emailBody           String?
   productImage        String?
   productDescritption String?
   productUrl          String?
   category            String?
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   userId              String
-  document            Document[]
-  user                User       @relation(fields: [userId], references: [id])
-  Team                Team?      @relation(fields: [teamId], references: [id])
+  files               files[]
+  user                User     @relation(fields: [userId], references: [id])
+  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
 
   embedding Unsupported("vector(1536)")?
 }
 
 model KnowledgeBase {
-  id        String     @unique @default(uuid())
+  id        String   @unique @default(uuid())
   url       String?
   type      String?
   email     String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    String
-  document  Document[]
-  user      User       @relation(fields: [userId], references: [id])
-  Team      Team?      @relation(fields: [teamId], references: [id])
+  files     files[]
+  user      User     @relation(fields: [userId], references: [id])
+  Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
 
   embedding Unsupported("vector(1536)")?
@@ -224,40 +225,40 @@ model KnowledgeBase {
 
 // Uploaded
 model ContactList {
-  id        String     @unique @default(uuid())
+  id        String   @unique @default(uuid())
   url       String?
   type      String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    String
-  document  Document[]
-  user      User       @relation(fields: [userId], references: [id])
-  Team      Team?      @relation(fields: [teamId], references: [id])
+  files     files[]
+  user      User     @relation(fields: [userId], references: [id])
+  Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
 
   embedding Unsupported("vector(1536)")?
 }
 
 model Connectors {
-  id                  String     @unique @default(uuid())
+  id                  String   @unique @default(uuid())
   email               String
   subjectLine         String?
   emailBody           String?
   productImage        String?
   productDescritption String?
   productUrl          String?
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   userId              String
-  document            Document[]
-  user                User       @relation(fields: [userId], references: [id])
-  Team                Team?      @relation(fields: [teamId], references: [id])
+  files               files[]
+  user                User     @relation(fields: [userId], references: [id])
+  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
 
   embedding Unsupported("vector(1536)")?
 }
 
-model Document {
+model files {
   id              Int                          @id @default(autoincrement())
   emailToolId     String?
   EmailTool       EmailTool?                   @relation(fields: [emailToolId], references: [id])
@@ -304,15 +305,15 @@ model TrialProspectTwo {
 }
 
 model ForgedAI {
-  id                  String                         @unique @default(uuid())
+  id                  String                      @unique @default(uuid())
   product             String?
   useCaseTwo          String
   useCase             String
-  createdAt           DateTime                       @default(now())
-  updatedAt           DateTime                       @updatedAt
-  marketing_Creatives Marketing_Creatives_Document[]
-  marketingPlan       Marketing_Plan_Document[]
-  trends              Trends_Document[]
+  createdAt           DateTime                    @default(now())
+  updatedAt           DateTime                    @updatedAt
+  marketing_Creatives Marketing_Creatives_files[]
+  marketingPlan       Marketing_Plan_files[]
+  trends              Trends_files[]
 }
 
 model Brand {
@@ -354,7 +355,7 @@ model MaaP {
   id String @unique @default(uuid())
 }
 
-model Trends_Document {
+model Trends_files {
   id        String                       @unique @default(uuid())
   content   String
   url       String?
@@ -365,7 +366,7 @@ model Trends_Document {
   embedding Unsupported("vector(1536)")?
 }
 
-model Marketing_Plan_Document {
+model Marketing_Plan_files {
   id            String                       @unique @default(uuid())
   content       String
   url           String?
@@ -376,7 +377,7 @@ model Marketing_Plan_Document {
   embedding     Unsupported("vector(1536)")?
 }
 
-model Marketing_Creatives_Document {
+model Marketing_Creatives_files {
   id          String                       @unique @default(uuid())
   content     String
   url         String?

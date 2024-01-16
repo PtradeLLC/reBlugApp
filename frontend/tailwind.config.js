@@ -1,3 +1,5 @@
+const { nextui } = require("@nextui-org/react");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,6 +9,7 @@ module.exports = {
     "./features/**/*.{js,ts,jsx,tsx}",
     "./node_modules/flowbite-react/lib/**/*.js",
     './node_modules/preline/preline.js',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
 
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
@@ -54,11 +57,25 @@ module.exports = {
       ]
     }
   },
+  darkMode: "class",
   plugins: [
     require("@tailwindcss/forms"),
     require('preline/plugin'),
     require('flowbite/plugin')({
       charts: true,
+    }),
+    nextui({
+      themes: {
+        dark: {
+          colors: {
+            primary: {
+              DEFAULT: "#BEF264",
+              foreground: "#000000",
+            },
+            focus: "#BEF264",
+          },
+        },
+      },
     }),
   ],
 };

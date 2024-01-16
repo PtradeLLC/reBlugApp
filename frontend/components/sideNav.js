@@ -261,7 +261,7 @@ export default function DashLay() {
                                                                 </Link>
                                                             </div>
                                                         </div>
-                                                        <div className="mt-5 flex justify-center sm:mt-0">
+                                                        <div className="mt-5 m-auto flex justify-center sm:mt-0 w-[200px] h-[50px]">
                                                             <Link
                                                                 href={'/dashboard/userdb'}
                                                                 className="flex items-center justify-center rounded-md bg-emerald-100 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-emerald-50 hover:text-gray-800"
@@ -280,7 +280,7 @@ export default function DashLay() {
                                                                 className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
                                                             >
                                                                 <div
-                                                                    className={`overflow-hidden h-[50px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
+                                                                    className={`overflow-hidden h-[50px]  w-[200px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                                                                 >
                                                                     <div className="">
                                                                         <div className="flex text-sm text-center items-center">

@@ -35,7 +35,7 @@ export default function Example() {
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            A platform where brands, bloggers, and marketers connect...
+            A platform where brands, bloggers, and marketers connect in a unified ecosystem...
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             ...Through the use of software and AI-powered technologies, social blogging and automation tools.

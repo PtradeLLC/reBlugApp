@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import SideBarNarrow from "./SideBarNarrow";
 import { useSession, signIn, signOut } from "next-auth/react";
 import PrelineScript from "./PrelineScript";
+import { NextUIProvider } from "@nextui-org/react";
 
 
 

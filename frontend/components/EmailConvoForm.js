@@ -9,7 +9,7 @@ import Ecommerce from "./Ecommerce";
 import Integration from "./integrations";
 import Loading from "./Loading";
 import { useDropzone } from 'react-dropzone'
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 export default function EmailForm({ user, campaignEmail, className }) {
     const { data: session } = useSession();
@@ -20,15 +20,30 @@ export default function EmailForm({ user, campaignEmail, className }) {
     const [contactListFile, setContactListFile] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedFiles, setUploadedFiles] = useState([]);
-    const [uploadedKnowledgeFiles, setUploadedKnowledgeFiles] = useState([]);
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        title: '',
+        email: user?.email || email || '',
+        goal: "",
+        subject: "",
+        message: "",
+        clientType: "",
+        productImage: "",
+        files: null
+    });
+    const [selectedComponent, setSelectedComponent] = useState(null);
+    const [typeOfClient, setTypeOfClient] = useState(null);
 
     const { firstName, lastName } = user
 
 
     //SECTION FOR KNOWLEDGEBASE
-    const [files, setFiles] = useState([])
-    const [rejected, setRejected] = useState([])
-    const file = new FileReader;
+    const [files, setFiles] = useState([]);
+    const [rejected, setRejected] = useState([]);
+
+    const file = new FileReader();
 
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         if (acceptedFiles?.length) {
@@ -37,7 +52,10 @@ export default function EmailForm({ user, campaignEmail, className }) {
                 ...acceptedFiles.map(file =>
                     Object.assign(file, { preview: URL.createObjectURL(file) })
                 )
-            ])
+            ]);
+
+            console.log("Accespted File:", acceptedFiles[0]);
+            console.log("Selected FileSSSS:", files);
         }
 
         if (rejectedFiles?.length) {
@@ -48,12 +66,12 @@ export default function EmailForm({ user, campaignEmail, className }) {
     //Type of files to accept
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: ['application/pdf', 'text/plain', 'application/msword,', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'text/csv'],
-        maxSize: 1024 * 1000,
-        onDrop
+        maxSize: 1024 * 1000 * 2,
+        onDrop,
     })
 
     useEffect(() => {
-        // Revoke the data uris to avoid memory leaks
+        // Revoke the data URIs to avoid memory leaks
         return () => files.forEach(file => URL.revokeObjectURL(file.preview))
     }, [files])
 
@@ -61,16 +79,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
         setFiles(files => files.filter(file => file.name !== name))
     };
 
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        title: '',
-        email: user?.email || email || '',
-        goal: "",
-        message: "",
-        files: null
-    });
-    const [selectedComponent, setSelectedComponent] = useState(null);
+
 
     useEffect(() => {
         if (user) {
@@ -92,339 +101,54 @@ export default function EmailForm({ user, campaignEmail, className }) {
         }));
     };
 
-
-    // handleSubmit function
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
             const formDataObject = new FormData();
-            if (!files?.length) return
 
-            // if (typeof acceptedFiles[0] === 'undefined') return;
+            if (typeof files[0] === 'undefined') {
+                console.error('No files to upload.');
+                return;
+            }
+
+            if (campaignEmail) {
+                setFormData(prev => ({ ...prev, clientType: campaignEmail }));
+            }
 
             // Append text inputs to formDataObject
             formDataObject.append('firstName', formData.firstName);
             formDataObject.append('lastName', formData.lastName);
             formDataObject.append('title', formData.title);
+            formDataObject.append('subject', formData.subject);
             formDataObject.append('email', formData.email);
             formDataObject.append('goal', formData.goal);
+            formDataObject.append('clientType', formData.clientType);
             formDataObject.append('message', formData.message);
-
             // Append knowledge and contactList files to formDataObject
             files.forEach((file) => formDataObject.append('files', file));
-
-            if (!files.length) {
-                console.error('No files to upload.');
-                return;
-            }
-
             const response = await fetch('/api/v1/Emailagent', {
                 method: 'POST',
                 body: formDataObject,
-            }).then(res => res.json());
-
-            if (response.ok) {
-                console.log('Form data submitted successfully!', response);
-                // Optionally reset the form data after successful submission
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    title: '',
-                    email: user?.email || email || '',
-                    goal: "",
-                    message: "",
-                    files: null,
-                });
-            } else {
-                console.error('Error submitting form:', response.statusText);
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Error submitting form.');
             }
+            setSubmitted(true);
         } catch (error) {
             console.error('Error submitting form:', error.message);
+            setSubmitted(false);
         }
     };
+    useEffect(() => {
+        // Cleanup for data URIs to avoid memory leaks
+        return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    }, [files]);
 
-
-
-    // Function to send a single file upload request
-    const handleKnowledgeBaseSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!files?.length || !formData.email) return;
-
-        const contactformData = new FormData();
-
-        // Append email
-        contactformData.append('email', formData.email);
-
-        // Read and append each file asynchronously
-        const readFilePromises = files.map((file) => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const fileData = event.target.result;
-
-                    // Append the file data to FormData
-                    contactformData.append('file', new Blob([fileData], { type: file.type }), file.name);
-
-                    resolve();
-                };
-                reader.readAsArrayBuffer(file);
-            });
-        });
-
-        // Wait for all files to be read before making the fetch request
-        await Promise.all(readFilePromises);
-
-        const URL = '/api/v1/knowledge';
-        const data = await fetch(URL, {
-            method: 'POST',
-            body: contactformData,
-        }).then((res) => res.json());
-
-        console.log(data);
-    };
-
-
-
-
-
-
-
-    // Good One
-    // const handleKnowledgeBaseSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (!files?.length || !formData.email) return;
-
-    //     const knowledgeData = new FormData();
-
-    //     // Append email
-    //     knowledgeData.append('email', formData.email);
-
-    //     // Append files
-    //     files.forEach((file) => knowledgeData.append('file', file));
-
-    //     const URL = '/api/v1/knowledge';
-    //     const data = await fetch(URL, {
-    //         method: 'POST',
-    //         body: knowledgeData,
-    //     }).then((res) => res.json());
-
-    //     console.log(data);
-    // };
-
-
-
-
-
-    // const handleKnowledgeBaseSubmit = async (formData) => {
-    //     try {
-    //         const knowledgeResponse = await fetch('/api/v1/knowledge', {
-    //             method: 'POST',
-    //             body: formData,
-    //         }).then((res) => res.json());
-
-    //         if (knowledgeResponse.ok) {
-    //             console.log('File submitted successfully!');
-
-    //             // Make a separate request for /api/v1/Emailagent
-    //             const emailResponse = await fetch('/api/v1/Emailagent', {
-    //                 method: 'POST',
-    //                 // Add headers or body data if required
-    //             }).then((res) => res.json());
-
-    //             if (emailResponse.message === 'success') {
-    //                 console.log('Email sent successfully!');
-    //                 return true;
-    //             } else {
-    //                 console.error('Error sending email:', emailResponse.message);
-    //                 return false;
-    //             }
-    //         } else {
-    //             console.error('Error submitting file:', knowledgeResponse.statusText);
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         console.error('Error submitting file:', error.message);
-    //         return false;
-    //     }
-    // };
-
-
-    // // Function to handle knowledge file submission
-    // const handleKnowledgeSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (!files?.length) return;
-
-    //     const knowledgeFormData = new FormData();
-    //     files.forEach((file) => knowledgeFormData.append('file', file));
-
-    //     const success = await sendFileRequest(knowledgeFormData);
-
-    //     if (success) {
-    //         // Handle successful knowledge file submission
-    //         console.log('Knowledge files submitted successfully!');
-    //         // Additional logic if needed
-    //     }
-    // };
-
-    // // Function to handle contact list file submission
-    // const handleContactSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (!files?.length) return;
-
-    //     const contactFormData = new FormData();
-    //     files.forEach((file) => contactFormData.append('file', file));
-
-    //     const success = await sendFileRequest(contactFormData);
-
-    //     if (success) {
-    //         // Handle successful contact list file submission
-    //         console.log('Contact list files submitted successfully!');
-    //         // Additional logic if needed
-    //     }
-    // };
-
-    // // Function to handle form data submission
-    // const handleSubmit = async () => {
-    //     try {
-    //         // Combine form data and other logic as needed
-    //         const formDataObject = new FormData();
-    //         for (const key in formData) {
-    //             if (formData.hasOwnProperty(key)) {
-    //                 // Check if the property is a File object (uploaded file)
-    //                 if (formData[key] instanceof File) {
-    //                     formDataObject.append(key, formData[key]);
-    //                 } else {
-    //                     formDataObject.append(key, formData[key]);
-    //                 }
-    //             }
-    //         };
-
-    //         // Send the combined form data to the server
-    //         const response = await fetch('/api/v1/Emailagent', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: formDataObject,
-    //         });
-
-    //         if (response.ok) {
-    //             console.log('Form data submitted successfully!', formData);
-    //             // Optionally reset the form data after successful submission
-    //             setFormData({
-    //                 firstName: '',
-    //                 lastName: '',
-    //                 title: '',
-    //                 email: user?.email || email || '',
-    //                 goal: '',
-    //                 message: '',
-    //                 knowledge: null,
-    //                 contactList: null,
-    //             });
-    //         } else {
-    //             console.error('Error submitting form:', response.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error submitting form:', error.message);
-    //     }
-    // };
-
-
-    // const handleSubmit = async () => {
-    //     try {
-    //         const formDataObject = new FormData();
-
-    //         // const knowledgeFormData = new FormData();
-    //         // files.forEach(file => knowledgeFormData.append('file', file));
-
-    //         // formData.append('knowledge', knowledgeFormData);
-
-    // for (const key in formData) {
-    //     if (formData.hasOwnProperty(key)) {
-    //         // Check if the property is a File object (uploaded file)
-    //         if (formData[key] instanceof File) {
-    //             formDataObject.append(key, formData[key]);
-    //         } else {
-    //             formDataObject.append(key, formData[key]);
-    //         }
-    //     }
-    // }
-
-    //         const response = await fetch('/api/v1/Emailagent', {
-    //             method: 'POST',
-    // headers: {
-    //     'Content-Type': 'application/json',
-    // },
-    //             body: formDataObject,
-    //         });
-
-    //         if (response.ok) {
-    //             console.log('Form data submitted successfully!', formData);
-    //             // Optionally reset the form data after successful submission
-    //             setFormData({
-    //                 firstName: '',
-    //                 lastName: '',
-    //                 title: '',
-    //                 email: user?.email || email || '',
-    //                 goal: "",
-    //                 message: "",
-    //                 knowledge: null,
-    //                 contactList: null,
-    //             });
-    //         } else {
-    //             console.error('Error submitting form:', response.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error submitting form:', error.message);
-    //     }
-    // };
-
-
-    // //KnowledgeList Submit
-    // const handleKnowledgeSubmit = async e => {
-    //     e.preventDefault()
-
-    //     if (!files?.length) return
-
-    //     const knowledgeFormData = new FormData()
-    //     files.forEach(file => knowledgeFormData.append('file', file))
-
-    //     const URL = 'api/v1/Emailagent'
-    //     const data = await fetch(URL, {
-    //         method: 'POST',
-    //         body: knowledgeFormData
-    //     }).then(res => res.json())
-
-    //     console.log(data);
-    //     // use `secured_url` in the database
-    // };
-
-
-    // //ContactList Submit
-    // const handleContactSubmit = async e => {
-    // e.preventDefault()
-
-    // if (!files?.length) return
-
-    // const contactformData = new FormData()
-    // files.forEach(file => contactformData.append('file', file));
-
-    // const URL = 'api/v1/Emailagent'
-    // const data = await fetch(URL, {
-    //     method: 'POST',
-    //     body: contactformData
-    // }).then(res => res.json())
-
-    // console.log(data);
-    // use `secured_url` in the database
-    // }
 
     return (
         <>
-            <form onSubmit={handleSubmit} method="post" action="/api/v1/Emailagent">
+            <form onSubmit={(e) => handleSubmit(e)} >
                 <div className="space-y-12 mt-2">
                     <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                         <div>
@@ -501,6 +225,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                                     id="title"
                                                     name="title"
                                                     onChange={handleChange}
+                                                    value={formData.title}
                                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                                                     placeholder="Enter a title for this campaign"
                                                 />
@@ -512,6 +237,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                                     id="comments"
                                                     name="comments"
                                                     type="checkbox"
+                                                    value={formData.comments}
                                                     checked
                                                     readOnly
                                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
@@ -530,6 +256,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                                 name="subject"
                                                 id="subject"
                                                 autoComplete="subject"
+                                                value={formData.subject}
                                                 onChange={handleChange}
                                                 placeholder="Subject Line: Write a fallback Subject line"
                                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
@@ -547,7 +274,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                                 onChange={handleChange}
                                                 rows={3}
                                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                defaultValue={''}
+                                                value={formData.message}
                                                 placeholder="Compose your message..."
                                             />
                                         </div>
@@ -603,20 +330,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
 
                                                 {/* Preview */}
                                                 <section className='mt-6'>
-                                                    {files.length > 0 && (
-                                                        <>
-                                                            <div className='flex justify-center gap-4'>
-                                                                <button
-                                                                    type='submit'
-                                                                    onClick={handleKnowledgeBaseSubmit}
-                                                                    className={`text-[12px] h-7 uppercase tracking-wider font-bold text-neutral-500 border rounded-md px-3 hover:bg-green-400 hover:text-white transition-colors`}
-                                                                >
-                                                                    Upload Files
-                                                                </button>
-                                                            </div>
-
-                                                        </>
-                                                    )}
                                                     {/* Accepted files */}
                                                     <h3 className='title text-sm font-medium leading-6 text-gray-900 mt-4 border-b'>
                                                         Accepted Files: <span className='text-sm'>(.pdf | .txt | .doc)</span>
@@ -664,103 +377,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                     <div className="col-span-full">
                                         <Integration />
                                     </div>
-
-                                    {/* START OF CONTACT LIST */}
-                                    {/* <div className="col-span-full">
-                                        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                            <div className="text-center">
-                                                <svg
-                                                    className="mx-auto h-12 w-12 text-gray-400"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                    aria-hidden="true"
-                                                >
-                                                    <path
-                                                        vectorEffect="non-scaling-stroke"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-                                                    />
-                                                </svg>
-
-                                                <div className="col-span-full">
-                                                    <div {...getRootProps({
-                                                        className: className
-                                                    })} >
-                                                        <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                                                            Upload files containing your contact list:
-                                                        </label>
-                                                        <input {...getInputProps()} />
-                                                        <div className='flex cursor-pointer flex-col items-center justify-center gap-4 border border-dotted  h-24 rounded-lg'>
-                                                            {isDragActive ? (
-                                                                <p>Drop the files here ...</p>
-                                                            ) : (
-                                                                <p>Drag or click to select file</p>
-                                                            )}
-                                                        </div>
-                                                        {files.length > 0 && (
-                                                            <>
-                                                                <div className='flex justify-center gap-4'>
-                                                                    <button
-                                                                        type='submit'
-                                                                        className={`text-[12px] h-7 uppercase tracking-wider font-bold text-neutral-500 border rounded-md px-3 hover:bg-red-400 hover:text-white transition-colors`}
-                                                                    >
-                                                                        Upload Files
-                                                                    </button>
-                                                                </div>
-
-                                                            </>
-                                                        )}
-                                                    </div>
-
-                                                   
-                                                    <section className='mt-10'>
-                                                        <h4 className='title text-sm font-medium leading-6 text-gray-900 mt-4 border-b'>
-                                                            Accepted Files: <span className='text-sm'>(.xlsx | .gsheet | .csv)</span>
-                                                        </h4>
-                                                        <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10'>
-                                                            {files.map(file => (
-                                                                <li key={file.name} className='relative h-24 w-24 rounded-md shadow-lg'>
-                                                                    {file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? (
-                                                                        <img
-                                                                            src="/images/xlsx.png"
-                                                                            alt={file.name}
-                                                                            className='h-full w-full object-contain rounded-md'
-                                                                        />
-                                                                    ) : file.type === 'application/vnd.ms-excel' ? (
-                                                                        <img
-                                                                            src="/images/googlesheets.png"
-                                                                            alt={file.name}
-                                                                            className='h-full w-full object-contain rounded-md'
-                                                                        />
-                                                                    ) : file.type === 'text/csv' ? (
-                                                                        <img
-                                                                            src="/images/csv.png"
-                                                                            alt={file.name}
-                                                                            className='h-full w-full object-contain rounded-md'
-                                                                        />
-                                                                    ) : null}
-                                                                    <button
-                                                                        type='button'
-                                                                        className='w-7 h-7 border border-secondary-400 bg-secondary-400 rounded-full flex justify-center items-center absolute -top-3 -right-3 hover:bg-white transition-colors'
-                                                                        onClick={() => removeFile(file.name)}
-                                                                    >
-                                                                        <XMarkIcon className='w-5 h-5 fill-slate-600 hover:fill-secondary-400 transition-colors' />
-                                                                    </button>
-                                                                    <p className='mt-2 text-neutral-500 text-[12px] font-medium'>
-                                                                        {file.name}
-                                                                    </p>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </section>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    {/* END OFCONTACT LIST  */}
                                 </>
 
                             </div>
