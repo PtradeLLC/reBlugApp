@@ -29,6 +29,9 @@ const Home = () => {
           <div className="flex justify-center content-center">
             <AIBlog />
           </div>
+          <div className="mt-3 w-full">
+            <Affiliate openModal={openModal} setOpenModal={setOpenModal} />
+          </div>
           <div className="flex justify-center content-center mb-10">
             <Tools openModal={openModal} setOpenModal={setOpenModal} />
           </div>
@@ -39,9 +42,6 @@ const Home = () => {
         </div>
         <div className="flex justify-center content-center">
           <Blog />
-        </div>
-        <div className="mt-3 w-full">
-          <Affiliate openModal={openModal} setOpenModal={setOpenModal} />
         </div>
         {/* <div className="flex justify-center content-center mt-3">
           <Influencer openModal={openModal} setOpenModal={setOpenModal} />
