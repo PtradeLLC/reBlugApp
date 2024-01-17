@@ -41,7 +41,7 @@ export default function Affiliate({ openModal, setOpenModal }) {
                 <span className="underline"><Link target="_blank" href="https://www.mailerlite.com/blog/compare-your-email-performance-metrics-industry-benchmarks">According to MailerLite's Email marketing benchmarks</Link></span>, the Average Open and Click Rates for email marketing are 41.31% and 3.01%, respectively.
                 So much for a communication tool, right?<br /> Our analysis suggests there is room for improvement in these metrics. Despite the estimated email marketing revenue reaching almost $12.33 billion in 2024, the average/click rate ratios are not particularly impressive. These are what we propose:
               </p>
-              <p className="mt-3 mb-1 font-semibold">Separating Concerns: Click / Open  Rates</p>
+              <p className="mt-3 mb-1 font-semibold">Separating Concerns for Click / Open  Rates</p>
               <p className="mt-2 font-medium italic">Addressing Key Click Rate Concerns:</p>
               <ul
                 role="list"
