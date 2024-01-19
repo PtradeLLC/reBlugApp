@@ -48,6 +48,8 @@ function classNames(...classes) {
 export default function Roadmap() {
     const [selected, setSelected] = useState(moods[5]);
     const { data: session, status } = useSession();
+
+
     const { user } = session;
 
     return (

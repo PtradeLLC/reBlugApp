@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 import Saas from "./Saas";
 import FundRaise from "./FundRaise";
@@ -11,6 +10,7 @@ import Loading from "./Loading";
 import { useDropzone } from 'react-dropzone'
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
+
 export default function EmailForm({ user, campaignEmail, className }) {
     const { data: session } = useSession();
     const { email } = session.user;
@@ -20,31 +20,27 @@ export default function EmailForm({ user, campaignEmail, className }) {
     const [contactListFile, setContactListFile] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedFiles, setUploadedFiles] = useState([]);
-
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         title: '',
-        email: user?.email || email || '',
-        goal: "",
+        email: `${email}`,
+        goal: "Product Launch",
         subject: "",
         message: "",
-        clientType: "",
-        productImage: "",
+        check: '',
+        clientType: campaignEmail || "",
         files: null
     });
+
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [typeOfClient, setTypeOfClient] = useState(null);
-
-    const { firstName, lastName } = user
-
+    const { firstName, lastName } = user;
 
     //SECTION FOR KNOWLEDGEBASE
     const [files, setFiles] = useState([]);
     const [rejected, setRejected] = useState([]);
-
     const file = new FileReader();
-
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         if (acceptedFiles?.length) {
             setFiles(previousFiles => [
@@ -53,11 +49,7 @@ export default function EmailForm({ user, campaignEmail, className }) {
                     Object.assign(file, { preview: URL.createObjectURL(file) })
                 )
             ]);
-
-            console.log("Accespted File:", acceptedFiles[0]);
-            console.log("Selected FileSSSS:", files);
         }
-
         if (rejectedFiles?.length) {
             setRejected(previousFiles => [...previousFiles, ...rejectedFiles])
         }
@@ -66,20 +58,19 @@ export default function EmailForm({ user, campaignEmail, className }) {
     //Type of files to accept
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: ['application/pdf', 'text/plain', 'application/msword,', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'text/csv'],
-        maxSize: 1024 * 1000 * 2,
+        maxSize: 1024 * 1024 * 5, // 5MB
+        multiple: true, // Allow multiple file uploads
         onDrop,
-    })
+    });
 
     useEffect(() => {
         // Revoke the data URIs to avoid memory leaks
         return () => files.forEach(file => URL.revokeObjectURL(file.preview))
-    }, [files])
+    }, [files]);
 
     const removeFile = name => {
         setFiles(files => files.filter(file => file.name !== name))
     };
-
-
 
     useEffect(() => {
         if (user) {
@@ -88,67 +79,113 @@ export default function EmailForm({ user, campaignEmail, className }) {
                 ...prevData,
                 firstName: user.firstName || '',
                 lastName: user.lastName || '',
+                role: user.role || '',
             }));
         }
     }, [user]);
 
-
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
+        const { name, value, type, checked } = event.target;
+
+        // Handle checkbox separately
+        if (type === 'checkbox') {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                [name]: checked,
+            }));
+        } else {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                [name]: value,
+            }));
+        }
     };
 
+    useEffect(() => {
+        if (campaignEmail) {
+            setFormData(prev => ({ ...prev, clientType: campaignEmail }));
+        }
+    }, [campaignEmail]);
+
+
     const handleSubmit = async (e) => {
+        console.log("Clicked handle:: ")
         e.preventDefault();
+
         try {
             const formDataObject = new FormData();
 
-            if (typeof files[0] === 'undefined') {
+            if (formData.files?.length === 0) {
                 console.error('No files to upload.');
                 return;
             }
 
-            if (campaignEmail) {
-                setFormData(prev => ({ ...prev, clientType: campaignEmail }));
-            }
-
             // Append text inputs to formDataObject
-            formDataObject.append('firstName', formData.firstName);
-            formDataObject.append('lastName', formData.lastName);
-            formDataObject.append('title', formData.title);
-            formDataObject.append('subject', formData.subject);
-            formDataObject.append('email', formData.email);
-            formDataObject.append('goal', formData.goal);
-            formDataObject.append('clientType', formData.clientType);
-            formDataObject.append('message', formData.message);
-            // Append knowledge and contactList files to formDataObject
+            formDataObject.append('firstName', user.firstName || '');
+            formDataObject.append('lastName', user.lastName || '');
+            formDataObject.append('title', user.role || '');
+            formDataObject.append('subject', formData.subject || '');  // Use value from the form input
+            formDataObject.append('email', user.email || email || '');
+            formDataObject.append('goal', formData.goal || '');  // Use value from the form input
+            formDataObject.append('clientType', campaignEmail || '');
+            formDataObject.append('message', formData.message || '');  // Use value from the form input
+
+
+
+            // Append files to formDataObject
             files.forEach((file) => formDataObject.append('files', file));
+
+            setLoading(true);
+
             const response = await fetch('/api/v1/Emailagent', {
                 method: 'POST',
-                body: formDataObject,
+                body: formDataObject, // Use the formDataObject as the body
                 credentials: 'include',
             });
+
             if (!response.ok) {
                 throw new Error('Error submitting form.');
             }
+
             setSubmitted(true);
+            setLoading(false); // Stop loading
+
+            // Log the formData after successful submission
+            formData.forEach((value, key) => {
+                console.log(`${key}: ${value}`);
+            });
         } catch (error) {
             console.error('Error submitting form:', error.message);
             setSubmitted(false);
+            setLoading(false); // Stop loading
         }
     };
+
     useEffect(() => {
         // Cleanup for data URIs to avoid memory leaks
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        const formDataObject = new FormData();
+
+        if (formData.files?.length === 0) {
+            console.error('No files to upload.');
+            return;
+        } else {
+            formDataObject.append('subject', formData.subject || ''); // Use value from the form input
+            formDataObject.append('email', user.email || email || '');
+            formDataObject.append('goal', formData.goal || '');
+            files.forEach((file) => formDataObject.append('files', file));
+            console.log(formDataObject);
+        }
+    }
+
     return (
         <>
-            <form onSubmit={(e) => handleSubmit(e)} >
+            <form onSubmit={handleSubmit} >
                 <div className="space-y-12 mt-2">
                     <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                         <div>
@@ -234,17 +271,17 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                         <div className="relative flex gap-x-3 mt-5">
                                             <div className="flex h-6 items-center">
                                                 <input
-                                                    id="comments"
-                                                    name="comments"
+                                                    id="check"
+                                                    name="check"
                                                     type="checkbox"
-                                                    value={formData.comments}
+                                                    value={formData.check}
                                                     checked
                                                     readOnly
                                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
                                                 />
                                             </div>
                                             <div className="text-sm leading-6">
-                                                <label htmlFor="comments" className="font-medium text-gray-900">
+                                                <label htmlFor="check" className="font-medium text-gray-900">
                                                     Generate Subject Line with AI (Recommended 👍🏻)
                                                 </label>
                                                 <p className="text-gray-500">Why is this recommended?</p>

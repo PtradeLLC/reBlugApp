@@ -1,152 +1,134 @@
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
+import { authOptions } from "../auth/[...nextauth]";
+import multer from 'multer';
 
 const prisma = new PrismaClient();
-
-
-
-const multer = require('multer');
-
 const storage = multer.diskStorage({
     destination: './uploads/',
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+        const date = new Date(Date.now());
+        cb(null, date.toISOString() + '-' + file.originalname);
     }
 });
-
-const upload = multer({ storage: storage });
-
-
+const fileFilter = function (req, file, cb) {
+    // Check the file extension
+    if (file.mimetype === 'application/pdf' || file.mimetype === 'text/plain' || file.mimetype === 'application/msword') {
+        // Accept the file
+        cb(null, true);
+    } else {
+        // Reject the file
+        cb(new Error('Invalid file type'), false);
+    }
+};
+const upload = multer({ storage: storage, fileFilter: fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
 
 export default async function handler(req, res) {
-    // Check if the request method is POST
-    if (req.method !== 'POST') {
-        res.status(405).json({ error: 'Method not allowed' });
-        return;
-    }
+    // Handle file upload
 
-    // Parse the request body as form data
-    const formData = await req.body;
-
-    // Get the text inputs from the form data
-    const firstNameData = formData.get('firstName');
-    const lastNameData = formData.get('lastName');
-    const titleData = formData.get('title');
-    const emailData = formData.get('email');
-    const goalData = formData.get('goal');
-    const subjectData = formData.get('subject');
-    const messageData = formData.get('message');
-
-    const session = await getServerSession(req, res, authOptions);
-
-
-    if (session) {
-        try {
-            // Get the uploaded files from the form data
-            const files = [];
-            for (const [key, file] of formData.entries()) {
-                if (key.startsWith('files')) {
-                    files.push(file);
-                }
-            };
-
-            //get email from session
-            const { email } = session?.user;
-
-            const user = await prisma.user.findUnique({
-                where: {
-                    email: emailData || email,
-                },
-                select: {
-                    firstName: true,
-                    lastName: true,
-                    Campaign: true,
-                    Document: true,
-                    ContactList: true,
-                    KnowledgeBase: true,
-                },
-            });
-
-
-            // Check if the campaign already exists for the user
-            const campaign = await prisma.campaign.findFirst({
-                where: {
-                    email: emailData || email,
-                    title: titleData,
-                    user: {
-                        email: emailData || email,
-                    },
-                },
-            });
-
-            if (campaign) {
-                // Update the existing campaign
-                await prisma.campaign.update({
-                    where: {
-                        email: emailData,
-                    },
-                    data: {
-                        goal: formData.get('goal'),
-                        subjectLine: formData.get('subject'),
-                        emailBody: formData.get('message'),
-                        category: formData.get('clientType'),
-                    },
-                });
-            } else {
-                // Create a new campaign
-                await prisma.campaign.create({
-                    data: {
-                        title: titleData,
-                        goal: formData.get('goal'),
-                        subjectLine: formData.get('subject'),
-                        emailBody: formData.get('message'),
-                        category: formData.get('clientType'),
-                        user: {
-                            connect: {
-                                email: emailData || email,
-                            },
-                        },
-                        files: {
-                            connect: [
-                                { id: fileId1 },
-                                { id: fileId2 },
-                            ],
-                        },
-                    },
-                });
+    try {
+        await upload.single('files')(req, res, async (err) => {
+            if (err) {
+                res.status(500).json({ error: 'Error uploading file' });
+                return;
             }
 
-            // Handle the file upload and save the file to the database
-            const file = req.file;
-            if (file) {
-                const newFile = await prisma.file.create({
-                    data: {
-                        name: file.originalname,
-                        type: file.mimetype,
-                        data: file.buffer,
-                        campaign: {
-                            connect: {
-                                title: titleData,
-                            },
-                        },
-                    },
-                });
+            // Handle the rest of the request
+            console.log('Request type:', req.method); // Log the request type
+            if (req.method !== 'POST') {
+                res.status(405).json({ error: 'Method not allowed' });
+                return;
             }
 
-            // Send a  response back to the client
-            res.status(200).json({ success: true });
-            // Send a response back to the client
-            res.status(200).json({ success: true });
-        } catch (error) {
-            res.status(500).json({ "message": "There is an error " + error })
-        }
 
+            const formDataObject = { ...req.body, file: req.file };
+            console.log('formData fom backend', formDataObject); // Log the form data
 
+            // Define the authOptions variable
+            // const session = await getServerSession(req, res, authOptions);
+            // if (session) {
+            //     try {
+            //         const files = [];
+            //         for (const [key, file] of formData.entries()) {
+            //             if (key.startsWith('files')) {
+            //                 files.push(file);
+            //             }
+            //         }
+            //         const userEmail = session?.user?.email;
+            //         const campaignTitle = formData.get('campaignTitle');
 
+            //         const campaign = await prisma.campaign.findFirst({
+            //             where: {
+            //                 email: userEmail,
+            //                 title: campaignTitle,
+            //                 user: {
+            //                     email: userEmail,
+            //                 },
+            //             },
+            //         });
 
+            //         if (campaign) {
+            //             await prisma.campaign.update({
+            //                 where: {
+            //                     title: campaignTitle,
+            //                 },
+            //                 data: {
+            //                     goal: formData.get('goal'),
+            //                     subjectLine: formData.get('subject'),
+            //                     emailBody: formData.get('message'),
+            //                     category: formData.get('clientType'),
+            //                 },
+            //             });
+            //         } else {
+            //             await prisma.campaign.create({
+            //                 data: {
+            //                     title: campaignTitle,
+            //                     goal: formData.get('goal'),
+            //                     subjectLine: formData.get('subject'),
+            //                     emailBody: formData.get('message'),
+            //                     category: formData.get('clientType'),
+            //                     user: {
+            //                         connect: {
+            //                             email: userEmail,
+            //                         },
+            //                     },
+            //                 },
+            //             });
+            //         }
+
+            //         const file = req.file;
+            //         if (file) {
+            //             await prisma.file.create({
+            //                 data: {
+            //                     name: file.originalname,
+            //                     type: file.mimetype,
+            //                     data: file.buffer,
+            //                     campaign: {
+            //                         connect: {
+            //                             title: campaignTitle,
+            //                         },
+            //                     },
+            //                 },
+            //             });
+            //         }
+            //         res.status(200).json({ success: true });
+            //     } catch (error) {
+            //         console.log('Error submitting form:', error.message); // Log the error
+            //         res.status(500).json({ message: `Error submitting form: ${error.message}` });
+            //     }
+            // }
+        });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        res.status(500).json({ message: `${error}` })
 
     }
-
-
 }
 
+
+
+export const config = {
+    api: {
+        bodyParser: false, // Disallow body parsing, consume as stream
+    },
+};
