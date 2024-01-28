@@ -1,4 +1,4 @@
-import { EnvelopeIcon, PencilSquareIcon, EnvelopeOpenIcon } from '@heroicons/react/20/solid';
+import { EnvelopeIcon } from '@heroicons/react/20/solid';
 import { useState, useEffect } from 'react';
 import EmailForm from "./EmailConvoForm";
 import { useSession } from "next-auth/react";

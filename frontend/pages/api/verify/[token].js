@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { resolve } from 'url';
 
 const prisma = new PrismaClient();
 
@@ -8,11 +7,11 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { token } = req.query;
-    console.log('Token from token:', token);
+    const { token: verificationToken } = req.query;  // Change 'token' to 'verificationToken'
+    console.log('Token from token:', verificationToken);
 
-    if (!token) {
-        console.log('No tokenfrom token');
+    if (!verificationToken) {
+        console.log('No token from token');
         return res.status(400).json({ error: 'Invalid parameters. Token is missing.' });
     }
 
@@ -32,14 +31,13 @@ export default async function handler(req, res) {
                                 },
                             },
                             {
-                                token,
+                                token: verificationToken,  // Change 'token' to 'verificationToken'
                             },
                         ],
                     },
                 },
             },
         });
-
         if (!teamMember) {
             console.log('Token not found or expired.'); // Add this line for debugging
             return res.status(400).json({ error: 'Team member does not exist.' });
@@ -80,6 +78,8 @@ export default async function handler(req, res) {
         };
 
         return res.status(200).json({ user: loginResponse, message: 'Login successful.' });
+
+        // ... rest of the file remains unchanged
     } catch (error) {
         console.error('Error during verification:', error);
         return res.status(500).json({

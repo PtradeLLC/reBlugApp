@@ -39,25 +39,25 @@ model Session {
 }
 
 model User {
-  id                 String              @id @default(cuid())
-  userId             String?             @unique
+  id                 String                       @id @default(cuid())
+  userId             String?                      @unique
   name               String?
   externalId         String?
   brandName          String?
   firstName          String?
   profileImage       String?
-  isActive           Boolean             @default(false)
+  isActive           Boolean                      @default(false)
   brandLogo          String?
   password           String?
   image              String? //Auth
   lastName           String?
   isVerified         Boolean?
   provider           String?
-  email              String              @unique
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
+  email              String                       @unique
+  createdAt          DateTime                     @default(now())
+  updatedAt          DateTime                     @updatedAt
   profileId          String?
-  role               Role                @default(MANAGER)
+  role               Role                         @default(MANAGER)
   emailVerified      DateTime?
   RecentUpdates      RecentUpdates[]
   CampaignHistory    CampaignHistory[]
@@ -73,10 +73,11 @@ model User {
   Campaign           Campaign[]
   Connectors         Connectors[]
   files              files[]
-
-  embedding     Unsupported("vector(1536)")?
-  KnowledgeBase KnowledgeBase[]
-  ContactList   ContactList[]
+  EmailContact       EmailContact[]
+  embedding          Unsupported("vector(1536)")?
+  KnowledgeBase      KnowledgeBase[]
+  ContactList        ContactList[]
+  ProductLaunchData  ProductLaunchData[]
 }
 
 model RecentUpdates {
@@ -143,6 +144,47 @@ model Profile {
   user      User     @relation(fields: [userId], references: [id])
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
+}
+
+model ProductLaunchData {
+  id           String   @id @default(cuid())
+  userId       String?
+  feature01    String?
+  title        String?
+  feature02    String?
+  feature03    String?
+  demographic  String?
+  company      String?
+  geographic   String?
+  job_title    String?
+  about        String?
+  objectives   String?
+  client_type  String?
+  pain_point01 String?
+  pain_point02 String?
+  pain_point03 String?
+  pain_point04 String?
+  unique01     String?
+  unique02     String?
+  unique03     String?
+  unique04     String?
+  tool01       String?
+  tool02       String?
+  tool03       String?
+  tool04       String?
+  website      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  User         User?    @relation(fields: [userId], references: [id])
+}
+
+model EmailContact {
+  id        String   @id @default(cuid())
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model VerificationToken {

@@ -9,6 +9,7 @@ import Integration from "./integrations";
 import Loading from "./Loading";
 import { useDropzone } from 'react-dropzone'
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import Vault from './Connectors/Vault';
 
 
 export default function EmailForm({ user, campaignEmail, className }) {
@@ -167,27 +168,27 @@ export default function EmailForm({ user, campaignEmail, className }) {
     }, [files]);
 
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        const formDataObject = new FormData();
+    // const handleClick = (e) => {
+    //     e.preventDefault();
+    //     const formDataObject = new FormData();
 
-        if (formData.files?.length === 0) {
-            console.error('No files to upload.');
-            return;
-        } else {
-            formDataObject.append('subject', formData.subject || ''); // Use value from the form input
-            formDataObject.append('email', user.email || email || '');
-            formDataObject.append('goal', formData.goal || '');
-            files.forEach((file) => formDataObject.append('files', file));
-            console.log(formDataObject);
-        }
-    }
+    //     if (formData.files?.length === 0) {
+    //         console.error('No files to upload.');
+    //         return;
+    //     } else {
+    //         formDataObject.append('subject', formData.subject || ''); // Use value from the form input
+    //         formDataObject.append('email', user.email || email || '');
+    //         formDataObject.append('goal', formData.goal || '');
+    //         files.forEach((file) => formDataObject.append('files', file));
+    //         console.log(formDataObject);
+    //     }
+    // }
 
     return (
         <>
             <form onSubmit={handleSubmit} >
                 <div className="space-y-12 mt-2">
-                    <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-2">
                         <div>
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Your Information</h2>
                             <p className="mt-1 text-sm leading-6 text-gray-600">Some info about you and your goals.</p>
@@ -254,19 +255,18 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                             </p>
                                         </div>
                                         <div className="col-span-full mt-5">
-                                            <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
-                                                Title
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="title"
-                                                    name="title"
-                                                    onChange={handleChange}
-                                                    value={formData.title}
-                                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                                    placeholder="Enter a title for this campaign"
-                                                />
-                                            </div>
+                                            {/* Dynamic rendering based on user selection */}
+                                            {campaignEmail === "Saas" && <Saas />}
+                                            {campaignEmail === "FundRaise" && <FundRaise />}
+                                            {campaignEmail === "Awareness" && <Awareness />}
+                                            {campaignEmail === "emailNewsletter" && <EmailNewsletter />}
+                                            {campaignEmail === "Commerce" && <Ecommerce />}
+                                        </div>
+                                        <div className="mt-2">
+                                            <h2 className="text-base font-semibold leading-7 text-gray-900">Email</h2>
+                                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                Lets Compose your email.
+                                            </p>
                                         </div>
                                         <div className="relative flex gap-x-3 mt-5">
                                             <div className="flex h-6 items-center">
@@ -412,21 +412,12 @@ export default function EmailForm({ user, campaignEmail, className }) {
                                     </div>
                                     {/* END OF KNOWLEDGE BASE  */}
                                     <div className="col-span-full">
-                                        <Integration />
+                                        <Vault />
                                     </div>
                                 </>
-
                             </div>
                         </div>
                     </div>
-
-                    {/* Dynamic rendering based on user selection */}
-                    {campaignEmail === "Saas" && <Saas />}
-                    {campaignEmail === "FundRaise" && <FundRaise />}
-                    {campaignEmail === "Awareness" && <Awareness />}
-                    {campaignEmail === "emailNewsletter" && <EmailNewsletter />}
-                    {campaignEmail === "Commerce" && <Ecommerce />}
-
                     <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                         {/* HIDE REPORT BELOW */}
                         {/* <div className="col-span-full">

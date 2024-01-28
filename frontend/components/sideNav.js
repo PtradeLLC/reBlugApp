@@ -206,7 +206,6 @@ export default function DashLay() {
             </div>
         );
 
-
         if (title === "Email Conversational") {
             return emailAction.map((action) => renderKpiContent(action));
         } else if (title === "Automate Marketing") {

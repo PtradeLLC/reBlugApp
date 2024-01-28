@@ -2,7 +2,7 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 
 
@@ -28,7 +28,7 @@ export default function Navbar() {
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between">
               <div className="flex">
                 <div className="pr-16 pt-1 pb-1">

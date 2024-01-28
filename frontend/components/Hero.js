@@ -35,10 +35,10 @@ export default function Example() {
             </a>
           </div>
           <h1 className="mt-10 lg:mt-72 text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            A platform for brands, bloggers, and marketers to connect in a unified ecosystem...
+            A platform for brands, bloggers, and marketers to connect in a unified ecosystem
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            ...Through the use of software and AI-powered technologies, social blogging and automation tools.
+            Through the use of software and AI-powered technologies, social blogging and automation tools.
           </p>
           <div className="mt-50 flex items-center gap-x-6">
             <a
@@ -58,9 +58,9 @@ export default function Example() {
               <img
                 src="/images/heroimage.png"
                 alt="App screenshot"
-                width={2432}
-                height={1442}
-                className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                width={950}
+                height={640}
+                className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
               />
             </div>
           </div>
