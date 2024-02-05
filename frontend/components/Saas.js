@@ -7,6 +7,7 @@ function Dropdown({ options, placeholder }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
+
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -30,7 +31,7 @@ function Dropdown({ options, placeholder }) {
                 aria-expanded={isOpen}
                 aria-labelledby="listbox-label"
             >
-                <span className="block truncate">{selectedOptions.length > 0 ? selectedOptions.map(id => options.find(option => option.id === id).name).join(', ') : placeholder}</span>
+                <span className="block truncate">{selectedOptions?.length > 0 ? selectedOptions.map(id => options.find(option => option.id === id).name).join(', ') : placeholder}</span>
             </button>
             {isOpen && (
                 <div className="absolute mt-1 w-full rounded-md bg-white z-10 shadow-lg">
@@ -48,11 +49,14 @@ function Dropdown({ options, placeholder }) {
                                 onClick={() => toggleOption(option.id)}
                             >
                                 <div className="flex items-center">
-                                    <span
-                                        className={`font-normal block truncate ${selectedOptions.includes(option.id) ? 'font-semibold' : ''}`}
-                                    >
-                                        {option.name}
-                                    </span>
+                                    {selectedOptions && selectedOptions.includes && selectedOptions.includes(option.id) && (
+                                        <span
+                                            className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
+                                        >
+                                            {option.name}
+                                        </span>
+                                    )}
+
                                     {selectedOptions.includes(option.id) && (
                                         <span
                                             className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
@@ -74,6 +78,7 @@ export default function Saas() {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [loadingStateIndex, setLoadingStateIndex] = useState(0);
     const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
+    const [textData, setTextData] = useState(null);
     const [timeoutId, setTimeoutId] = useState(null);
     const [showLoadingStatus, setShowLoadingStatus] = useState(false);
     const [loadingStateStatus, setLoadingStateStatus] = useState([
@@ -82,12 +87,11 @@ export default function Saas() {
             goal: 'Product Launch',
             loadingStatus: [
                 { id: 1, status: "Preparing data for Channel Distribution" },
+                { id: 1, status: "Conducting Product Analysis" },
                 { id: 2, status: "Conducting Competitive Analysis" },
-                { id: 3, status: "Researching Complementary Brands" },
-                { id: 4, status: "Identifying Complementary Brands" },
-                { id: 5, status: "Configuring Lead Magnets" },
-                { id: 6, status: "Developing Customer Personas" },
-                { id: 7, status: "Generating Qualified Leads" },
+                { id: 3, status: "Researching Ideal Customer Profile" },
+                { id: 4, status: "Defining Ideal Customer Profile" },
+                { id: 5, status: "Developing Customer Personas" },
             ],
         },
         {
@@ -182,29 +186,29 @@ export default function Saas() {
 
 
     const [formData, setFormData] = useState({
-        title: '',
-        feature01: '',
-        feature02: '',
-        feature03: '',
-        demographic: '',
-        company: '',
-        geographic: '',
-        job_title: '',
-        about: '',
-        objectives: '',
-        client_type: 'B2B',
-        pain_point01: '',
-        pain_point02: '',
-        pain_point03: '',
-        pain_point04: '',
-        unique01: '',
-        unique02: '',
-        unique03: '',
-        unique04: '',
-        tool01: '',
-        tool02: '',
-        tool03: '',
-        tool04: ''
+        title: "",
+        feature01: "",
+        feature02: "",
+        feature03: "",
+        demographic: "",
+        company: "",
+        geographic: "",
+        job_title: "",
+        about: "",
+        objectives: "",
+        client_type: "",
+        pain_point01: "",
+        pain_point02: "",
+        pain_point03: "",
+        pain_point04: "",
+        unique01: "",
+        unique02: "",
+        unique03: "",
+        unique04: "",
+        tool01: "",
+        tool02: "",
+        tool03: "",
+        tool04: ""
     }
     );
 
@@ -227,8 +231,9 @@ export default function Saas() {
     ];
 
     const clientelle = [
-        { id: 1, title: 'B2B' },
-        { id: 2, title: 'B2C' },
+        { id: 1, title: "B2B" },
+        { id: 2, title: "B2C" },
+        { id: 3, title: "Both" }
     ];
 
 
@@ -253,8 +258,6 @@ export default function Saas() {
         setShowLoadingStatus(true);
         loadNextStatus();
 
-        console.log(formData);
-
         try {
             // Make the POST request to the API endpoint
             const response = await fetch('/api/productLaunchStatus', {
@@ -267,15 +270,31 @@ export default function Saas() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+
+
+                console.log('Data structure:', data); // Log data structure
+                setTextData(data);
+                console.log('handleLaunch: type of Data:', typeof data);
+                console.log('handleLaunch: type of Data:', typeof textData);
             } else {
                 console.log('Response not okay:', response.statusText);
             }
         } catch (error) {
             // Handle any unexpected errors
             console.error('Error making POST request:', error.message);
+        } finally {
+            // Hide loading status after API call completes
+            setShowLoadingStatus(false);
         }
     };
+
+    // Call handleLaunch when component mounts
+    useEffect(() => {
+        console.log('type of text data INSIDE useEffect:', typeof textData);
+    }, [textData]);
+
+
+
 
     const loadNextStatus = () => {
         if (loadingStateIndex >= loadingStateStatus.length) {
@@ -295,9 +314,6 @@ export default function Saas() {
         // Access the status if it exists
         const status = currentStatuses[loadingStatusIndex]?.status || "Unknown";
 
-        // Update UI or perform any actions with the status here
-
-        // Increment the index for the next iteration
         setLoadingStatusIndex(prevIndex => prevIndex + 1);
 
         // Check if loadingStateIndex is still within bounds before scheduling the next iteration
@@ -316,7 +332,6 @@ export default function Saas() {
     }, [timeoutId]);
 
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -332,7 +347,10 @@ export default function Saas() {
             });
 
             if (response.ok) {
-                const data = await response.json({});
+                const data = await response.json();
+                const responseData = data.text;
+
+                setTextData(responseData);
             } else {
                 console.log('Response not okay:', response.statusText);
             }
@@ -340,7 +358,6 @@ export default function Saas() {
             console.log(error);
         }
     };
-
 
     return (
         <form onSubmit={handleSubmit}>
@@ -770,24 +787,26 @@ export default function Saas() {
                     <div>
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Strategies and Tactics</h2>
                         <p className="mt-1 text-sm leading-6 text-gray-600">
-                            The following sections gives an high-level overview of what goes
-                            into planning and launching your campaign successfully
-                            based on the provided information. First step is generating qualified buyers for your product.
+                            Click the button so we can launch a strategy for your product, define Ideal Customer Profile, and ultimately find their contact information.
                         </p>
                     </div>
 
                     <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                         <div className="col-span-full">
                             <>
-                                <button className="bg-green-700 mt-2 rounded-md text-white p-2" onClick={handleLaunch} disabled={showLoadingStatus}>
-                                    {showLoadingStatus ? 'Generating Leads...' : 'Launch Product Strategy'}
+                                <button
+                                    className="bg-green-700 mt-2 rounded-md text-white p-2"
+                                    onClick={handleLaunch}
+                                    disabled={showLoadingStatus || (textData && textData.length > 0)}>
+                                    {showLoadingStatus ? 'Generating Leads...' : 'hello'}
                                 </button>
+
                                 {showLoadingStatus && (
                                     <div>
                                         <h2>{loadingStateStatus[loadingStateIndex].goal}</h2>
                                         <p>Status: {loadingStateIndex < loadingStateStatus.length && loadingStatusIndex < loadingStateStatus[loadingStateIndex].loadingStatus.length
                                             ? loadingStateStatus[loadingStateIndex]?.loadingStatus[loadingStatusIndex]?.status
-                                            : "Qualified Lead list has been generated. Now deploying AI model/agents for the next set of tasks..."}
+                                            : "Ideal Customer Profile has been defined below. Now deploying AI model/agents for the next set of tasks..."}
                                         </p>
                                     </div>
                                 )}
@@ -803,18 +822,26 @@ export default function Saas() {
                             Based on the provided information, here are data driven summaries that addresses the following key points:
                             <span className="font-semibold"> Customer behavior</span> and <span className="font-semibold">Motivation</span>,
                             <span className="font-semibold"> Ideal Customer Profile</span>,
-                            <span className="font-semibold"> Demands</span>,
-                            <span className="font-semibold"> Conversion Rates</span>, and
+                            <span className="font-semibold"> Demands</span>, and
                             <span className="font-semibold"> Lead generation</span>.
                         </p>
                     </div>
 
                     <div className="max-w-2xl space-y-10 md:col-span-2">
-                        <p>Response goes here</p>
+                        {/* {textData && (
+                            <div>
+                                {textData.map((item, index) => (
+                                    <div key={index}>
+                                        <h3>{Object.keys(item)[0]}</h3>
+                                        <p>{Object.values(item)[0]}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )} */}
+                        {showLoadingStatus && <p>Loading your Ideal Customers...</p>}
                     </div>
                 </div>
             </div>
-
             <div className="mt-6 flex items-center justify-end gap-x-6">
                 <button
                     type="submit"

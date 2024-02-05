@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import GhostContentApi from '@tryghost/content-api';
+import { getPosts } from '../../lib/posts';
 
 
 //featured_image, title, author, name, 
 
-const api = new GhostContentApi({
-    url: 'http://localhost:2368',
-    key: `${process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY}`,
-    version: 'v5.0'
-})
+// const api = new GhostContentApi({
+//     url: 'http://localhost:2368',
+//     key: `${process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY}`,
+//     version: 'v5.0'
+// });
 
-async function getPosts() {
-    return await api.posts
-        .browse({
-            include: ['tags, authors'],
-            limit: 10
-        }).catch(err => {
-            throw new Error(err);
-        })
-}
+// async function getPosts() {
+//     return await api.posts
+//         .browse({
+//             include: ['tags, authors'],
+//             limit: 'all'
+//         }).catch(err => {
+//             throw new Error(err);
+//         })
+// }
 
 
 export default function Blog() {
@@ -60,7 +61,7 @@ export default function Blog() {
                                 <div className="relative w-full">
                                     <Image
                                         src={post.feature_image}
-                                        alt=""
+                                        alt={post.title}
                                         width={100}
                                         height={100}
                                         className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
@@ -76,9 +77,10 @@ export default function Blog() {
                                     </div>
                                     <div className="group relative">
                                         <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 line-clamp-3">
-                                            <Link href={''}>
+                                            <Link href={`/posts/${post.slug}`}>
                                                 <span className="absolute inset-0" />
                                                 {post.title}
+                                                {/* {post.excerpt} */}
                                             </Link>
                                         </h3>
                                     </div>

@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from "./auth/[...nextauth]";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import stringify from 'fast-stable-stringify';
 
 const prisma = new PrismaClient();
 
@@ -11,6 +13,8 @@ export default async function handler(req, res) {
 
         if (req.method === 'POST') {
             const formData = req.body;
+
+            console.log("FormData:", formData);
 
             // Fetch the user from the database
             const user = await prisma.user.findUnique({
@@ -50,133 +54,113 @@ export default async function handler(req, res) {
                     }
                 });
 
-
-                const postData = {
-                    "model": "togethercomputer/llama-2-70b-chat",
-                    "max_tokens": 2480,
-                    "prompt": `[INST] You are a seasoned marketing strategist for a business-to-business software company.
-                    "Objectives" = "Goals that you need to accomplish"
-                    "Task" = "Steps taken to accomplish the goals"
-                    Your "Objectives" are to:
-                    1. Analyze the 'input': "${savedData.about}".         
-                    2. "Task": Based on the analyzed input, create a detailed profile of
-                    25 "ideal customers" based on market research, customer personas, and past customer data. 
-                    Identify key characteristics, define pain points, and needs that the product addresses.    
-                    3. "Task": Refine the above 'Ideal customer' list to include only ones that are likely to 
-                    purchase the product based on the above ${savedData.feature01}, ${savedData.feature02}, ${savedData.feature03}.
-                    4. "Task": Refine the above list of 'Ideal customer' to include ONLY ones that are likely 
-                    to purchase the product based on ${savedData.pain_point01}, ${savedData.pain_point02}, ${savedData.pain_point03}, ${savedData.pain_point04} and the ${savedData.client_type}.
-                    5. "Task": Refine the above list of 'Ideal customer' to include ONLY ones that are likely to 
-                    purchase the product based on its ${savedData.unique01}, ${savedData.unique02}, ${savedData.unique03}, ${savedData.unique04}.
-                    6. "Task": Based on 'REFINED LIST',  Write a code to generate email list of 'qualified contacts' for the 
-                    product - Generate leads using Apollo API by following these tasks:
-                    "Task":
-                    1. Identify the job titles, industries, and locations of your ideal customers based on the refined list above.
-                    2. Use Apollo.io's search filters to look for contacts that match your ideal customer profile. Filter by job title, company, location, industry, and other relevant criteria.
-                    3. Export the contact information of the qualified leads into a spreadsheet, and save it to a variable with the name 'productLaunchEmailList'.[/INST]`,
-                    "request_type": "language-model-inference",
-                    "temperature": 0.7,
-                    "top_p": 0.7,
-                    "top_k": 50,
-                    "repetition_penalty": 1,
-                    "stream_tokens": true,
-                    "stop": [
-                        "[/INST]",
-                        "</s>"
-                    ],
-                    "repetitive_penalty": 1,
-                    "update_at": "2024-01-28T09:53:54.133Z",
-                    "promptObj": {
-                        "prompt": "“You are a seasoned marketing strategist for a business-to-business software company. Your objectives are to:* Analyzes the provided product information below.About the productThe product is 'A platform for brands, bloggers, and marketers to connect in a unified ecosystem. ForgedMart offers AI-powered tools and agency-level solutions tailored for brands and marketers    \"ForgedMart's flagship solutions include:    '1. **Email Marketing Tool:**  This unique AI-powered tool enables brands to send both transactional and marketing emails, and recipients to engage in inquiries about the email content, brand products, or services by interacting with an AI-powered chatbot embedded within the email body.    \"2. **Article Assistant:** Also powered by AI, this tool allows bloggers to integrate a conversational chatbot into every published article. It provides readers with a trusted companion to interact with, whether it's for fact-checking or inquiring about specific details while digesting the article content.\",Task: Based on the information about the product, Create a detailed profile of the 25 ideal customers based on market research, customer personas, and past customer data. Identify key characteristics, pain points, and needs that the product addresses.The product has the following  features:\u2028 feature01: 'Email Marketing tool',  feature02: 'Bloggers Article Helper',  feature03: 'Marketing automation',Task: Refine the above `Ideal customer` list to include only ones that are likely to purchase the product based on the above features.The product solves the following problems for 'B2B`(clientType): pain_point01: 'It improves open and click rates in email marketing', pain_point02: 'AI Powered marketing tool generates qualified email contact for brands and marketers', pain_point03: 'Provide a platform for marketing', pain_point04: 'Help brands and marketers launch successful email campaign, marketing campaign.', Task: Refine the above list of `Ideal customer` to include ONLY ones that are likely to purchase the product based on the problems it solves.The product is different from any other product in the market with these unique  features: unique01: 'The first of its kind to launch AI in the email body', unique02: 'It injects AI conversational chatbot in the email'Task: Refine the above list of `Ideal customer` to include ONLY ones that are likely to purchase the product based on its unique application.* Based on REFINED LIST, Generate an email list of qualified contacts for the product - leads using`Apollo.io` API.* Divide the email list into segments based on various criteria such as demographics, purchase history, engagement level, or preferences. * Create a detailed profile of the ideal customer based on market research, customer personas, and past customer data. Identify key characteristics, pain points, and needs that the product addresses.\" "
-                    }
-                };
+                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 
-                async function query(data) {
-                    const response = await fetch(
-                        "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
-                        {
-                            headers: { Authorization: "Bearer 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" },
-                            method: "POST",
-                            body: JSON.stringify(data),
-                        }
-                    );
-                    const result = await response.json();
-                    return result;
-                }
+                const safetySettings = [
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                    },
+                ];
 
-                query({
-                    "inputs":
-                        `You are a seasoned marketing strategist for a business-to-business software company.
-                "Objectives" = "Goals that you need to accomplish"
-                "Task" = "Steps taken to accomplish the goals"
-                Your "Objectives" are to:
-                1. Analyze the 'input': "${savedData.about}".         
-                2. "Task": Based on the analyzed input, create a detailed profile of
-                25 "ideal customers" based on market research, customer personas, and past customer data. 
-                Identify key characteristics, define pain points, and needs that the product addresses.    
-                3. "Task": Refine the above 'Ideal customer' list to include only ones that are likely to 
-                purchase the product based on the above ${savedData.feature01}, ${savedData.feature02}, ${savedData.feature03}.
-                4. "Task": Refine the above list of 'Ideal customer' to include ONLY ones that are likely 
-                to purchase the product based on ${savedData.pain_point01}, ${savedData.pain_point02}, ${savedData.pain_point03}, ${savedData.pain_point04} and the ${savedData.client_type}.
-                5. "Task": Refine the above list of 'Ideal customer' to include ONLY ones that are likely to 
-                purchase the product based on its ${savedData.unique01}, ${savedData.unique02}, ${savedData.unique03}, ${savedData.unique04}.
-                6. "Task": Based on 'REFINED LIST',  Write a code to generate email list of 'qualified contacts' for the 
-                product - Generate leads using Apollo API by following these tasks:
-                "Task":
-                1. Identify the job titles, industries, and locations of your ideal customers based on the refined list above.
-                2. Use Apollo.io's search filters to look for contacts that match your ideal customer profile. Filter by job title, company, location, industry, and other relevant criteria.
-                3. Export the contact information of the qualified leads into a spreadsheet, and save it to a variable with the name 'productLaunchEmailList'`
-                }).then((response) => {
-                    console.log(JSON.stringify(response));
+                // For text-only input, use the gemini-pro model
+                const model = genAI.getGenerativeModel({
+                    model: 'gemini-pro',
+                    generationConfig: {
+                        temperature: 0.9,
+                        topP: 1,
+                        topK: 1,
+                    },
+                    safetySettings,
                 });
 
 
+                const prompt = [
+                    `Your task is to analyze  '${savedData.about}', and write a short summary in a paragraph about it. Provide an informative description about how 'email marketing' can help its promotional efforts.
+                    
+                    Based on your "${savedData.about}" analysis above, do the following:
+                    * Write a short summary 'About Product' in a paragraph about '${savedData.about}' to show how much you know about the product .
+                    * Create a bulleted LIST of 'Ideal Customers' for the product as well as 'decision makers'. Highlight the individuals 'based on job titles' that are most likely to approve this product for purchase.
+                    * Leverage web data as a research tool to identify 'pain points' that the product solves for 'Ideal Customers' and compare it in contrast with '${savedData.pain_point01}', ' ${savedData.pain_point02}', '${savedData.pain_point03}', '${savedData.pain_point04}'.
+                    * Identify and provide a list of key characteristics of the 'Ideal Customers', and suggest how to engage and interest them in the product.
+                     Suggest ways to market and promote the product to 'Ideal Customers'.
+                     Base your strategies and suggestions for either 'B2B', B2C' or 'Both' - Identify which 'Customer Type' - 'B2B', B2C' or 'both' is most likely to purchase the product.
+                     Create a LIST of 'decision makers', individuals based on 'job titles' that are most likely to approve this product for purchase"
+                     When you provide your final answer, please 'EXPLAIN' the 'reasoning and assumptions' behind your suggested 'Ideal Customers', and why they are ideal for the product.
+                    
+                    Your response is an array of objects in the format:
+                    '[
+                        {
+                            "The Product": {
+                                "About Product": "",
+                            }
+                        },
+                        {
+                            "Defining Ideal Customers": {
+                                "Ideal Customer": "",
+                          
+                            }
+                        },
+                        {
+                            "Key Characteristics of Ideal Customers": {
+                                "Characteristics": "",
+                            }
+                        },
+                        {
+                            "Reasoning & Assumptions": {
+                                "Reasoning": "",
 
+                            }
+                        },
+                        {
+                            "Ideal Customer Type": {
+                                "Customer Type": "",
+                            }
+                        },
 
+                    ]'
+                    `,
+                ];
 
+                // const result = await model.generateContentStream(prompt);
+                // const response = await result.response;
+                // const text = await response.text();
+                // const textArray = text.split('"message: "Data received and processed successfully",');
+                // const parsedText = JSON.parse(textArray[1]);
 
+                // console.log(parsedText, 'After processing From Server');
+                // res.status(200).json(parsedText);
+                // ... (rest of your code)
 
+                const result = await model.generateContentStream(prompt);
+                const response = await result.response;
+                const text = await response.text();
 
+                console.log('TEXT', text);
 
+                // Attempt to extract and parse valid JSON from the response
+                try {
+                    // Send the parsed JSON data as the response
+                    res.status(200).json(text);
+                } catch (error) {
+                    // If JSON parsing fails, log the error and send a generic error response
+                    console.error('Error parsing JSON from AI response:', error);
+                    res.status(500).json({ message: 'Error processing AI response' });
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // const listUrl = 'https://api.together.xyz/v1/chat/completions';
-
-                // const productLaunchList = await fetch(listUrl, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         Authorization: 'Bearer 208747a05763f1f4750eef08e65f1beac5dbad8e434629e3d7bf4858beb07184'
-                //     },
-                //     body: JSON.stringify(postData)
-                // })
-
-                // if (productLaunchList.ok) {
-                //     try {
-                //         const responseData = await productLaunchList.text();
-
-                //         console.log(responseData);
-                //     } catch (error) {
-                //         console.error('Error parsing response body:', error);
-                //     }
-                // } else {
-                //     console.error('Error fetching data:', productLaunchList.statusText);
-                // }
-
-                res.status(200).json({ message: 'Data received and processed successfully' });
             } else {
                 // User not found
                 res.status(404).json({ message: 'User not found' });
@@ -191,3 +175,4 @@ export default async function handler(req, res) {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+

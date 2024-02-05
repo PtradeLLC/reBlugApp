@@ -1,10 +1,10 @@
 import React from 'react'
-import AllBlogs from '../components/BlogColList'
+import Blog from "./posts/allBlogs"
 
 const blogSignUp = () => {
     return (
         <div>
-            <AllBlogs />
+            <Blog />
         </div>
     )
 }

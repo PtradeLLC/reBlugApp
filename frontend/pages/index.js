@@ -7,7 +7,7 @@ import WaitingList from "../components/waitingList";
 import AIBlog from "../components/blogSection";
 import LogoTwo from "../components/LogoTwo";
 import { useState } from "react";
-import Blog from "../components/Blog"
+import Blog from "./posts/allBlogs"
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);

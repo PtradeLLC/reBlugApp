@@ -38,7 +38,9 @@ export default function Example() {
             A platform for brands, bloggers, and marketers to connect in a unified ecosystem
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Through the use of software and AI-powered technologies, social blogging and automation tools.
+            Making blogging interactive, social and useful for marketing through the use of
+            software, AI-powered technologies, and automation tools.
+
           </p>
           <div className="mt-50 flex items-center gap-x-6">
             <a
