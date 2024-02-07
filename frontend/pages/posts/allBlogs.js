@@ -4,25 +4,6 @@ import Link from 'next/link';
 import { getPosts } from '../../lib/posts';
 
 
-//featured_image, title, author, name, 
-
-// const api = new GhostContentApi({
-//     url: 'http://localhost:2368',
-//     key: `${process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY}`,
-//     version: 'v5.0'
-// });
-
-// async function getPosts() {
-//     return await api.posts
-//         .browse({
-//             include: ['tags, authors'],
-//             limit: 'all'
-//         }).catch(err => {
-//             throw new Error(err);
-//         })
-// }
-
-
 export default function Blog() {
     const [posts, setPosts] = useState([]);
 
@@ -39,8 +20,6 @@ export default function Blog() {
         fetchPosts();
     }, []);
 
-    console.log(posts);
-
     return (
         <div className="bg-white pt-9 pb-24 sm:pb-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -56,7 +35,6 @@ export default function Blog() {
                         const postDate = new Date(post.published_at);
                         const month = postDate.toLocaleString('default', { month: 'long' });
                         const day = postDate.getDate();
-
 
                         return (
                             <article key={post.id} className="flex flex-col items-start justify-between">

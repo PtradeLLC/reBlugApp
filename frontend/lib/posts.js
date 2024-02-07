@@ -1,5 +1,3 @@
-// lib/posts.js
-
 import GhostContentApi from '@tryghost/content-api';
 
 const api = new GhostContentApi({
@@ -22,7 +20,8 @@ export async function getPosts() {
 export async function getSinglePost(postSlug) {
     try {
         const post = await api.posts.read({
-            slug: postSlug
+            slug: postSlug,
+            // formats: 'plaintext'
         });
         return post;
     } catch (error) {

@@ -1,79 +1,34 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { getSinglePost } from '../../lib/posts';
-import GhostContentApi from '@tryghost/content-api';
+import { getSinglePost, getPosts } from '../../lib/posts';
 // import { JSDOM } from 'jsdom';
 
 const PostPage = ({ post }) => {
     const contentRef = useRef(null);
     const [webpageContent, setWebpageContent] = useState('');
-    const [postContent, setPostContent] = useState('');
+    const [postContent, setPostContent] = useState({
+        id: `${post.id}`,
+        title: `${post.title}`,
+        content: `${post.html}`
+    });
 
-    // useEffect(() => {
-    //     if (contentRef.current) {
-    //         // Find the first <p> element within the content
-    //         const paragraphs = contentRef.current.querySelectorAll('p');
-
-    //         // Loop through each paragraph and check if it contains text that resembles a title
-    //         paragraphs.forEach(paragraph => {
-
-    //             if (paragraph.textContent.includes('Title:')) {
-
-    //                 paragraph.classList.add('font-semibold', 'text-2xl', 'text-gray-900', 'mb-5');
-    //             } else if (paragraph.textContent.includes('Introduction:')) {
-    //                 paragraph.classList.add('font-semibold', 'sm:text-lg', 'text-xl', 'text-gray-700', 'mb-5');
-    //             }
-    //         });
-    //     }
-    // }, [post.html]);
-
-    // useEffect(() => {
-    //     async function fetchWebpageContent() {
-    //         try {
-    //             const response = await fetch(post.url);
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-
-    //             const data = await response.text();
-    //             // setWebpageContent(data);
-
-
-
-    //             // const dom = new JSDOM(data);
-    //             // const links = dom.window.document.querySelectorAll('a');
-    //             // links.forEach(link => {
-    //             //     console.log('URL:', link.href);
-    //             // });
-
-
-
-    //         } catch (error) {
-    //             console.error('Error fetching webpage content:', error);
-    //         }
-    //     }
-
-    //     fetchWebpageContent();
-    // }, []);
 
 
     const sendDataToBackend = () => {
-
-        console.log('hello');
-        // fetch('/api/blog/slugPage', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ content: postContent }),
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log('Response from API:', data);
-        //         // Handle response as needed
-        //     })
-        //     .catch(error => {
-        //         console.error('There was a problem sending data to the backend:', error);
-        //     });
+        fetch('/api/blog/slugPage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: postContent }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from API:', data);
+                // Handle response as needed
+            })
+            .catch(error => {
+                console.error('There was a problem sending data to the backend:', error);
+            });
     };
 
     return (
@@ -115,9 +70,9 @@ const PostPage = ({ post }) => {
                                 <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86} />
                             </svg>
                             <blockquote className="text-xl font-semibold leading-8 text-white sm:text-2xl sm:leading-9">
-                                {/* <p className='text-4xl'>
+                                <p className='text-4xl'>
                                     {post.title}
-                                </p> */}
+                                </p>
                             </blockquote>
                             <figcaption className="mt-8 text-base">
                                 <div className="font-semibold text-white">Judith Black</div>
@@ -129,8 +84,8 @@ const PostPage = ({ post }) => {
             </div>
             <div className='mt-20 max-w-7xl md:flex lg:flex justify-center px-6 mx-auto bg-slate-50 rounded-md'>
                 <span className='max-w-7xl pr-4 pl-2 my-4'>
-                    {/* <h1 className='font-semibold bg-slate-200 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
-                    </h1> */}
+                    <h1 className='font-semibold bg-slate-200 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
+                    </h1>
                     <ul className='mt-2 text-sm bg-slate-100 rounded'>
                         <li>About Judith Black</li>
                         <li>Post Category</li>
@@ -138,56 +93,46 @@ const PostPage = ({ post }) => {
                     </ul>
                 </span>
                 <span className='max-w-7xl my-4'>
-                    {/* <div dangerouslySetInnerHTML={{ __html: post.html }} ref={contentRef} /> */}
+                    <span className='text-xs flex justify-end'>Reading time: {post.reading_time} mins</span>
+                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
                 </span>
             </div>
-            <div>
+            {/* <div>
                 <button className='bg-slate-400' onClick={sendDataToBackend}>
                     CHATBOT UI
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 };
 
 
+export async function getStaticPaths() {
+    const allPosts = await getPosts();
 
-// async function getPosts() {
-//     return await api.posts
-//         .browse({
-//             include: ['tags, authors'],
-//             limit: 'all'
-//         }).catch(err => {
-//             throw new Error(err);
-//         })
-// }
+    const paths = allPosts.map((post) => ({
+        params: { slug: post.slug }
+    }));
 
-// export async function getStaticPaths() {
-//     const allPosts = await getPosts();
-
-//     const paths = allPosts.map((post) => ({
-//         params: { slug: post.slug }
-//     }));
-
-//     return {
-//         paths,
-//         fallback: false
-//     };
-// }
+    return {
+        paths,
+        fallback: false
+    };
+}
 
 
-// export async function getStaticProps({ params }) {
-//     const post = await getSinglePost(params.slug);
+export async function getStaticProps({ params }) {
+    const post = await getSinglePost(params.slug);
 
-//     if (!post) {
-//         return {
-//             notFound: true
-//         };
-//     }
+    if (!post) {
+        return {
+            notFound: true
+        };
+    }
 
-//     return {
-//         props: { post }
-//     };
-// }
+    return {
+        props: { post }
+    };
+}
 
 export default PostPage;
