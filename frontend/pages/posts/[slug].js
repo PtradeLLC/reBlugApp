@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { getSinglePost, getPosts } from '../../lib/posts';
+import Link from 'next/link'
 // import { JSDOM } from 'jsdom';
 
 const PostPage = ({ post }) => {
@@ -82,7 +83,9 @@ const PostPage = ({ post }) => {
                     </div>
                 </div>
             </div>
+            <div className='flex justify-end pr-6 mt-4'><Link href="/blogSignUp">All Post</Link></div>
             <div className='mt-20 max-w-7xl md:flex lg:flex justify-center px-6 mx-auto bg-slate-50 rounded-md'>
+
                 <span className='max-w-7xl pr-4 pl-2 my-4'>
                     <h1 className='font-semibold bg-slate-200 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
                     </h1>
@@ -93,7 +96,7 @@ const PostPage = ({ post }) => {
                     </ul>
                 </span>
                 <span className='max-w-7xl my-4'>
-                    <span className='text-xs flex justify-end'>Reading time: {post.reading_time} mins</span>
+                    <span className='text-xs flex justify-end my-2'>Reading time: {post.reading_time} mins</span>
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
                 </span>
             </div>
