@@ -12,7 +12,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
+    domains: ["images.unsplash.com", "lh3.googleusercontent.com", "forgedmart.ghost.io"],
     remotePatterns: [
       {
         protocol: "https",

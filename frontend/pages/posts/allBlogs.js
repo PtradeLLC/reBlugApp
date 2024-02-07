@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import GhostContentApi from '@tryghost/content-api';
 import { getPosts } from '../../lib/posts';
 
 
@@ -40,6 +39,8 @@ export default function Blog() {
         fetchPosts();
     }, []);
 
+    console.log(posts);
+
     return (
         <div className="bg-white pt-9 pb-24 sm:pb-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -55,6 +56,7 @@ export default function Blog() {
                         const postDate = new Date(post.published_at);
                         const month = postDate.toLocaleString('default', { month: 'long' });
                         const day = postDate.getDate();
+
 
                         return (
                             <article key={post.id} className="flex flex-col items-start justify-between">
@@ -79,10 +81,11 @@ export default function Blog() {
                                         <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 line-clamp-3">
                                             <Link href={`/posts/${post.slug}`}>
                                                 <span className="absolute inset-0" />
-                                                {post.title}
-                                                {/* {post.excerpt} */}
+                                                {post.title}<br />
+                                                <span className='text-xs flex justify-end my-2'>Click to read article</span>
                                             </Link>
                                         </h3>
+                                        {/* <p>{post.excerpt ? post.excerpt : post.plaintext}</p> */}
                                     </div>
                                 </div>
                             </article>
