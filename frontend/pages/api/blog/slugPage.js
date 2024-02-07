@@ -1,90 +1,98 @@
 import { PrismaClient } from '@prisma/client';
-import { JSDOM } from 'jsdom';
+import * as cheerio from 'cheerio';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import fs from 'fs';
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     try {
-        // Extract the URL from the request body
-        const { url } = req.body;
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        // Extract the content from the request body
+        const { content } = req.body;
 
-        console.log("URL", url);
-
-        // Check if the URL is defined and not empty
-        if (!url) {
-            throw new Error('URL is not provided or empty.');
+        // Check if the content is defined and not empty
+        if (!content) {
+            throw new Error('Content is not provided or empty.');
         }
 
-        // Send an HTTP request to the provided URL using fetch
-        const response = await fetch(url);
-        const htmlContent = await response.text();
+        // Use cheerio to load the HTML content
+        const $ = cheerio.load(content.content);
 
-        console.log("HTMLContent", htmlContent);
+        // Extract the text content without HTML tags
+        const textContent = $.text();
 
-        // Create a new JSDOM instance and parse the HTML content
-        const dom = new JSDOM(htmlContent);
-        const { document } = dom.window;
+        const run = async () => {
+            // For text-and-image input (multimodal), use the gemini-pro-vision model
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        // Identify the main content section using appropriate DOM manipulation methods
-        const mainContent = document.querySelector('main');
 
-        // Extract paragraphs from the main content section
-        const paragraphs = Array.from(mainContent.querySelectorAll('p')).map(p => p.textContent);
 
-        console.log('Paragraph', paragraphs);
+            const safetySettings = [
+                {
+                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                },
+            ];
 
-        // Save the extracted paragraphs to the database using Prisma
-        await prisma.paragraphs.createMany({
-            data: paragraphs.map(text => ({ text })),
-        });
+            const generationConfig = {
+                temperature: 0.3,
+                topK: 1,
+                topP: 1,
+            };
+
+
+            if (textContent) {
+                const user = `What are Proven Strategies for Email Marketing?`
+
+                const parts = [
+                    {
+                        text: `The ${user} asks a question, Please use ${textContent} as the reference to this article's content. 
+                    Use the context of the article to provide meaningful answers in a friendly and engaging manner.
+                    When addressing the content and providing answer, refer to the author of the article as 'the Author'.
+                    ` },
+                ];
+
+                const result = await model.generateContent({
+                    contents: [{ role: "user", parts }],
+                    generationConfig,
+                    safetySettings,
+                });
+                const response = result.response;
+                const text = response.text();
+                console.log(response.text());
+            }
+
+        };
+
+        // Call the run function
+        run();
+
+        // Save the content to the database using Prisma
+        // Adjust this part based on your data model and how you want to save content
+        // For example:
+        // await prisma.post.create({
+        //     data: {
+        //         title: content.title,
+        //         body: content.body,
+        //     },
+        // });
 
         res.status(200).json({ message: 'Content extracted and saved successfully.' });
     } catch (error) {
-        console.error('Error scraping and extracting content:', error);
-        res.status(500).json({ message: 'Error scraping and extracting content.' });
+        console.error('Error extracting and saving content:', error);
+        res.status(500).json({ message: 'Error extracting and saving content.' });
     }
 }
-
-
-
-
-// import { PrismaClient } from '@prisma/client';
-// import axios from 'axios';
-// import { JSDOM } from 'jsdom';
-
-// const prisma = new PrismaClient();
-
-// export default async function handler(req, res) {
-//     try {
-//         // Extract the URL from the request body
-//         const { url } = req.body;
-
-//         // Send an HTTP request to the provided URL
-//         const response = await axios.get(url);
-//         const htmlContent = response.data;
-
-//         console.log("HTMLContent", htmlContent);
-
-//         // Create a new JSDOM instance and parse the HTML content
-//         const dom = new JSDOM(htmlContent);
-//         const { document } = dom.window;
-
-//         // Identify the main content section using appropriate DOM manipulation methods
-//         const mainContent = document.querySelector('main');
-
-//         // Extract paragraphs from the main content section
-//         const paragraphs = Array.from(mainContent.querySelectorAll('p')).map(p => p.textContent);
-
-//         console.log('Paragraph', paragraphs);
-
-//         // Save the extracted paragraphs to the database using Prisma
-//         await prisma.paragraphs.createMany({
-//             data: paragraphs.map(text => ({ text })),
-//         });
-
-//         res.status(200).json({ message: 'Content extracted and saved successfully.' });
-//     } catch (error) {
-//         console.error('Error scraping and extracting content:', error);
-//         res.status(500).json({ message: 'Error scraping and extracting content.' });
-//     }
-// }

@@ -1,17 +1,17 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { getSinglePost, getPosts } from '../../lib/posts';
-import Link from 'next/link'
+import Link from 'next/link';
+
 // import { JSDOM } from 'jsdom';
 
 const PostPage = ({ post }) => {
     const contentRef = useRef(null);
     const [webpageContent, setWebpageContent] = useState('');
     const [postContent, setPostContent] = useState({
-        id: `${post.id}`,
-        title: `${post.title}`,
-        content: `${post.html}`
+        id: post.id,
+        title: post.title,
+        content: post.html
     });
-
 
 
     const sendDataToBackend = () => {
@@ -100,11 +100,11 @@ const PostPage = ({ post }) => {
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
                 </span>
             </div>
-            {/* <div>
+            <div>
                 <button className='bg-slate-400' onClick={sendDataToBackend}>
                     CHATBOT UI
                 </button>
-            </div> */}
+            </div>
         </div>
     );
 };
