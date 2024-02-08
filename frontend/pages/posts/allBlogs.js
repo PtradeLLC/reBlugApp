@@ -21,7 +21,7 @@ export default function Blog() {
     }, []);
 
     return (
-        <div className="bg-white pt-9 pb-24 sm:pb-8">
+        <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the Blog</h2>
@@ -39,12 +39,19 @@ export default function Blog() {
                         return (
                             <article key={post.id} className="flex flex-col items-start justify-between">
                                 <div className="relative w-full">
-                                    <Image
+                                    {/* <Image
                                         src={post.feature_image}
                                         alt={post.title}
                                         width={100}
                                         height={100}
-                                        className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                                        className=" w-full rounded-2xl bg-gray-100 object-cover "
+
+                                    // aspect-[16/9] sm:aspect-[2/1] lg:aspect-[3/2]
+                                    /> */}
+                                    <img
+                                        className="object-cover inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-500 to-gray-900 shadow-2xl"
+                                        src={post.feature_image}
+                                        alt="authorImage"
                                     />
 
                                     <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />

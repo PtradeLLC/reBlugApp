@@ -18,6 +18,15 @@ const PostPage = ({ post }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    console.log(post);
+
+    const postImages = {
+        postId1: "/images/trekker.jpg",
+        postId2: "/images/trekker.jpg",
+        postId3: "/images/trekker.jpg",
+    }
+    const imageUrl = postImages[`postId${post.id}`];
+
     return (
         <div className='mt-20'>
             <div className="relative mt-22 bg-gray-900 pb-20 sm:mt-36 sm:pb-24 xl:pb-0">
@@ -36,8 +45,8 @@ const PostPage = ({ post }) => {
                     <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
                         <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                             <img
-                                className="absolute inset-0 h-full w-full rounded-2xl bg-gray-800 object-cover shadow-2xl"
-                                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
+                                className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-500 to-gray-900 shadow-2xl"
+                                src={post.feature_image}
                                 alt="authorImage"
                             />
                         </div>
