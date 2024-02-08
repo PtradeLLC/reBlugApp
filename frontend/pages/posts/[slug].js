@@ -15,27 +15,8 @@ const PostPage = ({ post }) => {
         title: post.title,
         content: post.html
     });
-    const [isChatVisible, setIsChatVisible] = useState(false); // State variable for chat visibility
+
     const [isOpen, setIsOpen] = useState(false);
-
-
-    const sendDataToBackend = () => {
-        fetch('/api/blog/slugPage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ content: postContent }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response from API:', data);
-                // Handle response as needed
-            })
-            .catch(error => {
-                console.error('There was a problem sending data to the backend:', error);
-            });
-    };
 
     return (
         <div className='mt-20'>
@@ -115,7 +96,7 @@ const PostPage = ({ post }) => {
                 </span>
             </div>
             <div>
-                {<ChatUI isOpen={isOpen} setIsOpen={setIsOpen} />}
+                {<ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />}
             </div>
         </div>
     );
