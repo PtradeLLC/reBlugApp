@@ -64,18 +64,7 @@ module.exports = {
     require('flowbite/plugin')({
       charts: true,
     }),
-    nextui({
-      themes: {
-        dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#BEF264",
-              foreground: "#000000",
-            },
-            focus: "#BEF264",
-          },
-        },
-      },
-    }),
+    nextui()
+
   ],
 };

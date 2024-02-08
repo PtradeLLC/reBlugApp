@@ -1,8 +1,11 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 import { getSinglePost, getPosts } from '../../lib/posts';
 import Link from 'next/link';
+import Image from 'next/image';
+import ChatUI from '../../components/ChatBot/AI-ChatUI';
+import { Button } from '@nextui-org/react';
 
-// import { JSDOM } from 'jsdom';
 
 const PostPage = ({ post }) => {
     const contentRef = useRef(null);
@@ -12,6 +15,8 @@ const PostPage = ({ post }) => {
         title: post.title,
         content: post.html
     });
+    const [isChatVisible, setIsChatVisible] = useState(false); // State variable for chat visibility
+    const [isOpen, setIsOpen] = useState(false);
 
 
     const sendDataToBackend = () => {
@@ -84,26 +89,33 @@ const PostPage = ({ post }) => {
                 </div>
             </div>
             <div className='flex justify-end pr-6 mt-4'><Link href="/blogSignUp">All Post</Link></div>
-            <div className='mt-20 max-w-7xl md:flex lg:flex justify-center px-6 mx-auto bg-slate-50 rounded-md'>
-
-                <span className='max-w-7xl pr-4 pl-2 my-4'>
+            <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
+                <span className='w-86 sticky top-0 pr-4 sm:justify-center pl-2 my-4'>
                     <h1 className='font-semibold bg-slate-200 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
                     </h1>
-                    <ul className='mt-2 text-sm bg-slate-100 rounded'>
+                    <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded'>
                         <li>About Judith Black</li>
                         <li>Post Category</li>
                         <li>Submit product for future article</li>
                     </ul>
+                    <Button onPress={() => setIsOpen(true)} className="bg-[#878784] hover:bg-slate-700 text-white h-8 m-auto text-center font-thin px-4 rounded-md animate-pulse">
+                        <span className='flex'>
+                            <Image src="/images/questionmark.png"
+                                width={25}
+                                height={25}
+                                alt="Ask the article" />
+                        </span>
+                        Chat with Article
+                    </Button>
                 </span>
-                <span className='max-w-7xl my-4'>
+
+                <span className='col-span-2 my-4'>
                     <span className='text-xs flex justify-end my-2'>Reading time: {post.reading_time} mins</span>
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
                 </span>
             </div>
             <div>
-                <button className='bg-slate-400' onClick={sendDataToBackend}>
-                    CHATBOT UI
-                </button>
+                {<ChatUI isOpen={isOpen} setIsOpen={setIsOpen} />}
             </div>
         </div>
     );

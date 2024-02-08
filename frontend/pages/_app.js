@@ -7,7 +7,7 @@ import "../styles/globals.css";
 import Layout from "../components/Layout";
 import { UserProvider } from "../components/UserProvider";
 import { RecoilRoot } from 'recoil';
-import { NextUIProvider } from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
@@ -16,9 +16,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <UserProvider>
         <RecoilRoot>
           <Layout className="overflow-hidden bg-white py-24 sm:py-32">
-
-            <Component {...pageProps} />
-
+            <NextUIProvider>
+              <Component {...pageProps} />
+            </NextUIProvider>
             <Analytics />
             <ToastContainer />
           </Layout>
