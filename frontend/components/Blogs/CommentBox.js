@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useSession, signOut } from "next-auth/react";
+
 
 const CommentBox = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
@@ -25,10 +32,29 @@ const CommentBox = () => {
         }
     };
 
+    const handleTextAreaClick = () => {
+        // Open the modal when the text area is clicked
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleSignUp = () => {
+        // Check if the user is authenticated (session exists)
+        if (session) {
+            return;
+        } else {
+            router.push('/register');
+        }
+    };
+
+
     return (
         <div>
             <div>
-                <div class="flex mb-7 overflow-y-auto h-60 items-start gap-2.5">
+                <div class="flex mb-7 items-start gap-2.5">
                     <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
                     <div class="flex flex-col gap-1 w-full">
                         <div class="flex items-center space-x-2 rtl:space-x-reverse">
@@ -36,7 +62,7 @@ const CommentBox = () => {
                             <span class="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
                         </div>
                         <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                            <p class="text-sm font-normal text-gray-900 dark:text-white"> Let the author know what you think about this article and what you've learned. Please keep it clean and perhaps thoughtful.</p>
+                            <p class="text-sm font-normal text-gray-900 dark:text-white"> Let the author know what you think about this article and perhaps what you've learned. Please keep it clean.</p>
                         </div>
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                     </div>
@@ -66,42 +92,48 @@ const CommentBox = () => {
                     </div> */}
                 </div>
             </div>
-            {comments.map((comment) => (
-                <div key={comment.id}>
-                    <div class="flex flex-col gap-1 w-full">
-                        <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                            <p class="text-sm font-normal text-gray-900 dark:text-white">{comment.content}</p>
+            <div className="overflow-y-auto h-[250px]">
+                {comments.map((comment) => (
+                    <div className='' key={comment.id}>
+                        <div class="flex gap-1 w-full">
+                            {/* Update Image to User Profile Image */}
+                            <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                            <div class="flex flex-col  w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 ">
+                                <span className='flex justify-between'>
+                                    <p class="text-sm font-normal text-gray-900 dark:text-white">{comment.content}</p>
+                                    <span>
+                                        <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
+                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                            </svg>
+                                        </button>
+                                        <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
+                                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Forward</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </span>
+                                </span>
+                                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted by {comment.author} on {comment.date}</span>
+                            </div>
                         </div>
-                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted by {comment.author} on {comment.date}</span>
                     </div>
-                    <div>
-                        <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                            </svg>
-                        </button>
-                        <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Forward</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
 
             {/* Comment form */}
             <form onSubmit={handleSubmit}>
@@ -115,6 +147,7 @@ const CommentBox = () => {
                             placeholder="Share your thoughts..."
                             value={newComment}
                             onChange={handleCommentChange}
+                            onClick={handleTextAreaClick}
                             required
                         />
                     </div>
@@ -127,6 +160,46 @@ const CommentBox = () => {
             </form>
 
             <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>
+
+            {/* Modal for prompting users to create an account */}
+            {!session && showModal && (
+                <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                        {/* You can use an icon here */}
+                                    </div>
+                                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                        <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                            Please create an account or login to share your thoughts on the article
+                                        </h3>
+                                        <div className="mt-2">
+                                            <p className="text-sm text-gray-500">
+                                                If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                    onClick={handleCloseModal}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
