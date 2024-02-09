@@ -58,7 +58,7 @@ const CommentBox = () => {
                     <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
                     <div class="flex flex-col gap-1 w-full">
                         <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="text-sm font-semibold text-gray-900 dark:text-white">AI Assistant</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
                             <span class="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
                         </div>
                         <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
@@ -158,8 +158,13 @@ const CommentBox = () => {
                     </div>
                 </div>
             </form>
-
-            <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>
+            <div className='flex px-2'>
+                <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>
+                <span className="text-xs ml-2 font-thin text-gray-600">
+                    Powered by{" "}
+                    <Link href="http://forgedmart.com/">ForgedMart</Link>
+                </span>
+            </div>
 
             {/* Modal for prompting users to create an account */}
             {!session && showModal && (
@@ -173,11 +178,11 @@ const CommentBox = () => {
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div className="sm:flex sm:items-start">
                                     <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                        {/* You can use an icon here */}
+                                        <img src='/images/Marttwainxyz.png' />
                                     </div>
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                            Please create an account or login to share your thoughts on the article
+                                            Please create an account or login to share your thoughts on this article
                                         </h3>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
