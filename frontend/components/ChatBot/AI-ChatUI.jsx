@@ -176,7 +176,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                           Join Author's group
                         </button>
                         <button className="rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50">
-                          Select a tone
+                          Sponsor Article
                         </button>
                       </div>
                       <form onSubmit={handleSubmit} className="mt-2">
