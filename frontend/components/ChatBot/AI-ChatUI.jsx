@@ -193,7 +193,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             className="w-5 h-5 mr-1"
                             src="/images/productreview.png"
                           />
-                          Review my product
+                          Product submission
                         </button>
                       </div>
                       <form onSubmit={handleSubmit} className="mt-2">

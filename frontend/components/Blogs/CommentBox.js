@@ -54,6 +54,7 @@ const CommentBox = () => {
     return (
         <div>
             <div>
+                <span className='text-xl font-semibold flex justify-center my-4'>Share your thoughts</span>
                 <div class="flex mb-7 items-start gap-2.5">
                     <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
                     <div class="flex flex-col gap-1 w-full">
@@ -62,7 +63,7 @@ const CommentBox = () => {
                             <span class="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
                         </div>
                         <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                            <p class="text-sm font-normal text-gray-900 dark:text-white"> Let the author know what you think about this article and perhaps what you've learned. Please keep it clean.</p>
+                            <p class="text-sm font-normal text-gray-900 dark:text-white"> Let the author know what you think about this article and perhaps what you've learned. Please keep it clean and reader friendly.</p>
                         </div>
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                     </div>
