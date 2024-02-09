@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ChatUI from '../../components/ChatBot/AI-ChatUI';
 import { Button } from '@nextui-org/react';
+import CommentBox from '../../components/Blogs/CommentBox';
 
 
 const PostPage = ({ post }) => {
@@ -112,6 +113,76 @@ const PostPage = ({ post }) => {
                 <span className='col-span-2 my-4'>
                     <span className='text-xs flex justify-end my-2'>Reading time: {post.reading_time} mins</span>
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
+                    <div className="mb-22 flex w-full flex-row justify-end gap-x-2 text-slate-500">
+                        <button className="hover:text-slate-600">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                ></path>
+                                <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
+                            </svg>
+                        </button>
+                        <button
+                            className="hover:text-slate-600"
+                            type="button"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                ></path>
+                                <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
+                            </svg>
+                        </button>
+                        <button
+                            className="hover:text-slate-600"
+                            type="button"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                ></path>
+                                <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
+                                <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <hr class="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
+                    <span className=''>
+                        <CommentBox />
+                    </span>
                 </span>
             </div>
             <div>

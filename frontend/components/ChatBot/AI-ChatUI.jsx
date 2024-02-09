@@ -78,12 +78,11 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         {sentInput && (
                           <div className="flex flex-row px-2 py-4 sm:px-4">
                             <img
-                              className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-                              src="https://dummyimage.com/256x256/363536/ffffff&text=U"
+                              class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                              src="/images/useravatar.png"
                               alt="User Avatar"
                             />
-
-                            <div className="flex max-w-3xl items-center">
+                            <div className="flex px-2 max-w-3xl items-center">
                               <p>{sentInput}</p>
                             </div>
                           </div>
@@ -156,12 +155,12 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         </div>
                         <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
                           <img
-                            className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-                            src="https://dummyimage.com/256x256/354ea1/ffffff&text=G"
+                            class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                            src="/images/OtherVar.png"
                             alt="Guide Avatar"
                           />
 
-                          <div className="flex max-w-3xl items-center rounded-xl">
+                          <div className="flex px-2 max-w-3xl items-center rounded-xl">
                             <p>
                               {modelResponse
                                 ? modelResponse
