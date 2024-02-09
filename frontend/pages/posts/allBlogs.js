@@ -39,15 +39,6 @@ export default function Blog() {
                         return (
                             <article key={post.id} className="flex flex-col items-start justify-between">
                                 <div className="relative w-full">
-                                    {/* <Image
-                                        src={post.feature_image}
-                                        alt={post.title}
-                                        width={100}
-                                        height={100}
-                                        className=" w-full rounded-2xl bg-gray-100 object-cover "
-
-                                    // aspect-[16/9] sm:aspect-[2/1] lg:aspect-[3/2]
-                                    /> */}
                                     <img
                                         className="object-cover inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-500 to-gray-900 shadow-2xl"
                                         src={post.feature_image}

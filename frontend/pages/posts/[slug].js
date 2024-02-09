@@ -72,21 +72,21 @@ const PostPage = ({ post }) => {
                             </blockquote>
                             <figcaption className="mt-8 text-base">
                                 <div className="font-semibold text-white">Judith Black</div>
-                                <div className="mt-1 text-gray-400">CEO of Tuple</div>
+                                <div className="mt-1 text-gray-400">Social: </div>
                             </figcaption>
                         </figure>
                     </div>
                 </div>
             </div>
-            <div className='flex justify-end pr-6 mt-4'><Link href="/blogSignUp">All Post</Link></div>
+            <div className='flex pr-6 mt-14 text-gray-900 bg-white border w-28 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'><Link href="/blogSignUp">All Post</Link></div>
             <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
-                <span className='w-86 sticky top-0 pr-4 sm:justify-center pl-2 my-4'>
-                    <h1 className='font-semibold bg-slate-200 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
+                <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
+                    <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
                     </h1>
                     <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded'>
-                        <li>About Judith Black</li>
-                        <li>Post Category</li>
-                        <li>Submit product for future article</li>
+                        <li className=' border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>About Judith Black</li>
+                        <li className=' border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>Category: </li>
+                        <li className=' border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>Submit product for future article</li>
                     </ul>
                     <Button onPress={() => setIsOpen(true)} className="bg-[#878784] hover:bg-slate-700 text-white h-8 m-auto text-center font-thin px-4 rounded-md animate-pulse">
                         <span className='flex'>
