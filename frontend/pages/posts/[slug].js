@@ -78,7 +78,11 @@ const PostPage = ({ post }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex pr-6 mt-14 text-gray-900 bg-white border w-28 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'><Link href="/blogSignUp">All Post</Link></div>
+            <div className='flex pr-6 mt-14 text-gray-900 bg-white border w-32 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                <Link className='flex items-center' href="/blogSignUp">
+                    <img className='w-7 h-7 mr-1' src='/images/blogpost.png' /> All Post
+                </Link>
+            </div>
             <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
                 <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
                     <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
