@@ -164,7 +164,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             <p>
                               {modelResponse
                                 ? modelResponse
-                                : "Ask questions or conduct research on this article."}
+                                : "Ask questions or conduct your own research on this article."}
                             </p>
                           </div>
                         </div>

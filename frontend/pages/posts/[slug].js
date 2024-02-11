@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import { getSinglePost, getPosts } from '../../lib/posts';
 import Link from 'next/link';
@@ -6,6 +5,8 @@ import Image from 'next/image';
 import ChatUI from '../../components/ChatBot/AI-ChatUI';
 import { Button } from '@nextui-org/react';
 import CommentBox from '../../components/Blogs/CommentBox';
+import SubmissionInfo from '../../components/Blogs/BlogInfo';
+import ArticleInfo from '../../components/Blogs/ArticleInfo';
 
 
 const PostPage = ({ post }) => {
@@ -19,13 +20,20 @@ const PostPage = ({ post }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
+    const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
+    const [isArticleModalOpen, setIsArticleModalOpen] = useState(false);
 
-    const postImages = {
-        postId1: "/images/trekker.jpg",
-        postId2: "/images/trekker.jpg",
-        postId3: "/images/trekker.jpg",
-    }
-    const imageUrl = postImages[`postId${post.id}`];
+    const handleSubmissionModalOpen = () => {
+        setIsSubmissionModalOpen(true);
+    };
+
+    const handleArticleModalOpen = () => {
+        setIsArticleModalOpen(true);
+    };
+
+    const handleClick = () => {
+        setIsOpen(true);
+    };
 
     return (
         <div className='mt-20'>
@@ -78,7 +86,7 @@ const PostPage = ({ post }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex pr-6 mt-14 text-gray-900 bg-white border w-36 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+            <div className='flex pr-6 mt-14 h-10 text-gray-900 bg-white border w-36 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                 <Link className='flex items-center' href="/blogSignUp">
                     <img className='w-7 h-7 mr-1' src='/images/blogpost.png' /> All Posts
                 </Link>
@@ -91,19 +99,27 @@ const PostPage = ({ post }) => {
                         {/* <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/about.png' /> About Judith Black
                         </li> */}
-                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                        <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/category.png' /> Category: {blogCategory ? blogCategory : "Marketing"}
                         </li>
-                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/submit.png' /> Submit product for future article
+                        <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                            <img className='w-7 h-7 mr-1' src='/images/users.png' />
+                            <div className=''>Readership: 2000 Readers</div>
                         </li>
-                        <Link href={'/register'}>
-                            <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                                <img className='w-7 h-7 mr-1' src='/images/aa.png' />Get Article Assistant for your Blog
-                            </li>
-                        </Link>
+                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                            <img className='w-7 h-7 mr-1' src='/images/submit.png' />
+                            <button name='ProductSubmission' type='button' onClick={handleSubmissionModalOpen}>
+                                Submit product for future article
+                            </button>
+                        </li>
+                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                            <img className='w-7 h-7 mr-1' src='/images/aa.png' />
+                            <button name='ArticleAssistant' type='button' onClick={handleArticleModalOpen}>
+                                Get Article Assistant for your Blog
+                            </button>
+                        </li>
                     </ul>
-                    <Button onPress={() => setIsOpen(true)} className="bg-[#878784] hover:bg-slate-700 text-white h-8 m-auto text-center font-thin px-4 rounded-md animate-pulse">
+                    <Button onClick={() => setIsOpen(true)} className="bg-[#878784] hover:bg-slate-700 text-white h-8 m-auto text-center font-thin px-4 rounded-md animate-pulse">
                         <span className='flex'>
                             <Image src="/images/questionmark.png"
                                 width={25}
@@ -117,72 +133,6 @@ const PostPage = ({ post }) => {
                 <span className='col-span-2 my-4'>
                     <span className='text-xs flex justify-end my-2'>Reading time: {post.reading_time} mins</span>
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
-                    <div className="mb-22 flex w-full flex-row justify-end gap-x-2 text-slate-500">
-                        <button className="hover:text-slate-600">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                ></path>
-                                <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
-                            </svg>
-                        </button>
-                        <button
-                            className="hover:text-slate-600"
-                            type="button"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                ></path>
-                                <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
-                            </svg>
-                        </button>
-                        <button
-                            className="hover:text-slate-600"
-                            type="button"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                ></path>
-                                <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
-                                <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </button>
-                    </div>
                     <hr class="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                     <span className=''>
                         <CommentBox />
@@ -192,10 +142,15 @@ const PostPage = ({ post }) => {
             <div>
                 {<ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />}
             </div>
+            <div>
+                <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
+            </div>
+            <div>
+                <ArticleInfo isOpen={isArticleModalOpen} setIsOpen={setIsArticleModalOpen} />
+            </div>
         </div>
     );
 };
-
 
 export async function getStaticPaths() {
     const allPosts = await getPosts();
@@ -209,7 +164,6 @@ export async function getStaticPaths() {
         fallback: false
     };
 }
-
 
 export async function getStaticProps({ params }) {
     const post = await getSinglePost(params.slug);
