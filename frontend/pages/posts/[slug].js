@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { getSinglePost, getPosts } from '../../lib/posts';
 import Link from 'next/link';
 import Image from 'next/image';

@@ -33,7 +33,6 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Response from API:", data);
         setInputValue("");
         setSentInput(inputValue);
         setModelResponse(data.finalResponse);

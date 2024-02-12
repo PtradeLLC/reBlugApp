@@ -26,12 +26,12 @@ const SubmissionInfo = ({ isOpen, setIsOpen }) => {
                         To see how it works, Please close this window and click on 'Chat with this Article' on this page.
                     </div>
                     <div className="flex justify-end">
-                        <button
+                        <Link href={'/register'}
                             type="submit"
                             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                         >
                             Get Started
-                        </button>
+                        </Link>
                     </div>
                 </ModalBody>
                 <ModalFooter>
