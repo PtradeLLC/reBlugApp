@@ -14,6 +14,7 @@ export default async function handler(req, res) {
 
             const fullName = submission.fullName;
             const description = submission.description;
+            const sponsorEmail = submission.email; //TO DO:::Send email to sponsors
 
             // Retrieve user session
             const session = await getServerSession(req, res);

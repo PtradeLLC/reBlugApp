@@ -15,6 +15,11 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const [modelResponse, setModelResponse] = useState("");
   const [sentInput, setSentInput] = useState("");
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+  const [inquiries, setInquiries] = useState({
+    authorsGroup: "How can I join author's group",
+    productSubmission:
+      "How can I submit my product to be included in future article",
+  });
 
   const sendDataToBackend = () => {
     fetch("/api/blog/slugPage", {
@@ -36,6 +41,33 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
         setInputValue("");
         setSentInput(inputValue);
         setModelResponse(data.finalResponse);
+      })
+      .catch((error) => {
+        console.error(
+          "There was a problem sending data to the backend:",
+          error
+        );
+      });
+  };
+
+  const handleClick = (buttonType) => {
+    let requestData = {};
+    if (buttonType === "authorsGroup") {
+      requestData = { group: inquiries.authorsGroup };
+    } else if (buttonType === "productSubmission") {
+      requestData = { submission: inquiries.productSubmission };
+    }
+
+    fetch("/api/blog/questionAI", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setModelResponse(data.text);
       })
       .catch((error) => {
         console.error(
@@ -170,7 +202,10 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                       </div>
 
                       <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 sm:text-sm">
-                        <button className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50">
+                        <button
+                          onClick={() => handleClick("authorsGroup")}
+                          className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
+                        >
                           <svg
                             class="w-6 h-6 text-gray-800 dark:text-white"
                             aria-hidden="true"
@@ -187,7 +222,10 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                           </svg>
                           Join Author's group
                         </button>
-                        <button className=" flex items-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50">
+                        <button
+                          onClick={() => handleClick("productSubmission")}
+                          className=" flex items-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
+                        >
                           <img
                             className="w-5 h-5 mr-1"
                             src="/images/productreview.png"
@@ -197,7 +235,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                       </div>
                       <form onSubmit={handleSubmit} className="mt-2">
                         <label htmlFor="chat-input" className="sr-only">
-                          Enter your prompt
+                          Ask this article
                         </label>
                         <div className="relative">
                           <textarea
