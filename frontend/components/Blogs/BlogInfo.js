@@ -44,6 +44,7 @@ const SubmissionInfo = ({ isOpen, setIsOpen }) => {
         <Modal
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
+            className="m-auto"
         >
             <ModalContent>
                 <ModalHeader className="flex flex-col gap-1">

@@ -105,7 +105,7 @@ const PostPage = ({ post }) => {
                     <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
                         <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                             <img
-                                className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-500 to-gray-900 shadow-2xl"
+                                className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-800 to-gray-900 shadow-2xl"
                                 src={post.feature_image}
                                 alt="authorImage"
                             />
@@ -167,13 +167,15 @@ const PostPage = ({ post }) => {
                         <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/submit.png' />
                             <button name='ProductSubmission' type='button' onClick={handleSubmissionModalOpen}>
-                                Submit product for future article
+                                Submit Product for future article
                             </button>
                         </li>
                         <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/aa.png' />
                             <button name='ArticleAssistant' type='button' onClick={handleArticleModalOpen}>
-                                Get Article Assistant for your Blog
+                                <span>
+                                    Article Assistant for your Blog
+                                </span>
                             </button>
                         </li>
                     </ul>
@@ -200,10 +202,10 @@ const PostPage = ({ post }) => {
             <div>
                 {<ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />}
             </div>
-            <div>
+            <div className='mx-4 px-2'>
                 <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
             </div>
-            <div>
+            <div className='mx-4 px-2'>
                 <ArticleInfo isOpen={isArticleModalOpen} setIsOpen={setIsArticleModalOpen} />
             </div>
         </div>
