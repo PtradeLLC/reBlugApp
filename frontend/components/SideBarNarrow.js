@@ -28,7 +28,7 @@ const SideBarNarrow = () => {
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
         { name: 'Database', href: '/dashboard/userdb', icon: ServerStackIcon },
         { name: 'Marketing', href: '#', icon: MegaphoneIcon },
-        { name: 'Blogging', href: '#', icon: UserGroupIcon },
+        { name: 'Blogging', href: '/blogs', icon: UserGroupIcon },
         { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
         { name: 'Resources', href: '#', icon: RectangleStackIcon },
         { name: 'Profile', href: '/profile', icon: CogIcon },

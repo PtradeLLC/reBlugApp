@@ -57,9 +57,9 @@ const SubmissionInfo = ({ isOpen, setIsOpen }) => {
                             product aligns with the author's current or future projects and is under consideration,
                             the author will reach out to you to discuss their review process and next steps.
                         </p>
-                        <p className="my-3 text-black font-thin text-sm">
+                        {/* <p className="my-3 text-black font-thin text-sm">
                             Click here to see sample of a sponsored article.
-                        </p>
+                        </p> */}
                         <form onSubmit={handleSubmit} className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 flex flex-col">
                             <div className="px-4 py-6 sm:p-8">
                                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">

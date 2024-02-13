@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import { type } from 'os';
 
 const prisma = new PrismaClient();
 
@@ -79,7 +80,6 @@ export default async function handler(req, res) {
 
                 // Join the non-starred parts to form the final response
                 const finalResponse = nonStarredParts.join('');
-                console.log(finalResponse);
 
                 res.status(200).json({ message: 'Content extracted and saved successfully.', finalResponse });
             }

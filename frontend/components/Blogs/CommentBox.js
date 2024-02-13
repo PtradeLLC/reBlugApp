@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react";
 
 
-const CommentBox = () => {
+const CommentBox = ({ postContent }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -15,20 +15,42 @@ const CommentBox = () => {
         setNewComment(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (newComment.trim() !== '') {
-            // Create a new comment object with some default values
+
+        if (newComment.trim() !== '' && session) {
+            const user = session.user;
+
             const commentObject = {
-                id: comments.length + 1, // Assign a unique id
-                content: newComment,
-                author: 'User', // You can use the actual user's name here
-                date: new Date().toLocaleString(), // Current date and time
+                articleContent: newComment,
+                user: user,
+                date: new Date().toLocaleString(),
             };
-            // Add the new comment to the comments array
-            setComments([...comments, commentObject]);
-            // Clear the textarea after posting the comment
-            setNewComment('');
+
+            const articleComment = commentObject.articleContent
+            const articleUser = user.name;
+            const articleEmail = user.email;
+
+            try {
+                const response = await fetch('/api/blog/commentsystem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user: articleUser, articleContent: articleComment, email: articleEmail })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to post comment');
+                }
+
+                const data = await response.json();
+
+                setComments([...comments, data]); // Update comments state with the response from the server
+                setNewComment('');
+            } catch (error) {
+                console.error('Error posting comment:', error.message);
+            }
         }
     };
 
@@ -67,30 +89,6 @@ const CommentBox = () => {
                         </div>
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                     </div>
-                    {/* <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                            <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                        </svg>
-                    </button>
-                    <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Forward</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                            </li>
-                        </ul>
-                    </div> */}
                 </div>
             </div>
             <div className="overflow-y-auto h-[250px]">
@@ -140,7 +138,7 @@ const CommentBox = () => {
             <form onSubmit={handleSubmit}>
                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                     <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-                        <label htmlFor="comment" className="sr-only">Your thoughts</label>
+                        <label htmlFor="comment" className="sr-only">Share your thoughts</label>
                         <textarea
                             id="comment"
                             rows="4"
