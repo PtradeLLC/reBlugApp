@@ -60,7 +60,7 @@ export default function BlogCategories() {
 
     return (
         <div className='flex'>
-            <div>
+            <div className='w-72'>
                 <header className="bg-white mt-20">
                     <nav className="flex items-center bg-slate-100 justify-between p-6 lg:px-8" aria-label="Global">
                         <div className="flex lg:hidden">
