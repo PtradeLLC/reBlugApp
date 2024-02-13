@@ -1,5 +1,4 @@
 import React from 'react';
-import Blog from "./posts/allBlogs"
 import BlogCategories from '../components/Blogs/blogCategory';
 
 const Blogger = () => {

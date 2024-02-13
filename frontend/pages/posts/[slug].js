@@ -88,7 +88,7 @@ const PostPage = ({ post }) => {
 
     return (
         <div className='mt-20'>
-            <div className="relative mt-22 bg-gray-900 pb-20 sm:mt-36 sm:pb-24 xl:pb-0">
+            <div className="relative mt-2 bg-gray-900 pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
                 <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
                     <div className="absolute left-[calc(50%-19rem)] top-[calc(50%-36rem)] transform-gpu blur-3xl">
                         <div

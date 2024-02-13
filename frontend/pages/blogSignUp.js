@@ -1,10 +1,10 @@
 import React from 'react'
-import Blog from "./posts/allBlogs"
+import BlogCategories from '../components/Blogs/blogCategory';
 
 const blogSignUp = () => {
     return (
         <div>
-            <Blog />
+            <BlogCategories />
         </div>
     )
 }
