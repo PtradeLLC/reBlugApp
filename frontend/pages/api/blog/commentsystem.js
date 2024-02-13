@@ -11,9 +11,6 @@ export default async function handler(req, res) {
         // Extract the content from the request body
         const { user, articleContent, email } = req.body;
 
-        console.log("Comment:", user);
-        console.log("Comment:", articleContent);
-        console.log("Comment:", email);
 
         // Check if the content is defined and not empty
         // if (!content || !postContent) {
@@ -34,6 +31,9 @@ export default async function handler(req, res) {
         const run = async () => {
 
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const contactAuthor = () => {
+                console.log("Author is contacted");
+            }
 
             const safetySettings = [
                 {
@@ -61,38 +61,44 @@ export default async function handler(req, res) {
             };
 
 
-            // if (articleComment) {
-            //     const user = `${articleComment}`;
+            if (articleContent) {
+                const userPrompt = `${articleContent}`;
 
-            //     const parts = [
-            //         {
-            //             text: `Please use ${user} as the 'comment' that the user is posting about this article, and use ${articleRef} as a reference 
-            //             to where you get your answers from about this article's content. Use the context of ${articleRef} to provide meaningful 
-            //             response in a friendly and engaging manner. When addressing the content and providing answer, refer to the author of the 
-            //             article as 'the Author'.
+                const parts = [
+                    {
+                        text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and when responding to the 
+                        user and providing answer, do the following
+                        1. Provide a concise and informative answer (no more than 50 words) for a given comment.
+                        2. Provide answers with credible sources.
+                        3. Refer to the user by '@${user}'. For example, If User's name is 'Jon', then refer to the user as '@Jon'.
+                        4. Do not repeat text. 
+                        5. If you are uncertain or concerned about your response to a 'comment' or 'question', say that 'you will let the author know about the question or comment, 
+                        and can circle back to the user with accurate information. Ask if the user wants to reach out the author' If user says 'yes' or 'agrees', perform the following actions:
+                        5a. Send an email to the author by executing the ${contactAuthor} function.
+                        6. An example of a 'question' is "How do I craft a compelling blog article?".
+                        6a. An example of a 'comment' is "This article is insightful".
+                        7. If user asks a 'question', respond back with a thoughtful, researched answer, and if user posts a 'comment', respond back with gratitude.
+                        8. If user posts a question or comment in 'First Person singular Pronoun' e.g: "How do I Craft Compelling Content for my blog?", respond back with
+                        'Second Person Pronoun" e.g: "How can you craft compelling content for your blog?"
+                        9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can get an accurate response from the article author.
+                    ` },
+                ];
 
-            //             Only use the context of this article to provide your response. 
-            //             If user Anything post a comment outside the scope of ${articleRef}, please inform them that the comment is outside the scope 
-            //             of the article. However, diligently research the web for meaningful answers or responses with notable sources.
-            //         ` },
-            //     ];
+                const result = await model.generateContent({
+                    contents: [{ role: "user", parts }],
+                    generationConfig,
+                    safetySettings,
+                });
+                const response = result.response;
+                const text = response.text();
+                // Extract the non-starred parts of the response
+                const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
 
-            //     const result = await model.generateContent({
-            //         contents: [{ role: "user", parts }],
-            //         generationConfig,
-            //         safetySettings,
-            //     });
-            //     const response = result.response;
-            //     const text = response.text();
-            //     // Extract the non-starred parts of the response
-            //     const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
+                // Join the non-starred parts to form the final response
+                const finalResponse = nonStarredParts.join('');
 
-            //     // Join the non-starred parts to form the final response
-            //     const finalResponse = nonStarredParts.join('');
-            //     console.log("FINAL RES", finalResponse);
-
-            //     res.status(200).json({ message: 'Content extracted and saved successfully.' });
-            // }
+                res.status(200).json({ message: 'Content extracted and saved successfully.', articleContent, finalResponse });
+            }
         };
 
         await run();

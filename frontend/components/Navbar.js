@@ -47,13 +47,19 @@ export default function Navbar() {
                     href={"/creators"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    Bloggers
+                    For Bloggers
                   </Link>
                   <Link
                     href={"/brands"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
                     Brands
+                  </Link>
+                  <Link
+                    href={"/blogs"}
+                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
+                  >
+                    Blog
                   </Link>
                   {/* <Link
                     href={"/bloggers-platforms"}
