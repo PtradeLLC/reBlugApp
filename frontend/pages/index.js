@@ -1,25 +1,45 @@
 import Head from "next/head";
 import Hero from "../components/Hero";
 import Tools from "../components/Tools";
-import Influencer from "../components/Influencers";
 import Affiliate from "../components/Affliate";
 import WaitingList from "../components/waitingList";
 import AIBlog from "../components/blogSection";
 import LogoTwo from "../components/LogoTwo";
 import { useState } from "react";
-import Blog from "./posts/allBlogs"
+import Blog from "./posts/allBlogs";
+
+
+export const metadata = {
+  title: "ForgedMart",
+  description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+  openGraph: {
+    title: "ForgedMart",
+    description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+    url: "https://forgedmart.com",
+    siteName: "ForgedMart",
+    type: "website",
+    images: [
+      {
+        url: "/images/Marttwainxyz.png",
+      },
+    ],
+  },
+}
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
 
+
+
   return (
     <div>
-      <Head>
-        <title>ForgedMart</title>
+      {/* <Head>
+        <title></title>
         <meta name="description" content="A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
+
 
       <main className="flex flex-col justify-center items-center">
         <span className="">

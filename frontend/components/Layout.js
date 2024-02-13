@@ -4,7 +4,25 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import SideBarNarrow from "./SideBarNarrow";
 import { useSession, signIn, signOut } from "next-auth/react";
 import PrelineScript from "./PrelineScript";
-import { NextUIProvider } from "@nextui-org/react";
+
+
+
+export const metadata = {
+  title: "ForgedMart",
+  description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+  openGraph: {
+    title: "ForgedMart",
+    description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+    url: "https://forgedmart.com",
+    siteName: "ForgedMart",
+    type: "website",
+    images: [
+      {
+        url: "/images/Marttwainxyz.png",
+      },
+    ],
+  },
+}
 
 
 

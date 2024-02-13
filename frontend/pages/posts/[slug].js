@@ -60,6 +60,7 @@ const navigation = [
 ];
 
 
+
 const PostPage = ({ post }) => {
     const contentRef = useRef(null);
     const [webpageContent, setWebpageContent] = useState('');
@@ -143,7 +144,7 @@ const PostPage = ({ post }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex pr-6 mt-14 h-10 text-gray-900 bg-white border w-36 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+            <div className='flex pr-6 mt-14 ml-2 h-10 text-gray-900 bg-white border w-36 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                 <Link className='flex items-center' href="/blogSignUp">
                     <img className='w-7 h-7 mr-1' src='/images/blogpost.png' /> All Posts
                 </Link>
@@ -153,9 +154,9 @@ const PostPage = ({ post }) => {
                     <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
                     </h1>
                     <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
-                        {/* <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/about.png' /> About Judith Black
-                        </li> */}
+                        </li>
                         <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/category.png' /> Category: {blogCategory ? blogCategory : "Marketing"}
                         </li>
@@ -233,6 +234,23 @@ export async function getStaticProps({ params }) {
 
     return {
         props: { post }
+    };
+}
+
+export async function generateMetadata({ params }) {
+    const post = await getSinglePost(params.slug);
+    return {
+        title: post.title,
+        description: post.excerpt,
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            images: [
+                {
+                    url: post.image,
+                },
+            ],
+        },
     };
 }
 
