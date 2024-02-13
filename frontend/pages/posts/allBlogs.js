@@ -24,7 +24,7 @@ export default function Blog() {
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the Blog</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">The Blog</h2>
                     <p className="mt-2 text-lg leading-8 text-gray-600">
                         AI powered blog allow you to research the subject further by having a conversation and asking questions related to the articles.
                     </p>

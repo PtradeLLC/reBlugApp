@@ -5,7 +5,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
 } from "@nextui-org/react";
 import Link from "next/link";
 
@@ -94,6 +93,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
         scrollBehavior={scrollBehavior}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        className="m-auto"
       >
         <ModalContent>
           {(onClose) => (

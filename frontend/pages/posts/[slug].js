@@ -200,7 +200,7 @@ const PostPage = ({ post }) => {
                 </span>
             </div>
             <div>
-                {<ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />}
+                <ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
             <div className='mx-4 px-2'>
                 <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
