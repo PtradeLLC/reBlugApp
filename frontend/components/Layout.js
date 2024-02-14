@@ -6,27 +6,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import PrelineScript from "./PrelineScript";
 
 
-
-export const metadata = {
-  title: "ForgedMart",
-  description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-  openGraph: {
-    title: "ForgedMart",
-    description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-    url: "https://forgedmart.com",
-    siteName: "ForgedMart",
-    type: "website",
-    images: [
-      {
-        url: "/images/Marttwainxyz.png",
-      },
-    ],
-  },
-}
-
-
-
-
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
   return (

@@ -9,22 +9,22 @@ import { useState } from "react";
 import Blog from "./posts/allBlogs";
 
 
-export const metadata = {
-  title: "ForgedMart",
-  description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-  openGraph: {
-    title: "ForgedMart",
-    description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-    url: "https://forgedmart.com",
-    siteName: "ForgedMart",
-    type: "website",
-    images: [
-      {
-        url: "/images/Marttwainxyz.png",
-      },
-    ],
-  },
-}
+// export const metadata = {
+//   title: "ForgedMart",
+//   description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+//   openGraph: {
+//     title: "ForgedMart",
+//     description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
+//     url: "https://forgedmart.com",
+//     siteName: "ForgedMart",
+//     type: "website",
+//     images: [
+//       {
+//         url: "/images/Marttwainxyz.png",
+//       },
+//     ],
+//   },
+// }
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -33,12 +33,12 @@ const Home = () => {
 
   return (
     <div>
-      {/* <Head>
-        <title></title>
+      <Head>
+        <title>ForgedMart</title>
         <meta name="description" content="A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-      </Head> */}
+      </Head>
 
 
       <main className="flex flex-col justify-center items-center">
