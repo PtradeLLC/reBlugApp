@@ -68,11 +68,7 @@ const SubmissionInfo = ({ isOpen, setIsOpen }) => {
     return (
         <Modal
             isOpen={isOpen}
-            onClose={() => {
-                if (successMessage) {
-                    setIsOpen(false);
-                }
-            }}
+            onClose={() => setIsOpen(false)}
             className="m-auto"
         >
             <ModalContent>

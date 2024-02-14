@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-import { type } from 'os';
 
 const prisma = new PrismaClient();
 
@@ -16,10 +15,10 @@ export default async function handler(req, res) {
             throw new Error('Content is not provided or is not a string.');
         }
 
-        // // Use cheerio to load the HTML content
+        // Use cheerio to load the HTML content
         const $ = cheerio.load(postContent.content);
 
-        // // Extract the text content without HTML tags
+        // Extract the text content without HTML tags
         const textContent = $('p').text();
 
         const articleQuery = { question: content, reference: textContent };
@@ -108,14 +107,12 @@ export default async function handler(req, res) {
         await run();
 
         // Save the content to the database using Prisma
-        // Adjust this part based on your data model and how you want to save content
-        // For example:
-        // await prisma.post.create({
-        //     data: {
-        //         title: content.title,
-        //         body: content.body,
-        //     },
-        // });
+        await prisma.post.create({
+            data: {
+                title: content.title,
+                body: content.body,
+            },
+        });
 
 
     } catch (error) {

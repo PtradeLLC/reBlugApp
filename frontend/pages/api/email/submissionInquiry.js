@@ -26,12 +26,25 @@ export default async function handler(req, res) {
             const msg = {
                 to: userEmail,
                 from: "support@forgedmart.com",
-                subject: `ForgedMart just landed you a sponsorship request`,
+                subject: `ForgedMart just landed you request for sponsorship `,
                 html: emailHtml,
             };
 
             // Send email using SendGrid
             await sgMail.send(msg);
+
+
+            // CHECK THIS CODE BELOW
+            const newSubmission = await prisma.submission.create({
+                data: {
+                    fullName: submission.fullName,
+                    description: submission.description,
+                    email: submission.email,
+                    website: submission.website,
+                },
+            });
+
+            console.log("New Submission:", newSubmission);
 
             // Respond with success
             res.status(200).json({ success: true });
@@ -43,41 +56,3 @@ export default async function handler(req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
-
-// import { PrismaClient } from '@prisma/client';
-// import { getServerSession } from "next-auth/next";
-// import sgMail from "@sendgrid/mail";
-// import { render } from "@react-email/render";
-// import SubmissionTemplate from '../emailfiles/submissionTemplate';
-
-// const prisma = new PrismaClient();
-
-// export default async function handler(req, res) {
-//     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//     try {
-//         if (req.method === 'POST') {
-//             const { dataToSend } = req.body;
-
-//             console.log("Genetical:", dataToSend);
-
-//             const msg = {
-//                 to: userEmail,
-//                 from: "support@forgedmart.com",
-//                 subject: `ForgedMart just landed you a sponsorship request`,
-//                 html: emailHtml,
-//             };
-
-//             // Send email using SendGrid
-//             await sgMail.send(msg);
-
-//             // Respond with success
-//             res.status(200).json({ success: true });
-//         } else {
-//             res.status(405).json({ error: 'Method Not Allowed' });
-//         }
-//     } catch (error) {
-//         console.error("Error sending email:", error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// }
