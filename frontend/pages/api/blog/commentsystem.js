@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-// import { getSinglePost, getPosts } from '../../lib/posts';
+
 
 const prisma = new PrismaClient();
 
@@ -10,23 +9,6 @@ export default async function handler(req, res) {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
         const { user, articleContent, email } = req.body;
-
-
-        // Check if the content is defined and not empty
-        // if (!content || !postContent) {
-        //     throw new Error('Content is not provided or is not a string.');
-        // }
-
-        // Use cheerio to load the HTML content
-        // const $ = cheerio.load(postContent.content);
-
-        // Extract the text content without HTML tags
-        // const textContent = $('p').text();
-
-        // const articleQuery = { reference: textContent };
-        // const articleRef = articleQuery.reference;
-        // const articleComment = articleQuery.comment;
-
 
         const run = async () => {
 

@@ -14,8 +14,6 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const formData = req.body;
 
-            console.log("FormData:", formData);
-
             // Fetch the user from the database
             const user = await prisma.user.findUnique({
                 where: {

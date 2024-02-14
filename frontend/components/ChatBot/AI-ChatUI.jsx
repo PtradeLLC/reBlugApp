@@ -33,7 +33,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
           title: postContent.title,
           content: postContent.content,
         },
-      }), // Sending the input value to the backend
+      }),
     })
       .then((response) => response.json())
       .then((data) => {

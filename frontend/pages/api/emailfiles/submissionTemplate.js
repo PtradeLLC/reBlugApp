@@ -12,7 +12,7 @@ import {
     Text,
 } from "@react-email/components";
 
-const SubmissionTemplate = ({ firstName, description, fullName }) => (
+const SubmissionTemplate = ({ firstName, description, fullName, website }) => (
     <Html>
         <Head />
         <Preview>
@@ -21,8 +21,8 @@ const SubmissionTemplate = ({ firstName, description, fullName }) => (
         <Body style={main}>
             <Container style={container}>
                 <Img
-                    src={`/images/OtherVar.png`}
-                    width="170"
+                    src={`https://forgedmart.com/images/OtherVar.png`}
+                    width="70"
                     height="50"
                     alt="Koala"
                     style={logo}
@@ -30,15 +30,14 @@ const SubmissionTemplate = ({ firstName, description, fullName }) => (
                 <Text style={paragraph}>Hi {firstName},</Text>
                 <Text style={paragraph}>
                     You have a new sponsorship inquiry from {fullName} waiting for your response.
-                    Below is a description of product they want you to review for potential inclusion
-                    in your next article
+                    Below is a description of the product they want you to review for potential inclusion
+                    in your next article, and you can find further information about the product on their website: {website}.
                     <br />
                     <Hr style={hr} />
                     <Text style={review}>{description}</Text>
                     <Hr style={hr} />
                     <br />
-                    Please click on the button below to login to your ForgedMart account for
-                    more information.
+                    Please click on the button below to login to your ForgedMart account to proceed.
                 </Text>
                 <Section style={btnContainer}>
                     <Button style={button} href="https://forgedmart.com/login">
@@ -56,9 +55,7 @@ const SubmissionTemplate = ({ firstName, description, fullName }) => (
     </Html>
 );
 
-SubmissionTemplate.PreviewProps = {
-    firstName,
-};
+
 
 export default SubmissionTemplate;
 

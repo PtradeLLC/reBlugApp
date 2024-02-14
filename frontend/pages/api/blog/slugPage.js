@@ -84,7 +84,7 @@ export default async function handler(req, res) {
                         'Second Person Pronoun" e.g: "How can you craft compelling content for your blog?"
                         9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can get an accurate response from the article author.
                         10. Refer to the author of the article as 'the Author'
-                        11. Remind user to comment in the Commenting tool on the page to share their thoughts and interact with others.
+                        11. Remind user to comment by using the 'Commenting tool' on the page to share their thoughts and interact with others.
                     ` },
                 ];
 

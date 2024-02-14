@@ -24,7 +24,7 @@ const navigation = [
 const blogCategories = [
     { name: "Books and Literature", href: "#", icon: "booksIcon" },
     { name: "DIY and Crafts", href: "#", icon: "diyIcon" },
-    { name: "Education and Learning", href: "#", icon: "educationIcon" },
+    { name: "Learning", href: "#", icon: "educationIcon" },
     { name: "Entertainment", href: "#", icon: "entertainmentIcon" },
     { name: "Marketing", href: "#", icon: "entertainmentIcon" },
     { name: "Pop Culture", href: "#", icon: "environmentIcon" },
