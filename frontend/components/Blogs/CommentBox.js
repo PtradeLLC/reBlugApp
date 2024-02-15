@@ -15,9 +15,6 @@ const CommentBox = ({ post }) => {
     };
 
 
-    console.log(comments, "FROM FRONTEND");
-
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -51,8 +48,6 @@ const CommentBox = ({ post }) => {
                 const data = await response.json();
                 const { articleComments, finalResponse, date } = data;
 
-
-                // setComments([...comments, { ...commentObject, articleComments, finalResponse }]);
                 setComments(prevComments => [...prevComments, { ...commentObject, articleComments, finalResponse }]);
                 setNewComment('');
             } catch (error) {

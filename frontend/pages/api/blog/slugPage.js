@@ -8,7 +8,9 @@ export default async function handler(req, res) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
-        const { content, postContent } = req.body;
+        const { content, postContent, userName } = req.body;
+
+        console.log("SLUGPAGE:", content, postContent);
 
         // Check if the content is defined and not empty
         if (!content || typeof content !== 'string' || !postContent) {
@@ -21,9 +23,14 @@ export default async function handler(req, res) {
         // Extract the text content without HTML tags
         const textContent = $('p').text();
 
+        console.log(textContent, "TextCont");
+
         const articleQuery = { question: content, reference: textContent };
         const articleQuestion = articleQuery.question;
         const articleRef = articleQuery.reference;
+
+
+        console.log(articleQuery, articleQuestion, articleRef, "ARTICLE");
 
 
         const run = async () => {
@@ -71,7 +78,7 @@ export default async function handler(req, res) {
                         When responding to the user and providing answer, do the following:
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
-                        3. Refer to the user by '@$userName'. For example, If User's name is 'Jon', then refer to the user as '@Jon'.
+                        3. Refer to the user by '@${userName}'. For example, If User's name is 'Jon', then refer to the user as '@Jon'.
                         4. Do not repeat text. 
                         5. If you are uncertain or concerned about your response to a 'comment' or 'question', say that 'you will let the author know about the question or comment, 
                         and can circle back to the user with accurate information. Ask if the user wants to reach out the author' If user says 'yes' or 'agrees', perform the following actions:
@@ -105,15 +112,6 @@ export default async function handler(req, res) {
         };
 
         await run();
-
-        // Save the content to the database using Prisma
-        await prisma.post.create({
-            data: {
-                title: content.title,
-                body: content.body,
-            },
-        });
-
 
     } catch (error) {
         console.error('Error extracting and saving content:', error);
