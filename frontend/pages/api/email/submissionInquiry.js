@@ -33,8 +33,6 @@ export default async function handler(req, res) {
             // Send email using SendGrid
             await sgMail.send(msg);
 
-
-            // CHECK THIS CODE BELOW
             const newSubmission = await prisma.submission.create({
                 data: {
                     fullName: submission.fullName,
@@ -43,8 +41,6 @@ export default async function handler(req, res) {
                     website: submission.website,
                 },
             });
-
-            console.log("New Submission:", newSubmission);
 
             // Respond with success
             res.status(200).json({ success: true });

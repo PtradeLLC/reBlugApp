@@ -1,39 +1,26 @@
 import { PrismaClient } from '@prisma/client';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
-
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
-        const { user, articleContent, email } = req.body;
+        const { articleContent, email: user, postTitle, postId } = req.body;
 
         const run = async () => {
-
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
             const contactAuthor = () => {
                 console.log("Author is contacted");
-            }
+            };
 
             const safetySettings = [
-                {
-                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                },
+                { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+                { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+                { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+                { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
             ];
 
             const generationConfig = {
@@ -42,13 +29,11 @@ export default async function handler(req, res) {
                 topP: 1,
             };
 
-
             if (articleContent) {
                 const userPrompt = `${articleContent}`;
 
-                const parts = [
-                    {
-                        text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and when responding to the 
+                const parts = [{
+                    text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and when responding to the 
                         user and providing answer, do the following
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
@@ -62,15 +47,15 @@ export default async function handler(req, res) {
                         7. If user asks a 'question', respond back with a thoughtful, researched answer, and if user posts a 'comment', respond back with gratitude.
                         8. If user posts a question or comment in 'First Person singular Pronoun' e.g: "How do I Craft Compelling Content for my blog?", respond back with
                         'Second Person Pronoun" e.g: "How can you craft compelling content for your blog?"
-                        9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can get an accurate response from the article author.
-                    ` },
-                ];
+                        9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can get an accurate response from the article author.`,
+                }];
 
                 const result = await model.generateContent({
                     contents: [{ role: "user", parts }],
                     generationConfig,
                     safetySettings,
                 });
+
                 const response = result.response;
                 const text = response.text();
                 // Extract the non-starred parts of the response
@@ -79,22 +64,47 @@ export default async function handler(req, res) {
                 // Join the non-starred parts to form the final response
                 const finalResponse = nonStarredParts.join('');
 
-                res.status(200).json({ message: 'Content extracted and saved successfully.', articleContent, finalResponse });
+                let existingCommentingSystem = await prisma.commentingSystem.findUnique({
+                    where: { id: postId },
+                    include: { comments: true },
+                });
+
+                if (!existingCommentingSystem) {
+                    existingCommentingSystem = await prisma.commentingSystem.create({
+                        data: {
+                            id: postId,
+                            title: postTitle,
+                            comments: {
+                                create: [
+                                    { title: postTitle, comment: articleContent, commentBy: user },
+                                ]
+                            }
+                        },
+                        include: {
+                            comments: true,
+                        },
+                    });
+                } else {
+                    await prisma.articleComment.create({
+                        data: {
+                            title: postTitle,
+                            comment: articleContent,
+                            commentBy: user,
+                            commentingSystemId: postId,
+                        },
+                    });
+                }
+                const articleComments = existingCommentingSystem.comments;
+
+                console.log(articleContent, finalResponse, articleComments)
+                res.status(200).json({ message: 'Content extracted and saved successfully.', articleContent, finalResponse, articleComments });
+            } else {
+                // If articleContent is empty or null, send an appropriate error response
+                res.status(400).json({ message: 'Invalid request: articleContent is missing or empty.' });
             }
         };
 
         await run();
-
-        // Save the content to the database using Prisma
-        // Adjust this part based on your data model and how you want to save content
-        // For example:
-        // await prisma.post.create({
-        //     data: {
-        //         title: content.title,
-        //         body: content.body,
-        //     },
-        // });
-
 
     } catch (error) {
         console.error('Error extracting and saving content:', error);

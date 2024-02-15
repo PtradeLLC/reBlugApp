@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-
-const CommentBox = ({ postContent }) => {
+const CommentBox = ({ post }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const router = useRouter();
 
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
     };
+
+
+    console.log(comments, "FROM FRONTEND");
+
 
 
     const handleSubmit = async (event) => {
@@ -28,9 +31,9 @@ const CommentBox = ({ postContent }) => {
                 date: new Date().toLocaleString(),
             };
 
-            const articleComment = commentObject.articleContent
-            const articleUser = user.name;
-            const articleEmail = user.email;
+            const { user: articleUser, name: articleEmail } = user;
+            const title = post.title;
+            const postId = post.id;
 
             try {
                 const response = await fetch('/api/blog/commentsystem', {
@@ -38,7 +41,7 @@ const CommentBox = ({ postContent }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ user: articleUser, articleContent: articleComment, email: articleEmail })
+                    body: JSON.stringify({ user: articleUser, articleContent: newComment, email: articleEmail, postTitle: title, postId: postId })
                 });
 
                 if (!response.ok) {
@@ -46,8 +49,11 @@ const CommentBox = ({ postContent }) => {
                 }
 
                 const data = await response.json();
+                const { articleComments, finalResponse, date } = data;
 
-                setComments([...comments, { ...user, articleContent: newComment }, articleUser, data]); // Update comments state with both user input and API response
+
+                // setComments([...comments, { ...commentObject, articleComments, finalResponse }]);
+                setComments(prevComments => [...prevComments, { ...commentObject, articleComments, finalResponse }]);
                 setNewComment('');
             } catch (error) {
                 console.error('Error posting comment:', error.message);
@@ -56,7 +62,6 @@ const CommentBox = ({ postContent }) => {
     };
 
     const handleTextAreaClick = () => {
-        // Open the modal when the text area is clicked
         setShowModal(true);
     };
 
@@ -65,87 +70,66 @@ const CommentBox = ({ postContent }) => {
     };
 
     const handleSignUp = () => {
-        // Check if the user is authenticated (session exists)
-        if (session) {
-            return;
-        } else {
+        if (!session) {
             router.push('/register');
         }
     };
-
-
 
     return (
         <div>
             <div>
                 <span className='text-xl font-semibold flex justify-center my-4'>Share your thoughts</span>
-                <div class="flex mb-7 items-start gap-2.5">
-                    <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                    <div class="flex flex-col gap-1 w-full">
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
-                            <span class="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
+                <div className="flex mb-7 items-start gap-2.5">
+                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                    <div className="flex flex-col gap-1 w-full">
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
+                            <span className="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
                         </div>
-                        <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                            <p class="text-sm font-normal text-gray-900 dark:text-white"> Let the author know what you think about this article and perhaps what you've learned. Please keep it clean and reader friendly.</p>
+                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                            <p className="text-sm font-normal text-gray-900 dark:text-white">Let the author know what you think about this article and perhaps what you've learned. Please keep it clean and reader friendly.</p>
                         </div>
-                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                     </div>
                 </div>
             </div>
             <div className="overflow-y-auto h-[250px]">
-                <div className="overflow-y-auto h-[250px]">
-                    {comments.filter(comment => comment.articleContent) // Filter out comments with undefined articleContent
-                        .map((comment) => (
-                            <div className='' key={comment.user}>
-                                <div class="flex gap-1 w-full">
-                                    {/* Update Image to User Profile Image */}
-                                    <img class="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                    <div class="flex flex-col  w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 ">
-                                        <span className='flex justify-between'>
-                                            <span className='flex flex-col text-sm font-thin'>{comment.name}
-                                                <p class="text-sm font-normal text-gray-900 dark:text-white">
-                                                    <span className='flex flex-col text-sm font-thin'>Article Assistant</span>
-                                                    {comment.articleContent}
-                                                </p>
-                                            </span>
-                                            <span>
-                                                <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
-                                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                                                    </svg>
-                                                </button>
-                                                <div id={`${comment.user}`} class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                                                        <li>
-                                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Forward</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </span>
-                                        </span>
-                                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{comment.finalResponse}</span>
+                {comments.map((comment, index) => (
+                    <>
+                        <div key={index} className="">
+                            {comment.articleComments && comment.articleComments.map((article, idx) => (
+                                <>
+                                    <span className='flex'>
+                                        {comment.user.image ? (
+                                            <img className="w-8 h-8 mr-2 rounded-full" src={comment.user.image} alt="profileImage" />
+                                        ) : (
+                                            <img className="w-8 h-8 mr-2 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                        )}
+                                        <span className='flex text-sm justify-center items-center font-thin'>{comment.user.name}</span>
+                                    </span>
+                                    {console.log("COMM", comment)}
+                                    <div key={idx} className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                        <p className="text-sm font-normal text-gray-900 dark:text-white">{article.comment}</p>
+                                        <p className="text-sm font-normal text-gray-500 mt-1">posted: {comment.date}</p>
                                     </div>
-
+                                </>
+                            )
+                            )}
+                            <>
+                                <span className='flex'>
+                                    <img className="w-8 h-8 mr-2 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                    <span className='flex text-sm justify-center items-center font-thin'>Article Assistant</span>
+                                </span>
+                                <div className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.finalResponse.split('* ').join('\n* ')}</p>
+                                    <p className="text-sm text-gray-500 mt-1 font-thin">posted: {comment.date}</p>
                                 </div>
-                            </div>
-                        ))}
-                </div>
-            </div>
+                            </>
+                        </div>
 
-            {/* Comment form */}
+                    </>
+                ))}
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                     <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -175,8 +159,6 @@ const CommentBox = ({ postContent }) => {
                     <Link href="http://forgedmart.com/">ForgedMart</Link>
                 </span>
             </div>
-
-            {/* Modal for prompting users to create an account */}
             {!session && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -220,18 +202,3 @@ const CommentBox = ({ postContent }) => {
 };
 
 export default CommentBox;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
