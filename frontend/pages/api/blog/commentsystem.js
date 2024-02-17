@@ -61,9 +61,6 @@ export default async function handler(req, res) {
                 // Extract the non-starred parts of the response
                 const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
 
-                // Join the non-starred parts to form the final response
-                // const finalResponse = nonStarredParts.join('');
-
                 // Check if the CommentingSystem entry exists
                 let existingCommentingSystem = await prisma.commentingSystem.findUnique({
                     where: { id: postId },
@@ -105,7 +102,6 @@ export default async function handler(req, res) {
                             },
                         },
                     });
-
                     // Send the response to the client
                     res.status(200).json({ message: 'Content extracted and saved successfully.', responseAi });
                 } else {
