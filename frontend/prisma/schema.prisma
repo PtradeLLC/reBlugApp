@@ -5,8 +5,8 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  url        = env("POSTGRES_PRISMA_URL")
-  directUrl  = env("POSTGRES_URL_NON_POOLING")
+  url        = env("POSTGRESDB_PRISMA_URL")
+  directUrl  = env("POSTGRESDB_URL_NON_POOLING")
   extensions = [vector]
 }
 
@@ -232,8 +232,20 @@ model ArticleComment {
   title              String?
   comment            String?
   commentBy          String?
+  aiResponse         AiResponse[] // Each comment can have multiple AI responses
   commentingSystem   CommentingSystem? @relation(fields: [commentingSystemId], references: [id])
   commentingSystemId String?
+}
+
+model AiResponse {
+  id                 String          @id @default(uuid())
+  title              String?
+  comment            String?
+  commentBy          String?
+  response           String?
+  commentingSystemId String?
+  articleComment     ArticleComment? @relation(fields: [articleCommentId], references: [id])
+  articleCommentId   String?
 }
 
 model EmailTool {

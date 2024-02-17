@@ -14,7 +14,21 @@ const CommentBox = ({ post }) => {
         setNewComment(event.target.value);
     };
 
+    const postId = post.id;
 
+    ///////////////////////////////////////////////
+    // LOCAL STORAGE
+    // const [comments, setComments] = useState(() => {
+    //     // Retrieve comments from local storage
+    //     const storedComments = localStorage.getItem('comments');
+    //     return storedComments ? JSON.parse(storedComments) : [];
+    // });
+
+    // useEffect(() => {
+    //     // Save comments to local storage whenever it changes
+    //     localStorage.setItem('comments', JSON.stringify(comments));
+    // }, [comments]);
+    /////////////////////////////////////////////////
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -30,7 +44,6 @@ const CommentBox = ({ post }) => {
 
             const { user: articleUser, name: articleEmail } = user;
             const title = post.title;
-            const postId = post.id;
 
             try {
                 const response = await fetch('/api/blog/commentsystem', {
@@ -45,16 +58,17 @@ const CommentBox = ({ post }) => {
                     throw new Error('Failed to post comment');
                 }
 
-                const data = await response.json();
-                const { articleComments, finalResponse, date } = data;
+                const responseData = await response.json();
 
-                setComments(prevComments => [...prevComments, { ...commentObject, articleComments, finalResponse }]);
+                setComments(prevComments => [...prevComments, { ...commentObject, responseData }]);
                 setNewComment('');
+
             } catch (error) {
                 console.error('Error posting comment:', error.message);
             }
         }
     };
+
 
     const handleTextAreaClick = () => {
         setShowModal(true);
@@ -69,6 +83,8 @@ const CommentBox = ({ post }) => {
             router.push('/register');
         }
     };
+
+
 
     return (
         <div>
@@ -88,10 +104,81 @@ const CommentBox = ({ post }) => {
                     </div>
                 </div>
             </div>
-            <div className="overflow-y-auto h-[250px]">
-                {comments.map((comment, index) => (
+            <div>
+                <ul className="comments-list">
+                    {comments.length > 0 ? comments.map((comment, index) => (
+                        <li key={index} className="comment-item">
+                            {/* Display the user's comment */}
+                            {console.log("Comments JSX:", comment)}
+                            <div className="user-comment">
+                                <p>{comment.articleContent}</p>
+                                <p className="comment-date">Posted: {comment.date}</p>
+                            </div>
+
+                            {/* Display the response */}
+                            <div className="response">
+                                {/* <p>{comment.articleContent.responseData.allData.finalResponse}</p> */}
+                                {/* Display additional information if needed */}
+                            </div>
+
+                            {/* Display additional comments if available */}
+                            {/* {comment.articleContent.responseData.allData.articleComments && comment.articleContent.responseData.allData.articleComments.length > 0 && (
+                                <div className="additional-comments">
+                                    <p>Additional Comments:</p>
+                                    <ul>
+                                        {comment.articleContent.responseData.allData.articleComments.map((additionalComment, idx) => (
+                                            <li key={idx}>
+                                                <p>{additionalComment.comment}</p>
+                                                <p className="comment-date">Posted: {additionalComment.date}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )} */}
+                        </li>
+                    )) : null}
+                </ul>
+            </div>
+            {/* <ul className="overflow-y-auto h-[250px]">
+                {comments.length > 0 ? comments.map((comment) => (
                     <>
-                        <div key={index} className="">
+                        <li key={comment.id} className="">
+                            {comment.articleComments && comment.articleComments.map((article, idx) => (
+                                <>
+                                    <span className='flex'>
+                                        {comment.user.image ? (
+                                            <img className="w-8 h-8 mr-2 rounded-full" src={comment.user.image} alt="profileImage" />
+                                        ) : (
+                                            <img className="w-8 h-8 mr-2 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                        )}
+                                        <span className='flex text-sm justify-center items-center font-thin'>{comment.user.name}</span>
+                                    </span>
+
+                                    <span key={idx} className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                        <p className="text-sm font-normal text-gray-900 dark:text-white">{article.comment}</p>
+                                        <p className="text-sm font-normal text-gray-500 mt-1">posted: {comment.date}</p>
+                                    </span>
+                                </>
+                            )
+                            )}
+                            <>
+                                <span className='flex'>
+                                    <img className="w-8 h-8 mr-2 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                    <span className='flex text-sm justify-center items-center font-thin'>Article Assistant</span>
+                                </span>
+                                <span className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.finalResponse.split('* ').join('\n* ')}</p>
+                                    <p className="text-sm text-gray-500 mt-1 font-thin">posted: {comment.date}</p>
+                                </span>
+                            </>
+                        </li>
+                    </>
+                )) : null}
+            </ul> */}
+            {/* <ul className="overflow-y-auto h-[250px]">
+                {comments.map((comment) => (
+                    <>
+                        <li key={comment.id} className="">
                             {comment.articleComments && comment.articleComments.map((article, idx) => (
                                 <>
                                     <span className='flex'>
@@ -103,10 +190,10 @@ const CommentBox = ({ post }) => {
                                         <span className='flex text-sm justify-center items-center font-thin'>{comment.user.name}</span>
                                     </span>
                                     {console.log("COMM", comment)}
-                                    <div key={idx} className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                    <span key={idx} className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                                         <p className="text-sm font-normal text-gray-900 dark:text-white">{article.comment}</p>
                                         <p className="text-sm font-normal text-gray-500 mt-1">posted: {comment.date}</p>
-                                    </div>
+                                    </span>
                                 </>
                             )
                             )}
@@ -115,16 +202,16 @@ const CommentBox = ({ post }) => {
                                     <img className="w-8 h-8 mr-2 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
                                     <span className='flex text-sm justify-center items-center font-thin'>Article Assistant</span>
                                 </span>
-                                <div className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                <span className="flex flex-col w-full mb-4 leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                                     <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.finalResponse.split('* ').join('\n* ')}</p>
                                     <p className="text-sm text-gray-500 mt-1 font-thin">posted: {comment.date}</p>
-                                </div>
+                                </span>
                             </>
-                        </div>
+                        </li>
 
                     </>
                 ))}
-            </div>
+            </ul> */}
             <form onSubmit={handleSubmit}>
                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                     <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
