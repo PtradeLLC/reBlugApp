@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 
 
@@ -12,7 +14,7 @@ export default function Blog({ posts }) {
     //     return <p className='mt-64'>Loading...</p>;
     // }
 
-    console.log(posts);
+    console.log("From blogpage", posts);
 
     //delete post
     const router = useRouter();
@@ -88,23 +90,111 @@ export default function Blog({ posts }) {
 
 
 export async function getStaticProps() {
+    // Function to strip HTML tags from a string
+    function stripHtmlTags(html) {
+        return html.replace(/<[^>]*>?/gm, ''); // Replace HTML tags with an empty string
+    }
+
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        const res = await fetch(apiUrl);
-        const posts = await res.json();
+        // Fetch all published posts from the database
+        const allPosts = await prisma.post.findMany({
+            where: { published: true },
+            include: {
+                comments: {
+                    select: { content: true },
+                },
+            },
+        });
+
+        // Remove HTML tags from the content field
+        const postsWithoutHtml = allPosts.map(post => ({
+            ...post,
+            content: stripHtmlTags(post.content),
+            createdAt: post.createdAt.toString(), // Convert createdAt to string
+        }));
 
         return {
             props: {
-                posts,
+                posts: postsWithoutHtml,
             },
-            revalidate: 10, // Add revalidation period
         };
     } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching and processing posts:', error);
+
+        // Return an error object if an error occurs
         return {
             props: {
-                posts: null, // Pass null if an error occurs
+                posts: null,
+                error: 'Error fetching and processing posts.',
             },
         };
     }
 }
+
+
+// export async function getStaticProps() {
+//     // Function to strip HTML tags from a string
+//     function stripHtmlTags(html) {
+//         return html.replace(/<[^>]*>?/gm, ''); // Replace HTML tags with an empty string
+//     }
+//     try {
+//         // Fetch all published posts from the database
+//         const allPosts = await prisma.post.findMany({
+//             where: { published: true },
+//             include: {
+//                 comments: {
+//                     select: { content: true },
+//                 },
+//             },
+//         });
+
+//         // Remove HTML tags from the content field
+//         const postsWithoutHtml = allPosts.map(post => ({
+//             ...post,
+//             content: stripHtmlTags(post.content),
+//         }));
+
+//         return {
+//             props: {
+//                 posts: postsWithoutHtml,
+//             },
+//         };
+//     } catch (error) {
+//         console.error('Error fetching and processing posts:', error);
+
+//         // Return an error object if an error occurs
+//         return {
+//             props: {
+//                 posts: null,
+//                 error: 'Error fetching and processing posts.',
+//             },
+//         };
+//     }
+// }
+
+
+
+// try {
+//     // const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+//     const apiUrl = "http://localhost:3000/api/blog/allBlogs";
+//     const res = await fetch(apiUrl);
+//     const posts = await res.json();
+
+
+
+//     console.log("From getStaticProps", posts, apiUrl);
+
+//     return {
+//         props: {
+//             posts,
+//         },
+//         revalidate: 10, // Add revalidation period
+//     };
+// } catch (error) {
+//     console.error('Error fetching posts:', error);
+//     return {
+//         props: {
+//             posts: null, // Pass null if an error occurs
+//         },
+//     };
+// }
