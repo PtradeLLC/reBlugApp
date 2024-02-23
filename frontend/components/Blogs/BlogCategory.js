@@ -115,7 +115,7 @@ export default function BlogCategories() {
                 </header>
             </div>
             <div className=''>
-                <Blog />
+                {/* <Blog /> */}
             </div>
         </div>
     )

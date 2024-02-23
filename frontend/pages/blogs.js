@@ -9,7 +9,4 @@ const Blogger = () => {
     )
 }
 
-
-{/*  */ }
-
 export default Blogger
