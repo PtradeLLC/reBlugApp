@@ -54,8 +54,6 @@ export default async function handler(req, res) {
         }
 
         const email = userInfo.email;
-
-        console.log(email);
         const postSlug = title.toLowerCase().split(' ').join('-');
 
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
