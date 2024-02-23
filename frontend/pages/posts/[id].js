@@ -358,24 +358,4 @@ export const getServerSideProps = async ({ params }) => {
     }
 };
 
-
-
-// export const getServerSideProps = async ({ params }) => {
-
-//     const post = await prisma.post.findUnique({
-//         where: {
-//             id: String(params?.id),
-//         },
-//         include: {
-//             comments: {
-//                 select: { content: true, id: true },
-//             },
-//         },
-//     });
-//     return {
-//         props: post,
-//     };
-// };
-
-
 export default PostPage;

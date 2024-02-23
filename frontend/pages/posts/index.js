@@ -89,7 +89,8 @@ export default function Blog({ posts }) {
 
 export async function getStaticProps() {
     try {
-        const res = await fetch('http://localhost:3000/api/blog/allBlogs');
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const res = await fetch(apiUrl);
         const posts = await res.json();
 
         return {
