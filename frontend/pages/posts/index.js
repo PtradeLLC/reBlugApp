@@ -8,9 +8,11 @@ import { useRouter } from 'next/router';
 export default function Blog({ posts }) {
     const [loading, setLoading] = useState(false);
 
-    if (!posts) {
-        return <p className='mt-64'>Loading...</p>;
-    }
+    // if (!posts) {
+    //     return <p className='mt-64'>Loading...</p>;
+    // }
+
+    console.log(posts);
 
     //delete post
     const router = useRouter();

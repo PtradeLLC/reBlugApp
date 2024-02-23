@@ -35,7 +35,6 @@ const Home = () => {
             <Tools openModal={openModal} setOpenModal={setOpenModal} />
           </div>
         </span>
-
         <div className="flex mt-1 w-full justify-center content-center">
           <LogoTwo />
         </div>
