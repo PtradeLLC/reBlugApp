@@ -10,6 +10,8 @@ import {
 import { Dialog } from '@headlessui/react'
 import { useWindowSize } from '@react-hook/window-size';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Blog from '../../pages/posts';
+
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
@@ -115,7 +117,7 @@ export default function BlogCategories() {
                 </header>
             </div>
             <div className=''>
-                {/* <Blog /> */}
+                <Blog />
             </div>
         </div>
     )
