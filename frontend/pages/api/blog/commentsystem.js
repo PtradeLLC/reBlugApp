@@ -113,6 +113,8 @@ export default async function handler(req, res) {
                 },
             });
 
+            const published = true;
+
             if (user) {
                 const newPost = await prisma.post.create({
                     data: {
@@ -124,6 +126,7 @@ export default async function handler(req, res) {
                         selectedFeatures: selectedFeatures,
                         postSlug: postSlug,
                         email: email,
+                        published: published
                     },
                 });
 
