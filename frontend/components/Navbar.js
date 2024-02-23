@@ -56,7 +56,7 @@ export default function Navbar() {
                     Brands | Marketers
                   </Link>
                   <Link
-                    href={"/blogs"}
+                    href={"/posts"}
                     className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
                     Blog

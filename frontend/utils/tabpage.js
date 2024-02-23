@@ -23,7 +23,7 @@ Features:
 
 const toolsArray = [
     {
-        name: "Article Assistant ",
+        name: "Start Blogging ",
         category: "Tool",
         isActive: false,
         content: "Article Assistant is not enable yet.",

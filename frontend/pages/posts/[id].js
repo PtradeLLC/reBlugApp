@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { getSinglePost, getPosts } from '../../lib/posts';
+import React, { useRef, useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ChatUI from '../../components/ChatBot/AI-ChatUI';
@@ -7,6 +6,15 @@ import { Button } from '@nextui-org/react';
 import CommentBox from '../../components/Blogs/CommentBox';
 import SubmissionInfo from '../../components/Blogs/BlogInfo';
 import ArticleInfo from '../../components/Blogs/ArticleInfo';
+import useSWR, { mutate } from 'swr';
+import { useSession } from "next-auth/react";
+import { CircularProgress } from "@nextui-org/react";
+import { useRouter } from 'next/router';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+
+
 
 const navigation = [
     {
@@ -60,20 +68,23 @@ const navigation = [
 ];
 
 
-
 const PostPage = ({ post }) => {
-    const contentRef = useRef(null);
-    const [webpageContent, setWebpageContent] = useState('');
-    const [postContent, setPostContent] = useState({
-        id: post.id,
-        title: post.title,
-        content: post.html
-    });
-
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
     const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
     const [isArticleModalOpen, setIsArticleModalOpen] = useState(false);
+    const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [singlePosts, setSinglePosts] = useState([])
+    const { data: session } = useSession();
+
+
+    const router = useRouter();
+
+
 
     const handleSubmissionModalOpen = () => {
         setIsSubmissionModalOpen(true);
@@ -87,6 +98,71 @@ const PostPage = ({ post }) => {
         setIsOpen(true);
     };
 
+    const handleCommentChange = (event) => {
+        setNewComment(event.target.value);
+    };
+
+    const handleTextAreaClick = () => {
+        setShowModal(true);
+    };
+
+    //Handles setting value for the loader
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setValue((v) => (v >= 100 ? 0 : v + 10));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
+
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    // console.log(post);
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (newComment.trim() !== '') {
+            try {
+                const { email, name } = user;
+                const title = post.title;
+
+                // Validate comment content
+                if (!newComment.trim()) {
+                    console.error('Comment content is empty');
+                    return;
+                }
+
+                const response = await fetch('/api/blog/commentsystem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user: name, articleContent: newComment, email: email, postTitle: title, postId: `${post.id}` })
+                }, { cache: 'force-cache' });
+
+                if (!response.ok) {
+                    throw new Error('Failed to post comment');
+                }
+
+                const responseData = await response.json();
+
+                setComments(prevComments => [...prevComments, responseData]);
+
+                // Clear the comment input field
+                setNewComment('');
+                setLoading(false);
+
+            } catch (error) {
+                console.error('Error posting comment:', error.message);
+            }
+
+        }
+    }
     return (
         <div className='mt-20'>
             <div className="relative mt-2 bg-gray-900 pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
@@ -106,7 +182,7 @@ const PostPage = ({ post }) => {
                         <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                             <img
                                 className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-800 to-gray-900 shadow-2xl"
-                                src={post.feature_image}
+                                src={post && post?.featureImage}
                                 alt="authorImage"
                             />
                         </div>
@@ -127,7 +203,7 @@ const PostPage = ({ post }) => {
                             </svg>
                             <blockquote className="text-xl font-semibold leading-8 text-white sm:text-2xl sm:leading-9">
                                 <p className='text-4xl'>
-                                    {post.title}
+                                    {post && post?.title}
                                 </p>
                             </blockquote>
                             <figcaption className="mt-8 text-base">
@@ -145,20 +221,22 @@ const PostPage = ({ post }) => {
                 </div>
             </div>
             <div className='flex pr-6 mt-14 ml-2 h-10 text-gray-900 bg-white border w-36 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                <Link className='flex items-center' href="/blogSignUp">
+                <Link className='flex items-center' href="/posts">
                     <img className='w-7 h-7 mr-1' src='/images/blogpost.png' /> All Posts
                 </Link>
             </div>
             <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
                 <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
-                    <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>{post.title}
+                    <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>
+                        {post && post?.title}
                     </h1>
                     <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
                         <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/about.png' /> About Judith Black
                         </li>
                         <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/category.png' /> Category: {blogCategory ? blogCategory : "Marketing"}
+                            <img className='w-7 h-7 mr-1' src='/images/category.png' />
+                            Category:{post && post?.Category}
                         </li>
                         <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/users.png' />
@@ -189,18 +267,52 @@ const PostPage = ({ post }) => {
                         Chat with this Article
                     </Button>
                 </span>
-
                 <span className='col-span-2 my-4'>
-                    <span className='text-xs flex justify-end my-2'>Reading time: {post.reading_time} mins</span>
-                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: post.html }} />
-                    <hr class="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
+                    { }
+                    <span className='text-xs flex justify-end my-2'>Reading time: {post && post?.createdAt} mins</span>
+                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${post && post?.content}` }} />
+                    <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                     <span className=''>
-                        <CommentBox post={post} />
+                        < CommentBox post={post} />
                     </span>
+                    <form onSubmit={handleSubmit}>
+                        <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                            <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                <label htmlFor="comment" className="sr-only">Share your thoughts</label>
+                                <textarea
+                                    id="comment"
+                                    rows="4"
+                                    className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                                    placeholder="Share your thoughts..."
+                                    value={newComment}
+                                    onChange={handleCommentChange}
+                                    onClick={handleTextAreaClick}
+                                    required
+                                />
+                            </div>
+                            <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+                                <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+                                    Post comment
+                                    {loading && (
+                                        <div className="flex justify-center">
+                                            <CircularProgress
+                                                aria-label="Loading..."
+                                                size="sm"
+                                                value={value}
+                                                color="warning"
+                                                className='mx-2'
+                                                showValueLabel={true}
+                                            />
+                                        </div>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </span>
             </div>
             <div>
-                <ChatUI postContent={postContent} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <ChatUI post={post} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
             <div className='mx-4 px-2'>
                 <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
@@ -212,48 +324,58 @@ const PostPage = ({ post }) => {
     );
 };
 
-export async function getStaticPaths() {
-    const allPosts = await getPosts();
 
-    const paths = allPosts.map((post) => ({
-        params: { slug: post.slug }
-    }));
 
-    return {
-        paths,
-        fallback: false
-    };
-}
+export const getServerSideProps = async ({ params }) => {
+    try {
+        const post = await prisma.post.findUnique({
+            where: {
+                id: String(params?.id),
+            },
+            include: {
+                comments: {
+                    select: { content: true, id: true },
+                },
+            },
+        });
 
-export async function getStaticProps({ params }) {
-    const post = await getSinglePost(params.slug);
+        // Convert the createdAt Date object to a string
+        // or to a format that can be serialized as JSON
+        post.createdAt = post.createdAt.toString();
 
-    if (!post) {
         return {
-            notFound: true
+            props: {
+                post,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching post:', error);
+        return {
+            props: {
+                post: null,
+            },
         };
     }
+};
 
-    return {
-        props: { post }
-    };
-}
 
-export async function generateMetadata({ params }) {
-    const post = await getSinglePost(params.slug);
-    return {
-        title: post.title,
-        description: post.excerpt,
-        openGraph: {
-            title: post.title,
-            description: post.excerpt,
-            images: [
-                {
-                    url: post.image,
-                },
-            ],
-        },
-    };
-}
+
+// export const getServerSideProps = async ({ params }) => {
+
+//     const post = await prisma.post.findUnique({
+//         where: {
+//             id: String(params?.id),
+//         },
+//         include: {
+//             comments: {
+//                 select: { content: true, id: true },
+//             },
+//         },
+//     });
+//     return {
+//         props: post,
+//     };
+// };
+
 
 export default PostPage;

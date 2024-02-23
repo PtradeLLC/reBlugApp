@@ -37,7 +37,9 @@ function classNames(...classes) {
 }
 
 export default function Summary() {
-    const [summary, setSummary] = useState("There are no recent summary");
+    const [summary, setSummary] = useState(`Features
+    Article Assistant This AI-powered tool enables you to include conversational chatbot seamlessly on your page. conversational chatbot seamlessly on your page.
+    `);
 
 
 
@@ -111,14 +113,21 @@ export default function Summary() {
                             </tr>
                         ))
                         :
-                        <tr>
-                            <td className="flex mt-2 justify-center items-center">
-                                {summary}
-                            </td>
-                        </tr>
+                        <>
+                            <tr>
+                                <td className="flex mt-2 justify-center items-center">
+
+                                </td>
+
+                            </tr>
+
+                        </>
                     }
                 </tbody>
             </table>
+            <div className="bg-slate-50 rounded-md my-8 p-3 mx-2">
+                {summary}
+            </div>
         </div >
     )
 }

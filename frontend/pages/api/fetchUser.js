@@ -20,6 +20,7 @@ export default async function handler(req, res) {
                     select: {
                         firstName: true,
                         lastName: true,
+                        email: true,
                         provider: true,
                         profileImage: true,
                         brandLogo: true,
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
                         res.status(200).json({
                             firstName: first_name,
                             lastName: last_name,
+                            email: email,
                             profileImage: user.profileImage,
                             provider: user.provider,
                             brandLogo: user.brandLogo,
@@ -79,6 +81,7 @@ export default async function handler(req, res) {
                             firstName: user.firstName,
                             lastName: user.lastName,
                             profileImage: user.profileImage,
+                            email: email,
                             provider: user.provider,
                             brandLogo: user.brandLogo,
                             brandName: user.brandName,

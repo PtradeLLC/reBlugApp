@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -8,14 +8,17 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { CircularProgress } from "@nextui-org/react";
 
 const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const [modalPlacement, setModalPlacement] = useState("auto");
   const [inputValue, setInputValue] = useState("");
   const [modelResponse, setModelResponse] = useState("");
+  const [value, setValue] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [sentInput, setSentInput] = useState("");
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+  const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   const [inquiries, setInquiries] = useState({
     authorsGroup: "How can I join author's group",
@@ -23,10 +26,21 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
       "How can I submit my product to be included in future article",
   });
 
+  //Handles setting value for the loader
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((v) => (v >= 100 ? 0 : v + 10));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const sendDataToBackend = () => {
     const userName = session.user.name;
 
     try {
+      setLoading(true);
+
       fetch("/api/blog/slugPage", {
         method: "POST",
         headers: {
@@ -47,6 +61,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
           setInputValue("");
           setSentInput(inputValue);
           setModelResponse(data.finalResponse);
+          setLoading(false);
         })
         .catch((error) => {
           console.error(
@@ -266,7 +281,20 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             type="submit"
                             className="absolute bottom-2 right-2.5 rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800 sm:text-base"
                           >
-                            Send <span className="sr-only">Send message</span>
+                            Send
+                            {loading && (
+                              <div className="flex justify-center">
+                                <CircularProgress
+                                  aria-label="Loading..."
+                                  size="sm"
+                                  value={value}
+                                  color="warning"
+                                  className="mx-2"
+                                  showValueLabel={true}
+                                />
+                              </div>
+                            )}
+                            <span className="sr-only">Send message</span>
                           </button>
                         </div>
                       </form>

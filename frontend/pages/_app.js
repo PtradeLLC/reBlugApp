@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={session}>
       <UserProvider>
         <RecoilRoot>
-          <Layout className="overflow-hidden bg-white py-24 sm:py-32">
+          <Layout className="overflow-hidden bg-white py-24 sm:py-32 portrait:hidden">
             <NextUIProvider>
               <Component {...pageProps} />
             </NextUIProvider>

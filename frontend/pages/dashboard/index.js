@@ -225,7 +225,9 @@ const Dashboard = function ({ children }) {
         <>
             <Suspense fallback={<Loading />}>
                 <div className="min-h-full overflow-hidden flex justify-center bg-white py-16 sm:py-16">
-                    <DashLay />
+                    <span className="w-full">
+                        <DashLay />
+                    </span>
                 </div >
             </Suspense >
         </>

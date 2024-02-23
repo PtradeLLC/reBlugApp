@@ -6,30 +6,9 @@ import WaitingList from "../components/waitingList";
 import AIBlog from "../components/blogSection";
 import LogoTwo from "../components/LogoTwo";
 import { useState } from "react";
-import Blog from "./posts/allBlogs";
-
-
-// export const metadata = {
-//   title: "ForgedMart",
-//   description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-//   openGraph: {
-//     title: "ForgedMart",
-//     description: "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
-//     url: "https://forgedmart.com",
-//     siteName: "ForgedMart",
-//     type: "website",
-//     images: [
-//       {
-//         url: "/images/Marttwainxyz.png",
-//       },
-//     ],
-//   },
-// }
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
-
-
 
   return (
     <div>
@@ -60,12 +39,6 @@ const Home = () => {
         <div className="flex mt-1 w-full justify-center content-center">
           <LogoTwo />
         </div>
-        <div className="flex justify-center content-center">
-          <Blog />
-        </div>
-        {/* <div className="flex justify-center content-center mt-3">
-          <Influencer openModal={openModal} setOpenModal={setOpenModal} />
-        </div> */}
       </main>
       <span className="mt-3">
         {openModal && <WaitingList setOpenModal={setOpenModal} />}

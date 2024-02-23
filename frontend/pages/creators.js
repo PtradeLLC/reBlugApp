@@ -13,7 +13,7 @@ export default function BloggersPage() {
         <div className="mx-auto flex justify-center items-center">
           <div className="">
             <Link
-              href="/blogSignUp"
+              href="/posts"
               className="p-4 w-60 inline-flex bg-red-500 h-9 items-center justify-center gap-x-3 rounded border border-transparent py-4 text-sm font-semibold text-white"
             >
               checkout our demo

@@ -2,106 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
-import useSWR from 'swr';
-import Loading from "../Loading";
+import useSWR, { mutate } from 'swr';
 
-const CommentBox = ({ post }) => {
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
+const CommentBox = ({ post, comments }) => {
     const [showModal, setShowModal] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-
-
-    const handleCommentChange = (event) => {
-        setNewComment(event.target.value);
-    };
-
-    const postId = post.id;
-
-    // const { data: commentsData, error } = useSWR(`/api/blog/commentsystem?postId=${postId}`);
-    const { data: commentsData, error } = useSWR(`/api/blog/commentsystem?postId=${postId}`);
-
-
-    ///////////////////////////////////////////////
-    // LOCAL STORAGE
-    // const [comments, setComments] = useState(() => {
-    //     // Retrieve comments from local storage
-    //     const storedComments = localStorage.getItem('comments');
-    //     return storedComments ? JSON.parse(storedComments) : [];
-    // });
-
-    // useEffect(() => {
-    //     // Save comments to local storage whenever it changes
-    //     localStorage.setItem('comments', JSON.stringify(comments));
-    // }, [comments]);
-    /////////////////////////////////////////////////
-
-
-    // Update comments state when data is fetched
-    useEffect(() => {
-        if (commentsData) {
-            setComments(commentsData);
-        }
-    }, [commentsData]);
-
-    // Function to handle form submission
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        if (newComment.trim() !== '' && session) {
-            const user = session.user;
-
-            const commentObject = {
-                articleContent: newComment,
-                user: user,
-                date: new Date().toLocaleString(),
-            };
-
-            const { user: articleUser, name: articleEmail } = user;
-            const title = post.title;
-
-            try {
-                const response = await fetch('/api/blog/commentsystem', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ user: articleUser, articleContent: newComment, email: articleEmail, postTitle: title, postId: postId })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to post comment');
-                }
-
-                const responseData = await response.json();
-
-                setComments(prevComments => [...prevComments, responseData.responseAi]);
-
-
-                // setComments(prevComments => [...prevComments, { ...commentObject, responseData }]);
-                setNewComment('');
-
-            } catch (error) {
-                console.error('Error posting comment:', error.message);
-            }
-        }
-    };
-
-    // Loading state
-    // if (!comments) return <div>Loading...</div>;
-
-    // Error state
-    if (error) return <div>Error: {error.message}</div>;
-
-
-    const handleTextAreaClick = () => {
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
 
     const handleSignUp = () => {
         if (!session) {
@@ -109,6 +15,25 @@ const CommentBox = ({ post }) => {
         }
     };
 
+    // console.log('post', post);
+
+    // const fetcher = async (url) => {
+    //     const res = await fetch(url);
+
+    //     const data = await res.json();
+
+    //     if (!res.ok) {
+    //         throw new Error('Failed to fetch comments');
+    //     }
+
+    //     return data;
+
+    // }
+
+    // // const postId = post.Id;
+    // const { data: commentsData, error } = useSWR(`/api/blog/commentsystem?postId=${post.id}`, fetcher);
+
+    // console.log(commentsData);
 
     return (
         <div>
@@ -133,61 +58,53 @@ const CommentBox = ({ post }) => {
                 </div>
             </div>
             <div className="overflow-y-auto h-[250px]">
-                {comments.map((comment, index) => (
-                    <div>
-
-                        <div key={comment.id} className="flex mb-7 items-start gap-2.5">
-                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                            <div className="flex flex-col gap-1 w-full">
-                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{comment.commentBy}</span>
-                                </div>
-                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                    <p className="text-sm font-normal text-gray-900 dark:text-white">
-                                        {comment.comment}
-                                    </p>
-                                </div>
-                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                {/* {commentsData && commentsData.map((item, index) => {
+                    console.log("Data Item::", item)
+                    return (
+                        <>
+                            <div key={item.id}>
+                                {Array.isArray(item.comments) && item.comments.map((comment, commentIndex) => (
+                                    <div>
+                                        <div key={comment.id}>
+                                            {console.log('post items', item)}
+                                            <div className="flex mb-7 items-start gap-2.5">
+                                                <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                                <div className="flex flex-col gap-1 w-full">
+                                                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                        <span className="text-sm font-semibold text-gray-900 dark:text-white">{comment.commentBy}</span>
+                                                    </div>
+                                                    <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                        <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.comment}</p>
+                                                    </div>
+                                                    <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {comment.aiResponse && comment.aiResponse.map((response, aiIndex) => (
+                                                <div key={response.id}>
+                                                    <div className="flex mb-7 items-start gap-2.5">
+                                                        <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                                        <div className="flex flex-col gap-1 w-full">
+                                                            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                                <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
+                                                            </div>
+                                                            <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                                <p className="text-sm font-normal text-gray-900 dark:text-white">{response.response}</p>
+                                                            </div>
+                                                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
-                        <div className="flex mb-7 items-start gap-2.5">
-                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                            <div className="flex flex-col gap-1 w-full">
-                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
-                                    <span className="text-xs font-thin text-gray-500 dark:text-gray-400">Moderator</span>
-                                </div>
-                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.response}</p>
-                                </div>
-                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                        </>
+                    );
+                })} */}
             </div>
-            <form onSubmit={handleSubmit}>
-                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                    <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-                        <label htmlFor="comment" className="sr-only">Share your thoughts</label>
-                        <textarea
-                            id="comment"
-                            rows="4"
-                            className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                            placeholder="Share your thoughts..."
-                            value={newComment}
-                            onChange={handleCommentChange}
-                            onClick={handleTextAreaClick}
-                            required
-                        />
-                    </div>
-                    <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
-                            Post comment
-                        </button>
-                    </div>
-                </div>
-            </form>
             <div className='flex px-2'>
                 <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>
                 <span className="text-xs ml-2 font-thin text-gray-600">

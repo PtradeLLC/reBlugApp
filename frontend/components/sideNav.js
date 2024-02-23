@@ -123,6 +123,7 @@ export default function DashLay() {
     const [recentUpdates, setRecentUpdates] = useState([]);
     const [prevRecentUpdatesLength, setPrevRecentUpdatesLength] = useState(0);
     const [isIntegrationsCatalogVisible, setIsIntegrationsCatalogVisible] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
 
 
     const handleRefreshList = () => {
@@ -217,19 +218,48 @@ export default function DashLay() {
         }
     };
 
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/fetchUser');
+
+                if (response.ok) {
+                    // Parse the response data
+                    const jsonData = await response.json();
+
+                    setUserInfo(jsonData);
+                } else {
+                    console.error('Failed to fetch data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        // Call the fetchData function when the component mounts
+        fetchData();
+
+
+    }, []);
+
+    // md:w-full
+
     return (
-        <div className='md:w-full flex sm:justify-center md:justify-start lg:justify-start '>
+        <div className='flex sm:justify-center md:justify-start'>
             <div className="">
                 {/* Content area */}
                 <div className="flex flex-col overflow-hidden">
                     {/* Main content */}
                     <div className="mobile-main flex overflow-hidden">
-                        <main className="index-main pb-8 lg:mt-8">
-                            {/* lg:max-w-[110rem] */}
-                            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                        <main className="index-main  pb-8 lg:mt-8">
+                            {/* lg:max-w-[110rem] , max-w-3xl */}
+                            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
-                                <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols- lg:gap-8">
+                                <div className="grid grid-cols-1 items-start gap-4 lg:gap-8">
 
                                     <div className="grid grid-cols-1 gap-4 lg:col-span-2 sm:mt-6.5">
 
@@ -250,7 +280,7 @@ export default function DashLay() {
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    Welcome {session?.user?.name || `${user?.firstName} ${user?.lastName} `}
+                                                                    Welcome {userInfo?.firstName}
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>
                                                                     Brand: {user?.brandName && `${user?.brandName}`}{' '}
@@ -319,46 +349,7 @@ export default function DashLay() {
                                             {selectedComponent === "Bloggers Panel" && <BlogTabs />}
                                         </section>
                                     </div>
-                                    {/* <div className="grid grid-cols-1 gap-4 lg:w-[451px]">
-                                        <section aria-labelledby="recent-hires-title">
-                                            <div className="overflow-hidden rounded-lg bg-white shadow">
-                                                <div className="p-6">
-                                                    <span className="flex">
-                                                        <div className="flex">
-                                                            <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
-                                                            <h2 className="text-base font-medium text-gray-900" id="recent-hires-title"> Team Members </h2>
-                                                        </div>
-                                                    </span>
-                                                    <div className="mt-6 flow-root">
-                                                        <div className="flex items-center">
-                                                            <span className="flex truncate text-sm font-medium mx-2 text-gray-900">
-                                                                {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto h-35 w-35 flex justify-center rounded-full" img={managerImage} rounded bordered />}
-                                                                <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{managerName} - {managerRole}</span>
 
-                                                                <span className="mx-1 flex items-center">
-                                                                    <button className="mx-1" onClick={handleRefreshList}>Refresh list</button>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                                                    </svg>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                        <TeamComponent refreshList={refreshList} />
-                                                    </div>
-
-                                                    <div className="mt-6">
-                                                        <button
-                                                            type="button"
-                                                            onClick={handleModalClick}
-                                                            className="flex w-full items-center justify-center rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            Add Team Member
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div> */}
                                 </div>
                             </div>
                             <span className="mt-3 px-2">
@@ -402,9 +393,49 @@ export default function DashLay() {
                         </main>
 
                         {/* Secondary column (hidden on smaller screens) */}
-                        <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white lg:block">
+                        <aside className="hidden w-96 overflow-y-auto border-l border-t border-gray-200 bg-white lg:block">
                             <section aria-labelledby="quicklinks-title">
-                                <div className="overflow-hidden rounded-lg border-r bg-white shadow">
+                                <div className="grid grid-cols-1 gap-4 border-r">
+                                    <section aria-labelledby="recent-hires-title">
+                                        <div className="overflow-hidden bg-white shadow">
+                                            <div className="p-6">
+                                                <span className="flex">
+                                                    <div className="flex">
+                                                        <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />
+                                                        <h2 className="text-base font-medium text-gray-900" id="recent-hires-title"> Team Members </h2>
+                                                    </div>
+                                                </span>
+                                                <div className="mt-6 flow-root items-center">
+                                                    <div className="flex items-center">
+                                                        <span className="flex items-center truncate text-sm font-medium mx-2 text-gray-900">
+                                                            {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto flex justify-center items-center" img={managerImage} rounded />}
+                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{userInfo?.firstName} - {userInfo?.role}</span>
+
+                                                            <span className="mx-1 flex items-center">
+                                                                <button className="mx-1" onClick={handleRefreshList}>Refresh</button>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                                </svg>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <TeamComponent refreshList={refreshList} />
+                                                </div>
+
+                                                <div className="mt-6">
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleModalClick}
+                                                        className="flex w-full items-center justify-center rounded-md bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                    >
+                                                        Add Team Member
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div className="overflow-hidden border-r bg-white shadow">
                                     <div className="p-6">
                                         <span className="flex">
                                             <div className="flex space-x-1">
@@ -444,11 +475,10 @@ export default function DashLay() {
                                         </div>
 
                                     </div>
-
                                 </div>
-                                <div className='mt-6'>
+                                {/* <div className='mt-1 border-r'>
                                     <Roadmap />
-                                </div>
+                                </div> */}
                             </section>
                         </aside>
                     </div>

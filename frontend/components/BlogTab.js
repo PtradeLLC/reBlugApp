@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray } from "../utils/tabpage";
+import Compose from './Blogs/write';
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: blogTab },
@@ -14,13 +15,18 @@ function classNames(...classes) {
 
 export default function BlogTabs() {
     const [selectedTab, setSelectedTab] = useState(tabs.find((tab) => tab.current));
+    const [activeUser, setActiveUser] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
     };
 
-    const handleClick = (e) => {
-        console.log("AI is active");
+    const handleClick = () => {
+        setActiveUser(true);
+    }
+    const openModal = () => {
+        setShowModal(true);
     }
 
     return (
@@ -32,7 +38,7 @@ export default function BlogTabs() {
                 <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full rounded-md border-gray-300 focus:border-red-500 focus:ring-red-500"
+                    className="block w-full rounded-md border-gray-300 focus:border-green-500 focus:ring-green-500"
                     value={selectedTab.name}
                     onChange={(e) => setSelectedTab(tabs.find((tab) => tab.name === e.target.value))}
                 >
@@ -45,7 +51,7 @@ export default function BlogTabs() {
             </div>
             <div className="hidden sm:block">
                 <nav className="isolate flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
-                    {tabs.map((tab, tabIdx) => (
+                    {activeUser && tabs.map((tab, tabIdx) => (
                         <a
                             key={tab.name}
                             href={tab.href}
@@ -62,7 +68,7 @@ export default function BlogTabs() {
                             <span
                                 aria-hidden="true"
                                 className={classNames(
-                                    selectedTab === tab ? 'bg-red-500' : 'bg-transparent',
+                                    selectedTab === tab ? 'bg-green-500' : 'bg-transparent',
                                     'absolute inset-x-0 bottom-0 h-0.5'
                                 )}
                             />
@@ -71,22 +77,105 @@ export default function BlogTabs() {
                 </nav>
             </div>
             <div className="mt-4">
-                {selectedTab.name === "Tools" ? (
-                    selectedTab.content.map((item, index) => (
-                        item.isActive ? (
-                            <div className=''>
-                                <p className='font-semibold'>Enabled Tools</p>
-                                <button className='bg-green-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
+                {activeUser && selectedTab.name === "Features" ? (
+                    <div className="divide-y divide-gray-100">
+                        <div className='bg-slate-50 rounded-md my-8 p-3'>
+                            Features:
+                            1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
+                            2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
+                            By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
+                            your industry.
+                        </div>
+                        <div className="relative flex items-start pb-4 pt-3.5">
+                            <div className="min-w-0 flex-1 text-sm leading-6">
+                                <label htmlFor="comments" className="font-medium text-gray-900">
+                                    Accept Article Sponsorship
+                                </label>
+                                <p id="comments-description" className="text-gray-500">
+                                    Brands are always looking for ways to market their products, consider and accept sponsorship in article.
+                                </p>
                             </div>
-                        ) : (<div className=''>
-                            <p className='font-semibold'>Select available tool from the list below to install and enable:</p>
-                            <button className='bg-red-600 mt-2 rounded-md text-white p-2' type='button' onClick={handleClick}>{item.name}</button>
-                        </div>)
-                    ))
-                ) : selectedTab.content.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                            <div className="ml-3 flex h-6 items-center">
+                                <input
+                                    id="comments"
+                                    aria-describedby="comments-description"
+                                    name="comments"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                            </div>
+                        </div>
+                        <div className="relative flex items-start pb-4 pt-3.5">
+                            <div className="min-w-0 flex-1 text-sm leading-6">
+                                <label htmlFor="candidates" className="font-medium text-gray-900">
+                                    Cross-promotion
+                                </label>
+                                <p id="candidates-description" className="text-gray-500">
+                                    Promote your blog with other bloggers within your niche category.
+                                </p>
+                            </div>
+                            <div className="ml-3 flex h-6 items-center">
+                                <input
+                                    id="candidates"
+                                    aria-describedby="candidates-description"
+                                    name="candidates"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                            </div>
+                        </div>
+                        <div className="relative flex items-start pb-4 pt-3.5">
+                            <div className="min-w-0 flex-1 text-sm leading-6">
+                                <label htmlFor="offers" className="font-medium text-gray-900">
+                                    Offers
+                                </label>
+                                <p id="offers-description" className="text-gray-500">
+                                    Get notified when a brand accepts or rejects your offer.
+                                </p>
+                            </div>
+                            <div className="ml-3 flex h-6 items-center">
+                                <input
+                                    id="offers"
+                                    aria-describedby="offers-description"
+                                    name="offers"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    typeof selectedTab.content === 'string' ? (
+                        selectedTab.content.split('\n').map((str, index) => (<p key={index}>{str} </p>))
+                    ) : (
+                        <>
+                            <div className='bg-slate-50 rounded-md my-8 p-3'>
+                                Features:
+                                1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
+                                2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
+                                By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
+                                your industry.
+                            </div>
+                            <div className='flex flex-wrap mx-auto py-4 justify-start'>
+                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60  rounded-md text-white p-2' type='button' onClick={openModal}>Write an Article</button>
+                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button>
+                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Article to Newsletter</button>
+                                {/* <button className='bg-green-600 mt-2 mx-2 sm:w-auto lg:w-72 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button> */}
+                            </div>
+                        </>
+
+                    )
+                )}
+                {!activeUser && selectedTab.name === "Features" && (
+                    <>
+                        <p className='font-thin mt-5'>Activate now to start blogging:</p>
+                        <button className='bg-green-600 mt-2 mx-3 w-72 rounded-md text-white p-2' type='button' onClick={handleClick}>Activate Tools</button>
+                    </>
+                )}
             </div>
-
-
+            <div>
+                <Compose showModal={showModal} setShowModal={setShowModal} />
+            </div>
         </div>
     );
 }

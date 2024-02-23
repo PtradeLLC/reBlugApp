@@ -8,7 +8,6 @@ import {
     UsersIcon,
 } from '@heroicons/react/24/outline';
 import { Dialog } from '@headlessui/react'
-import Blog from '../../pages/posts/allBlogs';
 import { useWindowSize } from '@react-hook/window-size';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
