@@ -38,8 +38,9 @@ export default async function handler(req, res) {
         // Extract the content from the request body
         const { title,
             featureImage,
-            content,
+            postId,
             crossPromote,
+            comment,
             selectedValue,
             selectedFeatures,
             userInfo } = req.body;
@@ -47,7 +48,8 @@ export default async function handler(req, res) {
         const post = {
             title,
             featureImage,
-            content,
+            postId,
+            comment,
             crossPromote,
             selectedValue,
             selectedFeatures
@@ -75,8 +77,8 @@ export default async function handler(req, res) {
             topP: 1,
         };
 
-        if (email && post) {
-            const userPrompt = `${content}`;
+        if (email && postId) {
+            const userPrompt = `${comment}`;
 
             const parts = [{
                 text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and when responding to the 
@@ -113,27 +115,20 @@ export default async function handler(req, res) {
                 },
             });
 
-            const published = true;
-
-            if (user) {
-                const newPost = await prisma.post.create({
+            if (user && postId) {
+                const newComment = await prisma.comments.create({
                     data: {
-                        title: title,
-                        featureImage: featureImage,
-                        content: content,
-                        crossPromote: crossPromote,
-                        Category: selectedValue,
-                        selectedFeatures: selectedFeatures,
-                        postSlug: postSlug,
-                        email: email,
-                        published: published
+                        title: title, // postTitle
+                        content: comment,
+                        aiResponse: text,
+                        postId: postId
                     },
+                    select: {
+                        id: true
+                    }
                 });
 
-                // Fetch all posts after creating the new post
-                const allPosts = await prisma.post.findMany();
-
-                res.status(200).json({ allPosts, newPost });
+                res.status(200).json({ message: "Comment is created successfully" });
             }
         } else {
             console.log('Invalid data provided');

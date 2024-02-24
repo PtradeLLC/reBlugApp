@@ -34,6 +34,8 @@ export default function Blog({ posts }) {
 
     }
 
+    console.log(posts);
+
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -44,7 +46,7 @@ export default function Blog({ posts }) {
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                    {posts.length > 0 ? (
+                    {/* {posts.length > 0 ? (
                         posts.map((post) => {
                             const postDate = new Date(post.createdAt);
                             const month = postDate.toLocaleString('default', { month: 'long' });
@@ -80,7 +82,7 @@ export default function Blog({ posts }) {
                         })
                     ) : (
                         <p>No posts available</p>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

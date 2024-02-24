@@ -120,8 +120,6 @@ const PostPage = ({ post }) => {
         setShowModal(false);
     };
 
-    // console.log(post);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -142,7 +140,7 @@ const PostPage = ({ post }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ user: name, articleContent: newComment, email: email, postTitle: title, postId: `${post.id}` })
+                    body: JSON.stringify({ user: name, comment: newComment, email: email, postTitle: title, postId: `${post.id}` })
                 }, { cache: 'force-cache' });
 
                 if (!response.ok) {
@@ -334,8 +332,11 @@ export const getServerSideProps = async ({ params }) => {
             },
             include: {
                 comments: {
-                    select: { content: true, id: true },
+                    include: {
+                        aiResponse: true, // Include aiResponse with comments
+                    },
                 },
+                aiResponses: true, // Include aiResponse directly in Post
             },
         });
 
@@ -357,5 +358,39 @@ export const getServerSideProps = async ({ params }) => {
         };
     }
 };
+
+
+
+// export const getServerSideProps = async ({ params }) => {
+//     try {
+//         const post = await prisma.post.findUnique({
+//             where: {
+//                 id: String(params?.id),
+//             },
+//             include: {
+//                 comments: {
+//                     select: { content: true, id: true },
+//                 },
+//             },
+//         });
+
+//         // Convert the createdAt Date object to a string
+//         // or to a format that can be serialized as JSON
+//         post.createdAt = post.createdAt.toString();
+
+//         return {
+//             props: {
+//                 post,
+//             },
+//         };
+//     } catch (error) {
+//         console.error('Error fetching post:', error);
+//         return {
+//             props: {
+//                 post: null,
+//             },
+//         };
+//     }
+// };
 
 export default PostPage;

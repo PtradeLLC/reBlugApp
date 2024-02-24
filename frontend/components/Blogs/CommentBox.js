@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSession } from "next-auth/react";
 import useSWR, { mutate } from 'swr';
 
-const CommentBox = ({ post, comments }) => {
+const CommentBox = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
@@ -14,26 +14,6 @@ const CommentBox = ({ post, comments }) => {
             router.push('/register');
         }
     };
-
-    // console.log('post', post);
-
-    // const fetcher = async (url) => {
-    //     const res = await fetch(url);
-
-    //     const data = await res.json();
-
-    //     if (!res.ok) {
-    //         throw new Error('Failed to fetch comments');
-    //     }
-
-    //     return data;
-
-    // }
-
-    // // const postId = post.Id;
-    // const { data: commentsData, error } = useSWR(`/api/blog/commentsystem?postId=${post.id}`, fetcher);
-
-    // console.log(commentsData);
 
     return (
         <div>
