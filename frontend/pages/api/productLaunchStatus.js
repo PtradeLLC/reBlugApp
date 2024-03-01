@@ -99,37 +99,7 @@ export default async function handler(req, res) {
                      Create a LIST of 'decision makers', individuals based on 'job titles' that are most likely to approve this product for purchase"
                      When you provide your final answer, please 'EXPLAIN' the 'reasoning and assumptions' behind your suggested 'Ideal Customers', and why they are ideal for the product.
                     
-                    Your response is an array of objects in the format:
-                    '[
-                        {
-                            "The Product": {
-                                "About Product": "",
-                            }
-                        },
-                        {
-                            "Defining Ideal Customers": {
-                                "Ideal Customer": "",
-                          
-                            }
-                        },
-                        {
-                            "Key Characteristics of Ideal Customers": {
-                                "Characteristics": "",
-                            }
-                        },
-                        {
-                            "Reasoning & Assumptions": {
-                                "Reasoning": "",
-
-                            }
-                        },
-                        {
-                            "Ideal Customer Type": {
-                                "Customer Type": "",
-                            }
-                        },
-
-                    ]'
+                    Return your response in JSON format.
                     `,
                 ];
 
@@ -145,9 +115,8 @@ export default async function handler(req, res) {
 
                 const result = await model.generateContentStream(prompt);
                 const response = await result.response;
-                const text = await response.text();
+                const text = response.text();
 
-                console.log('TEXT', text);
 
                 // Attempt to extract and parse valid JSON from the response
                 try {

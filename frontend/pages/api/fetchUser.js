@@ -28,7 +28,6 @@ export default async function handler(req, res) {
                         role: true,
                         isActive: true,
                         image: true,
-                        social: true,
                         userType: true,
                     },
                 });

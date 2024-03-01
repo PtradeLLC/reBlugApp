@@ -22,8 +22,8 @@ const TeamComponent = ({ refreshList }) => {
             });
 
             if (!response.ok) {
-                console.error('There is an error', response);
-                throw new Error("Failed to fetch data from the server");
+                console.error('There is an error', response.statusText);
+                throw new Error("Failed to fetch data from the server", Error.Message);
             }
 
             const data = await response.json();
@@ -97,6 +97,7 @@ const TeamComponent = ({ refreshList }) => {
                                 <div className="flex items-center space-x-2">
                                     <div className="flex items-center flex-shrink-0">
                                         <img
+                                            id='invitation-layer'
                                             className="h-8 w-8 rounded-full"
                                             src={person?.image || "/images/brand.png"}
                                             alt="profile image"

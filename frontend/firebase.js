@@ -1,5 +1,8 @@
-import { getApp, initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+// import { getFunctions } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,32 +17,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = getApp().length ? getApp() : initializeApp(firebaseConfig);
-const storage = getStorage(app);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// Create a child reference for profile storage
-const profilesRef = ref(storage, 'profile');
+// Get Firestore and Storage instances
+const db = getFirestore(app);
+const storage = getStorage(app);
+const auth = getAuth(app);
+
 
 // Create a child reference for images storage
-const imagesRef = ref(storage, 'images/brand');
+const postRef = ref(storage, 'images/posts');
 
 // Create file metadata including the content type
 const metadata = {
     contentType: 'image/jpeg',
 };
 
-// Sample usage of uploadBytes
-const file = new Blob(['Hello, world!'], { type: 'text/plain' });
 
-// Update storage reference based on the type of image being uploaded
-let storageRef;
 
-if (fileToUpdate === 'profileImage') {
-    storageRef = ref(profilesRef);
-} else if (fileToUpdate === 'brandLogo') {
-    storageRef = ref(imagesRef, 'brand');
-}
 
-const uploadTask = uploadBytes(storageRef, file, metadata);
-
-export { storage, profilesRef, imagesRef, uploadTask };
+export { storage, postRef, db, auth };

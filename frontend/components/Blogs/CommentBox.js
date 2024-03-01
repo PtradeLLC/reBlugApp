@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
-import useSWR, { mutate } from 'swr';
 
-const CommentBox = ({ post }) => {
+const CommentBox = ({ post, comments }) => {
     const [showModal, setShowModal] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
@@ -37,53 +36,50 @@ const CommentBox = ({ post }) => {
                     </div>
                 </div>
             </div>
+
+            {/* {console.log(comments)} */}
             <div className="overflow-y-auto h-[250px]">
-                {/* {commentsData && commentsData.map((item, index) => {
-                    console.log("Data Item::", item)
+                {comments && comments?.map((item) => {
+
                     return (
-                        <>
-                            <div key={item.id}>
-                                {Array.isArray(item.comments) && item.comments.map((comment, commentIndex) => (
-                                    <div>
-                                        <div key={comment.id}>
-                                            {console.log('post items', item)}
-                                            <div className="flex mb-7 items-start gap-2.5">
-                                                <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                <div className="flex flex-col gap-1 w-full">
-                                                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                        <span className="text-sm font-semibold text-gray-900 dark:text-white">{comment.commentBy}</span>
-                                                    </div>
-                                                    <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                        <p className="text-sm font-normal text-gray-900 dark:text-white">{comment.comment}</p>
-                                                    </div>
-                                                    <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                        <div key={item.id}>
+                            <div>
+                                <div key={item.id}>
+                                    <div >
+                                        <div className="flex mb-7 items-start gap-2.5">
+                                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                            <div className="flex flex-col gap-1 w-full">
+                                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                    {console.log('from the box', item)}
+                                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{post.User.name}</span>
                                                 </div>
+                                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                    item.
+                                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{item.content}</p>
+                                                </div>
+                                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                                             </div>
                                         </div>
-                                        <div>
-                                            {comment.aiResponse && comment.aiResponse.map((response, aiIndex) => (
-                                                <div key={response.id}>
-                                                    <div className="flex mb-7 items-start gap-2.5">
-                                                        <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                        <div className="flex flex-col gap-1 w-full">
-                                                            <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                                <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
-                                                            </div>
-                                                            <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                                <p className="text-sm font-normal text-gray-900 dark:text-white">{response.response}</p>
-                                                            </div>
-                                                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                                        </div>
-                                                    </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex mb-7 items-start gap-2.5">
+                                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                            <div className="flex flex-col gap-1 w-full">
+                                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
                                                 </div>
-                                            ))}
+                                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{item.aiResponse}</p>
+                                                </div>
+                                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                        </>
+                        </div>
                     );
-                })} */}
+                })}
             </div>
             <div className='flex px-2'>
                 <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>

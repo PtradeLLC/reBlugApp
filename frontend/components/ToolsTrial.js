@@ -116,7 +116,7 @@ export default function Trial() {
         },
         body: JSON.stringify(formData),
       });
-      console.log(postedDocs);
+
     } catch (error) {
       console.log(error);
     }

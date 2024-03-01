@@ -8,6 +8,8 @@ import PrelineScript from "./PrelineScript";
 
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
+
+
   return (
     <>
       <div className="flex justify-center px-1 m-auto">

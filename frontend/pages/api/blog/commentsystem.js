@@ -36,27 +36,10 @@ export default async function handler(req, res) {
 
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
-        const { title,
-            featureImage,
-            postId,
-            crossPromote,
-            comment,
-            selectedValue,
-            selectedFeatures,
-            userInfo } = req.body;
+        const { comment, content, email, postTitle, postId } = req.body;
 
-        const post = {
-            title,
-            featureImage,
-            postId,
-            comment,
-            crossPromote,
-            selectedValue,
-            selectedFeatures
-        }
 
-        const email = userInfo.email;
-        const postSlug = title.toLowerCase().split(' ').join('-');
+        const postSlug = postTitle.toLowerCase().split(' ').join('-');
 
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -80,12 +63,21 @@ export default async function handler(req, res) {
         if (email && postId) {
             const userPrompt = `${comment}`;
 
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: email
+                },
+                select: {
+                    firstName: true,
+                }
+            });
+
             const parts = [{
                 text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and when responding to the 
                     user and providing answer, do the following
                     1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                     2. Provide answers with credible sources.
-                    3. Refer to the user by '@${userInfo}'. For example, If User's name is 'Jon', then refer to the user as '@Jon'.
+                    3. Refer to the user by '@${user.firstName}'. For example, If User's name is 'Jon', then refer to the user as '@Jon'.
                     4. Do not repeat text. 
                     5. If you are uncertain or concerned about your response to a 'comment' or 'question', say that 'you will let the author know about the question or comment, 
                     and can circle back to the user with accurate information. Ask if the user wants to reach out the author' If user says 'yes' or 'agrees', perform the following actions:
@@ -95,7 +87,11 @@ export default async function handler(req, res) {
                     7. If user asks a 'question', respond back with a thoughtful, researched answer, and if user posts a 'comment', respond back with gratitude.
                     8. If user posts a question or comment in 'First Person singular Pronoun' e.g: "How do I Craft Compelling Content for my blog?", respond back with
                     'Second Person Pronoun" e.g: "How can you craft compelling content for your blog?"
-                    9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can get an accurate response from the article author.`,
+                    9. Information in your response MUST be up-to-date. If you are uncertain, let the user know that you can 
+                    get an accurate response from the article author.
+                    10. If user posts comment referencing the page article, please refer to the button on the page labelled 'Chat with this Article'.
+                    11. Use ${content} as context to provide your answers, but keep it brief.
+                    `,
             }];
 
             const result = await model.generateContent({
@@ -108,27 +104,33 @@ export default async function handler(req, res) {
             const text = response.text();
             // Extract the non-starred parts of the response
             const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
+            const aiResponseText = nonStarredParts.join('\n'); // Concatenate array elements into a single string
 
-            const user = await prisma.user.findUnique({
-                where: {
-                    email: email,
-                },
-            });
 
-            if (user && postId) {
-                const newComment = await prisma.comments.create({
+            if (user) {
+                const createdComment = await prisma.comments.create({
                     data: {
-                        title: title, // postTitle
+                        title: postTitle,
                         content: comment,
                         aiResponse: text,
-                        postId: postId
                     },
                     select: {
                         id: true
                     }
                 });
 
-                res.status(200).json({ message: "Comment is created successfully" });
+                if (createdComment) {
+                    const allComments = await prisma.comments.findMany({
+                        where: {
+                            id: createdComment.id
+                        },
+                        select: {
+                            content: true,
+                            aiResponse: true,
+                        }
+                    });
+                    res.status(200).json(allComments);
+                }
             }
         } else {
             console.log('Invalid data provided');

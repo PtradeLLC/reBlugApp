@@ -10,8 +10,6 @@ export default async function handler(req, res) {
         // Extract the content from the request body
         const { content, postContent, userName } = req.body;
 
-        console.log("SLUGPAGE:", content, postContent);
-
         // Check if the content is defined and not empty
         if (!content || typeof content !== 'string' || !postContent) {
             throw new Error('Content is not provided or is not a string.');
@@ -22,8 +20,6 @@ export default async function handler(req, res) {
 
         // Extract the text content without HTML tags
         const textContent = $('p').text();
-
-        console.log(textContent, "TextCont");
 
         const articleQuery = { question: content, reference: textContent };
         const articleQuestion = articleQuery.question;

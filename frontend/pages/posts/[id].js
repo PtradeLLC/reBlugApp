@@ -11,9 +11,9 @@ import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
 import { PrismaClient } from '@prisma/client';
+
+
 const prisma = new PrismaClient();
-
-
 
 
 const navigation = [
@@ -78,13 +78,12 @@ const PostPage = ({ post }) => {
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [singlePosts, setSinglePosts] = useState([])
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+
+    // console.log(session);
 
 
     const router = useRouter();
-
-
 
     const handleSubmissionModalOpen = () => {
         setIsSubmissionModalOpen(true);
@@ -116,6 +115,9 @@ const PostPage = ({ post }) => {
     }, []);
 
 
+    const { data, isLoading } = useSWR(`/api/blog/commentsystem`)
+
+
     const handleCloseModal = () => {
         setShowModal(false);
     };
@@ -123,11 +125,13 @@ const PostPage = ({ post }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
         if (newComment.trim() !== '') {
             try {
-                const { email, name } = user;
+                const { email, name } = session.user;
                 const title = post.title;
+                const content = post.content; //Post Content
 
                 // Validate comment content
                 if (!newComment.trim()) {
@@ -135,32 +139,72 @@ const PostPage = ({ post }) => {
                     return;
                 }
 
-                const response = await fetch('/api/blog/commentsystem', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ user: name, comment: newComment, email: email, postTitle: title, postId: `${post.id}` })
-                }, { cache: 'force-cache' });
+                db.collection('posts').add({
 
-                if (!response.ok) {
-                    throw new Error('Failed to post comment');
-                }
+                });
 
-                const responseData = await response.json();
+                // db.collection('comments').add({
 
-                setComments(prevComments => [...prevComments, responseData]);
+                // });
+
+
+
+                // setComments(prevComments => [...prevComments, responseData]);
 
                 // Clear the comment input field
                 setNewComment('');
                 setLoading(false);
-
             } catch (error) {
                 console.error('Error posting comment:', error.message);
             }
 
         }
     }
+
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+
+    //     if (newComment.trim() !== '') {
+    //         try {
+    //             const { email, name } = session.user;
+    //             const title = post.title;
+    //             const content = post.content; //Post Content
+
+    //             // Validate comment content
+    //             if (!newComment.trim()) {
+    //                 console.error('Comment content is empty');
+    //                 return;
+    //             }
+
+    //             const response = await fetch('/api/blog/commentsystem', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: post.id })
+    //             }, { cache: 'force-cache' });
+
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to post comment');
+    //             }
+
+    //             const responseData = await response.json();
+
+    //             // setComments(prevComments => [...prevComments, responseData]);
+
+    //             // Clear the comment input field
+    //             setNewComment('');
+    //             setLoading(false);
+    //         } catch (error) {
+    //             console.error('Error posting comment:', error.message);
+    //         }
+
+    //     }
+    // }
+
+
     return (
         <div className='mt-20'>
             <div className="relative mt-2 bg-gray-900 pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
@@ -205,7 +249,7 @@ const PostPage = ({ post }) => {
                                 </p>
                             </blockquote>
                             <figcaption className="mt-8 text-base">
-                                <div className="font-semibold text-white">Judith Black</div>
+                                {/* <div className="font-semibold text-white">{post.User.name}</div> */}
                                 <div className="mt-1 text-gray-400 flex gap-2">
                                     {navigation.map((item, index) => (
                                         <div key={index}>
@@ -225,12 +269,13 @@ const PostPage = ({ post }) => {
             </div>
             <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
                 <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
+
                     <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>
                         {post && post?.title}
                     </h1>
                     <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
                         <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/about.png' /> About Judith Black
+                            {/* <img className='w-7 h-7 mr-1' src='/images/about.png' /> {post.User.name} */}
                         </li>
                         <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                             <img className='w-7 h-7 mr-1' src='/images/category.png' />
@@ -255,23 +300,18 @@ const PostPage = ({ post }) => {
                             </button>
                         </li>
                     </ul>
-                    <Button onClick={() => setIsOpen(true)} className="bg-[#878784] hover:bg-slate-700 text-white h-8 m-auto text-center font-thin px-4 rounded-md animate-pulse">
-                        <span className='flex'>
-                            <Image src="/images/questionmark.png"
-                                width={25}
-                                height={25}
-                                alt="Ask the article" />
-                        </span>
-                        Chat with this Article
-                    </Button>
+
                 </span>
+
                 <span className='col-span-2 my-4'>
-                    { }
-                    <span className='text-xs flex justify-end my-2'>Reading time: {post && post?.createdAt} mins</span>
+                    <span className='flex'>
+                        <span className='text-xs flex justify-end my-2 mx-2'>Reading time: {post && post?.createdAt} mins</span>
+                        <span className='text-xs flex justify-end my-2'>Views: {post && post?.views}</span>
+                    </span>
                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${post && post?.content}` }} />
                     <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                     <span className=''>
-                        < CommentBox post={post} />
+                        < CommentBox post={post} comments={comments} />
                     </span>
                     <form onSubmit={handleSubmit}>
                         <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
@@ -310,7 +350,7 @@ const PostPage = ({ post }) => {
                 </span>
             </div>
             <div>
-                <ChatUI post={post} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <ChatUI postContent={post} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
             <div className='mx-4 px-2'>
                 <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
@@ -318,10 +358,18 @@ const PostPage = ({ post }) => {
             <div className='mx-4 px-2'>
                 <ArticleInfo isOpen={isArticleModalOpen} setIsOpen={setIsArticleModalOpen} />
             </div>
+            <Button onClick={() => setIsOpen(true)} className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse">
+                <span className='flex'>
+                    <Image src="/images/questionmark.png"
+                        width={25}
+                        height={25}
+                        alt="Ask the article" />
+                </span>
+                Chat with this Article
+            </Button>
         </div>
     );
 };
-
 
 
 export const getServerSideProps = async ({ params }) => {
@@ -333,20 +381,18 @@ export const getServerSideProps = async ({ params }) => {
             include: {
                 comments: {
                     include: {
-                        aiResponse: true, // Include aiResponse with comments
+                        User: true,
+                        AiResponse: true
                     },
                 },
-                aiResponses: true, // Include aiResponse directly in Post
+                // aiResponses: true,
+                // User: true,
             },
         });
 
-        // Convert the createdAt Date object to a string
-        // or to a format that can be serialized as JSON
-        post.createdAt = post.createdAt.toString();
-
         return {
             props: {
-                post,
+                post: JSON.parse(JSON.stringify(post)),
             },
         };
     } catch (error) {
@@ -361,36 +407,5 @@ export const getServerSideProps = async ({ params }) => {
 
 
 
-// export const getServerSideProps = async ({ params }) => {
-//     try {
-//         const post = await prisma.post.findUnique({
-//             where: {
-//                 id: String(params?.id),
-//             },
-//             include: {
-//                 comments: {
-//                     select: { content: true, id: true },
-//                 },
-//             },
-//         });
-
-//         // Convert the createdAt Date object to a string
-//         // or to a format that can be serialized as JSON
-//         post.createdAt = post.createdAt.toString();
-
-//         return {
-//             props: {
-//                 post,
-//             },
-//         };
-//     } catch (error) {
-//         console.error('Error fetching post:', error);
-//         return {
-//             props: {
-//                 post: null,
-//             },
-//         };
-//     }
-// };
 
 export default PostPage;

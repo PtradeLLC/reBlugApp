@@ -406,11 +406,11 @@ export default function DashLay() {
                                                     </div>
                                                 </span>
                                                 <div className="mt-6 flow-root items-center">
-                                                    <div className="flex items-center">
+                                                    <div className="items-center">
                                                         <span className="flex items-center truncate text-sm font-medium mx-2 text-gray-900">
-                                                            {loading ? <Loading className="ml-2" /> : <Avatar className="mx-auto flex justify-center items-center" img={managerImage} rounded />}
-                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{userInfo?.firstName} - {userInfo?.role}</span>
-
+                                                            {loading && <Loading className="ml-2" />}
+                                                            <img className="rounded w-7" src={managerImage} alt='profileImage' />
+                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{userInfo?.firstName}</span>
                                                             <span className="mx-1 flex items-center">
                                                                 <button className="mx-1" onClick={handleRefreshList}>Refresh</button>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -418,6 +418,7 @@ export default function DashLay() {
                                                                 </svg>
                                                             </span>
                                                         </span>
+                                                        <span className="mx-1 font-thin my-1 text-sm text-gray-900">{userInfo?.role.toLowerCase()}</span>
                                                     </div>
                                                     <TeamComponent refreshList={refreshList} />
                                                 </div>

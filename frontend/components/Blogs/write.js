@@ -5,6 +5,8 @@ const ReactQuill = typeof window === 'object' ? require('react-quill') : () => f
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import 'react-quill/dist/quill.bubble.css';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, CheckboxGroup, Checkbox, RadioGroup, Radio, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import DropzoneComponent from '../Dropzone';
 
 
 const Compose = ({ showModal, setShowModal }) => {
@@ -16,6 +18,7 @@ const Compose = ({ showModal, setShowModal }) => {
     const [crossPromote, setCrossPromote] = useState('yes');
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Select a Category"]));
     const [selectedFeatures, setSelectedFeatures] = useState(["article-newsletter", "blog-podcast"]);
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,6 +45,7 @@ const Compose = ({ showModal, setShowModal }) => {
         [selectedKeys]
     );
 
+
     const handlePublish = async (e) => {
         e.preventDefault();
         try {
@@ -56,7 +60,7 @@ const Compose = ({ showModal, setShowModal }) => {
             };
 
             // Send the data to the API
-            const response = await fetch('/api/blog/commentsystem', {
+            const response = await fetch('/api/blog/createPost', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +72,7 @@ const Compose = ({ showModal, setShowModal }) => {
             if (response.ok) {
                 const data = await response.json();
 
-                console.log('Article published successfully!', data);
+                console.log('DELETE::Article published successfully!', data);
 
             } else {
                 console.error('Failed to publish article');
@@ -84,8 +88,6 @@ const Compose = ({ showModal, setShowModal }) => {
             console.error('Error publishing article:', error);
         }
     };
-
-
 
     const blogCategories = [
         { name: "Books and Literature", href: "#", icon: "booksIcon" },
@@ -135,26 +137,7 @@ const Compose = ({ showModal, setShowModal }) => {
                                     Feature Image
                                 </label>
                                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                    <div className="text-center">
-                                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                            <label
-                                                htmlFor="file-upload"
-                                                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                                            >
-                                                <span>Upload a file</span>
-                                                <input
-                                                    id="file-upload"
-                                                    name="file-upload"
-                                                    type="file"
-                                                    className="sr-only"
-                                                    onChange={(e) => setFeatureImage(e.target.value)}
-                                                />
-                                            </label>
-                                            <p className="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                                    </div>
+                                    <DropzoneComponent />
                                 </div>
                             </div>
                             <div className={`absolute z-10 mr-4`}>

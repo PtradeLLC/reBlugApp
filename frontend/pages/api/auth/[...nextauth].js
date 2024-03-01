@@ -10,11 +10,13 @@ import SalesforceProvider from "next-auth/providers/salesforce";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import { compare } from "bcrypt";
 import { PrismaClient } from '@prisma/client';
-import { generateParagonToken } from "./paragonToken";
+import { adminAuth, adminDb } from "../../../firebase-admin.js";
+import { FirestoreAdapter } from "@auth/firebase-adapter";
 
 const prisma = new PrismaClient();
 
 export const authOptions = {
+    // adapter: FirestoreAdapter(adminDb),
     adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
@@ -52,7 +54,6 @@ export const authOptions = {
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials, req) {
-                console.log('Received credentials:', credentials);
                 try {
                     const { email } = credentials;
 
@@ -114,10 +115,31 @@ export const authOptions = {
             }
         }),
     ],
+
+    // callbacks: {
+    //     session: async ({ session, token }) => {
+    //         if (session?.user) {
+    //             if (token.sub) {
+    //                 session.user.id = token.sub;
+
+    //                 const firebaseToken = await adminAuth.createCustomToken(token.sub);
+    //                 session.firebaseToken = firebaseToken;
+    //             }
+    //         }
+    //         return session;
+    //     },
+    //     jwt: async ({ user, token }) => {
+    //         if (user) {
+    //             token.sub = user.id;
+    //         }
+    //         return token;
+    //     }
+    // },
     session: {
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
+
     secret: process.env.NEXTAUTH_SECRET,
 
     pages: {
