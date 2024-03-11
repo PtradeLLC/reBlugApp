@@ -12,11 +12,25 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["images.unsplash.com", "lh3.googleusercontent.com", "forgedmart.ghost.io"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "replicate.com",
+      },
+      {
+        protocol: 'https',
+        hostname: "lh3.googleusercontent.com",
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: "forgedmart.ghost.io",
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: "images.unsplash.com",
+        pathname: '**',
       },
       {
         protocol: "https",

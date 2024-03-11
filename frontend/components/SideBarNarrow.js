@@ -2,13 +2,9 @@ import { Fragment, useState, useEffect, createContext, Suspense, useRef } from '
 import { Dialog, Menu } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import {
-    Bars3BottomLeftIcon,
+    PowerIcon,
     CogIcon,
     HomeIcon,
-    WrenchScrewdriverIcon,
-    FilmIcon,
-    RectangleStackIcon,
-    Squares2X2Icon,
     UserGroupIcon,
     XMarkIcon,
     ServerStackIcon,
@@ -26,12 +22,12 @@ const SideBarNarrow = () => {
 
     const sidebarNavigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
-        { name: 'Database', href: '/dashboard/userdb', icon: ServerStackIcon },
+        { name: 'Integrations', href: '/dashboard/userdb', icon: PowerIcon },
         { name: 'Marketing', href: '#', icon: MegaphoneIcon },
         { name: 'Blogging', href: '/posts', icon: UserGroupIcon },
-        { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
-        { name: 'Resources', href: '#', icon: RectangleStackIcon },
         { name: 'Profile', href: '/profile', icon: CogIcon },
+        // { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
+        // { name: 'Resources', href: '#', icon: RectangleStackIcon },
     ].map(item => ({
         ...item,
         current: item.href === currentPath,

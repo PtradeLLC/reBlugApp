@@ -37,49 +37,48 @@ model Session {
 }
 
 model User {
-  id                 String                       @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String?                      @unique
+  id                 String              @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String?
   name               String?
   externalId         String?
   brandName          String?
   firstName          String?
   profileImage       String?
-  isActive           Boolean                      @default(false)
+  isActive           Boolean             @default(false)
   brandLogo          String?
   password           String?
-  image              String? //Auth
+  image              String?
   lastName           String?
   isVerified         Boolean?
   provider           String?
-  email              String                       @unique
-  createdAt          DateTime                     @default(now())
-  updatedAt          DateTime                     @updatedAt
+  email              String              @unique
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
   profileId          String?
-  role               Role                         @default(MANAGER)
-  Accounts           Account[]
-  Profile            Profile[]
-  Sessions           Session[]
+  role               Role                @default(MANAGER)
+  accounts           Account[]
+  profile            Profile[]
+  sessions           Session[]
   emailVerified      DateTime?
   userType           String?
-  VerificationTokens VerificationToken[]
-  embedding          Unsupported("vector(1536)")?
-  RecentUpdates      RecentUpdates[]
-  CampaignHistory    CampaignHistory[]
-  Team               Team[]
-  EmailTool          EmailTool[]
-  EmailLists         emailList[]
+  verificationTokens VerificationToken[]
+  recentUpdates      RecentUpdates[]
+  campaignHistory    CampaignHistory[]
+  team               Team[]
+  emailTool          EmailTool[]
+  emailLists         EmailList[]
   social             Social[]
-  Campaign           Campaign[]
-  Connectors         Connectors[]
-  files              files[]
-  EmailContact       EmailContact[]
-  KnowledgeBase      KnowledgeBase[]
-  ContactList        ContactList[]
-  ProductLaunchData  ProductLaunchData[]
-  Posts              Post[]
+  campaign           Campaign[]
+  connectors         Connectors[]
+  files              Files[]
+  emailContact       EmailContact[]
+  knowledgeBase      KnowledgeBase[]
+  contactList        ContactList[]
+  productLaunchData  ProductLaunchData[]
+  posts              Post[]
   comment            Comments[]
-  // sponsors           Sponsors[]
-  Sponsors           Sponsors[]
+  sponsors           Sponsors[]
+  Category           Category[]
 }
 
 model VerificationToken {
@@ -92,7 +91,6 @@ model VerificationToken {
   user        User?     @relation(fields: [userId], references: [id])
   createdAt   DateTime  @default(now())
   activatedAt DateTime?
-  // Team        Team?     @relation(fields: [teamId], references: [id])
   teamId      String?   @db.ObjectId
   Team        Team?     @relation(fields: [teamId], references: [id])
 
@@ -135,9 +133,9 @@ model Update {
 model History {
   id                String           @id @default(auto()) @map("_id") @db.ObjectId
   History           String?
-  CampaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
+  campaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
   campaignHistoryId String?          @db.ObjectId
-  RecentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
+  recentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
   recentUpdatesId   String?          @db.ObjectId
 }
 
@@ -151,19 +149,19 @@ model Team {
   password           String?
   image              String?
   Profile            Profile[]
-  EmailLists         emailList[]
-  EmailTool          EmailTool[]
+  emailLists         EmailList[]
+  emailTool          EmailTool[]
   member             User?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
   role               Role                @default(MEMBER)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   teamId             String?             @db.ObjectId
   userId             String?
-  VerificationTokens VerificationToken[]
-  Campaign           Campaign[]
-  Connectors         Connectors[]
-  KnowledgeBase      KnowledgeBase[]
-  ContactList        ContactList[]
+  verificationTokens VerificationToken[]
+  campaign           Campaign[]
+  connectors         Connectors[]
+  knowledgeBase      KnowledgeBase[]
+  contactList        ContactList[]
 }
 
 model ProductLaunchData {
@@ -226,43 +224,37 @@ model Post {
   id               String       @id @default(auto()) @map("_id") @db.ObjectId
   title            String?
   featureImage     String?
+  contentImage     String?
   views            Int          @default(0)
   createdAt        DateTime     @default(now())
   desc             String?
   crossPromote     String?
   selectedValue    String?
+  image            String?
   updatedAt        DateTime     @updatedAt
   selectedFeatures String[]
   published        Boolean      @default(false)
   content          String?
   email            String?
-  tips             Tips[]
   comments         Comments[]
   aiResponses      AiResponse[]
   sponsors         Sponsors[]
-  User             User?        @relation(fields: [userEmail], references: [email])
+  user             User?        @relation(fields: [userId], references: [id])
   userEmail        String?
   author           String?
-  categorySlug     String
+  categorySlug     String?
   userId           String?      @db.ObjectId
-  category         Category?    @relation(fields: [categorySlug], references: [slug])
+  category         Category?    @relation(fields: [categoryId], references: [id])
   categoryId       String?      @db.ObjectId
-  slug             String       @unique
 }
 
 model Category {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
-  slug  String  @unique
-  image String
-  Posts Post[]
-}
-
-model Tips {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  tip    String?
-  Post   Post?   @relation(fields: [postId], references: [id])
-  postId String? @db.ObjectId
+  title  String?
+  slug   String  @unique
+  posts  Post[]
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
 }
 
 model Comments {
@@ -272,13 +264,13 @@ model Comments {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now()) @updatedAt
   postSlug   String
-  aiResponse String? // Define the relationship to AiResponse
-  post       Post        @relation(fields: [postSlug], references: [slug])
+  aiResponse String?
   postId     String?     @db.ObjectId
   user       User?       @relation(fields: [userEmail], references: [email])
   userEmail  String
   userId     String?     @db.ObjectId
   AiResponse AiResponse?
+  Post       Post?       @relation(fields: [postId], references: [id])
 }
 
 model AiResponse {
@@ -288,9 +280,9 @@ model AiResponse {
   commentBy          String?
   response           String?
   commentingSystemId String?
-  Comment            Comments? @relation(fields: [articleCommentId], references: [id])
+  comments           Comments? @relation(fields: [articleCommentId], references: [id])
   articleCommentId   String?   @unique @db.ObjectId
-  Post               Post?     @relation(fields: [postId], references: [id])
+  post               Post?     @relation(fields: [postId], references: [id])
   postId             String?   @db.ObjectId
 }
 
@@ -316,7 +308,7 @@ model EmailTool {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String   @db.ObjectId
-  files               files[]
+  files               Files[]
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?  @db.ObjectId
@@ -337,7 +329,7 @@ model Campaign {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String   @db.ObjectId
-  files               files[]
+  files               Files[]
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?  @db.ObjectId
@@ -353,7 +345,7 @@ model KnowledgeBase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String   @db.ObjectId
-  files     files[]
+  files     Files[]
   user      User     @relation(fields: [userId], references: [id])
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?  @db.ObjectId
@@ -369,7 +361,7 @@ model ContactList {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String   @db.ObjectId
-  files     files[]
+  files     Files[]
   user      User     @relation(fields: [userId], references: [id])
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?  @db.ObjectId
@@ -388,7 +380,7 @@ model Connectors {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String   @db.ObjectId
-  files               files[]
+  files               Files[]
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?  @db.ObjectId
@@ -396,7 +388,7 @@ model Connectors {
   embedding Unsupported("vector(1536)")?
 }
 
-model files {
+model Files {
   id              String                       @id @default(auto()) @map("_id") @db.ObjectId
   emailToolId     String?                      @db.ObjectId
   EmailTool       EmailTool?                   @relation(fields: [emailToolId], references: [id])
@@ -423,7 +415,7 @@ model TrialProspect {
   image     String?
 }
 
-model emailList {
+model EmailList {
   id        String                       @id @default(auto()) @map("_id") @db.ObjectId
   email     String
   userId    String?                      @db.ObjectId

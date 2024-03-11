@@ -2,78 +2,56 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    try {
-        let tabs = [
-            { title: "Books and Literature", slug: "", image: "/booksimage.png" },
-            { title: "DIY and Crafts", slug: "", image: "/diyimage.png" },
-            { title: "Learning", slug: "", image: "/educationimage.png" },
-            { title: "Entertainment", slug: "", image: "/entertainmentimage.png" },
-            { title: "Pop Culture", slug: "", image: "/environmentimage.png" },
-            { title: "Environmentalism", slug: "", image: "/environmentimage.png" },
-            { title: "Fashion and Beauty", slug: "", image: "/fashionimage.png" },
-            { title: "Finance", slug: "", image: "/financeimage.png" },
-            { title: "Food and Cooking", slug: "", image: "/foodimage.png" },
-            { title: "Health and Wellness", slug: "", image: "/healthimage.png" },
-            { title: "Lifestyle", slug: "", image: "/lifestyleimage.png" },
-            { title: "Parenting", slug: "", image: "/parentingimage.png" },
-            { title: "Photography", slug: "", image: "/photographyimage.png" },
-            { title: "Current Events", slug: "", image: "/politicsimage.png" },
-            { title: "Relationships", slug: "", image: "/relationshipsimage.png" },
-            { title: "Science and Technology", slug: "", image: "/scienceimage.png" },
-            { title: "Sports and Fitness", slug: "", image: "/sportsimage.png" },
-            { title: "Travel", slug: "", image: "/travelimage.png" }
-        ];
+    // try {
 
-        const allCategories = await prisma.category.findMany({
-            select: {
-                id: true,
-                title: true
-            }
-        });
+    //     const categoryMap = new Map();
+    //     const allCategoriesFromDB = await prisma.category.findMany({
+    //         select: {
+    //             id: true,
+    //             title: true,
+    //             slug: true
+    //         }
+    //     });
 
-        if (allCategories.length === 0) {
-            // If no categories exist, create them based on the tabs array
-            for (const tab of tabs) {
-                const catSlug = tab.title.trim().split(" ").join("-");
-                await prisma.category.create({
-                    data: {
-                        title: tab.title,
-                        slug: catSlug,
-                        image: tab.image
-                    }
-                });
-            }
-            res.status(200).json({ message: 'Categories created successfully.' });
-        } else {
-            // Update existing categories if they already exist
-            for (const tab of tabs) {
-                const catSlug = tab.title.trim().split(" ").join("-").toLocaleLowerCase();
-                const existingCategory = allCategories.find(category => category.title === tab.title);
-                if (existingCategory) {
-                    await prisma.category.update({
-                        where: { id: existingCategory.id },
-                        data: {
-                            slug: catSlug,
-                            image: tab.image
-                        }
-                    });
-                } else {
-                    // If the category does not exist, create it
-                    await prisma.category.create({
-                        data: {
-                            title: tab.title,
-                            slug: catSlug,
-                            image: tab.image
-                        }
-                    });
-                }
-            }
-            res.status(200).json({ message: 'Categories updated successfully.' });
-        }
+    //     allCategoriesFromDB.forEach(post => {
+    //         const { category, title, id } = post;
+    //         const catSlug = category.trim().split(" ").join("-").toLocaleLowerCase();
+    //         const postSlug = title.trim().split(" ").join("-").toLocaleLowerCase();
 
+    //         if (!categoryMap.has(catSlug)) {
+    //             categoryMap.set(catSlug, {
+    //                 slug: catSlug,
+    //                 category,
+    //                 posts: []
+    //             });
+    //         }
+    //         categoryMap.get(catSlug).posts.push({ ...post, slug: postSlug });
+    //     });
 
-    } catch (error) {
-        console.error('Error creating or fetching categories:', error);
-        res.status(500).json({ message: 'Error creating or fetching categories.' });
-    }
+    //     // Create a map of categories fetched from the database using slug as key
+    //     const dbCategoryMap = new Map();
+    //     allCategoriesFromDB.forEach(category => {
+    //         dbCategoryMap.set(category.slug, {
+    //             slug: category.slug,
+    //             category: category.title,
+    //             posts: []
+    //         });
+    //     });
+
+    //     // Merge categories from local environment with categories from database
+    //     for (const [slug, categoryData] of categoryMap.entries()) {
+    //         if (dbCategoryMap.has(slug)) {
+    //             dbCategoryMap.get(slug).posts = [...dbCategoryMap.get(slug).posts, ...categoryData.posts];
+    //         } else {
+    //             dbCategoryMap.set(slug, categoryData);
+    //         }
+    //     }
+
+    //     // Convert the map back to an array of categories
+    //     const combinedCategories = Array.from(dbCategoryMap.values());
+    //     res.status(200).json({ message: 'Categories created successfully.', allCategories: combinedCategories });
+    // } catch (error) {
+    //     console.error('Error creating or fetching categories:', error);
+    //     res.status(500).json({ message: 'Error creating or fetching categories.' });
+    // }
 }

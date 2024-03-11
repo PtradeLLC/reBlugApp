@@ -1,13 +1,15 @@
 import React from "react";
 import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 
-export default function CategoryCard() {
+export default function CategoryCard({ title, author }) {
+    // const { title, content, createdAt, author, views } = posts
+    console.log("Title from ", title, author);
     return (
         <div className="">
             <Card isFooterBlurred className="w-full h-[400px] col-span-12 sm:col-span-7">
                 <CardHeader className="absolute bg-transparent backdrop-blur z-10 top-0 flex-col items-start">
                     <p className="text-tiny text-white uppercase font-bold">Your day your way</p>
-                    <h4 className="text-white font-medium text-xl">Your checklist for better sleep</h4>
+                    <h4 className="text-white font-medium text-xl">{title}</h4>
                 </CardHeader>
                 <img
                     alt="Relaxing app background"
@@ -19,18 +21,14 @@ export default function CategoryCard() {
                     <div className="flex flex-grow gap-2 items-center">
                         <div className="flex flex-col">
                             <p className="text-sm font-semibold text-slate-900">Breathing App</p>
-                            <p className="text-sm text-slate-900 line-clamp-3">DALL·E 2 is an AI system that can create
-                                realistic images and art from a description in natural language.
-                                images and art from a description in natural language.
-                                images and art from a description in natural language.
-                            </p>
+                            {/* <p className="text-sm text-slate-900 line-clamp-3">{content}</p> */}
                             <span className="flex justify-between item-center my-1 w-full">
                                 <img
                                     alt="Breathing app icon"
                                     className="rounded-full h-9 w-9 object-cover bg-black"
                                     src="/images/youtube.png"
                                 />
-                                <p className="text-sm text-slate-900 font-thin">John Holmes</p>
+                                <p className="text-sm text-slate-900 font-thin">author</p>
                                 <p className="text-sm text-slate-900 font-thin">Feb 28</p>
                                 <span className="text-slate-900 text-sm flex font-thin">
                                     92

@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import Loading from './Loading';
 
-
 export default function Team({ show, setShow }) {
     const [state, setState] = useState(
         {
@@ -28,13 +27,6 @@ export default function Team({ show, setShow }) {
         }
     };
 
-    // const isEmailValid = (emails) => {
-    //     const emailArray = emails.split(',').map((email) => email.trim());
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    //     return emailArray.every((email) => emailRegex.test(email));
-    // };
-
     const isEmailValid = (emails) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emails.every((email) => emailRegex.test(email));
@@ -55,12 +47,8 @@ export default function Team({ show, setShow }) {
         }
     };
 
-
-
     const sendInvite = async () => {
         const baseUrl = "/api/team-members";
-
-
         try {
             setState((prevState) => ({
                 ...prevState,

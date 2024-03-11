@@ -5,35 +5,6 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     try {
-        // Fetch comments from cache if available, otherwise fetch from the database
-
-        // const fetchComments = async () => {
-        //     try {
-        //         const cache = await caches.open('comments-cache');
-        //         const cachedResponse = await cache.match('/api/blog/commentsystem');
-
-        //         if (cachedResponse) {
-        //             const data = await cachedResponse.json();
-        //             console.log('Comments fetched from cache:', data);
-        //             return data;
-        //         } else {
-        //             const response = await fetch('/api/blog/commentsystem');
-
-        //             if (!response.ok) {
-        //                 throw new Error('Failed to fetch comments');
-        //             }
-
-        //             const data = await response.json();
-        //             await cache.put('/api/blog/commentsystem', response.clone());
-        //             console.log('Comments fetched from API:', data);
-        //             return data;
-        //         }
-        //     } catch (error) {
-        //         console.error('Error fetching comments:', error.message);
-        //         throw new Error('Failed to fetch comments');
-        //     }
-        // };
-
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
         const { comment, content, email, postTitle, postId } = req.body;

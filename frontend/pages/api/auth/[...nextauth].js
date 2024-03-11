@@ -10,13 +10,10 @@ import SalesforceProvider from "next-auth/providers/salesforce";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import { compare } from "bcrypt";
 import { PrismaClient } from '@prisma/client';
-import { adminAuth, adminDb } from "../../../firebase-admin.js";
-import { FirestoreAdapter } from "@auth/firebase-adapter";
 
 const prisma = new PrismaClient();
 
 export const authOptions = {
-    // adapter: FirestoreAdapter(adminDb),
     adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
@@ -72,6 +69,7 @@ export const authOptions = {
 
                     if (existingUser) {
                         // Log the user object to check its structure
+                        console.log("User exists", existingUser);
 
                         // Attach user information to the session
                         req.session.user = {

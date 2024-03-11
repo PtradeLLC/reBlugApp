@@ -26,9 +26,6 @@ export default async function handler(req, res) {
         const articleRef = articleQuery.reference;
 
 
-        console.log(articleQuery, articleQuestion, articleRef, "ARTICLE");
-
-
         const run = async () => {
 
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });

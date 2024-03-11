@@ -34,23 +34,25 @@ export default function Example() {
               </span>
             </a>
           </div>
-          <h1 className="mt-10 lg:mt-72 text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            A platform for brands, bloggers, and marketers to connect in a unified ecosystem
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            Every Brand and Marketer has a <span className='text-red-700'>'Thing'.</span>
           </h1>
+          <h2 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+            We solve <span className='text-red-700'>things</span> by providing a unified ecosystem where brands, marketers and bloggers can connect.
+          </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Making blogging interactive, social and useful for marketing through the use of
+            Specifically by making blogging interactive, social and useful for marketing through the use of
             software, AI-powered technologies, and automation tools.
-
           </p>
-          <div className="mt-50 flex items-center gap-x-6">
+          <div className="mt-60 flex items-center gap-x-6">
             <a
-              href="/register"
+              href=""
               className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
             >
-              Sign Up
+              For Brands & Marketers
             </a>
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-              Login <span aria-hidden="true">→</span>
+            <a href="" className="text-sm font-semibold leading-6 text-gray-900">
+              For Bloggers <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>

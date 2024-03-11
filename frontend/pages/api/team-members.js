@@ -105,7 +105,7 @@ export default async function handler(req, res) {
                             const userOnTeam = await prisma.team.findFirst({
                                 where: {
                                     member: {
-                                        id: existingUser.id,
+                                        id: existinguser.id,
                                     },
                                 },
                             });

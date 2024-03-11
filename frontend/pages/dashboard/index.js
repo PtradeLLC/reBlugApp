@@ -146,7 +146,6 @@ const Dashboard = function ({ children }) {
                     setUserData(data);
                     setUser(data);
 
-
                     const updatedUser = {
                         firstName: data?.first_name || user?.firstName,
                         lastName: data?.last_name || user?.lastName,
@@ -188,9 +187,7 @@ const Dashboard = function ({ children }) {
                 } catch (error) {
                     console.error("Error fetching user:", error.message);
                 }
-
             }
-
         };
 
         fetchData();

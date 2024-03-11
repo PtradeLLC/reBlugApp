@@ -6,12 +6,12 @@ import { Button } from '@nextui-org/react';
 import CommentBox from '../../components/Blogs/CommentBox';
 import SubmissionInfo from '../../components/Blogs/BlogInfo';
 import ArticleInfo from '../../components/Blogs/ArticleInfo';
-import useSWR, { mutate } from 'swr';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
-import { PrismaClient } from '@prisma/client';
-
+import { useParams } from 'next/navigation';
+import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 
 const prisma = new PrismaClient();
 
@@ -68,22 +68,24 @@ const navigation = [
 ];
 
 
-const PostPage = ({ post }) => {
+const PostPage = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
     const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
     const [isArticleModalOpen, setIsArticleModalOpen] = useState(false);
+    const [allPosts, setAllPosts] = useState();
     const [value, setValue] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [postBySlug, setPostBySlug] = useState();
     const { data: session, status } = useSession();
+    const params = useParams();
+    const query = useRouter();
+    const [uniqPost, setUniqPost] = useState(null);
+    const { id } = params || {};
 
-    // console.log(session);
-
-
-    const router = useRouter();
 
     const handleSubmissionModalOpen = () => {
         setIsSubmissionModalOpen(true);
@@ -114,8 +116,30 @@ const PostPage = ({ post }) => {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        const findPost = async () => {
+            try {
+                setLoading(true);
+                const baseUrl = `http://localhost:3000/api/blog/uniquePost/${id}`;
+                const res = await axios.get(baseUrl);
+                const postData = res.data;
 
-    const { data, isLoading } = useSWR(`/api/blog/commentsystem`)
+                if (!postData) {
+                    throw new Error("Something went wrong");
+                }
+
+                setUniqPost(postData);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        if (id) {
+            findPost();
+        }
+    }, [id]);
+
 
 
     const handleCloseModal = () => {
@@ -131,7 +155,7 @@ const PostPage = ({ post }) => {
             try {
                 const { email, name } = session.user;
                 const title = post.title;
-                const content = post.content; //Post Content
+                const content = post.content;
 
                 // Validate comment content
                 if (!newComment.trim()) {
@@ -149,7 +173,7 @@ const PostPage = ({ post }) => {
 
 
 
-                // setComments(prevComments => [...prevComments, responseData]);
+                setComments(prevComments => [...prevComments, responseData]);
 
                 // Clear the comment input field
                 setNewComment('');
@@ -192,7 +216,7 @@ const PostPage = ({ post }) => {
 
     //             const responseData = await response.json();
 
-    //             // setComments(prevComments => [...prevComments, responseData]);
+    //             setComments(prevComments => [...prevComments, responseData]);
 
     //             // Clear the comment input field
     //             setNewComment('');
@@ -200,14 +224,13 @@ const PostPage = ({ post }) => {
     //         } catch (error) {
     //             console.error('Error posting comment:', error.message);
     //         }
-
     //     }
     // }
 
 
     return (
         <div className='mt-20'>
-            <div className="relative mt-2 bg-gray-900 pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
+            <div className="relative mt-2 bg-[#ced4da] pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
                 <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
                     <div className="absolute left-[calc(50%-19rem)] top-[calc(50%-36rem)] transform-gpu blur-3xl">
                         <div
@@ -221,44 +244,62 @@ const PostPage = ({ post }) => {
                 </div>
                 <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
                     <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
-                        <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
-                            <img
-                                className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-gradient-to-r from-slate-800 to-gray-900 shadow-2xl"
-                                src={post && post?.featureImage}
-                                alt="authorImage"
-                            />
+                        { }
+                        <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                            {loading ? (
+                                <div className="flex justify-center">
+                                    <CircularProgress
+                                        aria-label="Loading..."
+                                        size="sm"
+                                        value={value}
+                                        color="warning"
+                                        className='mx-2'
+                                        showValueLabel={true}
+                                    />
+                                </div>
+                            ) :
+                                <img
+                                    className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-[#adb5bd] shadow-2xl"
+                                    src={uniqPost && uniqPost?.featureImage}
+                                    alt="authorImage"
+                                />
+                            }
                         </div>
                     </div>
                     <div className="w-full max-w-2xl xl:max-w-none xl:flex-auto xl:px-16 xl:py-24">
-                        <figure className="relative isolate pt-6 sm:pt-12">
-                            <svg
-                                viewBox="0 0 162 128"
-                                fill="none"
-                                aria-hidden="true"
-                                className="absolute left-0 top-0  h-32 stroke-white/20"
-                            >
-                                <path
-                                    id="b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb"
-                                    d="M65.5697 118.507L65.8918 118.89C68.9503 116.314 71.367 113.253 73.1386 109.71C74.9162 106.155 75.8027 102.28 75.8027 98.0919C75.8027 94.237 75.16 90.6155 73.8708 87.2314C72.5851 83.8565 70.8137 80.9533 68.553 78.5292C66.4529 76.1079 63.9476 74.2482 61.0407 72.9536C58.2795 71.4949 55.276 70.767 52.0386 70.767C48.9935 70.767 46.4686 71.1668 44.4872 71.9924L44.4799 71.9955L44.4726 71.9988C42.7101 72.7999 41.1035 73.6831 39.6544 74.6492C38.2407 75.5916 36.8279 76.455 35.4159 77.2394L35.4047 77.2457L35.3938 77.2525C34.2318 77.9787 32.6713 78.3634 30.6736 78.3634C29.0405 78.3634 27.5131 77.2868 26.1274 74.8257C24.7483 72.2185 24.0519 69.2166 24.0519 65.8071C24.0519 60.0311 25.3782 54.4081 28.0373 48.9335C30.703 43.4454 34.3114 38.345 38.8667 33.6325C43.5812 28.761 49.0045 24.5159 55.1389 20.8979C60.1667 18.0071 65.4966 15.6179 71.1291 13.7305C73.8626 12.8145 75.8027 10.2968 75.8027 7.38572C75.8027 3.6497 72.6341 0.62247 68.8814 1.1527C61.1635 2.2432 53.7398 4.41426 46.6119 7.66522C37.5369 11.6459 29.5729 17.0612 22.7236 23.9105C16.0322 30.6019 10.618 38.4859 6.47981 47.558L6.47976 47.558L6.47682 47.5647C2.4901 56.6544 0.5 66.6148 0.5 77.4391C0.5 84.2996 1.61702 90.7679 3.85425 96.8404L3.8558 96.8445C6.08991 102.749 9.12394 108.02 12.959 112.654L12.959 112.654L12.9646 112.661C16.8027 117.138 21.2829 120.739 26.4034 123.459L26.4033 123.459L26.4144 123.465C31.5505 126.033 37.0873 127.316 43.0178 127.316C47.5035 127.316 51.6783 126.595 55.5376 125.148L55.5376 125.148L55.5477 125.144C59.5516 123.542 63.0052 121.456 65.9019 118.881L65.5697 118.507Z"
-                                />
-                                <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86} />
-                            </svg>
-                            <blockquote className="text-xl font-semibold leading-8 text-white sm:text-2xl sm:leading-9">
-                                <p className='text-4xl'>
-                                    {post && post?.title}
-                                </p>
-                            </blockquote>
-                            <figcaption className="mt-8 text-base">
-                                {/* <div className="font-semibold text-white">{post.User.name}</div> */}
-                                <div className="mt-1 text-gray-400 flex gap-2">
-                                    {navigation.map((item, index) => (
-                                        <div key={index}>
-                                            <span className='flex'> {item.icon({ width: 24, height: 24, fill: 'currentColor' })}</span>
+                        {uniqPost && (
+                            <>
+                                <figure className="relative isolate pt-6 sm:pt-12">
+                                    <svg
+                                        viewBox="0 0 162 128"
+                                        fill="none"
+                                        aria-hidden="true"
+                                        className="absolute left-0 top-0  h-32 stroke-white/20"
+                                    >
+                                        <path
+                                            id="b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb"
+                                            d="M65.5697 118.507L65.8918 118.89C68.9503 116.314 71.367 113.253 73.1386 109.71C74.9162 106.155 75.8027 102.28 75.8027 98.0919C75.8027 94.237 75.16 90.6155 73.8708 87.2314C72.5851 83.8565 70.8137 80.9533 68.553 78.5292C66.4529 76.1079 63.9476 74.2482 61.0407 72.9536C58.2795 71.4949 55.276 70.767 52.0386 70.767C48.9935 70.767 46.4686 71.1668 44.4872 71.9924L44.4799 71.9955L44.4726 71.9988C42.7101 72.7999 41.1035 73.6831 39.6544 74.6492C38.2407 75.5916 36.8279 76.455 35.4159 77.2394L35.4047 77.2457L35.3938 77.2525C34.2318 77.9787 32.6713 78.3634 30.6736 78.3634C29.0405 78.3634 27.5131 77.2868 26.1274 74.8257C24.7483 72.2185 24.0519 69.2166 24.0519 65.8071C24.0519 60.0311 25.3782 54.4081 28.0373 48.9335C30.703 43.4454 34.3114 38.345 38.8667 33.6325C43.5812 28.761 49.0045 24.5159 55.1389 20.8979C60.1667 18.0071 65.4966 15.6179 71.1291 13.7305C73.8626 12.8145 75.8027 10.2968 75.8027 7.38572C75.8027 3.6497 72.6341 0.62247 68.8814 1.1527C61.1635 2.2432 53.7398 4.41426 46.6119 7.66522C37.5369 11.6459 29.5729 17.0612 22.7236 23.9105C16.0322 30.6019 10.618 38.4859 6.47981 47.558L6.47976 47.558L6.47682 47.5647C2.4901 56.6544 0.5 66.6148 0.5 77.4391C0.5 84.2996 1.61702 90.7679 3.85425 96.8404L3.8558 96.8445C6.08991 102.749 9.12394 108.02 12.959 112.654L12.959 112.654L12.9646 112.661C16.8027 117.138 21.2829 120.739 26.4034 123.459L26.4033 123.459L26.4144 123.465C31.5505 126.033 37.0873 127.316 43.0178 127.316C47.5035 127.316 51.6783 126.595 55.5376 125.148L55.5376 125.148L55.5477 125.144C59.5516 123.542 63.0052 121.456 65.9019 118.881L65.5697 118.507Z"
+                                        />
+                                        <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86} />
+                                    </svg>
+                                    <blockquote className="text-xl font-semibold leading-8 text-slate-900 sm:text-2xl sm:leading-9">
+                                        <p className='text-4xl'>
+                                            {uniqPost?.title}
+                                        </p>
+                                    </blockquote>
+                                    <figcaption className="mt-8 text-base">
+                                        <div className="font-semibold sm:text-lg text-slate-700">{uniqPost.author}</div>
+                                        <div className="mt-1 text-gray-400 flex gap-2">
+                                            {navigation.map((item, index) => (
+                                                <div key={index}>
+                                                    <span className='flex'> {item.icon({ width: 24, height: 24, fill: 'currentColor' })}</span>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                            </figcaption>
-                        </figure>
+                                    </figcaption>
+                                </figure>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -267,90 +308,147 @@ const PostPage = ({ post }) => {
                     <img className='w-7 h-7 mr-1' src='/images/blogpost.png' /> All Posts
                 </Link>
             </div>
-            <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
-                <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
+            {uniqPost && (
+                <>
+                    <div className='mt-10 max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md'>
+                        <span className='w-86 pr-4 sm:justify-center pl-2 my-4'>
+                            <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>
+                                {uniqPost?.title}
+                            </h1>
+                            <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
+                                <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                                    <img className='w-7 h-7 mr-1' src={`${uniqPost.image}`} /> {uniqPost.author}
+                                </li>
+                                <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                                    <img className='w-7 h-7 mr-1' src='/images/category.png' />
+                                    Category: {uniqPost?.category.title}
+                                </li>
+                                <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                                    <img className='w-7 h-7 mr-1' src='/images/users.png' />
+                                    <div className=''>Readership: 2000 Readers</div>
+                                </li>
+                                <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                                    <img className='w-7 h-7 mr-1' src='/images/submit.png' />
+                                    <button name='ProductSubmission' type='button' onClick={handleSubmissionModalOpen}>
+                                        Submit Product for future article
+                                    </button>
+                                </li>
+                                <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
+                                    <img className='w-7 h-7 mr-1' src='/images/aa.png' />
+                                    <button name='ArticleAssistant' type='button' onClick={handleArticleModalOpen}>
+                                        <span>
+                                            Article Assistant for your Blog
+                                        </span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </span>
 
-                    <h1 className='font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl'>
-                        {post && post?.title}
-                    </h1>
-                    <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
-                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            {/* <img className='w-7 h-7 mr-1' src='/images/about.png' /> {post.User.name} */}
-                        </li>
-                        <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/category.png' />
-                            Category:{post && post?.Category}
-                        </li>
-                        <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/users.png' />
-                            <div className=''>Readership: 2000 Readers</div>
-                        </li>
-                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/submit.png' />
-                            <button name='ProductSubmission' type='button' onClick={handleSubmissionModalOpen}>
-                                Submit Product for future article
-                            </button>
-                        </li>
-                        <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                            <img className='w-7 h-7 mr-1' src='/images/aa.png' />
-                            <button name='ArticleAssistant' type='button' onClick={handleArticleModalOpen}>
-                                <span>
-                                    Article Assistant for your Blog
-                                </span>
-                            </button>
-                        </li>
-                    </ul>
+                        <span className='col-span-2 my-4'>
+                            <span className='flex'>
+                                <span className='text-xs flex justify-end my-2 mx-2'>Reading time: {uniqPost?.createdAt} mins</span>
+                                <span className='text-xs flex justify-end my-2'>Views: {uniqPost?.views}</span>
+                            </span>
+                            <span className='flex justify-center items-center'>
+                                {loading ? (
+                                    <div className="flex justify-center">
+                                        <CircularProgress
+                                            aria-label="Loading..."
+                                            size="sm"
+                                            value={value}
+                                            color="warning"
+                                            className='mx-2'
+                                            showValueLabel={true}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${uniqPost?.content}` }} />
+                                )}
+                            </span>
 
-                </span>
 
-                <span className='col-span-2 my-4'>
-                    <span className='flex'>
-                        <span className='text-xs flex justify-end my-2 mx-2'>Reading time: {post && post?.createdAt} mins</span>
-                        <span className='text-xs flex justify-end my-2'>Views: {post && post?.views}</span>
-                    </span>
-                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${post && post?.content}` }} />
-                    <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
-                    <span className=''>
-                        < CommentBox post={post} comments={comments} />
-                    </span>
-                    <form onSubmit={handleSubmit}>
-                        <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                            <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-                                <label htmlFor="comment" className="sr-only">Share your thoughts</label>
-                                <textarea
-                                    id="comment"
-                                    rows="4"
-                                    className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                                    placeholder="Share your thoughts..."
-                                    value={newComment}
-                                    onChange={handleCommentChange}
-                                    onClick={handleTextAreaClick}
-                                    required
-                                />
-                            </div>
-                            <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-                                <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
-                                    Post comment
-                                    {loading && (
-                                        <div className="flex justify-center">
-                                            <CircularProgress
-                                                aria-label="Loading..."
-                                                size="sm"
-                                                value={value}
-                                                color="warning"
-                                                className='mx-2'
-                                                showValueLabel={true}
-                                            />
+                            <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
+                            <span className=''>
+                                < CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
+                            </span>
+                            <form onSubmit={handleSubmit}>
+                                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                    <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                        <label htmlFor="comment" className="sr-only">Share your thoughts</label>
+                                        <textarea
+                                            id="comment"
+                                            rows="4"
+                                            className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                                            placeholder="Share your thoughts..."
+                                            value={newComment}
+                                            onChange={handleCommentChange}
+                                            onClick={handleTextAreaClick}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+                                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+                                            Post comment
+                                            {loading && (
+                                                <div className="flex justify-center">
+                                                    <CircularProgress
+                                                        aria-label="Loading..."
+                                                        size="sm"
+                                                        value={value}
+                                                        color="warning"
+                                                        className='mx-2'
+                                                        showValueLabel={true}
+                                                    />
+                                                </div>
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </span>
+                        {/* {!session && showModal && (
+                            <div className="fixed z-10 inset-0 overflow-y-auto">
+                                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+                                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                                    <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div className="sm:flex sm:items-start">
+                                                <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                    <img src='/images/Marttwainxyz.png' />
+                                                </div>
+                                                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                    <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                                        Please create an account or login to share your thoughts on this article
+                                                    </h3>
+                                                    <div className="mt-2">
+                                                        <p className="text-sm text-gray-500">
+                                                            If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    )}
-                                </button>
+                                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                            <button
+                                                type="button"
+                                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                onClick={handleCloseModal}
+                                            >
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </span>
-            </div>
+                        )} */}
+                    </div>
+                </>
+            )}
             <div>
-                <ChatUI postContent={post} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <ChatUI postContent={uniqPost?.content} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
             <div className='mx-4 px-2'>
                 <SubmissionInfo isOpen={isSubmissionModalOpen} setIsOpen={setIsSubmissionModalOpen} />
@@ -370,42 +468,6 @@ const PostPage = ({ post }) => {
         </div>
     );
 };
-
-
-export const getServerSideProps = async ({ params }) => {
-    try {
-        const post = await prisma.post.findUnique({
-            where: {
-                id: String(params?.id),
-            },
-            include: {
-                comments: {
-                    include: {
-                        User: true,
-                        AiResponse: true
-                    },
-                },
-                // aiResponses: true,
-                // User: true,
-            },
-        });
-
-        return {
-            props: {
-                post: JSON.parse(JSON.stringify(post)),
-            },
-        };
-    } catch (error) {
-        console.error('Error fetching post:', error);
-        return {
-            props: {
-                post: null,
-            },
-        };
-    }
-};
-
-
 
 
 export default PostPage;

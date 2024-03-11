@@ -1,46 +1,17 @@
 import { useState } from 'react';
-import {
-    CalendarIcon,
-    ChartPieIcon,
-    DocumentDuplicateIcon,
-    FolderIcon,
-    HomeIcon,
-    UsersIcon,
-} from '@heroicons/react/24/outline';
-import { Dialog } from '@headlessui/react'
 import { useWindowSize } from '@react-hook/window-size';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Blog from '../../pages/posts';
 import { Divider } from "@nextui-org/react";
-import { PrismaClient } from '@prisma/client';
 
 
-const prisma = new PrismaClient();
-
-
-const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, count: '12', current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, count: '20+', current: false },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
-]
-
-
-const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function BlogCategoriesHero({ post }) {
+export default function BlogCategoriesHero() {
     const [width, height] = useWindowSize();
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className='w-full'>
@@ -235,22 +206,3 @@ export default function BlogCategoriesHero({ post }) {
     )
 }
 
-
-// export const getServerSideProps = async () => {
-//     try {
-//         const post = await prisma.category.findMay();
-
-//         return {
-//             props: {
-//                 post: JSON.parse(JSON.stringify(post)),
-//             },
-//         };
-//     } catch (error) {
-//         console.error('Error fetching post:', error);
-//         return {
-//             props: {
-//                 post: null,
-//             },
-//         };
-//     }
-// };

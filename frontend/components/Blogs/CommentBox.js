@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
+import { CircularProgress } from "@nextui-org/react";
 
-const CommentBox = ({ post, comments }) => {
-    const [showModal, setShowModal] = useState(false);
+const CommentBox = ({ post, comments, showModal, setShowModal }) => {
     const { data: session } = useSession();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const handleSignUp = () => {
         if (!session) {
@@ -36,57 +37,64 @@ const CommentBox = ({ post, comments }) => {
                     </div>
                 </div>
             </div>
-
             {/* {console.log(comments)} */}
             <div className="overflow-y-auto h-[250px]">
-                {comments && comments?.map((item) => {
-
-                    return (
-                        <div key={item.id}>
-                            <div>
+                {!loading && !comments ? (
+                    <div className="flex justify-center">
+                        <CircularProgress
+                            aria-label="Loading..."
+                            size="sm"
+                            value={value}
+                            color="warning"
+                            className='mx-2'
+                            showValueLabel={true}
+                        />
+                    </div>
+                ) : (
+                    <>
+                        {comments && comments?.map((item) => {
+                            return (
                                 <div key={item.id}>
-                                    <div >
-                                        <div className="flex mb-7 items-start gap-2.5">
-                                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                            <div className="flex flex-col gap-1 w-full">
-                                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                    {console.log('from the box', item)}
-                                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{post.User.name}</span>
-                                                </div>
-                                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                    item.
-                                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{item.content}</p>
-                                                </div>
-                                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div>
-                                        <div className="flex mb-7 items-start gap-2.5">
-                                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                            <div className="flex flex-col gap-1 w-full">
-                                                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
+                                        <div key={item.id}>
+                                            <div >
+                                                <div className="flex mb-7 items-start gap-2.5">
+                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                                    <div className="flex flex-col gap-1 w-full">
+
+                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">{post.User.name}</span>
+                                                        </div>
+                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                            item.
+                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.content}</p>
+                                                        </div>
+                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                                                    </div>
                                                 </div>
-                                                <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                    <p className="text-sm font-normal text-gray-900 dark:text-white">{item.aiResponse}</p>
+                                            </div>
+                                            <div>
+                                                <div className="flex mb-7 items-start gap-2.5">
+                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                                                    <div className="flex flex-col gap-1 w-full">
+                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
+                                                        </div>
+                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.aiResponse}</p>
+                                                        </div>
+                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
+                                                    </div>
                                                 </div>
-                                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-            <div className='flex px-2'>
-                <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" className="text-red-600 dark:text-red-500 hover:underline">Community Guidelines</a>.</p>
-                <span className="text-xs ml-2 font-thin text-gray-600">
-                    Powered by{" "}
-                    <Link href="http://forgedmart.com/">ForgedMart</Link>
-                </span>
+                            );
+                        })}
+                    </>
+                )}
+
             </div>
             {!session && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -117,7 +125,7 @@ const CommentBox = ({ post, comments }) => {
                                 <button
                                     type="button"
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={handleCloseModal}
+                                    onClick={() => setShowModal(false)}
                                 >
                                     Close
                                 </button>
