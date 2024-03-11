@@ -4,8 +4,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Loading from "./Loading";
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRecoilState } from 'recoil';
-import { recapEventState } from '../atoms/recapState';
+// import { useRecoilState } from 'recoil';
+// import { recapEventState } from '../atoms/recapState';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -16,12 +16,12 @@ export default function WelcomeModal({ setOpenModal, recentUpdates, email, first
     const [loading, setLoading] = useState(false);
     const [history, setHistory] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
-    const [recap, setRecap] = useRecoilState(recapEventState);
+    // const [recap, setRecap] = useRecoilState(recapEventState);
 
     // Example function that adds recap
-    const addRecap = () => {
-        setRecap((prev) => [...prev, `someRecapContent`])
-    }
+    // const addRecap = () => {
+    //     setRecap((prev) => [...prev, `someRecapContent`])
+    // }
 
     const closeModal = () => {
         setOpenModal(false);
