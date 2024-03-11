@@ -10,10 +10,11 @@ import { useState } from "react";
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
 
+
   return (
     <div>
       <Head>
-        <title>ForgedMart</title>
+        <title>reBlug</title>
         <meta name="description" content="A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

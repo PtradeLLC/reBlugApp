@@ -15,7 +15,6 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import TeamComponent from "../../components/TeamComponent";
 import WelcomeModal from "../../components/verfication-mod";
-import { Avatar } from 'flowbite-react';
 import dynamic from 'next/dynamic';
 import IntegrationsCatalog from "../../components/integrations";
 import Integration from "../../components/integrations";
