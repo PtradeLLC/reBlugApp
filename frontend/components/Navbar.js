@@ -3,8 +3,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
-import { useEffect } from "react";
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
@@ -14,15 +12,12 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    // Session data is still loading
-    return null; // or loading indicator
+    return null;
   }
 
   const handleClick = async () => {
     await signOut({ callbackUrl: "/" });
   };
-
-
 
   return (
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
@@ -61,18 +56,6 @@ export default function Navbar() {
                   >
                     Blog
                   </Link>
-                  {/* <Link
-                    href={"/bloggers-platforms"}
-                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
-                  >
-                    Platforms
-                  </Link> */}
-                  {/* <Link
-                    href={"/social"}
-                    className="inline-flex items-center border-b-2 border-red-50 px-1 pt-1 text-sm font-medium text-gray-900"
-                  >
-                    Social Media Groups
-                  </Link> */}
                   <Link
                     href="/contact"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -94,7 +77,6 @@ export default function Navbar() {
                   <Menu as="div" className="relative ml-3">
                     {session && <button className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}>Sign out</button>}
                     {!session && <Link className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Link>}
-                    {/* {session ? <button onClick={handleClick}>Sign out</button> : <Link href={"/api/auth/signin"}>Sign In | Register</Link>} */}
                   </Menu>
                 }
               </div>
@@ -128,20 +110,6 @@ export default function Navbar() {
               >
                 Brands
               </Disclosure.Button>
-              {/* <Disclosure.Button
-                as="a"
-                href="/bloggers-platforms"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                Platforms
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="/social"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                Social Media Groups
-              </Disclosure.Button> */}
               <Disclosure.Button
                 as="a"
                 href="/contact"
