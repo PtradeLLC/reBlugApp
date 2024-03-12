@@ -65,6 +65,8 @@ export default function Blog() {
         setCurrentPage(page);
     };
 
+    // console.log(posts);
+
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
             <div className="mx-auto px-6 lg:px-8">
@@ -73,7 +75,7 @@ export default function Blog() {
                 </div>
                 <div>
                     <div className='my-3'>
-                        <BreadCrumbs categories={categories} />
+                        {posts && posts.length > 0 && <BreadCrumbs categories={categories} />}
                     </div>
                     <div className='flex justify-center items-center'>
                         <div>
@@ -200,7 +202,7 @@ export default function Blog() {
                     <Divider className="my-8 w-8/12  m-auto" />
                 </div>
                 <div className='my-3' ><h2 className='font-thin'>Latest Posts</h2></div>
-                <div className="mx-auto justify-center items-center  mt-6 grid max-w-2xl grid-cols-1 gap-x-4 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div className="mx-auto justify-center items-center mt-6 grid max-w-2xl grid-cols-1 gap-x-4 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {posts && posts.length > 0 ? (
                         posts
                             .slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
@@ -216,7 +218,7 @@ export default function Blog() {
                                                 <p className="text-tiny text-white uppercase font-bold">{title}</p>
                                                 <h4 className="text-white font-medium text-base">{post.title}</h4>
                                             </CardHeader>
-                                            {console.log(posts, "from Index")}
+                                            {/* {console.log("POSTSSS", post)} */}
                                             <img
                                                 alt="Relaxing app background"
                                                 className="z-0 w-full h-full flex justify-center items-center object-cover"
