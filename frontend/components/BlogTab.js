@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray } from "../utils/tabpage";
-import Compose from './Blogs/write';
+import Compose from './Blogs/Write';
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: blogTab },
