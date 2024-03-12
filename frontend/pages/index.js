@@ -37,7 +37,6 @@ const Home = () => {
         <meta name="theme-color" content="#ffffff"></meta>
       </Head>
 
-
       <main className="flex flex-col justify-center items-center">
         <span className="">
           <div className="flex justify-center content-center">
