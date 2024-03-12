@@ -216,6 +216,7 @@ export default function Blog() {
                                                 <p className="text-tiny text-white uppercase font-bold">{title}</p>
                                                 <h4 className="text-white font-medium text-base">{post.title}</h4>
                                             </CardHeader>
+                                            {console.log(posts, "from Index")}
                                             <img
                                                 alt="Relaxing app background"
                                                 className="z-0 w-full h-full flex justify-center items-center object-cover"
