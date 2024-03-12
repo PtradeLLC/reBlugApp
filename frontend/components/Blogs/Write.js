@@ -218,7 +218,7 @@ const Compose = ({ showModal, setShowModal }) => {
                 <ModalFooter>
                     <span className="text-xs font-thin text-gray-600">
                         Powered by{" "}
-                        <Link href="http://forgedmart.com/">ForgedMart</Link>
+                        <Link href="http://reblug.com/">reBlug</Link>
                     </span>
                 </ModalFooter>
             </ModalContent>

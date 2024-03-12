@@ -5,7 +5,7 @@ import FundRaise from "./FundRaise";
 import EmailNewsletter from "./EmailNewsletter";
 import Awareness from "./Awareness";
 import Ecommerce from "./Ecommerce";
-import Integration from "./integrations";
+import Integration from "./Integrations";
 import Loading from "./Loading";
 import { useDropzone } from 'react-dropzone'
 import { XMarkIcon } from '@heroicons/react/24/solid';

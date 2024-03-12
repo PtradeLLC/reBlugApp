@@ -1,5 +1,5 @@
 import React from "react";
-import EmailMarketing from "../components/emailMarketing";
+import EmailMarketing from "../components/EmailMarketing";
 
 const EmailTest = () => {
   return (

@@ -16,8 +16,8 @@ import { useRouter } from 'next/navigation';
 import TeamComponent from "./TeamComponent";
 import WelcomeModal from "./verfication-mod";
 import dynamic from 'next/dynamic';
-import IntegrationsCatalog from "./integrations";
-import Integration from "./integrations";
+import IntegrationsCatalog from "./Integrations";
+import Integration from "./Integrations";
 import Roadmap from './Roadmap';
 import BlogTabs from './BlogTab';
 
