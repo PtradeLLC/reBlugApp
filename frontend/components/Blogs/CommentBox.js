@@ -3,11 +3,22 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
+import Comment from './Comment';
 
-const CommentBox = ({ post, comments, showModal, setShowModal }) => {
+const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
     const { data: session } = useSession();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [value, setValue] = useState(0);
+
+    // Handles setting value for the loader
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setValue((v) => (v >= 100 ? 0 : v + 10));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleSignUp = () => {
         if (!session) {
@@ -37,9 +48,19 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                     </div>
                 </div>
             </div>
-            {/* {console.log(comments)} */}
             <div className="overflow-y-auto h-[250px]">
-                {!loading && !comments ? (
+                {/* {console.log(comments)} */}
+                {!loading ? (
+                    <>
+                        {comments.length > 0 ? comments.map((comment) => (
+                            <Comment key={comment.id} comment={comment} />
+                        )) : (
+                            <p className='text-sm font-normal text-gray-900 dark:text-white'>
+                                There is no comment posted yet for this article
+                            </p>
+                        )}
+                    </>
+                ) : (
                     <div className="flex justify-center">
                         <CircularProgress
                             aria-label="Loading..."
@@ -50,51 +71,7 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                             showValueLabel={true}
                         />
                     </div>
-                ) : (
-                    <>
-                        {comments && comments?.map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <div>
-                                        <div key={item.id}>
-                                            <div >
-                                                <div className="flex mb-7 items-start gap-2.5">
-                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                    <div className="flex flex-col gap-1 w-full">
-
-                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">{post.User.name}</span>
-                                                        </div>
-                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                            item.
-                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.content}</p>
-                                                        </div>
-                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="flex mb-7 items-start gap-2.5">
-                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                    <div className="flex flex-col gap-1 w-full">
-                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
-                                                        </div>
-                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.aiResponse}</p>
-                                                        </div>
-                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </>
                 )}
-
             </div>
             {!session && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">

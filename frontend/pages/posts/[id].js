@@ -68,8 +68,8 @@ const navigation = [
 ];
 
 
-const PostPage = () => {
-    const [comments, setComments] = useState([]);
+const PostPage = ({ comments }) => {
+    // const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
@@ -146,44 +146,7 @@ const PostPage = () => {
         setShowModal(false);
     };
 
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-
-        if (newComment.trim() !== '') {
-            try {
-                const { email, name } = session.user;
-                const title = post.title;
-                const content = post.content;
-
-                // Validate comment content
-                if (!newComment.trim()) {
-                    console.error('Comment content is empty');
-                    return;
-                }
-
-                db.collection('posts').add({
-
-                });
-
-                // db.collection('comments').add({
-
-                // });
-
-
-
-                setComments(prevComments => [...prevComments, responseData]);
-
-                // Clear the comment input field
-                setNewComment('');
-                setLoading(false);
-            } catch (error) {
-                console.error('Error posting comment:', error.message);
-            }
-
-        }
-    }
+    // console.log(uniqPost);
 
 
     // const handleSubmit = async (event) => {
@@ -194,7 +157,7 @@ const PostPage = () => {
     //         try {
     //             const { email, name } = session.user;
     //             const title = post.title;
-    //             const content = post.content; //Post Content
+    //             const content = post.content;
 
     //             // Validate comment content
     //             if (!newComment.trim()) {
@@ -202,19 +165,15 @@ const PostPage = () => {
     //                 return;
     //             }
 
-    //             const response = await fetch('/api/blog/commentsystem', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: post.id })
-    //             }, { cache: 'force-cache' });
+    //             db.collection('posts').add({
 
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to post comment');
-    //             }
+    //             });
 
-    //             const responseData = await response.json();
+    //             // db.collection('comments').add({
+
+    //             // });
+
+
 
     //             setComments(prevComments => [...prevComments, responseData]);
 
@@ -224,8 +183,56 @@ const PostPage = () => {
     //         } catch (error) {
     //             console.error('Error posting comment:', error.message);
     //         }
+
     //     }
     // }
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+
+
+        if (newComment.trim() !== '') {
+            try {
+                const { email } = session.user;
+                const title = uniqPost.title;
+                const content = uniqPost.content;
+
+                // Validate comment content
+                if (!newComment.trim()) {
+                    console.error('Comment content is empty');
+                    return;
+                }
+
+                const response = await fetch('/api/blog/commentsystem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: uniqPost.id })
+                }, { cache: 'force-cache' });
+
+                if (!response.ok) {
+                    throw new Error('Failed to post comment');
+                }
+
+                const responseData = await response.json();
+                // console.log(responseData);
+
+                // setComments(prevComments => [...prevComments, responseData]);
+
+                // Clear the comment input field
+                setNewComment('');
+                setLoading(false);
+            } catch (error) {
+                console.error('Error posting comment:', error.message);
+            }
+        }
+    }
+
+    // console.log("COMMENTS", comments);
 
 
     return (
@@ -366,7 +373,6 @@ const PostPage = () => {
                                 )}
                             </span>
 
-
                             <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                             <span className=''>
                                 < CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
@@ -406,7 +412,7 @@ const PostPage = () => {
                                 </div>
                             </form>
                         </span>
-                        {/* {!session && showModal && (
+                        {!session && showModal && (
                             <div className="fixed z-10 inset-0 overflow-y-auto">
                                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -443,7 +449,7 @@ const PostPage = () => {
                                     </div>
                                 </div>
                             </div>
-                        )} */}
+                        )}
                     </div>
                 </>
             )}
@@ -468,6 +474,43 @@ const PostPage = () => {
         </div>
     );
 };
+
+
+export async function getServerSideProps(context) {
+    const { id } = context.query;
+    try {
+        const post = await prisma.post.findUnique({
+            where: { id },
+            select: { slug: true }
+        });
+
+        if (post) {
+            const comments = await prisma.comments.findMany({
+                where: { postSlug: post.slug },
+                include: {
+                    user: true
+                }
+            });
+
+            return {
+                props: {
+                    comments: JSON.parse(JSON.stringify(comments))
+                }
+            };
+        } else {
+            return {
+                notFound: true
+            };
+        }
+    } catch (error) {
+        console.error("Error fetching post or comments:", error);
+        return {
+            props: {
+                comments: []
+            }
+        };
+    }
+}
 
 
 export default PostPage;

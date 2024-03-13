@@ -52,9 +52,9 @@ export default function BlogCategories({ categories }) {
                 )}
                 <Breadcrumbs
                     size="sm"
-                    maxItems={21}
-                    itemsBeforeCollapse={10}
-                    itemsAfterCollapse={10}
+                    maxItems={41}
+                    itemsBeforeCollapse={21}
+                    itemsAfterCollapse={22}
                     onAction={(key) => setCurrentPage(key)}
                     classNames={{
                         list: "gap-2",

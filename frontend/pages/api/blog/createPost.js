@@ -13,13 +13,15 @@ export default async function handler(req, res) {
             selectedFeatures,
             userInfo, } = req.body;
 
-        const email = userInfo.email;
+        const email = userInfo.email || 'support@forgedmart.com';
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
+
+        console.log(email);
 
         if (email) {
             const user = await prisma.user.findUnique({
@@ -69,12 +71,13 @@ export default async function handler(req, res) {
                         data: {
                             views: {
                                 increment: 1,
-                            }
+                            },
                         },
                         select: {
                             id: true,
                             title: true,
                             content: true,
+                            slug: true,
                             views: true,
                             // likes: true,
                         },
