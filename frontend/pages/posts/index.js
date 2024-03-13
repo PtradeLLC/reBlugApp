@@ -3,9 +3,10 @@ import Link from 'next/link';
 import BlogCategories from '../../components/Blogs/BlogCategory';
 import { Divider } from "@nextui-org/react";
 import BreadCrumbs from '../../components/Blogs/categoryBreadcrumbs';
-import { Card, CardHeader, CardFooter, Image, Button, Pagination } from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Button, Pagination } from "@nextui-org/react";
 import axios from 'axios';
 import { CircularProgress } from "@nextui-org/react";
+import Image from 'next/image';
 
 
 
@@ -65,7 +66,6 @@ export default function Blog() {
         setCurrentPage(page);
     };
 
-    // console.log(posts);
 
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
@@ -81,7 +81,7 @@ export default function Blog() {
                         <div>
                             <div><h2 className='font-thin'>Discover</h2></div>
                             <>
-                                <div className="max-w-[85rem] px-4 py-1 sm:px-6 lg:px-8 lg:py-4 mx-auto">
+                                <div className="max-w-[85rem] px-4 py-1 sm:px-6 lg:px-8 lg:py-2 mx-auto">
                                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         <a
                                             className="group dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -133,7 +133,7 @@ export default function Blog() {
                                                     className="size-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl"
                                                     src="https://images.unsplash.com/photo-1542125387-c71274d94f0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
                                                     alt="Image Description"
-                                                />
+                                                />s
                                             </div>
                                             <div className="mt-7">
                                                 <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
@@ -152,7 +152,6 @@ export default function Blog() {
                                                         height={24}
                                                         viewBox="0 0 24 24"
                                                         fill="none"
-                                                        stroke="currentColor"
                                                         strokeWidth={2}
                                                         strokeLinecap="round"
                                                         strokeLinejoin="round"
@@ -218,13 +217,29 @@ export default function Blog() {
                                                 <p className="text-tiny text-white uppercase font-bold">{title}</p>
                                                 <h4 className="text-white font-medium text-base">{post.title}</h4>
                                             </CardHeader>
-                                            {/* {console.log("POSTSSS", post)} */}
-                                            <img
-                                                alt="Relaxing app background"
-                                                className="z-0 w-full h-full flex justify-center items-center object-cover"
-                                                src={post.featureImage}
-                                                style={{ objectPosition: 'top' }}
-                                            />
+                                            <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                                                {loading ? (
+                                                    <div className="flex justify-center">
+                                                        <CircularProgress
+                                                            aria-label="Loading..."
+                                                            size="sm"
+                                                            value={value}
+                                                            color="warning"
+                                                            className='mx-2'
+                                                            showValueLabel={true}
+                                                        />
+                                                    </div>
+
+                                                ) : (<Image
+                                                    src={post.featureImage || "/images/bloger1.jpg"}
+                                                    width={500}
+                                                    alt={post?.title}
+                                                    height={500}
+                                                    style={{ objectPosition: 'top' }}
+                                                    fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                                                />)
+                                                }
+                                            </div>
                                             <CardFooter className="absolute bg-white bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                                                 <div className="flex flex-grow gap-2 items-center">
                                                     <div className="flex flex-col justify-center">
@@ -276,6 +291,7 @@ export default function Blog() {
                     total={Math.ceil(posts.length / postsPerPage)}
                     color="success"
                     initialPage={1}
+                    value={value}
                     page={currentPage}
                     onChange={handlePageChange}
                 />

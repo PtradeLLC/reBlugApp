@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import { Pagination } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
+import Image from 'next/image';
 
 const CatBlogPage = () => {
     const router = useRouter();
@@ -72,7 +73,7 @@ const CatBlogPage = () => {
                 </div>) :
                 (
                     <>
-                        <div className="max-w-[85rem] mt-6 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                        <div className="max-w-[85rem] mt-6 px-4 py-10 sm:px-6 lg:px-8 mx-auto">
                             <h1 className="text-3xl font-semibold mb-6">{categoryTitle}</h1>
                             {!loading && posts && posts.length > 0 && (
                                 <ul className="grid sm:grid-cols-2 mt-7 lg:grid-cols-3 gap-6">
@@ -82,12 +83,27 @@ const CatBlogPage = () => {
                                                 href={`/posts/${item.id}`}
                                                 className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 dark:border-gray-700 dark:hover:border-transparent dark:hover:shadow-black/[.4] dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                             >
-                                                <div className="aspect-w-16 aspect-h-11">
-                                                    <img
-                                                        className="w-full object-cover rounded-xl"
-                                                        src={item.featureImage}
-                                                        alt={item.category.title}
-                                                    />
+                                                <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                                                    {loading ? (
+                                                        <div className="flex justify-center">
+                                                            <CircularProgress
+                                                                aria-label="Loading..."
+                                                                size="sm"
+                                                                value={value}
+                                                                color="warning"
+                                                                className='mx-2'
+                                                                showValueLabel={true}
+                                                            />
+                                                        </div>
+                                                    ) : (<Image
+                                                        src={item.featureImage || "/images/bloger2.jpg"}
+                                                        width={500}
+                                                        alt={item?.title}
+                                                        height={500}
+                                                        style={{ objectPosition: 'top' }}
+                                                        fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                                                    />)
+                                                    }
                                                 </div>
                                                 <div className="my-6">
                                                     <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:group-hover:text-white">

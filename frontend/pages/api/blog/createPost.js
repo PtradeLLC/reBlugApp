@@ -21,8 +21,6 @@ export default async function handler(req, res) {
             console.log("Author is contacted with:", email);
         };
 
-        console.log(email);
-
         if (email) {
             const user = await prisma.user.findUnique({
                 where: {

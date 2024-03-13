@@ -251,7 +251,6 @@ const PostPage = ({ comments }) => {
                 </div>
                 <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
                     <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
-                        { }
                         <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                             {loading ? (
                                 <div className="flex justify-center">
@@ -264,12 +263,14 @@ const PostPage = ({ comments }) => {
                                         showValueLabel={true}
                                     />
                                 </div>
-                            ) :
-                                <img
-                                    className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-[#adb5bd] shadow-2xl"
-                                    src={uniqPost && uniqPost?.featureImage}
-                                    alt="authorImage"
-                                />
+                            ) : (<Image
+                                src={uniqPost?.featureImage || "/images/bloger3.jpg"}
+                                width={500}
+                                alt={uniqPost?.title}
+                                height={500}
+                                style={{ objectPosition: 'top' }}
+                                fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                            />)
                             }
                         </div>
                     </div>
@@ -295,7 +296,7 @@ const PostPage = ({ comments }) => {
                                         </p>
                                     </blockquote>
                                     <figcaption className="mt-8 text-base">
-                                        <div className="font-semibold sm:text-lg text-slate-700">{uniqPost.author}</div>
+                                        <div className="font-semibold sm:text-lg text-slate-700">{uniqPost?.author}</div>
                                         <div className="mt-1 text-gray-400 flex gap-2">
                                             {navigation.map((item, index) => (
                                                 <div key={index}>
