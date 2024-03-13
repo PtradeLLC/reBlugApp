@@ -12,6 +12,9 @@ import useSWR from "swr";
 
 
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+
 export default function Blog() {
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -23,33 +26,92 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    // Function to fetch posts and categories
-    const loadPostsAndCategories = async (page) => {
-        try {
-            setLoading(true); // Set loading state to true before fetching data
-            // const response = await axios.get(`http://localhost:3000/api/blog/categoryBySlug?page=${page}`);
-            const response = await axios.get(`https://www.reblug.com/api/blog/categoryBySlug?page=${page}`);
-            const { posts, totalPages } = response.data;
-            setCurrentPage(page);
-            setTotalPages(totalPages);
+    const { data, error, isValidating } = useSWR(
+        `/api/blog/categoryBySlug?page=${currentPage}`,
+        fetcher
+    );
 
-            // Extract unique posts based on post ID to avoid duplicates
-            const uniquePosts = Array.from(new Set(posts.map(post => post.id))).map(id => {
-                return posts.find(post => post.id === id);
-            });
-            setPosts(uniquePosts);
+    useEffect(() => {
+        if (error) console.error("An error occurred:", error);
+        if (!isValidating) setLoading(false);
+    }, [error, isValidating]);
 
-            // Extract unique categories from fetched posts
-            const uniqueCategories = Array.from(new Set(posts.map(post => post.category.id))).map(id => {
-                return posts.find(post => post.category.id === id).category;
-            });
+    useEffect(() => {
+        if (data) {
+            setPosts(data.posts);
+
+            // Extracting categories from posts
+            const newCategories = data.posts.map((post) => post.category);
+
+            // Concatenating all categories and removing duplicates
+            const uniqueCategories = Array.from(new Set(newCategories));
+
+            // Updating categories state
             setCategories(uniqueCategories);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        } finally {
-            setLoading(false);
         }
+    }, [data]);
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setValue((v) => (v >= 100 ? 0 : v + 10));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setLoading(true); // Set loading to true when page changes
     };
+
+    // const { data, error, isLoading } = useSWR(`/api/blog/categoryBySlug?page=${currentPage}`, fetcher);
+
+    // if (error) return "An error has occurred.";
+    // if (isLoading) return "Loading...";
+
+    // useEffect(() => {
+    //     setLoading(true);
+    //     if (data) {
+    //         setPosts(data.posts);
+    //     }
+    //     setLoading(false);
+    // }, [data]);
+
+
+
+    // // Function to fetch posts and categories
+    // const loadPostsAndCategories = async (page) => {
+
+    //     try {
+    //         setLoading(true);
+    //         console.log(data);
+
+
+    //         setLoading(true); // Set loading state to true before fetching data
+    //         const response = await axios.get(`http://localhost:3000/api/blog/categoryBySlug?page=${page}`);
+    //         // const response = await axios.get(`https://www.reblug.com/api/blog/categoryBySlug?page=${page}`);
+    //         const { posts, totalPages } = response.data;
+    //         setCurrentPage(page);
+    //         setTotalPages(totalPages);
+
+    //         // Extract unique posts based on post ID to avoid duplicates
+    //         const uniquePosts = Array.from(new Set(posts.map(post => post.id))).map(id => {
+    //             return posts.find(post => post.id === id);
+    //         });
+    //         setPosts(uniquePosts);
+
+    //         // Extract unique categories from fetched posts
+    //         const uniqueCategories = Array.from(new Set(posts.map(post => post.category.id))).map(id => {
+    //             return posts.find(post => post.category.id === id).category;
+    //         });
+    //         setCategories(uniqueCategories);
+    //     } catch (error) {
+    //         console.error('Error fetching posts:', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     //Handles setting value for the loader
     useEffect(() => {
@@ -60,15 +122,6 @@ export default function Blog() {
         return () => clearInterval(interval);
     }, []);
 
-    // Effect to load initial posts and categories
-    useEffect(() => {
-        loadPostsAndCategories(1);
-    }, []);
-
-    // Function to handle page change
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
 
 
     return (
@@ -237,7 +290,7 @@ export default function Blog() {
                 </div>
 
             </div>
-            <div className='flex justify-center items-center my-2'>
+            <div className='flex justify-center mt-28 items-center my-2'>
                 <Pagination
                     total={Math.ceil(posts.length / postsPerPage)}
                     color="success"

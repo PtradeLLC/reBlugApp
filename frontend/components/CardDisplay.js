@@ -37,7 +37,7 @@ const CardDisplay = ({ post }) => {
                         showValueLabel={true}
                     />
                 </div>
-            </div> : <div key={id} className="max-w-[85rem] px-4 py-10 sm:px-4 lg:px-6 lg:py-14 mx-auto">
+            </div> : <div key={id} className="max-w-[85rem] h-[487px] px-4 py-10 sm:px-4 lg:px-6 lg:py-14 mx-auto">
                 <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-2">
                     <div className="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                         <div className="h-52 flex flex-col justify-center items-center bg-slate-600 rounded-t-xl">
@@ -66,7 +66,7 @@ const CardDisplay = ({ post }) => {
                             <span className="block mb-1 text-xs font-semibold uppercase text-slate-600 dark:text-slate-500">
                                 {author}
                             </span>
-                            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white">
+                            <h3 className="text-xl font-semibold line-clamp-2 text-gray-800 dark:text-gray-300 dark:hover:text-white">
                                 {title}
                             </h3>
                             <p className="mt-3 text-gray-500 line-clamp-4">

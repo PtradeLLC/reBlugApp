@@ -8,7 +8,7 @@ const Comment = ({ comment }) => {
                 <div>
                     <div>
                         <div className="flex mb-7 items-start gap-2.5">
-                            <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
+                            <img className="w-8 h-8 rounded-full" src={comment.user.image || "/images/OtherVar.png"} alt="profileImage" />
                             <div className="flex flex-col gap-1 w-full">
                                 <div className="flex items-center space-x-2 rtl:space-x-reverse">
                                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{comment?.user?.firstName}</span>

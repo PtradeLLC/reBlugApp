@@ -11,7 +11,8 @@ import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+import useSWR from "swr";
+
 
 const prisma = new PrismaClient();
 
@@ -68,8 +69,9 @@ const navigation = [
 ];
 
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const PostPage = ({ comments }) => {
-    // const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
@@ -83,7 +85,6 @@ const PostPage = ({ comments }) => {
     const { data: session, status } = useSession();
     const params = useParams();
     const query = useRouter();
-    const [uniqPost, setUniqPost] = useState(null);
     const { id } = params || {};
 
 
@@ -116,83 +117,29 @@ const PostPage = ({ comments }) => {
         return () => clearInterval(interval);
     }, []);
 
+
+    const { data: uniqPost, error, isValidating } = useSWR(
+        `/api/blog/uniquePost/${id}`,
+        fetcher
+    );
+
     useEffect(() => {
-        const findPost = async () => {
-            try {
-                setLoading(true);
-                const baseUrl = `http://localhost:3000/api/blog/uniquePost/${id}`;
-                const res = await axios.get(baseUrl);
-                const postData = res.data;
+        if (error) console.error("An error occurred:", error);
+    }, [error]);
 
-                if (!postData) {
-                    throw new Error("Something went wrong");
-                }
-
-                setUniqPost(postData);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        if (id) {
-            findPost();
-        }
-    }, [id]);
-
+    useEffect(() => {
+        if (uniqPost) setLoading(false);
+    }, [uniqPost]);
 
 
     const handleCloseModal = () => {
         setShowModal(false);
     };
 
-    // console.log(uniqPost);
-
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     setLoading(true);
-
-    //     if (newComment.trim() !== '') {
-    //         try {
-    //             const { email, name } = session.user;
-    //             const title = post.title;
-    //             const content = post.content;
-
-    //             // Validate comment content
-    //             if (!newComment.trim()) {
-    //                 console.error('Comment content is empty');
-    //                 return;
-    //             }
-
-    //             db.collection('posts').add({
-
-    //             });
-
-    //             // db.collection('comments').add({
-
-    //             // });
-
-
-
-    //             setComments(prevComments => [...prevComments, responseData]);
-
-    //             // Clear the comment input field
-    //             setNewComment('');
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.error('Error posting comment:', error.message);
-    //         }
-
-    //     }
-    // }
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-
-
 
         if (newComment.trim() !== '') {
             try {
@@ -231,8 +178,6 @@ const PostPage = ({ comments }) => {
             }
         }
     }
-
-    // console.log("COMMENTS", comments);
 
 
     return (

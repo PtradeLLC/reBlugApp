@@ -27,6 +27,8 @@ export default function BlogCategories({ categories }) {
         return () => clearInterval(interval);
     }, []);
 
+    // console.log(categories);
+
     const handleClick = (id) => {
         setCurrentPage(id);
         setShowCrumbs(true);
@@ -38,7 +40,7 @@ export default function BlogCategories({ categories }) {
             <span>
                 <h1 className="font-semibold mb-4">Categories</h1>
             </span>
-            <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] px-2 flex-grow justify-start items-center">
+            <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] px-2 flex-grow justify-start h-[60px] items-center">
                 {loading && (
                     <div className="flex justify-center">
                         <CircularProgress
@@ -72,7 +74,7 @@ export default function BlogCategories({ categories }) {
                     <BreadcrumbItem key="home" href={`/posts`} isCurrent={currentPage === "home"}>
                         All Blogs
                     </BreadcrumbItem>
-                    {categories && categories.map((category) => (
+                    {/* {categories && categories.map((category) => (
                         <BreadcrumbItem
                             key={category.id}
                             href={`/categories/${category.id}`}
@@ -81,7 +83,7 @@ export default function BlogCategories({ categories }) {
                         >
                             {category.title}
                         </BreadcrumbItem>
-                    ))}
+                    ))} */}
                 </Breadcrumbs>
                 <div>
                     {showCrumbs && categories.length > 0 && <CatBlogPage categories={categories} />}
