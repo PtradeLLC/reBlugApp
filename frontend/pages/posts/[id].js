@@ -244,7 +244,7 @@ const PostPage = ({ comments }) => {
                                         <div className="font-semibold sm:text-lg text-slate-700">{uniqPost?.author}</div>
                                         <div className="mt-1 text-gray-400 flex gap-2">
                                             {navigation.map((item, index) => (
-                                                <div key={index}>
+                                                <div key={item.name}>
                                                     <span className='flex'> {item.icon({ width: 24, height: 24, fill: 'currentColor' })}</span>
                                                 </div>
                                             ))}

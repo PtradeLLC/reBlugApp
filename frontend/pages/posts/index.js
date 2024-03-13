@@ -28,8 +28,10 @@ export default function Blog() {
 
     const { data, error, isValidating } = useSWR(
         `/api/blog/categoryBySlug?page=${currentPage}`,
-        fetcher
+        fetcher,
+        { cache: 'no-store' }
     );
+    { cache: 'no-store' }
 
     useEffect(() => {
         if (error) console.error("An error occurred:", error);

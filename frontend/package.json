@@ -127,6 +127,7 @@
     "typewriter-effect": "^2.20.1",
     "utility-types": "^3.10.0",
     "uuid": "^9.0.1",
+    "vercel": "^33.5.5",
     "webpack": "^5.89.0",
     "ws": "^8.14.2"
   },
