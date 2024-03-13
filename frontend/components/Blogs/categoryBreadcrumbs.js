@@ -8,7 +8,8 @@ import { CircularProgress } from "@nextui-org/react";
 export default function BlogCategories({ categories }) {
     const [currentPage, setCurrentPage] = useState("Home");
     const router = useRouter();
-    const [showCrumbs, setShowCrumbs] = useState(false);
+    // const [showCrumbs, setShowCrumbs] = useState(false);
+    const [showCrumbs, setShowCrumbs] = useState(true);
     const uniqueCategoryIds = new Set();
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
@@ -72,7 +73,6 @@ export default function BlogCategories({ categories }) {
                         All Blogs
                     </BreadcrumbItem>
                     {categories && categories.map((category) => (
-                        // Render all categories regardless of loading state
                         <BreadcrumbItem
                             key={category.id}
                             href={`/categories/${category.id}`}
