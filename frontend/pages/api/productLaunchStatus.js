@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from "./auth/[...nextauth]";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-import stringify from 'fast-stable-stringify';
 
-const prisma = new PrismaClient();
+
 
 export default async function handler(req, res) {
     try {

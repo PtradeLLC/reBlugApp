@@ -10,8 +10,6 @@ import Image from 'next/image';
 import CardDisplay from '@/components/CardDisplay';
 import useSWR from "swr";
 
-
-
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 
@@ -26,12 +24,15 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    const { data, error, isValidating } = useSWR(
-        `/api/blog/categoryBySlug?page=${currentPage}`,
-        fetcher,
-        { cache: 'no-store' }
-    );
-    { cache: 'no-store' }
+    let catApiUrl;
+
+    if (process.env.NODE_ENV === 'production') {
+        catApiUrl = `http://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+    } else if (process.env.NODE_ENV === 'development') {
+        catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
+    }
+
+    const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
     useEffect(() => {
         if (error) console.error("An error occurred:", error);

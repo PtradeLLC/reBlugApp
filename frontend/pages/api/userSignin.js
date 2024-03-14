@@ -1,8 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 
-const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {

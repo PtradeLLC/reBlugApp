@@ -1,12 +1,11 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
-import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import SendNewEmail from './newUser';
-
+import prisma from "../../../lib/db";
 const saltRounds = 12;
 
-const prisma = new PrismaClient();
+
 
 export default async function handler(req, res) {
   if (req.method === "POST") {

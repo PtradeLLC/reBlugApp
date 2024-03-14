@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import Replicate from "replicate";
 import fetch from 'node-fetch';
-
-const prisma = new PrismaClient();
+import prisma from "../../../lib/db";
 
 export default async function handler(req, res) {
     try {

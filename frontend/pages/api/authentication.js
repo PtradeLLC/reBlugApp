@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import SendNewEmail from "../email/newUser";
+import SendNewEmail from "./email/newUser";
 
 const prisma = new PrismaClient();
 

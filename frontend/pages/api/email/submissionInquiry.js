@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 import sgMail from "@sendgrid/mail";
 import { render } from "@react-email/render";
 import SubmissionTemplate from '../emailfiles/submissionTemplate';
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);

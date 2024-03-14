@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 import Replicate from "replicate";
 
-const prisma = new PrismaClient();
+
 
 export default async function handler(req, res) {
     try {

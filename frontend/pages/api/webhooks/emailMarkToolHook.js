@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
+import prisma from "../../../lib/db";
 
 //Import conversational tool to respond to messages
 

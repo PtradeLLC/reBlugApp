@@ -241,7 +241,7 @@ model Post {
   comments         Comments[]
   aiResponses      AiResponse[]
   sponsors         Sponsors[]
-  user             User?        @relation(fields: [userId], references: [id])
+  user             User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userEmail        String?
   author           String?
   categorySlug     String?
@@ -268,7 +268,7 @@ model Comments {
   postSlug   String?
   aiResponse String?
   postId     String?     @db.ObjectId
-  user       User?       @relation(fields: [userEmail], references: [email])
+  user       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userEmail  String?
   userId     String?     @db.ObjectId
   AiResponse AiResponse?

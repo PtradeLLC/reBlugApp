@@ -10,11 +10,9 @@ import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../lib/db";
 import useSWR from "swr";
 
-
-const prisma = new PrismaClient();
 
 
 const navigation = [

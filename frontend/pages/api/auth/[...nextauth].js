@@ -8,10 +8,8 @@ import InstagramProvider from "next-auth/providers/instagram";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import SalesforceProvider from "next-auth/providers/salesforce";
 import LinkedInProvider from "next-auth/providers/linkedin";
+import prisma from "../../../lib/db";
 import { compare } from "bcrypt";
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),

@@ -1,12 +1,11 @@
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 
 
 
-const prisma = new PrismaClient();
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: {

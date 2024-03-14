@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../lib/db";
 import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     try {
