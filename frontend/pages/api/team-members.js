@@ -1,4 +1,4 @@
-import prisma from "../../../lib/db";
+import prisma from "../../lib/db";
 import { randomUUID } from 'crypto';
 import SendMemberInvite from './email/membersInvite';
 import { getServerSession } from "next-auth/next";

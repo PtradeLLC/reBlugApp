@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
-import prisma from "../../../lib/db";
+import prisma from "../../lib/db";
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
