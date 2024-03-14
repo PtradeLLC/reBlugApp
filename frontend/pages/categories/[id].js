@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import axios from "axios";
-import { Pagination } from "@nextui-org/react";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
-import Image from 'next/image';
+import useSWR from "swr";
+import Link from "next/link";
+import Image from "next/image";
 
-const CatBlogPage = () => {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export default function BlogCategories() {
+    const [currentPage, setCurrentPage] = useState("Home");
     const router = useRouter();
-    const { id } = router.query;
+    const [showCrumbs, setShowCrumbs] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [posts, setPosts] = useState([]);
-    const [page, setPage] = useState(1);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(12);
-    const [totalPages, setTotalPages] = useState(1);
-    const [categoryTitle, setCategoryTitle] = useState('');
     const [value, setValue] = useState(0);
+    const [categories, setCategories] = useState(null);
 
-    const loadPosts = async (page) => {
-        try {
-            setLoading(true);
-            const response = await axios.get(`/api/blog/categoryBySlug?page=${page}`);
-            const { posts, totalPages } = response.data;
+    let singleCat;
 
-            const filteredPosts = posts.filter(post => post.category.id === id);
-            const totalPosts = filteredPosts.length;
+    if (process.env.NODE_ENV === 'production') {
+        singleCat = `http://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+    } else if (process.env.NODE_ENV === 'development') {
+        singleCat = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
+    }
 
-            const startIndex = (page - 1) * postsPerPage;
-            const endIndex = Math.min(startIndex + postsPerPage, totalPosts);
+    const { data, error, isValidating, mutate } = useSWR(singleCat, fetcher);
 
-            setCategoryTitle(filteredPosts[0]?.category?.title || '');
-            setPosts(filteredPosts.slice(startIndex, endIndex));
-            setCurrentPage(page);
-            setTotalPages(Math.ceil(totalPosts / postsPerPage));
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (error) console.error("An error occurred:", error);
+        if (!isValidating) setLoading(false);
+    }, [error, isValidating]);
+
+    useEffect(() => {
+        if (data) {
+            setCategories(data);
         }
-    };
+    }, [data]);
 
-    //Handles setting value for the loader
+    useEffect(() => {
+        setCurrentPage("Home");
+    }, []);
+
     useEffect(() => {
         const interval = setInterval(() => {
             setValue((v) => (v >= 100 ? 0 : v + 10));
@@ -50,249 +50,128 @@ const CatBlogPage = () => {
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        loadPosts(1);
-    }, [id]); // Reload posts when slug changes
-
-    const handlePageChange = (page) => {
-        loadPosts(page);
+    const handleClick = (id) => {
+        setCurrentPage(id);
+        setShowCrumbs(true);
+        router.push(`/categories/${id}`);
     };
 
     return (
-        <div className='flex flex-col justify-center items-center mt-20'>
-            {loading ? (
-                <div className="flex justify-center">
-                    <CircularProgress
-                        aria-label="Loading..."
-                        size="lg"
-                        value={value}
-                        color="warning"
-                        className='mx-2'
-                        showValueLabel={true}
-                    />
-                </div>) :
-                (
-                    <>
-                        <div className="max-w-[85rem] mt-6 px-4 py-10 sm:px-6 lg:px-8 mx-auto">
-                            <h1 className="text-3xl font-semibold mb-6">{categoryTitle}</h1>
-                            {!loading && posts && posts.length > 0 && (
-                                <ul className="grid sm:grid-cols-2 mt-7 lg:grid-cols-3 gap-6">
-                                    {posts.map((item) => (
-                                        <li key={item.id}>
-                                            <Link
-                                                href={`/posts/${item.id}`}
-                                                className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 dark:border-gray-700 dark:hover:border-transparent dark:hover:shadow-black/[.4] dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                            >
-                                                <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
-                                                    {loading ? (
-                                                        <div className="flex justify-center">
-                                                            <CircularProgress
-                                                                aria-label="Loading..."
-                                                                size="sm"
-                                                                value={value}
-                                                                color="warning"
-                                                                className='mx-2'
-                                                                showValueLabel={true}
-                                                            />
-                                                        </div>
-                                                    ) : (<Image
-                                                        src={item.featureImage || "/images/bloger2.jpg"}
-                                                        width={500}
-                                                        alt={item?.title}
-                                                        height={500}
-                                                        style={{ objectPosition: 'top' }}
-                                                        fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
-                                                    />)
-                                                    }
-                                                </div>
-                                                <div className="my-6">
-                                                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:group-hover:text-white">
-                                                        {item.title}
-                                                    </h3>
-                                                    <p className="mt-5 line-clamp-3 text-gray-600 dark:text-gray-400">
-                                                        {item.content}
-                                                    </p>
-                                                </div>
-                                                <div className="mt-auto flex items-center gap-x-3">
-                                                    <img
-                                                        className="size-8 rounded-full"
-                                                        src={item.image}
-                                                        alt="Author Image"
-                                                    />
-                                                    <div>
-                                                        <h5 className="text-sm text-gray-800 dark:text-gray-200">
-                                                            By {item.author}
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
-                        <div className='flex justify-center items-center my-2'>
-                            <Pagination
-                                total={Math.ceil(posts.length / postsPerPage)}
-                                color="success"
-                                initialPage={1}
-                                page={currentPage}
-                                onChange={handlePageChange}
+        <div className="mt-20">
+            <>
+                <span>
+                    <h1 className="font-semibold mb-4">Categories</h1>
+                </span>
+                <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] px-2 flex-grow justify-start h-[60px] items-center">
+                    {loading && (
+                        <div className="flex justify-center">
+                            <CircularProgress
+                                aria-label="Loading..."
+                                size="sm"
+                                value={value}
+                                color="warning"
+                                className='mx-2'
+                                showValueLabel={true}
                             />
                         </div>
-                    </>
-                )
-            }
+                    )}
+                    <Breadcrumbs
+                        size="sm"
+                        maxItems={41}
+                        itemsBeforeCollapse={21}
+                        itemsAfterCollapse={22}
+                        onAction={(key) => setCurrentPage(key)}
+                        classNames={{
+                            list: "gap-2",
+                        }}
+                        itemClasses={{
+                            item: [
+                                "px-2 py-0.5 border-small border-default-400 rounded-small",
+                                "data-[current=true]:border-foreground data-[current=true]:bg-foreground data-[current=true]:text-background transition-colors",
+                                "data-[disabled=true]:border-default-400 data-[disabled=true]:bg-default-100",
+                            ],
+                            separator: "hidden",
+                        }}
+                    >
+                        <BreadcrumbItem key="home" href={`/posts`} isCurrent={currentPage === "home"}>
+                            All Blogs
+                        </BreadcrumbItem>
+                        {categories && categories.posts && Array.isArray(categories.posts) &&
+                            Array.from(new Set(categories.posts.map(post => post.category.id))).map(categoryId => {
+                                const post = categories.posts.find(post => post.category.id === categoryId);
+                                return (
+                                    <BreadcrumbItem
+                                        key={categoryId}
+                                        href={`/categories/${categoryId}`}
+                                        isCurrent={currentPage === categoryId}
+                                        onPress={() => handleClick(categoryId)}
+                                    >
+                                        {post.category.title}
+                                    </BreadcrumbItem>
+                                );
+                            })
+                        }
+                    </Breadcrumbs>
+                </div>
+                <div className="max-w-[85rem] mt-6 px-4 py-10 sm:px-6 lg:px-8 mx-auto">
+                    {!loading && categories && categories.posts && categories.posts.length > 0 && (
+                        <ul className="grid sm:grid-cols-2 mt-7 lg:grid-cols-3 gap-6">
+                            {categories.posts.map((item) => (
+                                <li key={item.id}>
+                                    <Link
+                                        href={`/posts/${item.id}`}
+                                        className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 dark:border-gray-700 dark:hover:border-transparent dark:hover:shadow-black/[.4] dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                    >
+                                        <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                                            {loading ? (
+                                                <div className="flex justify-center">
+                                                    <CircularProgress
+                                                        aria-label="Loading..."
+                                                        size="sm"
+                                                        value={value}
+                                                        color="warning"
+                                                        className='mx-2'
+                                                        showValueLabel={true}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <Image
+                                                    src={item.featureImage || "/images/bloger2.jpg"}
+                                                    width={500}
+                                                    alt={item?.title}
+                                                    height={500}
+                                                    style={{ objectPosition: 'top' }}
+                                                    fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                                                />
+                                            )}
+                                        </div>
+                                        <div className="my-6">
+                                            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:group-hover:text-white">
+                                                {item.title}
+                                            </h3>
+                                            <p className="mt-5 line-clamp-3 text-gray-600 dark:text-gray-400">
+                                                {item.content}
+                                            </p>
+                                        </div>
+                                        <div className="mt-auto flex items-center gap-x-3">
+                                            <img
+                                                className="size-8 rounded-full"
+                                                src={item.image}
+                                                alt="Author Image"
+                                            />
+                                            <div>
+                                                <h5 className="text-sm text-gray-800 dark:text-gray-200">
+                                                    By {item.author}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </>
         </div>
     );
-};
-
-export default CatBlogPage;
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import Link from 'next/link';
-// import { useRouter } from 'next/router';
-// import axios from "axios";
-// import { Pagination } from "@nextui-org/react";
-// import { CircularProgress } from "@nextui-org/react";
-
-// const CatBlogPage = () => {
-//     const router = useRouter();
-//     const { id } = router.query;
-//     const [loading, setLoading] = useState(false);
-//     const [posts, setPosts] = useState([]);
-//     const [page, setPage] = useState(1);
-//     const [currentPage, setCurrentPage] = useState(1);
-//     const [postsPerPage] = useState(12);
-//     const [totalPages, setTotalPages] = useState(1);
-//     const [categoryTitle, setCategoryTitle] = useState('');
-//     const [value, setValue] = useState(0);
-
-//     const loadPosts = async (page) => {
-//         try {
-//             setLoading(true);
-//             const response = await axios.get(`/api/blog/categoryBySlug?page=${page}`);
-//             const { posts, totalPages } = response.data;
-
-//             const filteredPosts = posts.filter(post => post.category.id === id);
-//             const totalPosts = filteredPosts.length;
-
-//             const startIndex = (page - 1) * postsPerPage;
-//             const endIndex = Math.min(startIndex + postsPerPage, totalPosts);
-
-//             setCategoryTitle(filteredPosts[0]?.category?.title || '');
-//             setPosts(filteredPosts.slice(startIndex, endIndex));
-//             setCurrentPage(page);
-//             setTotalPages(Math.ceil(totalPosts / postsPerPage));
-//         } catch (error) {
-//             console.error('Error fetching posts:', error);
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     //Handles setting value for the loader
-//     useEffect(() => {
-//         const interval = setInterval(() => {
-//             setValue((v) => (v >= 100 ? 0 : v + 10));
-//         }, 500);
-
-//         return () => clearInterval(interval);
-//     }, []);
-
-//     useEffect(() => {
-//         loadPosts(1);
-//     }, [id]); // Reload posts when slug changes
-
-//     const handlePageChange = (page) => {
-//         loadPosts(page);
-//     };
-
-//     return (
-//         <>
-//             {loading ? (
-//                 <div className="flex justify-center">
-//                     <CircularProgress
-//                         aria-label="Loading..."
-//                         size="lg"
-//                         value={value}
-//                         color="warning"
-//                         className='mx-2'
-//                         showValueLabel={true}
-//                     />
-//                 </div>) :
-//                 (
-//                     <>
-//                         <div className="max-w-[85rem] mt-6 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-//                             <h1 className="text-3xl font-semibold mb-6">{categoryTitle}</h1>
-//                             {!loading && posts && posts.length > 0 && (
-//                                 <ul className="grid sm:grid-cols-2 mt-7 lg:grid-cols-3 gap-6">
-//                                     {posts.length > 0 ? (
-//                                         posts
-//                                             .slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
-//                                             .map((item) => {
-//                                                 return (
-//                                                     <>
-//                                                         <li key={item.id}>
-//                                                             <Link
-//                                                                 href={`/posts/${item.id}`}
-//                                                                 className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 dark:border-gray-700 dark:hover:border-transparent dark:hover:shadow-black/[.4] dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-//                                                             >
-//                                                                 <div className="aspect-w-16 aspect-h-11">
-//                                                                     <img
-//                                                                         className="w-full object-cover rounded-xl"
-//                                                                         src={item.featureImage}
-//                                                                         alt={item.category.title}
-//                                                                     />
-//                                                                 </div>
-//                                                                 <div className="my-6">
-//                                                                     <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:group-hover:text-white">
-//                                                                         {item.title}
-//                                                                     </h3>
-//                                                                     <p className="mt-5 line-clamp-3 text-gray-600 dark:text-gray-400">
-//                                                                         {item.content}
-//                                                                     </p>
-//                                                                 </div>
-//                                                                 <div className="mt-auto flex items-center gap-x-3">
-//                                                                     <img
-//                                                                         className="size-8 rounded-full"
-//                                                                         src={item.image}
-//                                                                         alt="Author Image"
-//                                                                     />
-//                                                                     <div>
-//                                                                         <h5 className="text-sm text-gray-800 dark:text-gray-200">
-//                                                                             By {item.author}
-//                                                                         </h5>
-//                                                                     </div>
-//                                                                 </div>
-//                                                             </Link>
-//                                                         </li>
-//                                                     </>
-//                                                 )
-
-//                                             })
-//                                     ) : (
-//                                         <span>{!loading && (!posts || posts.length === 0) && <p>Loading...</p>}</span>
-//                                     )}
-//                                 </ul>
-//                             )}
-//                         </div>
-//                         <div className='flex justify-center items-center my-2'>
-//                             <Pagination
-//                                 total={Math.ceil(posts.length / postsPerPage)}
-//                                 color="success"
-//                                 initialPage={1}
-//                                 page={currentPage}
-//                                 onChange={handlePageChange}
-//                             />
-//                         </div>
-//                     </>
-//                 )
-//             }
-//         </>
-//     );
-// };
-
-// export default CatBlogPage;
+}

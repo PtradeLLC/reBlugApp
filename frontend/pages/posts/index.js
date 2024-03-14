@@ -68,54 +68,6 @@ export default function Blog() {
         setLoading(true); // Set loading to true when page changes
     };
 
-    // const { data, error, isLoading } = useSWR(`/api/blog/categoryBySlug?page=${currentPage}`, fetcher);
-
-    // if (error) return "An error has occurred.";
-    // if (isLoading) return "Loading...";
-
-    // useEffect(() => {
-    //     setLoading(true);
-    //     if (data) {
-    //         setPosts(data.posts);
-    //     }
-    //     setLoading(false);
-    // }, [data]);
-
-
-
-    // // Function to fetch posts and categories
-    // const loadPostsAndCategories = async (page) => {
-
-    //     try {
-    //         setLoading(true);
-    //         console.log(data);
-
-
-    //         setLoading(true); // Set loading state to true before fetching data
-    //         const response = await axios.get(`http://localhost:3000/api/blog/categoryBySlug?page=${page}`);
-    //         // const response = await axios.get(`https://www.reblug.com/api/blog/categoryBySlug?page=${page}`);
-    //         const { posts, totalPages } = response.data;
-    //         setCurrentPage(page);
-    //         setTotalPages(totalPages);
-
-    //         // Extract unique posts based on post ID to avoid duplicates
-    //         const uniquePosts = Array.from(new Set(posts.map(post => post.id))).map(id => {
-    //             return posts.find(post => post.id === id);
-    //         });
-    //         setPosts(uniquePosts);
-
-    //         // Extract unique categories from fetched posts
-    //         const uniqueCategories = Array.from(new Set(posts.map(post => post.category.id))).map(id => {
-    //             return posts.find(post => post.category.id === id).category;
-    //         });
-    //         setCategories(uniqueCategories);
-    //     } catch (error) {
-    //         console.error('Error fetching posts:', error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
     //Handles setting value for the loader
     useEffect(() => {
         const interval = setInterval(() => {
@@ -149,21 +101,17 @@ export default function Blog() {
                                         >
                                             <div className="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
                                                 <img
-                                                    className="size-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl"
-                                                    src="https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80"
-                                                    alt="Image Description"
+                                                    className="size-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out h-[218px] rounded-xl"
+                                                    src="/images/eightBlog.jpg"
+                                                    alt="Beginner"
                                                 />
-                                                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
-                                                    Your article: Sponsored
-                                                </span>
                                             </div>
                                             <div className="mt-7">
                                                 <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
-                                                    For Bloggers
+                                                    Blogging for Beginners
                                                 </h3>
-                                                <p className="mt-3 text-gray-800 dark:text-gray-200">
-                                                    Produce professional, reliable streams easily leveraging Preline's
-                                                    innovative broadcast studio
+                                                <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
+                                                    Quickly learn the fundamental of writing, telling stories to engage an audience, and business of blogging. Let's match you with a vetted expert.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
                                                     Read more
@@ -190,21 +138,23 @@ export default function Blog() {
                                         >
                                             <div className="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
                                                 <img
-                                                    className="size-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl"
-                                                    src="https://images.unsplash.com/photo-1542125387-c71274d94f0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                                                    className="size-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out h-[218px] rounded-xl"
+                                                    src="/images/expertBlog.jpg"
                                                     alt="Image Description"
-                                                />s
+                                                />
+                                                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
+                                                    Your article: Sponsored
+                                                </span>
                                             </div>
                                             <div className="mt-7">
                                                 <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
-                                                    Brand Blogging
+                                                    Expert Bloggers
                                                 </h3>
-                                                <p className="mt-3 text-gray-800 dark:text-gray-200">
-                                                    Optimize your in-person experience with best-in-class capabilities
-                                                    like badge printing and lead retrieval
+                                                <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
+                                                    Effortlessly collaborate with brands in search of media partnerships, we help you grow and monetize your medium on and off our platform.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
-                                                    Read more
+                                                    Try it out
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -212,6 +162,7 @@ export default function Blog() {
                                                         height={24}
                                                         viewBox="0 0 24 24"
                                                         fill="none"
+                                                        stroke="currentColor"
                                                         strokeWidth={2}
                                                         strokeLinecap="round"
                                                         strokeLinejoin="round"
@@ -226,14 +177,23 @@ export default function Blog() {
                                             href="#"
                                         >
                                             <div className="flex-auto p-4 border md:p-6">
-                                                <h3 className="text-xl text-slate-900 group-hover:text-gray-700">
-                                                    <span className="font-bold">Preline</span> Press publishes books
-                                                    about economic and technological advancement.
+                                                <div className='relative pt-[70%] sm:pt-[70%] rounded-xl overflow-hidden'>
+                                                    <img
+                                                        className="size-full absolute top-0 start-0 object-cover rounded-xl"
+                                                        src="/images/threeBlog.jpg"
+                                                        alt="Brand Blogging"
+                                                    />
+                                                </div>
+                                                <h3 className="text-xl font-semibold mt-8 text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
+                                                    Enterprise and Start up alike
                                                 </h3>
+                                                <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
+                                                    Host and persist your blog pages with supreme artificial intelligence, knowledge tools, and engaged users.
+                                                </p>
                                             </div>
                                             <div className="pt-0 p-4 md:p-6 border">
                                                 <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-900 group-hover:text-gray-700">
-                                                    Visit the site
+                                                    Check out Brand Solutions
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"

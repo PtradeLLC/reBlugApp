@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import CatBlogPage from "../../pages/categories/[id]";
 import { CircularProgress } from "@nextui-org/react";
 
 
 export default function BlogCategories({ categories }) {
     const [currentPage, setCurrentPage] = useState("Home");
     const router = useRouter();
-    // const [showCrumbs, setShowCrumbs] = useState(false);
     const [showCrumbs, setShowCrumbs] = useState(true);
-    const uniqueCategoryIds = new Set();
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
 
@@ -27,13 +24,19 @@ export default function BlogCategories({ categories }) {
         return () => clearInterval(interval);
     }, []);
 
-    // console.log(categories);
-
     const handleClick = (id) => {
         setCurrentPage(id);
         setShowCrumbs(true);
+        console.log(uniqueCategories);
         router.push(`/categories/${id}`);
     };
+
+    // Filter out duplicate categories based on ID
+    const uniqueCategories = categories.filter(
+        (category, index) => categories.findIndex(c => c.id === category.id) === index
+    );
+
+
 
     return (
         <>
@@ -74,7 +77,7 @@ export default function BlogCategories({ categories }) {
                     <BreadcrumbItem key="home" href={`/posts`} isCurrent={currentPage === "home"}>
                         All Blogs
                     </BreadcrumbItem>
-                    {/* {categories && categories.map((category) => (
+                    {uniqueCategories && uniqueCategories.map((category) => (
                         <BreadcrumbItem
                             key={category.id}
                             href={`/categories/${category.id}`}
@@ -83,12 +86,12 @@ export default function BlogCategories({ categories }) {
                         >
                             {category.title}
                         </BreadcrumbItem>
-                    ))} */}
+                    ))}
                 </Breadcrumbs>
-                <div>
-                    {showCrumbs && categories.length > 0 && <CatBlogPage categories={categories} />}
-                </div>
             </div>
         </>
     );
 }
+
+
+

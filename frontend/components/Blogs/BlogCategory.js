@@ -27,7 +27,7 @@ export default function BlogCategoriesHero() {
                                 <div className="col-span-4">
                                     <img
                                         className="rounded-xl"
-                                        src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80"
+                                        src="/images/oneBlog.jpg"
                                         alt="Image Description"
                                     />
                                 </div>
@@ -35,7 +35,7 @@ export default function BlogCategoriesHero() {
                                 <div className="col-span-3">
                                     <img
                                         className="rounded-xl"
-                                        src="https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+                                        src="/images/superBlog.jpg"
                                         alt="Image Description"
                                     />
                                 </div>
@@ -43,7 +43,7 @@ export default function BlogCategoriesHero() {
                                 <div className="col-span-5">
                                     <img
                                         className="rounded-xl"
-                                        src="https://images.unsplash.com/photo-1600194992440-50b26e0a0309?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+                                        src="/images/sixBlog.jpg"
                                         alt="Image Description"
                                     />
                                 </div>
@@ -57,13 +57,13 @@ export default function BlogCategoriesHero() {
                                 {/* Title */}
                                 <div className="space-y-2 md:space-y-4">
                                     <h2 className="font-bold text-left text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
-                                        Our platform help you succeed as a blogger with smart tools that helps:
+                                        Helping you succeed at your blogging endeavor with smart tools that helps:
                                     </h2>
                                 </div>
                                 <ul role="list" className="space-y-2 sm:space-y-4">
                                     <li className="flex space-x-3">
                                         {/* Solid Check */}
-                                        <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
+                                        <span className="mt-0.5 size-5 flex justify-start items-center rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
                                             <svg
                                                 className="flex-shrink-0 size-3.5"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ export default function BlogCategoriesHero() {
                                     </li>
                                     <li className="flex space-x-3">
                                         {/* Solid Check */}
-                                        <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
+                                        <span className="mt-0.5 size-5 flex justify-start rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
                                             <svg
                                                 className="flex-shrink-0 size-3.5"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -126,8 +126,31 @@ export default function BlogCategoriesHero() {
                                             </svg>
                                         </span>
                                         {/* End Solid Check */}
-                                        <span className="text-sm sm:text-base text-gray-500">
-                                            <span className="font-bold">Monetize through</span> brand sponsorships
+                                        <span className="text-sm text-left sm:text-base text-gray-500">
+                                            <span className="font-bold">Monetize your blog through</span> brand collaboration & sponsorships.
+                                        </span>
+                                    </li>
+                                    <li className="flex space-x-3">
+                                        {/* Solid Check */}
+                                        <span className="mt-0.5 size-5 flex justify-center items-center rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
+                                            <svg
+                                                className="flex-shrink-0 size-3.5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width={24}
+                                                height={24}
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            >
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                        </span>
+                                        {/* End Solid Check */}
+                                        <span className="text-sm text-left sm:text-base text-gray-500">
+                                            <span className="font-bold">AI tools</span> for interaction reader engagement.
                                         </span>
                                     </li>
                                     <li className="flex space-x-3">
@@ -150,7 +173,7 @@ export default function BlogCategoriesHero() {
                                         </span>
                                         {/* End Solid Check */}
                                         <span className="text-sm sm:text-base text-gray-500">
-                                            Increase your <span className="font-bold">Web traffic.</span>
+                                            Increase your <span className="font-bold">readership.</span>
                                         </span>
                                     </li>
                                     <li className="flex space-x-3">
@@ -179,8 +202,8 @@ export default function BlogCategoriesHero() {
                                 </ul>
                                 <div>
                                     <p className="text-gray-500 text-left">
-                                        Bring your ideas to life and steadily grow your readership as you share
-                                        your masterpiece effortlessly and let your voice be heard.
+                                        Continue telling great stories and share them with the world.
+                                        It's what you do, and our job is to help you grow your reach.
                                     </p>
                                 </div>
                                 <div className="flex justify-start -space-x-3">

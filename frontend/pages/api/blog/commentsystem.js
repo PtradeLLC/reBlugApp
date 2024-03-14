@@ -3,6 +3,7 @@ import Replicate from "replicate";
 import fetch from 'node-fetch';
 import prisma from "../../../lib/db";
 
+
 export default async function handler(req, res) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -97,15 +98,12 @@ export default async function handler(req, res) {
             if (user) {
                 const uniquePostBySlug = await prisma.post.findUnique({
                     where: {
-                        slug: postSlug
-                    }
+                        id: postId
+                    },
                 })
 
                 if (uniquePostBySlug) {
                     const createdComment = await prisma.comments.create({
-                        where: {
-                            postSlug: uniquePostBySlug.slug
-                        },
                         data: {
                             title: postTitle,
                             content: comment,
@@ -130,9 +128,11 @@ export default async function handler(req, res) {
                                 aiResponse: true,
                             }
                         });
+                        console.log(allComments);
                         res.status(200).json(allComments);
                     }
                 }
+
             }
         } else {
             console.log('Invalid data provided');
