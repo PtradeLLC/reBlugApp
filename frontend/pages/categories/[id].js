@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
@@ -6,6 +5,7 @@ import { CircularProgress } from "@nextui-org/react";
 import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,25 +16,33 @@ export default function BlogCategories() {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
     const [categories, setCategories] = useState(null);
+    const { id } = router.query;
+
+    // console.log(id);
 
     let singleCat;
 
     if (process.env.NODE_ENV === 'production') {
-        singleCat = `http://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+        singleCat = `/api/blog/uniqueCategory/${id}`;
     } else if (process.env.NODE_ENV === 'development') {
-        singleCat = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
+        singleCat = `/api/blog/uniqueCategory/${id}`;
     }
 
-    const { data, error, isValidating, mutate } = useSWR(singleCat, fetcher);
+    const { data, error, isValidating, mutate } = useSWR(`http://localhost:3000/api/blog/uniqueCategory/${id}`, fetcher);
+
+    // console.log("data from apiCat", data);
+
 
     useEffect(() => {
         if (error) console.error("An error occurred:", error);
         if (!isValidating) setLoading(false);
     }, [error, isValidating]);
 
+
     useEffect(() => {
         if (data) {
-            setCategories(data);
+            setLoading(false)
+            setCategories(data)
         }
     }, [data]);
 
@@ -122,7 +130,7 @@ export default function BlogCategories() {
                                         href={`/posts/${item.id}`}
                                         className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 dark:border-gray-700 dark:hover:border-transparent dark:hover:shadow-black/[.4] dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                     >
-                                        <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                                        <div className="relative flex justify-center aspect-[2/1] h-full xl:aspect-auto">
                                             {loading ? (
                                                 <div className="flex justify-center">
                                                     <CircularProgress
@@ -137,10 +145,15 @@ export default function BlogCategories() {
                                             ) : (
                                                 <Image
                                                     src={item.featureImage || "/images/bloger2.jpg"}
+                                                    sizes="100vw"
+                                                    style={{
+                                                        width: '100%',
+                                                        height: 'auto',
+                                                    }}
                                                     width={500}
+                                                    height={300}
+                                                    // style={{ objectPosition: 'top' }}
                                                     alt={item?.title}
-                                                    height={500}
-                                                    style={{ objectPosition: 'top' }}
                                                     fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
                                                 />
                                             )}
@@ -149,7 +162,7 @@ export default function BlogCategories() {
                                             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:group-hover:text-white">
                                                 {item.title}
                                             </h3>
-                                            <p className="mt-5 line-clamp-3 text-gray-600 dark:text-gray-400">
+                                            <p className="mt-5 line-clamp-1 text-gray-600 dark:text-gray-400">
                                                 {item.content}
                                             </p>
                                         </div>
@@ -162,6 +175,10 @@ export default function BlogCategories() {
                                             <div>
                                                 <h5 className="text-sm text-gray-800 dark:text-gray-200">
                                                     By {item.author}
+                                                    {/* {console.log(item)} */}
+                                                </h5>
+                                                <h5 className="text-sm text-gray-800 dark:text-gray-200">
+                                                    {item.category.title}
                                                 </h5>
                                             </div>
                                         </div>

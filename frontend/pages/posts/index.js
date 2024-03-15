@@ -77,7 +77,7 @@ export default function Blog() {
         return () => clearInterval(interval);
     }, []);
 
-
+    // console.log(posts);
 
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
@@ -86,14 +86,14 @@ export default function Blog() {
                     <BlogCategories categories={categories} />
                 </div>
                 <div>
-                    <div className='my-3'>
-                        {posts && posts.length > 0 && <BreadCrumbs categories={categories} />}
+                    <div className='my-3 p-2'>
+                        {posts && posts.length > 0 && <BreadCrumbs posts={posts} categories={categories} />}
                     </div>
                     <div className='flex justify-center items-center'>
                         <div>
                             <div><h2 className='font-thin'>Discover</h2></div>
                             <>
-                                <div className="max-w-[85rem] px-4 py-1 sm:px-6 lg:px-8 lg:py-2 mx-auto">
+                                <div className="max-w-[85rem]  px-4 py-1 sm:px-6 lg:px-8 lg:py-2 mx-auto">
                                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         <a
                                             className="group dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"

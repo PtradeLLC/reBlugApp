@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
@@ -10,6 +11,7 @@ export default function BlogCategories({ categories }) {
     const [showCrumbs, setShowCrumbs] = useState(true);
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
+    const [valueddd, setValueddd] = useState(null);
 
     useEffect(() => {
         setCurrentPage("Home");
@@ -27,9 +29,13 @@ export default function BlogCategories({ categories }) {
     const handleClick = (id) => {
         setCurrentPage(id);
         setShowCrumbs(true);
-        console.log(uniqueCategories);
+
         router.push(`/categories/${id}`);
     };
+
+
+
+
 
     // Filter out duplicate categories based on ID
     const uniqueCategories = categories.filter(
@@ -43,7 +49,7 @@ export default function BlogCategories({ categories }) {
             <span>
                 <h1 className="font-semibold mb-4">Categories</h1>
             </span>
-            <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] px-2 flex-grow justify-start h-[60px] items-center">
+            <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] flex-grow justify-start h-40 p-2 items-center">
                 {loading && (
                     <div className="flex justify-center">
                         <CircularProgress
@@ -67,7 +73,7 @@ export default function BlogCategories({ categories }) {
                     }}
                     itemClasses={{
                         item: [
-                            "px-2 py-0.5 border-small border-default-400 rounded-small",
+                            "px-2 py-2 border-small border-default-400 rounded-small",
                             "data-[current=true]:border-foreground data-[current=true]:bg-foreground data-[current=true]:text-background transition-colors",
                             "data-[disabled=true]:border-default-400 data-[disabled=true]:bg-default-100",
                         ],
@@ -79,7 +85,7 @@ export default function BlogCategories({ categories }) {
                     </BreadcrumbItem>
                     {uniqueCategories && uniqueCategories.map((category) => (
                         <BreadcrumbItem
-                            key={category.id}
+                            key={category.id} // or category.slug if unique
                             href={`/categories/${category.id}`}
                             isCurrent={currentPage === category.id}
                             onPress={() => handleClick(category.id)}

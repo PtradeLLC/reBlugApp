@@ -206,14 +206,21 @@ const PostPage = ({ comments }) => {
                                         showValueLabel={true}
                                     />
                                 </div>
-                            ) : (<Image
-                                src={uniqPost?.featureImage || "/images/bloger3.jpg"}
-                                width={500}
-                                alt={uniqPost?.title}
-                                height={500}
-                                style={{ objectPosition: 'top' }}
-                                fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
-                            />)
+                            ) : (
+                                <Image
+                                    src={uniqPost?.featureImage || "/images/bloger3.jpg"}
+                                    sizes="100vw"
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectPosition: 'top'
+                                    }}
+                                    width={500}
+                                    height={500}
+                                    alt={uniqPost?.title}
+                                    fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                                />
+                            )
                             }
                         </div>
                     </div>

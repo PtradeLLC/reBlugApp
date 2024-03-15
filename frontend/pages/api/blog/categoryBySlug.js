@@ -1,3 +1,4 @@
+import { where } from "firebase/firestore";
 import prisma from "../../../lib/db";
 
 export default async function handler(req, res) {
@@ -17,6 +18,9 @@ export default async function handler(req, res) {
 
         // Fetch a subset of posts based on pagination parameters
         const findAllPost = await prisma.post.findMany({
+            // where{
+            //     id
+            // },
             include: {
                 category: {
                     select: {

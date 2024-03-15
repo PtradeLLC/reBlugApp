@@ -26,14 +26,13 @@ export default function Navbar() {
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between">
               <div className="flex">
-                <div className="pr-16 pt-1 pb-1">
+                <div className="pr-14 pt-1 pb-1">
                   <a href={session ? `/dashboard` : `/`}>
-                    <Image
-                      src="/images/Mart.png"
-                      alt="ForgedMart Logo"
-                      width={100}
-                      height={24}
+                    <img
+                      src="/images/logoreBlug.png"
+                      alt="reBlug Logo"
                       priority
+                      className="w-20 h-10 object-contain mt-1 px-1 "
                     />
                   </a>
                 </div>
