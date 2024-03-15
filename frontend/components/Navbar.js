@@ -31,8 +31,8 @@ export default function Navbar() {
                     <img
                       src="/images/logoreBlug.png"
                       alt="reBlug Logo"
-                      priority
-                      className="w-20 h-10 object-contain mt-1 px-1 "
+                      priority="true"
+                      className="w-20 h-[27px] object-contain mt-1 px-1 "
                     />
                   </a>
                 </div>

@@ -147,7 +147,7 @@
     "postcss": "^8.4.25",
     "prettier": "^3.1.1",
     "prettier-plugin-prisma": "^5.0.0",
-    "prisma": "^5.9.1",
+    "prisma": "^5.11.0",
     "raw-loader": "^4.0.2",
     "replicate": "^0.18.1",
     "start-server-and-test": "^2.0.3",
