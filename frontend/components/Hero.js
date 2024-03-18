@@ -3,7 +3,7 @@ import HeroCarousel from './HeroCarousel'
 
 export default function Hero() {
   return (
-    <div className="relative isolate overflow-hidden bg-white">
+    <div className="relative isolate overflow-hidden bg-white w-full">
       <svg
         className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
         aria-hidden="true"
@@ -31,12 +31,12 @@ export default function Hero() {
             </span>
             <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
               <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
-                <span className='text-green-700 whatsnew'>AI-powered Article Assistant</span>
+                <span className='text-green-700 whatsnew'>Support us on ProductHunt</span>
               </a>
-              &nbsp;{'|'}
-              <a href="#email-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
+              {/* &nbsp;{'|'} */}
+              {/* <a href="#email-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
                 <span className='text-red-600 whatsnew'>Email Conversational Tool</span>
-              </a>
+              </a> */}
               <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </span>
 
