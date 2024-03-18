@@ -27,14 +27,14 @@ const BlogComponent = () => {
                         <div className="space-y-6 sm:space-y-8">
 
                             <div className="space-y-2 md:space-y-4">
-                                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                <h2 className="font-bold text-2xl lg:text-4xl text-gray-800 dark:text-gray-200">
                                     Running a blog?
                                 </h2>
-                                <p className="font-bold text-2xl lg:text-3xl text-gray-700 dark:text-gray-200">
+                                <p className="font-thin text-xl lg:text-3xl text-gray-700 dark:text-gray-200">
                                     Give your articles superpowers
                                 </p>
                                 <p className="text-gray-500">
-                                    Include our AI-powered Article Assistant tool as part of your marketing strategy.
+                                    Include our AI-powered Article Assistant tool as part of your <span className='text-green-500 text-2xl'>growth strategy.</span>
                                 </p>
                             </div>
 
@@ -81,7 +81,7 @@ const BlogComponent = () => {
                     <BlogListGroup />
                 </div>
                 <div id="Blogger-as-platform" className="mt-8 flex justify-end items-center gap-x-6">
-                    <Link href="/creators" className="text-sm font-semibold text-gray-900">
+                    <Link href="/posts" className="text-sm font-semibold text-gray-900">
                         How it works <span aria-hidden="true">&rarr;</span>
                     </Link>
                 </div>

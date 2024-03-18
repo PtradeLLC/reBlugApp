@@ -1,6 +1,7 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import HeroCarousel from './HeroCarousel'
 
-export default function Example() {
+export default function Hero() {
   return (
     <div className="relative isolate overflow-hidden bg-white">
       <svg
@@ -24,18 +25,24 @@ export default function Example() {
       <div className="mx-auto px-6 pb-24 pt-10 sm:pb-28 lg:flex lg:px-8 lg:py-36">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0">
           <div className="mt-20 sm:mt-32 lg:mt-8">
-            <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
-              <span className="rounded-full mr-2 bg-red-600/10 px-3 py-1 text-sm font-semibold leading-6 text-red-600 ring-1 ring-inset ring-red-600/10">
-                What's new
-              </span>
-              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
-                <span>AI-powered Article Assistant</span>
-                <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-              </span>
-            </a>
+
+            <span className="rounded-full mr-2 bg-slate-600/10 px-3 py-1 text-sm font-semibold leading-6 text-black ring-1 ring-inset ring-red-600/10">
+              What's new
+            </span>
+            <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
+              <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
+                <span className='text-green-700 whatsnew'>AI-powered Article Assistant</span>
+              </a>
+              &nbsp;{'|'}
+              <a href="#email-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
+                <span className='text-red-600 whatsnew'>Email Conversational Tool</span>
+              </a>
+              <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            </span>
+
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            Every Brand and Marketer has a <span className='text-red-700'>'Thing'.</span>
+            Every Brand and Marketer has a <span className='text-red-700'>'Thing'</span> to tackle with when it comes to <span className='text-green-900 text-2xl'>growth.</span>
           </h1>
           <h2 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl">
             We solve <span className='text-red-700'>things</span> by providing a unified ecosystem where brands, marketers and bloggers can connect.
@@ -44,27 +51,19 @@ export default function Example() {
             Specifically by making blogging interactive, social and useful for marketing through the use of
             software, AI-powered technologies, and automation tools.
           </p>
-          <div className="mt-60 flex items-center gap-x-6">
-            <a
-              href=""
-              className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-            >
-              For Brands & Marketers
-            </a>
-            <a href="" className="text-sm font-semibold leading-6 text-gray-900">
-              For Bloggers <span aria-hidden="true">→</span>
-            </a>
+          <div className="mt-2 flex items-center gap-x-6 smaller-gap">
+            <HeroCarousel />
           </div>
         </div>
-        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
-          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none  xl:ml-32 hidedivmf ">
+          <div className="max-w-3xl flex-none sm:max-w-5xl  lg:max-w-none hidedivmf">
+            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1  ring-inset hidedivmf ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
               <img
-                src="/images/heroimage.png"
+                src="/images/heroimgetwo.png"
                 alt="App screenshot"
                 width={950}
                 height={640}
-                className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
+                className="rounded-md shadow-2xl ring-1 md:block ring-gray-900/10 "
               />
             </div>
           </div>

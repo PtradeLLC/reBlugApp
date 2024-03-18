@@ -28,12 +28,13 @@ export default function Navbar() {
               <div className="flex">
                 <div className="pr-14 pt-1 pb-1">
                   <a href={session ? `/dashboard` : `/`}>
-                    <img
+                    <p className="textLogo text-2xl">reBl<span className="text-red-500 font-semibold">ʊ</span>g</p>
+                    {/* <img
                       src="/images/logoreBlug.png"
                       alt="reBlug Logo"
                       priority="true"
                       className="w-20 h-[27px] object-contain mt-1 px-1 "
-                    />
+                    /> */}
                   </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">

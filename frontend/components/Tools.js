@@ -18,7 +18,7 @@ const Tools = ({ openModal, setOpenModal }) => {
       id: 2,
       name: "Develop Marketing Plan",
       title: "AI powered: yes",
-      desc: "Our AI tool first understand your target audience's needs, preferences, and behaviors. This includes analyzing the data collected on shopping trends, Identifying new trends, Sales data, Tracking trends, and finally predicting outcomes.",
+      desc: "Our AI tool first understand your target audience's needs, preferences, and behaviors. This includes analyzing the data collected on shopping trends, Identifying new trends, Sales data, Tracking trends.",
       trialUrl: "##",
       telephone: "+1-202-555-0170",
       imageUrl: "/images/plan.jpg",
@@ -40,7 +40,7 @@ const Tools = ({ openModal, setOpenModal }) => {
 
   return (
     <div>
-      <p className="text-lg mt-4 mb-3 flex justify-center text-center pl-2 pr-2 font-semibold">
+      <p className="text-lg mt-4 mb-3 flex justify-center text-center font-extralight pl-2 pr-2">
         Growth-hack your brand to success in three easy steps
       </p>
       <ul className="grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 ml-12 mr-12">
@@ -65,7 +65,7 @@ const Tools = ({ openModal, setOpenModal }) => {
                 <dd className="text-sm text-gray-500">{person.title}</dd>
                 <dt className="sr-only">desc</dt>
                 <dd className="mt-3 mb-8">
-                  <span className="inline-flex items-center px-2 text-xs font-medium">
+                  <span className="inline-flex items-center px-2 text-md line-clamp-3 text-left font-medium">
                     {person.desc}
                   </span>
                 </dd>
