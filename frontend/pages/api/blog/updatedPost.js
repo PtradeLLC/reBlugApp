@@ -1,4 +1,3 @@
-import { where } from "firebase/firestore";
 import prisma from "../../../lib/db";
 import Replicate from "replicate";
 

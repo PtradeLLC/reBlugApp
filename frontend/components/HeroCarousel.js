@@ -13,7 +13,7 @@ const HeroCarousel = () => {
         },
         {
             title: "Social Blogging",
-            text: "Embrace Blogger economy's unstoppable wave. Organically harness growth and elevate your brand, whether starting out or established. Use this AI-powered tool to redefine your impact and amplify your influence.",
+            text: "Embrace Blogger economy's upcoming wave. Use the power of AI to harness growth organically and elevate your status, whether starting out or established. Amplify your influence ad personal brand",
             href: '#blog-tool',
             tag: '🎉 Just Launched!'
         },
@@ -39,7 +39,7 @@ const HeroCarousel = () => {
                     <div className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                         <span className="font-extrabold text-red-500">{item.tag}: </span>
                         <Link href={item.href}>
-                            <span className='font-semibold'>{item.title}</span> - {item.text}
+                            <span className='font-semibold hero-text line-clamp-4'>{item.title} - {item.text} </span>
                         </Link>
                         <div className="mt-10 flex items-center gap-x-6 width-[250px]">
                             <Link className="flex justify-center items-center text-sm font-semibold leading-6 text-gray-900" href={item.href}>
