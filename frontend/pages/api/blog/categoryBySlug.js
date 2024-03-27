@@ -1,4 +1,3 @@
-import { where } from "firebase/firestore";
 import prisma from "../../../lib/db";
 
 export default async function handler(req, res) {
