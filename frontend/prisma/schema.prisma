@@ -76,7 +76,7 @@ model User {
   contactList        ContactList[]
   productLaunchData  ProductLaunchData[]
   posts              Post[]
-  comment            Comments[]
+  comment            Comment[]
   sponsors           Sponsors[]
   Category           Category[]
 }
@@ -221,33 +221,59 @@ model Submission {
 }
 
 model Post {
-  id               String       @id @default(auto()) @map("_id") @db.ObjectId
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
   title            String?
   featureImage     String?
   contentImage     String?
-  views            Int          @default(0)
-  createdAt        DateTime     @default(now())
-  desc             String?
+  views            Int            @default(0)
+  createdAt        DateTime       @default(now())
+  description      String?
   crossPromote     String?
-  slug             String?
+  slug             String?        @unique
   selectedValue    String?
   paramsId         String?
   image            String?
-  updatedAt        DateTime     @updatedAt
+  updatedAt        DateTime       @updatedAt
   selectedFeatures String[]
-  published        Boolean      @default(false)
+  published        Boolean        @default(false)
   content          String?
   email            String?
-  comments         Comments[]
+  comments         Comment[]
   aiResponses      AiResponse[]
   sponsors         Sponsors[]
-  user             User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userEmail        String?
-  author           String?
+  author           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   categorySlug     String?
-  userId           String?      @db.ObjectId
-  category         Category?    @relation(fields: [categoryId], references: [id])
-  categoryId       String?      @db.ObjectId
+  blogger          String?
+  userId           String?        @db.ObjectId
+  category         Category?      @relation(fields: [categoryId], references: [id])
+  categoryId       String?        @db.ObjectId
+  images           ImageOnPost[]
+  AvatarOnPost     AvatarOnPost[]
+}
+
+model Image {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  mimeType String
+  data     Bytes
+  title    String
+  posts    ImageOnPost[]
+}
+
+model ImageOnPost {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String @db.ObjectId
+  image   Image  @relation(fields: [imageId], references: [id])
+  imageId String @db.ObjectId
+}
+
+model AvatarOnPost {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String @db.ObjectId
+  // avatar   Avatar @relation(fields: [avatarId], references: [id])
+  avatarId String @db.ObjectId
 }
 
 model Category {
@@ -259,7 +285,7 @@ model Category {
   userId String? @db.ObjectId
 }
 
-model Comments {
+model Comment {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   title      String?
   content    String?
@@ -276,16 +302,16 @@ model Comments {
 }
 
 model AiResponse {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   title              String?
   comment            String?
   commentBy          String?
   response           String?
   commentingSystemId String?
-  comments           Comments? @relation(fields: [articleCommentId], references: [id])
-  articleCommentId   String?   @unique @db.ObjectId
-  post               Post?     @relation(fields: [postId], references: [id])
-  postId             String?   @db.ObjectId
+  comments           Comment? @relation(fields: [articleCommentId], references: [id])
+  articleCommentId   String?  @unique @db.ObjectId
+  post               Post?    @relation(fields: [postId], references: [id])
+  postId             String?  @db.ObjectId
 }
 
 model Sponsors {

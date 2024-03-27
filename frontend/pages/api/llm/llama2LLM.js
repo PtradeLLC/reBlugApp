@@ -217,31 +217,73 @@ const generateTaskData = async function handleCreatePost(allCategories) {
         }
 
         if (tasks) {
-            // Create an instance of the LLM
-            const llama2LLM = new LlamaDeuce({ chatStrategy: DeuceChatStrategy.META });
+            const llm = new Ollama({ model: "llama2", temperature: 0.75 });
+            {
+                const response = await llm.chat({
+                    messages: [{ content: "Tell me a joke.", role: "user" }],
+                });
+                console.log("Response 1:", response.message.content);
+            }
+            {
+                const response = await llm.complete({ prompt: "How are you?" });
+                console.log("Response 2:", response.text);
+            }
+            {
+                const response = await llm.chat({
+                    messages: [{ content: "Tell me a joke.", role: "user" }],
+                    stream: true,
+                });
+                console.log("Response 3:");
+                for await (const message of response) {
+                    process.stdout.write(message.delta); // no newline
+                }
+                console.log(); // newline
+            }
+            {
+                const response = await llm.complete({
+                    prompt: "How are you?",
+                    stream: true,
+                });
+                console.log("Response 4:");
+                for await (const message of response) {
+                    process.stdout.write(message.text); // no newline
+                }
+                console.log(); // newline
+            }
+            {
+                const embedding = await llm.getTextEmbedding("Hello world!");
+                console.log("Embedding:", embedding);
+            }
 
-            // Create a service context
-            const serviceContext = serviceContextFromDefaults({ llm: mistralLLM });
 
-            // Create documents from tasks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             const documents = tasks.map(task => new Document({ text: task }));
 
-            // Load and index documents
-            const index = await VectorStoreIndex.fromDocuments([documents], {
-                serviceContext,
-            });
 
-            console.log(index);
 
-            const queryEngine = index.asQueryEngine();
+
+
+
             const query = "Complete the tasks in the document by following the instructions carefully.";
-
-            const response = await queryEngine.query({
-                query,
-            });
-
-            console.log(response);
-
         }
     } catch (error) {
         console.log(error);

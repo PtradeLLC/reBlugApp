@@ -11,3 +11,4 @@ const prisma = globalThis.prismaGlobal;
 module.exports = prisma;
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma;
+

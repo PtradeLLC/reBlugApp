@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         }
         if (group) {
             const run = async () => {
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
                 const safetySettings = [
                     {
