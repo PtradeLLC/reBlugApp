@@ -24,7 +24,7 @@ async function generateArticleContent(item) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
     const generationConfig = {
-        temperature: 0.6,
+        temperature: 0.7,
         topK: 1,
         topP: 1,
         maxOutputTokens: 4500,
@@ -191,14 +191,20 @@ async function generateArticleContent(item) {
         Response should be formatted to include the 'category' as listed in the ${item.title}, 'post title', author, and 'post content' separately
         </Task>
         <Instructions>
-        - Response should be formatted as follows. Response should to include the 'category' from the ${item.title} list, 'post title', author and 'post content' separately as shown below:
+        - Response should be formatted as a JSON object with the following key values as shown below. The valid fields are as 'category', 'title', 'author', and 'content'.
+        - Response should include generated post for each item in the ${item.title} list 
+        - Each post must be in the contextually related to the category. 
+        - Each post must have a 'title', 'author', and 'post content' separately in the response.
+        - Each post must be between 4 to 5 minutes reading time.
 
+        Below is an example of a valid response.
         Example:
+        
         {
-          "category": "",
-          "title": "",
-          "author": "",
-          "content": "Welcome to my blog! I'm Emma Bell, a DIY enthusiast with a passion for transforming ordinary spaces into extraordinary ones. Today, I'm thrilled to share with you a guide on how to create your own DIY home decor. \n\n DIY home decor is a fantastic way to add a personal touch to your living space. It's not only cost-effective but also a fun and rewarding activity. \n\n Let's start with choosing your project. This could be anything from a painted canvas to a handmade throw pillow. The key is to select something that excites you and fits your skill level. \n\n Once you've chosen your project, gather your materials. This could include items like paint, fabric, glue, and a variety of crafting tools. Remember, the beauty of DIY is that you can often repurpose items you already have at home. \n\n Now comes the fun part - start crafting! Follow the instructions for your chosen project, but don't be afraid to add your own creative spin. \n\n Once you've finished, display your masterpiece proudly. It's a reflection of your creativity and hard work. \n\n",
+            "category": "",
+            "title": "",
+            "author": "",
+            "content": ""
         }
         </Instructions>
     
@@ -249,7 +255,6 @@ export default async function handler(req, res) {
 
             try {
                 const content = await generateArticleContent(item);
-                content.trim();
 
                 // Extract category
                 const categoryMatch = content.match(/"category": "(.*?)"/);
@@ -338,8 +343,6 @@ export default async function handler(req, res) {
 
                             },
                         });
-
-
 
                         const imageData = savedImage.map((image) => image.id);
 
