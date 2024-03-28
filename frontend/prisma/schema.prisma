@@ -268,12 +268,21 @@ model ImageOnPost {
   imageId Int
 }
 
+model Avatar {
+  id       Int            @id @default(autoincrement())
+  name     String
+  mimeType String
+  data     Bytes
+  title    String
+  posts    AvatarOnPost[]
+}
+
 model AvatarOnPost {
   id       Int    @id @default(autoincrement())
   post     Post   @relation(fields: [postId], references: [id])
   postId   Int
-  // avatar   Avatar @relation(fields: [avatarId], references: [id])
-  avatarId String
+  avatar   Avatar @relation(fields: [avatarId], references: [id])
+  avatarId Int
 }
 
 model Category {
