@@ -1,7 +1,14 @@
 import prisma from "../../../lib/db";
+import { corsMiddleware } from "../../../middleware";
 
 export default async function handler(req, res) {
     try {
+        // Apply CORS middleware
+        const response = corsMiddleware(req, res);
+        if (response) {
+            return response;
+        }
+
         const page = parseInt(req.query.page) || 1;
         const postsPerPage = 12;
 
@@ -31,10 +38,12 @@ export default async function handler(req, res) {
             return res.status(404).json({ message: 'Post not found' });
         }
 
-
+        // Return posts: If you want to implement server-side pagination, where 
+        // you only return a subset of posts for the current page
         const posts = findAllPost.slice(startIndex, endIndex);
-        console.log("posts", posts);
 
+        // console.log("Find all posts:", findAllPost);
+        // console.log("Posts:", posts);
 
         return res.status(200).json({ message: findAllPost, totalPages });
     } catch (error) {
