@@ -7,6 +7,7 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 
@@ -16,6 +17,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const [modelResponse, setModelResponse] = useState("");
   const [value, setValue] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
   const [sentInput, setSentInput] = useState("");
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   const [loading, setLoading] = useState(false);
@@ -107,6 +109,16 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     sendDataToBackend();
+  };
+
+  const handleSignUp = () => {
+    if (!session) {
+      router.push("/register");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (

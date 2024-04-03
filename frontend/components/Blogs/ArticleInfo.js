@@ -38,7 +38,7 @@ const SubmissionInfo = ({ isOpen, setIsOpen }) => {
                 <ModalFooter>
                     <span className="text-xs font-thin text-gray-600">
                         Powered by{" "}
-                        <Link href="http://forgedmart.com/">ForgedMart</Link>
+                        <Link href="https://reblug.com/">reBlug</Link>
                     </span>
                 </ModalFooter>
             </ModalContent>
