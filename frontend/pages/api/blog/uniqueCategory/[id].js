@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
         const singleCategory = await prisma.category.findUnique({
             where: {
-                id: String(id),
+                id: id,
             },
             include: {
                 posts: {
@@ -15,7 +15,6 @@ export default async function handler(req, res) {
                         id: true,
                         title: true,
                         category: true,
-                        user: true,
                     }
                 },
             },
@@ -24,20 +23,6 @@ export default async function handler(req, res) {
         if (!singleCategory) {
             return res.status(404).json({ message: 'Post not found' });
         }
-
-        // Extract category information from the post
-        // const { category, ...postData } = singleCategory;
-
-        // Create a new object with the necessary category information
-        // const responseData = {
-        //     ...postData,
-        //     category: {
-        //         id: category.id,
-        //         title: category.title,
-        //         slug: category.slug,
-        //         userId: category.userId
-        //     }
-        // };
         res.status(200).json(singleCategory);
     } catch (error) {
         console.error('Error creating or fetching post:', error);

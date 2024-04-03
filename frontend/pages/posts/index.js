@@ -12,7 +12,6 @@ import useSWR from "swr";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-
 export default function Blog() {
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -40,11 +39,15 @@ export default function Blog() {
     }, [error, isValidating]);
 
     useEffect(() => {
-        if (data) {
-            setPosts(data.posts);
+        if (data && data.posts) {
+            const cleanedPosts = data.posts.map((post) => ({
+                ...post,
+                content: cleanUpContent(post.content), // Use the returned value
+            }));
+            setPosts(cleanedPosts);
 
             // Extracting categories from posts
-            const newCategories = data.posts.map((post) => post.category);
+            const newCategories = cleanedPosts.map((post) => post.category);
 
             // Concatenating all categories and removing duplicates
             const uniqueCategories = Array.from(new Set(newCategories));
@@ -53,6 +56,21 @@ export default function Blog() {
             setCategories(uniqueCategories);
         }
     }, [data]);
+
+    const cleanUpContent = (content) => {
+        return content
+            .replace(/\*/g, '') // Remove all asterisks (*)
+            .replace(/###/g, '') // Remove '###'
+            .replace(/##/g, '') // Remove '##'
+            .replace(/\n\n/g, '')
+            .replace(/\n/g, '')
+            .replace(/\n\n/g, '')
+            .trim()
+            .replace(/(<([^>]+)>)/gi, '')
+            .replace(/^## (.*?)\n\n/gm, '')
+            .replace(/\*\s(.*?)\n\n/gm, '<ul><li>$1</li></ul><p>')
+
+    };
 
 
     useEffect(() => {
@@ -76,8 +94,6 @@ export default function Blog() {
 
         return () => clearInterval(interval);
     }, []);
-
-    // console.log(posts);
 
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">

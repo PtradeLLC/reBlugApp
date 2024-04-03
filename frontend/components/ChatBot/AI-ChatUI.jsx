@@ -25,7 +25,6 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
     productSubmission:
       "How can I submit my product to be included in future article",
   });
-
   //Handles setting value for the loader
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,19 +47,15 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
         },
         body: JSON.stringify({
           content: inputValue,
-          postContent: {
-            id: postContent.id,
-            title: postContent.title,
-            content: postContent.content,
-            userName: userName,
-          },
+          postContent: postContent,
+          userName: userName,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           setInputValue("");
           setSentInput(inputValue);
-          setModelResponse(data.finalResponse);
+          setModelResponse(data.message);
           setLoading(false);
         })
         .catch((error) => {
@@ -81,7 +76,6 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
     } else if (buttonType === "productSubmission") {
       requestData = { submission: inquiries.productSubmission };
     }
-
     fetch("/api/blog/questionAI", {
       method: "POST",
       headers: {
@@ -363,8 +357,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
               </ModalBody>
               <ModalFooter>
                 <span className="text-xs font-thin text-gray-600">
-                  Powered by{" "}
-                  <Link href="http://forgedmart.com/">ForgedMart</Link>
+                  Powered by <Link href="https://reblug.com/">reBlug</Link>
                 </span>
               </ModalFooter>
             </>

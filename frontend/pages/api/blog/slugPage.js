@@ -2,7 +2,6 @@ import prisma from "../../../lib/db";
 import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
-
 export default async function handler(req, res) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
         }
 
         // Use cheerio to load the HTML content
-        const $ = cheerio.load(postContent.content);
+        const $ = cheerio.load(postContent);
 
         // Extract the text content without HTML tags
         const textContent = $('p').text();
@@ -24,10 +23,8 @@ export default async function handler(req, res) {
         const articleQuestion = articleQuery.question;
         const articleRef = articleQuery.reference;
 
-
         const run = async () => {
-
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
             const contactAuthor = () => {
                 console.log("Author is contacted");
@@ -53,20 +50,18 @@ export default async function handler(req, res) {
             ];
 
             const generationConfig = {
-                temperature: 0.3,
+                temperature: 0.4,
                 topK: 1,
                 topP: 1,
             };
 
-
-            if (articleQuestion && articleRef) {
+            if (articleQuestion && postContent) {
                 const userPrompt = `${articleQuestion}`
-
 
                 const parts = [
                     {
-                        text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and use ${articleRef} as reference or context where you get your answers. 
-                        Use the context of ${articleRef} to provide meaningful answers in a friendly and engaging manner. 
+                        text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and use ${postContent} as reference or context where you get your answers. 
+                        Use the context of ${postContent} to provide meaningful answers in a friendly and engaging manner. 
                         When responding to the user and providing answer, do the following:
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
@@ -98,13 +93,12 @@ export default async function handler(req, res) {
 
                 // Join the non-starred parts to form the final response
                 const finalResponse = nonStarredParts.join('');
-
-                res.status(200).json({ message: 'Content extracted and saved successfully.', finalResponse });
+                res.status(200).json({ message: finalResponse });
+            } else {
+                res.status(400).json({ message: "Please provide an article question and reference." });
             }
         };
-
         await run();
-
     } catch (error) {
         console.error('Error extracting and saving content:', error);
         res.status(500).json({ message: 'Error extracting and saving content.' });

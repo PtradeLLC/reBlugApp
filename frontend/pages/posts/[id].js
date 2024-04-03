@@ -10,9 +10,10 @@ import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
-import prisma from "../../lib/db";
 import useSWR from "swr";
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 
 
 const navigation = [
@@ -125,15 +126,35 @@ const PostPage = ({ comments }) => {
         if (error) console.error("An error occurred:", error);
     }, [error]);
 
+    // Utility function to clean up content
+    function cleanUpContent(content) {
+        return content
+            .replace(/(<([^>]+)>)/gi, '')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/^### (.*?)\n\n/gm, '<h2>$1</h2><p>')
+            .replace(/\*\s(.*?)\n\n/gm, '<ul><li>$1</li></ul><p>')
+    }
+
     useEffect(() => {
-        if (uniqPost) setLoading(false);
+        if (error) {
+            console.error("An error occurred:", error);
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (uniqPost) {
+            setLoading(false);
+
+            // Clean up the content
+            const cleanedContent = cleanUpContent(uniqPost.content);
+            // Now you can use cleanedContent wherever necessary
+        }
     }, [uniqPost]);
 
 
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -164,11 +185,6 @@ const PostPage = ({ comments }) => {
                 }
 
                 const responseData = await response.json();
-                // console.log(responseData);
-
-                // setComments(prevComments => [...prevComments, responseData]);
-
-                // Clear the comment input field
                 setNewComment('');
                 setLoading(false);
             } catch (error) {
@@ -177,7 +193,18 @@ const PostPage = ({ comments }) => {
         }
     }
 
+    function cleanUpContent(content) {
+        return content?.replace(/\*/g, '')?.replace(/##/g, '')?.replace(/\n/g, '').trim();
+    }
 
+    function cleanUpContent(content) {
+        // Split the content based on double line breaks
+        const paragraphs = content.split('\n\n');
+        // Map over the paragraphs and wrap each one in a <p> tag
+        const formattedContent = paragraphs.map((paragraph, index) => `<p key=${index}>${paragraph}</p>`);
+        // Join the formatted paragraphs into a single string
+        return formattedContent.join('');
+    }
     return (
         <div className='mt-20'>
             <div className="relative mt-2 bg-[#ced4da] pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
@@ -320,7 +347,8 @@ const PostPage = ({ comments }) => {
                                         />
                                     </div>
                                 ) : (
-                                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${uniqPost?.content}` }} />
+                                    // <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${uniqPost?.content}` }} />
+                                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: cleanUpContent(uniqPost?.content) }} />
                                 )}
                             </span>
 
@@ -427,41 +455,50 @@ const PostPage = ({ comments }) => {
 };
 
 
+// Function to handle errors
+function handleServerError(error) {
+    console.error("An error occurred:", error);
+    return {
+        props: {
+            comments: [],
+            error: "An error occurred while fetching data."
+        }
+    };
+}
+
+
 export async function getServerSideProps(context) {
     const { id } = context.query;
     try {
+        if (!id) {
+            return { notFound: true };
+        }
+
         const post = await prisma.post.findUnique({
-            where: { id },
+            where: { id: id },
             select: { slug: true }
         });
 
-        if (post) {
-            const comments = await prisma.comments.findMany({
-                where: { postSlug: post.slug },
-                include: {
-                    user: true
-                }
-            });
-
-            return {
-                props: {
-                    comments: JSON.parse(JSON.stringify(comments))
-                }
-            };
-        } else {
-            return {
-                notFound: true
-            };
+        if (!post) {
+            return { notFound: true };
         }
-    } catch (error) {
-        console.error("Error fetching post or comments:", error);
+
+        const comments = await prisma.comment.findMany({
+            where: { postSlug: post.slug },
+            include: { user: true }
+        });
+
         return {
             props: {
-                comments: []
+                comments: JSON.parse(JSON.stringify(comments)),
+                postSlug: post.slug
             }
         };
+    } catch (error) {
+        return handleServerError(error);
     }
 }
+
 
 
 export default PostPage;

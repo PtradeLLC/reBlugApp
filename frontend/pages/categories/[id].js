@@ -30,9 +30,6 @@ export default function BlogCategories() {
 
     const { data, error, isValidating, mutate } = useSWR(`http://localhost:3000/api/blog/uniqueCategory/${id}`, fetcher);
 
-    // console.log("data from apiCat", data);
-
-
     useEffect(() => {
         if (error) console.error("An error occurred:", error);
         if (!isValidating) setLoading(false);

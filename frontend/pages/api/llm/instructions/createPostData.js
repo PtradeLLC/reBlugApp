@@ -1,8 +1,6 @@
+
 import { PrismaClient } from '@prisma/client';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-import fetch from 'node-fetch';
-import diverseAvatars from './avatars';
-import { Cloudinary } from "@cloudinary/url-gen";
 
 const prisma = new PrismaClient();
 
@@ -224,337 +222,152 @@ async function generateArticleContent(item) {
 
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log(chunkText);
-            const { totalTokens } = await model.countTokens(parts);
-            console.log("Total tokens:", totalTokens);
-            chunks.push(chunk.text());
+            chunks.push(chunkText
+                .replace(/\n/g, "")
+                .replace(/##/g, "")
+                .replace(/###/g, "")
+                .replace(/```/g, "")
+                .replace(/\*/g, "")
+                .replace(/ \n\n/g, "")
+
+            );
         };
 
         text = chunks.join('');
-        console.log(text);
+        const history = [];
+        history.push(text);
         return text;
     } catch (error) {
         console.error("Error generating content or converting to markdown:", error);
+        throw error;
     }
 }
 
-
 export default async function handler(req, res) {
     try {
-        const allPosts = await fetchAllPosts();
+        const allCategoryLists = await fetchAllPosts();
 
-        for (const item of allPosts) {
-            console.log(`Processing item: ${item.title}`);
+        if (!allCategoryLists || allCategoryLists.length === 0) {
+            console.error("No posts found.");
+            return res.status(404).json({ message: 'No posts found' });
+        }
+
+        for (const item of allCategoryLists) {
             const categorySlug = item.title.toLowerCase().split(' ').join('-');
-            const targetCategory = allPosts.find(category => category.slug === categorySlug);
+
+
+            const targetCategory = allCategoryLists.find(category => category.slug === categorySlug);
 
             if (!targetCategory) {
                 console.error(`Category with slug '${categorySlug}' not found.`);
                 continue;
             }
-
             const categoryId = targetCategory.id;
 
             try {
                 const content = await generateArticleContent(item);
 
-                // Extract category
-                const categoryMatch = content.match(/"category": "(.*?)"/);
-                const category = categoryMatch ? categoryMatch[1] : null;
+                // Split the text into individual JSON objects
+                const jsonObjects = content.match(/\{(?:[^{}]|(?:\{(?!\})|(?<!\{)\}))*\}/g);
 
-                // Extract post title
-                const titleMatch = content.match(/"title": "(.*?)"/);
-                const postTitle = titleMatch ? titleMatch[1] : null;
+                if (!jsonObjects) {
+                    console.error("No JSON objects found in content.");
+                    continue;
+                }
 
-                // Extract author
-                const authorMatch = content.match(/"author": "(.*?)"/);
-                const author = authorMatch ? authorMatch[1] : null;
+                for (const jsonObject of jsonObjects) {
+                    try {
+                        const parsedContent = JSON.parse(jsonObject);
 
-                // Extract post content
-                const contentMatch = content.match(/"content": "(.*?)"/);
-                const postContent = contentMatch ? contentMatch[1] : null;
+                        if (!parsedContent) {
+                            console.error("Parsed content is null or undefined.");
+                            continue;
+                        }
 
-                // Extract tips
-                const tipsMatch = content.match(/"tips": {(.*?)}/s);
-                const tipsObject = tipsMatch ? tipsMatch[1] : null;
-                const tips = tipsObject ? Object.values(JSON.parse(`{${tipsObject}}`)).map(tip => tip) : [];
+                        // Extract data from parsedContent...
+                        const category = parsedContent.category;
+                        const postTitle = parsedContent.title;
+                        const author = parsedContent.author;
+                        const postContent = parsedContent.content;
 
-                ////// Image Generation/////////
-                const engineId = 'stable-diffusion-xl-1024-v1-0';
-                const imageApiKey = process.env.STABILITY_API_KEY;
-                const imageUrl = `https://api.stability.ai/v1/generation/${engineId}/text-to-image`;
-                const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
-                const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
-                const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+                        if (!category || !postTitle || !postContent) {
+                            console.error("Required fields are missing in parsed content:", jsonObject);
+                            continue;
+                        }
 
-                const generateArticleImages = async (textPrompts, imageApiKey) => {
+                        // Extract slug from post title
+                        const postSlug = postTitle.toLowerCase().split(' ').join('-');
 
-                    const response = await fetch(imageUrl,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Accept: 'application/json',
-                                Authorization: `Bearer ${imageApiKey}`,
+                        const uniquePost = { ...item, slug: postSlug };
+
+                        // Check if postTitle is null or undefined before proceeding
+                        if (!postTitle) {
+                            console.error("Post title not found in content:", jsonObject);
+                            continue;
+                        }
+
+                        const upsertedPost = await prisma.post.upsert({
+                            where: { slug: uniquePost.slug },
+                            create: {
+                                category: category,
+                                title: postTitle,
+                                author: author || "Lola B",
+                                content: postContent,
+                                slug: postSlug,
+                                category: { connect: { id: categoryId } },
                             },
-                            body: JSON.stringify({
-                                text_prompts: textPrompts,
-                                cfg_scale: 7,
-                                height: 1024,
-                                width: 1024,
-                                steps: 30,
-                                samples: 3,
-                            }),
-                        }
-                    );
-
-                    if (!response.ok) {
-                        throw new Error(`Non-200 response: ${await response.text()}`);
-                    }
-
-                    const responseJSON = await response.json();
-
-                    const imageUrls = responseJSON.artifacts.map((artifact, index) => {
-                        const fileName = `v1_txt2img_${index}.png`;
-                        const imageData = Buffer.from(artifact.base64, 'base64');
-                        return {
-                            url: `data:image/png;base64,${imageData.toString('base64')}`,
-                            fileName,
-                        };
-                    });
-
-
-                    try {
-                        const cloudinary = new Cloudinary({ cloud: { cloudName: CLOUDINARY_CLOUD_NAME } });
-                        const uploadResults = await Promise.all(
-                            imageUrls.map((image) =>
-                                cloudinary.uploader.upload(image.imageData, {
-                                    upload_preset: 'article-preset', // Configure a preset for article image uploads
-                                    public_id: image.fileName,
-                                })
-                            )
-                        );
-
-                        // Update imageUrls with Cloudinary upload information
-                        imageUrls.forEach((imageUrl, index) => {
-                            imageUrl.url = uploadResults[index].url;
-                            imageUrl.id = uploadResults[index].public_id; // Assuming public_id is the desired ID
+                            update: {
+                                title: postTitle, // Update title if needed
+                                author: author || "Lola B", // Update author if needed
+                                content: postContent, // Update content if needed
+                                slug: postSlug, // Update slug if needed
+                                category: { connect: { id: categoryId } },
+                            },
                         });
 
-                        return imageUrls;
-                    } catch (error) {
-                        console.error('Error uploading images to Cloudinary:', error);
-                        // Handle upload error gracefully (e.g., retry or log for later processing)
-                        throw error; // Re-throw the error to propagate it to the calling function
-                    }
-                }
-
-
-
-                ////// Avatar Generation/////////
-                async function generateAvatarImages(avatarPrompts, imageApiKey) {
-                    const response = await fetch(`${imageUrl}stable-diffusion-xl-1024-v1-0/text-to-image`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Accept: 'application/json',
-                            Authorization: `Bearer ${imageApiKey}`,
-                        },
-                        body: JSON.stringify({
-                            text_prompts: avatarPrompts,
-                            cfg_scale: 7,
-                            height: 1024,
-                            width: 1024,
-                            steps: 30,
-                            samples: 1,
-                        }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Non-200 response: ${await response.text()}`);
-                    }
-
-                    const responseJSON = await response.json();
-
-                    const imageUrls = responseJSON.artifacts.map((artifact, index) => {
-                        const fileName = `v1_avatar_${index}.png`;
-                        const imageData = Buffer.from(artifact.base64, 'base64');
-                        return { fileName, imageData };
-                    });
-
-                    try {
-                        const cloudinary = new Cloudinary({ cloud: { cloudName: CLOUDINARY_CLOUD_NAME } });
-                        const uploadResults = await Promise.all(
-                            imageUrls.map((image) =>
-                                cloudinary.uploader.upload(image.imageData, {
-                                    upload_preset: 'avatar-preset', // Configure a preset for avatar uploads
-                                    public_id: image.fileName,
-                                })
-                            )
-                        );
-
-                        // Update imageUrls with Cloudinary upload information
-                        imageUrls.forEach((imageUrl, index) => {
-                            imageUrl.url = uploadResults[index].url;
-                            imageUrl.id = uploadResults[index].public_id; // Assuming public_id is the desired ID
-                        });
-
-                        return imageUrls;
-                    } catch (error) {
-                        console.error('Error uploading images to Cloudinary:', error);
-                        // Handle upload error gracefully (e.g., retry or log for later processing)
-                        throw error; // Re-throw the error to propagate it to the calling function
-                    }
-                }
-
-
-                const postSlug = item.title.toLowerCase().split(' ').join('-');
-
-                try {
-                    const textPrompts = [
-                        {
-                            text: `"Generate three ultra photorealistic RAW images each based on the titles ${postTitle}. Capture the images with a high-resolution photograph using an 85mm lens for a flattering perspective. fujifilm: 1 | centered: 1. Do not include captions in the generated images."`,
-                        },
-                    ];
-
-                    const avatarPrompts = [
-                        {
-                            text: `"Generate an avatar of ${diverseAvatars[Math.floor(Math.random() * diverseAvatars.length)]} with a high resolution photograph. Do not include captions in the generated image."`,
-                        }
-                    ]
-                    const generatedImages = await generateArticleImages(textPrompts, imageApiKey);
-                    const generatedAvatar = await generateAvatarImages(avatarPrompts, imageApiKey);
-
-
-                    if (generatedImages) {
+                        // Delete posts with null content   
                         try {
-                            const savedImages = await prisma.image.createMany({
-                                data: generatedImages.imageUrls.map((imageUrl) => ({
-                                    url: imageUrl,
-                                    title: postSlug,
-                                })),
-                                skipDuplicates: true, // Avoid saving duplicates
+                            const findDbPosts = await prisma.post.findMany({
+                                where: {
+                                    AND: [
+                                        { category: { id: categoryId } },
+                                        { content: null }
+                                    ]
+                                }
                             });
 
-                            const imageData = savedImages.map((image) => image.id);
-
-                            try {
-                                // Upserting a post
-                                const upsertedPost = await prisma.post.upsert({
-                                    where: { id: postId }, // Specify a unique identifier for the post
-                                    create: { // Data for creating a new post
-                                        category: category,
-                                        title: postTitle,
-                                        author: author || "Lola B",
-                                        tips: tips,
-                                        content: postContent,
-                                        slug: postSlug,
-                                        category: { connect: { id: categoryId } },
-                                        images: { create: imageData.map((imageId) => ({ imageId })) },
-                                    },
-                                    update: {
-                                        title: postTitle, // Update title if needed
-                                        author: author || "Lola B", // Update author if needed
-                                        tips: tips, // Update tips if needed
-                                        content: postContent, // Update content if needed
-                                        slug: postSlug, // Update slug if needed
-                                        category: { connect: { id: categoryId } },
-                                        images: { create: imageData.map((imageId) => ({ imageId })) },
-                                    },
-                                });
-
-                                if (generatedAvatar) {
-                                    try {
-                                        // Save avatar to Avatar table
-                                        const savedAvatar = await prisma.avatar.create({
-                                            data: {
-                                                url: generatedAvatar[0].url, // Assuming the first element is the avatar
-                                                title: `${postSlug}`,
-                                                post: { connect: { id: upsertedPost.id } }, // Associate with the created/updated post
-                                            },
-                                        });
-
-                                        console.log('Avatar saved:', savedAvatar);
-
-                                        // ... additional logic if needed after avatar saving ...
-                                    } catch (error) {
-                                        console.error('Error saving avatar:', error);
-                                        // Handle avatar saving error gracefully (e.g., log for later processing)
+                            if (findDbPosts.length > 0) {
+                                const deletePosts = await prisma.post.deleteMany({
+                                    where: {
+                                        AND: [
+                                            { category: { id: categoryId } },
+                                            { content: null }
+                                        ]
                                     }
-                                }
-
-                                console.log('Post saved:', upsertedPost);
-                            } catch (error) {
-                                console.error('Error upserting post:', error);
-                                // Handle post saving error gracefully (e.g., retry or log for later processing)
+                                });
+                                console.log("Deleted posts with null content:", deletePosts);
                             }
                         } catch (error) {
-                            console.error('Error saving images:', error);
-                            // Handle image saving error gracefully (e.g., retry or log for later processing)
+                            console.error("Error deleting posts:", error);
+                        }
+                        console.log('Post created successfully:', upsertedPost)
+
+                    } catch (error) {
+                        console.error('Error parsing JSON object:', error);
+                        // Check if the error is due to unexpected non-whitespace character
+                        if (error instanceof SyntaxError && error.message.includes('Unexpected non-whitespace character')) {
+                            console.error('Error parsing JSON object:', error);
+                            console.error('Skipping data with unexpected non-whitespace character:', jsonObject);
+                            continue;
+                        } else {
+                            console.error('Error parsing content:', error);
                         }
                     }
-
-
-                    // if (generatedImages) {
-                    //     const savedImage = await prisma.image.upsert({
-                    //         where: { id: imageId },
-                    //         create: {
-                    //             url: generatedImages.imageUrls,
-                    //             title: postSlug,
-
-                    //         },
-                    //         update: {
-                    //             title: postSlug,
-
-                    //         },
-                    //     });
-
-                    //     const imageData = savedImage.map((image) => image.id);
-
-                    //     if (!savedImage) {
-                    //         console.error('Error saving image:', error);
-                    //     }
-
-                    //     try {
-                    //         // Upserting a post
-                    //         const upsertedPost = await prisma.post.upsert({
-                    //             where: { id: postId }, // Specify a unique identifier for the post, such as its ID
-                    //             create: { // Data to create a new post if it doesn't exist
-                    //                 category: category,
-                    //                 title: postTitle,
-                    //                 author: author || "Lola B",
-                    //                 tips: tips,
-                    //                 content: postContent,
-                    //                 slug: postSlug,
-                    //                 category: { connect: { id: categoryId } },
-                    //                 images: { create: imageData.map((imageId) => ({ imageId })) }
-                    //             },
-                    //             update: { // Data to update the existing post if it already exists
-                    //                 title: postTitle, // Update title if needed
-                    //                 author: author || "Lola B", // Update author if needed
-                    //                 tips: tips, // Update tips if needed
-                    //                 content: postContent, // Update content if needed
-                    //                 slug: postSlug, // Update slug if needed
-                    //                 category: { connect: { id: categoryId } }, // Update category if needed
-                    //                 images: { create: imageData.map((imageId) => ({ imageId })) },
-                    //             },
-                    //         });
-                    //         console.log('Post saved:', upsertedPost);
-                    //     } catch (error) {
-                    //         console.error('Error upserting post:', error);
-                    //     }
-
-                    // }
-                } catch (error) {
-                    console.error('Error generating images:', error);
                 }
-                // console.log("Article created successfully", content);
             } catch (error) {
-                console.error('Error creating articles:', error);
-                // Handle error gracefully, maybe continue with other articles
+                console.error('Error generating content:', error);
             }
         }
-
         res.status(200).json({ message: 'Articles created successfully' });
     } catch (error) {
         console.error('Something went wrong:', error);

@@ -397,7 +397,7 @@ export default function DashLay() {
                                 <div className="grid grid-cols-1 gap-4 border-r">
                                     <section aria-labelledby="recent-hires-title">
                                         <div className="overflow-hidden bg-white shadow">
-                                            <div className="p-6">
+                                            <div className="p-4">
                                                 <span className="flex">
                                                     <div className="flex">
                                                         <Image className="h-[17px] w-[20px] justify-center items-center" src={"/images/team.png"} width={25} height={18} alt="team members" />

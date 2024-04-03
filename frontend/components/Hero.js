@@ -42,7 +42,7 @@ export default function Hero() {
 
           </div>
           <h1 className="mt-10 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl hero-text">
-            Every Brand and Marketer has a <span className='text-red-700 underline'>Thing</span> or two to tackle with when it comes to <span className='text-green-900 text-2xl'>growth</span> marketing
+            Every Brand and Marketer has a <span className='text-red-700 underline'>Thing</span> or two to tackle when it comes to <span className='text-green-900 text-2xl'>growth</span> marketing
           </h1>
           <h2 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl hero-text">
             We solve <span className='text-red-700 hero-text'>things</span> by providing a unified ecosystem where brands, marketers and bloggers can connect.

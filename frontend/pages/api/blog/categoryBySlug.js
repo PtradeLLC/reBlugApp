@@ -17,9 +17,6 @@ export default async function handler(req, res) {
 
         // Fetch a subset of posts based on pagination parameters
         const findAllPost = await prisma.post.findMany({
-            // where{
-            //     id
-            // },
             include: {
                 category: {
                     select: {
@@ -31,6 +28,9 @@ export default async function handler(req, res) {
             },
         });
 
+        if (!findAllPost) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
         return res.status(200).json({ posts: findAllPost, totalPages });
     } catch (error) {
         console.error('Error generating content:', error);

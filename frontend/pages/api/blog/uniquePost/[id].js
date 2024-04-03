@@ -6,17 +6,21 @@ export default async function handler(req, res) {
     try {
         const singlePost = await prisma.post.findUnique({
             where: {
-                id: String(id),
+                id: id,
             },
             include: {
                 comments: {
                     include: {
                         AiResponse: true,
-                        user: true
+                        user: {
+                            select: {
+                                firstName: true,
+                                email: true
+                            }
+                        }
                     },
                 },
-                user: true,
-                category: true // Include the category information
+                category: true
             },
         });
 
@@ -37,10 +41,10 @@ export default async function handler(req, res) {
                 userId: category.userId
             }
         };
+
         res.status(200).json(responseData);
     } catch (error) {
         console.error('Error creating or fetching post:', error);
         res.status(500).json({ message: 'Error creating or fetching post.' });
     }
 }
-

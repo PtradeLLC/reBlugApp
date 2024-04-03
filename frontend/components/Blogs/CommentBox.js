@@ -48,7 +48,7 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
                     </div>
                 </div>
             </div>
-            <div className="overflow-y-auto h-[350px]">
+            <div className="overflow-y-auto h-[320px]">
                 {!loading ? (
                     <>
                         {comments.length > 0 ? comments.map((comment) => (

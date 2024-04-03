@@ -2,6 +2,12 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+//Add the package.json
+// "type": "module",
+// "prisma": {
+//     "seed": "node ./prisma/posts.js"
+//   },
+
 async function seed() {
     try {
         const uniqueCategories = [
@@ -46,6 +52,12 @@ async function seed() {
                 }
             }
         }
+
+        // "type": "module",
+        // "prisma": {
+        //     "seed": "node prisma/posts.js"
+        //   },
+
         async function dbSeed() {
             await seedCategories();
         }

@@ -41,8 +41,6 @@ export default function Summary() {
     Article Assistant This AI-powered tool enables you to include conversational chatbot seamlessly on your page. conversational chatbot seamlessly on your page.
     `);
 
-
-
     return (
         <div className="bg-white py-10 border rounded-sm">
             <span className="shadow-xl border-b border-white/10 bg-slate-200">

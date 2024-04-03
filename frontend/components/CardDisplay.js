@@ -9,9 +9,6 @@ const CardDisplay = ({ post }) => {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
 
-    // console.log(post);
-
-
     //Handles setting value for the loader
     useEffect(() => {
         const interval = setInterval(() => {
@@ -20,8 +17,6 @@ const CardDisplay = ({ post }) => {
 
         return () => clearInterval(interval);
     }, []);
-
-
 
 
     return (
@@ -69,9 +64,7 @@ const CardDisplay = ({ post }) => {
                             <h3 className="text-xl font-semibold line-clamp-2 text-gray-800 dark:text-gray-300 dark:hover:text-white">
                                 {title}
                             </h3>
-                            <p className="mt-3 text-gray-500 line-clamp-4">
-                                {content}
-                            </p>
+                            <p className="mt-3 text-gray-500 line-clamp-4" dangerouslySetInnerHTML={{ __html: content }}></p>
                         </div>
                         <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
                             <a

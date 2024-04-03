@@ -1,7 +1,4 @@
-import prisma from "../../../lib/db";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-
-
 
 export default async function handler(req, res) {
     try {
@@ -39,7 +36,7 @@ export default async function handler(req, res) {
                 ];
 
                 const generationConfig = {
-                    temperature: 0.3,
+                    temperature: 0.4,
                     topK: 1,
                     topP: 1,
                 };
@@ -79,7 +76,7 @@ export default async function handler(req, res) {
             await run();
         } else if (submission) {
             const run = async () => {
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
                 const safetySettings = [
                     {
@@ -101,7 +98,7 @@ export default async function handler(req, res) {
                 ];
 
                 const generationConfig = {
-                    temperature: 0.3,
+                    temperature: 0.4,
                     topK: 1,
                     topP: 1,
                 };
