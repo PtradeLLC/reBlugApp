@@ -57,7 +57,6 @@ export default async function handler(req, res) {
 
             if (articleQuestion && postContent) {
                 const userPrompt = `${articleQuestion}`
-
                 const parts = [
                     {
                         text: `Please use ${userPrompt} as the 'comment' or 'question' that the user is posting about the page article, and use ${postContent} as reference or context where you get your answers. 

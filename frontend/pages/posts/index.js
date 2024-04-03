@@ -38,12 +38,14 @@ export default function Blog() {
         if (!isValidating) setLoading(false);
     }, [error, isValidating]);
 
+
     useEffect(() => {
-        if (data && data.posts) {
-            const cleanedPosts = data.posts.map((post) => ({
+        if (data && data.message) {
+            const cleanedPosts = data.message.map((post) => ({
                 ...post,
                 content: cleanUpContent(post.content),
             }));
+
             setPosts(cleanedPosts);
             // Extracting categories from posts
             const newCategories = cleanedPosts.map((post) => post.category);
@@ -68,7 +70,6 @@ export default function Blog() {
             .replace(/\*\s(.*?)\n\n/gm, '<ul><li>$1</li></ul><p>')
     };
 
-
     useEffect(() => {
         const interval = setInterval(() => {
             setValue((v) => (v >= 100 ? 0 : v + 10));
@@ -90,9 +91,6 @@ export default function Blog() {
 
         return () => clearInterval(interval);
     }, []);
-
-
-    console.log("POSTSS", posts);
 
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
@@ -266,7 +264,6 @@ export default function Blog() {
                         )
                     )}
                 </div>
-
             </div>
             <div className='flex justify-center mt-28 items-center my-2'>
                 <Pagination

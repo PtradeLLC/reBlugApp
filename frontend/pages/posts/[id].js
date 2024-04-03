@@ -13,6 +13,7 @@ import { useParams } from 'next/navigation';
 import useSWR from "swr";
 import { PrismaClient } from '@prisma/client';
 
+
 const prisma = new PrismaClient();
 
 
@@ -85,6 +86,8 @@ const PostPage = ({ comments }) => {
     const params = useParams();
     const query = useRouter();
     const { id } = params || {};
+    const router = useRouter();
+
 
 
     const handleSubmissionModalOpen = () => {
@@ -192,6 +195,12 @@ const PostPage = ({ comments }) => {
             }
         }
     }
+
+    const handleSignUp = () => {
+        if (!session) {
+            router.push('/register');
+        }
+    };
 
     function cleanUpContent(content) {
         return content?.replace(/\*/g, '')?.replace(/##/g, '')?.replace(/\n/g, '').trim();
@@ -347,7 +356,6 @@ const PostPage = ({ comments }) => {
                                         />
                                     </div>
                                 ) : (
-                                    // <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${uniqPost?.content}` }} />
                                     <div className='text-lg' dangerouslySetInnerHTML={{ __html: cleanUpContent(uniqPost?.content) }} />
                                 )}
                             </span>
