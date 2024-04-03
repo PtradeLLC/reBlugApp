@@ -92,6 +92,8 @@ export default function Blog() {
         return () => clearInterval(interval);
     }, []);
 
+    // console.log("POSTS", posts);
+
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
             <div className="mx-auto px-6 lg:px-8">

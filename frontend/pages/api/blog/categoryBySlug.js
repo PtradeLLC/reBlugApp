@@ -30,6 +30,12 @@ export default async function handler(req, res) {
         if (!findAllPost) {
             return res.status(404).json({ message: 'Post not found' });
         }
+
+
+        const posts = findAllPost.slice(startIndex, endIndex);
+        console.log("posts", posts);
+
+
         return res.status(200).json({ message: findAllPost, totalPages });
     } catch (error) {
         console.error('Error generating content:', error);

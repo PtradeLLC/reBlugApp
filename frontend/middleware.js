@@ -33,5 +33,7 @@ export function corsMiddleware(req) {
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/api/:path*'],
+    // '/api/:path*'
+    matcher: ['/dashboard/:path*'],
 };
+
