@@ -26,7 +26,7 @@ export default function Blog() {
     let catApiUrl;
 
     if (process.env.NODE_ENV === 'production') {
-        catApiUrl = `http://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+        catApiUrl = `https://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
     } else if (process.env.NODE_ENV === 'development') {
         catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
     }
@@ -42,16 +42,13 @@ export default function Blog() {
         if (data && data.posts) {
             const cleanedPosts = data.posts.map((post) => ({
                 ...post,
-                content: cleanUpContent(post.content), // Use the returned value
+                content: cleanUpContent(post.content),
             }));
             setPosts(cleanedPosts);
-
             // Extracting categories from posts
             const newCategories = cleanedPosts.map((post) => post.category);
-
             // Concatenating all categories and removing duplicates
             const uniqueCategories = Array.from(new Set(newCategories));
-
             // Updating categories state
             setCategories(uniqueCategories);
         }
@@ -69,7 +66,6 @@ export default function Blog() {
             .replace(/(<([^>]+)>)/gi, '')
             .replace(/^## (.*?)\n\n/gm, '')
             .replace(/\*\s(.*?)\n\n/gm, '<ul><li>$1</li></ul><p>')
-
     };
 
 
@@ -83,7 +79,7 @@ export default function Blog() {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-        setLoading(true); // Set loading to true when page changes
+        setLoading(true);
     };
 
     //Handles setting value for the loader
@@ -94,6 +90,9 @@ export default function Blog() {
 
         return () => clearInterval(interval);
     }, []);
+
+
+    console.log("POSTSS", posts);
 
     return (
         <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
