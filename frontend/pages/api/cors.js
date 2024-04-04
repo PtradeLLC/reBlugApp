@@ -8,6 +8,6 @@ export function corsMiddleware(req, res, next) {
     if (req.method === 'OPTIONS') {
         res.status(200).end();
     } else {
-        next(); // Call the next middleware function or route handler
+        next();
     }
 }

@@ -95,7 +95,7 @@ export default function Blog() {
     // console.log("POSTS", posts);
 
     return (
-        <div className="bg-white mt-10 pt-9 pb-24 sm:pb-8">
+        <div className="bg-white mt-10 pt-7 pb-24 sm:pb-8">
             <div className="mx-auto px-6 lg:px-8">
                 <div className="mx-auto text-center">
                     <BlogCategories categories={categories} />
@@ -110,9 +110,9 @@ export default function Blog() {
                             <>
                                 <div className="max-w-[85rem]  px-4 py-1 sm:px-6 lg:px-8 lg:py-2 mx-auto">
                                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                        <a
+                                        <Link
                                             className="group dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                            href="#"
+                                            href="/posts/beginnerBloggers"
                                         >
                                             <div className="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
                                                 <img
@@ -126,10 +126,10 @@ export default function Blog() {
                                                     Blogging for Beginners
                                                 </h3>
                                                 <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
-                                                    Quickly learn the fundamental of writing, telling stories to engage an audience, and business of blogging. Let's match you with a vetted expert.
+                                                    Quickly learn the fundamentals of writing, telling stories to engage an audience, and business of blogging. Get started today, great for beginners, no signup required.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
-                                                    Read more
+                                                    Start for Free
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ export default function Blog() {
                                                     </svg>
                                                 </p>
                                             </div>
-                                        </a>
+                                        </Link>
                                         <a
                                             className="group dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                                             href="#"
@@ -166,10 +166,10 @@ export default function Blog() {
                                                     Expert Bloggers
                                                 </h3>
                                                 <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
-                                                    Effortlessly collaborate with brands in search of media partnerships, we help you grow and monetize your medium on and off our platform.
+                                                    Effortlessly collaborate with brands in search of media partnerships, grow and monetize your medium on and off our platform.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
-                                                    Try it out
+                                                    Try it Out
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"
