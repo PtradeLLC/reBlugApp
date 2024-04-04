@@ -23,13 +23,7 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    let catApiUrl;
-
-    if (process.env.NODE_ENV === 'production') {
-        catApiUrl = `https://reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
-    } else if (process.env.NODE_ENV === 'development') {
-        catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
-    }
+    let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
