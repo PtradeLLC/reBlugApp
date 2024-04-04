@@ -4,15 +4,15 @@ export default async function handler(req, res) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         // Extract the content from the request body
-        const { group, submission } = req.body;
-        let groupSocial = "How can I join author's group";
-        let submissionQuestion = "How can I submit my product to be included in future article"
+        const { novice, ideasFormation } = req.body;
+        let novinceBlogger = "Give me step by step instructions on how to write a blog article.";
+        let ideaFormation = "What are some ideas on how to form an idea?";
 
         // Check if the content is defined and not empty
-        if (!group && !submission) {
+        if (!novice && !ideasFormation) {
             throw new Error('Content is not provided.');
         }
-        if (group) {
+        if (novice) {
             const run = async () => {
                 const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
@@ -43,24 +43,12 @@ export default async function handler(req, res) {
 
                 const parts = [
                     {
-                        text: `Respond with: 
-                    "To join the author's group is free, and comes with various exclusive benefits. You can join author's group by:
-                     Signing up on ForgedMart, and visiting the author's profile page.
-                     Click on Join Group on the profile page to send a request to the author.
-                
-                    Once you have joined the author's group, you will be able to enjoy the following benefits:
-
-                     Access to exclusive content, such as behind-the-scenes information about the author's writing process, sneak 
-                    peeks at upcoming projects, exclusive contents e.t.c.
-                     Opportunities to interact with the author directly, such as through Q&A sessions, live chats.
-                     Deep discounts on sponsored products and services.
-
-                    Joining the author's group is a great way to connect with other fans of the author's work, learn more about 
-                    the author's writing process, and get exclusive access to content and benefits.
-
-                    Keep your response ONLY to the above sentences.
-                    ".
-                    ` },
+                        text: `Act as an experienced Blogger and a Writer. Create an outline for a blog post.
+                        Outline why the 'title' is important starting with 'Why Titles Matter', and how to construct 'title' for the blog post that is optimized for SEO including 'best practices'.
+                        Generate a list of SEO optimized fancy titles as an example. 
+                        Briefly explain what 'SEO' is, and why it is important for the blog post.
+                        
+                        Do not include the this instructions in your response.` },
                 ];
 
                 const result = await model.generateContent({
@@ -71,10 +59,16 @@ export default async function handler(req, res) {
                 const response = result.response;
                 const text = response.text();
 
-                res.status(200).json({ message: 'Content extracted and saved successfully.', text });
+                // Extract the non-starred parts of the response
+                const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
+
+                // Join the non-starred parts to form the final response
+                const finalResponse = nonStarredParts.join('');
+
+                res.status(200).json({ message: 'Content extracted and saved successfully.', finalResponse });
             }
             await run();
-        } else if (submission) {
+        } else if (ideasFormation) {
             const run = async () => {
                 const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 

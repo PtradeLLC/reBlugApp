@@ -23,8 +23,8 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
+    let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
     // let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
-    let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
@@ -122,7 +122,7 @@ export default function Blog() {
                                                     Quickly learn the fundamentals of writing, telling stories to engage an audience, and business of blogging. Get started today, great for beginners, no signup required.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
-                                                    Start for Free
+                                                    Learn for Free
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"

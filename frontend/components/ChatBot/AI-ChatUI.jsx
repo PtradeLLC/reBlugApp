@@ -144,7 +144,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         {sentInput && (
                           <div className="flex flex-row px-2 py-4 sm:px-4">
                             <img
-                              class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                              className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
                               src="/images/useravatar.png"
                               alt="User Avatar"
                             />
@@ -221,7 +221,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         </div>
                         <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
                           <img
-                            class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                            className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
                             src="/images/OtherVar.png"
                             alt="Guide Avatar"
                           />
@@ -251,7 +251,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             <path
                               stroke="currentColor"
                               strokeLinecap="round"
-                              stroke-width="2"
+                              strokeWidth="2"
                               d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                             />
                           </svg>
