@@ -150,7 +150,7 @@ const generateAvatar = async () => {
         const response =
             await leap.bulkWorkflowRuns.runBulk({
                 workflow_id: "wkf_B5vqoEqxfCkpWy",
-                input_csv_url: "http://localhost:3000/api/llm/instructions/avatarOutput.csv",
+                input_csv_url: "https://www.reblug.com/api/llm/instructions/avatarOutput.csv",
             });
         // const response = await fetch(imageUrl, {
         //     method: 'POST',

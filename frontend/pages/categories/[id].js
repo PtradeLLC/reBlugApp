@@ -28,7 +28,7 @@ export default function BlogCategories() {
         singleCat = `/api/blog/uniqueCategory/${id}`;
     }
 
-    const { data, error, isValidating, mutate } = useSWR(`http://localhost:3000/api/blog/uniqueCategory/${id}`, fetcher);
+    const { data, error, isValidating, mutate } = useSWR(`https://www.reblug.com/api/blog/uniqueCategory/${id}`, fetcher);
 
     useEffect(() => {
         if (error) console.error("An error occurred:", error);
