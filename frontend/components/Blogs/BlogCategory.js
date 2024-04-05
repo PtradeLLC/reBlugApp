@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useWindowSize } from '@react-hook/window-size';
 import { Divider } from "@nextui-org/react";
 
-
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -61,7 +59,7 @@ export default function BlogCategoriesHero() {
                                     </h2>
                                 </div>
                                 <ul role="list" className="space-y-2 sm:space-y-4">
-                                    <li className="flex space-x-3">
+                                    <li className="flex space-x-2">
                                         {/* Solid Check */}
                                         <span className="mt-0.5 size-5 flex justify-start items-center rounded-full bg-green-50 text-green-600 dark:bg-green-800/30 dark:text-green-500">
                                             <svg

@@ -97,7 +97,7 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                     const sections = processedString.split(/\n\n/);
 
                     setModelResponse(sections);
-                    return formattedSections;
+                    return sections;
                 } else {
                     console.error('Received data is not in the expected format:', data);
                 }

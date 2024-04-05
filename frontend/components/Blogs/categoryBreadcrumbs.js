@@ -49,7 +49,7 @@ export default function BlogCategories({ categories }) {
             <span>
                 <h1 className="font-semibold mb-4">Categories</h1>
             </span>
-            <div className="flex overflow-hidden hover:overflow-x-auto w-[90%] flex-grow justify-start h-40 p-2 items-center">
+            <div className="flex overflow-hidden hover:overflow-x-auto flex-grow justify-start p-2 items-center">
                 {loading && (
                     <div className="flex justify-center">
                         <CircularProgress
