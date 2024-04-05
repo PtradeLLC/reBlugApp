@@ -43,12 +43,14 @@ export default async function handler(req, res) {
 
                 const parts = [
                     {
-                        text: `Act as an experienced Blogger and a Writer. Create an outline for a blog post.
+                        text: `Create an outline for a blog post.
                         Outline why the 'title' is important starting with 'Why Titles Matter', and how to construct 'title' for the blog post that is optimized for SEO including 'best practices'.
                         Generate a list of SEO optimized fancy titles as an example. 
                         Briefly explain what 'SEO' is, and why it is important for the blog post.
                         
-                        Do not include the this instructions in your response.` },
+                        Do not include the this instructions in your response.
+                        Keep your response ONLY to the context of 'how to construct blog post title'.
+                        ` },
                 ];
 
                 const result = await model.generateContent({
@@ -60,12 +62,8 @@ export default async function handler(req, res) {
                 const text = response.text();
 
                 // Extract the non-starred parts of the response
-                const nonStarredParts = text.split(/\*\*+/).filter(part => !part.trim().startsWith("Answer:"));
-
-                // Join the non-starred parts to form the final response
-                const finalResponse = nonStarredParts.join('');
-
-                res.status(200).json({ message: 'Content extracted and saved successfully.', finalResponse });
+                const nonStarredParts = text.split(/\*\*+/).filter(part => !part.includes('*')).join('');
+                res.status(200).json({ message: 'Content extracted and saved successfully.', nonStarredParts });
             }
             await run();
         } else if (ideasFormation) {

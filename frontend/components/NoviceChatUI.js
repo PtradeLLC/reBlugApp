@@ -42,7 +42,7 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
         try {
             setLoading(true);
 
-            fetch("/api/blog/slugPage", {
+            fetch("/api/blog/noviceQuestion", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,14 +50,15 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                 body: JSON.stringify({
                     content: inputValue,
                     postContent: postContent,
-                    userName: userName,
                 }),
             })
                 .then((response) => response.json())
                 .then((data) => {
                     setInputValue("");
                     setSentInput(inputValue);
-                    setModelResponse(data.message);
+                    setModelResponse(data);
+
+                    console.log(data);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -87,7 +88,19 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
         })
             .then((response) => response.json())
             .then((data) => {
-                setModelResponse(data.text);
+                if (typeof data === 'object' && data.nonStarredParts) {
+                    // Preprocess the nonStarredParts string to ensure proper formatting
+                    let processedString = data.nonStarredParts.replace('Best Practices:', '\n\nBest Practices:');
+                    processedString = processedString.replace('Example SEO-Optimized Fancy Titles:', '\n\nExample SEO-Optimized Fancy Titles:');
+
+                    // Split the processed string into individual sections based on newline characters
+                    const sections = processedString.split(/\n\n/);
+
+                    setModelResponse(sections);
+                    return formattedSections;
+                } else {
+                    console.error('Received data is not in the expected format:', data);
+                }
             })
             .catch((error) => {
                 console.error(
@@ -96,6 +109,45 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                 );
             });
     };
+
+
+    // Function to preprocess and format the response data
+    const formatResponseData = (data) => {
+        if (Array.isArray(data)) {
+            return data.map((section, index) => {
+                const formattedSection = section
+                    .split("\n")
+                    .filter((item) => item.trim() !== "")
+                    .map((item, index) => {
+                        if (index === 0) {
+                            // Format section title (e.g., I. Why Titles Matter)
+                            return item;
+                        } else {
+                            // Format section items (e.g., A. Captures attention and entices readers)
+                            return `    ${String.fromCharCode(65 + index - 1)}. ${item.trim()}`;
+                        }
+                    })
+                    .join("\n");
+                return formattedSection;
+            });
+        }
+        return [];
+    };
+
+    useEffect(() => {
+        // Mocking the response data
+        const responseData = [
+            "Select your path by using the buttons below, and if you have questions about the tips at any point, please feel free to ask me.",
+            "You will discover why crafting titles for your blog is important.",
+            "When you are ready, you may close this window and carefully craft your title in the text input for 'title'.",
+            "You can always ask me more questions for this step by using the text input below.",
+        ];
+
+        // Format the response data
+        const formattedData = formatResponseData(responseData);
+        setModelResponse(formattedData);
+    }, []);
+
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -227,11 +279,15 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                                     />
 
                                                     <div className="flex px-2 max-w-3xl items-center rounded-xl">
-                                                        <p>
-                                                            {modelResponse
-                                                                ? modelResponse
-                                                                : "Select your path by using the buttons below, and if you have questions at any point, please feel free to ask me."}
-                                                        </p>
+                                                        {modelResponse.length > 0 && (
+                                                            <div>
+                                                                {modelResponse.map((section, index) => (
+                                                                    <div key={index}>
+                                                                        <h2>{section}</h2>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,7 +311,7 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                                             d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                                                         />
                                                     </svg>
-                                                    I'm new to blogging
+                                                    Give me tips for Title
                                                 </button>
                                                 <button
                                                     onClick={() => handleClick("ideaFormation")}
@@ -306,65 +362,6 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                             </form>
                                         </div>
                                     </div>
-                                    {/* <div>
-                                        {!session && showModal && (
-                                            <div className="fixed z-10 inset-0 overflow-y-auto">
-                                                <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                    <div
-                                                        className="fixed inset-0 transition-opacity"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                                    </div>
-                                                    <span
-                                                        className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                                        aria-hidden="true"
-                                                    >
-                                                        &#8203;
-                                                    </span>
-                                                    <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                            <div className="sm:flex sm:items-start">
-                                                                <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                                    <img src="/images/Marttwainxyz.png" />
-                                                                </div>
-                                                                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                                    <h3
-                                                                        className="text-lg leading-6 font-medium text-gray-900"
-                                                                        id="modal-title"
-                                                                    >
-                                                                        Please create an account or login to share
-                                                                        your thoughts on this article
-                                                                    </h3>
-                                                                    <div className="mt-2">
-                                                                        <p className="text-sm text-gray-500">
-                                                                            If you don't have an account yet, you can{" "}
-                                                                            <button
-                                                                                onClick={handleSignUp}
-                                                                                className="text-red-600 dark:text-red-500 hover:underline"
-                                                                            >
-                                                                                sign up here
-                                                                            </button>
-                                                                            .
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                                            <button
-                                                                type="button"
-                                                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                                                onClick={handleCloseModal}
-                                                            >
-                                                                Close
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div> */}
                                 </div>
                             </ModalBody>
                             <ModalFooter>
