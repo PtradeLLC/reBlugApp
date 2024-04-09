@@ -161,12 +161,12 @@ export default function BlogTabs() {
                         </div> */}
                     </>
                 )}
-                {!activeUser && selectedTab.name === "Features" && (
+                {/* {!activeUser && selectedTab.name === "Features" && (
                     <>
                         <p className='font-thin mt-5'>Activate now to start blogging:</p>
                         <button className='bg-green-600 mt-2 mx-3 w-72 rounded-md text-white p-2' type='button' onClick={handleClick}>Activate Tools</button>
                     </>
-                )}
+                )} */}
             </div>
             <div>
                 <Compose showModal={showModal} setShowModal={setShowModal} />
