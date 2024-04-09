@@ -81,7 +81,7 @@ export default function BlogTabs() {
                     <div className="divide-y divide-gray-100">
                         <div className='bg-slate-50 rounded-md my-8 p-3'>
                             Features:
-                            1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
+                            1. Article Assistant: This AI-powered tool enables you to include conversational chatbot seamlessly on your blog page.
                             2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
                             By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
                             your industry.
@@ -166,12 +166,12 @@ export default function BlogTabs() {
 
                     )
                 )}
-                {!activeUser && selectedTab.name === "Features" && (
+                {/* {!activeUser && selectedTab.name === "Features" && (
                     <>
                         <p className='font-thin mt-5'>Activate now to start blogging:</p>
                         <button className='bg-green-600 mt-2 mx-3 w-72 rounded-md text-white p-2' type='button' onClick={handleClick}>Activate Tools</button>
                     </>
-                )}
+                )} */}
             </div>
             <div>
                 <Compose showModal={showModal} setShowModal={setShowModal} />
