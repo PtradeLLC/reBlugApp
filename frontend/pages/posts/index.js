@@ -3,8 +3,7 @@ import Link from 'next/link';
 import BlogCategories from '../../components/Blogs/BlogCategory';
 import { Divider } from "@nextui-org/react";
 import BreadCrumbs from '../../components/Blogs/categoryBreadcrumbs';
-import { Card, CardHeader, CardFooter, Pagination } from "@nextui-org/react";
-import axios from 'axios';
+import { Pagination } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
 import Image from 'next/image';
 import CardDisplay from '@/components/CardDisplay';
@@ -23,8 +22,8 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    // let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
-    let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+    let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
+    // let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
@@ -113,16 +112,20 @@ export default function Blog() {
                                                     src="/images/eightBlog.jpg"
                                                     alt="Beginner"
                                                 />
+                                                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-red-800 text-white py-1.5 px-3 dark:bg-gray-900">
+                                                    Program: reBlug Junior
+                                                </span>
                                             </div>
                                             <div className="mt-7">
                                                 <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 dark:text-gray-200">
                                                     Blogging for Beginners
                                                 </h3>
                                                 <p className="mt-3 text-gray-800 line-clamp-4 dark:text-gray-200">
-                                                    Quickly learn the fundamentals of writing, telling stories to engage an audience, and business of blogging. Get started today, great for beginners, no signup required.
+                                                    {/* Quickly learn the fundamentals of writing, express your ideas through storytelling, telling stories to engage an audience. Great for beginners. */}
+                                                    Perfect for beginners - Ages 13+. This program will swiftly guide you through mastering the basics of writing, enabling you to effectively express your ideas.
                                                 </p>
                                                 <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
-                                                    Learn for Free
+                                                    Get more info
                                                     <svg
                                                         className="flex-shrink-0 size-4"
                                                         xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
     Modal,
@@ -11,7 +12,11 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 
-const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusionStep }) => {
+const NoviceUI = ({
+    isOpen,
+    setIsOpen,
+    stepLabel,
+}) => {
     const [modalPlacement, setModalPlacement] = useState("auto");
     const [inputValue, setInputValue] = useState("");
     const [modelResponse, setModelResponse] = useState("");
@@ -21,11 +26,13 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
     const [sentInput, setSentInput] = useState("");
     const [scrollBehavior, setScrollBehavior] = React.useState("inside");
     const [loading, setLoading] = useState(false);
+    const [showLabel, setShowLabel] = useState(null);
     const { data: session } = useSession();
     const [inquiries, setInquiries] = useState({
-        novinceBlogger: "How can I develop skills as a blogger",
-        ideaFormation:
-            "How can I submit my product to be included in future article",
+        blogTitle: "How do I construct a blog title that captures attention and entices readers?",
+        blogContent: "How do I write blog content that is engaging and informative?",
+        blogConclusion: "How can I craft a blog conclusion that resonates with readers?",
+        // ideaFormation: "How can I submit my product to be included in future article",
     });
     //Handles setting value for the loader
     useEffect(() => {
@@ -37,28 +44,23 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
     }, []);
 
     const sendDataToBackend = () => {
-        const userName = session.user.name;
-
         try {
             setLoading(true);
 
-            fetch("/api/blog/noviceQuestion", {
+            fetch("/api/noviceQuestion", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     content: inputValue,
-                    postContent: postContent,
                 }),
             })
                 .then((response) => response.json())
                 .then((data) => {
                     setInputValue("");
                     setSentInput(inputValue);
-                    setModelResponse(data);
-
-                    console.log(data);
+                    setModelResponse(data.message);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -68,48 +70,64 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                     );
                 });
         } catch (error) {
-            console.console.log(error);
+            console.log(error);
         }
     };
 
-    const handleClick = (buttonType) => {
-        let requestData = {};
-        if (buttonType === `novinceBlogger`) {
-            requestData = { novice: inquiries.novinceBlogger };
-        } else if (buttonType === "ideaFormation") {
-            requestData = { ideasFormation: inquiries.ideaFormation };
+    const handleButtonClick = (buttonType) => {
+        setLoading(true);
+        let data = {};
+
+        if (buttonType === `novinceBlogger` && stepLabel === 'Get tips for Title') {
+            data = { novice: inquiries.blogTitle };
+        } else if (buttonType === `novinceBlogger` && stepLabel === 'Get tips for Content') {
+            data = { novice: inquiries.blogContent };
+        } else if (buttonType === `novinceBlogger` && stepLabel === 'Get tips for Conclusion') {
+            data = { novice: inquiries.blogConclusion };
         }
+        // else if (buttonType === `ideaFormation` && stepLabel === 'Get tips for Title') {
+        //     data = { ideasFormation: inquiries.ideaFormation };
+        // }
+
         fetch("/api/blog/novinceAI", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(requestData),
+            body: JSON.stringify(data),
         })
             .then((response) => response.json())
             .then((data) => {
-                if (typeof data === 'object' && data.nonStarredParts) {
-                    // Preprocess the nonStarredParts string to ensure proper formatting
-                    let processedString = data.nonStarredParts.replace('Best Practices:', '\n\nBest Practices:');
-                    processedString = processedString.replace('Example SEO-Optimized Fancy Titles:', '\n\nExample SEO-Optimized Fancy Titles:');
 
-                    // Split the processed string into individual sections based on newline characters
-                    const sections = processedString.split(/\n\n/);
+                const { titleData } = data;
 
-                    setModelResponse(sections);
-                    return sections;
+                if (data && titleData) {
+                    function removeBold(text) {
+                        return text.replace(/\*\*(.*?)\*\*/g, "$1\n");
+                    }
+
+                    const allHelp = removeBold(titleData.titleData);
+                    const allHelp2 = allHelp.replace(/(\n)(\d+\.) /g, '$1\n\n$2');
+                    const allHelp3 = allHelp2.replace(/(\n)(\d+\.) /g, '$1\n\n$2');
+
+                    //Move all section starting with `I.` to a new line
+                    const allHelp4 = allHelp3.replace(/(\-\* )(.*) /g, '$1\n\n');
+
+
+                    console.log("Data:", allHelp4);
+
+                    setModelResponse(allHelp4);
+                    setLoading(false);
                 } else {
                     console.error('Received data is not in the expected format:', data);
+                    setLoading(false);
                 }
             })
             .catch((error) => {
-                console.error(
-                    `There was a problem sending data to the backend: ${error}`,
-                    error
-                );
+                console.error(`There was a problem sending data to the backend: ${error}`, error);
+                setLoading(false);
             });
     };
-
 
     // Function to preprocess and format the response data
     const formatResponseData = (data) => {
@@ -138,8 +156,7 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
         // Mocking the response data
         const responseData = [
             "Select your path by using the buttons below, and if you have questions about the tips at any point, please feel free to ask me.",
-            "You will discover why crafting titles for your blog is important.",
-            "When you are ready, you may close this window and carefully craft your title in the text input for 'title'.",
+            "When you are ready, you may close this window.",
             "You can always ask me more questions for this step by using the text input below.",
         ];
 
@@ -162,17 +179,6 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
         event.preventDefault();
         sendDataToBackend();
     };
-
-    const handleSignUp = () => {
-        if (!session) {
-            router.push("/register");
-        }
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
-
     return (
         <>
             <Modal
@@ -193,17 +199,30 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                     <div>
                                         <div className="flex w-full flex-col">
                                             <div className="flex-1 overflow-y-auto rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-                                                {sentInput && (
-                                                    <div className="flex flex-row px-2 py-4 sm:px-4">
-                                                        <img
-                                                            class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                                                            src="/images/useravatar.png"
-                                                            alt="User Avatar"
-                                                        />
-                                                        <div className="flex px-2 max-w-3xl items-center">
-                                                            <p>{sentInput}</p>
-                                                        </div>
-                                                    </div>
+                                                {loading ? (
+                                                    <CircularProgress
+                                                        aria-label="Loading..."
+                                                        size="sm"
+                                                        value={value}
+                                                        color="warning"
+                                                        className="mx-2"
+                                                        showValueLabel={true}
+                                                    />
+                                                ) : (
+                                                    <>
+                                                        {sentInput && (
+                                                            <div className="flex flex-row px-2 py-4 sm:px-4">
+                                                                <img
+                                                                    className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                                                                    src="/images/useravatar.png"
+                                                                    alt="User Avatar"
+                                                                />
+                                                                <div className="flex px-2 max-w-3xl items-center">
+                                                                    <p>{sentInput}</p>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </>
                                                 )}
                                                 <div className="mb-2 flex w-full flex-row justify-end gap-x-2 text-slate-500">
                                                     <button className="hover:text-slate-600">
@@ -277,24 +296,42 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                                         src="/images/OtherVar.png"
                                                         alt="Guide Avatar"
                                                     />
+                                                    {loading ? (
+                                                        <div className="flex justify-center">
+                                                            <CircularProgress
+                                                                aria-label="Loading..."
+                                                                size="sm"
+                                                                value={value}
+                                                                color="warning"
+                                                                className="mx-2"
+                                                                showValueLabel={true}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex px-2 max-w-3xl items-center rounded-xl">
+                                                            {modelResponse ? (
+                                                                <div className="text-sm text-slate-600 dark:text-slate-300">
+                                                                    {modelResponse}
+                                                                </div>
 
-                                                    <div className="flex px-2 max-w-3xl items-center rounded-xl">
-                                                        {modelResponse.length > 0 && (
-                                                            <div>
-                                                                {modelResponse.map((section, index) => (
-                                                                    <div key={index}>
-                                                                        <h2>{section}</h2>
+                                                            ) : (
+                                                                <>
+                                                                    <div>
+                                                                        <div className="text-sm text-slate-600 dark:text-slate-300">
+                                                                            {modelResponse}
+                                                                            {/* {JSON.stringify(formatJsonData(modelResponse), null, 2)} */}
+                                                                        </div>
                                                                     </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
 
                                             <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 sm:text-sm">
                                                 <button
-                                                    onClick={() => handleClick("novinceBlogger")}
+                                                    onClick={() => handleButtonClick("novinceBlogger")}
                                                     className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
                                                 >
                                                     <svg
@@ -311,17 +348,17 @@ const NoviceUI = ({ isOpen, setIsOpen, postTitleStep, postBodyStep, postConclusi
                                                             d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                                                         />
                                                     </svg>
-                                                    Give me tips for Title
+                                                    {stepLabel}
                                                 </button>
                                                 <button
-                                                    onClick={() => handleClick("ideaFormation")}
+                                                    onClick={() => handleButtonClick("ideaFormation")}
                                                     className=" flex items-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
                                                 >
                                                     <img
                                                         className="w-5 h-5 mr-1"
                                                         src="/images/productreview.png"
                                                     />
-                                                    Tips and Ideation
+                                                    Brainstorm Ideas
                                                 </button>
                                             </div>
                                             <form onSubmit={handleSubmit} className="mt-2">

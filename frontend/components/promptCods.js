@@ -17,7 +17,7 @@ const YourComponent = () => {
         // Ensure you have Node.js version >= 18 for this to work
         // npm install @google/generative-ai
 
-        const MODEL_NAME = "gemini-pro-vision";
+        const MODEL_NAME = "gemini-1.0-pro-vision";
         const API_KEY = "YOUR_API_KEY";
 
         const genAI = new GoogleGenerativeAI(API_KEY);

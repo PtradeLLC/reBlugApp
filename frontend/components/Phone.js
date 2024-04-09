@@ -1,1 +1,9 @@
-// {Something with phone goes here}
+import React from 'react'
+
+const Phone = () => {
+    return (
+        <div>Phone</div>
+    )
+}
+
+export default Phone

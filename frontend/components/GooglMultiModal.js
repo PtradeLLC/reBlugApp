@@ -28,8 +28,8 @@ const YourComponent = () => {
         };
 
         const run = async () => {
-            // For text-and-image input (multimodal), use the gemini-pro-vision model
-            const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+            // For text-and-image input (multimodal), use the gemini-1.0-pro-vision model
+            const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-vision" });
 
             const prompt = "What's different between these pictures?";
 

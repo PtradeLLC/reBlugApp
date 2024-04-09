@@ -72,6 +72,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   };
 
   const handleClick = (buttonType) => {
+    setLoading(false);
     let requestData = {};
     if (buttonType === "authorsGroup") {
       requestData = { group: inquiries.authorsGroup };
@@ -88,12 +89,14 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
       .then((response) => response.json())
       .then((data) => {
         setModelResponse(data.text);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(
           `There was a problem sending data to the backend: ${error}`,
           error
         );
+        setLoading(false);
       });
   };
 
@@ -141,18 +144,32 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                   <div>
                     <div className="flex w-full flex-col">
                       <div className="flex-1 overflow-y-auto rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-                        {sentInput && (
-                          <div className="flex flex-row px-2 py-4 sm:px-4">
-                            <img
-                              className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                              src="/images/useravatar.png"
-                              alt="User Avatar"
-                            />
-                            <div className="flex px-2 max-w-3xl items-center">
-                              <p>{sentInput}</p>
-                            </div>
-                          </div>
+                        {loading ? (
+                          <CircularProgress
+                            aria-label="Loading..."
+                            size="sm"
+                            value={value}
+                            color="warning"
+                            className="mx-2"
+                            showValueLabel={true}
+                          />
+                        ) : (
+                          <>
+                            {sentInput && (
+                              <div className="flex flex-row px-2 py-4 sm:px-4">
+                                <img
+                                  className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                                  src="/images/useravatar.png"
+                                  alt="User Avatar"
+                                />
+                                <div className="flex px-2 max-w-3xl items-center">
+                                  <p>{sentInput}</p>
+                                </div>
+                              </div>
+                            )}
+                          </>
                         )}
+
                         <div className="mb-2 flex w-full flex-row justify-end gap-x-2 text-slate-500">
                           <button className="hover:text-slate-600">
                             <svg
@@ -226,13 +243,26 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             alt="Guide Avatar"
                           />
 
-                          <div className="flex px-2 max-w-3xl items-center rounded-xl">
-                            <p>
-                              {modelResponse
-                                ? modelResponse
-                                : "Ask questions or conduct your own research on this article."}
-                            </p>
-                          </div>
+                          {loading ? (
+                            <div className="flex justify-center">
+                              <CircularProgress
+                                aria-label="Loading..."
+                                size="lg"
+                                value={value}
+                                color="warning"
+                                className="mx-2"
+                                showValueLabel={true}
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex px-2 max-w-3xl items-center rounded-xl">
+                              <p>
+                                {modelResponse
+                                  ? modelResponse
+                                  : "Ask questions or conduct your own research on this article."}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
 

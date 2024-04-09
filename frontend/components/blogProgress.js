@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckIcon } from '@heroicons/react/24/solid'
 import NoviceUI from '@/components/NoviceChatUI';
 
 const steps = [
-    { id: '01', name: 'Post Title', description: 'Begin by entering a Title in the tool above. Click here to launch AI-tool guide in this step for tips and ideas.', href: '#', status: 'current' },
-    { id: '02', name: 'Content Body', description: 'Write your content here. Need help with this step? Click here.', href: '#', status: 'upcoming' }, //'complete' for completed steps
-    { id: '03', name: 'Conclusion', description: 'Finalize your blog and preview.', href: '#', status: 'upcoming' },
+    { id: '01', name: 'Get tips for Title', title: "Title", description: 'Begin by entering a Title above. Click here to launch AI-tool guide for tips and ideas for this step.', href: '#', status: 'current' },
+    { id: '02', name: 'Get tips for Content', title: "Content Body", description: 'Write your content above. Need help with this step? Article Assistant is here to help. Click here.', href: '#', status: 'upcoming' }, //'complete' for completed steps
+    { id: '03', name: 'Get tips for Conclusion', title: "Conclusion", description: 'Finalize your blog and preview.', href: '#', status: 'upcoming' },
 ]
 
 function classNames(...classes) {
@@ -17,10 +17,50 @@ export default function Progress() {
     const [postTitleStep, setPostTitleStep] = useState(steps[0].name);
     const [postBodyStep, setPostBodyStep] = useState(steps[1].name);
     const [postConclusionStep, setPostConclusionStep] = useState(steps[2].name);
+    const [label, setLabel] = useState('');
 
-    const handleClick = () => {
+    const handleStepClick = (event, stepName) => {
+        event.preventDefault();
         setIsOpen(true);
+
+        if (stepName === "Get tips for Title") {
+            setLabel(stepName);
+        } else if (stepName === "Get tips for Content") {
+            setLabel(stepName);
+        } else if (stepName === "Get tips for Conclusion") {
+            setLabel(stepName);
+        }
     };
+
+    // Inside the return statement:
+    {
+        steps.map((step, stepIdx) => (
+            <li key={step.id} className="relative overflow-hidden lg:flex-1">
+                <div
+                    className={classNames(
+                        stepIdx === 0 ? 'rounded-t-md border-b-0' : '',
+                        stepIdx === steps.length - 1 ? 'rounded-b-md border-t-0' : '',
+                        'overflow-hidden border border-red-200 lg:border-0'
+                    )}
+                >
+                    {step.status === 'complete' ? (
+                        <button onClick={() => handleStepClick(step.name)} className="group">
+                            {/* Content for complete steps */}
+                        </button>
+                    ) : step.status === 'current' ? (
+                        <button onClick={() => handleStepClick(step.name)} aria-current="step">
+                            {/* Content for current step */}
+                        </button>
+                    ) : (
+                        <button onClick={() => handleStepClick(step.name)} className="group">
+                            {/* Content for upcoming steps */}
+                        </button>
+                    )}
+                    {/* Separator */}
+                </div>
+            </li>
+        ))
+    }
 
     return (
         <>
@@ -39,8 +79,8 @@ export default function Progress() {
                                         'overflow-hidden border border-red-200 lg:border-0'
                                     )}
                                 >
-                                    {step.status === 'complete' ? (
-                                        <button onClick={handleClick} className="group">
+                                    {step.status === 'current' ? (
+                                        <button className='px-4 py-1' onClick={(event) => handleStepClick(event, step.name)} aria-current="step">
                                             <span
                                                 className="absolute left-0 top-0 h-full w-1 bg-transparent group-hover:bg-red-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
                                                 aria-hidden="true"
@@ -53,40 +93,19 @@ export default function Progress() {
                                             >
                                                 <span className="flex-shrink-0">
                                                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600">
-                                                        <CheckIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                                                        {/* <CheckIcon className="h-6 w-6 text-gray-400" aria-hidden="true" /> */}
+                                                        <p className="h-6 w-6 text-white" aria-hidden="true" >{step.id}</p>
                                                     </span>
                                                 </span>
                                                 <span className="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                                    <span className="text-sm font-bold">{step.name}</span>
-                                                    <span className="text-sm font-medium text-red-500">{step.description}</span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    ) : step.status === 'current' ? (
-                                        <button onClick={handleClick} aria-current="step">
-                                            <span
-                                                className="absolute left-0 top-0 h-full w-1 bg-green-600 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                                                aria-hidden="true"
-                                            />
-                                            <span
-                                                className={classNames(
-                                                    stepIdx !== 0 ? 'lg:pl-9' : '',
-                                                    'flex items-start px-6 py-5 text-sm font-medium'
-                                                )}
-                                            >
-                                                <span className="flex-shrink-0">
-                                                    <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-green-600">
-                                                        <span className="text-green-600">{step.id}</span>
-                                                    </span>
-                                                </span>
-                                                <span className="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                                    <span className="text-sm font-medium text-green-600">{step.name}</span>
-                                                    <span className="text-sm font-medium text-green-500">{step.description}</span>
+                                                    <span className="text-sm font-bold">{step.title}</span>
+                                                    <span className="text-sm text-left font-medium text-red-500">{step.description}</span>
                                                 </span>
                                             </span>
                                         </button>
                                     ) : (
-                                        <button onClick={handleClick} className="group">
+                                        <button onClick={(event) => handleStepClick(event, step.name)} className="group px-4 py-1">
+                                            {/* Content for upcoming steps */}
                                             <span
                                                 className="absolute left-0 top-0 h-full w-1 bg-transparent group-hover:bg-red-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
                                                 aria-hidden="true"
@@ -94,22 +113,22 @@ export default function Progress() {
                                             <span
                                                 className={classNames(
                                                     stepIdx !== 0 ? 'lg:pl-9' : '',
-                                                    'flex items-start px-6 py-5 text-sm font-medium'
+                                                    'flex items-start px-6 py-5 text-md font-bold'
                                                 )}
                                             >
                                                 <span className="flex-shrink-0">
-                                                    <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-red-300">
-                                                        <span className="text-red-500">{step.id}</span>
+                                                    <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-green-600">
+                                                        {/* <CheckIcon className="h-6 w-6 text-gray-400" aria-hidden="true" /> */}
+                                                        <p className="h-6 w-6 text-gray-400" aria-hidden="true" >{step.id}</p>
                                                     </span>
                                                 </span>
                                                 <span className="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                                    <span className="text-sm font-medium text-red-500">{step.name}</span>
-                                                    <span className="text-sm font-medium text-red-500">{step.description}</span>
+                                                    <span className="text-sm font-bold">{step.title}</span>
+                                                    <span className="text-sm text-left font-medium text-red-500">{step.description}</span>
                                                 </span>
                                             </span>
                                         </button>
                                     )}
-
                                     {stepIdx !== 0 ? (
                                         <>
                                             {/* Separator */}
@@ -133,7 +152,12 @@ export default function Progress() {
             </div>
             <div>
                 <div>
-                    <NoviceUI isOpen={isOpen} setIsOpen={setIsOpen} postTitleStep={postTitleStep} postBodyStep={postBodyStep} postConclusionStep={postConclusionStep} />
+                    <NoviceUI
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        stepLabel={label}
+                        setSetLabel={label}
+                    />
                 </div>
             </div>
         </>
