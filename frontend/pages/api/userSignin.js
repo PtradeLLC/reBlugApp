@@ -35,7 +35,6 @@ export default async function handler(req, res) {
                     redirect: '/dashboard',
                 });
             } else {
-                // Passwords do not match
                 return res.status(401).json({ message: 'Invalid email or password. Please review your login credentials or reset your password.' });
             }
         } catch (error) {
