@@ -145,25 +145,20 @@ export default function BlogTabs() {
                         </div>
                     </div>
                 ) : (
-                    typeof selectedTab.content === 'string' ? (
-                        selectedTab.content.split('\n').map((str, index) => (<p key={index}>{str} </p>))
-                    ) : (
-                        <>
-                            <div className='bg-slate-50 rounded-md my-8 p-3'>
-                                Features:
-                                1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
-                                2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
-                                By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
-                                your industry.
-                            </div>
-                            <div className='flex flex-wrap mx-auto py-4 justify-start'>
-                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60  rounded-md text-white p-2' type='button' onClick={openModal}>Write an Article</button>
-                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button>
-                                <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Article to Newsletter</button>
-                            </div>
-                        </>
-
-                    )
+                    <>
+                        <div className='bg-slate-50 rounded-md my-8 p-3'>
+                            Features:
+                            1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
+                            2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
+                            By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
+                            your industry.
+                        </div>
+                        <div className='flex flex-wrap mx-auto py-4 justify-start'>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60  rounded-md text-white p-2' type='button' onClick={openModal}>Write an Article</button>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-60 rounded-md text-white p-2' type='button' onClick={handleClick}>Article to Newsletter</button>
+                        </div>
+                    </>
                 )}
                 {!activeUser && selectedTab.name === "Features" && (
                     <>
