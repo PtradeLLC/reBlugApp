@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray } from "../utils/tabpage";
 import Compose from './Blogs/Write';
+import Accordion from "./Accordion";
 
 const tabs = [
     { name: 'Features', href: '#features', current: true, content: blogTab },
@@ -146,7 +147,9 @@ export default function BlogTabs() {
                     </div>
                 ) : (
                     <>
-                        <div><p>Monkey</p></div>
+                        <div>
+                            <Accordion />
+                        </div>
                         {/* <div className='bg-slate-50 rounded-md my-8 p-3'>
                             Features:
                             1. Article Assistant: This AI-powegreen tool enables you to include conversational chatbot seamlessly on your blog page.
