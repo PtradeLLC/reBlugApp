@@ -77,7 +77,7 @@ export default function BlogTabs() {
                 </nav>
             </div>
             <div className="mt-4">
-                {/* {activeUser && selectedTab.name === "Features" ? (
+                {activeUser && selectedTab.name === "Features" ? (
                     <div className="divide-y divide-gray-100">
                         <div className='bg-slate-50 rounded-md my-8 p-3'>
                             Features:
@@ -164,7 +164,7 @@ export default function BlogTabs() {
                         </>
 
                     )
-                )} */}
+                )}
                 {/* {!activeUser && selectedTab.name === "Features" && (
                     <>
                         <p className='font-thin mt-5'>Activate now to start blogging:</p>
