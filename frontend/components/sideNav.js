@@ -210,12 +210,7 @@ export default function DashLay() {
         } else if (title === "Automate Marketing") {
             return automationAction.map((action) => renderKpiContent(action));
         } else if (title === "Bloggers Panel") {
-            // return marketingAction.map((action) => renderKpiContent(action));
-            return (
-                <>
-                    <p>Hello</p>
-                </>
-            )
+            return marketingAction.map((action) => renderKpiContent(action));
         } else {
             return null;
         }
