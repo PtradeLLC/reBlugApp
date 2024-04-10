@@ -8,9 +8,11 @@ import { getServerSession } from "next-auth/next";
 const prisma = new PrismaClient();
 
 
-export default function App() {
+export default function ChatPost({ posts }) {
 
     const { data: session } = useSession();
+
+    console.log("POSTS", posts);
 
 
     const defaultContent =
@@ -74,40 +76,49 @@ export default function App() {
     );
 }
 
-
-// export async function getServerSideProps() {
-//     // Fetch data from external API
-//     const res = await prisma.user.findUnique({
-//         where: { email: session.user.email },
-
-//         select: {
-//             name: true,
-//             email: true
-//         }
-//     });
-
-//     console.log("USER_RESPONSE", repo);
-
-//     // Pass data to the page via props
-//     return { props: { repo } }
-// }
-
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions);
-    console.log("SESSION", session);
-    // Fetch data from external API
+
     const res = await prisma.user.findUnique({
         where: { email: session.user.email },
         select: {
+            id: true, // Include user's ID for filtering posts
             name: true,
             email: true
         }
     });
 
-    console.log("USER_RESPONSE", res);
+    if (res) {
+        const posts = await prisma.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true
+            },
+            where: {
+                userId: res.id
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+            take: 5,
+        });
 
-    // Pass data to the page via props
-    return { props: { repo: res } }
+        // Return posts if user exists and has posts
+        return {
+            props: {
+                posts
+            }
+        };
+    }
+
+    // Return an empty array if user doesn't exist or has no posts
+    return {
+        props: {
+            posts: []
+        }
+    };
 }
+
 
 
