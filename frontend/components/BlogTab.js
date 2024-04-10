@@ -148,9 +148,9 @@ export default function BlogTabs() {
                 ) : (
                     <>
                         <div className='flex flex-wrap mx-auto py-4 justify-start'>
-                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-30  rounded-md text-white p-2' type='button' onClick={openModal}>Write an Article</button>
-                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-30 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button>
-                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-30 rounded-md text-white p-2' type='button' onClick={handleClick}>Article to Newsletter</button>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-48 lg:w  rounded-md text-white p-2' type='button' onClick={openModal}>Write an Article</button>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-white p-2' type='button' onClick={handleClick}>Blog to Podcast</button>
+                            <button className='bg-green-600 mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-white p-2' type='button' onClick={handleClick}>Article to Newsletter</button>
                         </div>
                         <div>
                             <Accordion />
