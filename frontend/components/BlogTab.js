@@ -147,10 +147,10 @@ export default function BlogTabs() {
                     </div>
                 ) : (
                     <>
-                        <div className='flex bg-slate-300 h-[37px] flex-wrap mx-auto py-2  justify-center'>
-                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-white p-1' type='button' onClick={openModal}>Write an Article</button>
-                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-white p-1' type='button' onClick={handleClick}>Blog to Podcast</button>
-                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-white p-1' type='button' onClick={handleClick}>Article to Newsletter</button>
+                        <div className='flex flex-wrap mx-auto py-2 justify-center'>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Blog to Podcast</button>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Article to Newsletter</button>
                         </div>
                         <div className='mt-3'>
                             <Accordion />
