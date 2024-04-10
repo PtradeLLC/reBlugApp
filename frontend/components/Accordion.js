@@ -6,10 +6,8 @@ import { getServerSession } from "next-auth/next";
 
 const prisma = new PrismaClient();
 
-
 export default function ChatPost({ posts }) {
     console.log("POSTS", posts);
-
 
     const defaultContent =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
@@ -90,7 +88,7 @@ export async function getServerSideProps(context) {
                 id: true,
                 title: true,
                 content: true,
-                comments: { // Include comments for each post
+                comments: {
                     select: {
                         id: true,
                         content: true,
