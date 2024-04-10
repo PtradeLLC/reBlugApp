@@ -152,6 +152,8 @@ export default function BlogTabs() {
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Blog to Podcast</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Article to Newsletter</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Sponsorship Inquiries</button>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
                         </div>
                         <div className='mt-3'>
                             <p className='mt-3 font-thin' >Your Published Articles</p>
