@@ -10,8 +10,7 @@ export default function ChatPost({ posts }) {
     console.log("POSTS", posts);
 
     const defaultContent =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, consequat.";
     return (
         <Accordion selectionMode="multiple">
             <AccordionItem
@@ -20,49 +19,13 @@ export default function ChatPost({ posts }) {
                 startContent={
                     <Avatar
                         isBordered
-                        color="primary"
+                        color="success"
                         radius="lg"
                         src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
                     />
                 }
                 subtitle="4 unread messages"
                 title="Chung Miller"
-            >
-                {defaultContent}
-            </AccordionItem>
-            <AccordionItem
-                key="2"
-                aria-label="Janelle Lenard"
-                startContent={
-                    <Avatar
-                        isBordered
-                        color="success"
-                        radius="lg"
-                        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                    />
-                }
-                subtitle="3 incompleted steps"
-                title="Janelle Lenard"
-            >
-                {defaultContent}
-            </AccordionItem>
-            <AccordionItem
-                key="3"
-                aria-label="Zoey Lang"
-                startContent={
-                    <Avatar
-                        isBordered
-                        color="warning"
-                        radius="lg"
-                        src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-                    />
-                }
-                subtitle={
-                    <p className="flex">
-                        2 issues to<span className="text-primary ml-1">fix now</span>
-                    </p>
-                }
-                title="Zoey Lang"
             >
                 {defaultContent}
             </AccordionItem>
@@ -116,7 +79,6 @@ export async function getServerSideProps(context) {
         };
     }
 
-    // Return an empty array if user doesn't exist or has no posts
     return {
         props: {
             posts: []
