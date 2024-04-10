@@ -1,7 +1,6 @@
 import React from "react";
 import { Accordion, AccordionItem, Avatar } from "@nextui-org/react";
 import { PrismaClient } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 
 
@@ -9,9 +8,6 @@ const prisma = new PrismaClient();
 
 
 export default function ChatPost({ posts }) {
-
-    const { data: session } = useSession();
-
     console.log("POSTS", posts);
 
 
@@ -93,7 +89,14 @@ export async function getServerSideProps(context) {
             select: {
                 id: true,
                 title: true,
-                content: true
+                content: true,
+                comments: { // Include comments for each post
+                    select: {
+                        id: true,
+                        content: true,
+                        aiResponse: true,
+                    }
+                }
             },
             where: {
                 userId: res.id
@@ -104,7 +107,6 @@ export async function getServerSideProps(context) {
             take: 5,
         });
 
-        // Return posts if user exists and has posts
         return {
             props: {
                 posts
@@ -119,6 +121,7 @@ export async function getServerSideProps(context) {
         }
     };
 }
+
 
 
 
