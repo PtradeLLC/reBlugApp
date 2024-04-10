@@ -2,7 +2,7 @@ import React from "react";
 import { Accordion, AccordionItem, Avatar } from "@nextui-org/react";
 import { PrismaClient } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { getSession } from 'next-auth/client';
+import { getServerSession } from "next-auth/next";
 
 
 const prisma = new PrismaClient();
@@ -93,9 +93,8 @@ export default function App() {
 // }
 
 export async function getServerSideProps(context) {
-    // Get session
-    const session = await getSession(context);
-
+    const session = await getServerSession(context.req, context.res, authOptions);
+    console.log("SESSION", session);
     // Fetch data from external API
     const res = await prisma.user.findUnique({
         where: { email: session.user.email },
