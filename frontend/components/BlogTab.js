@@ -150,7 +150,7 @@ export default function BlogTabs() {
                         <div className='flex flex-wrap mx-auto py-2 justify-center'>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Blog to Podcast</button>
-                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
+                            <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Monetize your content</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={openModal}>Write an Article</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Article to Newsletter</button>
                             <button className='bg-white border mt-2 mx-2 sm:w-auto md:w-48 rounded-md text-gray-700 p-1' type='button' onClick={handleClick}>Sponsorship Inquiries</button>

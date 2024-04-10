@@ -30,14 +30,10 @@ export const authOptions = {
             clientId: process.env.LINKEDIN_CLIENT_ID,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET
         }),
-        // InstagramProvider({
-        //     clientId: process.env.INSTAGRAM_CLIENT_ID,
-        //     clientSecret: process.env.INSTAGRAM_CLIENT_SECRET
-        //   }),
-        TwitchProvider({
-            clientId: process.env.TWITCH_CLIENT_ID,
-            clientSecret: process.env.TWITCH_CLIENT_SECRET,
-        }),
+        // TwitchProvider({
+        //     clientId: process.env.TWITCH_CLIENT_ID,
+        //     clientSecret: process.env.TWITCH_CLIENT_SECRET,
+        // }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
