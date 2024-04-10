@@ -24,7 +24,7 @@ export default function ChatPost({ posts }) {
                         src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
                     />
                 }
-                subtitle="4 unread messages"
+                subtitle="4 comments"
                 title="Chung Miller"
             >
                 {defaultContent}
@@ -39,14 +39,12 @@ export async function getServerSideProps(context) {
     const res = await prisma.user.findUnique({
         where: { email: session.user.email },
         select: {
-            id: true, // Include user's ID for filtering posts
+            id: true,
             name: true,
             email: true
         }
     });
-
     console.log("RES from Accordion", res);
-
     if (res) {
         const posts = await prisma.post.findMany({
             select: {
@@ -69,9 +67,7 @@ export async function getServerSideProps(context) {
             },
             take: 5,
         });
-
         console.log("POSTS from Accordion", posts);
-
         return {
             props: {
                 posts
