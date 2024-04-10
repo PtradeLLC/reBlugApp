@@ -1,7 +1,18 @@
 import React from "react";
 import { Accordion, AccordionItem, Avatar } from "@nextui-org/react";
+import { PrismaClient } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { getSession } from 'next-auth/client';
+
+
+const prisma = new PrismaClient();
+
 
 export default function App() {
+
+    const { data: session } = useSession();
+
+
     const defaultContent =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
@@ -62,3 +73,42 @@ export default function App() {
         </Accordion>
     );
 }
+
+
+// export async function getServerSideProps() {
+//     // Fetch data from external API
+//     const res = await prisma.user.findUnique({
+//         where: { email: session.user.email },
+
+//         select: {
+//             name: true,
+//             email: true
+//         }
+//     });
+
+//     console.log("USER_RESPONSE", repo);
+
+//     // Pass data to the page via props
+//     return { props: { repo } }
+// }
+
+export async function getServerSideProps(context) {
+    // Get session
+    const session = await getSession(context);
+
+    // Fetch data from external API
+    const res = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: {
+            name: true,
+            email: true
+        }
+    });
+
+    console.log("USER_RESPONSE", res);
+
+    // Pass data to the page via props
+    return { props: { repo: res } }
+}
+
+
