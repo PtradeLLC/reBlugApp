@@ -22,8 +22,8 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
-    // let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+    // let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
+    let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
