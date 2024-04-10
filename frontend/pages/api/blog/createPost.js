@@ -15,6 +15,13 @@ export default async function handler(req, res) {
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
+        console.log("ALL BLOG INFO", email, firstName, postSlug, title,
+            featureImage,
+            content,
+            crossPromote,
+            selectedValue,
+            selectedFeatures);
+
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
@@ -26,6 +33,8 @@ export default async function handler(req, res) {
                 },
             });
 
+            console.log("USER from createPost", user);
+
             if (user) {
                 // Check if the post already exists
                 let existingPost = await prisma.post.findFirst({
@@ -34,6 +43,8 @@ export default async function handler(req, res) {
                         userId: user.id,
                     },
                 });
+
+                console.log("EXISTING POST from createPost", existingPost);
 
                 if (!existingPost) {
                     // If the post doesn't exist, create a new one
@@ -57,6 +68,10 @@ export default async function handler(req, res) {
                             updatedAt: new Date()
                         },
                     });
+
+                    console.log("NEW POST from createPost", newPost);
+
+
                     res.status(200).json(newPost);
                 } else {
                     // If the post exists, update the views count
@@ -78,6 +93,8 @@ export default async function handler(req, res) {
                             // likes: true,
                         },
                     });
+
+                    console.log("UPDATED POST from createPost", updatedPost);
                     res.status(200).json(updatedPost);
                 }
             }

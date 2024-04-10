@@ -82,6 +82,8 @@ export async function getServerSideProps(context) {
         }
     });
 
+    console.log("RES from Accordion", res);
+
     if (res) {
         const posts = await prisma.post.findMany({
             select: {
@@ -104,6 +106,8 @@ export async function getServerSideProps(context) {
             },
             take: 5,
         });
+
+        console.log("POSTS from Accordion", posts);
 
         return {
             props: {

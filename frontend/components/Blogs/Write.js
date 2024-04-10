@@ -71,6 +71,7 @@ const Compose = ({ showModal, setShowModal }) => {
             // // Check if the request was successful
             if (response.ok) {
                 const data = await response.json();
+                console.log('Data from Write:', data);
             } else {
                 console.error('Failed to publish article');
             }

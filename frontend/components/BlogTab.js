@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { emailTab, marketing_tab, outcomes_tab, blogTab, articles_tab, sposorship_tab, tools_tab, toolsArray } from "../utils/tabpage";
+import { blogTab, articles_tab, sposorship_tab, tools_tab } from "../utils/tabpage";
 import Compose from './Blogs/Write';
 import Accordion from "./Accordion";
 
