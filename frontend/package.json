@@ -133,6 +133,7 @@
     "svix": "^1.6.0",
     "swr": "^2.2.0",
     "tls": "^0.0.1",
+    "tremendous": "^3.0.1",
     "ts-loader": "^9.4.4",
     "twilio": "^3.40.0",
     "typewriter-effect": "^2.20.1",
