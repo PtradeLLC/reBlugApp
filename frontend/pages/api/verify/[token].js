@@ -1,3 +1,4 @@
+import { is } from "cheerio/lib/api/traversing";
 import prisma from "../../../lib/db";
 
 // const prisma = new PrismaClient();
@@ -49,6 +50,7 @@ export default async function handler(req, res) {
                 },
                 data: {
                     isVerified: true,
+                    isActive: true,
                     name: newUser.firstName + " " + newUser.lastName,
                 },
             });
