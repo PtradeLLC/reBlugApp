@@ -1,9 +1,8 @@
 import { Html } from "@react-email/html";
 import { Body } from "@react-email/body";
-import Link from 'next/link'
 
 export default function Email({ firstName, token }) {
-  const verificationLink = `https://reblug.com/verify/${token}`;
+  const verificationLink = `/verify/${token}`;
 
   return (
     <Html>

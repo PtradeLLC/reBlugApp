@@ -1,4 +1,3 @@
-import { is } from "cheerio/lib/api/traversing";
 import prisma from "../../../lib/db";
 
 // const prisma = new PrismaClient();
