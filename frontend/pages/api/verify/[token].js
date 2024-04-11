@@ -54,8 +54,8 @@ export default async function handler(req, res) {
         }
 
         if (
-            teamMember.VerificationTokens !== undefined &&
-            teamMember.VerificationTokens.some((t) => t.token === token && t.activatedAt === null)
+            teamMember.verificationTokens !== undefined &&
+            teamMember.verificationTokens.some((t) => t.token === token && t.activatedAt === null)
         ) {
             await prisma.verificationToken.update({
                 where: {

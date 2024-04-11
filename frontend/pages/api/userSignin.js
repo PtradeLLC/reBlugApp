@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import prisma from "../../lib/db";
+import { select } from '@nextui-org/react';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -16,6 +17,14 @@ export default async function handler(req, res) {
             const existingUser = await prisma.user.findUnique({
                 where: {
                     email: lowercaseEmail,
+                },
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    brandName: true,
+                    password: true,
                 },
             });
 

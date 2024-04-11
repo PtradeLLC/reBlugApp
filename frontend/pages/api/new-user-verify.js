@@ -18,19 +18,19 @@ export default async function handler(req, res) {
             const existingUser = await prisma.user.findFirst({
                 where: {
                     email: lowercaseEmail,
-                    VerificationTokens: {
+                    verificationTokens: {
                         some: {
                             token: verification.trim(),
                         },
                     },
                 },
                 include: {
-                    VerificationTokens: true,
+                    verificationTokens: true,
                 },
             });
 
             // Getting User Tokens
-            const userTokens = existingUser?.VerificationTokens?.map((item) => item.token) || [];
+            const userTokens = existingUser?.verificationTokens?.map((item) => item.token) || [];
 
             if (!userTokens.includes(verification.trim())) {
                 return res.status(200).json({

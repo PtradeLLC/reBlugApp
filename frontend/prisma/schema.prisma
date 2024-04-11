@@ -56,7 +56,7 @@ model User {
   updatedAt          DateTime            @updatedAt
   profileId          String?
   role               Role                @default(MANAGER)
-  accounts           Account[]
+  Accounts           Account[]
   profile            Profile[]
   sessions           Session[]
   emailVerified      DateTime?

@@ -25,7 +25,7 @@ export default async function handler(req, res) {
           email: lowercaseEmail,
           OR: [
             { isVerified: true },
-            { VerificationTokens: { some: { activatedAt: null } } },
+            { verificationTokens: { some: { activatedAt: null } } },
           ],
         },
         select: {

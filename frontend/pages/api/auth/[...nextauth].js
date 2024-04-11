@@ -62,15 +62,14 @@ export const authOptions = {
                     });
 
                     if (existingUser) {
-                        // Log the user object to check its structure
-                        console.log("User exists", existingUser);
-
                         // Attach user information to the session
                         req.session.user = {
-                            name: existingUser.name,
+                            name: existingUser.name || existingUser.firstName || null,
                             email: existingUser.email,
-                            image: existingUser.image,
+                            image: existingUser.image || null,
                         };
+
+                        console.log(req.session.user);
 
                         const isActive = existingUser.Accounts.every(account => account.isActive);
 
@@ -85,14 +84,11 @@ export const authOptions = {
                                     isActive: true,
                                 },
                             });
-
-
                             // Delete sensitive data before returning user
                             delete existingUser.password;
 
                             // return user if all accounts are active
                             return existingUser;
-
                         } else {
                             console.log("User account is already active");
                         }

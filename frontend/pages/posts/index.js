@@ -5,7 +5,6 @@ import { Divider } from "@nextui-org/react";
 import BreadCrumbs from '../../components/Blogs/categoryBreadcrumbs';
 import { Pagination } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
-import Image from 'next/image';
 import CardDisplay from '@/components/CardDisplay';
 import useSWR from "swr";
 
@@ -22,8 +21,8 @@ export default function Blog() {
     const [value, setValue] = useState(0);
 
 
-    // let catApiUrl = `http://localhost:3000/api/blog/categoryBySlug?page=${currentPage}`;
-    let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
+    let catApiUrl = `/api/blog/categoryBySlug?page=${currentPage}`;
+    // let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 
