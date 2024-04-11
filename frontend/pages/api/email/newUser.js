@@ -8,21 +8,10 @@ export default async function SendNewEmail(res, { firstName, token, email, userI
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const emailHtml = render(
-        <Email firstName={firstName} token={token} />
-    );
-
-    // const msg = {
-    //     to: [email], // Change to your recipient
-    //     from: "reBlug <support@reblug.com>",
-    //     subject: "🎉 Welcome to reBlug✨",
-    //     react: emailHtml,
-    // };
-
     try {
         const { data, error } = await resend.emails.send({
             from: 'support@reblug.com',
-            to: { email },
+            to: email,
             subject: "🎉 Welcome to reBlug✨",
             react: Email({ firstName, token, email, userId, provider }),
         });
