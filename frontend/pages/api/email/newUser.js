@@ -4,7 +4,7 @@ import { render } from "@react-email/render";
 import { getSession } from "next-auth/react";
 import { Resend } from 'resend';
 
-export default async function SendNewEmail({ firstName, token, email, userId, provider }) {
+export default async function SendNewEmail(res, { firstName, token, email, userId, provider }) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
