@@ -9,7 +9,7 @@ export default function Verify({ }) {
     useEffect(() => {
         const verifyUser = async () => {
             try {
-                const response = await axios.get(`/api/verify/${token}`);
+                const response = await axios.get(`https://www.reblug.com/api/verify/${token}`);
                 // Assuming the verification endpoint returns a success message
                 if (response.data.message === "Verification successful.") {
                     router.push('/login'); // Redirect to login page
