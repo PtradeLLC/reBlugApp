@@ -107,6 +107,7 @@ model Post {
   categorySlug     String?
   blogger          String?
   userId           String?
+  postSlug         String?
   category         Category?      @relation(fields: [categoryId], references: [id])
   categoryId       String?
   images           ImageOnPost[]

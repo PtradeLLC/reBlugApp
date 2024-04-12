@@ -15,13 +15,6 @@ export default async function handler(req, res) {
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
-        console.log("ALL BLOG INFO", email, firstName, postSlug, title,
-            featureImage,
-            content,
-            crossPromote,
-            selectedValue,
-            selectedFeatures);
-
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
