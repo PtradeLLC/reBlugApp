@@ -154,7 +154,7 @@ const Compose = ({ showModal, setShowModal }) => {
                                     <DropzoneComponent />
                                 </div>
                             </div>
-                            <div className={`absolute z-10 mr-4`}>
+                            {/* <div className={`absolute z-10 mr-4`}>
                                 <button type='button' onClick={() => setOpen(!open)}>
                                     <Image src={'/images/addme.png'} width={30} height={30} alt='addImage' />
                                 </button>
@@ -166,7 +166,7 @@ const Compose = ({ showModal, setShowModal }) => {
                                         <Image className='mx-1' src={'/images/image-file.png'} width={25} height={25} alt='' />
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                             <ReactQuill
                                 className='h-40 px-4 mt-5'
                                 theme="snow"
