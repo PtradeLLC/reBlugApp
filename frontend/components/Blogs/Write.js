@@ -20,7 +20,7 @@ const Compose = ({ showModal, setShowModal }) => {
     const { data: session, status } = useSession();
 
 
-    modules = {
+    const modules = {
         toolbar: [
             [{ 'header': [1, 2, false] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
