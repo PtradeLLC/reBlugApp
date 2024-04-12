@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
-import { PhotoIcon } from '@heroicons/react/24/solid'
-import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.snow.css';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, CheckboxGroup, Checkbox, RadioGroup, Radio, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import DropzoneComponent from '../Dropzone';
