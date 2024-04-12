@@ -9,6 +9,7 @@ export default async function handler(req, res) {
             content,
             crossPromote,
             selectedValue,
+            selectedCategory,
             selectedFeatures,
             userInfo, } = req.body;
 
@@ -19,6 +20,14 @@ export default async function handler(req, res) {
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
+
+        const getAllCategory = await prisma.category.findMany();
+
+        console.log("allCategory", getAllCategory);
+
+        console.log("selectedKeys", selectedCategory);
+
+        // const selectedCategory = selectedKeys;
 
         if (email) {
             const user = await prisma.user.findUnique({

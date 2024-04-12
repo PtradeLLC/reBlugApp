@@ -67,6 +67,9 @@ const Compose = ({ showModal, setShowModal }) => {
     const handlePublish = async (e) => {
         e.preventDefault();
         try {
+            const selectedCategory = selectedKeys.has("Select a Category") ? null : Array.from(selectedKeys)[0];
+
+
             const data = {
                 title,
                 featureImage,
@@ -74,6 +77,7 @@ const Compose = ({ showModal, setShowModal }) => {
                 crossPromote,
                 selectedValue,
                 selectedFeatures,
+                selectedCategory,
                 userInfo,
             };
 
@@ -155,19 +159,6 @@ const Compose = ({ showModal, setShowModal }) => {
                                     <DropzoneComponent />
                                 </div>
                             </div>
-                            {/* <div className={`absolute z-10 mr-4`}>
-                                <button type='button' onClick={() => setOpen(!open)}>
-                                    <Image src={'/images/addme.png'} width={30} height={30} alt='addImage' />
-                                </button>
-
-                                {open && (
-                                    <div className='flex mx-3'>
-                                        <Image className='mx-1' src={'/images/photo-upload.png'} width={25} height={25} alt='' />
-                                        <Image className='mx-1' src={'/images/video-file.png'} width={25} height={25} alt='' />
-                                        <Image className='mx-1' src={'/images/image-file.png'} width={25} height={25} alt='' />
-                                    </div>
-                                )}
-                            </div> */}
                             <ReactQuill
                                 className='h-40 px-4 mt-5'
                                 theme="snow"

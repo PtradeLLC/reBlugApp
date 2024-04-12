@@ -33,16 +33,10 @@ export default function BlogCategories({ categories }) {
         router.push(`/categories/${id}`);
     };
 
-
-
-
-
     // Filter out duplicate categories based on ID
     const uniqueCategories = categories.filter(
         (category, index) => categories.findIndex(c => c.id === category.id) === index
     );
-
-
 
     return (
         <>
