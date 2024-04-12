@@ -22,7 +22,6 @@ export default function Blog() {
 
 
     let catApiUrl = `/api/blog/categoryBySlug?page=${currentPage}`;
-    // let catApiUrl = `https://www.reblug.com/api/blog/categoryBySlug?page=${currentPage}`;
 
     const { data, error, isValidating, mutate } = useSWR(catApiUrl, fetcher,);
 

@@ -13,6 +13,7 @@ export default async function handler(req, res) {
                 return res.status(400).json({ message: 'Email or password is missing' });
             }
 
+
             const lowercaseEmail = email.toLowerCase();
             const existingUser = await prisma.user.findUnique({
                 where: {
@@ -28,6 +29,8 @@ export default async function handler(req, res) {
                 },
             });
 
+            console.log("EXISTING USER", existingUser);
+
             // Check if the user exists
             if (!existingUser) {
                 return res.status(404).json({ message: 'User not found. Please sign up for an account.' });
@@ -35,6 +38,8 @@ export default async function handler(req, res) {
 
             // Compare the provided password with the hashed password in the database
             const passwordMatch = await bcrypt.compare(password, existingUser.password);
+
+            console.log("PASSWORD MATCH", passwordMatch);
 
             if (passwordMatch) {
                 // Return the user information
