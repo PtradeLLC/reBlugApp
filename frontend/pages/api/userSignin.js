@@ -29,7 +29,7 @@ export default async function handler(req, res) {
                 },
             });
 
-            console.log("EXISTING USER", existingUser);
+            console.log("EXISTING USER", existingUser); //Cant log user in 
 
             // Check if the user exists
             if (!existingUser) {
