@@ -153,7 +153,7 @@ const Compose = ({ showModal, setShowModal }) => {
                             </div>
                             <ReactQuill
                                 className='h-40 px-4 mt-5'
-                                theme="bubble"
+                                theme="snow"
                                 value={content}
                                 onChange={setContent}
                                 placeholder='Begin by typing here. You may select to highlight texts for format...'
