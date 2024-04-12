@@ -336,7 +336,8 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                       </form>
                     </div>
                   </div>
-                  <div>
+                  {/* RUN BELOW CODE TO ENSURE USER IS LOGGED IN */}
+                  {/* <div>
                     {!session && showModal && (
                       <div className="fixed z-10 inset-0 overflow-y-auto">
                         <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -394,7 +395,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </ModalBody>
               <ModalFooter>
