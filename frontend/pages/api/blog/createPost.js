@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             console.log("Author is contacted with:", email);
         };
 
-        const getAllCategory = await prisma.category.findMany({
+        const getAllCategories = await prisma.category.findMany({
             select: {
                 id: true,
                 title: true,
@@ -30,19 +30,20 @@ export default async function handler(req, res) {
         });
 
         const lowerCaseCategory = selectedCategory.toLowerCase().split(' ').join('-');
+        let selectedId = null;
 
-        const getDbCategorySlug = getAllCategory.map(category => category.slug);
-
-        let selectedKeys = '';
-
-        if (selectedCategory === getDbCategorySlug.title && lowerCaseCategory === getDbCategorySlug) {
-            selectedKeys = getDbCategorySlug;
-            return selectedKeys
+        for (const category of getAllCategories) {
+            if (category.slug === lowerCaseCategory) {
+                selectedId = category.id;
+                break;
+            }
         }
 
-        console.log("Selected DB KEY", selectedKeys);
-
-        // const selectedCategory = selectedKeys;
+        if (!selectedId) {
+            console.log("No category Id was matched");
+        } else {
+            console.log("Selected KEY", selectedId);
+        };
 
         if (email) {
             const user = await prisma.user.findUnique({
@@ -60,8 +61,6 @@ export default async function handler(req, res) {
                     },
                 });
 
-                console.log("EXISTING POST from createPost", existingPost);
-
                 if (!existingPost) {
                     // If the post doesn't exist, create a new one
                     const newPost = await prisma.post.create({
@@ -73,6 +72,7 @@ export default async function handler(req, res) {
                             email: email,
                             views: 0,
                             postSlug: postSlug,
+                            categoryId: selectedId,
                             crossPromote: crossPromote,
                             selectedValue: selectedValue,
                             selectedFeatures: selectedFeatures,
