@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
 
         // Upload the image to Cloudflare
-        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
+        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT}/images/v2/direct_upload`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,12 +62,13 @@ export default async function handler(req, res) {
 
         const uploadedImageData = await uploadedImageResponse.json();
 
-        console.log("Uploaded Image Data: ", uploadedImageData);
+        if (!uploadedImageData.success) {
+            console.error('Image upload failed:', uploadedImageData.errors);
+            return res.status(500).json({ message: 'Image upload failed.' });
+        }
 
         // Extract the URL of the uploaded image from the response
         const uploadedImageUrl = uploadedImageData.result.url;
-
-        console.log("Uploaded Image URL: ", uploadedImageUrl);
 
 
         if (email) {
@@ -86,21 +87,6 @@ export default async function handler(req, res) {
                     },
                 });
 
-                const hostedImage = await fetch(`https://api.cloudflare.com/client/v4/accounts/account_id/images/v2/direct_upload`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer undefined`,
-                    },
-                    body: JSON.stringify({
-                        "type": "upload",
-                        "file": featureImage
-                    })
-                        .then(response => response.json())
-                        .then(response => console.log(response))
-                        .catch(err => console.error(err))
-                });
-
                 if (!existingPost) {
                     // If the post doesn't exist, create a new one
                     const newPost = await prisma.post.create({
@@ -110,6 +96,7 @@ export default async function handler(req, res) {
                             content: content,
                             published: true,
                             email: email,
+                            featureImage: uploadedImageUrl,
                             views: 0,
                             postSlug: postSlug,
                             categoryId: selectedId,
