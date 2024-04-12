@@ -17,13 +17,11 @@ export default async function handler(req, res) {
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
-        // Assume you have the Cloudflare account ID and API token stored securely
-        const account_id = 'your_account_id';
-        const api_token = 'your_api_token';
-
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
+
+        console.log("Feature Image: ", featureImage);
 
         const getAllCategories = await prisma.category.findMany({
             select: {
@@ -62,8 +60,12 @@ export default async function handler(req, res) {
 
         const uploadedImageData = await uploadedImageResponse.json();
 
+        console.log("Uploaded Image Data: ", uploadedImageData);
+
         // Extract the URL of the uploaded image from the response
         const uploadedImageUrl = uploadedImageData.result.url;
+
+        console.log("Uploaded Image URL: ", uploadedImageUrl);
 
         // Create or update the post in the database
         const user = await prisma.user.findUnique({
