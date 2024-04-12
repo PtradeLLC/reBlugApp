@@ -1,4 +1,5 @@
 import prisma from "../../../lib/db";
+const saltRounds = 12;
 
 export default async function handler(req, res) {
     try {
@@ -11,7 +12,7 @@ export default async function handler(req, res) {
             selectedFeatures,
             userInfo, } = req.body;
 
-        const email = userInfo.email || 'support@forgedmart.com';
+        const email = userInfo.email || 'support@reblug.com';
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
@@ -46,16 +47,12 @@ export default async function handler(req, res) {
                             content: content,
                             published: true,
                             email: email,
-                            views: 0, // Initialize views to 0
+                            views: 0,
                             postSlug: postSlug,
                             crossPromote: crossPromote,
                             selectedValue: selectedValue,
                             selectedFeatures: selectedFeatures,
-                            userId: {
-                                connect: {
-                                    id: user.id,
-                                },
-                            },
+                            userId: user.id,
                             updatedAt: new Date()
                         },
                     });
