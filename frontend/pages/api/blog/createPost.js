@@ -53,7 +53,7 @@ export default async function handler(req, res) {
                             crossPromote: crossPromote,
                             selectedValue: selectedValue,
                             selectedFeatures: selectedFeatures,
-                            User: {
+                            user: {
                                 connect: {
                                     id: user.id,
                                 },
