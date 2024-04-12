@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
 
         // Upload the image to Cloudflare
-        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT}/images/v2/direct_upload`, {
+        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 type: 'upload',
-                file: featureImage, // Assuming featureImage is the image data
+                file: featureImage,
             }),
         });
 
