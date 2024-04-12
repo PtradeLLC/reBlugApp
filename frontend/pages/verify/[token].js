@@ -14,8 +14,7 @@ export default function Verify({ }) {
                 console.log("RESPONSE", response);
                 console.log("RESPONSEMESSAGE", response.data.message);
                 // Assuming the verification endpoint returns a success message
-                if (response.data.message === "Login successful") {
-
+                if (response.data.user.newUserId) {
                     router.push('/login'); // Redirect to login page
                 }
             } catch (error) {
