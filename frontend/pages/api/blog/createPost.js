@@ -21,11 +21,26 @@ export default async function handler(req, res) {
             console.log("Author is contacted with:", email);
         };
 
-        const getAllCategory = await prisma.category.findMany();
+        const getAllCategory = await prisma.category.findMany({
+            select: {
+                id: true,
+                title: true,
+                slug: true
+            }
+        });
 
-        console.log("allCategory", getAllCategory);
+        const lowerCaseCategory = selectedCategory.toLowerCase().split(' ').join('-');
 
-        console.log("selectedKeys", selectedCategory);
+        const getDbCategorySlug = getAllCategory.map(category => category.slug);
+
+        let selectedKeys = '';
+
+        if (selectedCategory === getDbCategorySlug.title && lowerCaseCategory === getDbCategorySlug) {
+            selectedKeys = getDbCategorySlug;
+            return selectedKeys
+        }
+
+        console.log("Selected DB KEY", selectedKeys);
 
         // const selectedCategory = selectedKeys;
 
