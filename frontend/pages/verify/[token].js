@@ -11,7 +11,7 @@ export default function Verify({ }) {
             try {
                 const response = await axios.get(`https://www.reblug.com/api/verify/${token}`);
                 // Assuming the verification endpoint returns a success message
-                if (response.data.message === "Verification successful.") {
+                if (response.data.message === "Login successful") {
                     router.push('/login'); // Redirect to login page
                 }
             } catch (error) {
