@@ -23,7 +23,8 @@ const Compose = ({ showModal, setShowModal }) => {
     const modules = {
         toolbar: [
             [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+            [{ 'color': [] }, { 'background': [] }],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
             ['link', 'image', 'video'], { size: ['huge'] }
             ['clean']
