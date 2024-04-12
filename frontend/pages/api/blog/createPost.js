@@ -26,8 +26,6 @@ export default async function handler(req, res) {
                 },
             });
 
-            console.log("USER from createPost", user);
-
             if (user) {
                 // Check if the post already exists
                 let existingPost = await prisma.post.findFirst({
@@ -53,7 +51,7 @@ export default async function handler(req, res) {
                             crossPromote: crossPromote,
                             selectedValue: selectedValue,
                             selectedFeatures: selectedFeatures,
-                            user: {
+                            userId: {
                                 connect: {
                                     id: user.id,
                                 },
@@ -63,8 +61,6 @@ export default async function handler(req, res) {
                     });
 
                     console.log("NEW POST from createPost", newPost);
-
-
                     res.status(200).json(newPost);
                 } else {
                     // If the post exists, update the views count
