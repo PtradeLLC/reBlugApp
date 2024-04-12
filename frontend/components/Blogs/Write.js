@@ -19,6 +19,24 @@ const Compose = ({ showModal, setShowModal }) => {
     const [selectedFeatures, setSelectedFeatures] = useState(["article-newsletter", "blog-podcast"]);
     const { data: session, status } = useSession();
 
+
+    modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
+        ],
+    },
+
+        formats = [
+            'header',
+            'bold', 'italic', 'underline', 'strike', 'blockquote',
+            'list', 'bullet', 'indent',
+            'link', 'image'
+        ];
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -70,7 +88,6 @@ const Compose = ({ showModal, setShowModal }) => {
             // // Check if the request was successful
             if (response.ok) {
                 const data = await response.json();
-                console.log('Data from Write:', data);
             } else {
                 console.error('Failed to publish article');
             }
@@ -154,6 +171,9 @@ const Compose = ({ showModal, setShowModal }) => {
                                 className='h-40 px-4 mt-5'
                                 theme="snow"
                                 value={content}
+                                toolbar={true}
+                                formats={formats}
+                                modules={modules}
                                 onChange={setContent}
                                 placeholder='Begin by typing here. You may select to highlight texts for format...'
                             />
