@@ -20,6 +20,9 @@ export default async function handler(req, res) {
                     },
                 },
             },
+            orderBy: {
+                createdAt: 'desc',
+            }
         });
 
         // Calculate total number of pages
