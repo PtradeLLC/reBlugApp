@@ -253,7 +253,6 @@ export default function DashLay() {
                     {/* Main content */}
                     <div className="mobile-main flex overflow-hidden">
                         <main className="index-main  pb-8 lg:mt-8">
-                            {/* lg:max-w-[110rem] , max-w-3xl */}
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                                 <h1 className="sr-only">Profile</h1>
 
@@ -278,11 +277,13 @@ export default function DashLay() {
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
+                                                                    {console.log("USERINFO:", userInfo?.firstName)}
                                                                     Welcome {userInfo?.firstName}
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>
-                                                                    Brand: {user?.brandName && `${user?.brandName}`}{' '}
-                                                                    {!user?.brandName && 'Not set. Want to use as brand or agency?'}
+                                                                    {console.log(user.brandName)}
+                                                                    Brand: {user?.brandName ? `${user?.brandName}` : ('Not set. Want to use as brand or agency?')}
+
                                                                 </h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
