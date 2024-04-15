@@ -69,10 +69,7 @@ export const authOptions = {
                             image: existingUser.image || null,
                         };
 
-                        console.log(req.session.user);
-
                         const isActive = existingUser.Accounts.every(account => account.isActive);
-
 
                         if (!isActive) {
                             // Update the user's isActive status to true

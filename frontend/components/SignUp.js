@@ -43,6 +43,7 @@ const SignUp = ({ handleRadioChange }) => {
                     }
 
                     const data = await response.json();
+
                     if (isMounted && data) {
                         setIsSuccess(true);
                         if (data.user) {
