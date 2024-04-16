@@ -1,7 +1,7 @@
 {
     "name": "reBlug",
     "short_name": "reBlug",
-    "start_url": "https://www.reblug.com",
+    "start_url": "../pages/index.js",
     "display": "standalone",
     "description": "A platform for brands, bloggers, and marketers to connect in a unified ecosystem. Making blogging useful for marketing through the use of software.",
     "lang": "en",
