@@ -6,7 +6,9 @@ import { select } from '@nextui-org/react';
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const { email, password } = req.body;
+            // const { email, password } = req.body;
+            const userData = req.body;
+            const { email, password } = userData;
 
             if (!email || !password) {
                 console.error('Validation error: email or password is missing');
@@ -41,14 +43,17 @@ export default async function handler(req, res) {
                 return res.status(401).json({ message: 'Invalid email or password. Please review your login credentials or reset your password.' });
             }
 
+            res.status(200).json({ user: userData, message: 'Authentication successful' });
+
             // Return the user information if password match
-            return res.status(200).json({
-                user: existingUser,
-                message: 'User signed in successfully',
-                redirect: '/dashboard',
-            });
+            // return res.status(200).json({
+            //     user: existingUser,
+            //     message: 'User signed in successfully',
+            //     redirect: '/dashboard',
+            // });
         } catch (error) {
             console.error('Error during sign-in:', error);
+            console.error('Authentication error:', error);
             return res.status(500).json({ error: `An error occurred during sign-in: ${error.message || error}` });
         } finally {
             await prisma.$disconnect();

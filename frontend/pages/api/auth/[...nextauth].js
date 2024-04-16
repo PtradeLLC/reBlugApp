@@ -3,8 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import HubspotProvider from "next-auth/providers/hubspot";
-import TwitchProvider from "next-auth/providers/twitch";
-import InstagramProvider from "next-auth/providers/instagram";
+import PatreonProvider from "next-auth/providers/patreon";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import SalesforceProvider from "next-auth/providers/salesforce";
 import LinkedInProvider from "next-auth/providers/linkedin";
@@ -30,13 +29,13 @@ export const authOptions = {
             clientId: process.env.LINKEDIN_CLIENT_ID,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET
         }),
-        // TwitchProvider({
-        //     clientId: process.env.TWITCH_CLIENT_ID,
-        //     clientSecret: process.env.TWITCH_CLIENT_SECRET,
-        // }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        }),
+        PatreonProvider({
+            clientId: process.env.PATREON_CLIENT_ID,
+            clientSecret: process.env.PATREON_CLIENT_SECRET,
         }),
         CredentialsProvider({
             name: 'credentials',
