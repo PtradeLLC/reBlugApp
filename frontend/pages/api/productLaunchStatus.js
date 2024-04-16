@@ -75,7 +75,7 @@ export default async function handler(req, res) {
 
                 // For text-only input, use the gemini-1.0-pro model
                 const model = genAI.getGenerativeModel({
-                    model: 'gemini-1.0-pro',
+                    model: 'gemini-1.5-pro',
                     generationConfig: {
                         temperature: 0.9,
                         topP: 1,
