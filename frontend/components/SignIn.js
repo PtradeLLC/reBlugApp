@@ -49,6 +49,8 @@ const SignIn = () => {
             const data = await response.json();
 
             if (data.user) {
+                console.log("Data User", data.user);
+
                 await signIn('credentials', {
                     email: data.user.email,
                     password: data.user.password,

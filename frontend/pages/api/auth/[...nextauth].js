@@ -75,7 +75,7 @@ export const authOptions = {
                             // Update the user's isActive status to true
                             await prisma.user.update({
                                 where: {
-                                    id: existingUser.id,
+                                    email: existingUser.email,
                                 },
                                 data: {
                                     isActive: true,
