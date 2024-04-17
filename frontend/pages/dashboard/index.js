@@ -148,7 +148,7 @@ const Dashboard = function ({ children }) {
                         firstName: data?.first_name || user?.firstName,
                         lastName: data?.last_name || user?.lastName,
                         provider: data?.provider,
-                        brandLogo: data?.brandLogo,
+                        brandLogo: data?.brandLogo || null,
                         brandName: data?.brandName,
                         profileImage: data?.profileImage,
                         session: data?.session || [],
