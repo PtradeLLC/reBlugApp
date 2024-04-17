@@ -24,12 +24,18 @@ export default async function handler(req, res) {
                         provider: true,
                         profileImage: true,
                         brandLogo: true,
+                        brandName: true,
                         role: true,
                         isActive: true,
                         image: true,
                         userType: true,
                     },
                 });
+
+                if (!user) {
+                    res.status(404).json({ message: 'User not found' });
+                    return;
+                }
 
                 if (user) {
                     let first_name, last_name;
@@ -58,7 +64,6 @@ export default async function handler(req, res) {
                                 userType: 'Blogger',
                             },
                         });
-
                         res.status(200).json({
                             firstName: first_name,
                             lastName: last_name,
@@ -72,7 +77,6 @@ export default async function handler(req, res) {
                             social: user.social,
                             userType: user.userType
                         });
-
                         return;
                     } else {
                         res.status(200).json({

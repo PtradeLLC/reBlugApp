@@ -141,6 +141,8 @@ const Dashboard = function ({ children }) {
                     const response = await fetch("/api/fetchUser");
                     const data = await response.json();
 
+                    console.log("Data: ", data);
+
                     setUserData(data);
                     setUser(data);
 

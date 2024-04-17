@@ -216,9 +216,6 @@ export default function DashLay() {
         }
     };
 
-
-
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -244,6 +241,8 @@ export default function DashLay() {
     }, []);
 
     // md:w-full
+
+    console.log("userInfo", userInfo);
 
     return (
         <div className='flex sm:justify-center md:justify-start'>
@@ -277,13 +276,12 @@ export default function DashLay() {
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    {console.log("USERINFO:", userInfo?.firstName)}
+                                                                    {/* {console.log("USERINFO:", userInfo?.firstName)} */}
                                                                     Welcome {userInfo?.firstName}
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>
-                                                                    {console.log(user.brandName)}
-                                                                    Brand: {user?.brandName ? `${user?.brandName}` : ('Not set. Want to use as brand or agency?')}
-
+                                                                    {/* {console.log(user.brandName)} */}
+                                                                    Brand: {user?.brandName ? `${user?.brandName}` || null : ('Not set. Want to use as brand or agency?')}
                                                                 </h4>
                                                                     <span className="text-xs">Edit Profile | image | name</span>
                                                                 </Link>
