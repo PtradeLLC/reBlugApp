@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import HubspotProvider from "next-auth/providers/hubspot";
 import PatreonProvider from "next-auth/providers/patreon";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import SalesforceProvider from "next-auth/providers/salesforce";
+import SalesforceProvider from "next-auth/providers/salesforce"
 import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "../../../lib/db";
 import { compare } from "bcrypt";
