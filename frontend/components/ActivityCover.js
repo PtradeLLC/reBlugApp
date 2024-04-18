@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Image, Button, CardBody } from "@nextui-org/react";
 import Calendar from "./Calendar";
 
 export default function AllActiveComponent() {
@@ -15,22 +15,21 @@ export default function AllActiveComponent() {
                 <CardHeader className="absolute z-10 px-2 top-1 flex-col !items-start">
                     <p className="text-tiny text-gray-900 uppercase font-bold">Your Calendar</p>
                 </CardHeader>
+
                 <div className="flex mt-2 flex-col gap-2 justify-center items-center">
                     <ul>
                         {activity ? (
-                            <li>
-                                <p className="text-gray-700 text-tiny">
-                                    You have {activity?.length} on your reBlug schedule.
-                                </p>
-                                <p className="text-gray-700 text-tiny">Get notified.</p>
-                            </li>
+                            (
+                                <li>
+                                    <CardBody className="flex flex-col gap-2 justify-center items-center">
+                                        <p className="text-gray-700 text-tiny">{activity}</p>
+                                    </CardBody>
+                                </li>
+                            )
                         ) : (
-                            <li>
-                                <p className="text-gray-700 text-tiny">
-                                    You have nothing on your reBlug schedule.
-                                </p>
-                                <p className="text-gray-700 text-tiny">Get notified.</p>
-                            </li>
+                            <CardBody className="flex flex-col gap-2 justify-center items-center">
+                                <p className="text-gray-700 text-tiny">Your reBlug schedule is empty.</p>
+                            </CardBody>
                         )}
                     </ul>
                 </div>
