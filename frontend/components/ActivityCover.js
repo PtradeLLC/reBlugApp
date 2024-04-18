@@ -21,7 +21,7 @@ export default function AllActiveComponent() {
                     removeWrapper
                     alt="Card background"
                     className="z-0 w-full h-full object-cover"
-                    src="/images/card-example-3.jpeg"
+                    src="/images/7venBlog.jpeg"
                 />
             </Card>
             <Card className="col-span-12 sm:col-span-4 h-[300px]">
@@ -33,7 +33,7 @@ export default function AllActiveComponent() {
                     removeWrapper
                     alt="Card background"
                     className="z-0 w-full h-full object-cover"
-                    src="/images/card-example-2.jpeg"
+                    src="/images/camgirl.png"
                 />
             </Card>
             <Card isFooterBlurred className="w-full h-[300px] col-span-12 sm:col-span-5">
@@ -45,7 +45,7 @@ export default function AllActiveComponent() {
                     removeWrapper
                     alt="Card example background"
                     className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-                    src="/images/card-example-6.jpeg"
+                    src="/images/creatorprofile.jpg"
                 />
                 <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                     <div>
@@ -66,14 +66,14 @@ export default function AllActiveComponent() {
                     removeWrapper
                     alt="Relaxing app background"
                     className="z-0 w-full h-full object-cover"
-                    src="/images/card-example-5.jpeg"
+                    src="/images/pete.jpg"
                 />
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                     <div className="flex flex-grow gap-2 items-center">
                         <Image
                             alt="Breathing app icon"
                             className="rounded-full w-10 h-11 bg-black"
-                            src="/images/breathing-app-icon.jpeg"
+                            src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
                             <p className="text-tiny text-white/60">Breathing App</p>
