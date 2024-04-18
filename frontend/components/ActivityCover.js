@@ -1,8 +1,11 @@
-import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Image, Button } from "@nextui-org/react";
+import React, { useState } from "react";
+import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 import Calendar from "./Calendar";
 
 export default function AllActiveComponent() {
+    // const { data: activity } = useSWR("/api/activity", fetcher);
+    const [activity, setActivity] = useState(null);
+
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
             <Card className="col-span-12 sm:col-span-7 md:col-span-8">
