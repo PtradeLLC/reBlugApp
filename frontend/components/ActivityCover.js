@@ -21,13 +21,13 @@ export default function AllActiveComponent() {
                         {activity ? (
                             (
                                 <li>
-                                    <CardBody className="flex flex-col gap-2 justify-center items-center">
+                                    <CardBody className="flex my-4 flex-col gap-2 justify-center items-center">
                                         <p className="text-gray-700 text-tiny">{activity}</p>
                                     </CardBody>
                                 </li>
                             )
                         ) : (
-                            <CardBody className="flex flex-col gap-2 justify-center items-center">
+                            <CardBody className="flex my-4 flex-col gap-2 justify-center items-center">
                                 <p className="text-gray-700 text-tiny">Your reBlug schedule is empty.</p>
                             </CardBody>
                         )}
