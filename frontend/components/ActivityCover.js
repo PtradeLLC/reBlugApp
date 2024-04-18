@@ -6,12 +6,9 @@ export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
             <Card className="col-span-12 sm:col-span-8 md:col-span-8">
-                <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-                    <p className="text-tiny text-gray-700 uppercase font-bold">your Calendar</p>
-                </CardHeader>
-                <Calendar />
+                <Calendar className="w-full h-full" />
             </Card>
-            <Card className="col-span-12 sm:col-span-4 md:col-span-4 h-[300px]">
+            <Card className="col-span-12 sm:col-span-4 md:col-span-4 ">
                 <CardHeader className="absolute z-10 top-1 flex-col !items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">Your schedule</p>
                     <h4 className="text-white font-medium text-large">Creates beauty like a beast</h4>
