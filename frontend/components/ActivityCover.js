@@ -4,9 +4,9 @@ import Calendar from "./Calendar";
 
 export default function AllActiveComponent() {
     return (
-        <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-8">
-            <div>
-                <Card className="col-span-12 sm:col-span-8 md:col-span-8 ">
+        <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
+            <span className="w-full">
+                <Card className="col-span-12 sm:col-span-8 md:col-span-8">
                     <CardHeader className="absolute z-10 top-1 flex-col !items-start">
                         <p className="text-tiny text-gray-700 uppercase font-bold">your Calendar</p>
                     </CardHeader>
@@ -26,7 +26,7 @@ export default function AllActiveComponent() {
                         </ul>
                     </div>
                 </Card>
-            </div>
+            </span>
             <Card isFooterBlurred className="w-full h-[300px] col-span-12 sm:col-span-5">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">New</p>
