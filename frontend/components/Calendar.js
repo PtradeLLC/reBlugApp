@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RangeCalendar } from "@nextui-org/react";
+import { RangeCalendar } from "@nextui-org/calendar";
 import { today, getLocalTimeZone } from "@internationalized/date";
 
 export default function Calendar() {
