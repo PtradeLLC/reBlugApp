@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
@@ -351,8 +351,6 @@ model EmailTool {
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
-
-  embedding Unsupported("vector(1536)")?
 }
 
 model Campaign {
@@ -372,8 +370,6 @@ model Campaign {
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
-
-  embedding Unsupported("vector(1536)")?
 }
 
 model KnowledgeBase {
@@ -388,8 +384,6 @@ model KnowledgeBase {
   user      User     @relation(fields: [userId], references: [id])
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
-
-  embedding Unsupported("vector(1536)")?
 }
 
 // Uploaded
@@ -404,8 +398,6 @@ model ContactList {
   user      User     @relation(fields: [userId], references: [id])
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
-
-  embedding Unsupported("vector(1536)")?
 }
 
 model Connectors {
@@ -423,25 +415,22 @@ model Connectors {
   user                User     @relation(fields: [userId], references: [id])
   Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
-
-  embedding Unsupported("vector(1536)")?
 }
 
 model Files {
-  id              String                       @unique @default(cuid())
+  id              String         @unique @default(cuid())
   emailToolId     String?
-  EmailTool       EmailTool?                   @relation(fields: [emailToolId], references: [id])
-  embedding       Unsupported("vector(1536)")?
-  Campaign        Campaign?                    @relation(fields: [campaignId], references: [id])
+  EmailTool       EmailTool?     @relation(fields: [emailToolId], references: [id])
+  Campaign        Campaign?      @relation(fields: [campaignId], references: [id])
   campaignId      String?
-  Connectors      Connectors?                  @relation(fields: [connectorsId], references: [id])
+  Connectors      Connectors?    @relation(fields: [connectorsId], references: [id])
   connectorsId    String?
   filename        String?
-  KnowledgeBase   KnowledgeBase?               @relation(fields: [knowledgeBaseId], references: [id])
+  KnowledgeBase   KnowledgeBase? @relation(fields: [knowledgeBaseId], references: [id])
   knowledgeBaseId String?
-  ContactList     ContactList?                 @relation(fields: [contactListId], references: [id])
+  ContactList     ContactList?   @relation(fields: [contactListId], references: [id])
   contactListId   String?
-  User            User?                        @relation(fields: [userId], references: [id])
+  User            User?          @relation(fields: [userId], references: [id])
   userId          String?
 }
 
@@ -455,13 +444,12 @@ model TrialProspect {
 }
 
 model EmailList {
-  id        String                       @unique @default(cuid())
-  email     String
-  userId    String?
-  User      User?                        @relation(fields: [userId], references: [id])
-  Team      Team?                        @relation(fields: [teamId], references: [id])
-  teamId    String?
-  embedding Unsupported("vector(1536)")?
+  id     String  @unique @default(cuid())
+  email  String
+  userId String?
+  User   User?   @relation(fields: [userId], references: [id])
+  Team   Team?   @relation(fields: [teamId], references: [id])
+  teamId String?
 }
 
 model TrialProspectTwo {
@@ -525,36 +513,33 @@ model MaaP {
 }
 
 model Trends_files {
-  id        String                       @unique @default(cuid())
+  id        String   @unique @default(cuid())
   content   String
   url       String?
   iaId      String
-  createdAt DateTime                     @default(now())
-  updatedAt DateTime                     @updatedAt
-  aiTools   ForgedAI                     @relation(fields: [iaId], references: [id])
-  embedding Unsupported("vector(1536)")?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  aiTools   ForgedAI @relation(fields: [iaId], references: [id])
 }
 
 model Marketing_Plan_files {
-  id            String                       @unique @default(cuid())
+  id            String   @unique @default(cuid())
   content       String
   url           String?
   planId        String
-  createdAt     DateTime                     @default(now())
-  updatedAt     DateTime                     @updatedAt
-  marketingPlan ForgedAI                     @relation(fields: [planId], references: [id])
-  embedding     Unsupported("vector(1536)")?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  marketingPlan ForgedAI @relation(fields: [planId], references: [id])
 }
 
 model Marketing_Creatives_files {
-  id          String                       @unique @default(cuid())
+  id          String   @unique @default(cuid())
   content     String
   url         String?
   creativesId String
-  createdAt   DateTime                     @default(now())
-  updatedAt   DateTime                     @updatedAt
-  creatives   ForgedAI                     @relation(fields: [creativesId], references: [id])
-  embedding   Unsupported("vector(1536)")?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatives   ForgedAI @relation(fields: [creativesId], references: [id])
 }
 
 enum Role {
