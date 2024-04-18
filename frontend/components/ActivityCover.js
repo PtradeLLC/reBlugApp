@@ -5,25 +5,28 @@ import Calendar from "./Calendar";
 export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-8">
-            <Card className="col-span-12 sm:col-span-4 md:col-span-6 h-[300px]">
-                <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-                    <p className="text-tiny text-white/60 uppercase font-bold">You Calendar</p>
-                    <h4 className="text-white font-medium text-large">Stream the Acme event</h4>
-                </CardHeader>
-                <Calendar />
-            </Card>
-            <Card className="col-span-12 sm:col-span-4 h-[300px]">
-                <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-                    <p className="text-tiny text-white/60 uppercase font-bold">Supercharged</p>
-                    <h4 className="text-white font-medium text-large">Creates beauty like a beast</h4>
-                </CardHeader>
-                <Image
-                    removeWrapper
-                    alt="Card background"
-                    className="z-0 w-full h-full object-cover"
-                    src="/images/camgirl.png"
-                />
-            </Card>
+            <div>
+                <Card className="col-span-12 sm:col-span-8 md:col-span-8 ">
+                    <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+                        <p className="text-tiny text-gray-700 uppercase font-bold">your Calendar</p>
+                    </CardHeader>
+                    <Calendar />
+                </Card>
+                <Card className="col-span-12 sm:col-span-4 md:col-span-4 h-[300px]">
+                    <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+                        <p className="text-tiny text-white/60 uppercase font-bold">Your schedule</p>
+                        <h4 className="text-white font-medium text-large">Creates beauty like a beast</h4>
+                    </CardHeader>
+                    <div>
+                        <ul>
+                            <li>
+                                <p className="text-white text-tiny">Your schedule</p>
+                                <p className="text-white text-tiny">Get notified.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </Card>
+            </div>
             <Card isFooterBlurred className="w-full h-[300px] col-span-12 sm:col-span-5">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">New</p>
