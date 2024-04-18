@@ -13,6 +13,7 @@ export default function Calendar() {
             aria-label="Date (Controlled)"
             value={value}
             onChange={setValue}
+            date={today(getLocalTimeZone())}
         />
     );
 }

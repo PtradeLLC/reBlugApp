@@ -5,8 +5,8 @@ import Calendar from "./Calendar";
 export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
-            <Card className="col-span-12 sm:col-span-8 md:col-span-8">
-                <Calendar className="w-full h-full" />
+            <Card className="col-span-12 sm:col-span-7 md:col-span-8">
+                <Calendar className="col-span-12" />
             </Card>
             <Card className="col-span-12 sm:col-span-4 md:col-span-4 ">
                 <CardHeader className="absolute z-10 top-1 flex-col !items-start">
