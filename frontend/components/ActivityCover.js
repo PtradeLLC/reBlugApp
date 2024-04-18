@@ -6,7 +6,7 @@ export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
             <Card className="col-span-12 sm:col-span-7 md:col-span-8">
-                <Calendar className="col-span-12" />
+                <Calendar className="col-span-12 h-[-webkit-fill-available]" />
             </Card>
             <Card className="col-span-12 sm:col-span-4 md:col-span-4 ">
                 <CardHeader className="absolute z-10 top-1 flex-col !items-start">
@@ -22,7 +22,7 @@ export default function AllActiveComponent() {
                     </ul>
                 </div>
             </Card>
-            <Card isFooterBlurred className="w-full h-[300px] col-span-12 sm:col-span-5">
+            <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">New</p>
                     <h4 className="text-black font-medium text-2xl">Acme camera</h4>
@@ -43,7 +43,7 @@ export default function AllActiveComponent() {
                     </Button>
                 </CardFooter>
             </Card>
-            <Card isFooterBlurred className="w-full h-[300px] col-span-12 sm:col-span-7">
+            <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                     <h4 className="text-white/90 font-medium text-xl">Your checklist for better sleep</h4>

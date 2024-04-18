@@ -11,7 +11,7 @@ export default function ContentTabs() {
 
 
     return (
-        <div className="flex flex-col px-4">
+        <div className="flex flex-col px-2">
             <Switch className="mb-4" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>
                 Vertical
             </Switch>
