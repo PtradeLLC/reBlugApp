@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
+import AllActiveComponent from "./ActivityCover";
 
 export default function ContentTabs() {
     const [isVertical, setIsVertical] = useState(true);
@@ -18,15 +19,9 @@ export default function ContentTabs() {
                 <Tabs aria-label="Options" isVertical={isVertical}>
                     <Tab key="all" title="All Activities">
                         <Card>
-                            {allActivities ? (
-                                <CardBody>
-                                    "All"
-                                </CardBody>
-                            ) : (
-                                <CardBody>
-                                    You have no activity
-                                </CardBody>
-                            )}
+                            <CardBody>
+                                <AllActiveComponent />
+                            </CardBody>
                         </Card>
                     </Tab>
                     <Tab key="email" title="Email Activities">
