@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Square3Stack3DIcon } from '@heroicons/react/20/solid';
 import ContentTabs from "./ContentTabs";
+import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 
 const statuses = { Completed: 'text-green-400 bg-green-400/10', Error: 'text-rose-400 bg-rose-400/10' }
 
@@ -45,12 +45,9 @@ export default function Summary() {
     return (
         <div className="bg-white py-10 border rounded-sm">
             <span className="shadow-xl border-b border-white/10 bg-slate-200">
-                <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2>
+                {/* <h2 className="px-4 text-base font-semibold leading-7 flex text-black sm:px-6 lg:px-8"><Square3Stack3DIcon className="text-base px-1 w-6 h-6 text-neutral-400" />Latest activity</h2> */}
             </span>
             <ContentTabs />
-            <div className="bg-slate-50 rounded-md my-8 p-3 mx-2">
-                {summary}
-            </div>
         </div >
     )
 }

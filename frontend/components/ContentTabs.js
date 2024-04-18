@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 
 export default function ContentTabs() {
-    const [isVertical, setIsVertical] = React.useState(true);
+    const [isVertical, setIsVertical] = useState(true);
     return (
         <div className="flex flex-col px-4">
             <Switch className="mb-4" isSelected={isVertical} onValueChange={setIsVertical}>
