@@ -224,7 +224,7 @@ export default function DashLay() {
                 if (response.ok) {
                     // Parse the response data
                     const jsonData = await response.json();
-
+                    console.log("JDATA", jsonData)
                     setUserInfo(jsonData);
                 } else {
                     console.error('Failed to fetch data:', response.statusText);
@@ -242,7 +242,10 @@ export default function DashLay() {
 
     // md:w-full
 
-    console.log("userInfo", userInfo);
+
+    console.log("USER", user)
+
+
 
     return (
         <div className='flex sm:justify-center md:justify-start'>
@@ -276,8 +279,7 @@ export default function DashLay() {
                                                             </div>
                                                             <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                 <h2 className="text-2xl font-semibold text-gray-900">
-                                                                    {/* {console.log("USERINFO:", userInfo?.firstName)} */}
-                                                                    Welcome {userInfo?.firstName}
+                                                                    Welcome {session?.user?.firstName}
                                                                 </h2>
                                                                 <Link href={"/profile"}> <h4>
                                                                     {/* {console.log(user.brandName)} */}
@@ -407,7 +409,7 @@ export default function DashLay() {
                                                         <span className="flex items-center truncate text-sm font-medium mx-2 text-gray-900">
                                                             {loading && <Loading className="ml-2" />}
                                                             <img className="rounded w-7" src={managerImage} alt='profileImage' />
-                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{userInfo?.firstName}</span>
+                                                            <span className="truncate mx-1 font-bold my-1 text-sm text-gray-900">{session?.user?.name}</span>
                                                             <span className="mx-1 flex items-center">
                                                                 <button className="mx-1" onClick={handleRefreshList}>Refresh</button>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -415,7 +417,7 @@ export default function DashLay() {
                                                                 </svg>
                                                             </span>
                                                         </span>
-                                                        <span className="mx-1 font-thin my-1 text-sm text-gray-900">{userInfo?.role.toLowerCase()}</span>
+                                                        {/* <span className="mx-1 font-thin my-1 text-sm text-gray-900">{userInfo?.role.toLowerCase()}</span> */}
                                                     </div>
                                                     <TeamComponent refreshList={refreshList} />
                                                 </div>
