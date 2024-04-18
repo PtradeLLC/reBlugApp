@@ -141,8 +141,6 @@ const Dashboard = function ({ children }) {
                     const response = await fetch("/api/fetchUser");
                     const data = await response.json();
 
-                    console.log("Data: ", data);
-
                     setUserData(data);
                     setUser(data);
 
@@ -223,7 +221,7 @@ const Dashboard = function ({ children }) {
             <Suspense fallback={<Loading />}>
                 <div className="min-h-full overflow-hidden flex justify-center bg-white py-16 sm:py-16">
                     <span className="w-full">
-                        <DashLay />
+                        <DashLay user={user} />
                     </span>
                 </div >
             </Suspense >

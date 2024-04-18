@@ -89,7 +89,7 @@ const marketingAction = [
 const UserContext = createContext();
 
 
-export default function DashLay() {
+export default function DashLay({ user }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const { data: session, status } = useSession();
@@ -107,9 +107,8 @@ export default function DashLay() {
     const [email, setEmail] = useState("");
 
     // Retrieve session information using useSession
-    // const { data: session, status } = useSession();
+
     const [userData, setUserData] = useState(null);
-    const [user, setUser] = useState(null);
     const [userSession, setUserSession] = useState(null);
     const managerName = session?.user?.name || `${user?.firstName} ${user?.lastName}`;
     const managerImage = session?.user?.image ?? (user?.profileImage ?? "/images/brand.png");
@@ -216,29 +215,28 @@ export default function DashLay() {
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/fetchUser');
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch('/api/fetchUser');
 
-                if (response.ok) {
-                    // Parse the response data
-                    const jsonData = await response.json();
-                    console.log("JDATA", jsonData)
-                    setUserInfo(jsonData);
-                } else {
-                    console.error('Failed to fetch data:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    //             if (response.ok) {
 
-        // Call the fetchData function when the component mounts
-        fetchData();
+    //                 const jsonData = await response.json();
+    //                 console.log("JDATA", jsonData)
+    //             } else {
+    //                 console.error('Failed to fetch data:', response.statusText);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
 
 
-    }, []);
+    //     fetchData();
+
+
+    // }, []);
 
     // md:w-full
 
