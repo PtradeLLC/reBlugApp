@@ -28,7 +28,7 @@ export default function AllActiveComponent() {
                             )
                         ) : (
                             <CardBody className="flex my-4 flex-col gap-2 justify-center items-center">
-                                <p className="text-gray-700 text-tiny">Your reBlug schedule is empty.</p>
+                                <p className="text-gray-700 text-tiny">Your reBlug schedule is clear, Nice!</p>
                             </CardBody>
                         )}
                     </ul>

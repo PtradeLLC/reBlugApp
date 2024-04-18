@@ -24,7 +24,7 @@ export default function ContentTabs() {
                             </CardBody>
                         </Card>
                     </Tab>
-                    <Tab key="email" title="Email Activities">
+                    <Tab key="email" title="Marketing Activities">
                         {allEmail ? (
                             <CardBody>
                                 "All"
