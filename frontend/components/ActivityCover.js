@@ -21,7 +21,7 @@ export default function AllActiveComponent() {
                     removeWrapper
                     alt="Card background"
                     className="z-0 w-full h-full object-cover"
-                    src="/images/7venBlog.jpeg"
+                    src="/images/7venBlog.jpg"
                 />
             </Card>
             <Card className="col-span-12 sm:col-span-4 h-[300px]">
