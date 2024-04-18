@@ -3,7 +3,7 @@ import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 import AllActiveComponent from "./ActivityCover";
 
 export default function ContentTabs() {
-    const [isVertical, setIsVertical] = useState(true);
+    const [isVertical, setIsVertical] = useState(false);
     const [allActivities, setAllActivities] = useState(false);
     const [allEmail, setAllEmail] = useState(false);
     const [allBlogs, setAllBlogs] = useState(false);
@@ -12,7 +12,7 @@ export default function ContentTabs() {
 
     return (
         <div className="flex flex-col px-4">
-            <Switch className="mb-4" isSelected={isVertical} onValueChange={setIsVertical}>
+            <Switch className="mb-4" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>
                 Vertical
             </Switch>
             <div className="flex w-full flex-col">
