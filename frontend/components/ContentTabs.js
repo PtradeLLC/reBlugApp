@@ -7,9 +7,6 @@ export default function ContentTabs() {
     const [noActivity, setNoActivity] = useState(null);
 
 
-
-
-
     return (
         <div className="flex flex-col px-4">
             <Switch className="mb-4" isSelected={isVertical} onValueChange={setIsVertical}>
