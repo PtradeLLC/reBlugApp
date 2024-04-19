@@ -12,7 +12,7 @@ const CreditCartInput = () => {
             id="cardName"
             placeholder="Full Name"
           />
-          <div className="flex items-center justify-center relative w-14 h-9 bg-gray-300 border border-white border-opacity-20 rounded-md">
+          <div className="flex items-center justify-center relative w-14 h-9  border-white border-opacity-20 rounded-md">
             <svg
               className="text-gray-800 fill-current"
               xmlns="http://www.w3.org/2000/svg"
