@@ -478,12 +478,13 @@ export default function DashLay({ user }) {
                                             </div>
                                         </div>
                                         <div className='p-6 border-r'>
+                                            <span className="text-slate-500 text-sm font-thin">Promo: Feedback</span>
                                             <div className=''>
-                                                <h3 className="text-gray-900 font-semibold">Marketing Budget on us</h3>
+                                                <h3 className="text-gray-900 font-semibold">Your Marketing Budget on Us</h3>
                                                 <p className='text-gray-500 text-medium'>
                                                     Receive a $15,000 on your marketing
                                                     budget if our tools fail to deliver as promised.
-                                                    We'll review the campaign, and if it doesn't perform as expected, and we'll fund a {''}
+                                                    We'll review the campaign, and if it doesn't perform as expected, we'll fund a {''}
                                                     <a target='_blank' className='text-slate-700 underline' href='https://www.tremendous.com'>Tremendous</a> account in your name within 24 hours
                                                     with no strings attached. Spend it as you see fit.
                                                 </p>

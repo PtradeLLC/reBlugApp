@@ -85,7 +85,7 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-white font-medium text-base">Got an Idea for a marketing tool?</h4>
+                            <h4 className="text-white font-medium text-[14px]">Got Ideas for marketing tools?</h4>
                             <p className="text-tiny text-white">Start earning royalties for your ideas</p>
                             <p className="text-tiny text-white">Let's build together</p>
                         </div>
