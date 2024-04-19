@@ -21,7 +21,7 @@ async function fetchAllPosts() {
 
 async function generateArticleContent(item) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
     const generationConfig = {
         temperature: 0.7,

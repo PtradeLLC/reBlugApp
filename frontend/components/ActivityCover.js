@@ -75,6 +75,7 @@ export default function AllActiveComponent() {
                     alt="Relaxing app background"
                     className="z-0 w-full h-[300px] object-cover top-2"
                     src="/images/ideas.jpg"
+                    style={{ objectPosition: 'top' }}
                 />
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                     <div className="flex flex-grow gap-2 items-center">
@@ -84,8 +85,8 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-white font-medium text-xl">Got an Idea for a marketing tool?</h4>
-                            <p className="text-tiny text-white">Earn royalty for your ideas</p>
+                            <h4 className="text-white font-medium text-lg">Got an Idea for a marketing tool?</h4>
+                            <p className="text-tiny text-white">Start earn royalties for your ideas</p>
                             <p className="text-tiny text-white">Let's build together</p>
                         </div>
                     </div>
