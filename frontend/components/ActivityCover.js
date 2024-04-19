@@ -45,7 +45,7 @@ export default function AllActiveComponent() {
                     </ul>
                     <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                         <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
-                            Get notified.
+                            Start a project
                         </Button>
                     </CardFooter>
                 </div>
@@ -84,7 +84,7 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-gray-900 font-medium text-xl">Got an Idea for a marketing tool?</h4>
+                            <h4 className="text-white font-medium text-xl">Got an Idea for a marketing tool?</h4>
                             <p className="text-tiny text-white">Earn royalty for your ideas</p>
                             <p className="text-tiny text-white">Let's build together</p>
                         </div>

@@ -483,8 +483,8 @@ export default function DashLay({ user }) {
                                                 <p className='text-gray-500 text-medium'>
                                                     Receive a $15,000 on your marketing
                                                     budget if our tools fail to deliver as promised.
-                                                    All you have to do is show us it didn't perform, and we'll fund a
-                                                    <a target='_blank' className='text-slate-700 underline' href='https://www.tremendous.com'>Tremendous</a> account within 24 hours.
+                                                    We'll review the campaign, and if didn't perform as expected, and we'll fund {''}
+                                                    <a target='_blank' className='text-slate-700 underline' href='https://www.tremendous.com'>Tremendous</a> account in your name within 24 hours.
                                                 </p>
                                             </div>
                                             <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
@@ -493,7 +493,7 @@ export default function DashLay({ user }) {
                                                     onClick={handleClick}
                                                     className="flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                                 >
-                                                    So, Want to call our bluff?
+                                                    So, want to call our bluff?
                                                 </button>
                                             </div>
                                         </div>
