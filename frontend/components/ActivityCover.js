@@ -68,19 +68,19 @@ export default function AllActiveComponent() {
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-tiny text-gray-600 uppercase font-bold">reBlug Lab</p>
+                    <p className="text-tiny text-white uppercase font-bold">reBlug Lab</p>
                 </CardHeader>
                 <Image
                     removeWrapper
                     alt="Relaxing app background"
-                    className="z-0 w-full h-[300px] object-cover"
+                    className="z-0 w-full h-[300px] object-cover top-2"
                     src="/images/ideas.jpg"
                 />
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                     <div className="flex flex-grow gap-2 items-center">
                         <Image
                             alt="Breathing app icon"
-                            className="rounded-full w-10 h-11 bg-black"
+                            className="rounded-full w-4 h-4 bg-black"
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
