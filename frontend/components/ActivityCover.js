@@ -41,8 +41,8 @@ export default function AllActiveComponent() {
                             )
                         ) : (
                             <Card>
-                                <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
-                                    <div className="flex flex-col">
+                                <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2 shadow-none">
+                                    <div className="flex flex-col shadow-none">
                                         <p className="text-tiny text-gray-700">Your reBlug Calendar is clean.</p>
                                     </div>
                                 </CardBody>
@@ -75,7 +75,7 @@ export default function AllActiveComponent() {
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">reBlug Lab</p>
-                    <h4 className="text-white/90 font-medium text-xl">Your checklist for better sleep</h4>
+                    <h4 className="text-white/90 font-medium text-xl">Earn recurring royalty for your ideas</h4>
                 </CardHeader>
                 <Image
                     removeWrapper
@@ -91,7 +91,7 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <p className="text-tiny text-white/60">Breathing App</p>
+                            <p className="text-tiny text-white/60">Let's build tools</p>
                             <p className="text-tiny text-white/60">Get a good night's sleep.</p>
                         </div>
                     </div>
