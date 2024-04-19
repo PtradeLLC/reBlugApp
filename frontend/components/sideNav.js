@@ -19,6 +19,7 @@ import dynamic from 'next/dynamic';
 import Integration from "./Integration";
 import Roadmap from './Roadmap';
 import BlogTabs from './BlogTab';
+import CreditCartInput from './CreditCartInput';
 
 
 const MixedChart = dynamic(() => import('./Charts/OpenClick'), { ssr: false });
@@ -476,9 +477,9 @@ export default function DashLay({ user }) {
 
                                             </div>
                                         </div>
-                                        {/* <div className='mt-1 border-r'>
-                                    <Roadmap />
-                                </div> */}
+                                        <div className='mt-1 border-r'>
+                                            <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                                        </div>
                                     </section>
                                 </aside>
                             </div>
