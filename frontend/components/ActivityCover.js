@@ -15,7 +15,7 @@ export default function AllActiveComponent() {
                 <CardHeader className="absolute z-10 px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
                     <p className="text-tiny text-gray-900 uppercase font-bold">Your Calendar</p>
                 </CardHeader>
-                <div className="flex mt-2 flex-col gap-2 justify-center items-center">
+                <div className="flex mt-20 flex-col gap-2 justify-center items-center">
                     <ul>
                         {activity ? (
                             (
