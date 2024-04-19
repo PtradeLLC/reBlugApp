@@ -13,8 +13,8 @@ export default function AllActiveComponent() {
                 <CardBody className="w-[-webkit-fill-available] h-[-webkit-fill-available]">
                     <Calendar />
                 </CardBody>
-                <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
-                    <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
+                <CardFooter className="absolute gap-y-2 bg-white/30 bottom-0  border-t-1 border-zinc-100/50 z-10 justify-between">
+                    <Button className="text-tiny text-gray-700 flex justify-end" color="primary" radius="full" size="sm">
                         Get notified.
                     </Button>
                 </CardFooter>
