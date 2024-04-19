@@ -6,11 +6,11 @@ const CreditCartInput = () => {
       <div className="flex flex-col justify-around bg-gray-200 p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs mx-auto">
         <div className="flex flex-row items-center justify-between mb-3">
           <input
-            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow rounded-sm"
+            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow cursor-not-allowed rounded-sm"
             type="text"
             name="cardName"
             id="cardName"
-            placeholder="Full Name"
+            placeholder="Your marketing budget"
           />
           <div className="flex items-center justify-center relative w-14 h-9  border-white border-opacity-20 rounded-md">
             <svg
@@ -37,7 +37,7 @@ const CreditCartInput = () => {
         </div>
         <div className="flex flex-col space-y-3">
           <input
-            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
+            className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
             type="text"
             name="cardNumber"
             id="cardNumber"
@@ -45,14 +45,14 @@ const CreditCartInput = () => {
           />
           <div className="flex flex-row justify-between">
             <input
-              className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
+              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
               type="text"
               name="expiryDate"
               id="expiryDate"
               placeholder="MM/AA"
             />
             <input
-              className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
+              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
               type="text"
               name="cvv"
               id="cvv"

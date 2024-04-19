@@ -38,7 +38,7 @@ export default function AllActiveComponent() {
                         ) : (
                             <Card>
                                 <div className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mt-10">
-                                    <p className="text-tiny text-gray-700">Your reBlug Calendar is clean.</p>
+                                    <p className="text-tiny drop-shadow-md shadow-white text-gray-700">Your reBlug Calendar is clean.</p>
                                 </div>
                             </Card>
                         )}
@@ -61,7 +61,7 @@ export default function AllActiveComponent() {
                         <p className="text-black text-tiny">Available soon.</p>
                         <p className="text-black text-tiny">Get notified.</p>
                     </div>
-                    <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
+                    <Button className="text-tiny text-gray-700" radius="full" size="sm">
                         Notify Me
                     </Button>
                 </CardFooter>
