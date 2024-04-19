@@ -74,13 +74,13 @@ export default function AllActiveComponent() {
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-tiny text-white/60 uppercase font-bold">reBlug Lab</p>
-                    <h4 className="text-white/90 font-medium text-xl">Earn recurring royalty for your ideas</h4>
+                    <p className="text-tiny text-gray-600 uppercase font-bold">reBlug Lab</p>
+                    <h4 className="text-gray-900 font-medium text-xl">Got an ideas</h4>
                 </CardHeader>
                 <Image
                     removeWrapper
                     alt="Relaxing app background"
-                    className="z-0 w-full h-full object-cover"
+                    className="z-0 w-full h-[300px] object-cover"
                     src="/images/ideas.jpg"
                 />
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
@@ -91,8 +91,8 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <p className="text-tiny text-white/60">Let's build tools</p>
-                            <p className="text-tiny text-white/60">Get a good night's sleep.</p>
+                            <p className="text-tiny text-white">Let's build tools</p>
+                            <p className="text-tiny text-white">Get a good night's sleep.</p>
                         </div>
                     </div>
                     <Button className="text-tiny " radius="full" size="sm">Get App</Button>
