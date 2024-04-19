@@ -96,12 +96,12 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-white font-medium text-[14px]">Got Ideas for marketing tools?</h4>
-                            <p className="text-tiny text-white">Start earning royalties for your ideas</p>
+                            <h4 className="text-white font-medium text-[12px]">Got Ideas for marketing tools?</h4>
+                            <p className="text-tiny text-white">Earn recurring royalties for your ideas</p>
                             <p className="text-tiny text-white">Let's build together</p>
                         </div>
                     </div>
-                    <Button className="text-tiny " radius="full" size="sm">More info</Button>
+                    <Button className="text-tiny " radius="full" size="sm">Learn More</Button>
                 </CardFooter>
             </Card>
         </div >
