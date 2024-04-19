@@ -12,10 +12,9 @@ export default function AllActiveComponent() {
                 <Calendar className="col-span-12 h-[-webkit-fill-available]" />
             </Card>
             <Card className="col-span-12 sm:col-span-4 md:col-span-4 ">
-                <CardHeader className="absolute z-10 px-2 top-1 flex-col !items-start">
+                <CardHeader className="absolute z-10 px-2 top-1 flex-col bg-slate-300 shadow-md !items-start">
                     <p className="text-tiny text-gray-900 uppercase font-bold">Your Calendar</p>
                 </CardHeader>
-
                 <div className="flex mt-2 flex-col gap-2 justify-center items-center">
                     <ul>
                         {activity ? (
@@ -32,6 +31,11 @@ export default function AllActiveComponent() {
                             </CardBody>
                         )}
                     </ul>
+                    <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+                        <Button className="text-tiny" color="primary" radius="full" size="sm">
+                            Get notification.
+                        </Button>
+                    </CardFooter>
                 </div>
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
