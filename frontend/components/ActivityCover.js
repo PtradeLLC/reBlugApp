@@ -32,26 +32,17 @@ export default function AllActiveComponent() {
                                         <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
                                             <p className="text-gray-700 text-tiny">{activity}</p>
                                         </CardBody>
-                                        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-end mt-2">
-                                            <Button className="text-tiny text-gray-700 " color="primary" radius="full" size="sm">
-                                                Get notified.
-                                            </Button>
-                                        </CardFooter>
                                     </Card>
                                 </li>
+
                             )
                         ) : (
                             <Card>
                                 <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
                                     <div className="flex flex-col">
-                                        <p className="text-tiny text-white/60">Your reBlug Calendar is empty.</p>
+                                        <p className="text-tiny text-gray-700">Your reBlug Calendar is clean.</p>
                                     </div>
                                 </CardBody>
-                                <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-end mt-2">
-                                    <Button className="text-tiny text-gray-700 " color="primary" radius="full" size="sm">
-                                        Get notified.
-                                    </Button>
-                                </CardFooter>
                             </Card>
                         )}
                     </ul>
@@ -61,7 +52,7 @@ export default function AllActiveComponent() {
                         </Button>
                     </CardFooter>
                 </div>
-            </Card>
+            </Card >
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
                 <Card className="col-span-12 sm:col-span-7 md:col-span-7">
                     <CardBody>
@@ -104,6 +95,6 @@ export default function AllActiveComponent() {
                     <Button className="text-tiny " radius="full" size="sm">Get App</Button>
                 </CardFooter>
             </Card>
-        </div>
+        </div >
     );
 }
