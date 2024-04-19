@@ -10,8 +10,8 @@ export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
             <Card className="col-span-12 sm:col-span-7 md:col-span-7">
-                <CardBody>
-                    <Calendar className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                <CardBody className="w-[-webkit-fill-available] h-[-webkit-fill-available]">
+                    <Calendar />
                 </CardBody>
                 <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                     <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
@@ -28,20 +28,29 @@ export default function AllActiveComponent() {
                         {activity ? (
                             (
                                 <li>
-                                    <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
-                                        <p className="text-gray-700 text-tiny">{activity}</p>
-                                    </CardBody>
-                                    <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-end mt-2">
-                                        <Button className="text-tiny text-gray-700 " color="primary" radius="full" size="sm">
-                                            Get notified.
-                                        </Button>
-                                    </CardFooter>
+                                    <Card>
+                                        <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
+                                            <p className="text-gray-700 text-tiny">{activity}</p>
+                                        </CardBody>
+                                        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-end mt-2">
+                                            <Button className="text-tiny text-gray-700 " color="primary" radius="full" size="sm">
+                                                Get notified.
+                                            </Button>
+                                        </CardFooter>
+                                    </Card>
                                 </li>
                             )
                         ) : (
-                            <CardBody className="flex my-4 flex-col gap-2 justify-center items-center">
-                                <p className="text-gray-700 text-tiny">Your reBlug Calendar is clear, Nice!</p>
-                            </CardBody>
+                            <Card>
+                                <CardBody className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mb-2">
+                                    <p className="text-gray-700 text-tiny">No activities</p>
+                                </CardBody>
+                                <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-end mt-2">
+                                    <Button className="text-tiny text-gray-700 " color="primary" radius="full" size="sm">
+                                        Get notified.
+                                    </Button>
+                                </CardFooter>
+                            </Card>
                         )}
                     </ul>
                     <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
@@ -90,7 +99,7 @@ export default function AllActiveComponent() {
                             <p className="text-tiny text-white/60">Get a good night's sleep.</p>
                         </div>
                     </div>
-                    <Button radius="full" size="sm">Get App</Button>
+                    <Button className="text-tiny " radius="full" size="sm">Get App</Button>
                 </CardFooter>
             </Card>
         </div>

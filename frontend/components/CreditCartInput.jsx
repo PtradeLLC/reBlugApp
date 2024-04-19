@@ -6,7 +6,7 @@ const CreditCartInput = () => {
       <div className="flex flex-col justify-around bg-gray-200 p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs mx-auto">
         <div className="flex flex-row items-center justify-between mb-3">
           <input
-            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow"
+            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow rounded-sm"
             type="text"
             name="cardName"
             id="cardName"
@@ -37,7 +37,7 @@ const CreditCartInput = () => {
         </div>
         <div className="flex flex-col space-y-3">
           <input
-            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
+            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
             type="text"
             name="cardNumber"
             id="cardNumber"
@@ -52,7 +52,7 @@ const CreditCartInput = () => {
               placeholder="MM/AA"
             />
             <input
-              className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
+              className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
               type="text"
               name="cvv"
               id="cvv"
