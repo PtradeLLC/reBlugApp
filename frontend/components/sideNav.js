@@ -279,7 +279,7 @@ export default function DashLay({ user }) {
                                                                     </div>
                                                                     <div className="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                                                                         <h2 className="text-2xl font-semibold text-gray-900">
-                                                                            Welcome {session?.user?.firstName}
+                                                                            Welcome {session?.user?.name || user?.firstName}
                                                                         </h2>
                                                                         <Link href={"/profile"}> <h4>
                                                                             {/* {console.log(user.brandName)} */}

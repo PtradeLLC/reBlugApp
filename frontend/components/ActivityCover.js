@@ -12,7 +12,7 @@ export default function AllActiveComponent() {
                 <Calendar className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
             </Card>
             <Card className="col-span-12 sm:col-span-4 md:col-span-5 ">
-                <CardHeader className="absolute z-10 px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
+                <CardHeader className="absolute w-[-webkit-fill-available] px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
                     <p className="text-tiny text-gray-900 uppercase font-bold">Your Calendar</p>
                 </CardHeader>
                 <div className="flex mt-20 flex-col gap-2 justify-center items-center">
@@ -32,7 +32,7 @@ export default function AllActiveComponent() {
                             )
                         ) : (
                             <CardBody className="flex my-4 flex-col gap-2 justify-center items-center">
-                                <p className="text-gray-700 text-tiny">Your reBlug schedule is clear, Nice!</p>
+                                <p className="text-gray-700 text-tiny">Your reBlug Calendar is clear, Nice!</p>
                             </CardBody>
                         )}
                     </ul>

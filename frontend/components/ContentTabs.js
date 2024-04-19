@@ -25,15 +25,17 @@ export default function ContentTabs() {
                         </Card>
                     </Tab>
                     <Tab key="email" title="Marketing Activities">
-                        {allEmail ? (
-                            <CardBody>
-                                "All"
-                            </CardBody>
-                        ) : (
-                            <CardBody>
-                                You have no activity
-                            </CardBody>
-                        )}
+                        <Card>
+                            {allEmail ? (
+                                <CardBody>
+                                    "All"
+                                </CardBody>
+                            ) : (
+                                <CardBody>
+                                    You have no activity
+                                </CardBody>
+                            )}
+                        </Card>
                     </Tab>
                     <Tab key="blogs" title="Blog Activities">
                         <Card>
