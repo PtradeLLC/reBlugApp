@@ -8,10 +8,10 @@ export default function AllActiveComponent() {
 
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
-            <Card className="col-span-12 sm:col-span-7 md:col-span-8">
-                <Calendar className="col-span-12 h-[-webkit-fill-available]" />
+            <Card className="col-span-12 sm:col-span-7 md:col-span-7">
+                <Calendar className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
             </Card>
-            <Card className="col-span-12 sm:col-span-4 md:col-span-4 ">
+            <Card className="col-span-12 sm:col-span-4 md:col-span-5 ">
                 <CardHeader className="absolute z-10 px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
                     <p className="text-tiny text-gray-900 uppercase font-bold">Your Calendar</p>
                 </CardHeader>
@@ -36,7 +36,7 @@ export default function AllActiveComponent() {
                             </CardBody>
                         )}
                     </ul>
-                    <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+                    <CardFooter className="absolute bg-gray-700 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                         <Button className="text-tiny" color="primary" radius="full" size="sm">
                             Get notification.
                         </Button>
@@ -44,7 +44,7 @@ export default function AllActiveComponent() {
                 </div>
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
-                <CardHeader className="absolute z-10 top-1 flex-col items-start">
+                <CardHeader className="absolute top-1 flex-col items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">New</p>
                     <h4 className="text-black font-medium text-2xl">Acme camera</h4>
                 </CardHeader>
