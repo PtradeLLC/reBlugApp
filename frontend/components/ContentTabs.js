@@ -24,7 +24,7 @@ export default function ContentTabs() {
                             </CardBody>
                         </Card>
                     </Tab>
-                    <Tab key="email" title="Marketing Activities">
+                    <Tab key="email" title="Marketing">
                         <Card>
                             {allEmail ? (
                                 <CardBody>
@@ -37,7 +37,7 @@ export default function ContentTabs() {
                             )}
                         </Card>
                     </Tab>
-                    <Tab key="blogs" title="Blog Activities">
+                    <Tab key="blogs" title="Blogging">
                         <Card>
                             {allBlogs ? (
                                 <CardBody>
