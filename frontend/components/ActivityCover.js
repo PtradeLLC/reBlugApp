@@ -10,7 +10,14 @@ export default function AllActiveComponent() {
     return (
         <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-4">
             <Card className="col-span-12 sm:col-span-7 md:col-span-7">
-                <Calendar className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                <CardBody>
+                    <Calendar className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                </CardBody>
+                <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+                    <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
+                        Get notified.
+                    </Button>
+                </CardFooter>
             </Card>
             <Card className="col-span-12 sm:col-span-4 md:col-span-5 ">
                 <CardHeader className="absolute w-[-webkit-fill-available] px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
@@ -46,7 +53,9 @@ export default function AllActiveComponent() {
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
                 <Card className="col-span-12 sm:col-span-7 md:col-span-7">
-                    <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                    <CardBody>
+                        <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                    </CardBody>
                 </Card>
                 <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                     <div>
