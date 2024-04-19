@@ -69,7 +69,6 @@ export default function AllActiveComponent() {
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <p className="text-tiny text-gray-600 uppercase font-bold">reBlug Lab</p>
-                    <h4 className="text-gray-900 font-medium text-xl">Got an Idea for a marketing tool?</h4>
                 </CardHeader>
                 <Image
                     removeWrapper
@@ -85,8 +84,9 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
+                            <h4 className="text-gray-900 font-medium text-xl">Got an Idea for a marketing tool?</h4>
+                            <p className="text-tiny text-white">Earn royalty for your ideas</p>
                             <p className="text-tiny text-white">Let's build together</p>
-                            <p className="text-tiny text-white">Get a good night's sleep.</p>
                         </div>
                     </div>
                     <Button className="text-tiny " radius="full" size="sm">More info</Button>
