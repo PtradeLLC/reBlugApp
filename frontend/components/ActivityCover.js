@@ -25,7 +25,7 @@ export default function AllActiveComponent() {
                                     </CardBody>
                                     <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                                         <Button className="text-tiny" color="primary" radius="full" size="sm">
-                                            Get notification.
+                                            Get notified.
                                         </Button>
                                     </CardFooter>
                                 </li>
@@ -36,9 +36,9 @@ export default function AllActiveComponent() {
                             </CardBody>
                         )}
                     </ul>
-                    <CardFooter className="absolute bg-gray-700 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+                    <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
                         <Button className="text-tiny" color="primary" radius="full" size="sm">
-                            Get notification.
+                            Get notified.
                         </Button>
                     </CardFooter>
                 </div>
