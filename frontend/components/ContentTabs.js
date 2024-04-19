@@ -12,7 +12,7 @@ export default function ContentTabs() {
 
     return (
         <div className="flex flex-col px-2">
-            <Switch className="mb-4 sm:hidden" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>
+            <Switch className="mb-4 hidden" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>
                 Vertical
             </Switch>
             <div className="flex w-full flex-col">
