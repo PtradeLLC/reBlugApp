@@ -15,7 +15,7 @@ export default function ContentTabs() {
             <Switch className="mb-4 hidden" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>
                 Vertical
             </Switch>
-            <div className="flex w-full flex-col">
+            <div className="flex w-full flex-col overflow-auto">
                 <Tabs aria-label="Options" isVertical={isVertical}>
                     <Tab key="all" title="All Activities">
                         <Card>
