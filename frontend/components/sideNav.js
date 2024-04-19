@@ -477,7 +477,7 @@ export default function DashLay({ user }) {
 
                                             </div>
                                         </div>
-                                        <div className='mt-1 border-r'>
+                                        <div className='p-6 border-r'>
                                             <div className=''>
                                                 <p>$15,000 if our tools doesn't work as advertised</p>
                                             </div>
