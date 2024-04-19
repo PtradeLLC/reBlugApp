@@ -9,8 +9,9 @@ const CreditCartInput = () => {
             className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow cursor-not-allowed rounded-sm"
             type="text"
             name="cardName"
+            disabled
             id="cardName"
-            placeholder="Your marketing budget"
+            placeholder="Your Name"
           />
           <div className="flex items-center justify-center relative w-14 h-9  border-white border-opacity-20 rounded-md">
             <svg
@@ -40,6 +41,7 @@ const CreditCartInput = () => {
             className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
             type="text"
             name="cardNumber"
+            disabled
             id="cardNumber"
             placeholder="0000 0000 0000 0000"
           />
@@ -48,13 +50,15 @@ const CreditCartInput = () => {
               className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
               type="text"
               name="expiryDate"
+              disabled
               id="expiryDate"
-              placeholder="MM/AA"
+              placeholder="MM/YY"
             />
             <input
               className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
               type="text"
               name="cvv"
+              disabled
               id="cvv"
               placeholder="CVV"
             />

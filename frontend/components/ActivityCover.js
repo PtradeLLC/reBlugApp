@@ -36,11 +36,9 @@ export default function AllActiveComponent() {
 
                             )
                         ) : (
-                            <Card>
-                                <div className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mt-10">
-                                    <p className="text-tiny drop-shadow-md shadow-white text-gray-700">Your reBlug Calendar is clean.</p>
-                                </div>
-                            </Card>
+                            <div className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mt-10">
+                                <p className="text-tiny drop-shadow-md shadow-white text-gray-700">Your reBlug Calendar is clear.</p>
+                            </div>
                         )}
                     </ul>
                     <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
