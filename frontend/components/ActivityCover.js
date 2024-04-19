@@ -45,10 +45,6 @@ export default function AllActiveComponent() {
                 </div>
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
-                <CardHeader className="absolute top-1 flex-col items-start">
-                    <p className="text-tiny text-white/60 uppercase font-bold">New</p>
-                    <h4 className="text-black font-medium text-2xl">Acme camera</h4>
-                </CardHeader>
                 <Card className="col-span-12 sm:col-span-7 md:col-span-7">
                     <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
                 </Card>
