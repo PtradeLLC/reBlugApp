@@ -483,10 +483,9 @@ export default function DashLay({ user }) {
                                                 <p className='text-gray-500 text-medium'>
                                                     Receive a $15,000 on your marketing
                                                     budget if our tools fail to deliver as promised.
-                                                    We'll review the campaign, and if it doesn't perform as expected, and we'll fund {''}
+                                                    We'll review the campaign, and if it doesn't perform as expected, and we'll fund a {''}
                                                     <a target='_blank' className='text-slate-700 underline' href='https://www.tremendous.com'>Tremendous</a> account in your name within 24 hours
                                                     with no strings attached. Spend it as you see fit.
-
                                                 </p>
                                             </div>
                                             <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
