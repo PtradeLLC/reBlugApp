@@ -478,7 +478,13 @@ export default function DashLay({ user }) {
                                             </div>
                                         </div>
                                         <div className='mt-1 border-r'>
+                                            <div className=''>
+                                                <p>$15,000 if our tools doesn't work as advertised</p>
+                                            </div>
                                             <CreditCartInput className="w-[-webkit-fill-available] h-[-webkit-fill-available]" />
+                                            <div className=''>
+                                                <p>Give it a try</p>
+                                            </div>
                                         </div>
                                     </section>
                                 </aside>
