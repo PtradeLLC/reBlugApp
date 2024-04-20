@@ -76,7 +76,7 @@ export default function AllActiveComponent() {
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-tiny text-white uppercase font-bold">reBlug Lab</p>
+                    <p className="text-tiny text-white uppercase font-bold">Bloggers Hub</p>
                 </CardHeader>
                 <Image
                     removeWrapper

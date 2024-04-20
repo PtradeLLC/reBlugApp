@@ -22,7 +22,7 @@ const SideBarNarrow = () => {
 
     const sidebarNavigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
-        { name: 'Integrations', href: '/dashboard/userdb', icon: PowerIcon },
+        { name: 'Brands Connect', href: '/dashboard/userdb', icon: PowerIcon },
         { name: 'Marketing', href: '#', icon: MegaphoneIcon },
         { name: 'Blogging', href: '/posts', icon: UserGroupIcon },
         { name: 'Profile', href: '/profile', icon: CogIcon },
