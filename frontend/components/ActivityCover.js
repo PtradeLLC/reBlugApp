@@ -86,7 +86,7 @@ export default function AllActiveComponent() {
                     style={{ objectPosition: 'top' }}
                 />
                 <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
-                    An idea is worth a thousand words
+                    Brands + Bloggers = Growth
                 </span>
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                     <div className="flex flex-grow gap-2 items-center">
@@ -96,9 +96,9 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-white font-medium text-[12px]">Got Ideas for marketing tools?</h4>
-                            <p className="text-tiny text-white">Earn recurring royalties for your ideas</p>
-                            <p className="text-tiny text-white">Let's build together</p>
+                            <h4 className="text-white font-medium text-[12px]">Bloggers Hub</h4>
+                            <p className="text-tiny text-white">Where Brands and Bloggers Meet</p>
+                            <p className="text-tiny text-white">Let's market together</p>
                         </div>
                     </div>
                     <Button className="text-tiny " radius="full" size="sm">Learn More</Button>
