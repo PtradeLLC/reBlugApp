@@ -22,7 +22,8 @@ export default function Hero() {
         </defs>
         <rect width="100%" height="100%" strokeWidth={0} fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
       </svg>
-      <div className="mx-auto px-6 pb-24 pt-10 sm:pb-28 lg:flex lg:px-8 lg:py-36">
+      <div className="mx-auto px-6 pb-24 pt-10 sm:pb-28 lg:flex lg:px-8 lg:py-20">
+        {/* lg:py-36 */}
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0">
           <div className="mt-20 sm:mt-32 lg:mt-8">
 
