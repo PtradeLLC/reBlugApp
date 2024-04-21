@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 import AllActiveComponent from "./ActivityCover";
 import MarketingTab from "./MarketingTab";
+import AllEmailsTab from "./AllEmailsTab";
 
 
 export default function ContentTabs() {
@@ -34,7 +35,7 @@ export default function ContentTabs() {
                                 </CardBody>
                             ) : (
                                 <CardBody>
-                                    You have no activity
+                                    <AllEmailsTab />
                                 </CardBody>
                             )}
                         </Card>
