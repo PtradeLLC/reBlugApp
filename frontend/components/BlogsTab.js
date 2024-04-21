@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AllEmailsTab = () => {
+const BlogsTab = () => {
     return (
         <div>
             <div className="md:flex">
@@ -57,4 +57,4 @@ const AllEmailsTab = () => {
     )
 }
 
-export default AllEmailsTab
+export default BlogsTab
