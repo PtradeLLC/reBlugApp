@@ -3,6 +3,7 @@ import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 import AllActiveComponent from "./ActivityCover";
 import MarketingTab from "./MarketingTab";
 import BlogsTab from "./BlogsTab";
+import AllActivitiesTab from "./AllActivitiesTab";
 
 
 export default function ContentTabs() {
@@ -23,7 +24,7 @@ export default function ContentTabs() {
                     <Tab key="all" title="All Activities">
                         <Card>
                             <CardBody>
-                                <AllActiveComponent />
+                                <AllActivitiesTab />
                             </CardBody>
                         </Card>
                     </Tab>
@@ -44,7 +45,7 @@ export default function ContentTabs() {
                         <Card>
                             {allBlogs ? (
                                 <CardBody>
-                                    "All"
+                                    <BlogsTab />
                                 </CardBody>
                             ) : (
                                 <CardBody>

@@ -50,8 +50,6 @@ const MarketingTab = () => {
                     <p>The tab JavaScript swaps classNamees to control the content visibility and styling.</p>
                 </div>
             </div>
-
-
         </div>
     )
 }
