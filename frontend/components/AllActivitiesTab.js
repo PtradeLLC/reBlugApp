@@ -12,7 +12,7 @@ const AllActiveComponent = () => {
             <div class="..."><AreaActivities /></div>
             <div class="col-span-2 ..."><BlogActivities /></div>
             <div class="..."><Earnings /></div>
-            <div class="col-span-2 ..."><EarningActivities /></div>
+            <div class="col-span-2 ..."><Earnings /></div>
             <div class="..."><OpenVsClick /></div>
             <div class="..."><CalendarActivities /></div>
             {/* <div class="...">07</div> */}
