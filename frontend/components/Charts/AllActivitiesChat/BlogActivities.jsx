@@ -71,31 +71,10 @@ const BlogActivities = () => {
               <div data-popper-arrow></div>
             </div>
           </div>
-          <button
-            id="dateRangeButton"
-            data-dropdown-toggle="dateRangeDropdown"
-            data-dropdown-ignore-click-outside-className="datepicker"
-            type="button"
-            className="inline-flex items-center text-blue-700 dark:text-blue-600 font-medium hover:underline"
-          >
+          <div>
             <CurrentMonth />
-            <svg
-              className="w-3 h-3 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
-          <div
+          </div>
+          {/* <div
             id="dateRangeDropdown"
             className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-80 lg:w-96 dark:bg-gray-700 dark:divide-gray-600"
           >
@@ -148,7 +127,7 @@ const BlogActivities = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-end items-center">
           <button
