@@ -52,12 +52,12 @@ const AllActivitiesTab = () => {
                     <>
                         <div class="grid grid-cols-1 gap-4 w-full">
                             <div class="col-span-12 gap-4 w-full">
-                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available] gap-4"><AreaActivities /></div>
-                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><Earnings /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><AreaActivities /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><Earnings /></div>
                             </div >
                             <div class="grid grid-cols-1 gap-4 w-full">
-                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available] gap-4"><BlogActivities /></div>
-                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><OpenVsClick /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><BlogActivities /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><OpenVsClick /></div>
                             </div>
                         </div>
                     </>
