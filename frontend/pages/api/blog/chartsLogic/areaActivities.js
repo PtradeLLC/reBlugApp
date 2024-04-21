@@ -66,7 +66,7 @@ const options = {
     },
 }
 
-if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(document.getElementById("area-chart"), options);
-    chart.render();
-}
+// if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+//     const chart = new ApexCharts(document.getElementById("area-chart"), options);
+//     chart.render();
+// }
