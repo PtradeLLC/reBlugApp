@@ -1,6 +1,36 @@
 import React from "react";
 
 const AreaActivities = () => {
+  const AreaActivities = () => {
+    const [chartData, setChartData] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+
+    useEffect(() => {
+      fetch("/api/charts/areaActivities")
+        .then((response) => response.json())
+        .then((data) => setChartOptions(data));
+    }, []);
+
+    const chartCanvas = document.getElementById("area-chart");
+
+    if (chartCanvas && ApexCharts) {
+      let chart = new ApexCharts(chartCanvas, chartOptions);
+      chart.render();
+    }
+
+    useEffect(() => {
+      fetch("/api/charts/areaActivities")
+        .then((response) => response.json())
+        .then((data) => setChartData(data));
+    }, []);
+
+    return (
+      <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+        <div id="area-chart"></div>
+      </div>
+    );
+  };
+
   return (
     <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between mb-3">
