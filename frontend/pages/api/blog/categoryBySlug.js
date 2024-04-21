@@ -4,6 +4,8 @@ import { corsMiddleware } from '../cors';
 import { PrismaClient } from "@prisma/client";
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { Leap } from "@leap-ai/workflows";
+
 
 
 const connectionString = `${process.env.DATABASE_URL}`
@@ -49,57 +51,78 @@ export default async function handler(req, res) {
             for (const post of posts) {
                 if (post) {
 
-                    fetch('https://api.together.xyz/v1/completions')
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Failed to fetch response from the API');
-                            }
-                            return response.json();
-                        })
-                        .then(async response => {
-                            if (response.choices && response.choices.length > 0) {
-                                const imageData = response.choices[0].image_base64;
-                                if (imageData) {
-                                    const fileName = `post_${post.id}.jpg`;
-                                    const filePath = `./public/images/postImages/${fileName}`;
+                    const leap = new Leap({
+                        apiKey: `${process.env.LEAP_API_KEY}`,
+                    });
 
-                                    if (!fs.existsSync(filePath)) { // Check if file already exists
-                                        // fs.writeFileSync(filePath, Buffer.from(imageData, 'base64'));
-                                        console.log('Image saved:', filePath);
-                                    } else {
-                                        const options = {
-                                            method: 'GET',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
-                                            }
-                                        };
+                    const response = await leap.workflowRuns.workflow(
+                        {
+                            workflow_id: "wkf_i3F5UjpZ2Vg",
+                            webhook_url: "https://myapp.com/webhook",
+                            input: {
+                                first_name: "Sam",
+                                last_name: "Altman",
+                            },
+                        },
+                    );
+                    console.log(response.data);
 
-                                        fetch('https://api.cloudflare.com/client/v4/accounts/' + process.env.CLOUDFLARE_ACCOUNT_ID + '/images/v2', options)
-                                            .then(response => response.json())
-                                            .then(async response => {
-                                                console.log("RESPONSE IMAGE ", response);
-                                                if (response.result && response.result.length > 0) {
-                                                    console.log("ResultImag", response.result);
-                                                    // Add image to post
-                                                    // await prisma.post.update({
-                                                    //     where: { id: post.id },
-                                                    //     data: { featureImage: "" },
-                                                    // });
-                                                }
-                                            }
-                                            )
-                                            .catch(err => console.error(err));
-                                        console.log('Image already exists:', filePath);
-                                    }
-                                } else {
-                                    console.error('Image data not found in the response');
-                                }
-                            } else {
-                                console.error('No choices found in the response');
-                            }
-                        })
-                        .catch(err => console.error('Error fetching or processing response:', err));
+                    // fetch('https://api.together.xyz/v1/completions')
+                    //     .then(response => {
+                    //         if (!response.ok) {
+                    //             throw new Error('Failed to fetch response from the API');
+                    //         }
+                    //         return response.json();
+                    //     })
+                    //     .then(async response => {
+                    //         if (response.choices && response.choices.length > 0) {
+                    //             const imageData = response.choices[0].image_base64;
+                    //             if (imageData) {
+                    //                 const fileName = `post_${post.id}.jpg`;
+                    //                 const filePath = `./public/images/postImages/${fileName}`;
+
+                    //                 if (!fs.existsSync(filePath)) { // Check if file already exists
+                    //                     // fs.writeFileSync(filePath, Buffer.from(imageData, 'base64'));
+                    //                     console.log('Image saved:', filePath);
+                    //                 } else {
+                    //                     const options = {
+                    //                         method: 'GET',
+                    //                         headers: {
+                    //                             'Content-Type': 'application/json',
+                    //                             Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
+                    //                         }
+                    //                     };
+
+                    //                     const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
+                    //                         method: 'POST',
+                    //                         headers: {
+                    //                             'Content-Type': 'application/json',
+                    //                             'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+                    //                         },
+                    //                         body: JSON.stringify({
+                    //                             type: 'upload',
+                    //                             file: featureImage,
+                    //                         }),
+                    //                     });
+
+                    //                     const uploadedImageData = await uploadedImageResponse.json();
+
+                    //                     if (!uploadedImageData.success) {
+                    //                         console.error('Image upload failed:', uploadedImageData.errors);
+                    //                         return res.status(500).json({ message: 'Image upload failed.' });
+                    //                     }
+
+                    //                     // Extract the URL of the uploaded image from the response
+                    //                     const uploadedImageUrl = uploadedImageData.result.url;
+                    //                 }
+                    //             } else {
+                    //                 console.error('Image data not found in the response');
+                    //             }
+                    //         } else {
+                    //             console.error('No choices found in the response');
+                    //         }
+                    //     })
+                    //     .catch(err => console.error('Error fetching or processing response:', err));
                 }
             }
         }

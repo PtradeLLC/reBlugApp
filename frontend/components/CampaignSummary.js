@@ -21,7 +21,7 @@ const CampaignSummary = ({ selectedComponent, openModal, setOpenModal }) => {
                 {summary ? <div>Here are your summary {summary}</div> :
                     !selectedComponent && (
                         <>
-                            <span className="bg-white justify-center items-center text-center py-2 font-semibold px-2 text-l">Activities</span>
+                            <span className="bg-white justify-center items-center text-center py-2 font-thin px-2 text-md">Activities</span>
                             <div>
                                 <Summary />
                             </div>

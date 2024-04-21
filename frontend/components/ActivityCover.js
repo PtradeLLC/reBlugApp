@@ -76,16 +76,16 @@ export default function AllActiveComponent() {
             </Card>
             <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-tiny text-white uppercase font-bold">Bloggers Hub</p>
+                    <p className="text-tiny text-slate-900 uppercase font-bold">Bloggers Hub</p>
                 </CardHeader>
-                <Image
+                {/* <Image
                     removeWrapper
                     alt="Relaxing app background"
                     className="z-0 w-full h-[300px] object-cover top-2"
                     src="/images/ideas.jpg"
                     style={{ objectPosition: 'top' }}
-                />
-                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-white py-1.5 px-3 dark:bg-gray-900">
+                /> */}
+                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-slate-700 py-1.5 px-3 dark:bg-gray-900">
                     Brands + Bloggers = Growth
                 </span>
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
@@ -96,9 +96,9 @@ export default function AllActiveComponent() {
                             src="/images/youtube.png"
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-white font-medium text-[12px]">Bloggers Hub</h4>
-                            <p className="text-tiny text-white">Where Brands and Bloggers Meet</p>
-                            <p className="text-tiny text-white">Let's market together</p>
+                            <h4 className="text-slate-900 font-medium text-[12px]">Bloggers Hub</h4>
+                            <p className="text-tiny text-slate-900">Where Brands and Bloggers Meet</p>
+                            <p className="text-tiny text-slate-900">Let's market together</p>
                         </div>
                     </div>
                     <Button className="text-tiny " radius="full" size="sm">Learn More</Button>
