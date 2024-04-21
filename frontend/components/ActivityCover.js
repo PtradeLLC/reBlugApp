@@ -85,7 +85,7 @@ export default function AllActiveComponent() {
                     src="/images/ideas.jpg"
                     style={{ objectPosition: 'top' }}
                 /> */}
-                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-gray-800 text-slate-700 py-1.5 px-3 dark:bg-gray-900">
+                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-slate-600 text-white py-1.5 px-3 dark:bg-gray-700">
                     Brands + Bloggers = Growth
                 </span>
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
