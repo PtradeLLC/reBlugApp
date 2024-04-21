@@ -48,7 +48,7 @@ const BlogActivities = () => {
                 </p>
                 <a
                   href="#"
-                  className="flex items-center font-medium text-blue-600 dark:text-blue-500 dark:hover:text-blue-600 hover:text-blue-700 hover:underline"
+                  className="flex items-center font-medium text-slate-600 dark:text-slate-500 dark:hover:text-slate-600 hover:text-slate-700 hover:underline"
                 >
                   Read more{" "}
                   <svg
@@ -99,7 +99,7 @@ const BlogActivities = () => {
                   <input
                     name="start"
                     type="text"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-slate-500 dark:focus:border-slate-500"
                     placeholder="Start date"
                   />
                 </div>
@@ -121,7 +121,7 @@ const BlogActivities = () => {
                   <input
                     name="end"
                     type="text"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-slate-500 dark:focus:border-slate-500"
                     placeholder="End date"
                   />
                 </div>
@@ -322,7 +322,7 @@ const BlogActivities = () => {
           </div>
           <a
             href="#"
-            className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
+            className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Traffic analysis
             <svg
