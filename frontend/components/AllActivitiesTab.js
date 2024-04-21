@@ -8,7 +8,7 @@ const AllActiveComponent = () => {
     return (
         <>
             <span className="py-2 mt-2 font-semibold px-2 text-md">All Activities</span>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4 w-full">
                 <div class="col-span-2..."><AreaActivities /></div>
                 <div class="col-span-2..."><Earnings /></div>
                 <div class="col-span-2 ..."><BlogActivities /></div>

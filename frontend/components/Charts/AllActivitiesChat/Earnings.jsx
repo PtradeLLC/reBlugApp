@@ -5,7 +5,7 @@ const Earnings = () => {
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <h2 className="text-xl font-bold">Earnings</h2>
       <div className="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
-        <dl>
+        <dl className="mx-8">
           <dt className="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
             Profit
           </dt>

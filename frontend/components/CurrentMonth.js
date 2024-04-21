@@ -27,8 +27,7 @@ const CurrentMonth = () => {
     console.log("Current Time: " + currentHour + ":" + currentMinute + ":" + currentSecond);
 
     return (
-        <div className="max-w-xs w-full font-thin bg-slate-800 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-            // Displaying the current month in 'January, February, March' format, date, and time
+        <div className="flex justify-between max-w-xs w-full font-thin rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p>{new Date(currentDate).toLocaleString('default', { month: 'long' })}</p>
             <p>{currentDateOfMonth}</p>
             {/* <p>{currentHour + ":" + currentMinute + ":" + currentSecond}</p> */}
