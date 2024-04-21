@@ -68,9 +68,9 @@ const AllActivitiesTab = () => {
                     <div>
                         <AllActiveComponent />
                     </div>
-                    <div>
-                        <div>SUMMARY GOES HERE</div>
-                    </div>
+                </div>
+                <div>
+                    <div>SUMMARY GOES HERE</div>
                 </div>
             </div>
         </div>
