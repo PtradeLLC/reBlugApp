@@ -19,31 +19,6 @@ const AreaActivities = () => {
       <div id="area-chart"></div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div className="flex justify-between items-center pt-5">
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="lastDaysdropdown"
-            data-dropdown-placement="bottom"
-            className="text-xs font-thin text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-            type="button"
-          >
-            Something goes here
-            <svg
-              className="w-2.5 m-2.5 ms-1.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
-
           <div
             id="lastDaysdropdown"
             className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
