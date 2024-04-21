@@ -66,10 +66,9 @@ const AllActivitiesTab = () => {
                             </a>
                         </li> */}
                     </ul>
-
-                </div>
-                <div>
-                    <AllActiveComponent />
+                    <div>
+                        <AllActiveComponent />
+                    </div>
                 </div>
             </div>
         </div>
