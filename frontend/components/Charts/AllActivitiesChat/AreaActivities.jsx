@@ -14,18 +14,6 @@ const AreaActivities = () => {
           <p className="text-base font-normal text-gray-500 dark:text-gray-400">
             Something goes here
           </p>
-          <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-yellow-500 dark:text-yellow-500 text-center">
-            0%
-            <span
-              className="w-3 h-3 ms-1"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 14"
-            >
-              <span>--</span>
-            </span>
-          </div>
         </div>
       </div>
       <div id="area-chart"></div>
@@ -64,14 +52,6 @@ const AreaActivities = () => {
               className="py-2 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdownDefaultButton"
             >
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Something goes here
-                </a>
-              </li>
               <li>
                 <a
                   href="#"
