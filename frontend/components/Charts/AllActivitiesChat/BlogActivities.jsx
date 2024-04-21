@@ -1,4 +1,5 @@
 import React from "react";
+import CurrentMonth from "@/components/CurrentMonth";
 
 const BlogActivities = () => {
   return (
@@ -7,7 +8,7 @@ const BlogActivities = () => {
         <div className="flex-col items-center">
           <div className="flex items-center mb-1">
             <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">
-              Website traffic
+              Blog activity
             </h5>
             <svg
               data-popover-target="chart-info"
@@ -77,7 +78,7 @@ const BlogActivities = () => {
             type="button"
             className="inline-flex items-center text-blue-700 dark:text-blue-600 font-medium hover:underline"
           >
-            31 Nov - 31 Dev{" "}
+            <CurrentMonth />
             <svg
               className="w-3 h-3 ms-2"
               aria-hidden="true"
