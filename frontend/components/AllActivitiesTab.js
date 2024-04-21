@@ -1,15 +1,13 @@
 import React from 'react'
 import AreaActivities from './Charts/AllActivitiesChat/AreaActivities'
 import BlogActivities from './Charts/AllActivitiesChat/BlogActivities'
-import OpenVsClick from './Charts/AllActivitiesChat/OpenClick'
-import CalendarActivities from './Charts/AllActivitiesChat/CalendarActivities'
 import Earnings from './Charts/AllActivitiesChat/Earnings'
 
 
 const AllActiveComponent = () => {
     return (
         <>
-            <span>All Activities</span>
+            <span className="py-2 mt-2 font-semibold px-2 text-md">All Activities</span>
             <div class="grid grid-cols-2 gap-4">
                 <div class="col-span-2..."><AreaActivities /></div>
                 <div class="col-span-2..."><Earnings /></div>
@@ -56,21 +54,13 @@ const AllActivitiesTab = () => {
                                 My Club
                             </a>
                         </li>
-                        {/* <li>
-                            <a className="inline-flex items-center px-4 py-3 text-gray-400 rounded-lg cursor-not-allowed bg-gray-50 w-full dark:bg-gray-800 dark:text-gray-500">
-                                <svg className="w-4 h-4 me-2 text-gray-400 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
-                                </svg>
-                                <span className='text-red-500 text-sm'>VIP Hub</span>
-                            </a>
-                        </li> */}
                     </ul>
                     <div>
                         <AllActiveComponent />
                     </div>
                 </div>
                 <div>
-                    <div>SUMMARY GOES HERE</div>
+                    <div className="py-2 mt-2 font-semibold px-2 text-md">Activity Summary</div>
                 </div>
             </div>
         </div>
