@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
 import AllActiveComponent from "./ActivityCover";
+import MarketingTab from "./MarketingTab";
+
 
 export default function ContentTabs() {
     const [isVertical, setIsVertical] = useState(false);
     const [allActivities, setAllActivities] = useState(false);
-    const [allEmail, setAllEmail] = useState(false);
+    const [allEmail, setAllEmail] = useState(true);
     const [allBlogs, setAllBlogs] = useState(false);
     const [noActivity, setNoActivity] = useState(null);
 
@@ -28,7 +30,7 @@ export default function ContentTabs() {
                         <Card>
                             {allEmail ? (
                                 <CardBody>
-                                    "All"
+                                    <MarketingTab />
                                 </CardBody>
                             ) : (
                                 <CardBody>
