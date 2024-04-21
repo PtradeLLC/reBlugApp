@@ -50,14 +50,14 @@ const AllActivitiesTab = () => {
                 </ul>
                 {showAllActive ? <AllActiveComponent /> : (
                     <>
-                        <div class="grid grid-cols-2 gap-4 w-full">
-                            <div class="col-span-12 md:col-span-2 gap-4 w-full">
-                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><AreaActivities /></div>
-                                <div class="w-[-webkit-fill-available]"><Earnings /></div>
+                        <div class="grid grid-cols-1 gap-4 w-full">
+                            <div class="col-span-12 gap-4 w-full">
+                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available] gap-4"><AreaActivities /></div>
+                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><Earnings /></div>
                             </div >
-                            <div class="grid grid-cols-2 gap-4 w-full">
-                                <div class="col-span-12 sm:col-span-2"><BlogActivities /></div>
-                                <div class="col-span-12 sm:col-span-2"><OpenVsClick /></div>
+                            <div class="grid grid-cols-1 gap-4 w-full">
+                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available] gap-4"><BlogActivities /></div>
+                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><OpenVsClick /></div>
                             </div>
                         </div>
                     </>
