@@ -224,7 +224,7 @@ export default function DashLay({ user }) {
     //             if (response.ok) {
 
     //                 const jsonData = await response.json();
-    //                 console.log("JDATA", jsonData)
+    //                 // console.log("JDATA", jsonData)
     //             } else {
     //                 console.error('Failed to fetch data:', response.statusText);
     //             }
@@ -299,54 +299,14 @@ export default function DashLay({ user }) {
                                                                     </Link>
                                                                 </div>
                                                             </div>
-                                                            {/* <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center w-full">
-                                                                {cards.map((card) => (
-                                                                    <button
-                                                                        key={card.id}
-                                                                        type="button"
-                                                                        onClick={() => { setSelectedComponent(card.title); setSelectedKpi(card.title) }}
-                                                                        className="font-medium mx-auto md:mx-auto text-[#0f172a] hover:text-black flex items-center space-x-1"
-                                                                    >
-                                                                        <div
-                                                                            className={`overflow-hidden h-[50px]  w-[200px] flex justify-center items-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
-                                                                        >
-                                                                            <div className="">
-                                                                                <div className="flex text-sm text-center items-center">
-
-                                                                                    <Image src={card.icon} alt="icon" width={30} height={30} />
-                                                                                    <span>{card.title}</span>
-
-                                                                                </div>
-                                                                                <span className="text-xs block text-center">{card.category}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </button>
-                                                                ))}
-                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </section>
-                                                {/* <section className={`mt-4 ${selectedComponent === "Automate Marketing" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
-                                                    {selectedKpi && (
-                                                        <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3  sm:gap-px sm:divide-y-0` : ""} `}>
-                                                            <h2 className="sr-only">
-                                                                Summary
-                                                            </h2>
-                                                            {selectedComponent ? kpi(selectedComponent)
-                                                                :
-                                                                <div>
-                                                                    <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
-                                                                </div>
-                                                            }
-                                                        </div>
-
-                                                    )}
+                                                <section className={`mt-4 ${selectedComponent === "Automate Marketing" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
+                                                    <div>
+                                                        <CampaignSummary selectedComponent={selectedComponent} openModal={openModal} setOpenModal={setOpenModal} />
+                                                    </div>
                                                 </section>
-                                                <section className={`mt - 4 ${selectedComponent === "Automate Marketing" ? "blur-md backdrop-blur-md pointer-events-none cursor-not-allowed" : ""} `}>
-                                                    {selectedComponent === "Email Conversational" && <EmailTabs />}
-                                                    {selectedComponent === "Automate Marketing" && <MarketTabs />}
-                                                    {selectedComponent === "Bloggers Panel" && <BlogTabs />}
-                                                </section> */}
                                             </div>
 
                                         </div>
