@@ -8,13 +8,13 @@ import Earnings from './Charts/AllActivitiesChat/Earnings'
 
 const AllActiveComponent = () => {
     return (
-        <div class="grid grid-cols-3 gap-4">
-            <div class="..."><AreaActivities /></div>
-            <div class=" ..."><BlogActivities /></div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2..."><AreaActivities /></div>
+            <div class="col-span-2 ..."><BlogActivities /></div>
             <div class="col-span-2..."><Earnings /></div>
-            <div class="..."><OpenVsClick /></div>
-            <div class="..."><CalendarActivities /></div>
-            <div class="col-span-2 ..."><Earnings /></div>
+            <div class="col-span-2..."><OpenVsClick /></div>
+            {/* <div class="..."><CalendarActivities /></div>
+            <div class="col-span-2 ..."><Earnings /></div> */}
 
             {/* <div class="...">07</div> */}
         </div>
