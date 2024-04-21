@@ -3,7 +3,7 @@ import CurrentMonth from "@/components/CurrentMonth";
 
 const BlogActivities = () => {
   return (
-    <div className="max-w-sm-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between items-start w-full">
         <div className="flex-col items-center">
           <div className="flex items-center mb-1">

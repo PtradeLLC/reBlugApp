@@ -52,7 +52,7 @@ const AllActivitiesTab = () => {
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full">
-                                <div class="flex flex-col gap-4 w-full h-full"><AreaActivities /></div>
+                                <div class="flex flex-col gap-4 w-full h-full mb-2"><AreaActivities /></div>
                                 <div class="flex flex-col gap-4 w-full h-full"><Earnings /></div>
                             </div >
                             <div class="sm:flex-col gap-4 w-full">
