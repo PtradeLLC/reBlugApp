@@ -50,11 +50,10 @@ const AllActivitiesTab = () => {
                 </ul>
                 {showAllActive ? <AllActiveComponent /> : (
                     <>
-                        <div className="py-2 mt-2 font-semibold px-2 text-md">All Activities</div>
                         <div class="grid grid-cols-2 gap-4 w-full">
-                            <div class="col-span-12 sm:col-span-2 gap-4 w-full">
-                                <div class=""><AreaActivities /></div>
-                                <div class=""><Earnings /></div>
+                            <div class="col-span-12 md:col-span-2 gap-4 w-full">
+                                <div class="w-[-webkit-fill-available] h-[-webkit-fill-available]"><AreaActivities /></div>
+                                <div class="w-[-webkit-fill-available]"><Earnings /></div>
                             </div >
                             <div class="grid grid-cols-2 gap-4 w-full">
                                 <div class="col-span-12 sm:col-span-2"><BlogActivities /></div>
