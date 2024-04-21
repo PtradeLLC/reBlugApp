@@ -2,6 +2,7 @@ import React from 'react'
 import AreaActivities from './Charts/AllActivitiesChat/AreaActivities'
 import BlogActivities from './Charts/AllActivitiesChat/BlogActivities'
 import Earnings from './Charts/AllActivitiesChat/Earnings'
+import OpenVsClick from './Charts/AllActivitiesChat/OpenClick'
 
 
 const AllActiveComponent = () => {
@@ -12,8 +13,11 @@ const AllActiveComponent = () => {
                 <div class="grid grid-cols-2 gap-4 w-full">
                     <div class="col-span-2 md:col-span-1"><AreaActivities /></div>
                     <div class="col-span-2 md:col-span-1"><Earnings /></div>
+                </div >
+                <div class="grid grid-cols-2 gap-4 w-full">
+                    <div class="col-span-2 md:col-span-1"><BlogActivities /></div>
+                    <div class="col-span-2 md:col-span-1"><OpenVsClick /></div>
                 </div>
-                <div class="col-span-2"><BlogActivities /></div>
             </div>
         </>
     )
