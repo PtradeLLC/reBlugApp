@@ -22,8 +22,8 @@ import BlogTabs from './BlogTab';
 import CreditCartInput from './CreditCartInput';
 
 
-const MixedChart = dynamic(() => import('./Charts/OpenClick'), { ssr: false });
-const CircleChart = dynamic(() => import('./Charts/Delivered'), {
+const MixedChart = dynamic(() => import('./Charts/AllActivitiesChat/OpenClick'), { ssr: false });
+const CircleChart = dynamic(() => import('./Charts/AllActivitiesChat/AreaActivities'), {
     ssr: false,
 });
 

@@ -20,8 +20,8 @@ import DashLay from "../../components/sideNav";
 
 
 
-const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
-const CircleChart = dynamic(() => import('../../components/Charts/Delivered'), {
+const MixedChart = dynamic(() => import('../../components/Charts/AllActivitiesChat/OpenClick'), { ssr: false });
+const CircleChart = dynamic(() => import('../../components/Charts/AllActivitiesChat/AreaActivities'), {
     ssr: false,
 });
 
