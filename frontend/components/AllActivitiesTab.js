@@ -14,7 +14,7 @@ const AllActivitiesTab = () => {
 
     return (
         <div>
-            <div className="md:flex">
+            <div className="md:flex gap-4 w-full">
                 <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                     <li>
                         <a href="#" className="inline-flex items-center px-4 py-3 text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600" aria-current="page">
@@ -50,12 +50,12 @@ const AllActivitiesTab = () => {
                 </ul>
                 {showAllActive ? <AllActiveComponent /> : (
                     <>
-                        <div class="grid grid-cols-1 gap-4 w-full">
-                            <div class="col-span-12 gap-4 w-full">
+                        <div class="sm:flex-col gap-4 w-full">
+                            <div class="gap-4 w-full">
                                 <div class="flex flex-col gap-4 w-full h-full"><AreaActivities /></div>
                                 <div class="flex flex-col gap-4 w-full h-full"><Earnings /></div>
                             </div >
-                            <div class="grid grid-cols-1 gap-4 w-full">
+                            <div class="sm:flex-col gap-4 w-full">
                                 <div class="flex flex-col gap-4 w-full h-full"><BlogActivities /></div>
                                 <div class="flex flex-col gap-4 w-full h-full"><OpenVsClick /></div>
                             </div>
