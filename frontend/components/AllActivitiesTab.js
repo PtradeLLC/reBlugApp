@@ -8,16 +8,14 @@ import Earnings from './Charts/AllActivitiesChat/Earnings'
 
 const AllActiveComponent = () => {
     return (
-        <div class="grid grid-cols-2 gap-4">
-            <div class="col-span-2..."><AreaActivities /></div>
-            <div class="col-span-2..."><Earnings /></div>
-            <div class="col-span-2 ..."><BlogActivities /></div>
-            {/* <div class="col-span-2..."><OpenVsClick /></div> */}
-            {/* <div class="..."><CalendarActivities /></div>
-            <div class="col-span-2 ..."><Earnings /></div> */}
-
-            {/* <div class="...">07</div> */}
-        </div>
+        <>
+            <span>All Activities</span>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2..."><AreaActivities /></div>
+                <div class="col-span-2..."><Earnings /></div>
+                <div class="col-span-2 ..."><BlogActivities /></div>
+            </div>
+        </>
     )
 }
 
@@ -69,6 +67,9 @@ const AllActivitiesTab = () => {
                     </ul>
                     <div>
                         <AllActiveComponent />
+                    </div>
+                    <div>
+                        <div>SUMMARY GOES HERE</div>
                     </div>
                 </div>
             </div>
