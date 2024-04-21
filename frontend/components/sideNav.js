@@ -299,8 +299,7 @@ export default function DashLay({ user }) {
                                                                     </Link>
                                                                 </div>
                                                             </div>
-
-                                                            <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center w-full">
+                                                            {/* <div className="mt-2 grid sm:mx-auto md:mx-auto sm:grid-cols-1 grid-cols-1 gap-5 lg:grid-cols-3 items-center w-full">
                                                                 {cards.map((card) => (
                                                                     <button
                                                                         key={card.id}
@@ -323,11 +322,11 @@ export default function DashLay({ user }) {
                                                                         </div>
                                                                     </button>
                                                                 ))}
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </section>
-                                                <section className={`mt-4 ${selectedComponent === "Automate Marketing" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
+                                                {/* <section className={`mt-4 ${selectedComponent === "Automate Marketing" ? "pointer-events-none blur-md backdrop-blur-md cursor-not-allowed" : ""} `}>
                                                     {selectedKpi && (
                                                         <div className={`${selectedComponent ? `divide-y mt-4 divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-3  sm:gap-px sm:divide-y-0` : ""} `}>
                                                             <h2 className="sr-only">
@@ -347,7 +346,7 @@ export default function DashLay({ user }) {
                                                     {selectedComponent === "Email Conversational" && <EmailTabs />}
                                                     {selectedComponent === "Automate Marketing" && <MarketTabs />}
                                                     {selectedComponent === "Bloggers Panel" && <BlogTabs />}
-                                                </section>
+                                                </section> */}
                                             </div>
 
                                         </div>
