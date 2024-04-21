@@ -14,8 +14,7 @@ export default function AllActiveComponent() {
                     <Calendar />
                 </CardBody>
             </Card>
-            <Card className="col-span-12 sm:col-span-4 md:col-span-5 ">
-
+            <Card className="col-span-12 sm:col-span-5 md:col-span-5 ">
                 <CardHeader className="absolute w-[-webkit-fill-available] px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
                     <span className="flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -50,60 +49,6 @@ export default function AllActiveComponent() {
                     </CardFooter>
                 </div>
             </Card >
-            <Card isFooterBlurred className="w-full col-span-12 sm:col-span-5">
-                <Card className="col-span-12 sm:col-span-7 md:col-span-7">
-                    <CardBody>
-                        Integrations: 0<br />
-                        Notifications: 0 <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                    </CardBody>
-                </Card>
-                <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
-                    <div>
-                        <p className="text-black text-tiny">Available soon.</p>
-                        <p className="text-black text-tiny">Get notified.</p>
-                    </div>
-                    <Button className="text-tiny text-gray-700" radius="full" size="sm">
-                        Notify Me
-                    </Button>
-                </CardFooter>
-            </Card>
-            <Card isFooterBlurred className="w-full col-span-12 sm:col-span-7">
-                <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-tiny text-slate-900 uppercase font-bold">Bloggers Hub</p>
-                </CardHeader>
-                {/* <Image
-                    removeWrapper
-                    alt="Relaxing app background"
-                    className="z-0 w-full h-[300px] object-cover top-2"
-                    src="/images/ideas.jpg"
-                    style={{ objectPosition: 'top' }}
-                /> */}
-                <span className="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-slate-600 text-white py-1.5 px-3 dark:bg-gray-700">
-                    Brands + Bloggers = Growth
-                </span>
-                <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                    <div className="flex flex-grow gap-2 items-center">
-                        <Image
-                            alt="Breathing app icon"
-                            className="rounded-full w-4 h-4 bg-black"
-                            src="/images/youtube.png"
-                        />
-                        <div className="flex flex-col">
-                            <h4 className="text-slate-900 font-medium text-[12px]">Bloggers Hub</h4>
-                            <p className="text-tiny text-slate-900">Where Brands and Bloggers Meet</p>
-                            <p className="text-tiny text-slate-900">Let's market together</p>
-                        </div>
-                    </div>
-                    <Button className="text-tiny " radius="full" size="sm">Learn More</Button>
-                </CardFooter>
-            </Card>
         </div >
     );
 }
