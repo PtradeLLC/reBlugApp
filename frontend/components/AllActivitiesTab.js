@@ -3,6 +3,22 @@ import AreaActivities from './Charts/AllActivitiesChat/AreaActivities'
 import BlogActivities from './Charts/AllActivitiesChat/BlogActivities'
 import OpenVsClick from './Charts/AllActivitiesChat/OpenClick'
 import CalendarActivities from './Charts/AllActivitiesChat/CalendarActivities'
+import Earnings from './Charts/AllActivitiesChat/Earnings'
+
+
+const AllActiveComponent = () => {
+    return (
+        <div class="grid grid-cols-3 gap-4">
+            <div class="..."><AreaActivities /></div>
+            <div class="col-span-2 ..."><BlogActivities /></div>
+            <div class="..."><Earnings /></div>
+            <div class="col-span-2 ..."><EarningActivities /></div>
+            <div class="..."><OpenVsClick /></div>
+            <div class="..."><CalendarActivities /></div>
+            {/* <div class="...">07</div> */}
+        </div>
+    )
+}
 
 const AllActivitiesTab = () => {
     return (
@@ -50,15 +66,10 @@ const AllActivitiesTab = () => {
                             </a>
                         </li> */}
                     </ul>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="..."><AreaActivities /></div>
-                        <div class="col-span-2 ..."><BlogActivities /></div>
-                        <div class="..."><ClubActivities /></div>
-                        <div class="col-span-2 ..."><EarningActivities /></div>
-                        <div class="..."><OpenVsClick /></div>
-                        <div class="..."><CalendarActivities /></div>
-                        <div class="...">07</div>
-                    </div>
+
+                </div>
+                <div>
+                    <AllActiveComponent />
                 </div>
             </div>
         </div>
