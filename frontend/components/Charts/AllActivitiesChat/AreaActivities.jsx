@@ -4,19 +4,19 @@ import { options } from "./chartData/areaOptionsData";
 const AreaActivities = () => {
   const [defaultReport, setDefaultReport] = useState(null);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const chartCanvas = document.getElementById("area-chart");
-  //     if (chartCanvas && typeof ApexCharts !== "undefined") {
-  //       const chart = new ApexCharts(chartCanvas, options);
-  //       chart.render();
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const chartCanvas = document.getElementById("area-chart");
+      if (chartCanvas && typeof ApexCharts !== "undefined") {
+        const chart = new ApexCharts(chartCanvas, options);
+        chart.render();
+      }
+    }
+  }, []);
 
-  // const handleClick = () => {
-  //   setDefaultReport("Nothing to report yet");
-  // };
+  const handleClick = () => {
+    setDefaultReport("Nothing to report yet");
+  };
 
   return (
     <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -36,7 +36,7 @@ const AreaActivities = () => {
           </p>
         </div>
       </div>
-      {/* <div id="area-chart"></div> */}
+      <div id="area-chart"></div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div className="flex justify-between items-center pt-5">
           <div
