@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
-import CalendarComponent from "./CalendarComponent";
 import MarketingTab from "./MarketingTab";
 import BlogsTab from "./BlogsTab";
 import AllActivitiesTab from "./AllActivitiesTab";
@@ -13,6 +12,7 @@ export default function ContentTabs() {
     const [allBlogs, setAllBlogs] = useState(true);
     const [noActivity, setNoActivity] = useState(null);
 
+    console.log(AllActivitiesTab);
 
     return (
         <div className="flex flex-col px-2">

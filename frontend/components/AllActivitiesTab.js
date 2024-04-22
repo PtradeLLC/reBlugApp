@@ -6,12 +6,10 @@ import OpenVsClick from './Charts/AllActivitiesChat/OpenClick';
 import CalendarComponent from './CalendarComponent';
 
 const AllActivitiesTab = () => {
-    const [showAllActive, setShowAllActive] = useState(false);
+    const [showAllActive, setShowAllActive] = useState(true);
     const [activeTab, setActiveTab] = useState(null);
 
-    const handleButtonClick = () => {
-        setShowAllActive(!showAllActive);
-    };
+
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
@@ -53,7 +51,7 @@ const AllActivitiesTab = () => {
                     </li>
                 </ul>
                 {/* Conditionally render content based on activeTab */}
-                {activeTab === 'metrics' && (
+                {showAllActive || activeTab === 'metrics' && (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
