@@ -1,5 +1,3 @@
-// chartsData.js
-
 export const options = {
     chart: {
         height: "100%",
