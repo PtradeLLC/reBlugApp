@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import ApexCharts from "../../../pages/api/blog/chartsLogic/areaActivities";
+import { options } from "./chartData/areaOptionsData";
 
 const AreaActivities = () => {
   const [chartOptions, setChartOptions] = useState(null);
 
   useEffect(() => {
-    fetch("/api/charts/areaActivities")
+    fetch("/api/blog/chartsLogic/areaChartData")
       .then((response) => response.json())
       .then((data) => setChartOptions(data));
   }, []);

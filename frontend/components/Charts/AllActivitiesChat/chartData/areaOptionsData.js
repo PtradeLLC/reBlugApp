@@ -1,5 +1,6 @@
+// chartsData.js
 
-const options = {
+export const options = {
     chart: {
         height: "100%",
         maxWidth: "100%",
@@ -65,8 +66,3 @@ const options = {
         show: false,
     },
 }
-
-// if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-//     const chart = new ApexCharts(document.getElementById("area-chart"), options);
-//     chart.render();
-// }
