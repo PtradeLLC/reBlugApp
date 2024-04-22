@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Tabs, Tab, Card, CardBody, Switch } from "@nextui-org/react";
-import AllActiveComponent from "./ActivityCover";
+import CalendarComponent from "./CalendarComponent";
 import MarketingTab from "./MarketingTab";
 import BlogsTab from "./BlogsTab";
 import AllActivitiesTab from "./AllActivitiesTab";
