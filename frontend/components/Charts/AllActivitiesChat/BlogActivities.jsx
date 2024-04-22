@@ -2,6 +2,12 @@ import React from "react";
 import CurrentMonth from "@/components/CurrentMonth";
 
 const BlogActivities = () => {
+  const [defaultReport, setDefaultReport] = useState(null);
+
+  const handleClick = () => {
+    setDefaultReport("No data to analyze yet");
+  };
+
   return (
     <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between items-start w-full">
@@ -320,8 +326,10 @@ const BlogActivities = () => {
               </li>
             </ul>
           </div>
-          <a
-            href="#"
+          <button
+            onClick={handleClick}
+            value={defaultReport}
+            type="button"
             className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Traffic analysis
@@ -340,7 +348,7 @@ const BlogActivities = () => {
                 d="m1 9 4-4-4-4"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
