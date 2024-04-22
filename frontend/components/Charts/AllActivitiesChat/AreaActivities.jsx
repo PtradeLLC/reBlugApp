@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { options } from "./chartData/areaOptionsData";
 
 const AreaActivities = () => {
+  const [defaultReport, setDefaultReport] = useState(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const chartCanvas = document.getElementById("area-chart");
@@ -11,6 +13,10 @@ const AreaActivities = () => {
       }
     }
   }, []);
+
+  const handleClick = () => {
+    setDefaultReport("Nothing to report yet");
+  };
 
   return (
     <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -51,8 +57,10 @@ const AreaActivities = () => {
               </li>
             </ul>
           </div>
-          <a
-            href="#"
+          <button
+            onClick={handleClick}
+            type="button"
+            value={"report"}
             className="text-sm font-thin inline-flex items-center rounded-lg text-red-600 hover:text-red-700 dark:hover:text-red-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Report
@@ -71,7 +79,7 @@ const AreaActivities = () => {
                 d="m1 9 4-4-4-4"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
