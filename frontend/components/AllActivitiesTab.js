@@ -51,7 +51,7 @@ const AllActivitiesTab = () => {
                     </li>
                 </ul>
                 {/* Conditionally render content based on activeTab */}
-                {showAllActive && (
+                {showAllActive ? (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
@@ -64,8 +64,7 @@ const AllActivitiesTab = () => {
                             </div>
                         </div>
                     </>
-                )}
-                {activeTab === 'metrics' && (
+                ) : activeTab === 'metrics' ? (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
@@ -78,17 +77,16 @@ const AllActivitiesTab = () => {
                             </div>
                         </div>
                     </>
-                )}
-                {activeTab === 'calendar' && (
+                ) : activeTab === 'calendar' ? (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
-                                <div class="flex flex-col gap-4 w-full h-full mb-2"><CalendarComponent /></div>
+                                <CalendarComponent />
                             </div >
                         </div>
                     </>
-                )}
-                {activeTab === 'earn' && (
+
+                ) : activeTab === 'earn' ? (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
@@ -98,18 +96,16 @@ const AllActivitiesTab = () => {
 
                         </div>
                     </>
-                )}
-                {activeTab === 'club' && (
+                ) : activeTab === 'club' ? (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
-                                <div class="flex flex-col gap-4 w-full h-full mb-2">
-                                    List of Clubs
-                                </div>
+                                CLUB ACTIVITIES
                             </div >
                         </div>
                     </>
-                )}
+                ) : null
+                }
             </div>
         </div >
     );
