@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import CommentBox from './Blogs/BloggerChatBox';
 import { PrismaClient } from '@prisma/client';
-import BlogActivities from './Charts/AllActivitiesChat/BlogActivities';
 
 const prisma = new PrismaClient();
 
@@ -17,7 +16,7 @@ const BlogsTab = () => {
             case 'comments':
                 return (
                     <>
-                        <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                        <div className="gap-4 w-full mb-2 ">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Blog Comments</h3>
                             <CommentBox />
                         </div>
@@ -25,19 +24,19 @@ const BlogsTab = () => {
                 );
             case 'article':
                 return (
-                    <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                    <div className="gap-4 w-full mb-2 ">
                         CLUB ACTIVITIES
                     </div>
                 );
             case 'sponsors':
                 return (
-                    <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                    <div className="gap-4 w-full mb-2 ">
                         Sponsors
                     </div>
                 );
             case 'my-group':
                 return (
-                    <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                    <div className="gap-4 w-full mb-2 ">
                         My Group
                     </div>
                 );
