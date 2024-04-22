@@ -51,7 +51,21 @@ const AllActivitiesTab = () => {
                     </li>
                 </ul>
                 {/* Conditionally render content based on activeTab */}
-                {showAllActive || activeTab === 'metrics' && (
+                {showAllActive && (
+                    <>
+                        <div class="sm:flex-col gap-4 w-full">
+                            <div class="gap-4 w-full mb-2">
+                                <div class="flex flex-col gap-4 w-full h-full mb-2"><AreaActivities /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><Earnings /></div>
+                            </div >
+                            <div class="sm:flex-col gap-4 mb-2 w-full">
+                                <div class="flex flex-col gap-4 mb-2 w-full h-full"><BlogActivities /></div>
+                                <div class="flex flex-col gap-4 w-full h-full"><OpenVsClick /></div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {activeTab === 'metrics' && (
                     <>
                         <div class="sm:flex-col gap-4 w-full">
                             <div class="gap-4 w-full mb-2">
