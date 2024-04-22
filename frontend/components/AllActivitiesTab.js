@@ -51,7 +51,7 @@ const AllActivitiesTab = () => {
     };
 
     return (
-        <div>
+        <div className='w-full flex'>
             <div className="md:flex gap-4 w-full">
                 <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                     <li>
