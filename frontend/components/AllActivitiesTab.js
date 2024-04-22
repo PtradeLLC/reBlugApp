@@ -53,16 +53,16 @@ const AllActivitiesTab = () => {
     return (
         <div>
             <div className="flex gap-4 w-[11/12] h-[30]">
-                <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4 py-3 text-medium text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'metrics' ? 'active' : ''}`}>
+                <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4 py-3 text-sm text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'metrics' ? 'active' : ''}`}>
                     Metrics
                 </button>
-                <button title="Calendar" type="button" onClick={() => handleTabClick('calendar')} className={`inline-flex items-center px-4 py-3 text-medium rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'calendar' ? 'active' : ''}`}>
+                <button title="Calendar" type="button" onClick={() => handleTabClick('calendar')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'calendar' ? 'active' : ''}`}>
                     Calendar
                 </button>
-                <button title="Earning" type="button" onClick={() => handleTabClick('earn')} className={`inline-flex items-center px-4 py-3 text-medium rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'earn' ? 'active' : ''}`}>
+                <button title="Earning" type="button" onClick={() => handleTabClick('earn')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'earn' ? 'active' : ''}`}>
                     Earnings
                 </button>
-                <button title="MyClub" type="button" onClick={() => handleTabClick('club')} className={`inline-flex items-center px-4 py-3 text-medium rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'club' ? 'active' : ''}`}>
+                <button title="MyClub" type="button" onClick={() => handleTabClick('club')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'club' ? 'active' : ''}`}>
                     My Club
                 </button>
             </div>
