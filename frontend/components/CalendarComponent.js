@@ -8,11 +8,6 @@ export default function CalendarComponent() {
 
     return (
         <div className="w-full gap-2 grid grid-cols-12 px-4">
-            <Card className="col-span-12">
-                <CardBody className="flex">
-                    <Calendar />
-                </CardBody>
-            </Card>
             <Card className="col-span-12 ">
                 <CardHeader className=" px-4 top-1 flex-col bg-slate-100 mb-3 shadow-sm !items-start">
                     <span className="flex">
@@ -48,6 +43,12 @@ export default function CalendarComponent() {
                     </CardFooter>
                 </div>
             </Card >
+            <Card className="col-span-12">
+                <CardBody className="flex">
+                    <Calendar />
+                </CardBody>
+            </Card>
+
         </div >
     );
 }
