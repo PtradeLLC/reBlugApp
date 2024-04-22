@@ -52,7 +52,7 @@ const AllActivitiesTab = () => {
 
     return (
         <div>
-            <div className="flex gap-4 w-full">
+            <div className="flex gap-4 w-[w-11/12]">
                 <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4 py-3 text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'metrics' ? 'active' : ''}`}>
                     Metrics
                 </button>
