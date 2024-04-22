@@ -32,7 +32,7 @@ const AreaActivities = () => {
             </span>
           </h5>
           <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-            Something goes here
+            Nothing to do yet
           </p>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardFooter, Image, Button, CardBody } from "@nextui-org/react";
 import Calendar from "./Calendar";
-import CreditCartInput from "./CreditCartInput";
 
 export default function CalendarComponent() {
     // const { data: activity } = useSWR("/api/activity", fetcher);
