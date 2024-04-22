@@ -1,6 +1,12 @@
 import React from "react";
 
 const Earnings = () => {
+  const [defaultReport, setDefaultReport] = useState(null);
+
+  const handleClick = () => {
+    setDefaultReport("Nothing to report yet");
+  };
+
   return (
     <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <h2 className="text-xl font-bold">Earnings</h2>
@@ -49,7 +55,7 @@ const Earnings = () => {
             Expense
           </dt>
           <dd className="leading-none text-xl font-bold text-red-600 dark:text-red-500">
-            -0
+            0
           </dd>
         </dl>
       </div>
@@ -57,8 +63,12 @@ const Earnings = () => {
       <div id="bar-chart"></div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div className="flex justify-between items-center pt-5">
-          <a
-            href="#"
+          <button
+            onClick={() => {
+              handleClick;
+            }}
+            type="button"
+            value={"report"}
             className="uppercase text-sm font-thin inline-flex items-center rounded-lg text-red-600 hover:text-red-700 dark:hover:text-red-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Report
@@ -77,7 +87,10 @@ const Earnings = () => {
                 d="m1 9 4-4-4-4"
               />
             </svg>
-          </a>
+          </button>
+          <p className="text-base font-thin text-gray-500 dark:text-gray-400">
+            {defaultReport ? defaultReport : null}
+          </p>
         </div>
       </div>
     </div>
