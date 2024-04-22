@@ -49,7 +49,7 @@ const BlogsTab = () => {
 
     return (
         <div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-[11/12]">
                 <button title="Comments" type="button" onClick={() => handleTabClick('comments')} className={`inline-flex items-center px-4 py-3 text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'comments' ? 'active' : ''}`}>
                     Comments
                 </button>
