@@ -349,6 +349,9 @@ const BlogActivities = () => {
               />
             </svg>
           </button>
+          <p className="text-base font-thin text-gray-500 dark:text-gray-400">
+            {defaultReport ? defaultReport : null}
+          </p>
         </div>
       </div>
     </div>
