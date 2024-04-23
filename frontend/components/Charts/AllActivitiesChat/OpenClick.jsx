@@ -8,8 +8,8 @@ const OpenVsClick = () => {
           <div className="">
             <h2 className="text-xl font-bold">Email</h2>
           </div>
-          <div className="grid grid-cols-2 w-full">
-            <div className="flex justify-between">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex">
               <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none text-sm font-thin mb-2">
                 Click Rate
                 <svg
