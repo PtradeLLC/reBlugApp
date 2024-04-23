@@ -5,47 +5,47 @@ const OpenVsClick = () => {
     <div className="w-full bg-white mb-3 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between mb-5">
         <div className="grid gap-4">
-          <div className="col-span-12">
+          <div className="">
             <h2 className="text-xl font-bold">Email</h2>
           </div>
           <div className="flex justify-between w-full">
-            <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none text-sm font-thin mb-2">
-              Click Rate
-              <svg
-                data-popover-target="clicks-info"
-                data-popover-placement="bottom"
-                className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-            </h5>
-            <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
-              0
-            </p>
             <div>
-              <div>
-                <h5 className="inline-flex text-sm items-center text-gray-500 dark:text-gray-400 leading-none font-thin mb-2">
-                  Open Rate
-                  <svg
-                    data-popover-target="cpc-info"
-                    data-popover-placement="bottom"
-                    className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                  </svg>
-                </h5>
-                <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
-                  $0
-                </p>
-              </div>
+              <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none text-sm font-thin mb-2">
+                Click Rate
+                <svg
+                  data-popover-target="clicks-info"
+                  data-popover-placement="bottom"
+                  className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+              </h5>
+              <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
+                0
+              </p>
+            </div>
+            <div>
+              <h5 className="inline-flex text-sm items-center text-gray-500 dark:text-gray-400 leading-none font-thin mb-2">
+                Open Rate
+                <svg
+                  data-popover-target="cpc-info"
+                  data-popover-placement="bottom"
+                  className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+              </h5>
+              <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
+                $0
+              </p>
             </div>
           </div>
           <button
