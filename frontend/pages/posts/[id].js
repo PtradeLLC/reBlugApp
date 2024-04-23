@@ -362,6 +362,7 @@ const PostPage = ({ comments }) => {
 
                             <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                             <span className=''>
+                                {/* {console.log("COMMENTS", comments)} */}
                                 < CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
                             </span>
                             <form onSubmit={handleSubmit}>

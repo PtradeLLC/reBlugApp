@@ -50,6 +50,7 @@ export default async function handler(req, res) {
         if (posts.length > 0) {
             for (const post of posts) {
                 if (post) {
+                    console.log("POST", post);
 
                     // const leap = new Leap({
                     //     apiKey: `${process.env.LEAP_API_KEY}`,
@@ -67,66 +68,67 @@ export default async function handler(req, res) {
                     // );
                     // console.log(response.data);
 
-                    fetch('https://api.together.xyz/v1/completions')
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Failed to fetch response from the API');
-                            }
-                            return response.json();
-                        })
-                        .then(async response => {
-                            if (response.choices && response.choices.length > 0) {
-                                const imageData = response.choices[0].image_base64;
-                                if (imageData) {
-                                    const fileName = `post_${post.id}.jpg`;
-                                    const filePath = `./public/images/postImages/${fileName}`;
+                    // fetch('https://api.together.xyz/v1/completions')
+                    //     .then(response => {
+                    //         if (!response.ok) {
+                    //             throw new Error('Failed to fetch response from the API');
+                    //         }
+                    //         return response.json();
+                    //     })
+                    //     .then(async response => {
+                    //         if (response.choices && response.choices.length > 0) {
+                    //             const imageData = response.choices[0].image_base64;
+                    //             if (imageData) {
+                    //                 const fileName = `post_${post.id}.jpg`;
+                    //                 const filePath = `./public/images/postImages/${fileName}`;
 
-                                    if (!fs.existsSync(filePath)) { // Check if file already exists
-                                        // fs.writeFileSync(filePath, Buffer.from(imageData, 'base64'));
-                                        console.log('Image saved:', filePath);
-                                    } else {
-                                        const options = {
-                                            method: 'GET',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
-                                            }
-                                        };
+                    //                 if (!fs.existsSync(filePath)) { // Check if file already exists
+                    //                     // fs.writeFileSync(filePath, Buffer.from(imageData, 'base64'));
+                    //                     console.log('Image saved:', filePath);
+                    //                 } else {
+                    //                     const options = {
+                    //                         method: 'GET',
+                    //                         headers: {
+                    //                             'Content-Type': 'application/json',
+                    //                             Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`
+                    //                         }
+                    //                     };
 
-                                        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-                                            },
-                                            body: JSON.stringify({
-                                                type: 'upload',
-                                                file: featureImage,
-                                            }),
-                                        });
+                    //                     const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
+                    //                         method: 'POST',
+                    //                         headers: {
+                    //                             'Content-Type': 'application/json',
+                    //                             'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+                    //                         },
+                    //                         body: JSON.stringify({
+                    //                             type: 'upload',
+                    //                             file: featureImage,
+                    //                         }),
+                    //                     });
 
-                                        const uploadedImageData = await uploadedImageResponse.json();
+                    //                     const uploadedImageData = await uploadedImageResponse.json();
 
-                                        if (!uploadedImageData.success) {
-                                            console.error('Image upload failed:', uploadedImageData.errors);
-                                            return res.status(500).json({ message: 'Image upload failed.' });
-                                        }
+                    //                     if (!uploadedImageData.success) {
+                    //                         console.error('Image upload failed:', uploadedImageData.errors);
+                    //                         return res.status(500).json({ message: 'Image upload failed.' });
+                    //                     }
 
-                                        // Extract the URL of the uploaded image from the response
-                                        const uploadedImageUrl = uploadedImageData.result.url;
-                                    }
-                                } else {
-                                    console.error('Image data not found in the response');
-                                }
-                            } else {
-                                console.error('No choices found in the response');
-                            }
-                        })
-                        .catch(err => console.error('Error fetching or processing response:', err));
+                    //                     // Extract the URL of the uploaded image from the response
+                    //                     const uploadedImageUrl = uploadedImageData.result.url;
+                    //                 }
+                    //             } else {
+                    //                 console.error('Image data not found in the response');
+                    //             }
+                    //         } else {
+                    //             console.error('No choices found in the response');
+                    //         }
+                    //     })
+                    //     .catch(err => console.error('Error fetching or processing response:', err));
                 }
             }
         }
         // Return all posts and total number of pages
+        console.log("POSTS", posts);
         return res.status(200).json({ message: posts, totalPages });
     } catch (error) {
         console.error('Error generating content:', error);
