@@ -25,7 +25,7 @@ const OpenVsClick = () => {
                 </svg>
               </h5>
               <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
-                0
+                0%
               </p>
             </div>
             <div>
@@ -44,7 +44,7 @@ const OpenVsClick = () => {
                 </svg>
               </h5>
               <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
-                0
+                0%
               </p>
             </div>
           </div>

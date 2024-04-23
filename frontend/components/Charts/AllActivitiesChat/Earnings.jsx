@@ -43,7 +43,7 @@ const Earnings = () => {
 
       <div className="grid grid-cols-2 py-3">
         <dl>
-          <dt className="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
+          <dt className="text-base font-thin text-gray-500 dark:text-gray-400 pb-1">
             Income
           </dt>
           <dd className="leading-none text-xl font-bold text-green-500 dark:text-green-400">
@@ -51,7 +51,7 @@ const Earnings = () => {
           </dd>
         </dl>
         <dl>
-          <dt className="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
+          <dt className="text-base font-thin text-gray-500 dark:text-gray-400 pb-1">
             Expense
           </dt>
           <dd className="leading-none text-xl font-bold text-red-600 dark:text-red-500">
