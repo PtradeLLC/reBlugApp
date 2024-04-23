@@ -51,7 +51,7 @@ function Dropdown({ options, placeholder }) {
                                 <div className="flex items-center">
                                     {selectedOptions && selectedOptions.includes && selectedOptions.includes(option.id) && (
                                         <span
-                                            className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
+                                            className="absolute text-black inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
                                         >
                                             {option.name}
                                         </span>
@@ -61,7 +61,7 @@ function Dropdown({ options, placeholder }) {
                                         <span
                                             className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
                                         >
-                                            X
+                                            x
                                         </span>
                                     )}
                                 </div>
