@@ -4,7 +4,7 @@ const OpenVsClick = () => {
   return (
     <div className="w-full bg-white mb-3 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between mb-5">
-        <div className="grid gap-4 grid-cols-12">
+        <div className="grid gap-4">
           <div className="col-span-12">
             <h2 className="text-xl font-bold">Email</h2>
           </div>
