@@ -110,7 +110,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
 
 
     const handleSubmit = async (e) => {
-        console.log("Clicked handle:: ")
         e.preventDefault();
 
         try {
@@ -147,6 +146,8 @@ export default function EmailForm({ user, campaignEmail, className }) {
             if (!response.ok) {
                 throw new Error('Error submitting form.');
             }
+
+            console.log('Submitted form successfully!');
 
             setSubmitted(true);
             setLoading(false); // Stop loading
