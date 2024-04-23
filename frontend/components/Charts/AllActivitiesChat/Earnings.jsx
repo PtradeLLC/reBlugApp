@@ -55,7 +55,7 @@ const Earnings = () => {
             Expense
           </dt>
           <dd className="leading-none text-xl font-bold text-red-600 dark:text-red-500">
-            0
+            $0
           </dd>
         </dl>
       </div>
