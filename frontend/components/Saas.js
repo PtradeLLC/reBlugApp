@@ -25,7 +25,7 @@ function Dropdown({ options, placeholder }) {
             <p className="block text-sm font-medium leading-6 text-gray-900">Select Product Category<br /> (select multiple if applicable)</p>
             <button
                 type="button"
-                className="block w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                className="block w-full py-2 pl-3 pr-10 text-left bg-slate-600 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm"
                 onClick={toggleDropdown}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
@@ -34,7 +34,7 @@ function Dropdown({ options, placeholder }) {
                 <span className="block truncate">{selectedOptions?.length > 0 ? selectedOptions.map(id => options.find(option => option.id === id).name).join(', ') : placeholder}</span>
             </button>
             {isOpen && (
-                <div className="absolute mt-1 w-full rounded-md bg-white z-10 shadow-lg">
+                <div className="absolute mt-1 w-full rounded-md bg-gray-50 z-10 shadow-lg">
                     <ul
                         tabIndex={-1}
                         role="listbox"
@@ -45,7 +45,7 @@ function Dropdown({ options, placeholder }) {
                         {options.map(option => (
                             <li
                                 key={option.id}
-                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-red-500 hover:text-white"
+                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-red-500 hover:text-black"
                                 onClick={() => toggleOption(option.id)}
                             >
                                 <div className="flex items-center">
@@ -396,7 +396,6 @@ export default function Saas() {
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">http://</span>
                                     <input
                                         type="text"
                                         name="website"

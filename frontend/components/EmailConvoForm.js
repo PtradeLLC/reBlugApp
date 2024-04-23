@@ -169,21 +169,21 @@ export default function EmailForm({ user, campaignEmail, className }) {
     }, [files]);
 
 
-    // const handleClick = (e) => {
-    //     e.preventDefault();
-    //     const formDataObject = new FormData();
+    const handleClick = (e) => {
+        e.preventDefault();
+        const formDataObject = new FormData();
 
-    //     if (formData.files?.length === 0) {
-    //         console.error('No files to upload.');
-    //         return;
-    //     } else {
-    //         formDataObject.append('subject', formData.subject || ''); // Use value from the form input
-    //         formDataObject.append('email', user.email || email || '');
-    //         formDataObject.append('goal', formData.goal || '');
-    //         files.forEach((file) => formDataObject.append('files', file));
-    //         console.log(formDataObject);
-    //     }
-    // }
+        if (formData.files?.length === 0) {
+            console.error('No files to upload.');
+            return;
+        } else {
+            formDataObject.append('subject', formData.subject || ''); // Use value from the form input
+            formDataObject.append('email', user.email || email || '');
+            formDataObject.append('goal', formData.goal || '');
+            files.forEach((file) => formDataObject.append('files', file));
+            console.log(formDataObject);
+        }
+    }
 
     return (
         <>
