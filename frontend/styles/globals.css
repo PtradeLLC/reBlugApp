@@ -6,6 +6,10 @@
   max-width: 100%;
 }
 
+.force-small {
+  border-radius: 15px;
+}
+
 .abel-regular {
   font-family: "Abel", sans-serif;
   font-weight: 400;
