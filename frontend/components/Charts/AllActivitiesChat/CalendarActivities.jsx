@@ -3,7 +3,7 @@ import React from "react";
 const CalendarActivities = () => {
   return (
     <div>
-      <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+      <div className="w-full bg-white mb-3 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
         <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <div className="flex justify-center items-center">
