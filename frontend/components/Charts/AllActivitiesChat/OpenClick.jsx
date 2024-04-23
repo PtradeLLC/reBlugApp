@@ -8,7 +8,7 @@ const OpenVsClick = () => {
           <div className="col-span-12">
             <h2 className="text-xl font-bold">Email</h2>
           </div>
-          <div className="flex">
+          <div className="flex justify-between w-full">
             <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none text-sm font-thin mb-2">
               Click Rate
               <svg
@@ -22,131 +22,32 @@ const OpenVsClick = () => {
               >
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
               </svg>
-              <div
-                data-popover
-                id="clicks-info"
-                role="tooltip"
-                className="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
-              >
-                <div className="p-3 space-y-2">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    Clicks growth - Incremental
-                  </h3>
-                  <p>
-                    Report helps navigate cumulative growth of community
-                    activities. Ideally, the chart should have a growing trend,
-                    as stagnating chart signifies a significant decrease of
-                    community activity.
-                  </p>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    Calculation
-                  </h3>
-                  <p>
-                    For each date bucket, the all-time volume of activities is
-                    calculated. This means that activities in period n contain
-                    all activities up to period n, plus the activities generated
-                    by your community in period.
-                  </p>
-                  <a
-                    href="#"
-                    className="flex items-center font-medium text-slate-600 dark:text-slate-500 dark:hover:text-slate-600 hover:text-slate-700 hover:underline"
-                  >
-                    Read more{" "}
-                    <svg
-                      className="w-2 h-2 ms-1.5 rtl:rotate-180"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                  </a>
-                </div>
-                <div data-popper-arrow></div>
-              </div>
             </h5>
             <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
               0
             </p>
-          </div>
-          <div>
             <div>
-              <h5 className="inline-flex text-sm items-center text-gray-500 dark:text-gray-400 leading-none font-thin mb-2">
-                Open Rate
-                <svg
-                  data-popover-target="cpc-info"
-                  data-popover-placement="bottom"
-                  className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <div
-                  data-popover
-                  id="cpc-info"
-                  role="tooltip"
-                  className="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
-                >
-                  <div className="p-3 space-y-2">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                      CPC growth - Incremental
-                    </h3>
-                    <p>
-                      Report helps navigate cumulative growth of community
-                      activities. Ideally, the chart should have a growing
-                      trend, as stagnating chart signifies a significant
-                      decrease of community activity.
-                    </p>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                      Calculation
-                    </h3>
-                    <p>
-                      For each date bucket, the all-time volume of activities is
-                      calculated. This means that activities in period n contain
-                      all activities up to period n, plus the activities
-                      generated by your community in period.
-                    </p>
-                    <a
-                      href="#"
-                      className="flex items-center font-medium text-slate-600 dark:text-slate-500 dark:hover:text-slate-600 hover:text-slate-700 hover:underline"
-                    >
-                      Read more{" "}
-                      <svg
-                        className="w-2 h-2 ms-1.5 rtl:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m1 9 4-4-4-4"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                  <div data-popper-arrow></div>
-                </div>
-              </h5>
-              <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
-                $0
-              </p>
+              <div>
+                <h5 className="inline-flex text-sm items-center text-gray-500 dark:text-gray-400 leading-none font-thin mb-2">
+                  Open Rate
+                  <svg
+                    data-popover-target="cpc-info"
+                    data-popover-placement="bottom"
+                    className="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                  </svg>
+                </h5>
+                <p className="text-gray-900 dark:text-white text-2xl leading-none font-bold">
+                  $0
+                </p>
+              </div>
             </div>
           </div>
-          <div></div>
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="lastDaysdropdown"
