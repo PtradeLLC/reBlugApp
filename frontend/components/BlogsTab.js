@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CommentBox from './Blogs/CommentBox';
+import Comment from './Blogs/Comment';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -18,7 +18,7 @@ const BlogsTab = () => {
                     <>
                         <div className="gap-4 w-full mb-2 ">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Blog Comments</h3>
-                            <CommentBox />
+                            <Comment />
                         </div>
                     </>
                 );
