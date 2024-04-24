@@ -25,6 +25,47 @@ const BlogsTab = ({ comment }) => {
         setNewComment(event.target.value);
     };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        if (newComment.trim() !== '') {
+            try {
+                const { email } = session.user;
+                const title = uniqPost.title;
+                const content = uniqPost.content;
+
+                // Validate comment content
+                if (!newComment.trim()) {
+                    console.error('Comment content is empty');
+                    return;
+                }
+
+                const response = await fetch('/api/blog/commentsystem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: uniqPost.id })
+                }, { cache: 'force-cache' });
+
+                if (!response.ok) {
+                    throw new Error('Failed to post comment');
+                }
+
+                const responseData = await response.json();
+                setNewComment('');
+                setLoading(false);
+            } catch (error) {
+                console.error('Error posting comment:', error.message);
+            }
+        }
+    }
+
+
+
+
+
     const renderTabContent = () => {
         switch (activeTab) {
             case 'comments':
