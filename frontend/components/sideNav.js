@@ -241,11 +241,6 @@ export default function DashLay({ user }) {
 
     // md:w-full
 
-
-    console.log("USER", user)
-
-
-
     return (
         <div className='flex sm:justify-center md:justify-start'>
             <div className="">

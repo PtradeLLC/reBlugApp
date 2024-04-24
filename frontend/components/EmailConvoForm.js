@@ -168,8 +168,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
-    console.log("THIS IS SUBMITTED", submitted);
-
 
     // const handleClick = (e) => {
     //     e.preventDefault();

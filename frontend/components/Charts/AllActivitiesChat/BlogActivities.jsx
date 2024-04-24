@@ -330,7 +330,7 @@ const BlogActivities = () => {
             onClick={handleClick}
             value={defaultReport}
             type="button"
-            className="uppercase text-sm font-thin inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
+            className="text-sm font-thin inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Traffic analysis
             <svg

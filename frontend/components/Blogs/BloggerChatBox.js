@@ -29,7 +29,30 @@ const CommentBox = ({ comments }) => {
                         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
                     </div>
                     <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                        <p className="text-sm font-normal text-gray-900 dark:text-white"> That's awesome. I think our users will really appreciate the improvements.</p>
+                        <div classNameName="overflow-y-auto h-[320px]">
+                            {!loading ? (
+                                <>
+                                    {comments.length > 0 ? comments.map((comment) => (
+                                        <Comment key={comment.id} comment={comment} />
+                                    )) : (
+                                        <p classNameName='text-sm font-normal text-gray-900 dark:text-white'>
+                                            There is no comment posted yet for this article
+                                        </p>
+                                    )}
+                                </>
+                            ) : (
+                                <div classNameName="flex justify-center">
+                                    <CircularProgress
+                                        aria-label="Loading..."
+                                        size="sm"
+                                        value={value}
+                                        color="warning"
+                                        classNameName='mx-2'
+                                        showValueLabel={true}
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Delivered</span>
                 </div>
@@ -38,7 +61,7 @@ const CommentBox = ({ comments }) => {
                         <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
                     </svg>
                 </button>
-                <div id="dropdownDots" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
+                {/* <div id="dropdownDots" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                         <li>
                             <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reply</a>
@@ -56,34 +79,8 @@ const CommentBox = ({ comments }) => {
                             <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
                         </li>
                     </ul>
-                </div>
+                </div> */}
             </div>
-
-
-            {/* <div classNameName="overflow-y-auto h-[320px]">
-                {!loading ? (
-                    <>
-                        {comments.length > 0 ? comments.map((comment) => (
-                            <Comment key={comment.id} comment={comment} />
-                        )) : (
-                            <p classNameName='text-sm font-normal text-gray-900 dark:text-white'>
-                                There is no comment posted yet for this article
-                            </p>
-                        )}
-                    </>
-                ) : (
-                    <div classNameName="flex justify-center">
-                        <CircularProgress
-                            aria-label="Loading..."
-                            size="sm"
-                            value={value}
-                            color="warning"
-                            classNameName='mx-2'
-                            showValueLabel={true}
-                        />
-                    </div>
-                )}
-            </div> */}
         </div>
     );
 };
