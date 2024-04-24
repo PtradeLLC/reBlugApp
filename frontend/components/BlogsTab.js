@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CommentBox from './Blogs/BloggerChatBox';
+import CommentBox from './Blogs/CommentBox';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

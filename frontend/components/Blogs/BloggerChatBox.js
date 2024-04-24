@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
+import Comment from './Comment';
 
 const CommentBox = ({ comments }) => {
     const { data: session } = useSession();
