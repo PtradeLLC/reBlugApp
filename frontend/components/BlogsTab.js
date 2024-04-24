@@ -6,9 +6,23 @@ const prisma = new PrismaClient();
 
 const BlogsTab = ({ comment }) => {
     const [activeTab, setActiveTab] = useState('comments');
+    const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedComment, setEditedComment] = useState('');
+    const [editedCommentId, setEditedCommentId] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deletedCommentId, setDeletedCommentId] = useState(null);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
+    };
+
+    const handleCommentChange = (event) => {
+        setNewComment(event.target.value);
     };
 
     const renderTabContent = () => {
@@ -16,9 +30,42 @@ const BlogsTab = ({ comment }) => {
             case 'comments':
                 return (
                     <>
-                        <div className="gap-4 w-full mb-2 ">
+                        <div className="gap-4 w-full mb-2 mt-3 ">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Blog Comments</h3>
-                            <div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                    <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                        <label htmlFor="comment" className="sr-only">Share your thoughts</label>
+                                        <textarea
+                                            id="comment"
+                                            rows="4"
+                                            className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                                            placeholder="Share your thoughts..."
+                                            value={newComment}
+                                            onChange={handleCommentChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+                                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+                                            Post comment
+                                            {loading && (
+                                                <div className="flex justify-center">
+                                                    <CircularProgress
+                                                        aria-label="Loading..."
+                                                        size="sm"
+                                                        value={value}
+                                                        color="warning"
+                                                        className='mx-2'
+                                                        showValueLabel={true}
+                                                    />
+                                                </div>
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {/* <div>
                                 <div>
                                     <div className="flex mb-7 items-start gap-2.5">
                                         <div className="flex flex-col gap-1 w-full">
@@ -47,7 +94,7 @@ const BlogsTab = ({ comment }) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </>
                 );
