@@ -256,7 +256,7 @@ const BlogActivities = () => {
             id="dropdownDefaultButton"
             data-dropdown-toggle="lastDaysdropdown"
             data-dropdown-placement="bottom"
-            className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+            className="text-sm font-thin text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
             type="button"
           >
             Last 7 days
@@ -330,7 +330,7 @@ const BlogActivities = () => {
             onClick={handleClick}
             value={defaultReport}
             type="button"
-            className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
+            className="uppercase text-sm font-thin inline-flex items-center rounded-lg text-slate-600 hover:text-slate-700 dark:hover:text-slate-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
           >
             Traffic analysis
             <svg

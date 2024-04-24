@@ -179,7 +179,7 @@ const CalendarActivities = () => {
               id="dropdownDefaultButton"
               data-dropdown-toggle="lastDaysdropdown"
               data-dropdown-placement="bottom"
-              className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+              className="text-sm font-thin text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
               type="button"
             >
               Last 7 days

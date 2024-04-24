@@ -129,7 +129,7 @@ const OpenVsClick = () => {
         <div className="pt-5">
           <a
             href="#"
-            className="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+            className="px-5 py-2.5 text-sm font-thin text-white inline-flex items-center bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
           >
             <svg
               className="w-3.5 h-3.5 text-white me-2 rtl:rotate-180"
