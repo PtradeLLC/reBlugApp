@@ -118,7 +118,7 @@ export default async function handler(req, res) {
 
                         const result = await chat.sendMessage(prompt);
                         const response = result.response;
-                        res.status(200).json({ message: response.text() });
+                        res.status(200).json({ message: response });
 
                     } catch (error) {
                         // If JSON parsing fails, log the error and send a generic error response
