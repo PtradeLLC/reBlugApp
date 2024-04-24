@@ -4,7 +4,6 @@ import { authOptions } from "./auth/[...nextauth]";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
 
-
 export default async function handler(req, res) {
     try {
         const session = await getServerSession(req, res, authOptions);
@@ -51,82 +50,86 @@ export default async function handler(req, res) {
                     }
                 });
 
-                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                // LLM API CALL
 
+                const MODEL_NAME = "gemini-1.5-pro-latest";
 
-                const safetySettings = [
-                    {
-                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                    },
-                    {
-                        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-                    },
-                ];
+                async function runChat() {
+                    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
-                // For text-only input, use the gemini-1.0-pro model
-                const model = genAI.getGenerativeModel({
-                    model: 'gemini-1.5-pro',
-                    generationConfig: {
+                    const generationConfig = {
                         temperature: 0.9,
-                        topP: 1,
-                        topK: 1,
-                    },
-                    safetySettings,
-                });
+                        topK: 0,
+                        topP: 0.95,
+                        maxOutputTokens: 8192,
+                    };
 
+                    const safetySettings = [
+                        {
+                            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                        },
+                        {
+                            category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                            threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+                        },
+                    ];
 
-                const prompt = [
-                    `Your task is to analyze  '${savedData.about}', and write a short summary in a paragraph about it. Provide an informative description about how 'email marketing' can help its promotional efforts.
-                    
-                    Based on your "${savedData.about}" analysis above, do the following:
-                    * Write a short summary 'About Product' in a paragraph about '${savedData.about}' to show how much you know about the product .
-                    * Create a bulleted LIST of 'Ideal Customers' for the product as well as 'decision makers'. Highlight the individuals 'based on job titles' that are most likely to approve this product for purchase.
-                    * Leverage web data as a research tool to identify 'pain points' that the product solves for 'Ideal Customers' and compare it in contrast with '${savedData.pain_point01}', ' ${savedData.pain_point02}', '${savedData.pain_point03}', '${savedData.pain_point04}'.
-                    * Identify and provide a list of key characteristics of the 'Ideal Customers', and suggest how to engage and interest them in the product.
-                     Suggest ways to market and promote the product to 'Ideal Customers'.
-                     Base your strategies and suggestions for either 'B2B', B2C' or 'Both' - Identify which 'Customer Type' - 'B2B', B2C' or 'both' is most likely to purchase the product.
-                     Create a LIST of 'decision makers', individuals based on 'job titles' that are most likely to approve this product for purchase"
-                     When you provide your final answer, please 'EXPLAIN' the 'reasoning and assumptions' behind your suggested 'Ideal Customers', and why they are ideal for the product.
-                    
-                    Return your response in JSON format.
-                    `,
-                ];
+                    const chat = model.startChat({
+                        generationConfig,
+                        safetySettings,
+                        history: [
+                        ],
+                    });
 
-                // const result = await model.generateContentStream(prompt);
-                // const response = await result.response;
-                // const text = await response.text();
-                // const textArray = text.split('"message: "Data received and processed successfully",');
-                // const parsedText = JSON.parse(textArray[1]);
+                    const prompt = [
+                        `Your task is to analyze  '${savedData.about}', and write a short summary in a paragraph about it. Provide an informative description about how 'email marketing' can help its promotional efforts.
+                        
+                        Based on your "${savedData.about}" analysis above, do the following:
+                        * Write a short summary 'About Product' in a paragraph about '${savedData.about}' to show how much you know about the product .
+                        * Create a bulleted LIST of 'Ideal Customers' for the product as well as 'decision makers'. Highlight the individuals 'based on job titles' that are most likely to approve this product for purchase.
+                        * Leverage web data as a research tool to identify 'pain points' that the product solves for 'Ideal Customers' and compare it in contrast with '${savedData.pain_point01}', ' ${savedData.pain_point02}', '${savedData.pain_point03}', '${savedData.pain_point04}'.
+                        * Identify and provide a list of key characteristics of the 'Ideal Customers', and suggest how to engage and interest them in the product.
+                         Suggest ways to market and promote the product to 'Ideal Customers'.
+                         Base your strategies and suggestions for either 'B2B', B2C' or 'Both' - Identify which 'Customer Type' - 'B2B', B2C' or 'both' is most likely to purchase the product.
+                         Create a LIST of 'decision makers', individuals based on 'job titles' that are most likely to approve this product for purchase"
+                         When you provide your final answer, please 'EXPLAIN' the 'reasoning and assumptions' behind your suggested 'Ideal Customers', and why they are ideal for the product.
+                        
+                        Return your response in JSON format.
+                        `,
+                    ];
 
-                // console.log(parsedText, 'After processing From Server');
-                // res.status(200).json(parsedText);
-                // ... (rest of your code)
+                    const result = await chat.sendMessage(prompt);
+                    const response = result.response;
+                    const text = response.text();
 
-                const result = await model.generateContentStream(prompt);
-                const response = await result.response;
-                const text = response.text();
+                    console.log("TEXT FROM PRODUCT API:", { text });
+                    // Return the response as JSON
+                    res.status(200).json({ text });
+                }
 
+                runChat();
 
-                // Attempt to extract and parse valid JSON from the response
                 try {
                     // Send the parsed JSON data as the response
-                    res.status(200).json(text);
+                    // Return the response as JSON
+                    console.log("Lets see what happens next");
+
+                    // res.status(200).json(text);
                 } catch (error) {
                     // If JSON parsing fails, log the error and send a generic error response
                     console.error('Error parsing JSON from AI response:', error);
                     res.status(500).json({ message: 'Error processing AI response' });
                 }
-
             } else {
                 // User not found
                 res.status(404).json({ message: 'User not found' });

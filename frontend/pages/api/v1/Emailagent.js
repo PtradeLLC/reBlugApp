@@ -24,7 +24,6 @@ const upload = multer({ storage: storage, fileFilter: fileFilter, limits: { file
 
 export default async function handler(req, res) {
     // Handle file upload
-
     try {
         await upload.single('files')(req, res, async (err) => {
             if (err) {
@@ -38,7 +37,6 @@ export default async function handler(req, res) {
                 res.status(405).json({ error: 'Method not allowed' });
                 return;
             }
-
 
             const formDataObject = { ...req.body, file: req.file };
             console.log('formData fom backend', formDataObject); // Log the form data
