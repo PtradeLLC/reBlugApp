@@ -48,7 +48,7 @@ const BlogsTab = () => {
 
     return (
         <div>
-            <div className="flex gap-4 w-[11/12] h-[30]">
+            <div className="flex gap-4 blogCommentButtons">
                 <button title="Comments" type="button" onClick={() => handleTabClick('comments')} className={`inline-flex items-center px-4 py-3 text-sm text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'comments' ? 'active' : ''}`}>
                     Comments
                 </button>
@@ -56,7 +56,7 @@ const BlogsTab = () => {
                     Metrics
                 </button>
                 <button title="Articles" type="button" onClick={() => handleTabClick('article')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'article' ? 'active' : ''}`}>
-                    Write an Articles
+                    Write Article
                 </button>
                 <button title="Sponsors" type="button" onClick={() => handleTabClick('sponsors')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'sponsors' ? 'active' : ''}`}>
                     My Sponsors
