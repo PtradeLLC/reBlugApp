@@ -104,21 +104,13 @@ export default async function handler(req, res) {
                         const chat = model.startChat({
                             generationConfig,
                             safetySettings,
-                            history: [
-                                {
-                                    role: "user",
-                                    parts: [{ text: prompt }],
-                                },
-                                {
-                                    role: "model",
-                                    parts: [{ text: "" }],
-                                },
-                            ],
+                            history: [],
                         });
 
                         const result = await chat.sendMessage(prompt);
                         const response = result.response;
-                        res.status(200).json({ message: response });
+                        const text = response.text;
+                        res.status(200).json({ message: text });
 
                     } catch (error) {
                         // If JSON parsing fails, log the error and send a generic error response
