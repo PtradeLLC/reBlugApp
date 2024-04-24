@@ -107,8 +107,6 @@ export default async function handler(req, res) {
                         }
                     });
 
-                    console.log('createdComment', createdComment);
-
                     if (createdComment) {
                         const allComments = await prisma.comment.findMany({
                             where: {

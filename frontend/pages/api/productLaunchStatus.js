@@ -53,13 +53,14 @@ export default async function handler(req, res) {
                 // LLM API CALL
 
                 const MODEL_NAME = "gemini-1.5-pro-latest";
+                const API_KEY = process.env.GEMINI_API_KEY;
 
                 async function runChat() {
-                    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                    const genAI = new GoogleGenerativeAI(API_KEY);
                     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
                     const generationConfig = {
-                        temperature: 0.9,
+                        temperature: 1,
                         topK: 0,
                         topP: 0.95,
                         maxOutputTokens: 8192,
@@ -84,16 +85,9 @@ export default async function handler(req, res) {
                         },
                     ];
 
-                    const chat = model.startChat({
-                        generationConfig,
-                        safetySettings,
-                        history: [
-                        ],
-                    });
-
                     const prompt = [
                         `Your task is to analyze  '${savedData.about}', and write a short summary in a paragraph about it. Provide an informative description about how 'email marketing' can help its promotional efforts.
-                        
+
                         Based on your "${savedData.about}" analysis above, do the following:
                         * Write a short summary 'About Product' in a paragraph about '${savedData.about}' to show how much you know about the product .
                         * Create a bulleted LIST of 'Ideal Customers' for the product as well as 'decision makers'. Highlight the individuals 'based on job titles' that are most likely to approve this product for purchase.
@@ -103,33 +97,37 @@ export default async function handler(req, res) {
                          Base your strategies and suggestions for either 'B2B', B2C' or 'Both' - Identify which 'Customer Type' - 'B2B', B2C' or 'both' is most likely to purchase the product.
                          Create a LIST of 'decision makers', individuals based on 'job titles' that are most likely to approve this product for purchase"
                          When you provide your final answer, please 'EXPLAIN' the 'reasoning and assumptions' behind your suggested 'Ideal Customers', and why they are ideal for the product.
-                        
-                        Return your response in JSON format.
                         `,
                     ];
+                    try {
 
-                    const result = await chat.sendMessage(prompt);
-                    const response = result.response;
-                    const text = response.text();
+                        const chat = model.startChat({
+                            generationConfig,
+                            safetySettings,
+                            history: [
+                                {
+                                    role: "user",
+                                    parts: [{ text: prompt }],
+                                },
+                                {
+                                    role: "model",
+                                    parts: [{ text: "" }],
+                                },
+                            ],
+                        });
 
-                    console.log("TEXT FROM PRODUCT API:", { text });
-                    // Return the response as JSON
-                    res.status(200).json({ text });
+                        const result = await chat.sendMessage(prompt);
+                        const response = result.response;
+                        res.status(200).json({ message: response.text() });
+
+                    } catch (error) {
+                        // If JSON parsing fails, log the error and send a generic error response
+                        console.error('Error parsing JSON from AI response:', error);
+                        res.status(500).json({ message: 'Error processing AI response' });
+                    }
                 }
 
                 runChat();
-
-                try {
-                    // Send the parsed JSON data as the response
-                    // Return the response as JSON
-                    console.log("Lets see what happens next");
-
-                    // res.status(200).json(text);
-                } catch (error) {
-                    // If JSON parsing fails, log the error and send a generic error response
-                    console.error('Error parsing JSON from AI response:', error);
-                    res.status(500).json({ message: 'Error processing AI response' });
-                }
             } else {
                 // User not found
                 res.status(404).json({ message: 'User not found' });
