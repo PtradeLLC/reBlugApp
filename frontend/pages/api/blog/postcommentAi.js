@@ -4,8 +4,6 @@ const prisma = new PrismaClient();
 
 
 export default async function handler(req, res) {
-    // const { email } = req.body;
-    const email = "info@publictrades.com"
 
     const user = await prisma.user.findUnique({
         where: {
@@ -21,10 +19,9 @@ export default async function handler(req, res) {
             userId: user.id
         },
         include: {
-            comments: true
-        }
+            comments: true,
+            aiResponses: true
+        },
     })
-    console.log(posts);
-
     res.status(200).json(posts);
 }
