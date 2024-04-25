@@ -99,8 +99,8 @@ const BlogsTab = ({ comment }) => {
                                 {posts && posts.map((post) => (
                                     <>
                                         <div className="flex justify-between px-4 ">
-                                            <img className='w-10 h-10 rounded' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
-                                            <div>{post.title}</div>
+                                            <img className='w-7 h-7 rounded mr-2 ' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
+                                            <div className='text-sm'>{post.title}</div>
                                         </div>
                                     </>
                                 ))}
