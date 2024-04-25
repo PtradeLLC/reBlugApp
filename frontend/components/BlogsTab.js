@@ -85,6 +85,7 @@ const BlogsTab = ({ comment }) => {
                             <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
                             {posts && posts.map((post) => (
                                 <>
+                                    {console.log(post)}
                                     <div className="flex justify-between">
                                         <img className='w-10 h-10 rounded' src={post.featureImage} alt={post.title} />
                                         <div>{post.title}</div>
