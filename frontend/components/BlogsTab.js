@@ -9,13 +9,7 @@ const BlogsTab = ({ comment }) => {
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedComment, setEditedComment] = useState('');
-    const [editedCommentId, setEditedCommentId] = useState(null);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [deletedCommentId, setDeletedCommentId] = useState(null);
+    const [posts, setPosts] = useState([]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -41,30 +35,44 @@ const BlogsTab = ({ comment }) => {
                     return;
                 }
 
-                const response = await fetch('/api/blog/commentsystem', {
+                const res = await fetch('/api/blog/postcommentAi', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: uniqPost.id })
+                    body: JSON.stringify({ email: email })
                 }, { cache: 'force-cache' });
 
-                if (!response.ok) {
+                if (!res.ok) {
                     throw new Error('Failed to post comment');
                 }
 
-                const responseData = await response.json();
-                setNewComment('');
-                setLoading(false);
+                const data = await res.json();
+
+                if (data) {
+                    setPosts(data);
+                };
+
+                // const response = await fetch('/api/blog/commentsystem', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: uniqPost.id })
+                // }, { cache: 'force-cache' });
+
+                // if (!response.ok) {
+                //     throw new Error('Failed to post comment');
+                // }
+
+                // const responseData = await response.json();
+                // setNewComment('');
+                // setLoading(false);
             } catch (error) {
                 console.error('Error posting comment:', error.message);
             }
         }
     }
-
-
-
-
 
     const renderTabContent = () => {
         switch (activeTab) {
@@ -72,7 +80,15 @@ const BlogsTab = ({ comment }) => {
                 return (
                     <>
                         <div className="gap-4 w-full mb-2 mt-3 ">
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Blog Comments</h3>
+                            <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
+                            {posts && posts.map((post) => (
+                                <>
+                                    <div className="flex justify-between">
+                                        <img className='w-10 h-10 rounded' src={post.featureImage} alt={post.title} />
+                                        <div>{post.title}</div>
+                                    </div>
+                                </>
+                            ))}
                             <form onSubmit={handleSubmit}>
                                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                                     <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -189,50 +205,4 @@ const BlogsTab = ({ comment }) => {
     )
 }
 
-export default BlogsTab
-
-export async function getServerSideProps(context) {
-    const { req } = context;
-
-    const session = req.session;
-
-    if (!session) {
-        console.log("Session not found");
-        return;
-    }
-
-    console.log("SESSION", session);
-
-    // const user = await prisma.user.findUnique({
-    //     where: {
-    //         id: id
-    //     }
-    // });
-
-    // const singlePost = await prisma.post.Many({
-    //     where: {
-    //         id: id,
-    //     },
-    //     include: {
-    //         comments: {
-    //             include: {
-    //                 AiResponse: true,
-    //                 user: {
-    //                     select: {
-    //                         firstName: true,
-    //                         email: true
-    //                     }
-    //                 }
-    //             },
-    //         },
-    //         category: true
-    //     },
-    // });
-
-    return {
-        props: {
-            // posts,
-            // aiResponse
-        },
-    }
-}
+export default BlogsTab;

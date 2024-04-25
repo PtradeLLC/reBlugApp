@@ -11,7 +11,7 @@ const OpenVsClick = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none text-sm font-thin mb-2">
-                Click Rate
+                Total Click Rate
                 <svg
                   data-popover-target="clicks-info"
                   data-popover-placement="bottom"
@@ -30,7 +30,7 @@ const OpenVsClick = () => {
             </div>
             <div>
               <h5 className="inline-flex text-sm items-center text-gray-500 dark:text-gray-400 leading-none font-thin mb-2">
-                Open Rate
+                Total Open Rate
                 <svg
                   data-popover-target="cpc-info"
                   data-popover-placement="bottom"
