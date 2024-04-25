@@ -142,7 +142,7 @@ const BlogsTab = ({ comment }) => {
             case 'article':
                 return (
                     <div className="gap-4 w-full mb-2 ">
-                        CLUB ACTIVITIES
+                        Club Articles
                     </div>
                 );
             case 'sponsors':
@@ -176,7 +176,7 @@ const BlogsTab = ({ comment }) => {
                     Write Article
                 </button>
                 <button title="Sponsors" type="button" onClick={() => handleTabClick('sponsors')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'sponsors' ? 'active' : ''}`}>
-                    My Sponsors
+                    Sponsors
                 </button>
                 <button title="MyGroup" type="button" onClick={() => handleTabClick('my-group')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'my-group' ? 'active' : ''}`}>
                     My Group
@@ -191,46 +191,48 @@ const BlogsTab = ({ comment }) => {
 
 export default BlogsTab
 
-export async function getServerSideProps(req) {
-    const { id } = req.query;
+export async function getServerSideProps(context) {
+    const { req } = context;
 
-    const user = await prisma.user.findUnique({
-        where: {
-            id: id
-        }
-    });
+    const session = req.session;
 
-    if (!user) {
-        return {
-            notFound: true
-        }
+    if (!session) {
+        console.log("Session not found");
+        return;
     }
 
-    const singlePost = await prisma.post.Many({
-        where: {
-            id: id,
-        },
-        include: {
-            comments: {
-                include: {
-                    AiResponse: true,
-                    user: {
-                        select: {
-                            firstName: true,
-                            email: true
-                        }
-                    }
-                },
-            },
-            category: true
-        },
-    });
+    console.log("SESSION", session);
+
+    // const user = await prisma.user.findUnique({
+    //     where: {
+    //         id: id
+    //     }
+    // });
+
+    // const singlePost = await prisma.post.Many({
+    //     where: {
+    //         id: id,
+    //     },
+    //     include: {
+    //         comments: {
+    //             include: {
+    //                 AiResponse: true,
+    //                 user: {
+    //                     select: {
+    //                         firstName: true,
+    //                         email: true
+    //                     }
+    //                 }
+    //             },
+    //         },
+    //         category: true
+    //     },
+    // });
 
     return {
         props: {
-            posts,
-            comments,
-            aiResponse
+            // posts,
+            // aiResponse
         },
     }
 }
