@@ -96,11 +96,13 @@ const BlogsTab = ({ comment }) => {
                                 <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
                                 <div className="gap-4 w-full mb-2 mt-3 ">
                                     {/* Iterate over posts */}
-                                    {posts.map((post) => (
+                                    {posts && posts.map((post) => (
                                         <div key={post.id} className='w-11/12 mx-auto bg-gray-100 rounded-lg p-4'>
                                             {/* Post title */}
+                                            {console.log(post.title)}
                                             <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">{post.title}</h3>
                                             {/* Comments */}
+                                            <p>Hshshs</p>
                                             <div className="mb-4">
                                                 <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">Comments:</h4>
                                                 {/* Iterate over comments */}
