@@ -93,18 +93,16 @@ const BlogsTab = ({ comment }) => {
                     <>
                         <div className="gap-4 w-full mb-2 mt-3 ">
                             <div className='w-11/12 mx-auto bg-gray-100 rounded-lg p-4'>
-                                <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
+                                <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Posts</h3>
                                 <div className="gap-4 w-full mb-2 mt-3 ">
                                     {/* Iterate over posts */}
                                     {posts && posts.map((post) => (
                                         <div key={post.id} className='w-11/12 mx-auto bg-gray-100 rounded-lg p-4'>
                                             {/* Post title */}
                                             {console.log(post.title)}
-                                            <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">{post.title}</h3>
+                                            <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">{post.title}</h3>
                                             {/* Comments */}
-                                            <p>Hshshs</p>
                                             <div className="mb-4">
-                                                <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">Comments:</h4>
                                                 {/* Iterate over comments */}
                                                 {post.comments ? post.comments.map((comment) => (
                                                     <Comment key={comment.id} comment={comment} />
@@ -112,7 +110,6 @@ const BlogsTab = ({ comment }) => {
                                             </div>
                                             {/* AI Responses */}
                                             <div className="mb-4">
-                                                <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">AI Responses:</h4>
                                                 {/* Iterate over AI responses */}
                                                 {post.comments && post.aiResponses.map((aiResponse) => (
                                                     <div key={aiResponse.id} className="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mb-2">
@@ -238,7 +235,7 @@ const BlogsTab = ({ comment }) => {
         <div>
             <div className="flex gap-4 blogCommentButtons">
                 <button title="Comments" type="button" onClick={() => handleTabClick('comments')} className={`inline-flex items-center px-4 py-3 text-sm text-white bg-slate-700 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'comments' ? 'active' : ''}`}>
-                    Comments
+                    Posts
                 </button>
                 <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white ${activeTab === 'metrics' ? 'active' : ''}`}>
                     Metrics
