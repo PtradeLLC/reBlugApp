@@ -199,7 +199,7 @@ const BlogsTab = ({ comment }) => {
     return (
         <div>
             <div className="flex gap-4 blogCommentButtons">
-                <button title="Comments" type="button" onClick={() => handleTabClick('comments')} className={`inline-flex items-center px-4 py-3 text-sm text-white bg-slate-100 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'comments' ? 'active' : ''}`}>
+                <button title="Comments" type="button" onClick={() => handleTabClick('comments')} className={`inline-flex items-center px-4 py-3 text-sm text-gray-900 bg-slate-100 rounded-lg active w-full dark:bg-slate-600 ${activeTab === 'comments' ? 'active' : ''}`}>
                     Posts
                 </button>
                 <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4 py-3 text-sm rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-100 dark:hover:bg-gray-300 dark:hover:text-white ${activeTab === 'metrics' ? 'active' : ''}`}>
