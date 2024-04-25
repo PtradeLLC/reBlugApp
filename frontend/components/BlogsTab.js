@@ -94,7 +94,7 @@ const BlogsTab = ({ comment }) => {
                 return (
                     <>
                         <div className="gap-4 w-full mb-2 mt-3 ">
-                            <div className='w-11/12 mx-auto'>
+                            <div className='w-11/12 mx-auto bg-gray-100 rounded-lg p-4'>
                                 <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
                                 {posts && posts.map((post) => (
                                     <>
