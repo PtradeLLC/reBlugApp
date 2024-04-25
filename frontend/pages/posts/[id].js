@@ -129,8 +129,6 @@ const PostPage = ({ comments }) => {
         if (error) console.error("An error occurred:", error);
     }, [error]);
 
-    console.log("Post data:", uniqPost);
-
     // Utility function to clean up content
     function cleanUpContent(content) {
         return content

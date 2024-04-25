@@ -12,8 +12,6 @@ export default function ContentTabs() {
     const [allBlogs, setAllBlogs] = useState(true);
     const [noActivity, setNoActivity] = useState(null);
 
-    console.log(AllActivitiesTab);
-
     return (
         <div className="flex flex-col px-2">
             <Switch className="mb-4 hidden" isSelected={isVertical} onValueChange={() => setIsVertical(!isVertical)}>

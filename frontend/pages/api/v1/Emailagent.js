@@ -30,9 +30,7 @@ export default async function handler(req, res) {
                 res.status(500).json({ error: 'Error uploading file' });
                 return;
             }
-
-            // Handle the rest of the request
-            console.log('Request type:', req.method); // Log the request type
+            // Log the request type
             if (req.method !== 'POST') {
                 res.status(405).json({ error: 'Method not allowed' });
                 return;

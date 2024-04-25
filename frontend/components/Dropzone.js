@@ -18,7 +18,7 @@ function Dropzone() {
             reader.onerror = () => console.log('File reading has failed');
             reader.onload = () => {
                 const binaryStr = reader.result;
-                console.log(binaryStr);
+
             };
 
             reader.readAsArrayBuffer(file);

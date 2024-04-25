@@ -46,7 +46,6 @@ async function seed() {
                             slug: slug,
                         }
                     });
-                    console.log(`Category "${createdCategory.title}" created successfully.`);
                 } catch (error) {
                     console.error(`Error creating category "${categoryName}":`, error);
                 }

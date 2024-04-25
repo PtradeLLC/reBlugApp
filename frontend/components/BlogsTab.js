@@ -59,7 +59,6 @@ const BlogsTab = ({ comment }) => {
 
 
     const getPosts = async () => {
-        console.log('GET Request');
         try {
             const request = await axios.get(
                 '/api/blog/postcommentAi'

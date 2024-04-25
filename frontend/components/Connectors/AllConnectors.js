@@ -8,7 +8,6 @@ const apideck = new Apideck({
 
 try {
     const { data } = await apideck.vault.connectionsAll({});
-    console.log('API called successfully', data)
 } catch (error) {
     console.error(error)
     return error.json()

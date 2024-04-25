@@ -154,7 +154,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
 
             // Log the formData after successful submission
             formData.forEach((value, key) => {
-                console.log(`${key}: ${value}`);
             });
         } catch (error) {
             console.error('Error submitting form:', error.message);

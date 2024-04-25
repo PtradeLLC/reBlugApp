@@ -114,8 +114,6 @@ const NoviceUI = ({
                     const allHelp4 = allHelp3.replace(/(\-\* )(.*) /g, '$1\n\n');
 
 
-                    console.log("Data:", allHelp4);
-
                     setModelResponse(allHelp4);
                     setLoading(false);
                 } else {
