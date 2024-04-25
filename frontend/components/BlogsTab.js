@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import Compose from './Blogs/Write';
 import BlogActivities from './Charts/AllActivitiesChat/BlogActivities';
+import GroupList from './MyGroup';
+import SponsorList from './SponsorList';
 
 const prisma = new PrismaClient();
 
@@ -16,6 +18,8 @@ const BlogsTab = ({ comment }) => {
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
     const [value, setValue] = useState(0);
+    const [myGroup, setMyGroup] = useState([]);
+    const [mySponsor, setMySponsor] = useState([]);
 
     const { data: session } = useSession();
 
@@ -181,13 +185,13 @@ const BlogsTab = ({ comment }) => {
             case 'sponsors':
                 return (
                     <div className="gap-4 w-full mb-2 ">
-                        Sponsors
+                        {mySponsor.length === 0 ? <div className="text-gray-500 dark:text-gray-300 text-center">You currently have no sponsor.</div> : <SponsorList sponsors={mySponsor} />}
                     </div>
                 );
             case 'my-group':
                 return (
                     <div className="gap-4 w-full mb-2 ">
-                        My Group
+                        {myGroup.length === 0 ? <div className="text-gray-500 dark:text-gray-300 text-center">You do not have any group/Member.</div> : <GroupList groups={myGroup} />}
                     </div>
                 );
 
