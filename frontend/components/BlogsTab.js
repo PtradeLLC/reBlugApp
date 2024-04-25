@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Comment from './Blogs/Comment';
 import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
+import { useSession } from "next-auth/react";
+import { CircularProgress } from "@nextui-org/react";
 
 const prisma = new PrismaClient();
 
@@ -11,6 +13,29 @@ const BlogsTab = ({ comment }) => {
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
+
+    const { data: session } = useSession();
+
+    const { user } = session;
+    const userEmail = user?.email;
+
+    const getUserPosts = async () => {
+        try {
+
+            const request = await axios.get(`/api/blog/postcommentAi?email=${userEmail}`);
+            setPosts(request.data);
+            console.log(request);
+        } catch (error) {
+            console.error("Error fetching user posts:", error);
+            // Handle error gracefully
+        }
+    };
+
+    useEffect(() => {
+        getUserPosts();
+    }, []);
+
+    console.log(posts);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -57,21 +82,6 @@ const BlogsTab = ({ comment }) => {
         }
     }
 
-
-    const getPosts = async () => {
-        try {
-            const request = await axios.get(
-                '/api/blog/postcommentAi'
-            );
-
-            setPosts(request.data);
-            console.log(request);
-        } catch (error) {
-            alert(error);
-        }
-    };
-
-    console.log(posts);
 
     const renderTabContent = () => {
         switch (activeTab) {
