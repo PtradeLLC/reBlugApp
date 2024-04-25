@@ -74,6 +74,8 @@ const BlogsTab = ({ comment }) => {
         }
     }
 
+    console.log(posts);
+
     const renderTabContent = () => {
         switch (activeTab) {
             case 'comments':
