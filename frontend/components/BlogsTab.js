@@ -99,12 +99,12 @@ const BlogsTab = ({ comment }) => {
                                 <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
                                 {posts && posts.map((post) => (
                                     <>
-                                        {/* <div className="flex justify-between px-4 ">
+                                        <div className="flex justify-between px-4 my-3">
                                             <img className='w-7 h-7 rounded mr-2 ' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
                                             <div className='text-sm line-clamp-2'>{post.title}</div>
-                                        </div> */}
-                                        <div>
-                                            <Comment key={post.id} className="line-clamp-3" comment={post} />
+                                        </div>
+                                        <div className='px-4 my-3'>
+                                            <Comment key={post.id} className="line-clamp-3" comment={post.comments} />
                                         </div>
                                     </>
                                 ))}
