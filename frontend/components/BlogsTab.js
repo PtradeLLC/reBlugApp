@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Comment from './Blogs/Comment';
 import { PrismaClient } from '@prisma/client';
+import axios from 'axios';
 
 const prisma = new PrismaClient();
 
@@ -35,24 +36,6 @@ const BlogsTab = ({ comment }) => {
                     return;
                 }
 
-                const res = await fetch('/api/blog/postcommentAi', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: email })
-                }, { cache: 'force-cache' });
-
-                if (!res.ok) {
-                    throw new Error('Failed to post comment');
-                }
-
-                const data = await res.json();
-
-                if (data) {
-                    setPosts(data);
-                };
-
                 // const response = await fetch('/api/blog/commentsystem', {
                 //     method: 'POST',
                 //     headers: {
@@ -73,6 +56,21 @@ const BlogsTab = ({ comment }) => {
             }
         }
     }
+
+
+    const getPosts = async () => {
+        console.log('GET Request');
+        try {
+            const request = await axios.get(
+                '/api/blog/postcommentAi'
+            );
+
+            setPosts(request.data);
+            console.log(request);
+        } catch (error) {
+            alert(error);
+        }
+    };
 
     console.log(posts);
 

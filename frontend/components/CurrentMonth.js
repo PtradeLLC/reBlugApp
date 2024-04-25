@@ -21,11 +21,6 @@ const CurrentMonth = () => {
     currentMinute = (currentMinute < 10 ? "0" : "") + currentMinute;
     currentSecond = (currentSecond < 10 ? "0" : "") + currentSecond;
 
-    // Displaying the current month, date, and time
-    console.log("Current Month: " + currentMonth);
-    console.log("Current Date: " + currentDateOfMonth);
-    console.log("Current Time: " + currentHour + ":" + currentMinute + ":" + currentSecond);
-
     return (
         <div className="flex justify-between max-w-xs w-full font-thin rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p>{new Date(currentDate).toLocaleString('default', { month: 'long' })}</p>
