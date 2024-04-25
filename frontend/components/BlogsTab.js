@@ -23,6 +23,7 @@ const BlogsTab = ({ comment }) => {
     const getUserPosts = async () => {
         try {
             const request = await axios.get(`/api/blog/postcommentAi?email=${userEmail}`);
+            console.log("User posts:", request.data);
             setPosts(request.data);
 
         } catch (error) {
@@ -100,7 +101,10 @@ const BlogsTab = ({ comment }) => {
                                     <>
                                         <div className="flex justify-between px-4 ">
                                             <img className='w-7 h-7 rounded mr-2 ' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
-                                            <div className='text-xs line-clamp-2'>{post.title}</div>
+                                            <div className='text-sm line-clamp-2'>{post.title}</div>
+                                        </div>
+                                        <div>
+                                            <Comment comment={post} />
                                         </div>
                                     </>
                                 ))}
