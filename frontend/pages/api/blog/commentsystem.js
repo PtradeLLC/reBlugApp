@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
         const postSlug = postTitle.toLowerCase().split(' ').join('-');
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
@@ -32,7 +32,6 @@ export default async function handler(req, res) {
 
         if (email && postId) {
             const userPrompt = `${comment}`;
-
 
             const user = await prisma.user.findUnique({
                 where: {

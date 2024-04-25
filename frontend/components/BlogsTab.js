@@ -13,6 +13,7 @@ const BlogsTab = ({ comment }) => {
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [value, setValue] = useState(0);
 
     const { data: session } = useSession();
 
@@ -21,10 +22,9 @@ const BlogsTab = ({ comment }) => {
 
     const getUserPosts = async () => {
         try {
-
             const request = await axios.get(`/api/blog/postcommentAi?email=${userEmail}`);
             setPosts(request.data);
-            console.log(request);
+
         } catch (error) {
             console.error("Error fetching user posts:", error);
             // Handle error gracefully
@@ -35,7 +35,13 @@ const BlogsTab = ({ comment }) => {
         getUserPosts();
     }, []);
 
-    console.log(posts);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setValue((v) => (v >= 100 ? 0 : v + 10));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -82,56 +88,56 @@ const BlogsTab = ({ comment }) => {
         }
     }
 
-
     const renderTabContent = () => {
         switch (activeTab) {
             case 'comments':
                 return (
                     <>
                         <div className="gap-4 w-full mb-2 mt-3 ">
-                            <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
-                            {posts && posts.map((post) => (
-                                <>
-                                    {console.log(post)}
-                                    <div className="flex justify-between">
-                                        <img className='w-10 h-10 rounded' src={post.featureImage} alt={post.title} />
-                                        <div>{post.title}</div>
+                            <div className='w-11/12 mx-auto'>
+                                <h3 className="text-lg font-thin text-gray-900 dark:text-white mb-2">All Comments</h3>
+                                {posts && posts.map((post) => (
+                                    <>
+                                        <div className="flex justify-between px-4 ">
+                                            <img className='w-10 h-10 rounded' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
+                                            <div>{post.title}</div>
+                                        </div>
+                                    </>
+                                ))}
+                                <form onSubmit={handleSubmit}>
+                                    <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                        <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                            <label htmlFor="comment" className="sr-only">Share your thoughts</label>
+                                            <textarea
+                                                id="comment"
+                                                rows="3"
+                                                className="w-full px-4 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                                                placeholder="Share your thoughts..."
+                                                value={newComment}
+                                                onChange={handleCommentChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+                                            <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+                                                Post comment
+                                                {loading && (
+                                                    <div className="flex justify-center">
+                                                        <CircularProgress
+                                                            aria-label="Loading..."
+                                                            size="sm"
+                                                            value={value}
+                                                            color="warning"
+                                                            className='mx-2'
+                                                            showValueLabel={true}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </button>
+                                        </div>
                                     </div>
-                                </>
-                            ))}
-                            <form onSubmit={handleSubmit}>
-                                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                                    <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-                                        <label htmlFor="comment" className="sr-only">Share your thoughts</label>
-                                        <textarea
-                                            id="comment"
-                                            rows="4"
-                                            className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                                            placeholder="Share your thoughts..."
-                                            value={newComment}
-                                            onChange={handleCommentChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-                                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
-                                            Post comment
-                                            {loading && (
-                                                <div className="flex justify-center">
-                                                    <CircularProgress
-                                                        aria-label="Loading..."
-                                                        size="sm"
-                                                        value={value}
-                                                        color="warning"
-                                                        className='mx-2'
-                                                        showValueLabel={true}
-                                                    />
-                                                </div>
-                                            )}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                             {/* <div>
                                 <div>
                                     <div className="flex mb-7 items-start gap-2.5">
