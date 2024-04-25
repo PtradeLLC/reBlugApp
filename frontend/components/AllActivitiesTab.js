@@ -42,7 +42,7 @@ const AllActivitiesTab = () => {
             case 'club':
                 return (
                     <div className="gap-4 w-full mb-2">
-                        CLUB ACTIVITIES
+                        There are no activities.
                     </div>
                 );
             default:
