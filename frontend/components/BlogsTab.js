@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
+import Compose from './Blogs/Write';
 
 const prisma = new PrismaClient();
 
@@ -167,7 +168,7 @@ const BlogsTab = ({ comment }) => {
             case 'article':
                 return (
                     <div className="gap-4 w-full mb-2 ">
-                        Club Articles
+                        <Compose />
                     </div>
                 );
             case 'sponsors':
