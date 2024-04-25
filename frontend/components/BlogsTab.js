@@ -172,26 +172,26 @@ const BlogsTab = ({ comment }) => {
                 );
             case 'article':
                 return (
-                    <div className="gap-4 w-full mb-2 ">
+                    <div className="gap-4 w-full mb-2 mt-2">
                         <Compose />
                     </div>
                 );
             case 'metrics':
                 return (
-                    <div className="gap-4 w-full mb-2 ">
+                    <div className="gap-4 w-full mb-2 mt-2">
                         <BlogActivities />
                     </div>
                 );
             case 'sponsors':
                 return (
-                    <div className="gap-4 w-full mb-2 ">
+                    <div className="gap-4 w-full mb-2 mt-2">
                         {mySponsor.length === 0 ? <div className="text-gray-500 dark:text-gray-300 text-center">You currently have no sponsor.</div> : <SponsorList sponsors={mySponsor} />}
                     </div>
                 );
             case 'my-group':
                 return (
-                    <div className="gap-4 w-full mb-2 ">
-                        {myGroup.length === 0 ? <div className="text-gray-500 dark:text-gray-300 text-center">You do not have any group/Member.</div> : <GroupList groups={myGroup} />}
+                    <div className="gap-4 w-full mb-2 mt-2">
+                        {myGroup.length === 0 ? <div className="text-gray-500 dark:text-gray-300 text-center">You do not have a group or belong to any group yet.</div> : <GroupList groups={myGroup} />}
                     </div>
                 );
 
