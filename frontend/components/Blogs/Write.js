@@ -132,7 +132,7 @@ const Compose = ({ showModal, setShowModal }) => {
 
     return (
         <>
-            <div className='overflow-y-auto h-[360px]'>
+            <div className='overflow-y-auto h-[360px] mt-3'>
                 <div className='mb-4'>
                     <input
                         className='mb-2 bg-transparent border-none w-full'
