@@ -102,7 +102,6 @@ const BlogsTab = ({ comment }) => {
                                             <img className='w-7 h-7 rounded mr-2 ' src={post.featureImage || '/images/OtherVar.png'} alt={post.title} />
                                             <div className='text-sm line-clamp-1'>{post.title}</div>
                                         </div>
-                                        {comments ? <Comment comment={post.comments} /> : 'No comments yet'}
                                     </>
                                 ))}
                                 <form onSubmit={handleSubmit}>
