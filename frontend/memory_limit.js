@@ -1,9 +1,8 @@
 const { getHeapStatistics } = require('v8');
-console.log(getHeapStatistics().heap_size_limit);
-console.log(getHeapStatistics().heap_size_limit);
 
 
-// To increase limit, `export NODE_OPTIONS=--max_old_space_size=8589934592` - 8gig
+
+// To increase limit, `node --max_old_space_size=8589934592` - 8gig
 
 // #increase to 1gb
 // node --max-old-space-size=1024 index.js

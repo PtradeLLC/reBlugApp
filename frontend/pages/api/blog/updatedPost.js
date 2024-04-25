@@ -1,12 +1,10 @@
 import prisma from "../../../lib/db";
-import Replicate from "replicate";
+
 
 
 export default async function handler(req, res) {
     try {
-        const replicate = new Replicate({
-            auth: process.env.REPLICATE_API_TOKEN,
-        });
+
 
         const allCategories = await prisma.category.findMany({
             select: {
