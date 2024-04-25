@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Comment from './Blogs/Comment';
 import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
