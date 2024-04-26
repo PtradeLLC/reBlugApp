@@ -169,6 +169,8 @@ const PostPage = ({ comments }) => {
                 const title = uniqPost.title;
                 const content = uniqPost.content;
 
+                console.log("Unidhdhd", uniqPost, uniqPost.id);
+
                 // Validate comment content
                 if (!newComment.trim()) {
                     console.error('Comment content is empty');

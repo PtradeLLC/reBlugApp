@@ -22,7 +22,7 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
 
     const handleSignUp = () => {
         if (!session) {
-            router.push('/register');
+            router.push('/login');
         }
     };
 

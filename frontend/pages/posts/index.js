@@ -240,7 +240,9 @@ export default function Blog() {
                                 const day = postDate.getDate();
                                 const { id, title, slug } = post.category;
                                 return (
-                                    <CardDisplay key={post.id} post={post} />
+                                    <>
+                                        <CardDisplay key={post.id} post={post} />
+                                    </>
                                 );
                             })
                     ) : (

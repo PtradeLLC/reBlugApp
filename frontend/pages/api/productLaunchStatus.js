@@ -113,7 +113,7 @@ export default async function handler(req, res) {
                         res.status(200).json({ message: text });
 
                     } catch (error) {
-                        // If JSON parsing fails, log the error and send a generic error response
+                        // If JSON parsing fai, log the error and send a generic error response
                         console.error('Error parsing JSON from AI response:', error);
                         res.status(500).json({ message: 'Error processing AI response' });
                     }

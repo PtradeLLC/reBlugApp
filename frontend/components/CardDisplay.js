@@ -6,9 +6,6 @@ import Link from 'next/link';
 
 const CardDisplay = ({ post }) => {
     const { featureImage, title, author, id, content, category } = post;
-
-
-
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(0);
 
@@ -51,13 +48,16 @@ const CardDisplay = ({ post }) => {
                                     />
                                 </div>
 
-                            ) : (<img
-                                src={featureImage || "/images/bloger1.jpg"}
-                                className='size-full object-cover h-52'
-                                alt={post?.title}
-                                style={{ objectPosition: 'top' }}
-                                fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
-                            />)
+                            ) : (
+                                <Link href={`/posts/${post.id}`}>
+                                    <img src={featureImage || "/images/bloger1.jpg"}
+                                        className='size-full object-cover h-52'
+                                        alt={post?.title}
+                                        style={{ objectPosition: 'top' }}
+                                        fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
+                                    />
+                                </Link>
+                            )
                             }
                         </div>
                         <div className="p-4 md:p-6">
@@ -70,12 +70,9 @@ const CardDisplay = ({ post }) => {
                             <p className="mt-3 text-gray-500 line-clamp-4" dangerouslySetInnerHTML={{ __html: content }}></p>
                         </div>
                         <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
-                            <a
-                                className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-thin rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                href="#"
-                            >
+                            <Link href={`/posts/${post.id}`} className="w-full py-3 px-4 inline-flex justify-center line-clamp-1 items-center gap-x-2 text-xs font-thin rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                 {category.title}
-                            </a>
+                            </Link>
                             <Link href={`/posts/${post.id}`} className=" font-thin w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm rounded-es-xl bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" radius="full" size="sm">Read More</Link>
                         </div>
                     </div>
