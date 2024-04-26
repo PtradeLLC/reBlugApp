@@ -3,7 +3,7 @@ import { Card, CardHeader, CardFooter, Image, Button, CardBody } from "@nextui-o
 import Calendar from "./Calendar";
 
 export default function CalendarComponent() {
-    // const { data: activity } = useSWR("/api/activity", fetcher);
+
     const [activity, setActivity] = useState(null);
 
     return (

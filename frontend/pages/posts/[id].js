@@ -150,7 +150,6 @@ const PostPage = ({ comments }) => {
 
             // Clean up the content
             const cleanedContent = cleanUpContent(uniqPost.content);
-            // Now you can use cleanedContent wherever necessary
         }
     }, [uniqPost]);
 
@@ -168,8 +167,6 @@ const PostPage = ({ comments }) => {
                 const { email } = session.user;
                 const title = uniqPost.title;
                 const content = uniqPost.content;
-
-                console.log("Unidhdhd", uniqPost, uniqPost.id);
 
                 // Validate comment content
                 if (!newComment.trim()) {
@@ -190,6 +187,9 @@ const PostPage = ({ comments }) => {
                 }
 
                 const responseData = await response.json();
+
+                console.log('Response data:', responseData);
+
                 setNewComment('');
                 setLoading(false);
             } catch (error) {
@@ -364,7 +364,6 @@ const PostPage = ({ comments }) => {
 
                             <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                             <span className=''>
-                                {/* {console.log("COMMENTS", comments)} */}
                                 <CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
                             </span>
                             <form onSubmit={handleSubmit}>

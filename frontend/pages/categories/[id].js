@@ -18,17 +18,7 @@ export default function BlogCategories() {
     const [categories, setCategories] = useState(null);
     const { id } = router.query;
 
-    // console.log(id);
-
-    let singleCat;
-
-    if (process.env.NODE_ENV === 'production') {
-        singleCat = `/api/blog/uniqueCategory/${id}`;
-    } else if (process.env.NODE_ENV === 'development') {
-        singleCat = `/api/blog/uniqueCategory/${id}`;
-    }
-
-    const { data, error, isValidating, mutate } = useSWR(`https://www.reblug.com/api/blog/uniqueCategory/${id}`, fetcher);
+    const { data, error, isValidating, mutate } = useSWR(`/api/blog/uniqueCategory/${id}`, fetcher);
 
     useEffect(() => {
         if (error) console.error("An error occurred:", error);
@@ -149,7 +139,6 @@ export default function BlogCategories() {
                                                     }}
                                                     width={500}
                                                     height={300}
-                                                    // style={{ objectPosition: 'top' }}
                                                     alt={item?.title}
                                                     fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
                                                 />
@@ -172,7 +161,6 @@ export default function BlogCategories() {
                                             <div>
                                                 <h5 className="text-sm text-gray-800 dark:text-gray-200">
                                                     By {item.author}
-                                                    {/* {console.log(item)} */}
                                                 </h5>
                                                 <h5 className="text-sm text-gray-800 dark:text-gray-200">
                                                     {item.category.title}

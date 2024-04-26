@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import fetch from 'node-fetch';
 import prisma from "../../../lib/db";
+import { userInfo } from "os";
 
 
 export default async function handler(req, res) {
@@ -19,9 +20,6 @@ export default async function handler(req, res) {
 
 
         if (email && postId) {
-
-            console.log("Author is contacted with:", email);
-            console.log("Author is contacted with:", postId);
             const userPrompt = `${comment}`;
 
             const user = await prisma.user.findUnique({
@@ -29,6 +27,7 @@ export default async function handler(req, res) {
                     email: email
                 },
                 select: {
+                    id: true,
                     firstName: true,
                 }
             });
@@ -89,55 +88,52 @@ export default async function handler(req, res) {
                     });
 
                     const result = await chat.sendMessage(parts);
-                    const response = result.response;
-                    const text = response.text;
+                    const response = result.response
+                    const geminiResponse = response.text();
 
-                    console.log("AI response:", text);
-
-
-                    // if (user) {
-                    //     const uniquePostBySlug = await prisma.post.findUnique({
-                    //         where: {
-                    //             id: postId
-                    //         },
-                    //     });
-
-                    //     if (geminiResponse) {
-                    //         const createdComment = await prisma.comment.create({
-                    //             data: {
-                    //                 title: postTitle,
-                    //                 content: comment,
-                    //                 aiResponse: geminiResponse,
-                    //                 postSlug: postSlug,
-                    //                 userEmail: email
-                    //             },
-                    //             select: {
-                    //                 id: true
-                    //             }
-                    //         });
-
-                    //         if (createdComment) {
-                    //             const allComments = await prisma.comment.findMany({
-                    //                 where: {
-                    //                     id: createdComment.id
-                    //                 },
-                    //                 select: {
-                    //                     id: true,
-                    //                     content: true,
-                    //                     user: true,
-                    //                     aiResponse: true,
-                    //                 }
-                    //             });
-                    //             res.status(200).json(allComments);
-                    //         }
-                    //     }
-                    // }
+                    console.log("GEMINI RESPONSE", geminiResponse);
 
 
+                    if (user) {
+                        const uniquePostBySlug = await prisma.post.findUnique({
+                            where: {
+                                id: postId
+                            },
+                        });
 
+                        console.log("USERR", user);
 
+                        if (uniquePostBySlug && geminiResponse) {
+                            const createdComment = await prisma.comment.create({
+                                data: {
+                                    title: postTitle,
+                                    content: comment,
+                                    aiResponse: geminiResponse,
+                                    postSlug: postSlug,
+                                    userEmail: email,
+                                    userId: user.id
+                                },
+                                select: {
+                                    id: true
+                                }
+                            });
 
-
+                            if (createdComment) {
+                                const allComments = await prisma.comment.findMany({
+                                    where: {
+                                        id: createdComment.id
+                                    },
+                                    select: {
+                                        id: true,
+                                        content: true,
+                                        user: true,
+                                        aiResponse: true,
+                                    }
+                                });
+                                res.status(200).json(allComments);
+                            }
+                        }
+                    }
                 } catch (error) {
                     // If JSON parsing fai, log the error and send a generic error response
                     console.error('Error parsing JSON from AI response:', error);
