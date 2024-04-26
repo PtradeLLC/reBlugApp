@@ -188,8 +188,6 @@ const PostPage = ({ comments }) => {
 
                 const responseData = await response.json();
 
-                console.log('Response data:', responseData);
-
                 setNewComment('');
                 setLoading(false);
             } catch (error) {
@@ -200,7 +198,7 @@ const PostPage = ({ comments }) => {
 
     const handleSignUp = () => {
         if (!session) {
-            router.push('/register');
+            router.push('/login');
         }
     };
 
@@ -313,7 +311,7 @@ const PostPage = ({ comments }) => {
                             </h1>
                             <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
                                 <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                                    <img className='w-7 h-7 mr-1' src={`${uniqPost.image}`} /> {uniqPost.author}
+                                    <img className='w-7 h-7 mr-1' src={`${uniqPost.image} || /images/faviconfb.png`} /> {uniqPost.author}
                                 </li>
                                 <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                                     <img className='w-7 h-7 mr-1' src='/images/category.png' />
