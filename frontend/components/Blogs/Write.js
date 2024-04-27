@@ -163,7 +163,7 @@ const Compose = ({ showModal, setShowModal }) => {
                 </div>
                 <RadioGroup
                     id='radio-butt'
-                    className='mt-16'
+                    className='mt-20'
                     label="Cross-promote this article?"
                     orientation="horizontal"
                     color="success"
