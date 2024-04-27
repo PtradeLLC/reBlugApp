@@ -143,9 +143,9 @@ const Compose = ({ showModal, setShowModal }) => {
                         placeholder='Enter Title here'
                     />
                     <div className="col-span-full">
-                        <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
+                        {/* <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
                             Feature Image
-                        </label>
+                        </label> */}
                         <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                             <DropzoneComponent />
                         </div>

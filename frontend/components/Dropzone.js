@@ -38,7 +38,8 @@ function Dropzone() {
                         <div {...getRootProps()}>
                             <input {...getInputProps()} />
                             <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                            {!isDragActive && "Click here to drop a file to upload"}
+                            {selectedFile ? selectedFile : !isDragActive && "Feature Image: Click here to drop a file to upload"}
+                            {/* {!isDragActive && "Feature Image: Click here to drop a file to upload"} */}
                             {isDragActive && !isDragReject && "Drop to upload this file"}
                             {isDragReject && "File type is not accepted"}
                             {fileRejections.length > 0 && fileRejections[0].file.size > maxSize && (
