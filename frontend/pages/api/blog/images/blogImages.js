@@ -54,8 +54,8 @@ export default function AvatarUploadPage() {
                     value={selectedField}
                     onChange={(e) => setSelectedField(e.target.value)}
                 >
-                    <option value="profileImage">Profile Image</option>
-                    <option value="brandLogo">Brand Logo</option>
+                    <option value="profileImage">featureImage</option>
+                    <option value="brandLogo">contentImage</option>
                 </select>
                 <br />
                 <input

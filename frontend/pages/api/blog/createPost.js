@@ -16,8 +16,6 @@ export default async function handler(req, res) {
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
-        console.log("BODY", req.body);
-
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
@@ -30,12 +28,8 @@ export default async function handler(req, res) {
             }
         });
 
-        console.log("AllCat", getAllCategories);
-
         const lowerCaseCategory = selectedCategory.toLowerCase().split(' ').join('-');
         let selectedId = null;
-
-
 
         for (const category of getAllCategories) {
             if (category.slug === lowerCaseCategory) {
@@ -49,8 +43,6 @@ export default async function handler(req, res) {
         } else {
             console.log("Selected KEY", selectedId);
         };
-
-        console.log("Selected ID", selectedId);
 
 
         // // Upload the image to Cloudflare

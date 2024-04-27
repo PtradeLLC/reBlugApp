@@ -4,6 +4,7 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 
 function Dropzone() {
+    const [selectedFile, setSelectedFile] = useState(null); // State to hold the selected file
     const [rejected, setRejected] = useState([]);
     const [loading, setLoading] = useState(false);
     const { data: session } = useSession();
@@ -18,33 +19,42 @@ function Dropzone() {
             reader.onerror = () => console.log('File reading has failed');
             reader.onload = () => {
                 const binaryStr = reader.result;
+                setSelectedFile(binaryStr); // Update the selected file state
             };
 
-            reader.readAsArrayBuffer(file);
+            reader.readAsDataURL(file); // Read file as data URL
         });
     };
 
     return (
-        <DropzoneComponent
-            minSize={0}
-            maxSize={maxSize}
-            onDrop={handleDrop}
-        >
-            {({ getRootProps, getInputProps, isDragActive, fileRejections, isDragReject }) => (
-                <section>
-                    <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                        {!isDragActive && "Click here to drop a file to upload"}
-                        {isDragActive && !isDragReject && "Drop to upload this file"}
-                        {isDragReject && "File type is not accepted"}
-                        {fileRejections.length > 0 && fileRejections[0].file.size > maxSize && (
-                            <div className='text-danger-300 mt-2'> File is too large.</div>
-                        )}
-                    </div>
-                </section>
+        <>
+            <DropzoneComponent
+                minSize={0}
+                maxSize={maxSize}
+                onDrop={handleDrop}
+            >
+                {({ getRootProps, getInputProps, isDragActive, fileRejections, isDragReject }) => (
+                    <section>
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                            {!isDragActive && "Click here to drop a file to upload"}
+                            {isDragActive && !isDragReject && "Drop to upload this file"}
+                            {isDragReject && "File type is not accepted"}
+                            {fileRejections.length > 0 && fileRejections[0].file.size > maxSize && (
+                                <div className='text-danger-300 mt-2'> File is too large.</div>
+                            )}
+                        </div>
+                    </section>
+                )}
+            </DropzoneComponent>
+            {selectedFile && (
+                <div>
+                    <h2>Selected Image:</h2>
+                    <img src={selectedFile} alt="Selected" />
+                </div>
             )}
-        </DropzoneComponent>
+        </>
     );
 }
 

@@ -68,17 +68,19 @@ const Compose = ({ showModal, setShowModal }) => {
         e.preventDefault();
         try {
             const selectedCategory = selectedKeys.has("Select a Category") ? null : Array.from(selectedKeys)[0];
-
-
             const data = {
                 title,
-                featureImage,
                 content,
                 crossPromote,
                 selectedValue,
                 selectedFeatures,
                 selectedCategory,
                 userInfo,
+            };
+
+            const featureImageFile = featureImage[0];
+            if (featureImageFile) {
+                data.featureImage = featureImageFile;
             };
 
             // Send the data to the API
@@ -96,7 +98,6 @@ const Compose = ({ showModal, setShowModal }) => {
             } else {
                 console.error('Failed to publish article');
             }
-
             setTitle('');
             setFeatureImage('');
             setContent('');
