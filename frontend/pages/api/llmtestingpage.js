@@ -47,8 +47,6 @@ export default async function handler(req, res) {
                 const response = result.response
                 const geminiResponse = response.text();
 
-                console.log(geminiResponse);
-
             } catch (error) {
                 // If JSON parsing fai, log the error and send a generic error response
                 console.error('Error parsing JSON from AI response:', error);

@@ -15,12 +15,8 @@ function Vault() {
             if (response.ok) {
                 // Parse the JSON response
                 const data = await response.json();
-                console.log('Data from Vault', data);
-
                 // Assuming your API sends the session token in the response
                 const { sessionToken } = data;
-                console.log('Token from Vault', sessionToken);
-
                 // Update state with the session token
                 setSessionToken(sessionToken);
 
