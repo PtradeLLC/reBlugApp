@@ -1,76 +1,50 @@
-import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
 import prisma from "../../lib/db";
-
-// const upload = multer().single('profileImage');
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 1024 * 1024 * 10,
-    },
-});
 
 export default async function handler(req, res) {
     try {
-        // Use multer middleware to parse the FormData
-        upload.any()(req, res, async (err) => {
-            if (err) {
-                console.error('Error parsing FormData:', err);
-                return res.status(500).json({ message: 'Error processing request' });
+        // Check if the request method is POST
+        if (req.method !== 'POST') {
+            return res.status(405).json({ message: 'Method not allowed' });
+        }
+
+        // Extract form data from request body
+        const formData = req.body.split('\n');
+
+        const extractedValues = {
+            firstName: '',
+            lastName: '',
+            brandName: '',
+            email: '',
+        };
+
+        for (let i = 0; i < formData.length; i++) {
+            const line = formData[i];
+
+            if (line.startsWith('Content-Disposition: form-data; name=')) {
+                const fieldName = line.split('name="')[1].split('"')[0];
+
+                const valueIndex = i + 2; // Next line after field name line
+                extractedValues[fieldName] = formData[valueIndex].trim(); // Extract and trim value
             }
+        }
 
-            // Access the FormData from req.body
-            const formData = req.body;
-
-            // Your existing code...
-            for (const pair of formData.entries()) {
-                console.log(pair);
-            }
-
-            try {
-                // Respond with success
-                return res.status(200).json({ message: 'Profile updated successfully' });
-            } catch (error) {
-
-                console.error('Error processing request:', error);
-
-                // Respond with an error status
-                return res.status(500).json({ message: 'Error processing request' });
-            } finally {
-                // Disconnect Prisma after handling the request
-                await prisma.$disconnect();
-            }
+        // Update user in the database
+        const user = await prisma.user.update({
+            where: {
+                email: extractedValues.email,
+            },
+            data: {
+                firstName: extractedValues.firstName,
+                lastName: extractedValues.lastName,
+                brandName: extractedValues.brandName,
+                name: extractedValues.firstName + " " + extractedValues.lastName,
+            },
         });
+
+        return res.status(200).json({ message: 'User updated successfully', user });
+
     } catch (error) {
         console.error('Error:', error);
         return res.status(500).json({ message: 'There is an error' });
     }
 }
-
-
-
-
-// export default async function handler(req, res) {
-//     // Parse multipart/form-data using multer middleware
-//     upload(req, res, async function (err) {
-//         if (err) {
-//             console.error('Error uploading file:', err);
-//             return res.status(500).json({ error: 'Error uploading file' });
-//         }
-
-//         // Access file via req.file
-//         const profileImage = req.file;
-
-//         // Access other form fields via req.body
-//         const { firstName, lastName, brandName, brandLogo } = req.body;
-
-//         // Process the form data...
-//     });
-// }
-
-
-
-// import multer from 'multer';
-
-
-
