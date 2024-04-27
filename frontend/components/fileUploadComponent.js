@@ -31,8 +31,7 @@ export default function AvatarUploadPage() {
                         const formData = new FormData();
                         formData.append('file', file);
 
-                        const response = await fetch(
-                            `/api/avatar/upload?filename=${file.name}&field=${selectedField}`,
+                        const response = await fetch(`/api/avatar/upload?filename=${file.name}&field=${selectedField}`,
                             {
                                 method: 'POST',
                                 body: formData,
@@ -40,7 +39,7 @@ export default function AvatarUploadPage() {
                         );
 
                         if (!response.ok) {
-                            throw new Error('Failed to upload image');
+                            throw new Error('Failed to upload image', response.Error)
                         }
 
                         const newBlob = await response.json();
