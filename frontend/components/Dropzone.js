@@ -39,7 +39,7 @@ function Dropzone() {
                         <div {...getRootProps()}>
                             <input {...getInputProps()} />
                             <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                            {isDragActive ? 'Drop to upload this file' : 'Feature Image: Click here to drop a file to upload'}
+                            {/* {isDragActive ? 'Drop to upload this file' : 'Feature Image: Click here to drop a file to upload'} */}
                             {fileRejections.length > 0 && fileRejections[0].file.size > maxSize && (
                                 <div className='text-danger-300 mt-2'> File is too large.</div>
                             )}
