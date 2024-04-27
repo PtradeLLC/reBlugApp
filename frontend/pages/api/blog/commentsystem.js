@@ -91,17 +91,12 @@ export default async function handler(req, res) {
                     const response = result.response
                     const geminiResponse = response.text();
 
-                    console.log("GEMINI RESPONSE", geminiResponse);
-
-
                     if (user) {
                         const uniquePostBySlug = await prisma.post.findUnique({
                             where: {
                                 id: postId
                             },
                         });
-
-                        console.log("USERR", user);
 
                         if (uniquePostBySlug && geminiResponse) {
                             const createdComment = await prisma.comment.create({

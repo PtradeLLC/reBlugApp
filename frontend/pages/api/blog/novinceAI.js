@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         }
         if (novice === "How do I construct a blog title that captures attention and entices readers?") {
             const run = async () => {
-                const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
 
                 const safetySettings = [
                     {

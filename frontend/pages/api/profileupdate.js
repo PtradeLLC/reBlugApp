@@ -1,15 +1,12 @@
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from "../../lib/db";
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from './auth/[...nextauth]';
 
-
-
+// const upload = multer().single('profileImage');
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
-        fileSize: 1024 * 1024 * 10, // Adjust file size limit as needed
+        fileSize: 1024 * 1024 * 10,
     },
 });
 
@@ -24,8 +21,6 @@ export default async function handler(req, res) {
 
             // Access the FormData from req.body
             const formData = req.body;
-
-            // Log the entire formData object
 
             // Your existing code...
             for (const pair of formData.entries()) {
@@ -51,3 +46,31 @@ export default async function handler(req, res) {
         return res.status(500).json({ message: 'There is an error' });
     }
 }
+
+
+
+
+// export default async function handler(req, res) {
+//     // Parse multipart/form-data using multer middleware
+//     upload(req, res, async function (err) {
+//         if (err) {
+//             console.error('Error uploading file:', err);
+//             return res.status(500).json({ error: 'Error uploading file' });
+//         }
+
+//         // Access file via req.file
+//         const profileImage = req.file;
+
+//         // Access other form fields via req.body
+//         const { firstName, lastName, brandName, brandLogo } = req.body;
+
+//         // Process the form data...
+//     });
+// }
+
+
+
+// import multer from 'multer';
+
+
+

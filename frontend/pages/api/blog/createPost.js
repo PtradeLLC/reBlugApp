@@ -16,6 +16,8 @@ export default async function handler(req, res) {
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
+        console.log("BODY", req.body);
+
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
@@ -27,6 +29,8 @@ export default async function handler(req, res) {
                 slug: true
             }
         });
+
+        console.log("AllCat", getAllCategories);
 
         const lowerCaseCategory = selectedCategory.toLowerCase().split(' ').join('-');
         let selectedId = null;
@@ -46,29 +50,33 @@ export default async function handler(req, res) {
             console.log("Selected KEY", selectedId);
         };
 
+        console.log("Selected ID", selectedId);
 
-        // Upload the image to Cloudflare
-        const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-            },
-            body: JSON.stringify({
-                type: 'upload',
-                file: featureImage,
-            }),
-        });
 
-        const uploadedImageData = await uploadedImageResponse.json();
+        // // Upload the image to Cloudflare
+        // const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+        //     },
+        //     body: JSON.stringify({
+        //         type: 'upload',
+        //         file: featureImage,
+        //     }),
+        // });
 
-        if (!uploadedImageData.success) {
-            console.error('Image upload failed:', uploadedImageData.errors);
-            return res.status(500).json({ message: 'Image upload failed.' });
-        }
+        // const uploadedImageData = await uploadedImageResponse.json();
+
+        console.log("Uploaded Image", uploadedImageData);
+
+        // if (!uploadedImageData.success) {
+        //     console.error('Image upload failed:', uploadedImageData.errors);
+        //     return res.status(500).json({ message: 'Image upload failed.' });
+        // }
 
         // Extract the URL of the uploaded image from the response
-        const uploadedImageUrl = uploadedImageData.result.url;
+        // const uploadedImageUrl = uploadedImageData.result.url;
 
 
         if (email) {
@@ -107,8 +115,6 @@ export default async function handler(req, res) {
                             updatedAt: new Date()
                         },
                     });
-
-                    console.log("NEW POST from createPost", newPost);
                     res.status(200).json(newPost);
                 } else {
                     // If the post exists, update the views count
@@ -131,7 +137,6 @@ export default async function handler(req, res) {
                         },
                     });
 
-                    console.log("UPDATED POST from createPost", updatedPost);
                     res.status(200).json(updatedPost);
                 }
             }
