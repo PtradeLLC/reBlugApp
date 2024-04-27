@@ -32,7 +32,8 @@ export default function ProfilePg() {
         lastName: '',
         profileImage: null,
         brandName: '',
-        brandLogo: null
+        brandLogo: null,
+        email: '',
     });
     const [passwordData, setPasswordData] = useState({
         newPassword: '',
@@ -118,18 +119,15 @@ export default function ProfilePg() {
         formDataToSend.append('firstName', formData.firstName);
         formDataToSend.append('lastName', formData.lastName);
         formDataToSend.append('brandName', formData.brandName);
+        formDataToSend.append('email', email);
 
         // Append profile image and brand logo files to FormData
         if (formData.profileImage) {
             formDataToSend.append('profileImage', formData.profileImage);
-            console.log('formData.profileImage', formData.profileImage);
         }
         if (formData.brandLogo) {
             formDataToSend.append('brandLogo', formData.brandLogo);
-            console.log('formData.brandLogo', formData.brandLogo);
         }
-
-        console.log('formDataToSend', formDataToSend);
 
         try {
             // Make the fetch request
@@ -317,7 +315,7 @@ export default function ProfilePg() {
                                     </p>
                                 </div>
                                 <div className='xs:mt-2 md:col-span-12'>
-                                    <AvatarUploadPage />
+                                    {user?.email && <AvatarUploadPage email={user?.email} />}
                                 </div>
                                 <form className="md:col-span-2" onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
@@ -389,7 +387,7 @@ export default function ProfilePg() {
                                     </div>
                                 </form>
                                 <div className='xs:mt-2 md:col-span-12'>
-                                    <AvatarUploadPage />
+                                    {user?.email && <AvatarUploadPage email={user?.email} />}
                                 </div>
                             </div>
                         </div>
