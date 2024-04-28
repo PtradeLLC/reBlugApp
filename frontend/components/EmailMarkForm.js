@@ -11,7 +11,6 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-
 //MODAL
 export default function DashConvTool({ openModal, setOpenModal }) {
     const [open, setOpen] = useState(false);

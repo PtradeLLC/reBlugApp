@@ -37,81 +37,80 @@ export default async function handler(req, res) {
             }
 
             const formDataObject = { ...req.body, file: req.file };
-            console.log('formData fom backend', formDataObject); // Log the form data
 
             // Define the authOptions variable
-            // const session = await getServerSession(req, res, authOptions);
-            // if (session) {
-            //     try {
-            //         const files = [];
-            //         for (const [key, file] of formData.entries()) {
-            //             if (key.startsWith('files')) {
-            //                 files.push(file);
-            //             }
-            //         }
-            //         const userEmail = session?.user?.email;
-            //         const campaignTitle = formData.get('campaignTitle');
+            const session = await getServerSession(req, res, authOptions);
+            if (session) {
+                try {
+                    const files = [];
+                    for (const [key, file] of formData.entries()) {
+                        if (key.startsWith('files')) {
+                            files.push(file);
+                        }
+                    }
+                    const userEmail = session?.user?.email;
+                    const campaignTitle = formData.get('campaignTitle');
 
-            //         const campaign = await prisma.campaign.findFirst({
-            //             where: {
-            //                 email: userEmail,
-            //                 title: campaignTitle,
-            //                 user: {
-            //                     email: userEmail,
-            //                 },
-            //             },
-            //         });
+                    const campaign = await prisma.campaign.findFirst({
+                        where: {
+                            email: userEmail,
+                            title: campaignTitle,
+                            user: {
+                                email: userEmail,
+                            },
+                        },
+                    });
 
-            //         if (campaign) {
-            //             await prisma.campaign.update({
-            //                 where: {
-            //                     title: campaignTitle,
-            //                 },
-            //                 data: {
-            //                     goal: formData.get('goal'),
-            //                     subjectLine: formData.get('subject'),
-            //                     emailBody: formData.get('message'),
-            //                     category: formData.get('clientType'),
-            //                 },
-            //             });
-            //         } else {
-            //             await prisma.campaign.create({
-            //                 data: {
-            //                     title: campaignTitle,
-            //                     goal: formData.get('goal'),
-            //                     subjectLine: formData.get('subject'),
-            //                     emailBody: formData.get('message'),
-            //                     category: formData.get('clientType'),
-            //                     user: {
-            //                         connect: {
-            //                             email: userEmail,
-            //                         },
-            //                     },
-            //                 },
-            //             });
-            //         }
+                    if (campaign) {
+                        await prisma.campaign.update({
+                            where: {
+                                title: campaignTitle,
+                            },
+                            data: {
+                                goal: formData.get('goal'),
+                                subjectLine: formData.get('subject'),
+                                emailBody: formData.get('message'),
+                                category: formData.get('clientType'),
+                            },
+                        });
+                    } else {
+                        await prisma.campaign.create({
+                            data: {
+                                title: campaignTitle,
+                                goal: formData.get('goal'),
+                                subjectLine: formData.get('subject'),
+                                emailBody: formData.get('message'),
+                                category: formData.get('clientType'),
+                                user: {
+                                    connect: {
+                                        email: userEmail,
+                                    },
+                                },
+                            },
+                        });
+                    }
 
-            //         const file = req.file;
-            //         if (file) {
-            //             await prisma.file.create({
-            //                 data: {
-            //                     name: file.originalname,
-            //                     type: file.mimetype,
-            //                     data: file.buffer,
-            //                     campaign: {
-            //                         connect: {
-            //                             title: campaignTitle,
-            //                         },
-            //                     },
-            //                 },
-            //             });
-            //         }
-            //         res.status(200).json({ success: true });
-            //     } catch (error) {
-            //         console.log('Error submitting form:', error.message); // Log the error
-            //         res.status(500).json({ message: `Error submitting form: ${error.message}` });
-            //     }
-            // }
+                    const file = req.file;
+                    if (file) {
+                        await prisma.file.create({
+                            data: {
+                                name: file.originalname,
+                                type: file.mimetype,
+                                data: file.buffer,
+                                campaign: {
+                                    connect: {
+                                        title: campaignTitle,
+                                    },
+                                },
+                            },
+                        });
+                    }
+                    res.status(200).json({ success: true });
+                } catch (error) {
+                    console.log('Error submitting form:', error.message); // Log the error
+                    res.status(500).json({ message: `Error submitting form: ${error.message}` });
+                }
+            }
         });
         res.status(200).json({ success: true });
     } catch (error) {
@@ -124,6 +123,6 @@ export default async function handler(req, res) {
 
 export const config = {
     api: {
-        bodyParser: false, // Disallow body parsing, consume as stream
+        bodyParser: false,
     },
 };

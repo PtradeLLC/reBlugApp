@@ -25,7 +25,7 @@ function Dropdown({ options, placeholder }) {
             <p className="block text-sm font-medium leading-6 text-gray-900">Select Product Category<br /> (select multiple if applicable)</p>
             <button
                 type="button"
-                className="block w-full py-2 pl-3 pr-10 text-left bg-slate-600 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                className="block w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm"
                 onClick={toggleDropdown}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
@@ -45,7 +45,7 @@ function Dropdown({ options, placeholder }) {
                         {options.map(option => (
                             <li
                                 key={option.id}
-                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-red-500 hover:text-black"
+                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-gray-500 hover:text-black"
                                 onClick={() => toggleOption(option.id)}
                             >
                                 <div className="flex items-center">
@@ -292,8 +292,6 @@ export default function Saas() {
     useEffect(() => {
         console.log('type of text data INSIDE useEffect:', typeof textData);
     }, [textData]);
-
-
 
 
     const loadNextStatus = () => {

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import EmailForm from "./EmailConvoForm";
 import { useSession } from "next-auth/react";
 
-
 const campaignsProducts = [
     {
         id: 1,
