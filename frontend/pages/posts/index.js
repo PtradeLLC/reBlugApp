@@ -5,7 +5,7 @@ import { Divider } from "@nextui-org/react";
 import BreadCrumbs from '../../components/Blogs/categoryBreadcrumbs';
 import { Pagination } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
-import CardDisplay from '@/components/CardDisplay';
+import CardDisplay from '../../components/CardDisplay';
 import useSWR from "swr";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());

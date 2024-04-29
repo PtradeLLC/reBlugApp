@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CurrentMonth from "@/components/CurrentMonth";
+import CurrentMonth from "../../CurrentMonth";
 
 const BlogActivities = () => {
   const [defaultReport, setDefaultReport] = useState(null);

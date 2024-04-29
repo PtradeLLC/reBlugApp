@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import JuniorProgram from "@/components/JuniorProgram";
+import JuniorProgram from "../../components/JuniorProgram";
 // import { Textarea } from "@nextui-org/react";
 // import Progress from "../../components/blogProgress";
 
