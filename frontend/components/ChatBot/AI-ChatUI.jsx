@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import {
   Modal,
   ModalContent,
@@ -112,11 +114,11 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
     sendDataToBackend();
   };
 
-  const handleSignUp = () => {
-    if (!session) {
-      router.push("/login");
-    }
-  };
+  // const handleSignUp = () => {
+  //   if (!session) {
+  //     router.push("/login");
+  //   }
+  // };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -282,7 +284,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                             className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
                           >
                             <svg
-                              class="w-6 h-6 text-gray-800 dark:text-white"
+                              className="w-6 h-6 text-gray-800 dark:text-white"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -295,7 +297,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                                 d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                               />
                             </svg>
-                            Join Author's group
+                            Join Author&apos;s group
                           </button>
                         )}
                         {loading ? (
@@ -392,7 +394,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                                     research on this article
                                   </h3>
                                   <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
+                                    {/* <p className="text-sm text-gray-500">
                                       If you don't have an account yet, you can{" "}
                                       <button
                                         onClick={handleSignUp}
@@ -400,8 +402,8 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                                       >
                                         sign up here for free
                                       </button>
-                                      .
-                                    </p>
+                                      
+                                    </p> */}
                                   </div>
                                 </div>
                               </div>
@@ -433,6 +435,12 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
       </Modal>
     </>
   );
+};
+
+ChatUI.propTypes = {
+  isOpen: PropTypes.bool.isRequired, // Ensure isOpen is a boolean and required
+  setIsOpen: PropTypes.func.isRequired, // Ensure setIsOpen is a function and required
+  postContent: PropTypes.string.isRequired, // Ensure postContent is a string and required
 };
 
 export default ChatUI;

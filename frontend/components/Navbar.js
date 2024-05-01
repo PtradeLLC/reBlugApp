@@ -1,9 +1,11 @@
+import React from "react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
+import Banner from "./Banner";
 
+// eslint-disable-next-line no-unused-vars
 function classNames(...classes) {
   return classes.filter(Boolean).join("");
 }
@@ -23,6 +25,7 @@ export default function Navbar() {
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
       {({ open }) => (
         <>
+          <Banner />
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between">
               <div className="flex">
@@ -75,8 +78,8 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 {
                   <Menu as="div" className="relative ml-3">
-                    {session && <button className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}>Sign out</button>}
-                    {!session && <Link className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Link>}
+                    {/* {session && <button className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" onClick={handleClick}>Sign out</button>}
+                    {!session && <Link className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" href={"/api/auth/signin"}>Sign In | Register</Link>} */}
                   </Menu>
                 }
               </div>

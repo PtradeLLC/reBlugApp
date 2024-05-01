@@ -9,7 +9,7 @@ function classNames(...classes) {
 
 export default function Summary() {
     const [summary, setSummary] = useState(`Features
-    Article Assistant This AI-powered tool enables you to include conversational chatbot seamlessly on your page. conversational chatbot seamlessly on your page.
+    Article Assistant This AI-powered tool enables you to include conversational Email ChatBot seamlessly on your page. conversational Email ChatBot seamlessly on your page.
     `);
 
     return (

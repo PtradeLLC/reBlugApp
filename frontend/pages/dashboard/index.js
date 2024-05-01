@@ -45,10 +45,10 @@ const cards = [
 const quicklinks = [
     {
         id: 1,
-        title: "Email Conversational Tool",
+        title: "Email Email ChatBot",
         href: "#",
         preview:
-            "An AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. This allows recipients to interact with a knowledge-based chatbot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
+            "An AI-powered marketing tool that helps businesses improve their email communication by embedding a Email ChatBot into their emails and newsletters. This allows recipients to interact with a knowledge-based Email ChatBot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
     },
 ];
 

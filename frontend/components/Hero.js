@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import HeroCarousel from './HeroCarousel'
 
@@ -28,7 +29,7 @@ export default function Hero() {
           <div className="mt-20 sm:mt-32 lg:mt-8">
 
             <span className="rounded-full mr-2 bg-slate-600/10 px-3 py-1 text-sm font-semibold leading-6 text-black ring-1 ring-inset ring-red-600/10">
-              What's new
+              What&apos;s new
             </span>
             <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
               <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
@@ -36,17 +37,19 @@ export default function Hero() {
               </a>
               {/* &nbsp;{'|'} */}
               {/* <a href="#email-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
-                <span className='text-red-600 whatsnew'>Email Conversational Tool</span>
+                <span className='text-red-600 whatsnew'>Email Email ChatBot</span>
               </a> */}
               <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </span>
 
           </div>
           <h1 className="mt-10 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl hero-text">
-            Every Brand and Marketer has a <span className='text-red-700 underline'>Thing</span> or two to tackle when it comes to <span className='text-green-900 text-2xl'>growth</span> marketing
+            Every Brand and Marketer has an ongoing <span className='text-red-700 underline'>Thing</span> or two to tackle when it comes to <span className='text-green-900 text-2xl'>growth</span> marketing
           </h1>
           <h2 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl hero-text">
-            We solve <span className='text-red-700 hero-text'>things</span> by providing a unified ecosystem where brands, marketers and bloggers can connect.
+            We solve <span className='text-red-700 hero-text'>things</span> by providing a “blogger-first”
+            platform where brands and marketers connect with talented bloggers, using tools and
+            technologies to bolster growth.
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600 hero-text">
             Specifically by making blogging interactive, social and useful for marketing through the use of

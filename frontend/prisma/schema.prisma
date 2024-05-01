@@ -439,7 +439,7 @@ model TrialProspect {
   email     String
   firstName String
   lastName  String
-  chatBot   String?
+  Email     String?
   image     String?
 }
 
@@ -457,7 +457,7 @@ model TrialProspectTwo {
   emai      String
   firstName String
   lastName  String
-  chatBot   String?
+  Email     String?
   image     String?
 }
 

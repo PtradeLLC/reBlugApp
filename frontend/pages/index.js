@@ -49,13 +49,14 @@ const Home = () => {
           <div className="mt-3 w-full">
             <Affiliate openModal={openModal} setOpenModal={setOpenModal} />
           </div>
-          <div className="flex justify-center content-center mb-10">
-            <Tools openModal={openModal} setOpenModal={setOpenModal} />
+          <div className="flex mt-1 w-full justify-center content-center">
+            <LogoTwo />
           </div>
+          {/* <div className="flex justify-center content-center mb-10">
+            <Tools openModal={openModal} setOpenModal={setOpenModal} />
+          </div> */}
         </span>
-        <div className="flex mt-1 w-full justify-center content-center">
-          <LogoTwo />
-        </div>
+
       </main>
       <span className="mt-3">
         {openModal && <WaitingList setOpenModal={setOpenModal} />}

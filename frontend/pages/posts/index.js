@@ -141,9 +141,9 @@ export default function Blog() {
                                                 </p>
                                             </div>
                                         </Link>
-                                        <a
+                                        <Link
                                             className="group dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                            href="#"
+                                            href="/creators"
                                         >
                                             <div className="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
                                                 <img
@@ -180,10 +180,10 @@ export default function Blog() {
                                                     </svg>
                                                 </p>
                                             </div>
-                                        </a>
+                                        </Link>
                                         <a
                                             className="group relative flex flex-col w-full min-h-60 bg-center bg-cover url('/img/hero-pattern.svg') rounded-xl hover:shadow-lg transition dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                                            href="#"
+                                            href="/brands"
                                         >
                                             <div className="flex-auto p-4 border md:p-6">
                                                 <div className='relative pt-[70%] sm:pt-[70%] rounded-xl overflow-hidden'>

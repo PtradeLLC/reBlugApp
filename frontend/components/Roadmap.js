@@ -14,14 +14,14 @@ import { Listbox, Transition } from '@headlessui/react'
 import { useSession, signIn, signOut } from "next-auth/react";
 
 const activity = [
-    { id: 1, type: 'Launched', person: { tool: 'Email Conversational Tool:' }, date: '7d ago', projColor: "text-green-600" },
+    { id: 1, type: 'Launched', person: { tool: 'Email Email ChatBot:' }, date: '7d ago', projColor: "text-green-600" },
     { id: 3, type: 'Launched', person: { tool: 'Article Assistant:' }, date: '6d ago', projColor: "text-green-600" },
     { id: 2, type: 'In Progress', person: { tool: 'Marketing Automation:' }, date: '6d ago', projColor: "text-orange-300" },
     {
         id: 4,
         type: 'commented',
         person: {
-            tool: 'Email Conversational Tool',
+            tool: 'Email Email ChatBot',
             imageUrl:
                 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },

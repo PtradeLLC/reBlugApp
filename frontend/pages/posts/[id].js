@@ -417,9 +417,9 @@ const PostPage = ({ comments }) => {
                                                         Please create an account or login to share your thoughts on this article
                                                     </h3>
                                                     <div className="mt-2">
-                                                        <p className="text-sm text-gray-500">
+                                                        {/* <p className="text-sm text-gray-500">
                                                             If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
-                                                        </p>
+                                                        </p> */}
                                                     </div>
                                                 </div>
                                             </div>

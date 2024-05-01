@@ -7,8 +7,8 @@ export default function BeginnerBlogger() {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <div className="mt-20 mb-10 px-4">
-        <h1 className="text-3xl font-bold mb-2">But why blog, you ask? The benefits are plentiful</h1>
+      <div className="mt-28 mb-10 px-4">
+        <h1 className="text-xl font-bold mb-2">But why blog, you ask? The benefits are plentiful</h1>
         <ol className="list-decimal list-inside mt-3">
           {/* <img className="w-[30%] rounded-lg p-3 flex flex-wrap justify-center" src="/images/scorpionTypist.png" /> */}
           <li>This program uses AI powered tool to help kids learn to write by building compelling blog articles. Kids are taught how to express their thoughts through the power of writing and storytelling.</li>

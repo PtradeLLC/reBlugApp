@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
+import PropTypes from 'prop-types';
 import Comment from './Comment';
 
-const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
+const CommentBox = ({ comments, showModal, setShowModal }) => {
     const { data: session } = useSession();
+    // eslint-disable-next-line no-unused-vars
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const [value, setValue] = useState(0);
 
     // Handles setting value for the loader
@@ -20,11 +21,11 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
         return () => clearInterval(interval);
     }, []);
 
-    const handleSignUp = () => {
-        if (!session) {
-            router.push('/login');
-        }
-    };
+    // const handleSignUp = () => {
+    //     if (!session) {
+    //         router.push('/login');
+    //     }
+    // };
 
     return (
         <div>
@@ -39,8 +40,8 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
                         </div>
                         <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                             <p className="text-sm font-normal text-gray-900 dark:text-white">
-                                Let the author know what you think about this article and perhaps what you've learned.
-                                Please keep it clean and reader friendly. Please use 'Chat with this Article' button on
+                                Let the author know what you think about this article and perhaps what you&apos;ve learned.
+                                Please keep it clean and reader friendly. Please use &ldquo;Chat with this Article&ldquo; button on
                                 this page to ask questions about this article or conduct article related researches.
                             </p>
                         </div>
@@ -90,9 +91,9 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
                                             Please create an account or login to share your thoughts on this article
                                         </h3>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
+                                            {/* <p className="text-sm text-gray-500">
                                                 If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -114,4 +115,14 @@ const CommentBox = ({ uniqPost, comments, showModal, setShowModal }) => {
     );
 };
 
+
+CommentBox.propTypes = {
+    uniqPost: PropTypes.string,
+    comments: PropTypes.array,
+    showModal: PropTypes.bool.isRequired,
+    setShowModal: PropTypes.func.isRequired,
+};
+
 export default CommentBox;
+
+

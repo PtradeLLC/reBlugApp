@@ -200,7 +200,7 @@ a {
   }
 
   .hidedivmf img {
-    display: none;
+    display: none !important;
   }
 
   /* .category-breadcrumbs {

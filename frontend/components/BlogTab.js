@@ -82,7 +82,7 @@ export default function BlogTabs() {
                     <div className="divide-y divide-gray-100">
                         <div className='bg-slate-50 rounded-md my-8 p-3'>
                             Features:
-                            1. Article Assistant: This AI-powered tool enables you to include conversational chatbot seamlessly on your blog page.
+                            1. Article Assistant: This AI-powered tool enables you to include conversational Email ChatBot seamlessly on your blog page.
                             2. Directory Listing: Directory is a social directory designed to connect you with other like-minded bloggers as well as you with brands.
                             By harnessing this service, you can build Strategic Alliances, and benefit from authentic reviews/recommendations from trusted voices in
                             your industry.

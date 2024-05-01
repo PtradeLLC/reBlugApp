@@ -13,7 +13,7 @@ const userNavigation = [
 ];
 
 const cards = [
-    { name: "Email", href: "#", amount: "Conversational Tool", id: 1 },
+    { name: "Email", href: "#", amount: "Email ChatBot", id: 1 },
     { name: "Marketing", href: "#", amount: "Automation", id: 2 },
     { name: "Bloggers", href: "#", amount: "Messaging Platform", id: 3 },
 ];
@@ -51,10 +51,10 @@ const recentHires = [
 const quicklinks = [
     {
         id: 1,
-        title: "Email Conversational Tool",
+        title: "Email Email ChatBot",
         href: "#",
         preview:
-            "Turn chats into sales with our conversational AI commerce. Let chatbot provide answers to your customers and handle sales on your behalf in a personalized shopping environment. Connect with clients in real time to promote new initiatives, update customers on key happenings all within the email.",
+            "Turn chats into sales with our conversational AI commerce. Let Email ChatBot provide answers to your customers and handle sales on your behalf in a personalized shopping environment. Connect with clients in real time to promote new initiatives, update customers on key happenings all within the email.",
     },
     {
         id: 2,

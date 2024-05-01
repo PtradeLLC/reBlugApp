@@ -6,25 +6,25 @@ import ReactDOMServer from "react-dom/server";
 const aiMessage = `
 * About Us
 ForgedMart is a SaaS company that helps organizations, brands, marketers, influencers achieve their marketing goals by implementing various strategies and tactics using AI marketing tools.
-Our Email Conversational Tool is an AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. 
-This allows email recipients to interact with a knowledge-based chatbot that can answer their questions and provide support, help with fundraising, sales, marketing, and more.
+Our Email Email ChatBot is an AI-powered marketing tool that helps businesses improve their email communication by embedding a Email ChatBot into their emails and newsletters. 
+This allows email recipients to interact with a knowledge-based Email ChatBot that can answer their questions and provide support, help with fundraising, sales, marketing, and more.
 Users can sign up at "forgedmart.com"
 
-Here is an example of how Email Conversational Tool can be used:
-A non-profit organization could use Email Conversational Tool to embed a chatbot into their donation email. The chatbot could answer questions about the organization's mission and programs, and help donors make a donation.
+Here is an example of how Email Email ChatBot can be used:
+A non-profit organization could use Email Email ChatBot to embed a Email ChatBot into their donation email. The Email ChatBot could answer questions about the organization's mission and programs, and help donors make a donation.
 
-An e-commerce company could use Email Conversational Tool to embed a chatbot into their product newsletter. The chatbot could answer questions about the company's products, help customers place an order, and track their shipments.
+An e-commerce company could use Email Email ChatBot to embed a Email ChatBot into their product newsletter. The Email ChatBot could answer questions about the company's products, help customers place an order, and track their shipments.
 
-A software company could use Email Conversational Tool to embed a chatbot into their customer support email. The chatbot could answer questions about the company's software, help customers troubleshoot problems, and create support tickets.
+A software company could use Email Email ChatBot to embed a Email ChatBot into their customer support email. The Email ChatBot could answer questions about the company's software, help customers troubleshoot problems, and create support tickets.
 
-Email Conversational Tool is a powerful tool that can help businesses of all sizes improve their email communication and achieve their marketing goals.
+Email Email ChatBot is a powerful tool that can help businesses of all sizes improve their email communication and achieve their marketing goals.
 
-Here are some of the benefits of using Email Conversational Tool:
-* Increased engagement: Email recipients are more likely to interact with emails that contain a chatbot. This can lead to higher open rates, click-through rates, and conversions.
-* Improved customer service: Chatbots can provide 24/7 customer support, answering questions and resolving issues quickly and efficiently.
-* Increased sales: Chatbots can help customers find the products or services they're looking for, and guide them through the purchase process.
-* Reduced costs: Chatbots can automate many tasks that are currently handled by human customer service representatives, which can save businesses money.
-Overall, Email Conversational Tool is a valuable tool for any business that wants to improve its email communication and achieve its marketing goals.
+Here are some of the benefits of using Email Email ChatBot:
+* Increased engagement: Email recipients are more likely to interact with emails that contain a Email ChatBot. This can lead to higher open rates, click-through rates, and conversions.
+* Improved customer service: Email ChatBots can provide 24/7 customer support, answering questions and resolving issues quickly and efficiently.
+* Increased sales: Email ChatBots can help customers find the products or services they're looking for, and guide them through the purchase process.
+* Reduced costs: Email ChatBots can automate many tasks that are currently handled by human customer service representatives, which can save businesses money.
+Overall, Email Email ChatBot is a valuable tool for any business that wants to improve its email communication and achieve its marketing goals.
 
 * Our Mission
 Our mission is to develop a variety of technological tools that help companies and brands in various industries achieve their marketing goals.
@@ -75,12 +75,12 @@ Choose the plan that works best for your needs.
 *End of Pricing*
 
 *Benefit*
-Here are some of the benefits of using Email Conversational Tool:
-* Increased engagement: Email recipients are more likely to interact with emails that contain a chatbot. This can lead to higher open rates, click-through rates, and conversions.
-* Improved customer service: Chatbots can provide 24/7 customer support, answering questions and resolving issues quickly and efficiently.
-* Increased sales: Chatbots can help customers find the products or services they're looking for, and guide them through the purchase process.
-* Reduced costs: Chatbots can automate many tasks that are currently handled by human customer service representatives, which can save businesses money.
-Email Conversational Tool is a valuable tool for any business that wants to improve its email communication and achieve its marketing goals.
+Here are some of the benefits of using Email Email ChatBot:
+* Increased engagement: Email recipients are more likely to interact with emails that contain a Email ChatBot. This can lead to higher open rates, click-through rates, and conversions.
+* Improved customer service: Email ChatBots can provide 24/7 customer support, answering questions and resolving issues quickly and efficiently.
+* Increased sales: Email ChatBots can help customers find the products or services they're looking for, and guide them through the purchase process.
+* Reduced costs: Email ChatBots can automate many tasks that are currently handled by human customer service representatives, which can save businesses money.
+Email Email ChatBot is a valuable tool for any business that wants to improve its email communication and achieve its marketing goals.
 *End of Benefit*
 
 This is an example of something User might ask:
@@ -94,7 +94,7 @@ User: “A mix of both”
 User: “Do you use social media in your marketing? If so, tell me which platforms.”
 Forged AI: “Yes we currently working on integrating facebook, instagram, TikTok on this tool.” 
 User: “What are your current marketing efforts?”
-Forged AI: “Currently, Our 'Email conversational Tool' allows brands to send emails or newsletters to their contacts, and allow me 'In this case' to answer questions about the email, products included in the email, services provided by the brand, cross promote products, or handle conversations to human counterparts if I don't have the answer.”
+Forged AI: “Currently, Our 'Email Email ChatBot' allows brands to send emails or newsletters to their contacts, and allow me 'In this case' to answer questions about the email, products included in the email, services provided by the brand, cross promote products, or handle conversations to human counterparts if I don't have the answer.”
 User: “What can I do with this tool”
 Forged AI: “You can use this tool to launch a new product or service, for marketing campaign, fundraising effort or looking to grow your existing customer base, I am here to help you achieve your goals.”
 *End of Example*
@@ -233,7 +233,7 @@ export default async function handler(req, res) {
                     .setReplyTo(sentFrom)
                     .setPersonalization(personalization)
                     .setSubject(
-                        "Email Conversational Tool - Thanks for Interest in ForgedMart"
+                        "Email Email ChatBot - Thanks for Interest in ForgedMart"
                     )
                     .setHtml(emailContent)
                     .setText(responseContent)

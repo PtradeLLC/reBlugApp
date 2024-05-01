@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { useWindowSize } from '@react-hook/window-size';
 import { Divider } from "@nextui-org/react";
 
@@ -15,7 +16,7 @@ export default function BlogCategoriesHero() {
         <div className='w-full'>
             <>
                 {/* Features */}
-                <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                <div className="max-w-[85rem] px-4 py-20 sm:px-6 lg:px-8 lg:py-20 mx-auto">
 
                     {/* Grid */}
                     <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
@@ -201,7 +202,7 @@ export default function BlogCategoriesHero() {
                                 <div>
                                     <p className="text-gray-500 text-left">
                                         Continue telling great stories and share them with the world.
-                                        It's what you do, and our job is to help you grow your reach.
+                                        It&apos;s what you do, and our job is to help you grow your reach.
                                     </p>
                                 </div>
                                 <div className="flex justify-start -space-x-3">
