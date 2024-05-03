@@ -219,7 +219,7 @@ const Dashboard = function ({ children }) {
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <div className="min-h-full overflow-hidden flex justify-center bg-white py-16 sm:py-16">
+                <div className="min-h-full overflow-hidden flex justify-center bg-white py-24 sm:py-24">
                     <span className="w-full">
                         <DashLay user={user} />
                     </span>

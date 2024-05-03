@@ -79,6 +79,7 @@ model User {
   comment            Comment[]
   sponsors           Sponsors[]
   Category           Category[]
+  Chat               Chat[]
 }
 
 model Post {
@@ -112,6 +113,7 @@ model Post {
   categoryId       String?
   images           ImageOnPost[]
   AvatarOnPost     AvatarOnPost[]
+  Chat             Chat[]
 }
 
 model VerificationToken {
@@ -323,6 +325,7 @@ model AiResponse {
   articleCommentId   String?  @unique
   post               Post?    @relation(fields: [postId], references: [id])
   postId             String?
+  Chat               Chat[]
 }
 
 model Sponsors {
@@ -497,6 +500,23 @@ model Social {
   BloggerId String?
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
+}
+
+model Chat {
+  id           String      @unique @default(cuid())
+  title        String?
+  content      String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now()) @updatedAt
+  postSlug     String?
+  aiResponse   String?
+  postId       String?
+  user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userEmail    String?
+  userId       String?
+  AiResponse   AiResponse? @relation(fields: [aiResponseId], references: [id])
+  Post         Post?       @relation(fields: [postId], references: [id])
+  aiResponseId String?
 }
 
 model Contact {

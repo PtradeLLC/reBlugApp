@@ -22,9 +22,9 @@ const SideBarNarrow = () => {
 
     const sidebarNavigation = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
-        { name: 'Brands', href: '/dashboard/userdb', icon: PowerIcon },
-        { name: 'Marketing', href: '#', icon: MegaphoneIcon },
         { name: 'Bloggers', href: '/posts', icon: UserGroupIcon },
+        { name: 'Brands', href: '/dashboard/userdb', icon: PowerIcon },
+        { name: 'bCommerce', href: '#', icon: MegaphoneIcon },
         { name: 'Profile', href: '/profile', icon: CogIcon },
         // { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
         // { name: 'Resources', href: '#', icon: RectangleStackIcon },
@@ -38,7 +38,7 @@ const SideBarNarrow = () => {
         <div>
             {/* Narrow sidebar */}
             <div>
-                <div className="hidden w-28 overflow-y-auto border border-l-0 border-gray-200 md:block">
+                <div className="hidden w-28 overflow-y-auto border mt-[55px] border-l-0 border-gray-200 md:block">
                     <div className="flex w-full flex-col py-6">
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {sidebarNavigation.map((item) => (
