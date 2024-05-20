@@ -34,7 +34,7 @@ function Dropdown({ options, placeholder }) {
                 <span className="block truncate">{selectedOptions?.length > 0 ? selectedOptions.map(id => options.find(option => option.id === id).name).join(', ') : placeholder}</span>
             </button>
             {isOpen && (
-                <div className="absolute mt-1 w-full rounded-md bg-white z-10 shadow-lg">
+                <div className="absolute mt-1 w-full rounded-md bg-gray-50 z-10 shadow-lg">
                     <ul
                         tabIndex={-1}
                         role="listbox"
@@ -45,13 +45,13 @@ function Dropdown({ options, placeholder }) {
                         {options.map(option => (
                             <li
                                 key={option.id}
-                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-red-500 hover:text-white"
+                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-gray-500 hover:text-black"
                                 onClick={() => toggleOption(option.id)}
                             >
                                 <div className="flex items-center">
                                     {selectedOptions && selectedOptions.includes && selectedOptions.includes(option.id) && (
                                         <span
-                                            className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
+                                            className="absolute text-black inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
                                         >
                                             {option.name}
                                         </span>
@@ -61,7 +61,7 @@ function Dropdown({ options, placeholder }) {
                                         <span
                                             className="absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer"
                                         >
-                                            X
+                                            x
                                         </span>
                                     )}
                                 </div>
@@ -294,8 +294,6 @@ export default function Saas() {
     }, [textData]);
 
 
-
-
     const loadNextStatus = () => {
         if (loadingStateIndex >= loadingStateStatus.length) {
             setShowLoadingStatus(false);
@@ -396,7 +394,6 @@ export default function Saas() {
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">http://</span>
                                     <input
                                         type="text"
                                         name="website"

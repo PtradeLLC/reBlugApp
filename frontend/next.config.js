@@ -16,6 +16,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "replicate.com",
+        pathname: '**',
       },
       {
         protocol: 'https',
@@ -24,7 +25,13 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: "forgedmart.ghost.io",
+        hostname: "https://0ayhovuii0guag6u.public.blob.vercel-storage.com",
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: "https://replicate.delivery/pbxt/",
         pathname: '**',
       },
       {

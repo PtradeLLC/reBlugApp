@@ -1,48 +1,75 @@
-import { handleUpload } from '@vercel/blob/client';
+import { put } from '@vercel/blob';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from '../auth/[...nextauth]';
+import { PrismaClient } from '@prisma/client';
 
-export default async function handler(
-    request,
-    response,
-) {
-    const body = (await request.json());
 
+const prisma = new PrismaClient();
+
+export default async function uploadFile(request, response) {
     try {
-        const jsonResponse = await handleUpload({
-            body,
-            request,
-            onBeforeGenerateToken: async (pathname /*, clientPayload */) => {
-                // Generate a client token for the browser to upload the file
-                // ⚠️ Authenticate and authorize users before generating the token.
-                // Otherwise, you're allowing anonymous uploads.
+        const filename = request.query.filename;
+        const session = await getServerSession(request, response, authOptions);
 
-                return {
-                    allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif'],
-                    tokenPayload: JSON.stringify({
-                        // optional, sent to your server on upload completion
-                        // you could pass a user id from auth, or a value from clientPayload
-                    }),
-                };
+        if (!session) {
+            return response.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const email = session.user.email;
+
+        if (!request.body || request.body.length === 0) {
+            throw new Error('No file included in the request body.');
+        }
+
+        const file = request.body[0];
+        const blob = await put(filename, file, { access: 'public' });
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email,
             },
-            onUploadCompleted: async ({ blob, tokenPayload }) => {
-                // Get notified of client upload completion
-                // ⚠️ This will not work on `localhost` websites,
-                // Use ngrok or similar to get the full upload flow
-
-                console.log('blob upload completed', blob, tokenPayload);
-
-                try {
-                    // Run any logic after the file upload completed
-                    // const { userId } = JSON.parse(tokenPayload);
-                    // await db.update({ avatar: blob.url, userId });
-                } catch (error) {
-                    throw new Error('Could not update user');
-                }
-            },
+            select: {
+                id: true,
+                profileImage: true,
+                brandLogo: true,
+            }
         });
 
-        return response.status(200).json(jsonResponse);
+        if (!user) {
+            return response.status(404).json({ error: 'User not found' });
+        }
+
+        const updateData = {};
+        if (filename && blob.url) {
+            if (request.query.field === 'profileImage') {
+                updateData.profileImage = blob.url;
+            } else if (request.query.field === 'brandLogo') {
+                updateData.brandLogo = blob.url;
+            } else {
+                updateData.profileImage = blob.url;
+                updateData.brandLogo = blob.url;
+            }
+        }
+
+        await prisma.user.update({
+            where: {
+                id: user.id,
+            },
+            data: updateData,
+        });
+
+        response.status(200).json({ message: 'File uploaded successfully' });
     } catch (error) {
-        // The webhook will retry 5 times waiting for a 200
-        return response.status(400).json({ error: error.message });
+        console.error('Error uploading file:', error);
+        response.status(500).json({ error: 'Failed to upload the file.' });
     }
 }
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '20mb',
+        },
+        runtime: 'edge',
+    },
+};

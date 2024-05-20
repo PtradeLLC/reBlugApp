@@ -8,9 +8,9 @@ const YourComponent = () => {
         // Access your API key as an environment variable
         const apiKey = process.env.API_KEY;
 
-        // For text-only input, use the gemini-pro model
+        // For text-only input, use the gemini-1.0-pro model
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
         const chat = model.startChat({
             history: [
@@ -34,7 +34,6 @@ const YourComponent = () => {
             const result = await chat.sendMessage(msg);
             const response = await result.response;
             const text = response.text();
-            console.log(text);
         };
 
         // Call the function to send a message

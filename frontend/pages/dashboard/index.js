@@ -16,13 +16,12 @@ import { useRouter } from 'next/navigation';
 import TeamComponent from "../../components/TeamComponent";
 import WelcomeModal from "../../components/verfication-mod";
 import dynamic from 'next/dynamic';
-import IntegrationsCatalog from "../../components/integrations";
-import Integration from "../../components/integrations";
 import DashLay from "../../components/sideNav";
 
 
-const MixedChart = dynamic(() => import('../../components/Charts/OpenClick'), { ssr: false });
-const CircleChart = dynamic(() => import('../../components/Charts/Delivered'), {
+
+const MixedChart = dynamic(() => import('../../components/Charts/AllActivitiesChat/OpenClick'), { ssr: false });
+const CircleChart = dynamic(() => import('../../components/Charts/AllActivitiesChat/AreaActivities'), {
     ssr: false,
 });
 
@@ -46,10 +45,10 @@ const cards = [
 const quicklinks = [
     {
         id: 1,
-        title: "Email Conversational Tool",
+        title: "Email Email ChatBot",
         href: "#",
         preview:
-            "An AI-powered marketing tool that helps businesses improve their email communication by embedding a chatbot into their emails and newsletters. This allows recipients to interact with a knowledge-based chatbot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
+            "An AI-powered marketing tool that helps businesses improve their email communication by embedding a Email ChatBot into their emails and newsletters. This allows recipients to interact with a knowledge-based Email ChatBot that answers questions and provide support, help with fundraising, sales, marketing, and more.",
     },
 ];
 
@@ -149,7 +148,7 @@ const Dashboard = function ({ children }) {
                         firstName: data?.first_name || user?.firstName,
                         lastName: data?.last_name || user?.lastName,
                         provider: data?.provider,
-                        brandLogo: data?.brandLogo,
+                        brandLogo: data?.brandLogo || null,
                         brandName: data?.brandName,
                         profileImage: data?.profileImage,
                         session: data?.session || [],
@@ -220,9 +219,9 @@ const Dashboard = function ({ children }) {
     return (
         <>
             <Suspense fallback={<Loading />}>
-                <div className="min-h-full overflow-hidden flex justify-center bg-white py-16 sm:py-16">
+                <div className="min-h-full overflow-hidden flex justify-center bg-white py-24 sm:py-24">
                     <span className="w-full">
-                        <DashLay />
+                        <DashLay user={user} />
                     </span>
                 </div >
             </Suspense >
@@ -230,5 +229,3 @@ const Dashboard = function ({ children }) {
     );
 }
 export default Dashboard;
-
-

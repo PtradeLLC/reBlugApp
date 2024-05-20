@@ -34,7 +34,6 @@ const fetchData = async () => {
             requestOptions
         );
         const result = await response.text();
-        console.log(result);
     } catch (error) {
         console.log("error", error);
     }

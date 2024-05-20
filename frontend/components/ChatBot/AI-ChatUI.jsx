@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import {
   Modal,
   ModalContent,
@@ -7,6 +9,7 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 
@@ -16,6 +19,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const [modelResponse, setModelResponse] = useState("");
   const [value, setValue] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
   const [sentInput, setSentInput] = useState("");
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   const [loading, setLoading] = useState(false);
@@ -25,7 +29,6 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
     productSubmission:
       "How can I submit my product to be included in future article",
   });
-
   //Handles setting value for the loader
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,10 +40,8 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
 
   const sendDataToBackend = () => {
     const userName = session.user.name;
-
     try {
       setLoading(true);
-
       fetch("/api/blog/slugPage", {
         method: "POST",
         headers: {
@@ -48,19 +49,15 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
         },
         body: JSON.stringify({
           content: inputValue,
-          postContent: {
-            id: postContent.id,
-            title: postContent.title,
-            content: postContent.content,
-            userName: userName,
-          },
+          postContent: postContent,
+          userName: userName,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           setInputValue("");
           setSentInput(inputValue);
-          setModelResponse(data.finalResponse);
+          setModelResponse(data.message);
           setLoading(false);
         })
         .catch((error) => {
@@ -75,13 +72,13 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   };
 
   const handleClick = (buttonType) => {
+    setLoading(false);
     let requestData = {};
     if (buttonType === "authorsGroup") {
       requestData = { group: inquiries.authorsGroup };
     } else if (buttonType === "productSubmission") {
       requestData = { submission: inquiries.productSubmission };
     }
-
     fetch("/api/blog/questionAI", {
       method: "POST",
       headers: {
@@ -92,12 +89,14 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
       .then((response) => response.json())
       .then((data) => {
         setModelResponse(data.text);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(
           `There was a problem sending data to the backend: ${error}`,
           error
         );
+        setLoading(false);
       });
   };
 
@@ -113,6 +112,16 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     sendDataToBackend();
+  };
+
+  // const handleSignUp = () => {
+  //   if (!session) {
+  //     router.push("/login");
+  //   }
+  // };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -135,18 +144,32 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                   <div>
                     <div className="flex w-full flex-col">
                       <div className="flex-1 overflow-y-auto rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-                        {sentInput && (
-                          <div className="flex flex-row px-2 py-4 sm:px-4">
-                            <img
-                              class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                              src="/images/useravatar.png"
-                              alt="User Avatar"
-                            />
-                            <div className="flex px-2 max-w-3xl items-center">
-                              <p>{sentInput}</p>
-                            </div>
-                          </div>
+                        {loading ? (
+                          <CircularProgress
+                            aria-label="Loading..."
+                            size="sm"
+                            value={value}
+                            color="warning"
+                            className="mx-2"
+                            showValueLabel={true}
+                          />
+                        ) : (
+                          <>
+                            {sentInput && (
+                              <div className="flex flex-row px-2 py-4 sm:px-4">
+                                <img
+                                  className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                                  src="/images/useravatar.png"
+                                  alt="User Avatar"
+                                />
+                                <div className="flex px-2 max-w-3xl items-center">
+                                  <p>{sentInput}</p>
+                                </div>
+                              </div>
+                            )}
+                          </>
                         )}
+
                         <div className="mb-2 flex w-full flex-row justify-end gap-x-2 text-slate-500">
                           <button className="hover:text-slate-600">
                             <svg
@@ -215,52 +238,91 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         </div>
                         <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
                           <img
-                            class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                            className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
                             src="/images/OtherVar.png"
                             alt="Guide Avatar"
                           />
 
-                          <div className="flex px-2 max-w-3xl items-center rounded-xl">
-                            <p>
-                              {modelResponse
-                                ? modelResponse
-                                : "Ask questions or conduct your own research on this article."}
-                            </p>
-                          </div>
+                          {loading ? (
+                            <div className="flex justify-center">
+                              <CircularProgress
+                                aria-label="Loading..."
+                                size="lg"
+                                value={value}
+                                color="warning"
+                                className="mx-2"
+                                showValueLabel={true}
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex px-2 max-w-3xl items-center rounded-xl">
+                              <p>
+                                {modelResponse
+                                  ? modelResponse
+                                  : "Ask questions or conduct your own research on this article."}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 sm:text-sm">
-                        <button
-                          onClick={() => handleClick("authorsGroup")}
-                          className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
-                        >
-                          <svg
-                            class="w-6 h-6 text-gray-800 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              stroke-width="2"
-                              d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                        {loading ? (
+                          <div className="flex justify-center">
+                            <CircularProgress
+                              aria-label="Loading..."
+                              size="sm"
+                              value={value}
+                              color="warning"
+                              className="mx-2"
+                              showValueLabel={true}
                             />
-                          </svg>
-                          Join Author's group
-                        </button>
-                        <button
-                          onClick={() => handleClick("productSubmission")}
-                          className=" flex items-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
-                        >
-                          <img
-                            className="w-5 h-5 mr-1"
-                            src="/images/productreview.png"
-                          />
-                          Product submission
-                        </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleClick("authorsGroup")}
+                            className="flex item-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
+                          >
+                            <svg
+                              className="w-6 h-6 text-gray-800 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeWidth="2"
+                                d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                              />
+                            </svg>
+                            Join Author&apos;s group
+                          </button>
+                        )}
+                        {loading ? (
+                          <div className="flex justify-center">
+                            <CircularProgress
+                              aria-label="Loading..."
+                              size="sm"
+                              value={value}
+                              color="warning"
+                              className="mx-2"
+                              showValueLabel={true}
+                            />
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleClick("productSubmission")}
+                            className=" flex items-center rounded-lg bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50"
+                          >
+                            <img
+                              className="w-5 h-5 mr-1"
+                              src="/images/productreview.png"
+                            />
+                            Product submission
+                          </button>
+                        )}
                       </div>
                       <form onSubmit={handleSubmit} className="mt-2">
                         <label htmlFor="chat-input" className="sr-only">
@@ -300,6 +362,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                       </form>
                     </div>
                   </div>
+                  {/* RUN BELOW CODE TO ENSURE USER IS LOGGED IN */}
                   <div>
                     {!session && showModal && (
                       <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -327,20 +390,20 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                                     className="text-lg leading-6 font-medium text-gray-900"
                                     id="modal-title"
                                   >
-                                    Please create an account or login to share
-                                    your thoughts on this article
+                                    Please create an account or login to do your
+                                    research on this article
                                   </h3>
                                   <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
+                                    {/* <p className="text-sm text-gray-500">
                                       If you don't have an account yet, you can{" "}
                                       <button
                                         onClick={handleSignUp}
                                         className="text-red-600 dark:text-red-500 hover:underline"
                                       >
-                                        sign up here
+                                        sign up here for free
                                       </button>
-                                      .
-                                    </p>
+                                      
+                                    </p> */}
                                   </div>
                                 </div>
                               </div>
@@ -363,8 +426,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
               </ModalBody>
               <ModalFooter>
                 <span className="text-xs font-thin text-gray-600">
-                  Powered by{" "}
-                  <Link href="http://forgedmart.com/">ForgedMart</Link>
+                  Powered by <Link href="https://reblug.com/">reBlug</Link>
                 </span>
               </ModalFooter>
             </>
@@ -373,6 +435,12 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
       </Modal>
     </>
   );
+};
+
+ChatUI.propTypes = {
+  isOpen: PropTypes.bool.isRequired, // Ensure isOpen is a boolean and required
+  setIsOpen: PropTypes.func.isRequired, // Ensure setIsOpen is a function and required
+  postContent: PropTypes.string.isRequired, // Ensure postContent is a string and required
 };
 
 export default ChatUI;

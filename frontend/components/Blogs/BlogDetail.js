@@ -3,7 +3,6 @@ import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 
 export default function CategoryCard({ title, author }) {
     // const { title, content, createdAt, author, views } = posts
-    console.log("Title from ", title, author);
     return (
         <div className="">
             <Card isFooterBlurred className="w-full h-[400px] col-span-12 sm:col-span-7">

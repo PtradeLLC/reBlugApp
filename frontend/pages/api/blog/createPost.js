@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from "../../../lib/db";
 
 export default async function handler(req, res) {
     try {
@@ -10,16 +8,68 @@ export default async function handler(req, res) {
             content,
             crossPromote,
             selectedValue,
+            selectedCategory,
             selectedFeatures,
             userInfo, } = req.body;
 
-        const email = userInfo.email;
+        const email = userInfo.email || 'support@reblug.com';
         const firstName = userInfo.firstName;
         const postSlug = title.toLowerCase().split(' ').join('-');
 
         const contactAuthor = () => {
             console.log("Author is contacted with:", email);
         };
+
+        const getAllCategories = await prisma.category.findMany({
+            select: {
+                id: true,
+                title: true,
+                slug: true
+            }
+        });
+
+        const lowerCaseCategory = selectedCategory.toLowerCase().split(' ').join('-');
+        let selectedId = null;
+
+        for (const category of getAllCategories) {
+            if (category.slug === lowerCaseCategory) {
+                selectedId = category.id;
+                break;
+            }
+        }
+
+        if (!selectedId) {
+            console.log("No category Id was matched");
+        } else {
+            console.log("Selected KEY", selectedId);
+        };
+
+
+        // // Upload the image to Cloudflare
+        // const uploadedImageResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+        //     },
+        //     body: JSON.stringify({
+        //         type: 'upload',
+        //         file: featureImage,
+        //     }),
+        // });
+
+        // const uploadedImageData = await uploadedImageResponse.json();
+
+        console.log("Uploaded Image", uploadedImageData);
+
+        // if (!uploadedImageData.success) {
+        //     console.error('Image upload failed:', uploadedImageData.errors);
+        //     return res.status(500).json({ message: 'Image upload failed.' });
+        // }
+
+        // Extract the URL of the uploaded image from the response
+        // const uploadedImageUrl = uploadedImageData.result.url;
+
 
         if (email) {
             const user = await prisma.user.findUnique({
@@ -46,16 +96,14 @@ export default async function handler(req, res) {
                             content: content,
                             published: true,
                             email: email,
-                            views: 0, // Initialize views to 0
+                            featureImage: uploadedImageUrl,
+                            views: 0,
                             postSlug: postSlug,
+                            categoryId: selectedId,
                             crossPromote: crossPromote,
                             selectedValue: selectedValue,
                             selectedFeatures: selectedFeatures,
-                            User: {
-                                connect: {
-                                    id: user.id,
-                                },
-                            },
+                            userId: user.id,
                             updatedAt: new Date()
                         },
                     });
@@ -69,16 +117,18 @@ export default async function handler(req, res) {
                         data: {
                             views: {
                                 increment: 1,
-                            }
+                            },
                         },
                         select: {
                             id: true,
                             title: true,
                             content: true,
+                            slug: true,
                             views: true,
                             // likes: true,
                         },
                     });
+
                     res.status(200).json(updatedPost);
                 }
             }

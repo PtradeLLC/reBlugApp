@@ -1,11 +1,10 @@
 import { Apideck } from "@apideck/node";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../lib/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
 import fetch from "isomorphic-fetch";
 import { randomUUID } from 'crypto';
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     try {

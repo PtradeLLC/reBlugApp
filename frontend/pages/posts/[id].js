@@ -10,8 +10,9 @@ import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
-import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+import useSWR from "swr";
+import { PrismaClient } from '@prisma/client';
+
 
 const prisma = new PrismaClient();
 
@@ -68,8 +69,9 @@ const navigation = [
 ];
 
 
-const PostPage = () => {
-    const [comments, setComments] = useState([]);
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const PostPage = ({ comments }) => {
     const [newComment, setNewComment] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [blogCategory, setBlogCategory] = useState('');
@@ -83,8 +85,9 @@ const PostPage = () => {
     const { data: session, status } = useSession();
     const params = useParams();
     const query = useRouter();
-    const [uniqPost, setUniqPost] = useState(null);
     const { id } = params || {};
+    const router = useRouter();
+
 
 
     const handleSubmissionModalOpen = () => {
@@ -116,36 +119,44 @@ const PostPage = () => {
         return () => clearInterval(interval);
     }, []);
 
+
+    const { data: uniqPost, error, isValidating } = useSWR(
+        `/api/blog/uniquePost/${id}`,
+        fetcher
+    );
+
     useEffect(() => {
-        const findPost = async () => {
-            try {
-                setLoading(true);
-                const baseUrl = `http://localhost:3000/api/blog/uniquePost/${id}`;
-                const res = await axios.get(baseUrl);
-                const postData = res.data;
+        if (error) console.error("An error occurred:", error);
+    }, [error]);
 
-                if (!postData) {
-                    throw new Error("Something went wrong");
-                }
+    // Utility function to clean up content
+    function cleanUpContent(content) {
+        return content
+            .replace(/(<([^>]+)>)/gi, '')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/^### (.*?)\n\n/gm, '<h2>$1</h2><p>')
+            .replace(/\*\s(.*?)\n\n/gm, '<ul><li>$1</li></ul><p>')
+    }
 
-                setUniqPost(postData);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        if (id) {
-            findPost();
+    useEffect(() => {
+        if (error) {
+            console.error("An error occurred:", error);
         }
-    }, [id]);
+    }, [error]);
 
+    useEffect(() => {
+        if (uniqPost) {
+            setLoading(false);
+
+            // Clean up the content
+            const cleanedContent = cleanUpContent(uniqPost.content);
+        }
+    }, [uniqPost]);
 
 
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -153,9 +164,9 @@ const PostPage = () => {
 
         if (newComment.trim() !== '') {
             try {
-                const { email, name } = session.user;
-                const title = post.title;
-                const content = post.content;
+                const { email } = session.user;
+                const title = uniqPost.title;
+                const content = uniqPost.content;
 
                 // Validate comment content
                 if (!newComment.trim()) {
@@ -163,71 +174,46 @@ const PostPage = () => {
                     return;
                 }
 
-                db.collection('posts').add({
+                const response = await fetch('/api/blog/commentsystem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: uniqPost.id })
+                }, { cache: 'force-cache' });
 
-                });
+                if (!response.ok) {
+                    throw new Error('Failed to post comment');
+                }
 
-                // db.collection('comments').add({
+                const responseData = await response.json();
 
-                // });
-
-
-
-                setComments(prevComments => [...prevComments, responseData]);
-
-                // Clear the comment input field
                 setNewComment('');
                 setLoading(false);
             } catch (error) {
                 console.error('Error posting comment:', error.message);
             }
-
         }
     }
 
+    const handleSignUp = () => {
+        if (!session) {
+            router.push('/login');
+        }
+    };
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     setLoading(true);
+    function cleanUpContent(content) {
+        return content?.replace(/\*/g, '')?.replace(/##/g, '')?.replace(/\n/g, '').trim();
+    }
 
-    //     if (newComment.trim() !== '') {
-    //         try {
-    //             const { email, name } = session.user;
-    //             const title = post.title;
-    //             const content = post.content; //Post Content
-
-    //             // Validate comment content
-    //             if (!newComment.trim()) {
-    //                 console.error('Comment content is empty');
-    //                 return;
-    //             }
-
-    //             const response = await fetch('/api/blog/commentsystem', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({ comment: newComment, content: content, email: email, postTitle: title, postId: post.id })
-    //             }, { cache: 'force-cache' });
-
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to post comment');
-    //             }
-
-    //             const responseData = await response.json();
-
-    //             setComments(prevComments => [...prevComments, responseData]);
-
-    //             // Clear the comment input field
-    //             setNewComment('');
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.error('Error posting comment:', error.message);
-    //         }
-    //     }
-    // }
-
-
+    function cleanUpContent(content) {
+        // Split the content based on double line breaks
+        const paragraphs = content.split('\n\n');
+        // Map over the paragraphs and wrap each one in a <p> tag
+        const formattedContent = paragraphs.map((paragraph, index) => `<p key=${index}>${paragraph}</p>`);
+        // Join the formatted paragraphs into a single string
+        return formattedContent.join('');
+    }
     return (
         <div className='mt-20'>
             <div className="relative mt-2 bg-[#ced4da] pb-20 sm:mt-32 sm:pb-24 xl:pb-0">
@@ -244,7 +230,6 @@ const PostPage = () => {
                 </div>
                 <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
                     <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
-                        { }
                         <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                             {loading ? (
                                 <div className="flex justify-center">
@@ -257,12 +242,21 @@ const PostPage = () => {
                                         showValueLabel={true}
                                     />
                                 </div>
-                            ) :
-                                <img
-                                    className="absolute object-contain inset-0 h-full w-full rounded-2xl bg-[#adb5bd] shadow-2xl"
-                                    src={uniqPost && uniqPost?.featureImage}
-                                    alt="authorImage"
+                            ) : (
+                                <Image
+                                    src={uniqPost?.featureImage || "/images/bloger3.jpg"}
+                                    sizes="100vw"
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectPosition: 'top'
+                                    }}
+                                    width={500}
+                                    height={500}
+                                    alt={uniqPost?.title}
+                                    fallback={<CircularProgress aria-label="Loading..." size="sm" value={value} color="warning" className='mx-2' showValueLabel={true} />}
                                 />
+                            )
                             }
                         </div>
                     </div>
@@ -288,10 +282,10 @@ const PostPage = () => {
                                         </p>
                                     </blockquote>
                                     <figcaption className="mt-8 text-base">
-                                        <div className="font-semibold sm:text-lg text-slate-700">{uniqPost.author}</div>
+                                        <div className="font-semibold sm:text-lg text-slate-700">{uniqPost?.author}</div>
                                         <div className="mt-1 text-gray-400 flex gap-2">
                                             {navigation.map((item, index) => (
-                                                <div key={index}>
+                                                <div key={item.name}>
                                                     <span className='flex'> {item.icon({ width: 24, height: 24, fill: 'currentColor' })}</span>
                                                 </div>
                                             ))}
@@ -317,7 +311,7 @@ const PostPage = () => {
                             </h1>
                             <ul className='mt-2 mb-4 text-sm bg-slate-100 rounded '>
                                 <li className='flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
-                                    <img className='w-7 h-7 mr-1' src={`${uniqPost.image}`} /> {uniqPost.author}
+                                    <img className='w-7 h-7 mr-1' src={`${uniqPost.image} || /images/faviconfb.png`} /> {uniqPost.author}
                                 </li>
                                 <li className='flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>
                                     <img className='w-7 h-7 mr-1' src='/images/category.png' />
@@ -362,14 +356,13 @@ const PostPage = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: `${uniqPost?.content}` }} />
+                                    <div className='text-lg' dangerouslySetInnerHTML={{ __html: cleanUpContent(uniqPost?.content) }} />
                                 )}
                             </span>
 
-
                             <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
                             <span className=''>
-                                < CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
+                                <CommentBox showModal={showModal} uniqPost={uniqPost} comments={comments} setShowModal={setShowModal} />
                             </span>
                             <form onSubmit={handleSubmit}>
                                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
@@ -406,7 +399,7 @@ const PostPage = () => {
                                 </div>
                             </form>
                         </span>
-                        {/* {!session && showModal && (
+                        {!session && showModal && (
                             <div className="fixed z-10 inset-0 overflow-y-auto">
                                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -424,9 +417,9 @@ const PostPage = () => {
                                                         Please create an account or login to share your thoughts on this article
                                                     </h3>
                                                     <div className="mt-2">
-                                                        <p className="text-sm text-gray-500">
+                                                        {/* <p className="text-sm text-gray-500">
                                                             If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
-                                                        </p>
+                                                        </p> */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -443,7 +436,7 @@ const PostPage = () => {
                                     </div>
                                 </div>
                             </div>
-                        )} */}
+                        )}
                     </div>
                 </>
             )}
@@ -468,6 +461,52 @@ const PostPage = () => {
         </div>
     );
 };
+
+
+// Function to handle errors
+function handleServerError(error) {
+    console.error("An error occurred:", error);
+    return {
+        props: {
+            comments: [],
+            error: "An error occurred while fetching data."
+        }
+    };
+}
+
+
+export async function getServerSideProps(context) {
+    const { id } = context.query;
+    try {
+        if (!id) {
+            return { notFound: true };
+        }
+
+        const post = await prisma.post.findUnique({
+            where: { id: id },
+            select: { slug: true }
+        });
+
+        if (!post) {
+            return { notFound: true };
+        }
+
+        const comments = await prisma.comment.findMany({
+            where: { postSlug: post.slug },
+            include: { user: true }
+        });
+
+        return {
+            props: {
+                comments: JSON.parse(JSON.stringify(comments)),
+                postSlug: post.slug
+            }
+        };
+    } catch (error) {
+        return handleServerError(error);
+    }
+}
+
 
 
 export default PostPage;

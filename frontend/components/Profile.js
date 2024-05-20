@@ -1,13 +1,8 @@
-import { Fragment, useState, createContext, useRef } from 'react'
+import { Fragment, useState, createContext, useRef, useCallback } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import {
-    UserCircleIcon,
-    LockClosedIcon,
-    XMarkIcon,
-    IdentificationIcon
-} from '@heroicons/react/24/outline';
+import { UserCircleIcon, LockClosedIcon, XMarkIcon, IdentificationIcon } from '@heroicons/react/24/outline';
 import { useSession } from "next-auth/react";
-import { upload } from "@vercel/blob/client";
+import AvatarUploadPage from './fileUploadComponent';
 
 const navigation = [
     { name: 'Profile Information', href: '#personal', icon: IdentificationIcon, current: false },
@@ -37,13 +32,13 @@ export default function ProfilePg() {
         lastName: '',
         profileImage: null,
         brandName: '',
-        brandLogo: null
+        brandLogo: null,
+        email: '',
     });
     const [passwordData, setPasswordData] = useState({
         newPassword: '',
         confirmPassword: '',
     });
-    const [imageTag, setImageTag] = useState({ brandLogo: null, profileImage: null });
 
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
@@ -117,59 +112,31 @@ export default function ProfilePg() {
         e.preventDefault();
         const baseUrl = '/api/profileupdate';
 
-        //Get images from formData
-        const pImage = formData.profileImage;
-        const bLogo = formData.brandLogo;
+        const formDataToSend = new FormData();
 
-        const userProfileImages = {
-            profileImage: pImage,
-            brandLogo: bLogo
-        }
-
-        const response = await fetch(
-            `/api/avatar/upload?filename=${file.name}`,
-            {
-                method: 'POST',
-                body: file,
-            },
-        );
-
-        const newBlob = await response.json()
-
-        setBlob(newBlob);
+        // Append text fields to FormData
+        formDataToSend.append('firstName', formData.firstName);
+        formDataToSend.append('lastName', formData.lastName);
+        formDataToSend.append('brandName', formData.brandName);
+        formDataToSend.append('email', user.email);
 
         try {
+            // Make the fetch request
             const response = await fetch(baseUrl, {
                 method: 'POST',
-                body: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                body: formDataToSend,
             });
 
             if (response.ok) {
                 const data = await response.json();
-
-                // Log the entire response object for debugging
                 console.log('Response from server:', data);
-
-                // Check the 'message' property in the response
-                if (data && data.message === 'Profile updated successfully') {
-                    // Optionally, you can handle success here
-                    console.log('Profile updated successfully');
-                } else {
-                    // Handle unexpected response format
-                    console.error('Unexpected response format:', data);
-                }
             } else {
-                // Handle HTTP error status
-                console.error('Error updating profile', await response.text());
+                console.error('Error updating profile:', await response.text());
             }
         } catch (error) {
-            console.error('Error updating profile', error);
+            console.error('Error updating profile:', error);
         }
     };
-
 
     return (
         <UserContext.Provider value={user}>
@@ -276,7 +243,6 @@ export default function ProfilePg() {
                     {/* Sidebar component, swap this element with another sidebar if you like */}
                     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 ring-1 ring-white/5">
                         <div className="flex h-16 shrink-0 items-center">
-
                         </div>
                         <nav className="flex flex-1 flex-col">
                             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -339,21 +305,11 @@ export default function ProfilePg() {
                                         Update your personal information.
                                     </p>
                                 </div>
-
+                                <div className='xs:mt-2 md:col-span-12'>
+                                    {user?.email && <AvatarUploadPage email={user?.email} />}
+                                </div>
                                 <form className="md:col-span-2" onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full flex flex-col gap-x-8">
-                                            {imageTag.profileImage
-                                                ? <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.profileImage} alt="Profile Image" />
-                                                : <img id="profileImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Profile Image" />
-                                            }
-                                            <span className='mt-1 mx-2'><input type="file" className='w-full h-10' accept="image/*" onChange={(e) => handleFileChange(e, 'profileImage')} /></span>
-                                            <span className='text-xs'>Edit image</span>
-                                            <div>
-                                                <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
-                                            </div>
-                                        </div>
-
                                         <div className="sm:col-span-3">
                                             <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-black">
                                                 First name
@@ -362,7 +318,7 @@ export default function ProfilePg() {
                                                 <input
                                                     type="text"
                                                     name="firstName"
-                                                    value={formData.firstName}
+                                                    value={formData.firstName || ''}
                                                     onChange={handleChange}
                                                     required
                                                     id="firstName"
@@ -384,7 +340,7 @@ export default function ProfilePg() {
                                                     id="lastName"
                                                     onChange={handleChange}
                                                     required
-                                                    value={formData.lastName}
+                                                    value={formData.lastName || ''}
                                                     placeholder='Updated your last name'
                                                     autoComplete="last-name"
                                                     className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
@@ -411,32 +367,17 @@ export default function ProfilePg() {
                                                         id="brandName"
                                                         onChange={handleChange}
                                                         required
-                                                        value={formData.brandName}
+                                                        value={formData.brandName || ''}
                                                         autoComplete="brandName"
                                                         className="flex-1 rounded-md border bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6"
                                                         placeholder="Update your Brand name"
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-span-full mt-3 flex items-center gap-x-8">
-
-                                                <div>
-                                                    {imageTag.brandLogo
-                                                        ? <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={imageTag.brandLogo} alt="Brand Logo" />
-                                                        : <img id="brandLogoImageTag" className="h-28 w-28 flex-none rounded-lg bg-white object-cover" src={user?.image} alt="Brand Logo" />
-                                                    }
-                                                    <span className='flex mt-2 mx-2 flex-col text-sm'><input className='w-full h-10' type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'brandLogo')} />112px by 112px</span>
-                                                    <span className='text-xs'>Edit image</span>
-                                                    <div>
-                                                        <p className="mt-2 text-xs leading-5 text-slate-400">JPG, GIF or PNG. 1MB max.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="mt-8 flex">
-                                        <div className="mt-4 flex w-44">
+                                    <div className="pl-1 flex mt-2">
+                                        <div className="flex w-44">
                                             <button type="submit" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                                 Update Profile
                                             </button>
@@ -444,82 +385,81 @@ export default function ProfilePg() {
                                     </div>
                                 </form>
                             </div>
-
-                            <div id='pass' className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-                                <div>
-                                    <h2 className="text-base font-semibold leading-7 text-black">Change password</h2>
-                                    <p className="mt-1 text-sm leading-6 text-slate-400">
-                                        Update your password associated with your account.
-                                    </p>
-                                </div>
-
-                                <form className="md:col-span-2" onSubmit={handlePasswordSubmit}>
-                                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-                                        <div className="col-span-full">
-                                            <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
-                                                New password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="new-password"
-                                                    name="newPassword"
-                                                    type="password"
-                                                    placeholder="Your new password"
-                                                    autoComplete="new-password"
-                                                    required
-                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                    onChange={handlePasswordChange}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="col-span-full">
-                                            <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-black">
-                                                Confirm password
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="confirm-password"
-                                                    name="confirmPassword"
-                                                    type="password"
-                                                    placeholder="Confirm password"
-                                                    required
-                                                    autoComplete="new-password"
-                                                    className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                                                    onChange={handlePasswordChange}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-4 flex w-44">
-                                            <button type="submit" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
-                                                Save Information
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div id='account' className="bg-slate-300 border border-b-slate-700 ring-neutral-600 rounded-md grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-                                <div>
-                                    <h2 className="text-base font-semibold leading-7 text-black">Delete account</h2>
-                                    <p className="mt-1 text-sm leading-6 text-slate-900">
-                                        You can delete your account here. This action is not reversible.
-                                        All information related to this account will be deleted permanently.
-                                    </p>
-                                </div>
-
-                                <form className="flex items-start md:col-span-2">
-                                    <button
-                                        type="submit"
-                                        className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
-                                    >
-                                        Yes, delete my account
-                                    </button>
-                                </form>
-                            </div>
                         </div>
                     </main>
+                </div>
+
+                <div id='pass' className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                    <div>
+                        <h2 className="text-base font-semibold leading-7 text-black">Change password</h2>
+                        <p className="mt-1 text-sm leading-6 text-slate-400">
+                            Update your password associated with your account.
+                        </p>
+                    </div>
+
+                    <form className="md:col-span-2" onSubmit={handlePasswordSubmit}>
+                        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+                            <div className="col-span-full">
+                                <label htmlFor="new-password" className="block text-sm font-medium leading-6 text-black">
+                                    New password
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        id="new-password"
+                                        name="newPassword"
+                                        type="password"
+                                        placeholder="Your new password"
+                                        autoComplete="new-password"
+                                        required
+                                        className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                        onChange={handlePasswordChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-span-full">
+                                <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-black">
+                                    Confirm password
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        id="confirm-password"
+                                        name="confirmPassword"
+                                        type="password"
+                                        placeholder="Confirm password"
+                                        required
+                                        autoComplete="new-password"
+                                        className="block w-full rounded-md border bg-white/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                        onChange={handlePasswordChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="mt-4 flex w-44">
+                                <button type="submit" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                    Save Information
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id='account' className="bg-slate-300 border border-b-slate-700 ring-neutral-600 rounded-md grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                    <div>
+                        <h2 className="text-base font-semibold leading-7 text-black">Delete account</h2>
+                        <p className="mt-1 text-sm leading-6 text-slate-900">
+                            You can delete your account here. This action is not reversible.
+                            All information related to this account will be deleted permanently.
+                        </p>
+                    </div>
+                    <form className="flex items-start md:col-span-2">
+                        <button
+                            type="submit"
+                            className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
+                        >
+                            Yes, delete my account
+                        </button>
+                    </form>
                 </div>
             </div>
         </UserContext.Provider >

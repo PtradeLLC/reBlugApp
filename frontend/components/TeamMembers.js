@@ -54,7 +54,6 @@ export default function Team({ show, setShow }) {
                 ...prevState,
                 loading: true,
             }));
-
             const response = await fetch(baseUrl, {
                 method: 'POST',
                 headers: {

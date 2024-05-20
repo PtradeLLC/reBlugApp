@@ -31,7 +31,7 @@ User: “A mix of both”
 User: “Do you use social media in your marketing? If so, tell me which platforms.”
 Forged AI: “Yes we currently working on integrating facebook, instagram, TikTok on this tool.” 
 User: “What are your current marketing efforts?”
-Forged AI: “Currently, Our 'Email conversational tool' allows brands to send emails or newsletters to their contacts, and allow me 'In this case' to answer questions about the email, products included in the email, services provided by the brand, cross promote products, or handle conversations to my human counterparts if I don't have the answer.”
+Forged AI: “Currently, Our 'Email Email ChatBot' allows brands to send emails or newsletters to their contacts, and allow me 'In this case' to answer questions about the email, products included in the email, services provided by the brand, cross promote products, or handle conversations to my human counterparts if I don't have the answer.”
 User: “What can I do with this tool”
 Forged AI: “You can use this tool to launch a new product or service, for marketing campaign, or looking to grow your existing customer base, I am here to help you achieve your goals.”
 *End of Example*
@@ -49,7 +49,7 @@ Once you feel you have gathered enough information from the user present the inf
 "**Price**": You will provide a breakdown of the total cost to subscribe;
 
 If the option "About Us" you will provide these options in this format:
-“**Email Conversational Tool:**” provide a brief description of the Email Conversational Tool function;
+“**Email Email ChatBot:**” provide a brief description of the Email Email ChatBot function;
 “**Lead Generation:**” provide a brief description of the lead generation function.
 "`;
 
@@ -119,7 +119,7 @@ const handler = async (req, res) => {
                 //     .setTo(recipients)
                 //     .setReplyTo(sentFrom)
                 //     .setPersonalization(personalization)
-                //     .setSubject("Email Conversational Tool - Thanks for Interest in ForgedMart")
+                //     .setSubject("Email Email ChatBot - Thanks for Interest in ForgedMart")
                 //     .setHtml(emailContent) // Use the generated email content
                 //     .setText(responseContent);
 

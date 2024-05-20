@@ -27,14 +27,14 @@ const BlogComponent = () => {
                         <div className="space-y-6 sm:space-y-8">
 
                             <div className="space-y-2 md:space-y-4">
-                                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                <h2 className="font-bold text-2xl lg:text-4xl text-gray-800 dark:text-gray-200">
                                     Running a blog?
                                 </h2>
-                                <p className="font-bold text-2xl lg:text-3xl text-gray-700 dark:text-gray-200">
+                                <p className="font-thin text-xl lg:text-3xl text-gray-700 dark:text-gray-200">
                                     Give your articles superpowers
                                 </p>
                                 <p className="text-gray-500">
-                                    Include our AI-powered Article Assistant tool as part of your marketing strategy.
+                                    Include our AI-powered Article Assistant tool as part of your <span className='text-green-500 text-2xl'>growth strategy.</span>
                                 </p>
                             </div>
 
@@ -47,7 +47,7 @@ const BlogComponent = () => {
 
 
                                     <span className="text-sm sm:text-base text-gray-500">
-                                        <span className="font-bold">AI Powered Assistant</span> – Each published article gets its own AI assistant to provide 'In-article research' to readers.
+                                        <span className="font-bold">AI Powered Assistant</span> – Give each of your article its own AI assistant to provide In-article research to your readers.
                                     </span>
                                 </li>
                                 <li className="flex space-x-3">
@@ -58,7 +58,7 @@ const BlogComponent = () => {
 
 
                                     <span className="text-sm sm:text-base text-gray-500">
-                                        <span className="font-bold">Knowledge Base</span> – The tool reads and uses the content of the article as a knowledge base document, also sources various information from the web to provide answers readers may have.
+                                        <span className="font-bold">Knowledge Base</span> – The tool reads and uses the content of the article as a knowledge base document, and also source various information from the web to provide in-depth information to readers.
                                     </span>
                                 </li>
                                 <li className="flex space-x-3">
@@ -67,13 +67,11 @@ const BlogComponent = () => {
                                         <svg className="flex-shrink-0 h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
                                     </span>
 
-
                                     <span className="text-sm sm:text-base text-gray-500">
-                                        <span className="font-bold">Reader Interaction</span> – Your readers can ask related questions. The AI assistant conduct web researches and provide answers with sources on subject matter right on the article page.
+                                        <span className="font-bold">Reader Interaction</span> – Your readers can ask article-related questions. The AI assistant conducts web researches and provide information with sources on subject matter right on the article page when readers are engaged.
                                     </span>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -81,7 +79,7 @@ const BlogComponent = () => {
                     <BlogListGroup />
                 </div>
                 <div id="Blogger-as-platform" className="mt-8 flex justify-end items-center gap-x-6">
-                    <Link href="/creators" className="text-sm font-semibold text-gray-900">
+                    <Link href="/posts" className="text-sm font-semibold text-gray-900">
                         How it works <span aria-hidden="true">&rarr;</span>
                     </Link>
                 </div>

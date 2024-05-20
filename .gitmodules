@@ -1,0 +1,9 @@
+[submodule "frontend/crawler"]
+	path = frontend/crawler
+	url = https://github.com/builderio/gpt-crawler
+[submodule "frontend/nocoDB"]
+	path = frontend/nocoDB
+	url = https://github.com/nocodb/nocodb-seed
+[submodule "frontend/gpt-researcher"]
+	path = frontend/gpt-researcher
+	url = https://github.com/assafelovic/gpt-researcher.git

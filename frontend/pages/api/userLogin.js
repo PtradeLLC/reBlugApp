@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../lib/db";
 import { authOptions } from "./auth/[...nextauth]";
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
                 },
             });
 
-            const redirectUrl = "https://forgedmart.com/dashboard"
+            const redirectUrl = "https://reblug.com/dashboard"
 
             const emailParams = {
                 to: [{ email: email }],

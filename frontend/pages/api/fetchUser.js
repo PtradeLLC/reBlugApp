@@ -1,14 +1,16 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../lib/db";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     const session = await getServerSession(req, res, authOptions);
 
     if (session) {
         const { email } = session?.user;
+
+
 
         try {
             // Check if email is defined before making the findUnique call
@@ -31,6 +33,13 @@ export default async function handler(req, res) {
                         userType: true,
                     },
                 });
+
+                if (!user) {
+                    res.status(404).json({ message: 'User not found' });
+                    return;
+                }
+
+
 
                 if (user) {
                     let first_name, last_name;
@@ -60,6 +69,7 @@ export default async function handler(req, res) {
                             },
                         });
 
+
                         res.status(200).json({
                             firstName: first_name,
                             lastName: last_name,
@@ -67,15 +77,15 @@ export default async function handler(req, res) {
                             profileImage: user.profileImage,
                             provider: user.provider,
                             brandLogo: user.brandLogo,
-                            brandName: user.brandName,
+                            brandName: user.brandName || null,
                             role: user.role,
                             isActive: user.isActive,
                             social: user.social,
                             userType: user.userType
                         });
-
                         return;
                     } else {
+
                         res.status(200).json({
                             firstName: user.firstName,
                             lastName: user.lastName,

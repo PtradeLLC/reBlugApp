@@ -3,15 +3,12 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import HubspotProvider from "next-auth/providers/hubspot";
-import TwitchProvider from "next-auth/providers/twitch";
-import InstagramProvider from "next-auth/providers/instagram";
+import PatreonProvider from "next-auth/providers/patreon";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import SalesforceProvider from "next-auth/providers/salesforce";
+import SalesforceProvider from "next-auth/providers/salesforce"
 import LinkedInProvider from "next-auth/providers/linkedin";
+import prisma from "../../../lib/db";
 import { compare } from "bcrypt";
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -30,19 +27,30 @@ export const authOptions = {
         }),
         LinkedInProvider({
             clientId: process.env.LINKEDIN_CLIENT_ID,
-            clientSecret: process.env.LINKEDIN_CLIENT_SECRET
-        }),
-        // InstagramProvider({
-        //     clientId: process.env.INSTAGRAM_CLIENT_ID,
-        //     clientSecret: process.env.INSTAGRAM_CLIENT_SECRET
-        //   }),
-        TwitchProvider({
-            clientId: process.env.TWITCH_CLIENT_ID,
-            clientSecret: process.env.TWITCH_CLIENT_SECRET,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+            authorization: {
+                params: { scope: 'openid profile email' },
+            },
+            issuer: 'https://www.linkedin.com',
+            jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
+            profile(profile, tokens) {
+                const defaultImage =
+                    'https://cdn-icons-png.flaticon.com/512/174/174857.png';
+                return {
+                    id: profile.sub,
+                    name: profile.name,
+                    email: profile.email,
+                    image: profile.picture ?? defaultImage,
+                };
+            },
         }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        }),
+        PatreonProvider({
+            clientId: process.env.PATREON_CLIENT_ID,
+            clientSecret: process.env.PATREON_CLIENT_SECRET,
         }),
         CredentialsProvider({
             name: 'credentials',
@@ -68,37 +76,30 @@ export const authOptions = {
                     });
 
                     if (existingUser) {
-                        // Log the user object to check its structure
-                        console.log("User exists", existingUser);
-
                         // Attach user information to the session
                         req.session.user = {
-                            name: existingUser.name,
+                            name: existingUser.name || existingUser.firstName || null,
                             email: existingUser.email,
-                            image: existingUser.image,
+                            image: existingUser.image || null,
                         };
 
                         const isActive = existingUser.Accounts.every(account => account.isActive);
-
 
                         if (!isActive) {
                             // Update the user's isActive status to true
                             await prisma.user.update({
                                 where: {
-                                    id: existingUser.id,
+                                    email: existingUser.email,
                                 },
                                 data: {
                                     isActive: true,
                                 },
                             });
-
-
                             // Delete sensitive data before returning user
                             delete existingUser.password;
 
                             // return user if all accounts are active
                             return existingUser;
-
                         } else {
                             console.log("User account is already active");
                         }

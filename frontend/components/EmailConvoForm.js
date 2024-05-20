@@ -5,7 +5,7 @@ import FundRaise from "./FundRaise";
 import EmailNewsletter from "./EmailNewsletter";
 import Awareness from "./Awareness";
 import Ecommerce from "./Ecommerce";
-import Integration from "./integrations";
+import Integration from "./Integration";
 import Loading from "./Loading";
 import { useDropzone } from 'react-dropzone'
 import { XMarkIcon } from '@heroicons/react/24/solid';
@@ -110,7 +110,6 @@ export default function EmailForm({ user, campaignEmail, className }) {
 
 
     const handleSubmit = async (e) => {
-        console.log("Clicked handle:: ")
         e.preventDefault();
 
         try {
@@ -148,12 +147,13 @@ export default function EmailForm({ user, campaignEmail, className }) {
                 throw new Error('Error submitting form.');
             }
 
+            console.log('Submitted form successfully!');
+
             setSubmitted(true);
             setLoading(false); // Stop loading
 
             // Log the formData after successful submission
             formData.forEach((value, key) => {
-                console.log(`${key}: ${value}`);
             });
         } catch (error) {
             console.error('Error submitting form:', error.message);

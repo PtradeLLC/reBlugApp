@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth/[...nextauth]";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
 
 export default async function handler(req, res) {
     try {
@@ -16,20 +17,30 @@ export default async function handler(req, res) {
         const managerEmail = session.user.email;
 
         if (req.method === 'GET') {
-            const userPromise = prisma.user.findUnique({
+            const user = await prisma.user.findUnique({
                 where: {
                     email: managerEmail,
                 },
                 include: {
-                    Team: true,
+                    team: {
+                        select: {
+                            id: true,
+                            email: true,
+                            isVerified: true,
+                        },
+                    }
                 },
             });
 
-            const [user, team] = await Promise.all([userPromise, userPromise.Team]);
-
-            if (user && team) {
-                return res.status(200).json({ message: 'Successful', user, team });
+            if (user) {
+                if (user.team) {
+                    console.log("User hasteams");
+                } else {
+                    console.log("User does not have a team");
+                }
+                return res.status(200).json({ message: 'Successful', team: user.team });
             } else {
+                console.log("User not found");
                 return res.status(404).json({ message: 'Team not found for the manager' });
             }
         } else {

@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useSession } from "next-auth/react";
 import { CircularProgress } from "@nextui-org/react";
+import PropTypes from 'prop-types';
+import Comment from './Comment';
 
-const CommentBox = ({ post, comments, showModal, setShowModal }) => {
+const CommentBox = ({ comments, showModal, setShowModal }) => {
     const { data: session } = useSession();
+    // eslint-disable-next-line no-unused-vars
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
+    const [value, setValue] = useState(0);
 
-    const handleSignUp = () => {
-        if (!session) {
-            router.push('/register');
-        }
-    };
+    // Handles setting value for the loader
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setValue((v) => (v >= 100 ? 0 : v + 10));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    // const handleSignUp = () => {
+    //     if (!session) {
+    //         router.push('/login');
+    //     }
+    // };
 
     return (
         <div>
@@ -28,8 +40,8 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                         </div>
                         <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                             <p className="text-sm font-normal text-gray-900 dark:text-white">
-                                Let the author know what you think about this article and perhaps what you've learned.
-                                Please keep it clean and reader friendly. Please use 'Chat with this Article' button on
+                                Let the author know what you think about this article and perhaps what you&apos;ve learned.
+                                Please keep it clean and reader friendly. Please use &ldquo;Chat with this Article&ldquo; button on
                                 this page to ask questions about this article or conduct article related researches.
                             </p>
                         </div>
@@ -37,9 +49,18 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                     </div>
                 </div>
             </div>
-            {/* {console.log(comments)} */}
-            <div className="overflow-y-auto h-[250px]">
-                {!loading && !comments ? (
+            <div className="overflow-y-auto h-[320px]">
+                {!loading ? (
+                    <>
+                        {comments.length > 0 ? comments.map((comment) => (
+                            <Comment key={comment.id} comment={comment} />
+                        )) : (
+                            <p className='text-sm font-normal text-gray-900 dark:text-white'>
+                                There is no comment posted yet for this article
+                            </p>
+                        )}
+                    </>
+                ) : (
                     <div className="flex justify-center">
                         <CircularProgress
                             aria-label="Loading..."
@@ -50,51 +71,7 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                             showValueLabel={true}
                         />
                     </div>
-                ) : (
-                    <>
-                        {comments && comments?.map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <div>
-                                        <div key={item.id}>
-                                            <div >
-                                                <div className="flex mb-7 items-start gap-2.5">
-                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                    <div className="flex flex-col gap-1 w-full">
-
-                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">{post.User.name}</span>
-                                                        </div>
-                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                            item.
-                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.content}</p>
-                                                        </div>
-                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="flex mb-7 items-start gap-2.5">
-                                                    <img className="w-8 h-8 rounded-full" src="/images/OtherVar.png" alt="profileImage" />
-                                                    <div className="flex flex-col gap-1 w-full">
-                                                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">Article Assistant</span>
-                                                        </div>
-                                                        <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                                            <p className="text-sm font-normal text-gray-900 dark:text-white">{item.aiResponse}</p>
-                                                        </div>
-                                                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </>
                 )}
-
             </div>
             {!session && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -114,9 +91,9 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
                                             Please create an account or login to share your thoughts on this article
                                         </h3>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
+                                            {/* <p className="text-sm text-gray-500">
                                                 If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -138,4 +115,14 @@ const CommentBox = ({ post, comments, showModal, setShowModal }) => {
     );
 };
 
+
+CommentBox.propTypes = {
+    uniqPost: PropTypes.string,
+    comments: PropTypes.array,
+    showModal: PropTypes.bool.isRequired,
+    setShowModal: PropTypes.func.isRequired,
+};
+
 export default CommentBox;
+
+

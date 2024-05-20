@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../lib/db";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 
-const prisma = new PrismaClient();
 
 const deleteTeamMember = async (req, res) => {
     const session = await getServerSession(req, res, authOptions);
@@ -21,11 +20,11 @@ const deleteTeamMember = async (req, res) => {
             },
             select: {
                 role: true,
-                Team: true,
+                team: true,
             },
         });
 
-        const isValidTeamMember = user.Team.some(member => member.id === memberId);
+        const isValidTeamMember = user.team.some(member => member.id === memberId);
 
         if (!isValidTeamMember) {
             return res.status(404).json({ error: 'Team member not found' });
@@ -39,9 +38,9 @@ const deleteTeamMember = async (req, res) => {
             return res.status(403).json({ error: 'Forbidden' });
         }
 
-        if (user && user.Team) {
+        if (user && user.team) {
             // Check if the memberId exists in the team
-            const isMemberInTeam = user.Team.some(member => member.id === memberId);
+            const isMemberInTeam = user.team.some(member => member.id === memberId);
 
             if (isMemberInTeam) {
                 // Remove the member from the team

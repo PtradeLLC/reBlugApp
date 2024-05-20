@@ -22,15 +22,16 @@ const TeamComponent = ({ refreshList }) => {
             });
 
             if (!response.ok) {
-                console.error('There is an error', response.statusText);
-                throw new Error("Failed to fetch data from the server", Error.Message);
+                throw new Error('Failed to fetch data from the server: ' + response.statusText);
             }
-
             const data = await response.json();
 
             if (data) {
-                const fetchedTeamMembers = data.user.Team;
+                const team = data.team;
 
+                const fetchedTeamMembers = team;
+
+                // Check if the fetched team members are different from the latest ones
                 if (JSON.stringify(fetchedTeamMembers) !== JSON.stringify(latestTeamMembers.current)) {
                     // Update the team members and set the team count
                     updateTeamMembers(fetchedTeamMembers);
@@ -38,7 +39,10 @@ const TeamComponent = ({ refreshList }) => {
 
                     // Update the latest team members reference
                     latestTeamMembers.current = fetchedTeamMembers;
+
                 }
+            } else {
+                throw new Error('Invalid data format received from the server');
             }
         } catch (error) {
             console.error('Error fetching team data:', error);
@@ -65,6 +69,8 @@ const TeamComponent = ({ refreshList }) => {
                 throw new Error("Failed to remove team member");
             }
 
+            const data = await response.json();
+
             // If the removal was successful, update the team members
             const updatedTeamMembers = teamCount.filter(person => person.id !== teamId);
             setTeamCount(updatedTeamMembers);
@@ -85,13 +91,12 @@ const TeamComponent = ({ refreshList }) => {
         console.log('viewd');
     }
 
-
     return (
-        <div className='overflow-y-auto overflow-x-hidden h-44'>
+        <div className='overflow-y-auto overflow-x-hidden h-16'>
             {loading && <Loading className="ml-2" />}
             <ul role="list" className="-my-5 mt-1 divide-y divide-gray-200">
                 {teamCount.length > 0 ? (
-                    [...teamCount].reverse().map((person) => ( // Create a reversed copy before mapping
+                    [...teamCount].reverse().map((person) => (
                         <li key={person.id} className="py-4">
                             {person?.email && (
                                 <div className="flex items-center space-x-2">
@@ -102,7 +107,7 @@ const TeamComponent = ({ refreshList }) => {
                                             src={person?.image || "/images/brand.png"}
                                             alt="profile image"
                                         />
-                                        <p className='mx-1 truncate'>{person?.email || person?.firstName || person?.name}</p>
+                                        <p className='mx-1 truncate'>{'@' + person?.email.substring(0, person.email.indexOf("@")) || person?.firstName || person?.name}</p>
                                         {person.isVerified === false ? <div className="min-w-0 flex-1">
                                             <p
                                                 className="inline-flex items-center bg-white px-2.5 py-1 text-xs font-semibold text-red-700"
@@ -112,7 +117,7 @@ const TeamComponent = ({ refreshList }) => {
                                             <button
                                                 type="button"
                                                 onClick={() => handleRemove(person.id)}
-                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                className="inline-flex items-center rounded-full bg-white px-1 py-1 text-[0.65rem] font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                             >
                                                 Remove
                                             </button>
@@ -121,14 +126,14 @@ const TeamComponent = ({ refreshList }) => {
                                             <button
                                                 type="button"
                                                 onClick={() => handleView(person.id)}
-                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                className="inline-flex items-center rounded-full bg-white px-1 py-1 text-[0.65rem] font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                             >
                                                 View
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => handleRemove(person.id)}
-                                                className="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                className="inline-flex items-center rounded-full bg-white px-1 py-1 text-[0.65rem] font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                             >
                                                 Remove
                                             </button>

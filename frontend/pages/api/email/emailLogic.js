@@ -1,12 +1,9 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
-import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import SendNewEmail from './newUser';
-
+import prisma from "../../../lib/db";
 const saltRounds = 12;
-
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -26,18 +23,18 @@ export default async function handler(req, res) {
           email: lowercaseEmail,
           OR: [
             { isVerified: true },
-            { VerificationTokens: { some: { activatedAt: null } } },
+            { verificationTokens: { some: { activatedAt: null } } },
           ],
         },
         select: {
+          id: true,
           userType: true,
         }
       });
 
-
       if (existingUser) {
-        // User already exists, log them in
-        if (!existingUser.isVerified && existingUser.verificationToken) {
+        // User already exists, log them in >>> ` && existingUser.verificationToken`
+        if (!existingUser.isVerified) {
           // If the user is not verified but has a verification token, update the isVerified field
           await prisma.user.update({
             where: { id: existingUser.id },
@@ -75,7 +72,8 @@ export default async function handler(req, res) {
       });
 
       if (token) {
-        await SendNewEmail({ firstName, email, token: token.token, userId: token.userId, provider });
+        // Send email
+        await SendNewEmail(res, { firstName: firstName, email: lowercaseEmail, token: token.token, userId: token.userId, provider: provider });
       }
 
       // Create a new session for the user
@@ -113,9 +111,7 @@ export default async function handler(req, res) {
 
     } catch (error) {
       console.error(error);
-      return res
-        .status(500)
-        .json({ error: `An error occurred during registration: ${error.message || error}` });
+      return res.status(500).json({ error: `An error occurred during registration: ${error.message || error}` });
     } finally {
       await prisma.$disconnect();
     }
