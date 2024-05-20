@@ -1,0 +1,31 @@
+{
+  "name": "eatnow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.0.3",
+    "@heroicons/react": "^2.1.3",
+    "@nextui-org/card": "^2.0.28",
+    "@nextui-org/react": "^2.3.6",
+    "@nextui-org/system": "^2.1.2",
+    "@nextui-org/theme": "^2.2.3",
+    "@nextui-org/tooltip": "^2.0.33",
+    "appwrite": "^14.0.1",
+    "framer-motion": "^11.1.9",
+    "lucide-react": "^0.378.0",
+    "next": "14.2.3",
+    "next-pwa": "^5.6.0",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
