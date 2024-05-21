@@ -1,8 +1,9 @@
+"use client";
 import { useState } from "react";
 import { RadioGroup, Switch } from "@headlessui/react";
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { CreditCardIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
-import WhyENPN from "./WhyUs";
+import WhyBrandENPN from "./ENPNBrands";
 
 const subNavigation = [
   {
@@ -39,7 +40,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Restaurant() {
+export default function BrandSign() {
   const [selectedPlan, setSelectedPlan] = useState(plans[1]);
   const [annualBillingEnabled, setAnnualBillingEnabled] = useState(true);
   const [currentTab, setCurrentTab] = useState(subNavigation[0].name);
@@ -81,8 +82,8 @@ export default function Restaurant() {
             <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
               {currentTab === "Why Eat Now, Pay Never?" ? (
                 <section aria-labelledby="why-us-heading">
-                  <div>
-                    <WhyENPN />
+                  <div className="">
+                    <WhyBrandENPN />
                   </div>
                 </section>
               ) : (

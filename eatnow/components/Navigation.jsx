@@ -16,7 +16,7 @@ const NavBar = () => {
             <div className="pr-14 pt-1 pb-1">
               <a href="/">
                 <img
-                  className="w-[184px] h-[24px]"
+                  className="logo-styles w-[184px] h-[24px]"
                   src="/images/reblogo.png"
                   alt="Logo"
                 />
@@ -82,22 +82,27 @@ const NavBar = () => {
             className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
           >
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
-              {/* <a
-                className="font-medium text-black/80 hover:text-black  sm:py-6"
-                href="#foodini"
-                aria-current="page"
-              >
-                How it works
-              </a> */}
               <a
                 className="font-medium text-black/80 hover:text-black sm:py-6"
                 href="/restaurant"
               >
-                Submit Restaurant
+                Private Chefs
               </a>
               <a
                 className="font-medium text-black/80 hover:text-black sm:py-6"
-                href="#"
+                href="/restaurant"
+              >
+                Food Trucks
+              </a>
+              <a
+                className="font-medium text-black/80 hover:text-black sm:py-6"
+                href="/restaurant"
+              >
+                Restaurants
+              </a>
+              <a
+                className="font-medium text-black/80 hover:text-black sm:py-6"
+                href="/brands"
               >
                 Brands
               </a>

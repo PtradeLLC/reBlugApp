@@ -158,42 +158,7 @@ const LoginForm = () => {
           </button>
         </div>
       </div>
-      <div className="text-sm text-slate-900 my-10">
-        <ul>
-          <li>
-            While this app is for profit, the truth is that as many as 828
-            million people globally (around 9.8% of the world population) are
-            affected by hunger worldwide, millions of children who face hunger
-            and food insecurity every day. Nearly 7 million households are
-            forced to skip meals or go hungry because they simply can't afford
-            enough to eat.
-          </li>
-          <br />
-          <li>
-            This isn't just a statistic, it's a heartbreaking reality. But there
-            is hope. Thanks to generous people like you, we can launch the Eat
-            Now, Pay Never initiatives, providing nutritious meals to everyone,
-            those who need it most.
-          </li>
-          <br />
-          <li>
-            Every donation, big or small, makes a difference. Your contribution
-            can help reduce this global level of hunger and ensure no one goes
-            hungry. Together, we can build a community where everyone has access
-            to healthy, delicious food at no cost.
-          </li>
-          <br />
-        </ul>
-      </div>
       <br />
-      <div>
-        <button
-          type="button"
-          className="w-full flex text-slate-900 items-center justify-center gap-x-3 py-1.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
-        >
-          Consider donating today.
-        </button>
-      </div>
     </main>
   );
 };
