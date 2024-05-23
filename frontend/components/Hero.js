@@ -33,23 +33,19 @@ export default function Hero() {
             </span>
             <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
               <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
-                <span className='text-green-700 whatsnew'>Support us on ProductHunt</span>
+                <span className='text-green-700 whatsnew'>ReBlug App: Live on App stores</span>
               </a>
-              {/* &nbsp;{'|'} */}
-              {/* <a href="#email-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
-                <span className='text-red-600 whatsnew'>Email Email ChatBot</span>
-              </a> */}
               <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </span>
 
           </div>
-          <h1 className="mt-10 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-3xl hero-text">
+          <h1 className="mt-10 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-2xl hero-text">
             Every Brand and Marketer has an ongoing <span className='text-red-700 underline'>Thing</span> or two to tackle when it comes to <span className='text-green-900 text-2xl'>growth</span> marketing
           </h1>
-          <h2 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl hero-text">
+          <h2 className="mt-10 text-2xl tracking-tight text-gray-700 sm:text-2xl hero-text">
             We solve <span className='text-red-700 hero-text'>things</span> by providing a “blogger-first”
-            platform where brands and marketers connect with talented bloggers, using tools and
-            technologies to bolster growth.
+            platform where brands and marketers connect with talented bloggers, and utilizing tools and
+            technologies developed to bolster growth.
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600 hero-text">
             Specifically by making blogging interactive, social and useful for marketing through the use of
@@ -59,9 +55,9 @@ export default function Hero() {
             <HeroCarousel />
           </div>
         </div>
-        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none  xl:ml-32 hidedivmf ">
-          <div className="max-w-3xl flex-none sm:max-w-5xl  lg:max-w-none hidedivmf">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1  ring-inset hidedivmf ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+        <div className="mx-auto flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none  xl:ml-32 hidedivmf ">
+          <div className="max-w-3xl flex-none sm:max-w-5xl  lg:max-w-none ">
+            <div className="mt-2 rounded-xl bg-gray-900/5 p-2 ring-1  ring-inset hidedivmf ring-gray-900/10 lg:m-4 lg:rounded-2xl lg:p-4 hidedivmf">
               <img
                 src="/images/heroimgetwo.png"
                 alt="App screenshot"

@@ -22,7 +22,7 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 fixed shadow">
+    <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 mb-2 fixed shadow">
       {({ open }) => (
         <>
           <Banner />
@@ -31,13 +31,10 @@ export default function Navbar() {
               <div className="flex">
                 <div className="pr-14 pt-1 pb-1">
                   <a href={session ? `/dashboard` : `/`}>
-                    <p className="textLogo text-2xl">reBl<span className="text-red-500 font-semibold">ʊ</span>g</p>
-                    {/* <img
-                      src="/images/logoreBlug.png"
-                      alt="reBlug Logo"
-                      priority="true"
-                      className="w-20 h-[27px] object-contain mt-1 px-1 "
-                    /> */}
+                    <p className="textLogo text-2xl">
+                      <span className="textLogo text-2xl">{`re`.toLowerCase()}</span>Bl
+                      <span className="text-red-500 font-semibold">ʊ</span>g
+                    </p>
                   </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">

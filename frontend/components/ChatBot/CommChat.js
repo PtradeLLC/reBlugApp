@@ -1,7 +1,106 @@
-import { Dropdown } from '@nextui-org/react';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
+import 'react-quill/dist/quill.snow.css';
+import { RadioGroup, Radio, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import DropzoneComponent from '../Dropzone';
 
-const CommChat = () => {
+
+const CommChat = ({ showModal, setShowModal }) => {
+    const [open, setOpen] = useState(false);
+    const [title, setTitle] = useState('');
+    const [featureImage, setFeatureImage] = useState('');
+    const [content, setContent] = useState('');
+    const [userInfo, setUserInfo] = useState(null);
+    const [crossPromote, setCrossPromote] = useState('yes');
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Select a Niche"]));
+    const [selectedFeatures, setSelectedFeatures] = useState(["article-newsletter", "blog-podcast"]);
+    const { data: session, status } = useSession();
+
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'], { size: ['huge'] }
+            ['clean']
+        ],
+    },
+
+        formats = [
+            'header',
+            'bold', 'italic', 'underline', 'strike', 'blockquote',
+            'list', 'bullet', 'indent',
+            'link', 'image'
+        ];
+
+    useEffect(() => {
+        const fetchChat = async () => {
+            try {
+                const response = await fetch('/api/chatContent');
+
+                if (response.ok) {
+                    // Parse the response data
+                    const jsonData = await response.json();
+
+                    console.log(jsonData);
+                    // setUserInfo(jsonData);
+                } else {
+                    console.error('Failed to fetch data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchChat();
+    }, []);
+
+    const selectedValue = React.useMemo(
+        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+        [selectedKeys]
+    );
+
+    const handleMessage = async (e) => {
+        e.preventDefault();
+        try {
+            const selectedCategory = selectedKeys.has("Select your Niche") ? null : Array.from(selectedKeys)[0];
+            const data = {
+                content,
+                selectedValue,
+                selectedCategory,
+            };
+
+            const featureImageFile = featureImage[0];
+            if (featureImageFile) {
+                data.featureImage = featureImageFile;
+            };
+
+            console.log(data);
+
+            // Send the data to the API
+            const response = await fetch('/api/blog/createPost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            // // Check if the request was successful
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.error('Failed to publish article');
+            }
+            setFeatureImage('');
+            setContent('');
+            setSelectedKeys(new Set(["Select a Niche"]));
+        } catch (error) {
+            console.error('Error publishing article:', error);
+        }
+    };
 
     const blogCategories = [
         { name: "Books and Literature", href: "#", icon: "booksIcon" },
@@ -25,170 +124,57 @@ const CommChat = () => {
         { name: "Travel", href: "#", icon: "travelIcon" }
     ];
 
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-
-    //     const baseurl = "/api/chatContent";
-    // };
-
-
     return (
-        <div className="w-11/12">
-            <>
-
-                {/* Chat Bot */}
-                <div className="relative w-full">
-                    {/* Search */}
-                    <footer className="max-w-4xl mx-auto sticky top-0 p-3 sm:py-6">
-                        <div className="lg:hidden flex justify-end mb-2 sm:mb-3">
-                            {/* Sidebar Toggle */}
-                            <button
-                                type="button"
-                                className="p-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
-                                data-hs-overlay="#application-sidebar"
-                                aria-controls="application-sidebar"
-                                aria-label="Toggle navigation"
-                            >
-                                <svg
-                                    className="flex-shrink-0 size-3.5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={24}
-                                    height={24}
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <line x1={3} x2={21} y1={6} y2={6} />
-                                    <line x1={3} x2={21} y1={12} y2={12} />
-                                    <line x1={3} x2={21} y1={18} y2={18} />
-                                </svg>
-                                <span>Sidebar</span>
-                            </button>
-                        </div>
-                        {/* Input */}
-                        <form handleSubmit={handleSubmit}>
-                            {/* <label>
-                                <Dropdown>
-                                    <Dropdown.Button flat>
-                                        Select Category
-                                    </Dropdown.Button>
-                                    <Dropdown.Menu
-                                        aria-label="Static Actions"
-                                        color="secondary"
-                                        onAction={(key) => console.log(key)}
+        <>
+            <div className='overflow-y-auto h-[360px] mt-3'>
+                <div className='mb-4'>
+                    <div>
+                        <div className='my-3 w-72 bg-white'>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button
+                                        variant="bordered"
+                                        className="border rounded-sm border-gray-600 text-black font-thin h-7 mb-1"
                                     >
-                                        {blogCategories.map((item) => (
-                                            <Dropdown.Item key={item.name} color="secondary" css={{ tt: "capitalize" }}>
-                                                {item.name}
-                                            </Dropdown.Item>
-                                        ))}
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            </label> */}
-                            <div className="relative">
-                                <textarea
-                                    className="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-red-500 focus:ring-red-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    placeholder="What's going on today..."
-                                    defaultValue={""}
-                                />
-                                {/* Toolbar */}
-                                <div className="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100 dark:bg-neutral-800">
-                                    <div className="flex justify-between items-center">
-                                        {/* Button Group */}
-                                        <div className="flex items-center">
-                                            <button
-                                                type="button"
-                                                className="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-gray-500 hover:text-red-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-red-500 dark:text-neutral-500 dark:hover:text-red-500"
-                                            >
-                                                <svg
-                                                    className="flex-shrink-0 size-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth={2}
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                >
-                                                    <rect width={18} height={18} x={3} y={3} rx={2} />
-                                                    <line x1={9} x2={15} y1={15} y2={9} />
-                                                </svg>
-                                            </button>
+                                        {selectedValue}
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Single selection example"
+                                    variant="flat"
+                                    disallowEmptySelection
+                                    selectionMode="single"
+                                    selectedKeys={selectedKeys}
+                                    onSelectionChange={setSelectedKeys}
+                                >
+                                    {blogCategories.map((item, index) => (
+                                        <DropdownItem className='bg-white' key={item.name}>{item.name}</DropdownItem>
 
-                                            <button
-                                                type="button"
-                                                className="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-gray-500 hover:text-red-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-red-500 dark:text-neutral-500 dark:hover:text-red-500"
-                                            >
-                                                <svg
-                                                    className="flex-shrink-0 size-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth={2}
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                >
-                                                    <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
+                    </div>
+                    <div>
+                        <ReactQuill
+                            className='h-40 px-4 mt-5'
+                            theme="snow"
+                            value={content}
+                            toolbar={true}
+                            formats={formats}
+                            modules={modules}
+                            onChange={setContent}
+                            placeholder='Send a message to the community!'
+                        />
+                    </div>
 
-                                        <div className="flex items-center gap-x-1">
-                                            <button
-                                                type="button"
-                                                className="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-gray-500 hover:text-red-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-red-500 dark:text-neutral-500 dark:hover:text-red-500"
-                                            >
-                                                <svg
-                                                    className="flex-shrink-0 size-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={24}
-                                                    height={24}
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth={2}
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                >
-                                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                                                    <line x1={12} x2={12} y1={19} y2={22} />
-                                                </svg>
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                className="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-white bg-red-600 hover:bg-red-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-red-500"
-                                            >
-                                                <svg
-                                                    className="flex-shrink-0 size-3.5"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width={16}
-                                                    height={16}
-                                                    fill="currentColor"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </footer>
                 </div>
-            </>
-        </div>
-    )
-}
-export default CommChat
+                <div className='flex justify-end'>
+                    <button onClick={handleMessage} className='bg-white border w-auto border-slate-600 mt-2 rounded-md text-black font-medium p-2 mr-6 mb-2'>Send message</button>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default CommChat;

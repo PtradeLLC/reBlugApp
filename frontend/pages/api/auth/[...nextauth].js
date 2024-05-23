@@ -114,6 +114,18 @@ export const authOptions = {
             }
         }),
     ],
+    callbacks: {
+        async signIn(user, account, profile) {
+            // Synchronize with Appwrite here
+            await synchronizeWithAppwrite(user, account, profile);
+            return true;
+        },
+        async session(session, user) {
+            session.user.id = user.id;
+            return session;
+        },
+    },
+
 
     // callbacks: {
     //     session: async ({ session, token }) => {

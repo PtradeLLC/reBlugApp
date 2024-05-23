@@ -28,7 +28,6 @@ export default function CalendarComponent() {
                                         </CardBody>
                                     </Card>
                                 </li>
-
                             )
                         ) : (
                             <div className="flex my-4 flex-col overflow-auto gap-2 justify-center items-center mt-10">
@@ -37,9 +36,15 @@ export default function CalendarComponent() {
                         )}
                     </ul>
                     <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 justify-between">
-                        <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
-                            Start a project
-                        </Button>
+                        {isVisible ? (
+                            <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
+                                Project Started
+                            </Button>
+                        ) : (
+                            <Button className="text-tiny text-gray-700" color="primary" radius="full" size="sm">
+                                Start a project
+                            </Button>
+                        )}
                     </CardFooter>
                 </div>
             </Card >

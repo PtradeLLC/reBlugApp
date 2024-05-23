@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import fetch from 'node-fetch';
 import prisma from "../../../lib/db";
-import { userInfo } from "os";
 
 
 export default async function handler(req, res) {

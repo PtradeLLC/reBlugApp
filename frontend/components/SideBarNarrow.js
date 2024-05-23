@@ -1,14 +1,12 @@
 import { Fragment, useState, useEffect, createContext, Suspense, useRef } from 'react';
-import { Dialog, Menu } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { Dialog, Menu } from '@headlessui/react';
 import {
     PowerIcon,
     CogIcon,
     HomeIcon,
     UserGroupIcon,
     XMarkIcon,
-    ServerStackIcon,
-    MegaphoneIcon,
+    CurrencyDollarIcon,
 } from '@heroicons/react/24/outline';
 import { Popover, Transition } from "@headlessui/react";
 
@@ -24,10 +22,8 @@ const SideBarNarrow = () => {
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
         { name: 'Bloggers', href: '/posts', icon: UserGroupIcon },
         { name: 'Brands', href: '/dashboard/userdb', icon: PowerIcon },
-        { name: 'bCommerce', href: '#', icon: MegaphoneIcon },
+        { name: 'bCommerce', href: '#', icon: CurrencyDollarIcon },
         { name: 'Profile', href: '/profile', icon: CogIcon },
-        // { name: 'Tools', href: '#', icon: WrenchScrewdriverIcon },
-        // { name: 'Resources', href: '#', icon: RectangleStackIcon },
     ].map(item => ({
         ...item,
         current: item.href === currentPath,

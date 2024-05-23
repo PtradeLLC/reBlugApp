@@ -5,6 +5,7 @@ import Earnings from './Charts/AllActivitiesChat/Earnings';
 import OpenVsClick from './Charts/AllActivitiesChat/OpenClick';
 import CalendarComponent from './CalendarComponent';
 import CommChat from './ChatBot/CommChat';
+import BlogChatUI from './BlogChatUI';
 
 const AllActivitiesTab = () => {
     const [activeTab, setActiveTab] = useState('metrics');
@@ -19,13 +20,13 @@ const AllActivitiesTab = () => {
                 return (
                     <div className="flex-col gap-4 w-full">
                         <div className="gap-4 w-full mb-2 ">
-                            <CommChat />
+                            <span>
+                                <CommChat />
+                            </span>
                         </div>
                         <hr />
                         <div className="gap-4 mb-2 w-full">
-                            Text in here
-                            {/* <BlogActivities />
-                            <OpenVsClick /> */}
+                            {/* <BlogChatUI /> */}
                         </div>
                     </div>
                 );
@@ -56,15 +57,19 @@ const AllActivitiesTab = () => {
         <div>
             <div className="flex gap-4 w-[11/12] h-[30] mb-2">
                 <button title="Metrics" type="button" onClick={() => handleTabClick('metrics')} className={`inline-flex items-center px-4  h-[36px] py-3 text-sm text-gray-700 bg-slate-100 rounded-lg active w-full dark:bg-slate-50 ${activeTab === 'metrics' ? 'active' : ''}`}>
+                    <img className="w-6 h-6 rounded-full" src="/images/chat.png" alt="chatImage" />
                     Chat
                 </button>
                 <button title="Calendar" type="button" onClick={() => handleTabClick('calendar')} className={`inline-flex items-center px-4 h-[36px] py-3 text-sm rounded-lg hover:text-gray-300 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-300 dark:hover:bg-gray-100 dark:hover:text-white ${activeTab === 'calendar' ? 'active' : ''}`}>
+                    <img className="w-6 h-6 rounded-full" src="/images/calendar.png" alt="calendarImage" />
                     Calendar
                 </button>
                 <button title="Earning" type="button" onClick={() => handleTabClick('earn')} className={`inline-flex items-center px-4 py-3 h-[36px] text-sm rounded-lg hover:text-gray-300 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-300 dark:hover:bg-gray-100 dark:hover:text-white ${activeTab === 'earn' ? 'active' : ''}`}>
+                    <img className="w-6 h-6 rounded-full" src="/images/earn.png" alt="earnImage" />
                     Earnings
                 </button>
                 <button title="MyClub" type="button" onClick={() => handleTabClick('club')} className={`inline-flex items-center px-4 py-3 h-[36px] text-sm rounded-lg hover:text-gray-300 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-300 dark:hover:bg-gray-100 dark:hover:text-white ${activeTab === 'club' ? 'active' : ''}`}>
+                    <img className="w-6 h-6 rounded-full" src="/images/email.png" alt="email_marketing" />
                     Email
                 </button>
             </div>
