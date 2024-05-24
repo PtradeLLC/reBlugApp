@@ -17,10 +17,10 @@ export const authOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
-        HubspotProvider({
-            clientId: process.env.HUBSPOT_CLIENT_ID,
-            clientSecret: process.env.HUBSPOT_CLIENT_SECRET
-        }),
+        // HubspotProvider({
+        //     clientId: process.env.HUBSPOT_CLIENT_ID,
+        //     clientSecret: process.env.HUBSPOT_CLIENT_SECRET
+        // }),
         SalesforceProvider({
             clientId: process.env.SALESFORCE_CLIENT_ID,
             clientSecret: process.env.SALESFORCE_CLIENT_SECRET
@@ -48,10 +48,10 @@ export const authOptions = {
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         }),
-        PatreonProvider({
-            clientId: process.env.PATREON_CLIENT_ID,
-            clientSecret: process.env.PATREON_CLIENT_SECRET,
-        }),
+        // PatreonProvider({
+        //     clientId: process.env.PATREON_CLIENT_ID,
+        //     clientSecret: process.env.PATREON_CLIENT_SECRET,
+        // }),
         CredentialsProvider({
             name: 'credentials',
             credentials: {

@@ -91,7 +91,7 @@ const YourComponent = () => {
         });
 
         const response = result.response;
-        console.log(response.text());
+        // console.log(response.text());
     }, []);
 
     return (

@@ -136,7 +136,7 @@ export default async function handler(req, res) {
             // const response = await mailerSend.email.identity.create(identity);
 
             if (response && response.statusCode === 201) {
-                console.log("hola")
+
 
                 // Creating Inbound (Inbound route is created successfully)
                 // async function createInbound() {

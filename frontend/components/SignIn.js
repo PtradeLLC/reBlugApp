@@ -39,7 +39,7 @@ const SignIn = () => {
                 if (response.status === 401 && data.message === "Hm, something went wrong") {
                     setError("Please review your login credentials or reset your password");
                 } else {
-                    console.log(data.message);
+                    // console.log(data.message);
                     setError(`Authentication failed: ${data.message}`);
                 }
 

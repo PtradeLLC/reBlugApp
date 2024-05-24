@@ -40,7 +40,7 @@ const YourComponent = () => {
             const result = await model.generateContent([prompt, image1Parts, image2Parts]);
             const response = await result.response;
             const text = response.text();
-            console.log(text);
+
         };
 
         // Call the run function

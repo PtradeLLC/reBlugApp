@@ -25,7 +25,6 @@ export default function Navbar() {
     <Disclosure as="nav" className="bg-white inset-x-0 top-0 z-10 mb-2 fixed shadow">
       {({ open }) => (
         <>
-          <Banner />
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between">
               <div className="flex">
@@ -93,6 +92,9 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
             </div>
+          </div>
+          <div>
+            <Banner />
           </div>
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
