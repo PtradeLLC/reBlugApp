@@ -8,7 +8,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import SalesforceProvider from "next-auth/providers/salesforce"
 import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "../../../lib/db";
-import { compare } from "bcrypt";
+import { synchronizeWithAppwrite } from '../../../lib/appwrite';
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -125,6 +125,7 @@ export const authOptions = {
             return session;
         },
     },
+
 
 
     // callbacks: {
