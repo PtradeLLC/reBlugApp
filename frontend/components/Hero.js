@@ -32,7 +32,7 @@ export default function Hero() {
               What&apos;s new
             </span>
             <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
-              <a href="#blog-tool" className="sm:inline-flex md:space-x-6 lg:space-x-6">
+              <a href="https://mobile.reblug.com" className="sm:inline-flex md:space-x-6 lg:space-x-6">
                 <span className='text-green-700 whatsnew'>ReBlug App: Live at the App stores</span>
               </a>
               <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

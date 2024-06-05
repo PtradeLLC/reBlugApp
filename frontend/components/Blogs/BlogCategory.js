@@ -48,6 +48,7 @@ export default function BlogCategoriesHero() {
                                 </div>
                                 {/* End Col */}
                             </div>
+
                             {/* End Grid */}
                         </div>
                         {/* End Col */}
@@ -55,7 +56,7 @@ export default function BlogCategoriesHero() {
                             <div className="space-y-6 sm:space-y-8">
                                 {/* Title */}
                                 <div className="space-y-2 md:space-y-4">
-                                    <h2 className="font-bold text-left text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                    <h2 className="textColor font-bold text-left text-3xl lg:text-4xl text-black">
                                         Helping you succeed at your blogging endeavor with smart tools that helps:
                                     </h2>
                                 </div>

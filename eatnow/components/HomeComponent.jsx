@@ -3,12 +3,16 @@ import Hero from "./Hero";
 import Restaurants from "./RestaurantList";
 import Foodhini from "./Foodini";
 import Footer from "./Footer";
+import Steps from "./StepperWorks";
 
 const HomeComponent = () => {
   return (
     <>
       <div className="flex justify-center items-center text-3xl font-bold text-white w-full max-w-screen-xl">
         <Hero />
+      </div>
+      <div className="flex justify-center items-center text-3xl font-bold text-white w-full max-w-screen-xl">
+        <Steps />
       </div>
       <div className="flex justify-center items-center text-3xl font-bold text-white w-full max-w-screen-xl">
         <Restaurants />

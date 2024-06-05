@@ -1,0 +1,20 @@
+{
+  "name": "ReBlug",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "eatnow"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:eatnow": "npm run dev --workspace=eatnow",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:eatnow\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

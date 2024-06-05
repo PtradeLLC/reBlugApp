@@ -7,14 +7,20 @@ const HeroCarousel = () => {
     const carouselItems = [
         {
             title: "Email ChatBot",
-            text: 'An AI powered email marketing tool that enhances communication between brands,marketers and their clients by injecting conversational AI ChatBot into email & newsletters messages.',
+            text: 'An AI powered email marketing tool that enhances communication between brands, marketers and their clients by injecting conversational AI ChatBot into email & newsletters messages.',
             href: '#email-tool',
             tag: '🎉 Just Launched!'
         },
         {
             title: "Social Blogging",
-            text: "Calling on bloggers to embrace " + "Blogger economy's" + "upcoming wave. Use the power of AI to harness growth and elevate your status with tools that amplifies your influence.",
+            text: "Calling on bloggers and writers to embrace " + "Blogger economy's" + " upcoming wave. Use the power of AI to harness growth and elevate your status with tools that amplifies your influence.",
             href: '#blog-tool',
+            tag: '🎉 Just Launched!'
+        },
+        {
+            title: "Eat Now, Pay Never",
+            text: "Order and enjoy food from the finest local restaurants without paying for it. This tool partners with restaurants and brands of all sizes to offer this concept of freemium marketing.",
+            href: 'https://mobile.reblug.com',
             tag: '🎉 Just Launched!'
         },
     ];

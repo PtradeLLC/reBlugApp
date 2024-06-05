@@ -525,6 +525,7 @@ model Contact {
   lastName  String
   company   String
   email     String
+  reason    String
   message   String
 }
 

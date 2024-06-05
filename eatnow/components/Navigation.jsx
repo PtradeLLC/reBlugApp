@@ -1,138 +1,178 @@
 "use client";
-import React from "react";
-import { Input } from "@nextui-org/react";
+import { useState, useRef, useEffect } from "react";
 
-const NavBar = () => {
-  const placements = ["inside"];
+// Profile Dropdown
+const ProfileDropDown = ({ className }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const profileRef = useRef();
+
+  const navigation = [
+    { title: "Bloggers", path: "/bloggers" },
+    { title: "Brands", path: "/brands" },
+    { title: "Blogs", path: "/blog-posts" },
+    { title: "Chefs", path: "/chefs" },
+    { title: "Restaurants", path: "/restaurants" },
+    { title: "Contact", path: "/contact" },
+  ];
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <>
-      <header className="shadow-md sticky bg-white top-0 z-50 w-full text-sm py-3 sm:py-0">
-        <nav
-          className="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
-          aria-label="Global"
-        >
-          <div className="flex items-center justify-between">
-            <div className="pr-14 pt-1 pb-1">
-              <a href="/">
-                <img
-                  className="logo-styles w-[184px] h-[24px]"
-                  src="/images/reblogo.png"
-                  alt="Logo"
-                />
-              </a>
-            </div>
-            <div className="sm:hidden">
-              <button
-                type="button"
-                className="hs-collapse-toggle size-9 flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-white/20 text-black/80 hover:text-black/80 hover:text-black hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none"
-                data-hs-collapse="#navbar-collapse-with-animation"
-                aria-controls="navbar-collapse-with-animation"
-                aria-label="Toggle navigation"
-              >
-                <svg
-                  className="hs-collapse-open:hidden flex-shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1={3} x2={21} y1={6} y2={6} />
-                  <line x1={3} x2={21} y1={12} y2={12} />
-                  <line x1={3} x2={21} y1={18} y2={18} />
-                </svg>
-                <svg
-                  className="hs-collapse-open:block hidden flex-shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div className="ml-20 w-8/12">
-            <div className="flex w-full flex-wrap bg-white justify-between items-center md:flex-nowrap mb-6 md:mb-0 gap-4">
-              {placements.map((placement) => (
-                <Input
-                  key={placement}
-                  type="text"
-                  className="h-10 my-2 sm:h-10"
-                  label="Search for restaurants or dishes"
-                  labelPlacement={placement}
-                />
-              ))}
-            </div>
-          </div>
-          <div
-            id="navbar-collapse-with-animation"
-            className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
+    <div className={`relative ${className}`}>
+      {isLoggedIn ? (
+        <div className="flex items-center space-x-4">
+          <button
+            ref={profileRef}
+            className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
           >
-            <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
-              <a
-                className="font-medium text-black/80 hover:text-black sm:py-6"
-                href="/restaurant"
-              >
-                Private Chefs
-              </a>
-              <a
-                className="font-medium text-black/80 hover:text-black sm:py-6"
-                href="/restaurant"
-              >
-                Food Trucks
-              </a>
-              <a
-                className="font-medium text-black/80 hover:text-black sm:py-6"
-                href="/restaurant"
-              >
-                Restaurants
-              </a>
-              <a
-                className="font-medium text-black/80 hover:text-black sm:py-6"
-                href="/brands"
-              >
-                Brands
-              </a>
-              <a
-                className="flex items-center gap-x-2 font-medium text-black/80 hover:text-black sm:border-s sm:border-slate/30 sm:my-6 sm:ps-6"
-                href="/login"
-              >
-                <svg
-                  className="flex-shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                  <circle cx={12} cy={7} r={4} />
-                </svg>
-                Log in
-              </a>
-            </div>
+            <img
+              src="https://randomuser.me/api/portraits/men/46.jpg"
+              alt="Profile"
+              className="w-full h-full rounded-full"
+            />
+          </button>
+          <div className="lg:hidden">
+            <span className="block">Micheal John</span>
+            <span className="block text-sm text-gray-500">john@gmail.com</span>
           </div>
-        </nav>
-      </header>
-    </>
+        </div>
+      ) : (
+        <div>Login</div>
+      )}
+      {isLoggedIn && (
+        <ul
+          className={`bg-white z-10 top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${isDropdownOpen ? "" : "lg:hidden"}`}
+        >
+          {navigation.map((item, idx) => (
+            <li key={idx}>
+              <a
+                className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+                href={item.path}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
-export default NavBar;
+const Navigation = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigationItems = [
+    { title: "Bloggers", path: "/bloggers" },
+    { title: "Brands", path: "/brands" },
+    { title: "Blogs", path: "/blog-posts" },
+    { title: "Chefs", path: "/chef-faq" },
+    { title: "Restaurants", path: "/restaurants" },
+    { title: "Contact", path: "/contact" },
+  ];
+
+  return (
+    <nav className="bg-white border-b top-0 z-[999] sticky shadow">
+      <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
+        <div className="flex-none lg:flex-initial">
+          <a href="/">
+            <img
+              src="/images/reblogo.png"
+              width={70}
+              height={20}
+              alt="ReBlug Logo"
+            />
+          </a>
+        </div>
+        <div className="flex-1 flex items-center justify-between">
+          <div
+            className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${menuOpen ? "" : "hidden"}`}
+          >
+            <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
+              {navigationItems.map((item, idx) => (
+                <li key={idx} className="text-gray-600 hover:text-gray-900">
+                  <a href={item.path}>{item.title}</a>
+                </li>
+              ))}
+            </ul>
+            <ProfileDropDown className="mt-5 pt-5 border-t lg:hidden" />
+          </div>
+          <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
+            <form className="flex items-center space-x-2 border rounded-md p-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 flex-none text-gray-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                className="w-full outline-none appearance-none placeholder-gray-500 text-gray-500 sm:w-auto"
+                type="text"
+                placeholder="Search dishes"
+              />
+            </form>
+            <ProfileDropDown className="hidden lg:block" />
+            <button
+              className="outline-none text-gray-400 block lg:hidden"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              {menuOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;

@@ -18,12 +18,46 @@
 
 body {
   background: #fff;
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  /* font-variation-settings: "slnt" 0; */
 }
 
 .textLogo {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+div#tabs-with-card-1 {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+}
+
+section.py-10.bg-\[\#EEEEEE\].heroimage {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+}
+
+.getstartednow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  padding: 7px;
+  margin: 12px 0 18px;
+}
+
+.hero-text {
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.idText {
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  /* font-weight: 200; */
+  font-variation-settings: "slnt" 0;
 }
 
 /* body {

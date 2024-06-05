@@ -22,3 +22,4 @@ OLD*
 specs.txt
 .venv
 .aider.*
+node_modules

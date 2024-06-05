@@ -6,15 +6,15 @@ const Foodhini = () => {
     <>
       {/* Features */}
       <div
-        id="foodini"
+        id="download-app"
         className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto"
       >
         <div className="relative p-6 md:p-12">
           {/* Grid */}
           <div className="relative z-10 lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
             <div className="mb-10 lg:mb-0 lg:col-span-6 lg:col-start-8 lg:order-2">
-              <h2 className="font-thin text-2xl text-gray-800 font-bold sm:text-3xl dark:text-neutral-200">
-                Meet <span className="text-amber-100">Foodhini</span>
+              <h2 className="font-thin text-2xl text-gray-900 font-bold sm:text-3xl dark:text-neutral-900">
+                Meet <span className="text-gray-900">Foodhini</span>
               </h2>
               {/* Tab Navs */}
               <nav
@@ -22,9 +22,9 @@ const Foodhini = () => {
                 aria-label="Tabs"
                 role="tablist"
               >
-                <button
-                  type="button"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:bg-neutral-200 p-4 md:p-5 rounded-xl dark:hs-tab-active:bg-neutral-800 dark:hover:bg-neutral-800 active"
+                <div
+                  // type="button"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md text-start p-4 md:p-5 rounded-xl active"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"
@@ -37,89 +37,89 @@ const Foodhini = () => {
                       alt="chef-image"
                     />
                     <span className="grow ms-6">
-                      <span className="font-thin block text-sm font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-neutral-200">
+                      <span className="font-thin block text-sm hs-tab-active:text-gray-600 text-gray-800 dark:hs-tab-active:text-gray-500 dark:text-neutral-900">
                         The Legend
                       </span>
-                      <span className="font-thin block text-lg mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-neutral-200">
-                        As rumor has it, when chefs prays to the gods at the 11
-                        O'clock hour hoping for a miracle, Foodhini answers.
+                      <span className="font-thin block text-lg mt-1 text-gray-800">
+                        As rumor has it, when chefs prays to the food gods at
+                        the 11 O'clock hour hoping for a miracle, Foodhini
+                        answers.
                       </span>
                     </span>
                   </span>
-                </button>
+                </div>
                 <div
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md text-start p-4 md:p-5 rounded-xl dark:hs-tab-active:bg-neutral-700 "
-                  id="tabs-with-card-item-2"
-                  data-hs-tab="#tabs-with-card-2"
-                  aria-controls="tabs-with-card-2"
+                  // type="button"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md text-start p-4 md:p-5 rounded-xl active"
+                  id="tabs-with-card-item-1"
+                  data-hs-tab="#tabs-with-card-1"
+                  aria-controls="tabs-with-card-1"
                   role="tab"
                 >
-                  <span
-                    id="tabs-with-card-item-1"
-                    data-hs-tab="#tabs-with-card-1"
-                    aria-controls="tabs-with-card-1"
-                    role="tab"
-                    className="flex hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:bg-neutral-200 p-4 md:p-5 rounded-xl dark:hs-tab-active:bg-neutral-800 dark:hover:bg-neutral-800 active"
-                  >
+                  <span className="flex">
                     <img
-                      className="size-7 bg-white rounded-md"
-                      src="/images/foodini/stefstash.png"
+                      className="size-9"
+                      src="/images/foodini/chefbo.png"
                       alt="chef-image"
                     />
                     <span className="grow ms-6">
-                      <span className="font-thin block text-sm font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-neutral-200">
+                      <span className="font-thin block text-sm hs-tab-active:text-gray-600 text-gray-800 dark:hs-tab-active:text-gray-500 dark:text-neutral-900">
                         "Foodhini Says"
                       </span>
-                      <span className="font-thin block text-lg mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-neutral-200">
-                        And as a result, he collaborates with chefs from various
-                        restaurants and brands to bring you &nbsp;
-                        <Tooltip
-                          className="w-60"
-                          showArrow={true}
-                          content="Actually we work with various brands, and accept individual donations to pick up the
-                          cost."
-                        >
-                          <span className="border-b border-dashed">
-                            their finest offerings for free{" "}
+                      <span className="grow">
+                        <span className="font-thin block text-lg mt-1 text-gray-800 dark:hs-tab-active:text-gray-200">
+                          As a result, he collaborates with brands and chefs
+                          from all works of life to bring you &nbsp;
+                          <Tooltip
+                            className="w-60 bg-white"
+                            showArrow={true}
+                            content="Actually we work with various brands to cover the cost."
+                          >
+                            <span className="border-b border-dashed border-black">
+                              their finest offerings for free{" "}
+                            </span>
+                          </Tooltip>
+                          <br />
+                          1. Download the app to explore all the exciting
+                          options Foodhini has to offer.
+                          <br />
+                          2. If you receive &nbsp;
+                          <Tooltip
+                            className="w-80 bg-white"
+                            showArrow={true}
+                            content="'Foodhini says: Google is buying dinner for 5,000 members who blogs about this product: sample-product.com'."
+                          >
+                            <span className="border-b border-dashed border-black">
+                              a notification from Foodhini{" "}
+                            </span>
+                          </Tooltip>
+                          , act quickly to enable cash deposited onto your
+                          virtual card.
+                          <br />
+                          3. Search or browse through local restaurant and chef
+                          menus in the app, place your order with your virtual
+                          card, and enjoy.
+                        </span>
+                        <p className="font-semibold block text-sm  my-3">
+                          Download now to enjoy your first order on us.
+                        </p>
+                        <div className="grid grid-cols-2 mt-5 mb-3 mx-auto">
+                          <span className="flex justify-center mx-2 cursor-pointer">
+                            <img
+                              className="rounded-small border w-24"
+                              src="/images/foodini/appleimg.webp"
+                              alt="Apple_app_store"
+                            />
                           </span>
-                        </Tooltip>
-                        <br />
-                        1. Download the app to explore all the exciting options
-                        Foodhini has to offer.
-                        <br />
-                        2. If you receive &nbsp;
-                        <Tooltip
-                          className="w-80"
-                          showArrow={true}
-                          content="'Foodhini says: Google is buying dinner for 5,000 members who blogs about this product: sample-product.com'."
-                        >
-                          <span className="border-b border-dashed">
-                            a notification from Foodhini{" "}
+                          <span className="flex justify-center mx-2 cursor-pointer">
+                            <img
+                              className="rounded-small border w-24"
+                              src="/images/foodini/gplay.png"
+                              alt="Google_app_store"
+                            />
                           </span>
-                        </Tooltip>
-                        , act quickly to take advantage of the best cuisines,
-                        treats, dishes, and desserts from top restaurants in
-                        town.
-                        <br />
-                        3. Search or browse through local restaurant menus in
-                        the app, place your order, and enjoy.
+                        </div>
                       </span>
-                      <div className="grid grid-cols-2 mt-5 mb-3 mx-auto">
-                        <span className="flex justify-center mx-2 cursor-pointer">
-                          <img
-                            className="rounded-small border h-9"
-                            src="/images/foodini/applogo.png"
-                            alt="Apple_app_store"
-                          />
-                        </span>
-                        <span className="flex justify-center mx-2 cursor-pointer">
-                          <img
-                            className="rounded-small border w-24"
-                            src="/images/foodini/gplay.png"
-                            alt="Google_app_store"
-                          />
-                        </span>
-                      </div>
                     </span>
                   </span>
                 </div>
@@ -206,7 +206,7 @@ const Foodhini = () => {
           {/* End Grid */}
           {/* Background Color */}
           <div className="absolute inset-0 grid grid-cols-12 size-full">
-            <div className="col-span-full lg:col-span-7 lg:col-start-6 bg-gray-100 w-full h-5/6 rounded-xl sm:h-3/4 lg:h-full dark:bg-neutral-950" />
+            <div className="col-span-full lg:col-span-7 lg:col-start-6 bg-stone-300 w-full h-5/6 rounded-xl sm:h-3/4 lg:h-full" />
           </div>
           {/* End Background Color */}
         </div>

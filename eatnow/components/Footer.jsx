@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -65,7 +66,7 @@ const navigation = [
   },
 ];
 
-export default function Footer() {
+export default function Foot() {
   const [year, setYear] = useState();
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function Footer() {
   }, [year]);
 
   return (
-    <footer className="bg-white">
+    <div className="bg-white">
       <div className="mx-auto  px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
@@ -103,6 +104,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import Restaurant from "@/components/RestaurantSignUp";
+import RestaurantsFaq from "@/components/RestaurantsQuestion";
 
 const RestaurantPage = () => {
   return (
     <div>
-      <Restaurant />
+      <RestaurantsFaq />
     </div>
   );
 };
