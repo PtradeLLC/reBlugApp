@@ -103,19 +103,43 @@ const Foodhini = () => {
                         <p className="font-semibold block text-sm  my-3">
                           Download now to enjoy your first order on us.
                         </p>
-                        <div className="grid grid-cols-2 mt-5 mb-3 mx-auto">
-                          <span className="flex justify-center mx-2 cursor-pointer">
+                        {/* <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
+                          <img
+                            src="/images/foodini/gplay.png"
+                            className="w-28"
+                            alt="googleplay"
+                          />
+                          <img
+                            src="/images/foodini/appleimg.webp"
+                            className="w-32"
+                            alt="apple-store"
+                          />
+                          <img
+                            src="/images/foodini/micsoft.png"
+                            className="w-20"
+                            alt="apple-store"
+                          />
+                        </div> */}
+                        <div className="grid grid-cols-3 mt-5 mb-3 mx-auto">
+                          <span className="flex justify-center mx-1 cursor-pointer">
                             <img
-                              className="rounded-small border w-24"
+                              className="rounded-small border w-18 h-[28px]"
                               src="/images/foodini/appleimg.webp"
                               alt="Apple_app_store"
                             />
                           </span>
-                          <span className="flex justify-center mx-2 cursor-pointer">
+                          <span className="flex justify-center mx-1 cursor-pointer">
                             <img
-                              className="rounded-small border w-24"
+                              className="rounded-small border w-18 h-[28px]"
                               src="/images/foodini/gplay.png"
                               alt="Google_app_store"
+                            />
+                          </span>
+                          <span className="flex justify-center mx-1 cursor-pointer">
+                            <img
+                              src="/images/foodini/micsoft.png"
+                              className="rounded-small border w-18 h-[28px]"
+                              alt="apple-store"
                             />
                           </span>
                         </div>
