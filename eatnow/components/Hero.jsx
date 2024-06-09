@@ -73,14 +73,14 @@ export default () => {
             <img src="/images/heroimgetwo.png" className="" alt="hero-image" />
           </div>
         </div>
-        <div className="mt-14 px-4 md:px-8">
-          <p className="text-center text-sm text-gray-700 font-semibold">
+        <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3 w-3/4">
+          <p className="text-center text-sm text-gray-700 font-semibold pt-3">
             Free Food Alert: Eat Now, Pay Never
           </p>
           <span>
             <StepTwo />
           </span>
-          <div className="flex justify-center items-center flex-wrap gap-x-12 gap-y-6 mt-6">
+          <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
             <img
               src="/images/foodini/gplay.png"
               className="w-28"
@@ -89,6 +89,11 @@ export default () => {
             <img
               src="/images/foodini/appleimg.webp"
               className="w-32"
+              alt="apple-store"
+            />
+            <img
+              src="/images/foodini/micsoft.png"
+              className="w-20"
               alt="apple-store"
             />
           </div>

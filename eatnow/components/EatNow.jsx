@@ -50,13 +50,13 @@ export default function EatNow() {
               </a>
             </div>
           </div>
-          <div className="mx-auto grid w-full max-w-xl grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
+          <div className="mx-auto w-full max-w-xl items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
             <img
-              className="max-h-12 w-[130px] object-contain rounded-lg object-left"
-              src="/images/mcdee.jpeg"
+              className="w-[450px] object-cover rounded-lg object-left"
+              src="/images/logoCloud.png"
               alt="mcDonalds"
             />
-            <img
+            {/* <img
               className="max-h-12 w-full object-contain object-left"
               src="/images/Chick-fil-A-Logo.png"
               alt="Chick-fil-A-Logo"
@@ -90,7 +90,7 @@ export default function EatNow() {
               alt="Dominos"
               width={120}
               height={38}
-            />
+            /> */}
           </div>
         </div>
       </div>

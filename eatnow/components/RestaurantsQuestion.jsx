@@ -22,41 +22,58 @@ export default function RestaurantsFaq() {
   ];
 
   return (
-    <div className="px-8 mt-4">
-      <span className="text-lg my-3 font-bold">The Tool</span>
-      <div className="text-md my-3">
-        Leveraging the established "Buy Now, Pay Later" (BNPL) model, "Eat Now,
-        Pay Never" emerges as a disruptive marketing tool. This innovative
-        strategy streamlines the food ordering process by allowing our members
-        to making no payment out of pocket for their food orders. The financial
-        responsibility is addressed by the platform, and it's brand partners
-        looking to market products or services to our engaged user base. We
-        encourage members to using funds disbursed by our platform to pay for
-        their food orders via virtual debit cards we preloaded with funds.
+    <>
+      <div className="bg-slate-50 rounded ml-4 mr-24 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex justify-center items-center col-span-1">
+            <img
+              src="/images/restaurants.jpg"
+              alt="Restaurants images"
+              className="rounded-lg"
+            />
+          </div>
+          <div className="px-10 pt-8 md:col-span-2">
+            <span className="text-lg my-3 font-bold">The Tool</span>
+            <div className="text-md my-3">
+              Leveraging the established "Buy Now, Pay Later" (BNPL) model, "Eat
+              Now, Pay Never" emerges as a disruptive marketing tool. This
+              innovative strategy streamlines the food ordering process by
+              allowing our members to make no payment out of pocket for their
+              food orders. The financial responsibility is addressed by the
+              platform, and its brand partners looking to market products or
+              services to our engaged user base. We encourage members to use
+              funds disbursed by our platform to pay for their food orders via
+              virtual debit cards we preloaded with funds.
+            </div>
+          </div>
+        </div>
+        <div className="text-md my-3">
+          <span className="font-bold">Still got questions?</span>
+          <br />
+          <Accordion variant="splitted">
+            {Questions.map((question, index) => (
+              <AccordionItem
+                key={index}
+                aria-label={`Accordion ${index + 1}`}
+                title={question}
+              >
+                {Answers[index]}
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
-      <div className="text-md my-3">
-        Still got questions? Here are some we have been asked:
-      </div>
-      <Accordion variant="splitted">
-        {Questions.map((question, index) => (
-          <AccordionItem
-            key={index}
-            aria-label={`Accordion ${index + 1}`}
-            title={question}
+      <div>
+        <span className="flex justify-center items-center text-md my-3">
+          <p className="mx-1 text-xs">Questions?</p>
+          <Link
+            className="flex justify-center items-center w-60 h-10 rounded-md text-md my-3 border"
+            href="https://cal.com/rebug-chrisb/30min"
           >
-            {Answers[index]}
-          </AccordionItem>
-        ))}
-      </Accordion>
-      <span className="flex justify-center items-center text-md my-3">
-        <p className="mx-1">Even more questions?</p>
-        <Link
-          className="flex justify-center items-center w-60 h-10 rounded-md text-md my-3 border"
-          href="https://cal.com/rebug-chrisb/30min"
-        >
-          Schedule a meeting today
-        </Link>
-      </span>
-    </div>
+            Schedule a meeting today
+          </Link>
+        </span>
+      </div>
+    </>
   );
 }

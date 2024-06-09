@@ -18,31 +18,33 @@ export default function WhyBrandENPN() {
   ];
 
   return (
-    <div className="px-8">
-      <span className="text-lg my-3 font-bold">Frequently Asked</span>
-      <div className="text-md my-3">
-        Here are some of the notable questions we have been asked:
-      </div>
-      <Accordion variant="splitted">
-        {Questions.map((question, index) => (
-          <AccordionItem
-            key={index}
-            aria-label={`Accordion ${index + 1}`}
-            title={question}
+    <div className="bg-slate-50 rounded ml-4 mr-24 mt-12">
+      <div className="px-10 pt-8 ">
+        <span className="text-lg my-3 font-bold">Frequently Asked</span>
+        <div className="text-md my-3">
+          Here are some of the notable questions we have been asked:
+        </div>
+        <Accordion variant="splitted">
+          {Questions.map((question, index) => (
+            <AccordionItem
+              key={index}
+              aria-label={`Accordion ${index + 1}`}
+              title={question}
+            >
+              {Answers[index]}
+            </AccordionItem>
+          ))}
+        </Accordion>
+        <span className="flex justify-center w-full items-center text-md my-3">
+          <p className="mx-1 text-xs">Questions?</p>
+          <Link
+            className="flex justify-center items-center w-60 h-10 rounded-md text-md my-3 border"
+            href="https://cal.com/rebug-chrisb/30min"
           >
-            {Answers[index]}
-          </AccordionItem>
-        ))}
-      </Accordion>
-      <span className="flex justify-center items-center text-md my-3">
-        <p className="mx-1">More questions?</p>
-        <Link
-          className="flex justify-center items-center w-60 h-10 rounded-md text-md my-3 border"
-          href="https://cal.com/rebug-chrisb/30min"
-        >
-          Schedule a meeting today
-        </Link>
-      </span>
+            Schedule a meeting today
+          </Link>
+        </span>
+      </div>
     </div>
   );
 }

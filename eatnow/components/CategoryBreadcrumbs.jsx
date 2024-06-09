@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
 
-export default function BlogCategories({ categories }) {
+export default function BreadCrumbs({ categories }) {
   const [currentPage, setCurrentPage] = useState("Home");
   const router = useRouter();
   const [showCrumbs, setShowCrumbs] = useState(true);
@@ -14,6 +14,8 @@ export default function BlogCategories({ categories }) {
   useEffect(() => {
     setCurrentPage("Home");
   }, []);
+
+  console.log("CATEGORIES", categories);
 
   // Handles setting value for the loader
   useEffect(() => {

@@ -2,11 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-//Add the package.json
-// "type": "module",
-// "prisma": {
-//     "seed": "node ./prisma/posts.js"
-//   },
+//TO SEED THE DB WITH THIS LIST, SCROLL DOWN TO COPY AND PASTE THE SEED FUNCTION TO PACKAGE.JSON
 
 async function seed() {
     try {
@@ -30,7 +26,27 @@ async function seed() {
             'Travel',
             'Entertainment',
             'Food Photography',
-            'Healthy Eating'
+            'Healthy Eating',
+            'LGBTQ',
+            'Music',
+            'Pets',
+            'Religion and Spirituality',
+            'Social Media',
+            'Spirituality',
+            'Style',
+            'Television',
+            'Veganism',
+            'Wellness',
+            'Writing',
+            'American Culture',
+            'European Culture',
+            'Japanese Culture',
+            'Middle Eastern Culture',
+            'Mexican Culture',
+            'Indian Culture',
+            'Korean Culture',
+            'Australian Culture',
+            'Chinese Culture',
         ];
 
         async function seedCategories() {
@@ -51,12 +67,6 @@ async function seed() {
                 }
             }
         }
-
-        // "type": "module",
-        // "prisma": {
-        //     "seed": "node prisma/posts.js"
-        //   },
-
         async function dbSeed() {
             await seedCategories();
         }
@@ -69,3 +79,11 @@ async function seed() {
     }
 }
 seed();
+
+
+
+
+// "type": "module",
+// "prisma": {
+//     "seed": "node prisma/posts.js"
+//   },

@@ -6,9 +6,6 @@ const prisma = new PrismaClient();
 export async function POST(request) {
     try {
         const { firstName, lastName, company, email, reason, message } = await request.json();
-
-        console.log(firstName, lastName, company, email, reason, message);
-
         // Save the form data to the database
         const contact = await prisma.contact.create({
             data: {
@@ -21,7 +18,7 @@ export async function POST(request) {
             },
         });
 
-        // Send email to the ADMIN_EMAIL
+        // To do: Send email to admin of form data
 
         // Respond with a success message
         return NextResponse.json({ success: true, contact });

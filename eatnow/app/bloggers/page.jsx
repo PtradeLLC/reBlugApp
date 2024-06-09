@@ -68,7 +68,7 @@ export default function Bloggers() {
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8 lg:mt-[-322px]">
           <img
-            src="/images/pile2.png"
+            src="/images/mamamia.jpg"
             alt="Walnut card tray filled with cards and card angled in dedicated groove."
             className="rounded-lg bg-gray-100"
           />

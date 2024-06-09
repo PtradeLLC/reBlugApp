@@ -1,14 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { useWindowSize } from "@react-hook/window-size";
 import { Divider } from "@nextui-org/react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function BlogCategoriesHero() {
-  const [width, height] = useWindowSize();
+export default function BlogCategories() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
