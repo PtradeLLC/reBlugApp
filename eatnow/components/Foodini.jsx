@@ -103,23 +103,6 @@ const Foodhini = () => {
                         <p className="font-semibold block text-sm  my-3">
                           Download now to enjoy your first order on us.
                         </p>
-                        {/* <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
-                          <img
-                            src="/images/foodini/gplay.png"
-                            className="w-28"
-                            alt="googleplay"
-                          />
-                          <img
-                            src="/images/foodini/appleimg.webp"
-                            className="w-32"
-                            alt="apple-store"
-                          />
-                          <img
-                            src="/images/foodini/micsoft.png"
-                            className="w-20"
-                            alt="apple-store"
-                          />
-                        </div> */}
                         <div className="grid grid-cols-3 mt-5 mb-3 mx-auto">
                           <span className="flex justify-center mx-1 cursor-pointer">
                             <img

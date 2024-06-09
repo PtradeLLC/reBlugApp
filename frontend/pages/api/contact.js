@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { firstName, lastName, company, email, message } = req.body;
+    const { firstName, lastName, company, email, reason, message } = req.body;
 
     try {
       // Create the contact in the database
@@ -13,6 +13,7 @@ export default async function handler(req, res) {
           lastName,
           company,
           email,
+          reason,
           message,
         },
       });
