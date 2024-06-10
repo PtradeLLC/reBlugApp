@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
       // Respond with a success message and the created contact
       res.status(201).json({
-        message: "Contact added to the Contact list.",
+        message: "New contact has been added to the Contact list.",
         contact: formContact,
       });
     } catch (error) {
