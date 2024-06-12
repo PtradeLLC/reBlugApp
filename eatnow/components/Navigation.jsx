@@ -10,7 +10,7 @@ const ProfileDropDown = ({ className }) => {
   const navigation = [
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
-    // { title: "Blogs", path: "/blog-posts" },
+    { title: "Blogs", path: "/blog-posts" },
     { title: "Chefs", path: "/chefs" },
     { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },
@@ -77,7 +77,7 @@ const Navigation = () => {
   const navigationItems = [
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
-    // { title: "Blogs", path: "/blog-posts" },
+    { title: "Blogs", path: "/blog-posts" },
     { title: "Chefs", path: "/chef-faq" },
     { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },

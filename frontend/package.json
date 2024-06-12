@@ -2,15 +2,17 @@
   "name": "reblug",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "postinstall": "prisma generate",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint --config .eslintrc.json"
+    "lint": "next lint --config .eslintrc.json",
+    "seed": "node prisma/posts.mjs"
   },
   "prisma": {
-    "seed": "node prisma/posts.js"
+    "seed": "node prisma/posts.mjs"
   },
   "dependencies": {
     "@apideck/node": "^3.1.2",
@@ -36,7 +38,7 @@
     "@premai/prem-sdk": "^0.3.26",
     "@prisma/adapter-neon": "^5.5.2",
     "@prisma/adapter-pg": "^5.12.1",
-    "@prisma/client": "^5.9.1",
+    "@prisma/client": "^5.15.0",
     "@prisma/extension-accelerate": "^0.6.2",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-popover": "1.0.7",
@@ -178,7 +180,7 @@
     "postcss": "^8.4.25",
     "prettier": "^3.1.1",
     "prettier-plugin-prisma": "^5.0.0",
-    "prisma": "^5.9.1",
+    "prisma": "^5.15.0",
     "raw-loader": "^4.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

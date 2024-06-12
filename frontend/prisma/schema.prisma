@@ -1,10 +1,10 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "postgresqlExtensions", "fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["driverAdapters", "fullTextIndex", "fullTextSearch", "postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "cockroachdb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,8 +22,8 @@ model Account {
   id_token          String?
   session_state     String?
   api_domain        String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   UserType          String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -56,30 +56,29 @@ model User {
   updatedAt          DateTime            @updatedAt
   profileId          String?
   role               Role                @default(MANAGER)
-  Accounts           Account[]
-  profile            Profile[]
-  sessions           Session[]
   emailVerified      DateTime?
   userType           String?
-  verificationTokens VerificationToken[]
-  recentUpdates      RecentUpdates[]
-  campaignHistory    CampaignHistory[]
-  team               Team[]
-  emailTool          EmailTool[]
-  emailLists         EmailList[]
-  social             Social[]
+  Accounts           Account[]
   campaign           Campaign[]
-  connectors         Connectors[]
-  files              Files[]
-  emailContact       EmailContact[]
-  knowledgeBase      KnowledgeBase[]
-  contactList        ContactList[]
-  productLaunchData  ProductLaunchData[]
-  // posts              Post[]
-  comment            Comment[]
-  sponsors           Sponsors[]
+  campaignHistory    CampaignHistory[]
   Category           Category[]
   Chat               Chat[]
+  comment            Comment[]
+  connectors         Connectors[]
+  contactList        ContactList[]
+  emailContact       EmailContact[]
+  emailLists         EmailList[]
+  emailTool          EmailTool[]
+  files              Files[]
+  knowledgeBase      KnowledgeBase[]
+  productLaunchData  ProductLaunchData[]
+  profile            Profile[]
+  recentUpdates      RecentUpdates[]
+  sessions           Session[]
+  social             Social[]
+  sponsors           Sponsors[]
+  team               Team[]
+  verificationTokens VerificationToken[]
 }
 
 model Post {
@@ -100,20 +99,19 @@ model Post {
   published        Boolean        @default(false)
   content          String?
   email            String?
-  comments         Comment[]
-  aiResponses      AiResponse[]
-  sponsors         Sponsors[]
   author           String?
-  // author           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   categorySlug     String?
   blogger          String?
   userId           String?
   postSlug         String?
-  category         Category?      @relation(fields: [categoryId], references: [id])
   categoryId       String?
-  images           ImageOnPost[]
+  aiResponses      AiResponse[]
   AvatarOnPost     AvatarOnPost[]
   Chat             Chat[]
+  comments         Comment[]
+  images           ImageOnPost[]
+  category         Category?      @relation(fields: [categoryId], references: [id])
+  sponsors         Sponsors[]
 }
 
 model VerificationToken {
@@ -123,11 +121,11 @@ model VerificationToken {
   email       String    @unique
   expires     DateTime
   updatedAt   DateTime  @updatedAt
-  user        User?     @relation(fields: [userId], references: [id])
   createdAt   DateTime  @default(now())
   activatedAt DateTime?
   teamId      String?
   Team        Team?     @relation(fields: [teamId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, token])
 }
@@ -137,41 +135,40 @@ model Profile {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-  // Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
   Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model RecentUpdates {
   id      String    @unique @default(cuid())
-  Updates Update[]
-  User    User?     @relation(fields: [userId], references: [id])
   userId  String?
   History History[]
+  User    User?     @relation(fields: [userId], references: [id])
+  Updates Update[]
 }
 
 model CampaignHistory {
   id      String    @unique @default(cuid())
-  History History[]
-  User    User?     @relation(fields: [userId], references: [id])
   userId  String?
+  User    User?     @relation(fields: [userId], references: [id])
+  History History[]
 }
 
 model Update {
   id              String         @unique @default(cuid())
   Update          String?
-  RecentUpdates   RecentUpdates? @relation(fields: [recentUpdatesId], references: [id])
   recentUpdatesId String?
+  RecentUpdates   RecentUpdates? @relation(fields: [recentUpdatesId], references: [id])
 }
 
 model History {
   id                String           @unique @default(cuid())
   History           String?
-  campaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
   campaignHistoryId String?
-  recentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
   recentUpdatesId   String?
+  campaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
+  recentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
 }
 
 model Team {
@@ -183,20 +180,20 @@ model Team {
   isVerified         Boolean?
   password           String?
   image              String?
-  Profile            Profile[]
-  emailLists         EmailList[]
-  emailTool          EmailTool[]
-  member             User?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
   role               Role                @default(MEMBER)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   teamId             String?
   userId             String?
-  verificationTokens VerificationToken[]
   campaign           Campaign[]
   connectors         Connectors[]
-  knowledgeBase      KnowledgeBase[]
   contactList        ContactList[]
+  emailLists         EmailList[]
+  emailTool          EmailTool[]
+  knowledgeBase      KnowledgeBase[]
+  Profile            Profile[]
+  member             User?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  verificationTokens VerificationToken[]
 }
 
 model ProductLaunchData {
@@ -236,8 +233,8 @@ model EmailContact {
   email     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
   userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
 }
 
 model Event {
@@ -266,10 +263,10 @@ model Image {
 
 model ImageOnPost {
   id      String @unique @default(cuid())
-  post    Post   @relation(fields: [postId], references: [id])
   postId  String
-  image   Image  @relation(fields: [imageId], references: [id])
   imageId String
+  image   Image  @relation(fields: [imageId], references: [id])
+  post    Post   @relation(fields: [postId], references: [id])
 }
 
 model Avatar {
@@ -283,19 +280,19 @@ model Avatar {
 
 model AvatarOnPost {
   id       String @unique @default(cuid())
-  post     Post   @relation(fields: [postId], references: [id])
   postId   String
-  avatar   Avatar @relation(fields: [avatarId], references: [id])
   avatarId String
+  avatar   Avatar @relation(fields: [avatarId], references: [id])
+  post     Post   @relation(fields: [postId], references: [id])
 }
 
 model Category {
   id     String  @unique @default(cuid())
   title  String?
   slug   String  @unique
-  posts  Post[]
-  user   User?   @relation(fields: [userId], references: [id])
   userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+  posts  Post[]
 }
 
 model Comment {
@@ -307,11 +304,11 @@ model Comment {
   postSlug   String?
   aiResponse String?
   postId     String?
-  user       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userEmail  String?
   userId     String?
   AiResponse AiResponse?
   Post       Post?       @relation(fields: [postId], references: [id])
+  user       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AiResponse {
@@ -321,10 +318,10 @@ model AiResponse {
   commentBy          String?
   response           String?
   commentingSystemId String?
-  comments           Comment? @relation(fields: [articleCommentId], references: [id])
   articleCommentId   String?  @unique
-  post               Post?    @relation(fields: [postId], references: [id])
   postId             String?
+  comments           Comment? @relation(fields: [articleCommentId], references: [id])
+  post               Post?    @relation(fields: [postId], references: [id])
   Chat               Chat[]
 }
 
@@ -332,11 +329,11 @@ model Sponsors {
   id           String      @unique @default(cuid())
   title        String?
   postId       String?
-  submission   Submission? @relation(fields: [submissionId], references: [id])
   submissionId String?
-  Post         Post?       @relation(fields: [postId], references: [id])
-  User         User?       @relation(fields: [userId], references: [id])
   userId       String?
+  Post         Post?       @relation(fields: [postId], references: [id])
+  submission   Submission? @relation(fields: [submissionId], references: [id])
+  User         User?       @relation(fields: [userId], references: [id])
 }
 
 model EmailTool {
@@ -350,10 +347,10 @@ model EmailTool {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String
-  files               Files[]
-  user                User     @relation(fields: [userId], references: [id])
-  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
 }
 
 model Campaign {
@@ -369,10 +366,10 @@ model Campaign {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String
-  files               Files[]
-  user                User     @relation(fields: [userId], references: [id])
-  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
 }
 
 model KnowledgeBase {
@@ -383,13 +380,12 @@ model KnowledgeBase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
-  files     Files[]
-  user      User     @relation(fields: [userId], references: [id])
-  Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
+  files     Files[]
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
-// Uploaded
 model ContactList {
   id        String   @unique @default(cuid())
   url       String?
@@ -397,10 +393,10 @@ model ContactList {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
-  files     Files[]
-  user      User     @relation(fields: [userId], references: [id])
-  Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  files     Files[]
 }
 
 model Connectors {
@@ -414,27 +410,27 @@ model Connectors {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              String
-  files               Files[]
-  user                User     @relation(fields: [userId], references: [id])
-  Team                Team?    @relation(fields: [teamId], references: [id])
   teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
 }
 
 model Files {
   id              String         @unique @default(cuid())
   emailToolId     String?
-  EmailTool       EmailTool?     @relation(fields: [emailToolId], references: [id])
-  Campaign        Campaign?      @relation(fields: [campaignId], references: [id])
   campaignId      String?
-  Connectors      Connectors?    @relation(fields: [connectorsId], references: [id])
   connectorsId    String?
   filename        String?
-  KnowledgeBase   KnowledgeBase? @relation(fields: [knowledgeBaseId], references: [id])
   knowledgeBaseId String?
-  ContactList     ContactList?   @relation(fields: [contactListId], references: [id])
   contactListId   String?
-  User            User?          @relation(fields: [userId], references: [id])
   userId          String?
+  Campaign        Campaign?      @relation(fields: [campaignId], references: [id])
+  Connectors      Connectors?    @relation(fields: [connectorsId], references: [id])
+  ContactList     ContactList?   @relation(fields: [contactListId], references: [id])
+  EmailTool       EmailTool?     @relation(fields: [emailToolId], references: [id])
+  KnowledgeBase   KnowledgeBase? @relation(fields: [knowledgeBaseId], references: [id])
+  User            User?          @relation(fields: [userId], references: [id])
 }
 
 model TrialProspect {
@@ -450,9 +446,9 @@ model EmailList {
   id     String  @unique @default(cuid())
   email  String
   userId String?
-  User   User?   @relation(fields: [userId], references: [id])
-  Team   Team?   @relation(fields: [teamId], references: [id])
   teamId String?
+  Team   Team?   @relation(fields: [teamId], references: [id])
+  User   User?   @relation(fields: [userId], references: [id])
 }
 
 model TrialProspectTwo {
@@ -485,8 +481,8 @@ model Brand {
 model Blogger {
   id        String   @unique @default(cuid())
   BloggerId String?
-  social    Social[]
   email     String
+  social    Social[]
 }
 
 model Social {
@@ -496,10 +492,10 @@ model Social {
   tiktok    String?
   google    String?
   twitter   String?
-  Blogger   Blogger? @relation(fields: [BloggerId], references: [id])
   BloggerId String?
-  User      User?    @relation(fields: [userId], references: [id])
   userId    String?
+  Blogger   Blogger? @relation(fields: [BloggerId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id])
 }
 
 model Chat {
@@ -511,22 +507,23 @@ model Chat {
   postSlug     String?
   aiResponse   String?
   postId       String?
-  user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userEmail    String?
   userId       String?
+  aiResponseId String?
   AiResponse   AiResponse? @relation(fields: [aiResponseId], references: [id])
   Post         Post?       @relation(fields: [postId], references: [id])
-  aiResponseId String?
+  user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Contact {
-  id        String @unique @default(cuid())
+  id        String   @unique @default(cuid())
   firstName String
   lastName  String
   company   String
   email     String
   reason    String
   message   String
+  createdAt DateTime @default(now())
 }
 
 model MaaP {

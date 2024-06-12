@@ -1,488 +1,485 @@
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('USER', 'MANAGER', 'MEMBER', 'ADMIN', 'BLOGGER');
 
--- DropEnum
-DROP TYPE "crdb_internal_region";
-
 -- CreateTable
 CREATE TABLE "Account" (
-    "id" STRING NOT NULL,
-    "userId" STRING NOT NULL,
-    "type" STRING NOT NULL,
-    "provider" STRING NOT NULL,
-    "providerAccountId" STRING NOT NULL,
-    "refresh_token" STRING,
-    "access_token" STRING,
-    "expires_at" INT4,
-    "token_type" STRING,
-    "scope" STRING,
-    "id_token" STRING,
-    "session_state" STRING,
-    "api_domain" STRING,
-    "UserType" STRING
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+    "api_domain" TEXT,
+    "UserType" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Session" (
-    "id" STRING NOT NULL,
-    "sessionToken" STRING NOT NULL,
-    "userId" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "sessionToken" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" STRING NOT NULL,
-    "userId" INT4,
-    "name" STRING,
-    "externalId" STRING,
-    "brandName" STRING,
-    "firstName" STRING,
-    "profileImage" STRING,
-    "isActive" BOOL NOT NULL DEFAULT false,
-    "brandLogo" STRING,
-    "password" STRING,
-    "image" STRING,
-    "lastName" STRING,
-    "isVerified" BOOL,
-    "provider" STRING,
-    "email" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "userId" INTEGER,
+    "name" TEXT,
+    "externalId" TEXT,
+    "brandName" TEXT,
+    "firstName" TEXT,
+    "profileImage" TEXT,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "brandLogo" TEXT,
+    "password" TEXT,
+    "image" TEXT,
+    "lastName" TEXT,
+    "isVerified" BOOLEAN,
+    "provider" TEXT,
+    "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "profileId" STRING,
+    "profileId" TEXT,
     "role" "Role" NOT NULL DEFAULT 'MANAGER',
     "emailVerified" TIMESTAMP(3),
-    "userType" STRING
+    "userType" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "featureImage" STRING,
-    "contentImage" STRING,
-    "views" INT4 NOT NULL DEFAULT 0,
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "featureImage" TEXT,
+    "contentImage" TEXT,
+    "views" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "description" STRING,
-    "crossPromote" STRING,
-    "slug" STRING,
-    "selectedValue" STRING,
-    "paramsId" STRING,
-    "image" STRING,
+    "description" TEXT,
+    "crossPromote" TEXT,
+    "slug" TEXT,
+    "selectedValue" TEXT,
+    "paramsId" TEXT,
+    "image" TEXT,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "selectedFeatures" STRING[],
-    "published" BOOL NOT NULL DEFAULT false,
-    "content" STRING,
-    "email" STRING,
-    "author" STRING,
-    "categorySlug" STRING,
-    "blogger" STRING,
-    "userId" STRING,
-    "postSlug" STRING,
-    "categoryId" STRING
+    "selectedFeatures" TEXT[],
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "content" TEXT,
+    "email" TEXT,
+    "author" TEXT,
+    "categorySlug" TEXT,
+    "blogger" TEXT,
+    "userId" TEXT,
+    "postSlug" TEXT,
+    "categoryId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "VerificationToken" (
-    "id" STRING NOT NULL,
-    "userId" STRING NOT NULL,
-    "token" STRING NOT NULL,
-    "email" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "activatedAt" TIMESTAMP(3),
-    "teamId" STRING
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Profile" (
-    "id" STRING NOT NULL,
-    "userId" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "teamId" STRING
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "RecentUpdates" (
-    "id" STRING NOT NULL,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "CampaignHistory" (
-    "id" STRING NOT NULL,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Update" (
-    "id" STRING NOT NULL,
-    "Update" STRING,
-    "recentUpdatesId" STRING
+    "id" TEXT NOT NULL,
+    "Update" TEXT,
+    "recentUpdatesId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "History" (
-    "id" STRING NOT NULL,
-    "History" STRING,
-    "campaignHistoryId" STRING,
-    "recentUpdatesId" STRING
+    "id" TEXT NOT NULL,
+    "History" TEXT,
+    "campaignHistoryId" TEXT,
+    "recentUpdatesId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Team" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "name" STRING,
-    "firstName" STRING,
-    "lastName" STRING,
-    "isVerified" BOOL,
-    "password" STRING,
-    "image" STRING,
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "isVerified" BOOLEAN,
+    "password" TEXT,
+    "image" TEXT,
     "role" "Role" NOT NULL DEFAULT 'MEMBER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "teamId" STRING,
-    "userId" STRING
+    "teamId" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "ProductLaunchData" (
-    "id" STRING NOT NULL,
-    "userId" STRING,
-    "feature01" STRING,
-    "title" STRING,
-    "feature02" STRING,
-    "feature03" STRING,
-    "demographic" STRING,
-    "company" STRING,
-    "geographic" STRING,
-    "job_title" STRING,
-    "about" STRING,
-    "objectives" STRING,
-    "client_type" STRING,
-    "pain_point01" STRING,
-    "pain_point02" STRING,
-    "pain_point03" STRING,
-    "pain_point04" STRING,
-    "unique01" STRING,
-    "unique02" STRING,
-    "unique03" STRING,
-    "unique04" STRING,
-    "tool01" STRING,
-    "tool02" STRING,
-    "tool03" STRING,
-    "tool04" STRING,
-    "website" STRING,
+    "id" TEXT NOT NULL,
+    "userId" TEXT,
+    "feature01" TEXT,
+    "title" TEXT,
+    "feature02" TEXT,
+    "feature03" TEXT,
+    "demographic" TEXT,
+    "company" TEXT,
+    "geographic" TEXT,
+    "job_title" TEXT,
+    "about" TEXT,
+    "objectives" TEXT,
+    "client_type" TEXT,
+    "pain_point01" TEXT,
+    "pain_point02" TEXT,
+    "pain_point03" TEXT,
+    "pain_point04" TEXT,
+    "unique01" TEXT,
+    "unique02" TEXT,
+    "unique03" TEXT,
+    "unique04" TEXT,
+    "tool01" TEXT,
+    "tool02" TEXT,
+    "tool03" TEXT,
+    "tool04" TEXT,
+    "website" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "EmailContact" (
-    "id" STRING NOT NULL,
-    "email" STRING,
+    "id" TEXT NOT NULL,
+    "email" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Event" (
-    "id" STRING NOT NULL,
-    "type" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
     "data" JSONB NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Submission" (
-    "id" STRING NOT NULL,
-    "fullName" STRING NOT NULL,
-    "website" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "description" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "fullName" TEXT NOT NULL,
+    "website" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "description" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Image" (
-    "id" STRING NOT NULL,
-    "name" STRING NOT NULL,
-    "mimeType" STRING NOT NULL,
-    "data" BYTES NOT NULL,
-    "title" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "mimeType" TEXT NOT NULL,
+    "data" BYTEA NOT NULL,
+    "title" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "ImageOnPost" (
-    "id" STRING NOT NULL,
-    "postId" STRING NOT NULL,
-    "imageId" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
+    "imageId" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Avatar" (
-    "id" STRING NOT NULL,
-    "name" STRING NOT NULL,
-    "mimeType" STRING NOT NULL,
-    "data" BYTES NOT NULL,
-    "title" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "mimeType" TEXT NOT NULL,
+    "data" BYTEA NOT NULL,
+    "title" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "AvatarOnPost" (
-    "id" STRING NOT NULL,
-    "postId" STRING NOT NULL,
-    "avatarId" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "postId" TEXT NOT NULL,
+    "avatarId" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Category" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "slug" STRING NOT NULL,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "slug" TEXT NOT NULL,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "content" STRING,
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "content" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "postSlug" STRING,
-    "aiResponse" STRING,
-    "postId" STRING,
-    "userEmail" STRING,
-    "userId" STRING
+    "postSlug" TEXT,
+    "aiResponse" TEXT,
+    "postId" TEXT,
+    "userEmail" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "AiResponse" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "comment" STRING,
-    "commentBy" STRING,
-    "response" STRING,
-    "commentingSystemId" STRING,
-    "articleCommentId" STRING,
-    "postId" STRING
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "comment" TEXT,
+    "commentBy" TEXT,
+    "response" TEXT,
+    "commentingSystemId" TEXT,
+    "articleCommentId" TEXT,
+    "postId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Sponsors" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "postId" STRING,
-    "submissionId" STRING,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "postId" TEXT,
+    "submissionId" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "EmailTool" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "subjectLine" STRING,
-    "emailBody" STRING,
-    "productImage" STRING,
-    "productDescritption" STRING,
-    "productUrl" STRING,
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "subjectLine" TEXT,
+    "emailBody" TEXT,
+    "productImage" TEXT,
+    "productDescritption" TEXT,
+    "productUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING NOT NULL,
-    "teamId" STRING
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Campaign" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "title" STRING,
-    "subjectLine" STRING,
-    "emailBody" STRING,
-    "productImage" STRING,
-    "productDescritption" STRING,
-    "productUrl" STRING,
-    "category" STRING,
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "title" TEXT,
+    "subjectLine" TEXT,
+    "emailBody" TEXT,
+    "productImage" TEXT,
+    "productDescritption" TEXT,
+    "productUrl" TEXT,
+    "category" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING NOT NULL,
-    "teamId" STRING
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "KnowledgeBase" (
-    "id" STRING NOT NULL,
-    "url" STRING,
-    "type" STRING,
-    "email" STRING,
+    "id" TEXT NOT NULL,
+    "url" TEXT,
+    "type" TEXT,
+    "email" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING NOT NULL,
-    "teamId" STRING
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "ContactList" (
-    "id" STRING NOT NULL,
-    "url" STRING,
-    "type" STRING,
+    "id" TEXT NOT NULL,
+    "url" TEXT,
+    "type" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING NOT NULL,
-    "teamId" STRING
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Connectors" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "subjectLine" STRING,
-    "emailBody" STRING,
-    "productImage" STRING,
-    "productDescritption" STRING,
-    "productUrl" STRING,
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "subjectLine" TEXT,
+    "emailBody" TEXT,
+    "productImage" TEXT,
+    "productDescritption" TEXT,
+    "productUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" STRING NOT NULL,
-    "teamId" STRING
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Files" (
-    "id" STRING NOT NULL,
-    "emailToolId" STRING,
-    "campaignId" STRING,
-    "connectorsId" STRING,
-    "filename" STRING,
-    "knowledgeBaseId" STRING,
-    "contactListId" STRING,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "emailToolId" TEXT,
+    "campaignId" TEXT,
+    "connectorsId" TEXT,
+    "filename" TEXT,
+    "knowledgeBaseId" TEXT,
+    "contactListId" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "TrialProspect" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "firstName" STRING NOT NULL,
-    "lastName" STRING NOT NULL,
-    "Email" STRING,
-    "image" STRING
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "Email" TEXT,
+    "image" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "EmailList" (
-    "id" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "userId" STRING,
-    "teamId" STRING
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "userId" TEXT,
+    "teamId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "TrialProspectTwo" (
-    "id" STRING NOT NULL,
-    "emai" STRING NOT NULL,
-    "firstName" STRING NOT NULL,
-    "lastName" STRING NOT NULL,
-    "Email" STRING,
-    "image" STRING
+    "id" TEXT NOT NULL,
+    "emai" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "Email" TEXT,
+    "image" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "ForgedAI" (
-    "id" STRING NOT NULL,
-    "product" STRING,
-    "useCaseTwo" STRING NOT NULL,
-    "useCase" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "product" TEXT,
+    "useCaseTwo" TEXT NOT NULL,
+    "useCase" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Brand" (
-    "id" STRING NOT NULL,
-    "brandName" STRING NOT NULL,
-    "email" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "brandName" TEXT NOT NULL,
+    "email" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Blogger" (
-    "id" STRING NOT NULL,
-    "BloggerId" STRING,
-    "email" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "BloggerId" TEXT,
+    "email" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Social" (
-    "id" STRING NOT NULL,
-    "facebook" STRING,
-    "twitch" STRING,
-    "tiktok" STRING,
-    "google" STRING,
-    "twitter" STRING,
-    "BloggerId" STRING,
-    "userId" STRING
+    "id" TEXT NOT NULL,
+    "facebook" TEXT,
+    "twitch" TEXT,
+    "tiktok" TEXT,
+    "google" TEXT,
+    "twitter" TEXT,
+    "BloggerId" TEXT,
+    "userId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Chat" (
-    "id" STRING NOT NULL,
-    "title" STRING,
-    "content" STRING,
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "content" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "postSlug" STRING,
-    "aiResponse" STRING,
-    "postId" STRING,
-    "userEmail" STRING,
-    "userId" STRING,
-    "aiResponseId" STRING
+    "postSlug" TEXT,
+    "aiResponse" TEXT,
+    "postId" TEXT,
+    "userEmail" TEXT,
+    "userId" TEXT,
+    "aiResponseId" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Contact" (
-    "id" STRING NOT NULL,
-    "firstName" STRING NOT NULL,
-    "lastName" STRING NOT NULL,
-    "company" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "reason" STRING NOT NULL,
-    "message" STRING NOT NULL
+    "id" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "company" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "reason" TEXT NOT NULL,
+    "message" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "MaaP" (
-    "id" STRING NOT NULL
+    "id" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Trends_files" (
-    "id" STRING NOT NULL,
-    "content" STRING NOT NULL,
-    "url" STRING,
-    "iaId" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "url" TEXT,
+    "iaId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Marketing_Plan_files" (
-    "id" STRING NOT NULL,
-    "content" STRING NOT NULL,
-    "url" STRING,
-    "planId" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "url" TEXT,
+    "planId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Marketing_Creatives_files" (
-    "id" STRING NOT NULL,
-    "content" STRING NOT NULL,
-    "url" STRING,
-    "creativesId" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "url" TEXT,
+    "creativesId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
@@ -650,16 +647,16 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Post" ADD CONSTRAINT "Post_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "VerificationToken" ADD CONSTRAINT "VerificationToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "VerificationToken" ADD CONSTRAINT "VerificationToken_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "VerificationToken" ADD CONSTRAINT "VerificationToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RecentUpdates" ADD CONSTRAINT "RecentUpdates_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -686,25 +683,25 @@ ALTER TABLE "ProductLaunchData" ADD CONSTRAINT "ProductLaunchData_userId_fkey" F
 ALTER TABLE "EmailContact" ADD CONSTRAINT "EmailContact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ImageOnPost" ADD CONSTRAINT "ImageOnPost_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ImageOnPost" ADD CONSTRAINT "ImageOnPost_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AvatarOnPost" ADD CONSTRAINT "AvatarOnPost_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ImageOnPost" ADD CONSTRAINT "ImageOnPost_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AvatarOnPost" ADD CONSTRAINT "AvatarOnPost_avatarId_fkey" FOREIGN KEY ("avatarId") REFERENCES "Avatar"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "AvatarOnPost" ADD CONSTRAINT "AvatarOnPost_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Category" ADD CONSTRAINT "Category_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AiResponse" ADD CONSTRAINT "AiResponse_articleCommentId_fkey" FOREIGN KEY ("articleCommentId") REFERENCES "Comment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -713,46 +710,43 @@ ALTER TABLE "AiResponse" ADD CONSTRAINT "AiResponse_articleCommentId_fkey" FOREI
 ALTER TABLE "AiResponse" ADD CONSTRAINT "AiResponse_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "Submission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "Submission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "KnowledgeBase" ADD CONSTRAINT "KnowledgeBase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "KnowledgeBase" ADD CONSTRAINT "KnowledgeBase_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContactList" ADD CONSTRAINT "ContactList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "KnowledgeBase" ADD CONSTRAINT "KnowledgeBase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContactList" ADD CONSTRAINT "ContactList_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Connectors" ADD CONSTRAINT "Connectors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ContactList" ADD CONSTRAINT "ContactList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Connectors" ADD CONSTRAINT "Connectors_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Files" ADD CONSTRAINT "Files_emailToolId_fkey" FOREIGN KEY ("emailToolId") REFERENCES "EmailTool"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Connectors" ADD CONSTRAINT "Connectors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Files" ADD CONSTRAINT "Files_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -761,19 +755,22 @@ ALTER TABLE "Files" ADD CONSTRAINT "Files_campaignId_fkey" FOREIGN KEY ("campaig
 ALTER TABLE "Files" ADD CONSTRAINT "Files_connectorsId_fkey" FOREIGN KEY ("connectorsId") REFERENCES "Connectors"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Files" ADD CONSTRAINT "Files_knowledgeBaseId_fkey" FOREIGN KEY ("knowledgeBaseId") REFERENCES "KnowledgeBase"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Files" ADD CONSTRAINT "Files_contactListId_fkey" FOREIGN KEY ("contactListId") REFERENCES "ContactList"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Files" ADD CONSTRAINT "Files_contactListId_fkey" FOREIGN KEY ("contactListId") REFERENCES "ContactList"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Files" ADD CONSTRAINT "Files_emailToolId_fkey" FOREIGN KEY ("emailToolId") REFERENCES "EmailTool"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Files" ADD CONSTRAINT "Files_knowledgeBaseId_fkey" FOREIGN KEY ("knowledgeBaseId") REFERENCES "KnowledgeBase"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Files" ADD CONSTRAINT "Files_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EmailList" ADD CONSTRAINT "EmailList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "EmailList" ADD CONSTRAINT "EmailList_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EmailList" ADD CONSTRAINT "EmailList_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "EmailList" ADD CONSTRAINT "EmailList_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Social" ADD CONSTRAINT "Social_BloggerId_fkey" FOREIGN KEY ("BloggerId") REFERENCES "Blogger"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -782,13 +779,13 @@ ALTER TABLE "Social" ADD CONSTRAINT "Social_BloggerId_fkey" FOREIGN KEY ("Blogge
 ALTER TABLE "Social" ADD CONSTRAINT "Social_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chat" ADD CONSTRAINT "Chat_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Chat" ADD CONSTRAINT "Chat_aiResponseId_fkey" FOREIGN KEY ("aiResponseId") REFERENCES "AiResponse"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Chat" ADD CONSTRAINT "Chat_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Trends_files" ADD CONSTRAINT "Trends_files_iaId_fkey" FOREIGN KEY ("iaId") REFERENCES "ForgedAI"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
