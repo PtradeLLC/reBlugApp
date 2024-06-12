@@ -1,0 +1,571 @@
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @unique @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  api_domain        String?
+  UserType          String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @unique @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                 String              @unique @default(cuid())
+  userId             Int?
+  name               String?
+  externalId         String?
+  brandName          String?
+  firstName          String?
+  profileImage       String?
+  isActive           Boolean             @default(false)
+  brandLogo          String?
+  password           String?
+  image              String?
+  lastName           String?
+  isVerified         Boolean?
+  provider           String?
+  email              String              @unique
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  profileId          String?
+  role               Role                @default(MANAGER)
+  emailVerified      DateTime?
+  userType           String?
+  Accounts           Account[]
+  campaign           Campaign[]
+  campaignHistory    CampaignHistory[]
+  Category           Category[]
+  Chat               Chat[]
+  comment            Comment[]
+  connectors         Connectors[]
+  contactList        ContactList[]
+  emailContact       EmailContact[]
+  emailLists         EmailList[]
+  emailTool          EmailTool[]
+  files              Files[]
+  knowledgeBase      KnowledgeBase[]
+  productLaunchData  ProductLaunchData[]
+  profile            Profile[]
+  recentUpdates      RecentUpdates[]
+  sessions           Session[]
+  social             Social[]
+  sponsors           Sponsors[]
+  team               Team[]
+  verificationTokens VerificationToken[]
+}
+
+model Post {
+  id               String         @unique @default(cuid())
+  title            String?
+  featureImage     String?
+  contentImage     String?
+  views            Int            @default(0)
+  createdAt        DateTime       @default(now())
+  description      String?
+  crossPromote     String?
+  slug             String?        @unique
+  selectedValue    String?
+  paramsId         String?
+  image            String?
+  updatedAt        DateTime       @updatedAt
+  selectedFeatures String[]
+  published        Boolean        @default(false)
+  content          String?
+  email            String?
+  author           String?
+  categorySlug     String?
+  blogger          String?
+  userId           String?
+  postSlug         String?
+  categoryId       String?
+  aiResponses      AiResponse[]
+  AvatarOnPost     AvatarOnPost[]
+  Chat             Chat[]
+  comments         Comment[]
+  images           ImageOnPost[]
+  category         Category?      @relation(fields: [categoryId], references: [id])
+  sponsors         Sponsors[]
+}
+
+model VerificationToken {
+  id          String    @unique @default(cuid())
+  userId      String
+  token       String    @unique
+  email       String    @unique
+  expires     DateTime
+  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+  activatedAt DateTime?
+  teamId      String?
+  Team        Team?     @relation(fields: [teamId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, token])
+}
+
+model Profile {
+  id        String   @unique @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  teamId    String?
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model RecentUpdates {
+  id      String    @unique @default(cuid())
+  userId  String?
+  History History[]
+  User    User?     @relation(fields: [userId], references: [id])
+  Updates Update[]
+}
+
+model CampaignHistory {
+  id      String    @unique @default(cuid())
+  userId  String?
+  User    User?     @relation(fields: [userId], references: [id])
+  History History[]
+}
+
+model Update {
+  id              String         @unique @default(cuid())
+  Update          String?
+  recentUpdatesId String?
+  RecentUpdates   RecentUpdates? @relation(fields: [recentUpdatesId], references: [id])
+}
+
+model History {
+  id                String           @unique @default(cuid())
+  History           String?
+  campaignHistoryId String?
+  recentUpdatesId   String?
+  campaignHistory   CampaignHistory? @relation(fields: [campaignHistoryId], references: [id])
+  recentUpdates     RecentUpdates?   @relation(fields: [recentUpdatesId], references: [id])
+}
+
+model Team {
+  id                 String              @unique @default(cuid())
+  email              String
+  name               String?
+  firstName          String?
+  lastName           String?
+  isVerified         Boolean?
+  password           String?
+  image              String?
+  role               Role                @default(MEMBER)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  teamId             String?
+  userId             String?
+  campaign           Campaign[]
+  connectors         Connectors[]
+  contactList        ContactList[]
+  emailLists         EmailList[]
+  emailTool          EmailTool[]
+  knowledgeBase      KnowledgeBase[]
+  Profile            Profile[]
+  member             User?               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  verificationTokens VerificationToken[]
+}
+
+model ProductLaunchData {
+  id           String   @unique @default(cuid())
+  userId       String?
+  feature01    String?
+  title        String?
+  feature02    String?
+  feature03    String?
+  demographic  String?
+  company      String?
+  geographic   String?
+  job_title    String?
+  about        String?
+  objectives   String?
+  client_type  String?
+  pain_point01 String?
+  pain_point02 String?
+  pain_point03 String?
+  pain_point04 String?
+  unique01     String?
+  unique02     String?
+  unique03     String?
+  unique04     String?
+  tool01       String?
+  tool02       String?
+  tool03       String?
+  tool04       String?
+  website      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  User         User?    @relation(fields: [userId], references: [id])
+}
+
+model EmailContact {
+  id        String   @unique @default(cuid())
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id   String @unique @default(cuid())
+  type String
+  data Json
+}
+
+model Submission {
+  id          String     @unique @default(cuid())
+  fullName    String
+  website     String
+  email       String
+  description String
+  Sponsors    Sponsors[]
+}
+
+model Image {
+  id       String        @unique @default(cuid())
+  name     String
+  mimeType String
+  data     Bytes
+  title    String
+  posts    ImageOnPost[]
+}
+
+model ImageOnPost {
+  id      String @unique @default(cuid())
+  postId  String
+  imageId String
+  image   Image  @relation(fields: [imageId], references: [id])
+  post    Post   @relation(fields: [postId], references: [id])
+}
+
+model Avatar {
+  id       String         @unique @default(cuid())
+  name     String
+  mimeType String
+  data     Bytes
+  title    String
+  posts    AvatarOnPost[]
+}
+
+model AvatarOnPost {
+  id       String @unique @default(cuid())
+  postId   String
+  avatarId String
+  avatar   Avatar @relation(fields: [avatarId], references: [id])
+  post     Post   @relation(fields: [postId], references: [id])
+}
+
+model Category {
+  id     String  @unique @default(cuid())
+  title  String?
+  slug   String  @unique
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+  posts  Post[]
+}
+
+model Comment {
+  id         String      @unique @default(cuid())
+  title      String?
+  content    String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now()) @updatedAt
+  postSlug   String?
+  aiResponse String?
+  postId     String?
+  userEmail  String?
+  userId     String?
+  AiResponse AiResponse?
+  Post       Post?       @relation(fields: [postId], references: [id])
+  user       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AiResponse {
+  id                 String   @unique @default(cuid())
+  title              String?
+  comment            String?
+  commentBy          String?
+  response           String?
+  commentingSystemId String?
+  articleCommentId   String?  @unique
+  postId             String?
+  comments           Comment? @relation(fields: [articleCommentId], references: [id])
+  post               Post?    @relation(fields: [postId], references: [id])
+  Chat               Chat[]
+}
+
+model Sponsors {
+  id           String      @unique @default(cuid())
+  title        String?
+  postId       String?
+  submissionId String?
+  userId       String?
+  Post         Post?       @relation(fields: [postId], references: [id])
+  submission   Submission? @relation(fields: [submissionId], references: [id])
+  User         User?       @relation(fields: [userId], references: [id])
+}
+
+model EmailTool {
+  id                  String   @unique @default(cuid())
+  email               String
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  userId              String
+  teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
+}
+
+model Campaign {
+  id                  String   @unique @default(cuid())
+  email               String
+  title               String?
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+  category            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  userId              String
+  teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
+}
+
+model KnowledgeBase {
+  id        String   @unique @default(cuid())
+  url       String?
+  type      String?
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  teamId    String?
+  files     Files[]
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ContactList {
+  id        String   @unique @default(cuid())
+  url       String?
+  type      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  teamId    String?
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  files     Files[]
+}
+
+model Connectors {
+  id                  String   @unique @default(cuid())
+  email               String
+  subjectLine         String?
+  emailBody           String?
+  productImage        String?
+  productDescritption String?
+  productUrl          String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  userId              String
+  teamId              String?
+  Team                Team?    @relation(fields: [teamId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
+  files               Files[]
+}
+
+model Files {
+  id              String         @unique @default(cuid())
+  emailToolId     String?
+  campaignId      String?
+  connectorsId    String?
+  filename        String?
+  knowledgeBaseId String?
+  contactListId   String?
+  userId          String?
+  Campaign        Campaign?      @relation(fields: [campaignId], references: [id])
+  Connectors      Connectors?    @relation(fields: [connectorsId], references: [id])
+  ContactList     ContactList?   @relation(fields: [contactListId], references: [id])
+  EmailTool       EmailTool?     @relation(fields: [emailToolId], references: [id])
+  KnowledgeBase   KnowledgeBase? @relation(fields: [knowledgeBaseId], references: [id])
+  User            User?          @relation(fields: [userId], references: [id])
+}
+
+model TrialProspect {
+  id        String  @unique @default(cuid())
+  email     String
+  firstName String
+  lastName  String
+  Email     String?
+  image     String?
+}
+
+model EmailList {
+  id     String  @unique @default(cuid())
+  email  String
+  userId String?
+  teamId String?
+  Team   Team?   @relation(fields: [teamId], references: [id])
+  User   User?   @relation(fields: [userId], references: [id])
+}
+
+model TrialProspectTwo {
+  id        String  @unique @default(cuid())
+  emai      String
+  firstName String
+  lastName  String
+  Email     String?
+  image     String?
+}
+
+model ForgedAI {
+  id                  String                      @unique @default(cuid())
+  product             String?
+  useCaseTwo          String
+  useCase             String
+  createdAt           DateTime                    @default(now())
+  updatedAt           DateTime                    @updatedAt
+  marketing_Creatives Marketing_Creatives_files[]
+  marketingPlan       Marketing_Plan_files[]
+  trends              Trends_files[]
+}
+
+model Brand {
+  id        String @unique @default(cuid())
+  brandName String
+  email     String
+}
+
+model Blogger {
+  id        String   @unique @default(cuid())
+  BloggerId String?
+  email     String
+  social    Social[]
+}
+
+model Social {
+  id        String   @unique @default(cuid())
+  facebook  String?
+  twitch    String?
+  tiktok    String?
+  google    String?
+  twitter   String?
+  BloggerId String?
+  userId    String?
+  Blogger   Blogger? @relation(fields: [BloggerId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id])
+}
+
+model Chat {
+  id           String      @unique @default(cuid())
+  title        String?
+  content      String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now()) @updatedAt
+  postSlug     String?
+  aiResponse   String?
+  postId       String?
+  userEmail    String?
+  userId       String?
+  aiResponseId String?
+  AiResponse   AiResponse? @relation(fields: [aiResponseId], references: [id])
+  Post         Post?       @relation(fields: [postId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id        String @unique @default(cuid())
+  firstName String
+  lastName  String
+  company   String
+  email     String
+  reason    String
+  message   String
+}
+
+model MaaP {
+  id String @unique @default(cuid())
+}
+
+model Trends_files {
+  id        String   @unique @default(cuid())
+  content   String
+  url       String?
+  iaId      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  aiTools   ForgedAI @relation(fields: [iaId], references: [id])
+}
+
+model Marketing_Plan_files {
+  id            String   @unique @default(cuid())
+  content       String
+  url           String?
+  planId        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  marketingPlan ForgedAI @relation(fields: [planId], references: [id])
+}
+
+model Marketing_Creatives_files {
+  id          String   @unique @default(cuid())
+  content     String
+  url         String?
+  creativesId String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatives   ForgedAI @relation(fields: [creativesId], references: [id])
+}
+
+enum Role {
+  USER
+  MANAGER
+  MEMBER
+  ADMIN
+  BLOGGER
+}
