@@ -8,9 +8,6 @@ import { Divider } from "@nextui-org/react";
 import CardDisplay from "../../components/CardDisplay";
 import useSWR from "swr";
 
-// To do
-// Create post for the blogs
-
 const fetcher = (url) =>
   fetch(url).then((res) => {
     if (!res.ok) {
@@ -45,6 +42,8 @@ export default function Blog() {
       setCategories(data);
     }
   }, [data]);
+
+  // console.log("categories", categories);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
