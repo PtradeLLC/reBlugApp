@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Divider } from "@nextui-org/react";
 import CardDisplay from "../../components/CardDisplay";
 import useSWR from "swr";
+import HowItWorks12 from "@/components/HowItWorks";
 
 const fetcher = (url) =>
   fetch(url).then((res) => {
@@ -68,16 +69,11 @@ const Blog = () => {
           <BlogCategories categories={categories || []} />
         </div>
         <div>
-          <div className="my-3 p-2">
-            {posts && posts.length > 0 && (
-              <BreadCrumbs posts={posts || []} categories={categories} />
-            )}
+          <div className="my-2">
+            <HowItWorks12 />
           </div>
           <div className="flex justify-center items-center">
             <div>
-              <div>
-                <h2 className="font-thin">Discover</h2>
-              </div>
               <>
                 <div className="max-w-[85rem] px-4 py-1 sm:px-6 lg:px-8 lg:py-2 mx-auto">
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -215,6 +211,7 @@ const Blog = () => {
             </div>
           </div>
           <Divider className="my-8 w-8/12 m-auto" />
+          <div></div>
         </div>
         {/* <div className="my-3">
           <h2 className="font-thin">Latest Posts</h2>
