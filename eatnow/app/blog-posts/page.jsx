@@ -260,7 +260,7 @@ const Blog = () => {
         </div>
         <Button
           onClick={() => setIsOpen(true)}
-          className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
+          className="article-assistant-button border border-black rotate-90 z-50 bg-slate-100 hover:bg-slate-50 hover:text-slate-800 text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
         >
           <span className="flex">
             <Image

@@ -254,7 +254,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                               <p>
                                 {modelResponse
                                   ? modelResponse
-                                  : "Need more information? Here to answer your questions."}
+                                  : "Need more information? Article Assistant is here to answer your questions."}
                               </p>
                             </div>
                           )}
@@ -327,7 +327,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                         <div className="relative">
                           <textarea
                             id="chat-input"
-                            className="block w-full resize-none rounded-xl border-none bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400 dark:focus:ring-slate-500 sm:text-base"
+                            className="block w-full resize-none rounded-xl border bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:bg-slate-50 dark:text-slate-50 dark:placeholder-slate-400 dark:focus:ring-slate-500 sm:text-base"
                             placeholder="Ask this article a question"
                             rows="1"
                             value={inputValue}
@@ -337,7 +337,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                           ></textarea>
                           <button
                             type="submit"
-                            className="absolute bottom-2 right-2.5 rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800 sm:text-base"
+                            className="absolute bottom-2 right-2.5 rounded-md bg-slate-50 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-white dark:hover:bg-slate-50 dark:focus:ring-slate-300 sm:text-base"
                           >
                             Send
                             {loading && (
