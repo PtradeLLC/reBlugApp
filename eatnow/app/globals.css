@@ -8,6 +8,18 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+.article-assistant-button {
+  position: fixed;
+  float: right;
+  top: 30%;
+  right: -80px;
+  cursor: pointer;
+  border: 0;
+  text-decoration: none;
+  outline: none;
+  z-index: 9999;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
