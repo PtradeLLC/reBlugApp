@@ -33,7 +33,9 @@ export default function RestaurantsFaq() {
             />
           </div>
           <div className="px-10 pt-8 md:col-span-2">
-            <span className="text-lg my-3 font-bold">The Tool</span>
+            <span className="text-lg my-3 font-bold font-barlow-condensed">
+              The Tool
+            </span>
             <div className="text-md my-3">
               Leveraging the established "Buy Now, Pay Later" (BNPL) model, "Eat
               Now, Pay Never" emerges as a disruptive marketing tool. This

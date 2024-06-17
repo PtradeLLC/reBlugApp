@@ -35,7 +35,7 @@ const BlogComponent = () => {
           <div className="mt-5 sm:mt-10 lg:mt-0 lg:col-span-5 ">
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-2 md:space-y-4">
-                <h2 className="font-bold text-2xl lg:text-4xl text-gray-800">
+                <h2 className="font-barlow-condensed font-bold text-2xl lg:text-4xl text-gray-800">
                   Running a blog?
                 </h2>
                 {/* for dark scheme: dark:text-gray-200 */}
@@ -131,7 +131,7 @@ const BlogComponent = () => {
         >
           Wait, there's more!
           <Link
-            href="/bloggers"
+            href="/blog-posts"
             className="text-sm font-semibold text-gray-900"
           >
             Get more details <span aria-hidden="true">&rarr;</span>

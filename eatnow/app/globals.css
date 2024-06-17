@@ -39,7 +39,8 @@ section.py-10.bg-\[\#EEEEEE\].heroimage {
 }
 
 .getstartednow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   padding: 7px;
   margin: 12px 0 18px;
@@ -96,4 +97,236 @@ section.py-10.bg-\[\#EEEEEE\].heroimage {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.ezy__howitworks12 {
+  /* Bootstrap variables */
+  --bs-body-color: #212529;
+  --bs-body-bg: rgb(255, 255, 255);
+
+  /* Easy Frontend variables */
+  --ezy-theme-color: rgb(13, 110, 253);
+  --ezy-theme-color-rgb: 13, 110, 253;
+  --ezy-border-color: rgba(0, 0, 0, 0.3);
+
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  overflow: hidden;
+  position: relative;
+  padding: 60px 0 120px;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .ezy__howitworks12 {
+    padding: 100px 0 200px;
+  }
+}
+
+/* Gray Block Style */
+.gray .ezy__howitworks12,
+.ezy__howitworks12.gray {
+  /* Bootstrap variables */
+  --bs-body-bg: rgb(246, 246, 246);
+}
+
+/* Dark Gray Block Style */
+.dark-gray .ezy__howitworks12,
+.ezy__howitworks12.dark-gray {
+  /* Bootstrap variables */
+  --bs-body-color: #ffffff;
+  --bs-body-bg: rgb(30, 39, 53);
+
+  /* Easy Frontend variables */
+  --ezy-border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark Block Style */
+.dark .ezy__howitworks12,
+.ezy__howitworks12.dark {
+  /* Bootstrap variables */
+  --bs-body-color: #ffffff;
+  --bs-body-bg: rgb(11, 23, 39);
+
+  /* Easy Frontend variables */
+  --ezy-border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ezy__howitworks12-heading {
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 100;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .ezy__howitworks12-heading {
+    font-size: 45px;
+  }
+}
+/* shapes */
+.ezy__howitworks12-shape-one {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 200px;
+  height: auto;
+  z-index: -1;
+}
+.ezy__howitworks12-shape-two {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 200px;
+  height: auto;
+  z-index: -1;
+}
+.ezy__howitworks12-shape-three {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 200px;
+  height: auto;
+  z-index: -1;
+}
+
+.ezy__howitworks12-cards
+  [class*="col-"]:nth-of-type(1n)
+  .ezy__howitworks12-card {
+  background-color: rgb(243, 73, 73);
+  box-shadow: 5px 5px 10px 0 rgba(243, 73, 73, 0.3);
+}
+.ezy__howitworks12-cards
+  [class*="col-"]:nth-of-type(2n)
+  .ezy__howitworks12-card {
+  background-color: rgb(255, 200, 56);
+  box-shadow: 5px 5px 10px 0 rgba(255, 200, 56, 0.3);
+}
+.ezy__howitworks12-cards
+  [class*="col-"]:nth-of-type(3n)
+  .ezy__howitworks12-card {
+  background-color: rgb(25, 202, 154);
+  box-shadow: 5px 5px 10px 0 rgba(25, 202, 154, 0.3);
+}
+.ezy__howitworks12-cards
+  [class*="col-"]:nth-of-type(4n)
+  .ezy__howitworks12-card {
+  background-color: rgb(117, 103, 248);
+  box-shadow: 5px 5px 10px 0 rgba(117, 103, 248, 0.3);
+}
+.ezy__howitworks12-card {
+  border-radius: 10px;
+  color: #fff;
+}
+.ezy__howitworks12-icon {
+  font-size: 48px;
+}
+
+.barlow-condensed-thin {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.barlow-condensed-extralight {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.barlow-condensed-light {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.barlow-condensed-regular {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.barlow-condensed-medium {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.barlow-condensed-semibold {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.barlow-condensed-bold {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.barlow-condensed-extrabold {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.barlow-condensed-black {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.barlow-condensed-thin-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.barlow-condensed-extralight-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.barlow-condensed-light-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.barlow-condensed-regular-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.barlow-condensed-medium-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.barlow-condensed-semibold-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.barlow-condensed-bold-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.barlow-condensed-extrabold-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.barlow-condensed-black-italic {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 900;
+  font-style: italic;
 }

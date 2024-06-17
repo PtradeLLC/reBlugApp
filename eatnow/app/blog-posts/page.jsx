@@ -27,22 +27,22 @@ const Blog = () => {
   const [value, setValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
+  // const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
 
-  useEffect(() => {
-    if (error) {
-      console.error("An error occurred:", error);
-    }
-    if (!isValidating) {
-      setLoading(false);
-    }
-  }, [error, isValidating]);
+  // useEffect(() => {
+  //   if (error) {
+  //     console.error("An error occurred:", error);
+  //   }
+  //   if (!isValidating) {
+  //     setLoading(false);
+  //   }
+  // }, [error, isValidating]);
 
-  useEffect(() => {
-    if (data) {
-      setCategories(data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setCategories(data);
+  //   }
+  // }, [data]);
 
   // console.log("categories", categories);
 
@@ -59,8 +59,8 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (error) return <div>Error loading data</div>;
-  if (isValidating) return <CircularProgress aria-label="Loading..." />;
+  // if (error) return <div>Error loading data</div>;
+  // if (isValidating) return <CircularProgress aria-label="Loading..." />;
 
   return (
     <div className="bg-white mt-7 pb-24 sm:pb-8">
@@ -96,10 +96,10 @@ const Blog = () => {
                           Blogging for Beginners
                         </h3>
                         <p className="mt-3 text-gray-800 line-clamp-4">
-                          Perfect for beginners - Ages 13+. This program will
-                          swiftly guide you through mastering the basics of
-                          writing, enabling you to effectively express your
-                          ideas.
+                          Perfect for beginners - Ages 13 & up. This program
+                          paired with an expert will swiftly guide you through
+                          mastering the basics of writing, enabling you to
+                          effectively express your ideas.
                         </p>
                         <p className="mt-5 inline-flex items-center gap-x-1 text-red-600 decoration-2 group-hover:underline font-medium">
                           Get more info
@@ -211,7 +211,6 @@ const Blog = () => {
             </div>
           </div>
           <Divider className="my-8 w-8/12 m-auto" />
-          <div></div>
         </div>
         {/* <div className="my-3">
           <h2 className="font-thin">Latest Posts</h2>

@@ -111,7 +111,7 @@ const BrandInfo = () => {
             <h3 className="text-slate-600 font-semibold">
               Brand Marketing Tools
             </h3>
-            <p className="text-gray-800 text-2xl font-semibold sm:text-3xl">
+            <p className="text-gray-800 text-2xl font-semibold sm:text-3xl font-barlow-condensed">
               Consumer Focused Marketing
             </p>
             <div className="max-w-xl">

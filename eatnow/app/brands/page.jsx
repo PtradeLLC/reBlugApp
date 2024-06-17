@@ -39,7 +39,7 @@ export default function Bloggers() {
     <div className="bg-white">
       <div className="apply-margin mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
         <div id="maap">
-          <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+          <h2 className="font-barlow-condensed text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
             Unlocking Growth with AI-Powered SaaS Tools{" "}
           </h2>
           <h3 className="mt-4 text-gray-500">

@@ -24,7 +24,7 @@ const Steps = () => {
   return (
     <div id="foodini" className="flex flex-col justify-center items-center">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8 mb-10 mt-10">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl font-barlow-condensed">
           How this works
         </h1>
         <ul aria-label="Steps" className="items-center text-gray-600 md:flex">

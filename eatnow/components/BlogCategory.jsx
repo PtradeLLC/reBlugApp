@@ -46,7 +46,7 @@ export default function BlogCategories() {
                 {/* End Col */}
               </div>
               {/* End Grid */}
-              <div className=" flex flex-col md:flex-row justify-center items-center flex-wrap gap-x-12 gap-y-6 mt-6">
+              <div className="font-barlow-condensed flex flex-col md:flex-row justify-center items-center flex-wrap gap-x-12 gap-y-6 mt-6">
                 <p className="text-center text-2xl text-gray-700 font-semibold">
                   Get the app today
                 </p>
@@ -68,7 +68,7 @@ export default function BlogCategories() {
               <div className="space-y-6 sm:space-y-8">
                 {/* Title */}
                 <div className="space-y-2 md:space-y-4">
-                  <h2 className="font-bold text-left text-3xl lg:text-4xl text-gray-800">
+                  <h2 className="font-barlow-condensed font-bold text-left text-3xl lg:text-4xl text-gray-800">
                     Helping you succeed at your blogging endeavor with smart
                     tools that helps:
                   </h2>
