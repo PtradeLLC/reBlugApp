@@ -14,7 +14,7 @@ const Steps = () => {
 
   const [steps, setStep] = useState({
     stepsItems: [
-      "Register or login to your account via dashboard and 'start' a 'B2B' or 'B2C' campaign. Upon receiving the order we will begin by meeting with you to understand your goals, target audience, and requirements.",
+      "Register or login to your account via dashboard and launch a 'B2B' or 'B2C' campaign. Upon receiving the order we will begin by meeting with you to understand your goals, target audience, and requirements.",
       "We then set up our system to work within your budget, audience, deploy marketing tool, set schedule, and other parameters to launch your campaign effectively.",
       "",
     ],

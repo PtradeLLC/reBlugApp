@@ -88,7 +88,7 @@ export default () => {
           <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
             <img
               src="/images/foodini/gplay.png"
-              className="w-28"
+              className="w-32"
               alt="googleplay"
             />
             <img
@@ -98,7 +98,7 @@ export default () => {
             />
             <img
               src="/images/foodini/micsoft.png"
-              className="w-20"
+              className="w-32"
               alt="apple-store"
             />
           </div>

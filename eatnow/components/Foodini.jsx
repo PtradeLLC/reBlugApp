@@ -122,7 +122,7 @@ const Foodhini = () => {
                             <img
                               src="/images/foodini/micsoft.png"
                               className="rounded-small border w-18 h-[28px]"
-                              alt="apple-store"
+                              alt="microsoft"
                             />
                           </span>
                         </div>

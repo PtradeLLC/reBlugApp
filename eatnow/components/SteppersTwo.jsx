@@ -6,7 +6,7 @@ const StepTwo = () => {
   });
 
   return (
-    <div className="max-w-2xl mx-auto px-4 md:px-0">
+    <div className="max-w-2xl mx-auto px-4 md:px-0 flex justify-center">
       <ul
         aria-label="Steps"
         className="items-center text-gray-600 font-medium md:flex"
@@ -65,7 +65,7 @@ const StepTwo = () => {
                   </svg>
                 </div>
               </div>
-              <div className="h-8 flex items-center md:h-auto">
+              <div className="h-8 w-[105px] flex items-center md:h-auto">
                 <h3
                   className={`text-sm ${steps.currentStep == idx + 1 ? "text-green-600 font-semibold" : ""}`}
                 >

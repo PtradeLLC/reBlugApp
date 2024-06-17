@@ -14,7 +14,7 @@ export default function BlogCategories() {
     <div className="w-full">
       <>
         {/* Features */}
-        <div className="max-w-[85rem] px-4 py-20 sm:px-6 lg:px-8 lg:pt-10 lg:pb-4 mx-auto">
+        <div className="max-w-[85rem] lg:h-[729px] px-4 py-20 sm:px-6 lg:px-8 lg:pt-10 lg:pb-4 mx-auto">
           {/* Grid */}
           <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
             <div className="lg:col-span-7 lg:mb-[222px]">
@@ -50,22 +50,29 @@ export default function BlogCategories() {
                 <p className="text-center text-2xl text-gray-700 font-semibold">
                   Get the app today
                 </p>
-                <img
-                  src="/images/foodini/gplay.png"
-                  className="w-28"
-                  alt="googleplay"
-                />
-                <img
-                  src="/images/foodini/appleimg.webp"
-                  className="w-32"
-                  alt="apple-store"
-                />
+                <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
+                  <img
+                    src="/images/foodini/gplay.png"
+                    className="w-32"
+                    alt="googleplay"
+                  />
+                  <img
+                    src="/images/foodini/appleimg.webp"
+                    className="w-32"
+                    alt="apple-store"
+                  />
+                  <img
+                    src="/images/foodini/micsoft.png"
+                    className="w-32"
+                    alt="apple-store"
+                  />
+                </div>
               </div>
             </div>
 
             {/* End Col */}
             <div className="mt-5 sm:mt-10 lg:mt-0 lg:col-span-5">
-              <div className="space-y-6 sm:space-y-8">
+              <div className="space-y-6 sm:space-y-8 mb-[105px]">
                 {/* Title */}
                 <div className="space-y-2 md:space-y-4">
                   <h2 className="font-barlow-condensed font-bold text-left text-3xl lg:text-4xl text-gray-800">
