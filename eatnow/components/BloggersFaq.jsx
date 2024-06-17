@@ -19,7 +19,7 @@ export default function BloggersFAQ() {
   ];
 
   return (
-    <div className="bg-slate-50 rounded ml-4 mr-24 mt-12">
+    <div className="bg-slate-50 rounded mx-auto px-3 mt-12">
       <div className="px-10 pt-8">
         <span className="text-lg my-3 font-bold">Frequently Asked</span>
         <div className="text-md my-3">

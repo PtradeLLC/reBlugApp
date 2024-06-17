@@ -23,7 +23,7 @@ export default function RestaurantsFaq() {
 
   return (
     <>
-      <div className="bg-slate-50 rounded ml-4 mr-24 mt-12">
+      <div className="bg-slate-50 rounded mx-auto px-3 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex justify-center items-center col-span-1">
             <img

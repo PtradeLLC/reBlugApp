@@ -14,7 +14,7 @@ export default function BlogCategories() {
     <div className="w-full">
       <>
         {/* Features */}
-        <div className="max-w-[85rem] lg:h-[729px] px-4 py-20 sm:px-6 lg:px-8 lg:pt-10 lg:pb-4 mx-auto">
+        <div className="max-w-[85rem] lg:h-[729px] px-4 pt-10 sm:px-6 lg:px-8 lg:pt-10 lg:pb-4 mx-auto">
           {/* Grid */}
           <div className="lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
             <div className="lg:col-span-7 lg:mb-[222px]">
