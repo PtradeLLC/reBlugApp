@@ -30,33 +30,6 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
     return () => clearInterval(interval);
   }, []);
 
-  //   const sendDataToBackend = async () => {
-  //     try {
-  //       setLoading(true);
-
-  //       const formData = new FormData();
-  //       formData.append("content", inputValue);
-
-  //       const response = await fetch("/api/blog/articleAssistant", {
-  //         method: "POST",
-  //         body: formData,
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-
-  //       const data = await response.json();
-  //       setInputValue("");
-  //       setSentInput(inputValue);
-  //       setModelResponse(data.message);
-  //     } catch (error) {
-  //       console.error("There was a problem sending data to the backend:", error);
-  //       setModelResponse("An error occurred. Please try again later.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
   const sendDataToBackend = async () => {
     try {
       setLoading(true);
@@ -76,7 +49,8 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
       const data = await response.json();
       setInputValue("");
       setSentInput(inputValue);
-      setModelResponse(data.message);
+      console.log("DATA", data);
+      setModelResponse(data.assistantResponse);
     } catch (error) {
       console.error("There was a problem sending data to the backend:", error);
       setModelResponse("An error occurred. Please try again later.");
@@ -373,18 +347,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                                     Please create an account or login to do your
                                     research on this article
                                   </h3>
-                                  <div className="mt-2">
-                                    {/* <p className="text-sm text-gray-500">
-                                      If you don't have an account yet, you can{" "}
-                                      <button
-                                        onClick={handleSignUp}
-                                        className="text-red-600 dark:text-red-500 hover:underline"
-                                      >
-                                        sign up here for free
-                                      </button>
-
-                                    </p> */}
-                                  </div>
+                                  <div className="mt-2"></div>
                                 </div>
                               </div>
                             </div>
