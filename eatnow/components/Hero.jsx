@@ -39,7 +39,9 @@ export default () => {
             <p>
               Specifically by making blogging interactive, social and useful for
               marketing through the use of software, AI-powered technologies,
-              and automation tools.
+              and automation tools. Brands can accurately target specific
+              audience demographics in their chosen niches by using a
+              combination of AI-powered tools and user-generated content.
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
               <a

@@ -9,10 +9,9 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
 import { CircularProgress } from "@nextui-org/react";
 
-const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
+const ChatUI = ({ isOpen, setIsOpen }) => {
   const [modalPlacement, setModalPlacement] = useState("auto");
   const [inputValue, setInputValue] = useState("");
   const [modelResponse, setModelResponse] = useState("");
@@ -21,83 +20,42 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   const [sentInput, setSentInput] = useState("");
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   const [loading, setLoading] = useState(false);
-  const [inquiries, setInquiries] = useState({
-    authorsGroup: "How can I join author's group",
-    productSubmission:
-      "How can I submit my product to be included in future article",
-  });
-  //   const [showModal, setShowModal] = useState(true)
-  //   const router = useRouter();
 
   //Handles setting value for the loader
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       setValue((v) => (v >= 100 ? 0 : v + 10));
-  //     }, 500);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((v) => (v >= 100 ? 0 : v + 10));
+    }, 500);
 
-  //     return () => clearInterval(interval);
-  //   }, []);
+    return () => clearInterval(interval);
+  }, []);
 
-  //   const sendDataToBackend = () => {
-  //     const userName = session.user.name;
-  //     try {
-  //       setLoading(true);
-  //       fetch("/api/blog/slugPage", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           content: inputValue,
-  //           postContent: postContent,
-  //           userName: userName,
-  //         }),
-  //       })
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           setInputValue("");
-  //           setSentInput(inputValue);
-  //           setModelResponse(data.message);
-  //           setLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           console.error(
-  //             "There was a problem sending data to the backend:",
-  //             error
-  //           );
-  //         });
-  //     } catch (error) {
-  //       console.console.log(error);
-  //     }
-  //   };
+  const sendDataToBackend = async () => {
+    try {
+      setLoading(true);
 
-  const handleClick = (buttonType) => {
-    setLoading(false);
-    let requestData = {};
-    if (buttonType === "authorsGroup") {
-      requestData = { group: inquiries.authorsGroup };
-    } else if (buttonType === "productSubmission") {
-      requestData = { submission: inquiries.productSubmission };
-    }
-    fetch("/api/blog/questionAI", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setModelResponse(data.text);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(
-          `There was a problem sending data to the backend: ${error}`,
-          error
-        );
-        setLoading(false);
+      const formData = new FormData();
+      formData.append("content", inputValue);
+
+      const response = await fetch("/api/blog/articleAssistant", {
+        method: "POST",
+        body: formData,
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setInputValue("");
+      setSentInput(inputValue);
+      setModelResponse(data.message);
+    } catch (error) {
+      console.error("There was a problem sending data to the backend:", error);
+      setModelResponse("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (event) => {
@@ -111,8 +69,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("This is submitted");
-    //   sendDataToBackend();
+    sendDataToBackend();
   };
 
   const handleCloseModal = () => {
@@ -398,7 +355,7 @@ const ChatUI = ({ isOpen, setIsOpen, postContent }) => {
                                       >
                                         sign up here for free
                                       </button>
-                                      
+
                                     </p> */}
                                   </div>
                                 </div>
