@@ -47,14 +47,22 @@ export async function POST(request, response) {
                         Increase your readership.
                         Minimize technical challenges.
 
+                        Foodhini:
+                        'Foodhini Says' are tasks designed to help brands achieve their marketing goals by completing specific actions. 
+                        In return for completing these tasks, we along with our brand partners will issue a virtual card in your dashboard, and fund it regularly as you run the tasks for Foodhini . This mutually beneficial arrangement allows brands to effectively reach their target audience while managing expenses strategically.
+
+                        Cross promotion:
+                        Discover Like-minded Bloggers. Leverage the power of community collaboration by engaging with fellow bloggers in the directory. Explore opportunities for guest posts, collaborative projects, and cross-promotions, amplifying your content and reaching a wider audience.
+
+                        E-commerce Features:
+                        Earn revenue by selling products based on your blog's niche. Use 'bCommerce' feature allow you to sell products directly to your readers without inventory management, product sourcing. We will provide the product and inventory management features, AI tools trained to provide sales and support to your readers.
+
+
                         ReBlug App:
                         The ReBlug app can be downloaded for user at all the app stores including Apple store, Google Play, Microsoft app store.
 
                         Pricing:
                         It is free to sign up to use the ReBlug platform. However, premium services require monthly subscription fee as shown on the pricing page.
-
-
-
         `;
 
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
