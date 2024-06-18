@@ -30,16 +30,43 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
     return () => clearInterval(interval);
   }, []);
 
+  //   const sendDataToBackend = async () => {
+  //     try {
+  //       setLoading(true);
+
+  //       const formData = new FormData();
+  //       formData.append("content", inputValue);
+
+  //       const response = await fetch("/api/blog/articleAssistant", {
+  //         method: "POST",
+  //         body: formData,
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+
+  //       const data = await response.json();
+  //       setInputValue("");
+  //       setSentInput(inputValue);
+  //       setModelResponse(data.message);
+  //     } catch (error) {
+  //       console.error("There was a problem sending data to the backend:", error);
+  //       setModelResponse("An error occurred. Please try again later.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
   const sendDataToBackend = async () => {
     try {
       setLoading(true);
 
-      const formData = new FormData();
-      formData.append("content", inputValue);
-
       const response = await fetch("/api/blog/articleAssistant", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: inputValue }),
       });
 
       if (!response.ok) {
@@ -391,9 +418,8 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
 };
 
 ChatUI.propTypes = {
-  isOpen: PropTypes.bool.isRequired, // Ensure isOpen is a boolean and required
-  setIsOpen: PropTypes.func.isRequired, // Ensure setIsOpen is a function and required
-  postContent: PropTypes.string.isRequired, // Ensure postContent is a string and required
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
 };
 
 export default ChatUI;

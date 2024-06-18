@@ -3,7 +3,8 @@ import { Providers } from "./providers";
 import NavBar from "@/components/Navigation";
 import Foot from "../components/Footer";
 import { metadata, viewport } from "./metadata";
-import ClientStyle from "./ClientStyle"; // Correct import path
+import ClientStyle from "./ClientStyle";
+import myMiddleware from '../_middleware';
 
 export { metadata, viewport };
 
