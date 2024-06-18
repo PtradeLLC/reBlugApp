@@ -77,9 +77,9 @@ export async function POST(request, response) {
                         "content": ""
                     }
                 ],
-                "model": "llama3-8b-8192",
-                "temperature": 1,
-                "max_tokens": 1024,
+                "model": "llama3-70b-8192",
+                "temperature": 0.5,
+                "max_tokens": 8192,
                 "top_p": 1,
                 "stream": true,
                 "stop": null
@@ -90,7 +90,7 @@ export async function POST(request, response) {
                 assistantResponse += chunk.choices[0]?.delta?.content || '';
             }
 
-            // Ensure that both message and assistantResponse are sent back
+            // Ensure that both message and assistantResponse are sent back Llama3-70B-8
             return NextResponse.json({ message: responseMessage, assistantResponse });
         } catch (error) {
             console.error('Error during Groq chat completion:', error);
