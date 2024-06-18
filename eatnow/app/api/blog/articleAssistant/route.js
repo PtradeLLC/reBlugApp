@@ -29,7 +29,7 @@ export async function POST(request, response) {
         Embrace the Journey: Transform from a hesitant beginner to a passionate blogger, one captivating post at a time.
         <Instruction>
         Use ${noviceInfo} for context when responding to inquiries regarding new blogger.
-         When responding to the user and providing answer, do the following:
+         When responding to the all user inquiries and providing answer, do the following:
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
                         3. Do not repeat text. 
@@ -49,7 +49,7 @@ export async function POST(request, response) {
                         Minimize technical challenges.
 
                         Foodhini:
-                        'Foodhini Says' are tasks designed to help brands achieve their marketing goals by completing specific actions. 
+                        'Foodhini says' are tasks designed to help brands achieve their marketing goals by completing specific actions. 
                         In return for completing these tasks, we along with our brand partners will issue a virtual card in your dashboard, and fund it regularly as you run the tasks for Foodhini . This mutually beneficial arrangement allows brands to effectively reach their target audience while managing expenses strategically.
 
                         Cross promotion:
