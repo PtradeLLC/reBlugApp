@@ -27,7 +27,8 @@ export async function POST(request, response) {
         Research Like a Pro: Unearth credible sources and learn to weave them seamlessly into your writing, building trust and authority with your readers.
         Find Your Voice: Discover your unique writing style and share your passions with the world.
         Embrace the Journey: Transform from a hesitant beginner to a passionate blogger, one captivating post at a time.
-
+        <Instruction>
+        Use ${noviceInfo} for context when responding to inquiries regarding new blogger.
          When responding to the user and providing answer, do the following:
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
@@ -63,6 +64,7 @@ export async function POST(request, response) {
 
                         Pricing:
                         It is free to sign up to use the ReBlug platform. However, premium services require monthly subscription fee as shown on the pricing page.
+        </Instruction>
         `;
 
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
