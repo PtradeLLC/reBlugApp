@@ -74,7 +74,7 @@ const HowItWorks12 = () => {
       <section className="ezy__howitworks12 light py-14 md:py-16 bg-white dark:bg-[#EEF5FF] text-zinc-900 dark:text-gray-900 relative overflow-hidden z-[1]">
         <div className="container px-4 m-auto">
           <div className="w-full text-center">
-            <h2 className="text-3xl md:text-[45px] leading-none font-medium mb-2 font-barlow-condensed">
+            <h2 className="font-barlow-condensed font-bold text-left text-3xl lg:text-4xl text-black">
               Blogging on ReBlug is Easy
             </h2>
           </div>
