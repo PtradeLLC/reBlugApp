@@ -1,16 +1,10 @@
 "use client";
 import { useState } from "react";
 import StepTwo from "./SteppersTwo";
+import RightSide from "./HeroRightSide";
 
 export default () => {
   const [state, setState] = useState(false);
-
-  // Replace javascript:void(0) path with your path
-  const navigation = [
-    { title: "Partners", path: "javascript:void(0)" },
-    { title: "Customers", path: "javascript:void(0)" },
-    { title: "Team", path: "javascript:void(0)" },
-  ];
 
   return (
     <>
@@ -77,7 +71,8 @@ export default () => {
             </div>
           </div>
           <div className="flex-none mt-14 md:mt-0 md:max-w-xl">
-            <img src="/images/heroimgetwo.png" className="" alt="hero-image" />
+            <RightSide />
+            {/* <img src="/images/heroimgetwo.png" className="" alt="hero-image" /> */}
           </div>
         </div>
         <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3 w-3/4">

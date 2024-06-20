@@ -270,7 +270,7 @@ const Blog = () => {
               alt="Ask the article"
             />
           </span>
-          Chat with this Article
+          Chat with this Page
         </Button>
       </div>
     </>

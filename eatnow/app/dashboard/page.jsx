@@ -1,11 +1,14 @@
-import React from "react";
+// app/dashboard/page.jsx
+import DashboardComponent from "../../components/DashboardComp";
 
-const Dashboard = () => {
+const DashboardPage = ({ user }) => {
   return (
-    <div>
-      <p>This is the Dashboard</p>
-    </div>
+    <>
+      <div>
+        <DashboardComponent />
+      </div>
+    </>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
