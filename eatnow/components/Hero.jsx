@@ -39,12 +39,6 @@ export default () => {
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
               <a
-                href="#blog-tool"
-                className="block py-2 px-4 text-center text-white font-medium bg-red-600 duration-150 hover:bg-red-500 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
-              >
-                Bloggers
-              </a>
-              <a
                 href="#eat-now-pay-never"
                 className="block py-2 px-4 text-center text-white font-medium bg-green-600 duration-150 hover:bg-red-500 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
               >
@@ -75,7 +69,7 @@ export default () => {
             {/* <img src="/images/heroimgetwo.png" className="" alt="hero-image" /> */}
           </div>
         </div>
-        <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3 w-3/4">
+        <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3">
           <p className="text-center text-sm text-gray-700 font-semibold pt-3">
             Free Food Alert: Eat Now, Pay Never
           </p>
