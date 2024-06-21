@@ -1,11 +1,12 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { account } from "../app/appwrite";
 import Banner from "./Banner";
+import Link from "next/link";
 
 // Profile Dropdown
-const ProfileDropDown = ({ className }) => {
+const ProfileDropDown = ({ className, logout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const profileRef = useRef();
 
   const navigation = [
@@ -31,31 +32,25 @@ const ProfileDropDown = ({ className }) => {
 
   return (
     <div className={`relative ${className}`}>
-      {isLoggedIn ? (
-        <div className="flex items-center space-x-4">
-          <button
-            ref={profileRef}
-            className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
-            onClick={() => setIsDropdownOpen((prev) => !prev)}
-          >
-            <img
-              src="https://randomuser.me/api/portraits/men/46.jpg"
-              alt="Profile"
-              className="w-full h-full rounded-full"
-            />
-          </button>
-          <div className="lg:hidden">
-            <span className="block">Micheal John</span>
-            <span className="block text-sm text-gray-500">john@gmail.com</span>
-          </div>
-        </div>
-      ) : (
-        <div className="text-sm">Login</div>
-      )}
-      {isLoggedIn && (
-        <ul
-          className={`bg-white z-10 top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${isDropdownOpen ? "" : "lg:hidden"}`}
+      <div className="flex items-center space-x-4">
+        <button
+          ref={profileRef}
+          className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
+          onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
+          <img
+            src="https://randomuser.me/api/portraits/men/46.jpg"
+            alt="Profile"
+            className="w-full h-full rounded-full"
+          />
+        </button>
+        <div className="lg:hidden">
+          <span className="block">Micheal John</span>
+          <span className="block text-sm text-gray-500">john@gmail.com</span>
+        </div>
+      </div>
+      {isDropdownOpen && (
+        <ul className="bg-white z-10 top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0">
           {navigation.map((item, idx) => (
             <li key={idx}>
               <a
@@ -66,6 +61,14 @@ const ProfileDropDown = ({ className }) => {
               </a>
             </li>
           ))}
+          <li>
+            <button
+              onClick={logout}
+              className="block w-full text-left text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+            >
+              Logout
+            </button>
+          </li>
         </ul>
       )}
     </div>
@@ -74,12 +77,34 @@ const ProfileDropDown = ({ className }) => {
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const user = await account.get();
+        setIsLoggedIn(!!user);
+      } catch (error) {
+        console.log("No active session found.");
+      }
+    };
+    checkSession();
+  }, []);
+
+  const logout = async () => {
+    try {
+      await account.deleteSession("current");
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   const navigationItems = [
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
-    { title: "Chefs", path: "/chef-faq" },
+    { title: "Chefs", path: "/chefs" },
     { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },
   ];
@@ -109,7 +134,10 @@ const Navigation = () => {
                   </li>
                 ))}
               </ul>
-              <ProfileDropDown className="mt-5 pt-5 border-t lg:hidden" />
+              <ProfileDropDown
+                className="mt-5 pt-5 border-t lg:hidden"
+                logout={logout}
+              />
             </div>
             <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
               <form className="flex items-center space-x-2 border rounded-md p-2">
@@ -133,7 +161,13 @@ const Navigation = () => {
                   placeholder="Search dishes"
                 />
               </form>
-              <ProfileDropDown className="hidden lg:block" />
+              {isLoggedIn ? (
+                <ProfileDropDown className="hidden lg:block" logout={logout} />
+              ) : (
+                <div className="text-sm">
+                  <Link href="/login">Login</Link>
+                </div>
+              )}
               <button
                 className="outline-none text-gray-400 block lg:hidden"
                 onClick={() => setMenuOpen((prev) => !prev)}

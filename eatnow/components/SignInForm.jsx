@@ -8,7 +8,6 @@ import {
   faGoogle,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-// import DashboardComponent from "../../components/DashboardComp";
 
 const SocialLoginButton = ({ provider, handleLogin, icon, label, bg }) => (
   <button
@@ -45,8 +44,6 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     }
   }, [user, router]);
 
-  console.log(user, "User from Form");
-
   const validatePassword = (password) => {
     const minLength = 8;
     const maxLength = 256;
@@ -66,6 +63,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     if (password.length < minLength || password.length > maxLength) {
       return `Password must be between ${minLength} and ${maxLength} characters long.`;
     }
+
+    console.log("Pass", password);
 
     if (commonPasswords.includes(password)) {
       return "Password should not be a commonly used password.";
@@ -108,8 +107,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        "http://localhost:3000/dashboard",
-        "http://localhost:3000/"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com/"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
