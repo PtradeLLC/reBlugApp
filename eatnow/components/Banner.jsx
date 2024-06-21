@@ -39,23 +39,16 @@ export default function Banner() {
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <p className="text-sm leading-6 text-gray-900">
           <strong className="font-bold text-red-700">
-            News Update: ReBlug App: Live at the App stores
+            News Update: Eat Now, Pay Never is Live
           </strong>
         </p>
-        {/* <Countdown /> */}
         <button
           onClick={handleClick}
-          className="flex-none w-32 h-10 rounded-md bg-gray-700 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+          className="flex-none w-30 h-10 rounded-md bg-gray-700 px-3.5 py-1 text-sm font-thin text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         >
-          Join Us <span aria-hidden="true">&rarr;</span>
+          Download App <span aria-hidden="true">&rarr;</span>
         </button>
       </div>
-      {/* <div className="flex flex-1 justify-end">
-                <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
-                    <span className="sr-only">Dismiss</span>
-                    <XMarkIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
-                </button>
-            </div> */}
       {showBanner ? (
         <SoftLaunch openModal={openModal} setOpenModal={setOpenModal} />
       ) : null}

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const RightSide = () => {
   return (
     <section className="max-w-[500px] h-[500px] bg-red-500 rounded-full p-2 mt-4 mx-auto px-4 md:px-8">
@@ -11,16 +13,16 @@ const RightSide = () => {
           77% of internet users report reading blog posts on a regular basis
         </h3>
       </div>
-      <div className="mx-2 px-3 text-white flex lg:flex flex-col justify-center items-center">
+      <div className="mx-2 px-3 text-white flex flex-col justify-center items-center">
         <h4 className="my-3 font-semibold">Is yours one of them?</h4>
-        <button className="mt-3 px-5 mb-2 py-3 rounded-md text-white w-44 bg-gray-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:mt-0 sm:ml-3 lg:w-auto">
+        <button className="mt-3 px-5 mb-2 py-3 rounded-md text-white w-48 bg-gray-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:mt-0 sm:ml-3 lg:w-auto">
           Run a Quick Check
         </button>
         <a
           href="#blog-tool"
           className="block py-2 px-4 text-center text-white font-medium bg-red-600 duration-150 hover:bg-red-700 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
         >
-          Got a Blog?
+          Are you a Blogger?
         </a>
       </div>
     </section>

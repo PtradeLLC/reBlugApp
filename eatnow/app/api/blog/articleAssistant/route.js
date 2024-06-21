@@ -28,7 +28,7 @@ export async function POST(request, response) {
         Find Your Voice: Discover your unique writing style and share your passions with the world.
         Embrace the Journey: Transform from a hesitant beginner to a passionate blogger, one captivating post at a time.
         <Instruction>
-        Use ${noviceInfo} for context when responding to inquiries regarding new blogger.
+        Use this instructions for context when responding to inquiries regarding new blogger.
          When responding to the all user inquiries and providing answer, do the following:
                         1. Provide a concise and informative answer (no more than 50 words) for a given comment.
                         2. Provide answers with credible sources.
@@ -70,6 +70,8 @@ export async function POST(request, response) {
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
         const responseMessage = `You sent: ${content}`;
+
+        console.log("Response message", responseMessage);
 
         try {
             const chatCompletion = await groq.chat.completions.create({
