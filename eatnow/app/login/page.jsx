@@ -1,14 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import SignInForm from "../../components/SignInForm";
-import DashboardComponent from "../../components/DashboardComp";
+
+import { useState } from "react";
+import SignInForm from "@/components/SignInForm";
 
 const SignIn = () => {
   const [showRegister, setShowRegister] = useState(false);
-  const [user, setUser] = useState(null);
 
-  const handleUserChange = (loggedInUser) => {
-    setUser(loggedInUser);
+  const handleClick = () => {
+    setShowRegister(!showRegister);
   };
 
   return (
@@ -16,7 +15,12 @@ const SignIn = () => {
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-6 gap-6 h-full">
           <div className="col-span-6 md:col-span-2 lg:col-span-3">
-            {/* Your image section */}
+            <div
+              className="bg-contain bg-center bg-no-repeat min-h-[150px] rounded-xl hidden md:block w-full md:w-[200%] lg:w-[150%] h-full"
+              style={{
+                backgroundImage: "url(/images/userss.jpg)",
+              }}
+            ></div>
           </div>
           <div className="col-span-6 md:col-span-4 lg:col-span-3 py-12">
             <div className="max-w-lg w-full h-full">
@@ -24,15 +28,33 @@ const SignIn = () => {
                 <h2 className="text-red-900 dark:text-white text-2xl font-bold mb-3">
                   Welcome to Reblug
                 </h2>
-                {/* Toggle between login and register */}
+                {showRegister ? (
+                  <div className="flex items-center mb-6 md:mb-12">
+                    <p className="mb-0 mr-2 opacity-50">
+                      Already have an account?
+                    </p>
+                    <button
+                      className="text-white hover:underline cursor-pointer"
+                      onClick={handleClick}
+                    >
+                      Login
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center mb-6 md:mb-12">
+                    <p className="mb-0 mr-2 opacity-50">New to Reblug?</p>
+                    <button
+                      className="text-white hover:underline cursor-pointer"
+                      onClick={handleClick}
+                    >
+                      Register
+                    </button>
+                  </div>
+                )}
                 <SignInForm
                   showRegister={showRegister}
                   setShowRegister={setShowRegister}
-                  setUser={handleUserChange}
                 />
-                {/* Render DashboardComponent if user is logged in */}
-                {console.log("User from signIn", user)}
-                {user && <DashboardComponent user={user} />}
               </div>
             </div>
           </div>

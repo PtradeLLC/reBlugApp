@@ -64,8 +64,6 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
       return `Password must be between ${minLength} and ${maxLength} characters long.`;
     }
 
-    console.log("Pass", password);
-
     if (commonPasswords.includes(password)) {
       return "Password should not be a commonly used password.";
     }
@@ -107,8 +105,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com/"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);

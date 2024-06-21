@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
 
-const DashboardComponent = ({ user }) => {
+const DashboardComponent = ({ name }) => {
   return (
     <div>
-      {console.log(user)}
-      <h2>Welcome, {user}!</h2>
+      <h1>Welcome, {name}!</h1>
       {/* Add more components to display user information */}
     </div>
   );
