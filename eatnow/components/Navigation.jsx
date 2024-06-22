@@ -104,7 +104,7 @@ const Navigation = () => {
         setIsLoggedIn(!!currentUser);
         setUser(currentUser);
       } catch (error) {
-        console.log("No active session found.");
+        console.log(error);
       }
     };
     checkSession();

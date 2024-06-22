@@ -24,60 +24,78 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const currentUser = await account.get();
-        setUser(currentUser);
-      } catch (error) {
-        console.log("No user logged in");
-      }
-    }
-    getUser();
-  }, []);
+  //   useEffect(() => {
+  //     async function getUser() {
+  //       try {
+  //         const currentUser = await account.get();
+  //         setLoading(true);
+  //         setUser(currentUser);
+  //         setLoading(false);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     getUser();
+  //   }, []);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
-    }
-  }, [user, router]);
+  //   if (loading) {
+  //     return (
+  //       <div className="flex items-center justify-center min-h-screen">
+  //         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  //           <div className="text-gray-700 text-center font-bold text-xl">
+  //             Loading...
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
 
-  const validatePassword = (password) => {
-    const minLength = 8;
-    const maxLength = 256;
-    const commonPasswords = [
-      "123456",
-      "password",
-      "123456789",
-      "12345678",
-      "12345",
-      "1234567",
-      "1234567890",
-      "qwerty",
-      "abc123",
-      "password1",
-    ];
+  //   useEffect(() => {
+  //     if (user) {
+  //       router.push("/dashboard");
+  //     }
+  //   }, [user, router]);
 
-    if (password.length < minLength || password.length > maxLength) {
-      return `Password must be between ${minLength} and ${maxLength} characters long.`;
-    }
+  //   const validatePassword = (password) => {
+  //     const minLength = 8;
+  //     const maxLength = 256;
+  //     const commonPasswords = [
+  //       "123456",
+  //       "password",
+  //       "123456789",
+  //       "12345678",
+  //       "12345",
+  //       "1234567",
+  //       "1234567890",
+  //       "qwerty",
+  //       "abc123",
+  //       "password1",
+  //     ];
 
-    if (commonPasswords.includes(password)) {
-      return "Password should not be a commonly used password.";
-    }
+  //     if (password.length < minLength || password.length > maxLength) {
+  //       return `Password must be between ${minLength} and ${maxLength} characters long.`;
+  //     }
 
-    return "";
-  };
+  //     if (commonPasswords.includes(password)) {
+  //       return "Password should not be a commonly used password.";
+  //     }
+
+  //     return "";
+  //   };
 
   const handleEmailLogin = async () => {
     try {
-      await account.createEmailSession(email, password);
+      console.log("Attempting login with:", email); // Log email to verify input
+      await account.createEmailPasswordSession(email, password);
       const loggedInUser = await account.get();
+      console.log("Logged in user:", loggedInUser); // Log user object if login is successful
       setUser(loggedInUser);
       setEmail("");
       setPassword("");
+      router.push("/dashboard"); // Redirect upon successful login
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please check your credentials.");
@@ -85,13 +103,6 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
   };
 
   const register = async () => {
-    const passwordError = validatePassword(password);
-    if (passwordError) {
-      console.error("Registration error:", passwordError);
-      alert(passwordError);
-      return;
-    }
-
     try {
       await account.create(ID.unique(), email, password, name);
       await handleEmailLogin();
@@ -105,8 +116,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        "http://localhost:3000/dashboard",
-        "http://localhost:3000/"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com/"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
@@ -128,7 +139,7 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
         <input
           type="email"
           placeholder="Email"
-          className="w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-red-600"
+          className="w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -136,7 +147,7 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
         <input
           type="password"
           placeholder="Password"
-          className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-blue-600"
+          className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -145,7 +156,7 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
           <input
             type="text"
             placeholder="Name"
-            className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-blue-600"
+            className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
