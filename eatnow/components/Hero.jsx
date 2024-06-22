@@ -23,9 +23,10 @@ export default () => {
               marketing
             </h2>
             <h3 className="text-green-900 text-lg">
-              We solve things by providing a “blogger-first” platform where
-              brands and marketers connect with talented bloggers, and utilizing
-              tools and technologies developed to bolster growth.
+              We solve <span className="text-red-600">things</span> by providing
+              a “blogger-first” platform where brands and marketers connect with
+              talented bloggers, utilizing tools and technologies developed to
+              bolster growth.
             </h3>
             <p>
               Specifically by making blogging interactive, social and useful for
