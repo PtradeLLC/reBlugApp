@@ -118,8 +118,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
         provider,
         // "http://localhost:3000/dashboard",
         // "http://localhost:3000/login"
-        "www.reblug.com/dashboard",
-        "www.reblug.com"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
