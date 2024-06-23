@@ -4,6 +4,7 @@ import { account } from "../app/appwrite";
 import Banner from "./Banner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Profile Dropdown
 const ProfileDropDown = ({ className, logout, user }) => {
@@ -50,11 +51,16 @@ const ProfileDropDown = ({ className, logout, user }) => {
               className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
               onClick={() => setIsDropdownOpen((prev) => !prev)}
             >
-              <img
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+
+              {/* <img
                 src="https://randomuser.me/api/portraits/men/46.jpg"
                 alt="Profile"
                 className="w-full h-full rounded-full"
-              />
+              /> */}
             </button>
             <div className="lg:hidden">
               <span className="block">{name}</span>

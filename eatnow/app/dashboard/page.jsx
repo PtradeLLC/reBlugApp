@@ -1,5 +1,5 @@
 "use client";
-import DashboardComponent from "@/components/DashboardComp";
+import Dashboard from "@/components/DashboardUI";
 import { account, ID } from "../appwrite";
 import { useState, useEffect } from "react";
 
@@ -28,7 +28,7 @@ const DashboardPage = () => {
   return (
     <>
       <div>
-        <DashboardComponent name={name} />
+        <Dashboard name={name} />
       </div>
     </>
   );

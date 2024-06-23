@@ -14,6 +14,7 @@ const SocialLoginButton = ({ provider, handleLogin, icon, label, bg }) => (
     onClick={() => handleLogin(provider)}
     className={`bg-${bg}-600 text-white py-3 px-6 rounded w-full flex items-center justify-center mt-4`}
   >
+    {console.log("Backgrouund:::", bg)}
     <FontAwesomeIcon icon={icon} className="mr-2 text-white" />
     <span className="text-center">Continue with {label}</span>
   </button>
@@ -25,90 +26,44 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [passValidated, setPassValidated] = useState("");
   const router = useRouter();
 
-  //   useEffect(() => {
-  //     async function getUser() {
-  //       try {
-  //         const currentUser = await account.get();
-  //         setLoading(true);
-  //         setUser(currentUser);
-  //         setLoading(false);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //     getUser();
-  //   }, []);
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const maxLength = 256;
 
-  //   if (loading) {
-  //     return (
-  //       <div className="flex items-center justify-center min-h-screen">
-  //         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  //           <div className="text-gray-700 text-center font-bold text-xl">
-  //             Loading...
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
+    if (password.length < minLength || password.length > maxLength) {
+      setPassValidated(
+        `Password must be between ${minLength} and ${maxLength} characters long.`
+      );
+      return;
+    }
 
-  //   useEffect(() => {
-  //     if (user) {
-  //       router.push("/dashboard");
-  //     }
-  //   }, [user, router]);
-
-  //   const validatePassword = (password) => {
-  //     const minLength = 8;
-  //     const maxLength = 256;
-  //     const commonPasswords = [
-  //       "123456",
-  //       "password",
-  //       "123456789",
-  //       "12345678",
-  //       "12345",
-  //       "1234567",
-  //       "1234567890",
-  //       "qwerty",
-  //       "abc123",
-  //       "password1",
-  //     ];
-
-  //     if (password.length < minLength || password.length > maxLength) {
-  //       return `Password must be between ${minLength} and ${maxLength} characters long.`;
-  //     }
-
-  //     if (commonPasswords.includes(password)) {
-  //       return "Password should not be a commonly used password.";
-  //     }
-
-  //     return "";
-  //   };
+    return "";
+  };
 
   const handleEmailLogin = async () => {
     try {
-      console.log("Attempting login with:", email); // Log email to verify input
       await account.createEmailPasswordSession(email, password);
       const loggedInUser = await account.get();
-      console.log("Logged in user:", loggedInUser); // Log user object if login is successful
+
       setUser(loggedInUser);
       setEmail("");
       setPassword("");
-      router.push("/dashboard"); // Redirect upon successful login
+      router.push("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed. Please check your credentials.");
     }
   };
 
   const register = async () => {
     try {
       await account.create(ID.unique(), email, password, name);
+      validatePassword();
       await handleEmailLogin();
     } catch (error) {
       console.error("Registration error:", error);
-      alert("Registration failed. Please try again.");
     }
   };
 
@@ -116,10 +71,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        // "http://localhost:3000/dashboard",
-        // "http://localhost:3000/login"
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/login"
+        // "https://www.reblug.com/dashboard",
+        // "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
