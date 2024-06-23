@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Switch } from "@/components/ui/switch";
 import Link from "next/link";
 import {
   Activity,
@@ -41,6 +42,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import SwitchForm from "./SwitchType";
 
 const Dashboard = ({ name }) => {
   const [loading, setLoading] = useState(true);
@@ -72,7 +74,7 @@ const Dashboard = ({ name }) => {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className="sr-only">ReBlug Dashboard</span>
           </Link>
           <Link
             href="#"
@@ -123,7 +125,7 @@ const Dashboard = ({ name }) => {
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
+                <span className="sr-only">ReBlug Dashboard</span>
               </Link>
               <Link href="#" className="hover:text-foreground">
                 Dashboard
@@ -188,16 +190,27 @@ const Dashboard = ({ name }) => {
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           <Card x-chunk="dashboard-01-chunk-0">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback className="h-4 w-4 text-muted-foreground">
+                  CN
+                </AvatarFallback>
+              </Avatar>
               <CardTitle className="text-sm font-medium">
-                Total Revenue
+                Welcome, {name}
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
+              <span>Logged in as:</span>
+              <div className="text-xl font-bold">Social Media Partner</div>
+              <div className="text-xs text-muted-foreground">
+                <span>
+                  <Link href={""}>Change User type</Link>
+                </span>
+              </div>
+              <div className="text-xs text-muted-foreground">
+                {/* <SwitchForm /> */}
+              </div>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-1">

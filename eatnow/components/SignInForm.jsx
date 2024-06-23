@@ -30,33 +30,24 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
+  const [verMessage, setVerMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [passValidated, setPassValidated] = useState("");
+
   const router = useRouter();
-
-  const validatePassword = (password) => {
-    const minLength = 8;
-    const maxLength = 256;
-
-    if (password.length < minLength || password.length > maxLength) {
-      setPassValidated(
-        `Password must be between ${minLength} and ${maxLength} characters long.`
-      );
-      return;
-    }
-
-    return "";
-  };
 
   const handleEmailLogin = async () => {
     try {
       await account.createEmailPasswordSession(email, password);
       const loggedInUser = await account.get();
-
-      setUser(loggedInUser);
-      setEmail("");
-      setPassword("");
-      router.push("/dashboard");
+      if (loggedInUser.emailVerification === false) {
+        router.push("/login");
+      } else {
+        setUser(loggedInUser);
+        setEmail("");
+        setPassword("");
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -64,9 +55,16 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 
   const register = async () => {
     try {
-      await account.create(ID.unique(), email, password, name);
-      validatePassword();
-      await handleEmailLogin();
+      const newUser = await account.create(ID.unique(), email, password, name);
+      if (newUser.emailVerification === false) {
+        router.push("/login");
+        setEmail("");
+        setPassword("");
+        setName("");
+        setVerMessage(`🫶🏼 Please check your email to verify your account`);
+      } else {
+        await handleEmailLogin();
+      }
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -97,6 +95,9 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 
   return (
     <>
+      <div className="bg-[#f97316] px-2 items-center mx-auto rounded-md mb-2">
+        {verMessage}
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="email"

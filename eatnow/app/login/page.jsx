@@ -24,17 +24,17 @@ const SignIn = () => {
           </div>
           <div className="col-span-6 md:col-span-4 lg:col-span-3 py-12">
             <div className="max-w-lg w-full h-full">
-              <div className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl p-4 md:p-12 lg:py-16">
+              <div className="bg-white text-gray-900 dark:bg-slate-800 shadow-xl rounded-2xl p-4 md:p-12 lg:py-16">
                 <h2 className="text-red-900 dark:text-white text-2xl font-bold mb-3">
                   Welcome to Reblug
                 </h2>
                 {showRegister ? (
-                  <div className="flex items-center mb-6 md:mb-12">
-                    <p className="mb-0 mr-2 opacity-50">
+                  <div className="flex text-black items-center mb-6 md:mb-12">
+                    <p className="mb-0 mr-2 opacity-50 text-black">
                       Already have an account?
                     </p>
                     <button
-                      className="text-white hover:underline cursor-pointer"
+                      className="text-gray-900 hover:underline cursor-pointer"
                       onClick={handleClick}
                     >
                       Login
@@ -44,7 +44,7 @@ const SignIn = () => {
                   <div className="flex items-center mb-6 md:mb-12">
                     <p className="mb-0 mr-2 opacity-50">New to Reblug?</p>
                     <button
-                      className="text-white hover:underline cursor-pointer"
+                      className="text-gray-900 hover:underline cursor-pointer"
                       onClick={handleClick}
                     >
                       Register
