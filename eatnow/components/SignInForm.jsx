@@ -115,7 +115,7 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
       <div className="bg-[#f97316] px-2 items-center mx-auto rounded-md mb-2">
         {verMessage}
       </div>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
@@ -148,11 +148,11 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
         >
           {showRegister ? "Register" : "Login"}
         </button>
-      </form>
+      </form> */}
       <div className="relative">
         <hr className="my-8 border-t border-gray-300" />
         <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
-          Or
+          Sign Up or Log In with one of these providers
         </span>
       </div>
       <SocialLoginButton

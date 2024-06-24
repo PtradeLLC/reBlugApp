@@ -42,6 +42,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import ToggleModal from "./ShareThisModal";
 
 const SocialMedDashboard = ({ name }) => {
   const [loading, setLoading] = useState(true);
@@ -52,6 +53,7 @@ const SocialMedDashboard = ({ name }) => {
   const [payments, setPayments] = useState(null);
   const [payHistory, setPayHistory] = useState(null);
   const [recentSubs, setRecentSubs] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (name) {
@@ -88,7 +90,8 @@ const SocialMedDashboard = ({ name }) => {
   };
 
   const handleUserType = (e) => {
-    console.log(e);
+    e.preventDefault();
+    setOpen(true);
   };
 
   return (
@@ -257,7 +260,7 @@ const SocialMedDashboard = ({ name }) => {
                   Account at{" "}
                   {subscriptionGrowth
                     ? subscriptionGrowth
-                    : `${subscriptionGrowth}% growth. There 
+                    : `${subscriptionGrowth}% growth. There
                     are ${subscriptions} subscriptions from you this month.`}
                 </p>
               </span>
@@ -308,7 +311,7 @@ const SocialMedDashboard = ({ name }) => {
                 className="text-xs flex justify-end mt-1"
                 size="sm"
               >
-                Connect an Account
+                Link Account
               </Button>
             </CardContent>
           </Card>
@@ -369,7 +372,7 @@ const SocialMedDashboard = ({ name }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
-              <CardTitle>Campaign Assets</CardTitle>
+              <CardTitle>Campaign Posts</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-8">
               {recentSubs ? (
@@ -385,17 +388,17 @@ const SocialMedDashboard = ({ name }) => {
                       Cos it's Free
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Click to grab this campaign for your media post
+                      Update needed for this campaign post
                       {/* olivia.martin@email.com */}
                     </p>
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     onClick={handleCampaign}
                     className="ml-auto font-medium"
                   >
                     Get Info
-                  </button>
+                  </button> */}
                 </div>
               )}
             </CardContent>
@@ -429,6 +432,9 @@ const SocialMedDashboard = ({ name }) => {
           </Card>
         </div>
       </main>
+      <div>
+        <ToggleModal open={open} setOpen={setOpen} />
+      </div>
     </div>
   );
 };
