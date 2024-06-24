@@ -427,33 +427,6 @@ const SocialMedDashboard = ({ name }) => {
               )}
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-5">
-            <CardHeader>
-              <CardTitle>Recent Subscriptions</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-8">
-              {recentSubs ? (
-                recentSubs
-              ) : (
-                <div className="flex items-center gap-4">
-                  <Avatar className="hidden h-9 w-9 sm:flex">
-                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                    <AvatarFallback>OM</AvatarFallback>
-                  </Avatar>
-                  <div className="grid gap-1">
-                    <p className="text-sm font-medium leading-none">
-                      None{/* Olivia Martin */}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      You currently have no subscribers.
-                      {/* olivia.martin@email.com */}
-                    </p>
-                  </div>
-                  <div className="ml-auto font-medium">$0.00</div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
         </div>
       </main>
     </div>
