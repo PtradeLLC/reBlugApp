@@ -369,7 +369,7 @@ const SocialMedDashboard = ({ name }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
-              <CardTitle>Campaign Promos</CardTitle>
+              <CardTitle>Campaign Assets</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-8">
               {recentSubs ? (
