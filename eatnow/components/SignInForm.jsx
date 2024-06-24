@@ -15,6 +15,8 @@ const backgroundClasses = {
   green: "bg-green-600",
 };
 
+//user([USER_ID], "verified")
+
 const SocialLoginButton = ({ provider, handleLogin, icon, label, bg }) => (
   <button
     onClick={() => handleLogin(provider)}
@@ -67,7 +69,11 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
   const register = async () => {
     try {
       const newUser = await account.create(ID.unique(), email, password, name);
-      await sendVerificationEmail(newUser.$id, email); // Send verification email
+      const session = await account.createEmailPasswordSession(email, password);
+      let link = await account.createVerification(
+        "http://localhost:3000/verify"
+        // "https://www.reblug.com/verify",
+      );
       if (newUser.emailVerification === false) {
         setEmail("");
         setPassword("");
@@ -85,10 +91,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        // "http://localhost:3000/dashboard",
-        // "http://localhost:3000/login"
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/login"
+        // "https://www.reblug.com/dashboard",
+        // "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
