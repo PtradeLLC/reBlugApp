@@ -357,7 +357,7 @@ const SocialMedDashboard = ({ name }) => {
                       <TableCell>
                         <div className="font-medium">None</div>
                         <div className="hidden text-sm text-muted-foreground md:inline">
-                          You currently have no subscribers.
+                          You currently have no payment.
                         </div>
                       </TableCell>
                       <TableCell className="text-right">$0</TableCell>
