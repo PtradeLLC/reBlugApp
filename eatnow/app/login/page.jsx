@@ -26,7 +26,7 @@ const SignIn = () => {
             <div className="max-w-lg w-full h-full">
               <div className="bg-white text-gray-900 dark:bg-slate-800 shadow-xl rounded-2xl p-4 md:p-12 lg:py-16">
                 <h2 className="text-red-900 dark:text-white text-2xl font-bold mb-3">
-                  Welcome to Reblug
+                  Welcome to ReBlug
                 </h2>
                 {showRegister ? (
                   <div className="flex text-black items-center mb-6 md:mb-12">
