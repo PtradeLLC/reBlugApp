@@ -108,69 +108,38 @@ export default function SoftLaunch({ setOpenModal }) {
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900"
                     >
-                      Thanks for your Interest in reBlug
+                      Thanks for your Interest in reBlug App
                     </Dialog.Title>
                     <div className="mt-2"></div>
                     <div className="mt-2">
                       {success ? (
-                        <p>Great! We will update you as soon as possible</p>
+                        <p>Our app is now live at the App stores</p>
                       ) : (
                         <>
                           <p className="text-sm text-gray-500">
-                            As we work hard to bring these tools to you, please
-                            use this form to join our growing list of amazing
-                            brands, bloggers and writer waiting to be notified.
-                            We promise you would be the first to try them in
-                            <br />
-                            <spa className="text-green-600 font-semibold">
-                              {count}
-                            </spa>
+                            Click on your corresponding app store to download:
                           </p>
+                          <div className="flex lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
+                            <img
+                              src="/images/foodini/gplay.png"
+                              className="w-32"
+                              alt="googleplay"
+                            />
+                            <img
+                              src="/images/foodini/appleimg.webp"
+                              className="w-32"
+                              alt="apple-store"
+                            />
+                            <img
+                              src="/images/foodini/micsoft.png"
+                              className="w-32"
+                              alt="apple-store"
+                            />
+                          </div>
                         </>
                       )}
                     </div>
                   </div>
-                </div>
-                <div className="mt-5 m-auto sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-1 justify-center items-center w-4/5 sm:gap-3">
-                  <form onSubmit={handleSubmit}>
-                    <div className="">
-                      <label htmlFor="email-address" className="sr-only">
-                        Email address
-                      </label>
-                      {!success ? (
-                        <input
-                          id="email-address"
-                          name="email"
-                          type="email"
-                          onChange={handleChange}
-                          autoComplete="email"
-                          value={formInput}
-                          required
-                          className="relative px-1 mt-4 block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                          placeholder="Email address"
-                        />
-                      ) : null}
-                      <div className="flex mt-5">
-                        {!success ? (
-                          <>
-                            <button
-                              type="submit"
-                              className="inline-flex mx-4 w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:col-start-2"
-                            >
-                              Submit
-                            </button>
-                            <button
-                              type="button"
-                              className="inline-flex w-1/5 justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-thin text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-50 hover:text-black sm:col-start-1 sm:mt-0"
-                              onClick={() => setOpen(false)}
-                            >
-                              Close
-                            </button>
-                          </>
-                        ) : null}
-                      </div>
-                    </div>
-                  </form>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
