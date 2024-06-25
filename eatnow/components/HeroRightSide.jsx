@@ -14,17 +14,26 @@ const RightSide = () => {
         </h3>
       </div>
       <div className="mx-2 px-3 text-white flex flex-col justify-center items-center">
-        <span className="mt-[-24px]">
+        <span className="mt-[-37px]">
           <h4 className="my-3 font-semibold">Is yours one of them?</h4>
-          <button className="mt-3 px-5 mb-2 py-3 rounded-md text-white w-48 bg-gray-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:mt-0 sm:ml-3 lg:w-auto">
-            Run a Quick Check
-          </button>
           <a
             href="#blog-tool"
-            className="block py-2 px-4 text-center text-white font-medium bg-red-600 duration-150 hover:bg-red-700 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
+            className="block mt-3 px-5 mb-2 py-3 rounded-md text-white w-48 bg-gray-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:mt-0 sm:ml-3 lg:w-auto"
+          >
+            Run Quick Check
+          </a>
+          <a
+            href="#blog-tool"
+            className="block mt-5 px-5 mb-2 py-3 rounded-md text-white w-48 bg-red-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:ml-3 lg:w-auto"
+          >
+            A you a Blogger
+          </a>
+          {/* <a
+            href="#blog-tool"
+            className="block py-2 px-4 text-center w-48 text-white font-medium bg-red-600 duration-150 hover:bg-red-700 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
           >
             Are you a Blogger?
-          </a>
+          </a> */}
         </span>
       </div>
     </section>
