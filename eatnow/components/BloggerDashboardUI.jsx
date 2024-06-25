@@ -50,14 +50,29 @@ const BloggerDashboard = ({ name }) => {
   const [subscriptionGrowth, setSubscriptionGrowth] = useState(0);
   const [activeMembers, setActiveMembers] = useState(0);
   const [hourlyActive, setHourlyActive] = useState(0);
-  const [connectedAccount, setconnectedAccount] = useState(0);
+  const [connectedAccount, setConnectedAccount] = useState(0);
   const [niche, setNiche] = useState(null);
+  const [userType, setUserType] = useState({
+    defaultType: "Blogger",
+    brandType: "Brand",
+    sMediaType: "Social Media Partner",
+    chefType: "Chef",
+  });
+  const [todayDate, setTodayDate] = useState("");
 
   useEffect(() => {
     if (name) {
       setLoading(false);
     }
   }, [name]);
+
+  useEffect(() => {
+    const today = () => {
+      let date = new Date();
+      return date.toDateString();
+    };
+    setTodayDate(today());
+  }, []);
 
   if (loading) {
     return (
@@ -222,7 +237,7 @@ const BloggerDashboard = ({ name }) => {
             </CardHeader>
             <CardContent>
               <span>You're logged in as:</span>
-              <div className="text-xl font-bold">Blogger</div>
+              <div className="text-xl font-bold">{userType.defaultType}</div>
               <div className="text-sm flex">
                 Niche: {niche ? niche : "Select a Niche "}
                 <Button
@@ -236,7 +251,12 @@ const BloggerDashboard = ({ name }) => {
               </div>
               <div className="text-xs text-muted-foreground">
                 <span>
-                  <button onClick={handleUserType}>Switch User Type</button>
+                  <Button
+                    className="text-xs mx-1 cursor-pointer w-[115px] h-[20px] p-3"
+                    onClick={handleUserType}
+                  >
+                    Switch User Type
+                  </Button>
                 </span>
               </div>
               <div className="text-xs text-muted-foreground">
@@ -287,7 +307,6 @@ const BloggerDashboard = ({ name }) => {
                 {`Check out various ways you can monetize your blog.`}
               </span>
               <Button
-                // text-xs text-muted-foreground - Add this to bait for subs
                 className="text-xs m-auto bg-blue-700 flex mt-1 "
                 type="button"
                 onClick={handlePaymentClick}
@@ -315,7 +334,6 @@ const BloggerDashboard = ({ name }) => {
                 {`One of our services is provide tools to help you start and grow.`}
               </span>
               <Button
-                // text-xs text-muted-foreground - Add this to bait for subs
                 className="text-xs m-auto bg-green-700 flex mt-1"
                 type="button"
                 onClick={handlePaymentClick}
@@ -336,10 +354,10 @@ const BloggerDashboard = ({ name }) => {
                   </span>
                 </CardDescription>
               </div>
-              <label class="inline-flex items-center cursor-pointer ml-auto gap-1 ">
-                <input type="checkbox" value="" class="sr-only peer" />
-                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <label className="inline-flex items-center cursor-pointer ml-auto gap-1 ">
+                <input type="checkbox" value="" className="sr-only peer" />
+                <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Just Me
                 </span>
               </label>
@@ -350,83 +368,30 @@ const BloggerDashboard = ({ name }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
+              <CardTitle>Recent Updates</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-8">
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
                   <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                  <AvatarFallback>OM</AvatarFallback>
+                  <AvatarFallback>WA</AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1">
                   <p className="text-sm font-medium leading-none">
-                    Olivia Martin
+                    Welcome Aboard
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    olivia.martin@email.com
+                    Thanks for joining ReBlug.
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$1,999.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/02.png" alt="Avatar" />
-                  <AvatarFallback>JL</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Jackson Lee
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    jackson.lee@email.com
-                  </p>
+                <div className="ml-auto font-medium">
+                  <span className="">{todayDate}</span>
                 </div>
-                <div className="ml-auto font-medium">+$39.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/03.png" alt="Avatar" />
-                  <AvatarFallback>IN</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Isabella Nguyen
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    isabella.nguyen@email.com
-                  </p>
+                <div className="ml-auto font-medium">
+                  <Link className="cursor-pointer hover:underline" href={"/"}>
+                    Where to begin
+                  </Link>
                 </div>
-                <div className="ml-auto font-medium">+$299.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/04.png" alt="Avatar" />
-                  <AvatarFallback>WK</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    William Kim
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    will@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$99.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/05.png" alt="Avatar" />
-                  <AvatarFallback>SD</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Sofia Davis
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    sofia.davis@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$39.00</div>
               </div>
             </CardContent>
           </Card>
@@ -436,9 +401,9 @@ const BloggerDashboard = ({ name }) => {
   );
 };
 
-export default BloggerDashboard;
-
-BloggerDashboard.PropTypes = {
+BloggerDashboard.propTypes = {
   name: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
 };
+
+export default BloggerDashboard;
