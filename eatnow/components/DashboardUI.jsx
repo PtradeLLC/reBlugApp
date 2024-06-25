@@ -42,7 +42,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ToggleModal from "./ShareThisModal";
+import TogglePageModal from "./ShareThisModal";
+import ChartModal from "./SubChartModal";
+import SubscriptionChartModal from "./SubChartModal";
 
 const SocialMedDashboard = ({ name }) => {
   const [loading, setLoading] = useState(true);
@@ -87,6 +89,10 @@ const SocialMedDashboard = ({ name }) => {
 
   const handleCampaign = (e) => {
     console.log(e);
+  };
+  const handleSubChart = (e) => {
+    console.log(e);
+    setOpen(true);
   };
 
   const handleUserType = (e) => {
@@ -266,6 +272,7 @@ const SocialMedDashboard = ({ name }) => {
               </span>
               <Button
                 type="button"
+                onClick={handleSubChart}
                 className="text-xs flex justify-end mt-1"
                 size="sm"
               >
@@ -280,7 +287,7 @@ const SocialMedDashboard = ({ name }) => {
             </CardHeader>
             <CardContent>
               <div className="text-xl font-bold">
-                ${`${payments || 0} /week`}
+                ${`${payments || 0} / month`}
               </div>
               <p className="text-xs text-muted-foreground">
                 You may change when funds are deposited to your account.
@@ -433,7 +440,9 @@ const SocialMedDashboard = ({ name }) => {
         </div>
       </main>
       <div>
-        <ToggleModal open={open} setOpen={setOpen} />
+        <TogglePageModal open={open} setOpen={setOpen} />
+        <ChartModal open={open} setOpen={setOpen} />
+        <SubscriptionChartModal open={open} setOpen={setOpen} />
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import ChatBubble from "@/components/chat/chatBubble";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,6 +50,8 @@ const BloggerDashboard = ({ name }) => {
   const [subscriptionGrowth, setSubscriptionGrowth] = useState(0);
   const [activeMembers, setActiveMembers] = useState(0);
   const [hourlyActive, setHourlyActive] = useState(0);
+  const [connectedAccount, setconnectedAccount] = useState(0);
+  const [niche, setNiche] = useState(null);
 
   useEffect(() => {
     if (name) {
@@ -105,7 +108,7 @@ const BloggerDashboard = ({ name }) => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Orders
+            bCommerce
           </Link>
           <Link
             href="#"
@@ -117,7 +120,7 @@ const BloggerDashboard = ({ name }) => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Customers
+            Orders
           </Link>
           <Link
             href="#"
@@ -153,7 +156,7 @@ const BloggerDashboard = ({ name }) => {
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Orders
+                bCommerce
               </Link>
               <Link
                 href="#"
@@ -165,7 +168,7 @@ const BloggerDashboard = ({ name }) => {
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Customers
+                Orders
               </Link>
               <Link
                 href="#"
@@ -182,7 +185,7 @@ const BloggerDashboard = ({ name }) => {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder="Search products or services..."
                 className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
               />
             </div>
@@ -215,18 +218,25 @@ const BloggerDashboard = ({ name }) => {
                   CN
                 </AvatarFallback>
               </Avatar>
-              <CardTitle className="text-sm font-medium">
-                Welcome, {name}
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Hey, {name}</CardTitle>
             </CardHeader>
             <CardContent>
               <span>You're logged in as:</span>
-              <div className="text-xl font-bold">Social Media Partner</div>
+              <div className="text-xl font-bold">Blogger</div>
+              <div className="text-sm flex">
+                Niche: {niche ? niche : "Select a Niche "}
+                <Button
+                  onClick={(e) => {
+                    e.target.value;
+                  }}
+                  className="text-xs mx-1 cursor-pointer w-[60px] h-[20px] p-3"
+                >
+                  {niche ? "Update" : "Select"}
+                </Button>
+              </div>
               <div className="text-xs text-muted-foreground">
                 <span>
-                  <button onClick={handleUserType}>
-                    Change your User Type
-                  </button>
+                  <button onClick={handleUserType}>Switch User Type</button>
                 </span>
               </div>
               <div className="text-xs text-muted-foreground">
@@ -237,56 +247,81 @@ const BloggerDashboard = ({ name }) => {
           <Card x-chunk="dashboard-01-chunk-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Subscriptions
+                Write & Publish
               </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 {subscriptions ? subscriptions : 0}
+                <span className="text-sm">published</span>
+                <span className="text-xs text-red-700 font-thin flex justify-end">
+                  Check out tools
+                </span>
               </div>
-              <span className="text-xs text-muted-foreground">
-                {`There are ${subscriptions} subscribers from you this month`}
+              <span className="text-sm text-muted-foreground">
+                {`Ideate, brainstorm, write, and publish an article quickly.`}
               </span>
-              <p className="text-xs text-muted-foreground">
-                At{" "}
-                {subscriptionGrowth
-                  ? subscriptionGrowth
-                  : `${subscriptionGrowth}% growth this month`}
-              </p>
+              <Button
+                type="button"
+                className="text-xs m-auto flex bg-red-700 mt-1"
+                size="sm"
+              >
+                Write an article
+              </Button>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Payment</CardTitle>
+              <CardTitle className="text-sm font-medium">Monetize</CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$0</div>
-              <p className="text-xs text-muted-foreground">
-                Is available to you.{" "}
-                <button
-                  className="text-xs text-muted-foreground"
-                  type="button"
-                  onClick={handlePaymentClick}
-                >
-                  Click to withdraw
-                </button>
-              </p>
+              <div className="text-2xl font-bold">
+                $0
+                <span className="text-xs text-blue-700 font-thin flex justify-end">
+                  Setup account
+                </span>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {`Check out various ways you can monetize your blog.`}
+              </span>
+              <Button
+                // text-xs text-muted-foreground - Add this to bait for subs
+                className="text-xs m-auto bg-blue-700 flex mt-1 "
+                type="button"
+                onClick={handlePaymentClick}
+              >
+                Get more info
+              </Button>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-3">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Your Active Members
+                Start or Grow your blog
               </CardTitle>
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{activeMembers}</div>
-              <p className="text-xs text-muted-foreground">
-                {hourlyActive} active since last hour
-              </p>
+              <div className="text-2xl font-bold">
+                {connectedAccount}
+                <span className="text-sm">reach</span>
+                <span className="text-xs text-green-700 font-thin flex justify-end">
+                  Check your blog
+                </span>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {`One of our services is provide tools to help you start and grow.`}
+              </span>
+              <Button
+                // text-xs text-muted-foreground - Add this to bait for subs
+                className="text-xs m-auto bg-green-700 flex mt-1"
+                type="button"
+                onClick={handlePaymentClick}
+              >
+                Check out Tools
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -294,138 +329,23 @@ const BloggerDashboard = ({ name }) => {
           <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center">
               <div className="grid gap-2">
-                <CardTitle>Transactions</CardTitle>
+                <CardTitle>Get Social</CardTitle>
                 <CardDescription>
-                  Recent transactions from your store.
+                  <span className="text-green-600">
+                    Article Assistant: Enabled
+                  </span>
                 </CardDescription>
               </div>
-              <Button asChild size="sm" className="ml-auto gap-1">
-                <Link href="#">
-                  View All
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Button>
+              <label class="inline-flex items-center cursor-pointer ml-auto gap-1 ">
+                <input type="checkbox" value="" class="sr-only peer" />
+                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  Just Me
+                </span>
+              </label>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Subscribers</TableHead>
-                    <TableHead className="hidden xl:table-column">
-                      Type
-                    </TableHead>
-                    <TableHead className="hidden xl:table-column">
-                      Status
-                    </TableHead>
-                    <TableHead className="hidden xl:table-column">
-                      Date
-                    </TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <div className="font-medium">Liam Johnson</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        liam@example.com
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      Sale
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      <Badge className="text-xs" variant="outline">
-                        Approved
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                      2023-06-23
-                    </TableCell>
-                    <TableCell className="text-right">$299.00</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <div className="font-medium">Olivia Smith</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        olivia@example.com
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      Refund
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      <Badge className="text-xs" variant="outline">
-                        Declined
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                      2023-06-24
-                    </TableCell>
-                    <TableCell className="text-right">$299.00</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <div className="font-medium">Noah Williams</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        noah@example.com
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      Subscription
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      <Badge className="text-xs" variant="outline">
-                        Approved
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                      2023-06-25
-                    </TableCell>
-                    <TableCell className="text-right">$299.00</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <div className="font-medium">Emma Brown</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        emma@example.com
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      Sale
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      <Badge className="text-xs" variant="outline">
-                        Approved
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                      2023-06-26
-                    </TableCell>
-                    <TableCell className="text-right">$299.00</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <div className="font-medium">Liam Johnson</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        liam@example.com
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      Sale
-                    </TableCell>
-                    <TableCell className="hidden xl:table-column">
-                      <Badge className="text-xs" variant="outline">
-                        Approved
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                      2023-06-27
-                    </TableCell>
-                    <TableCell className="text-right">$299.00</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <ChatBubble />
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">

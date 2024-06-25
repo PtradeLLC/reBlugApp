@@ -2,6 +2,7 @@
 import SocialMedDashboard from "@/components/DashboardUI";
 import { account, ID } from "../appwrite";
 import { useState, useEffect } from "react";
+import BloggerDashboard from "@/components/BloggerDashboardUI";
 
 const DashboardPage = () => {
   const [name, setName] = useState("");
@@ -28,7 +29,9 @@ const DashboardPage = () => {
   return (
     <>
       <div>
-        <SocialMedDashboard name={name} />
+        <BloggerDashboard name={name} />
+
+        {/* <SocialMedDashboard name={name} /> */}
       </div>
     </>
   );

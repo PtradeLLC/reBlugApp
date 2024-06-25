@@ -15,8 +15,6 @@ const backgroundClasses = {
   green: "bg-green-600",
 };
 
-//user([USER_ID], "verified")
-
 const SocialLoginButton = ({ provider, handleLogin, icon, label, bg }) => (
   <button
     onClick={() => handleLogin(provider)}
@@ -91,10 +89,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        // "http://localhost:3000/dashboard",
-        // "http://localhost:3000/login"
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/login"
+        // "https://www.reblug.com/dashboard",
+        // "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
@@ -150,10 +148,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
         </button>
       </form> */}
       <div className="relative">
-        <hr className="my-8 border-t border-gray-300" />
-        <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
+        {/* <hr className="my-8 border-t border-gray-300" /> */}
+        {/* <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
           Sign Up or Log In with one of these providers
-        </span>
+        </span> */}
       </div>
       <SocialLoginButton
         provider="google"
