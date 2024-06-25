@@ -87,15 +87,13 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 
   const handleLogin = async (provider) => {
     try {
-      if (user) {
-        await account.createOAuth2Session(
-          provider,
-          "http://localhost:3000/dashboard",
-          "http://localhost:3000/login"
-          // "https://www.reblug.com/dashboard",
-          // "https://www.reblug.com"
-        );
-      }
+      await account.createOAuth2Session(
+        provider,
+        // "http://localhost:3000/dashboard",
+        // "http://localhost:3000/login"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com"
+      );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
     }
