@@ -69,8 +69,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
       const newUser = await account.create(ID.unique(), email, password, name);
       const session = await account.createEmailPasswordSession(email, password);
       let link = await account.createVerification(
-        "http://localhost:3000/verify"
-        // "https://www.reblug.com/verify",
+        // "http://localhost:3000/verify"
+        "https://www.reblug.com/verify"
       );
       if (newUser.emailVerification === false) {
         setEmail("");
@@ -89,10 +89,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        "http://localhost:3000/dashboard",
-        "http://localhost:3000/login"
-        // "https://www.reblug.com/dashboard",
-        // "https://www.reblug.com"
+        // "http://localhost:3000/dashboard",
+        // "http://localhost:3000/login"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
