@@ -2,85 +2,22 @@ import React, { useState, useRef, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 
-// eslint-disable-next-line react/prop-types
 export default function SoftLaunch({ setOpenModal }) {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [formInput, setFormInput] = useState("");
-  const [success, setSuccess] = useState("");
-  const [count, setCount] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormInput(e.target.value);
   };
-
-  function updateCountdown() {
-    const now = new Date();
-    const timeDifference = targetDate - now;
-
-    // Calculate hours, minutes, and seconds
-    const hours = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-    // Format hours, minutes, and seconds
-    const formattedHours = String(hours).padStart(2, "0");
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(seconds).padStart(2, "0");
-
-    // Display the countdown in the UI
-    let countDown = `${formattedHours}hr : ${formattedMinutes}mins : ${formattedSeconds}sec`;
-    setCount(countDown);
-
-    // If the countdown reaches zero, do something
-    if (timeDifference <= 0) {
-      clearInterval(timerInterval);
-      setCount("We Launched, Yay!");
-      // Do something when the countdown finishes
-    }
-  }
-
-  // Set the target date 24 hours from now
-  const targetDate = new Date("May 1, 2024 12:00:00");
-  targetDate.setDate(targetDate.getDate() + 1);
-
-  // Update the countdown every second
-  const timerInterval = setInterval(updateCountdown, 1000);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/waitingList", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formInput }), // Sending the formInput value as data
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      if (response.ok) {
-        setFormInput("");
-        setSuccess(true);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
-
   return (
-    <Transition.Root show={open} as={React.Fragment}>
+    <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpenModal(false)} // Close the modal when the dialog is closed
+        onClose={() => setOpenModal(false)}
       >
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -110,14 +47,13 @@ export default function SoftLaunch({ setOpenModal }) {
                     >
                       Thanks for your Interest in reBlug App
                     </Dialog.Title>
-                    <div className="mt-2"></div>
                     <div className="mt-2">
                       {success ? (
                         <p>Our app is now live at the App stores</p>
                       ) : (
                         <>
                           <p className="text-sm text-gray-500">
-                            Click on your corresponding app store to download:
+                            Click on your favorite app store to download:
                           </p>
                           <div className="flex lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
                             <img
@@ -133,12 +69,21 @@ export default function SoftLaunch({ setOpenModal }) {
                             <img
                               src="/images/foodini/micsoft.png"
                               className="w-32"
-                              alt="apple-store"
+                              alt="microsoft-store"
                             />
                           </div>
                         </>
                       )}
                     </div>
+                  </div>
+                  <div className="mt-5 sm:mt-6">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                      onClick={() => setOpen(false)}
+                    >
+                      Close
+                    </button>
                   </div>
                 </div>
               </Dialog.Panel>
