@@ -1,12 +1,17 @@
 "use client";
 import SocialMedDashboard from "@/components/DashboardUI";
-import { account, ID } from "../appwrite";
+import { account } from "../appwrite";
 import { useState, useEffect } from "react";
 import BloggerDashboard from "@/components/BloggerDashboardUI";
+import BrandModal from "@/components/BrandModal";
+import RestaurantModal from "@/components/RestaurantSignUp";
+import TogglePageModal from "@/components/SwitchPageModal";
 
 const DashboardPage = () => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
+  const [selectedUserType, setSelectedUserType] = useState("Blogger");
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     async function getUser() {
@@ -26,12 +31,30 @@ const DashboardPage = () => {
     }
   }, [user]);
 
+  const renderComponent = () => {
+    switch (selectedUserType) {
+      case "Blogger":
+        return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
+      case "Brand":
+        return <BrandModal name={name} />;
+      case "Social Media Partner":
+        return <SocialMedDashboard name={name} />;
+      case "Restaurant":
+        return <RestaurantModal name={name} />;
+      default:
+        return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
+    }
+  };
+
   return (
     <>
       <div>
-        <BloggerDashboard name={name} />
-
-        {/* <SocialMedDashboard name={name} /> */}
+        {renderComponent()}
+        <TogglePageModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+          setUserType={setSelectedUserType}
+        />
       </div>
     </>
   );

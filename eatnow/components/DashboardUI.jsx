@@ -42,20 +42,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import TogglePageModal from "./ShareThisModal";
+import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";
 
-const SocialMedDashboard = ({ name }) => {
+const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState(0);
   const [subscriptionGrowth, setSubscriptionGrowth] = useState(0);
   const [connectedAccount, setconnectedAccount] = useState(0);
-  const [hourlyActive, setHourlyActive] = useState(0);
   const [payments, setPayments] = useState(null);
   const [payHistory, setPayHistory] = useState(null);
   const [recentSubs, setRecentSubs] = useState(null);
   const [open, setOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   useEffect(() => {
     if (name) {
@@ -90,13 +90,16 @@ const SocialMedDashboard = ({ name }) => {
   const handleCampaign = (e) => {
     console.log(e);
   };
+
   const handleSubChart = (e) => {
     console.log(e);
+    setModalType("subscription");
     setOpen(true);
   };
 
-  const handleUserType = (e) => {
-    e.preventDefault();
+  const handleUserType = () => {
+    console.log("OpenModal");
+    setModalType("toggle");
     setOpen(true);
   };
 
@@ -240,9 +243,12 @@ const SocialMedDashboard = ({ name }) => {
               <div className="text-xl font-bold">Social Media Partner</div>
               <div className="text-xs text-muted-foreground">
                 <span>
-                  <button onClick={handleUserType}>
-                    Change your User Type
-                  </button>
+                  <Button
+                    onClick={handleUserType}
+                    className="text-xs mx-1 cursor-pointer w-[115px] h-[20px] p-3"
+                  >
+                    Switch User Type
+                  </Button>
                 </span>
               </div>
               <div className="text-xs text-muted-foreground">
