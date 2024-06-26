@@ -239,7 +239,7 @@ const RestaurantDashboard = ({ name, setModalOpen }) => {
             </CardHeader>
             <CardContent>
               <span>You're logged in as:</span>
-              <div className="text-xl font-bold">F&B</div>
+              <div className="text-xl font-bold">Food & Beverages</div>
               <div className="text-xs text-muted-foreground">
                 <span>
                   <Button

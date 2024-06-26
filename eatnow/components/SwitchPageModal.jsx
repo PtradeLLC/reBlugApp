@@ -45,7 +45,7 @@ const SwitchModalPage = ({ open, setOpen, setUserType }) => {
             <SelectItem value="Social Media Partner">
               Social Media Partner
             </SelectItem>
-            <SelectItem value="Restaurant">F&B</SelectItem>
+            <SelectItem value="Restaurant">Food & Beverages</SelectItem>
           </SelectContent>
         </Select>
         <DialogFooter>
