@@ -98,9 +98,8 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   };
 
   const handleUserType = () => {
-    console.log("OpenModal");
-    setModalType("toggle");
     setOpen(true);
+    setModalType("toggle");
   };
 
   return (

@@ -46,7 +46,7 @@ import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";
 
-const SocialMedDashboard = ({ name, setModalOpen }) => {
+const RestaurantDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState(0);
   const [subscriptionGrowth, setSubscriptionGrowth] = useState(0);
@@ -239,7 +239,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             </CardHeader>
             <CardContent>
               <span>You're logged in as:</span>
-              <div className="text-xl font-bold">Brand</div>
+              <div className="text-xl font-bold">F&B</div>
               <div className="text-xs text-muted-foreground">
                 <span>
                   <Button
@@ -453,9 +453,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   );
 };
 
-export default SocialMedDashboard;
+export default RestaurantDashboard;
 
-SocialMedDashboard.PropTypes = {
+RestaurantDashboard.PropTypes = {
   name: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
 };

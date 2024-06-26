@@ -21,8 +21,6 @@ import {
 const SwitchModalPage = ({ open, setOpen, setUserType }) => {
   const [selectedType, setSelectedType] = useState("");
 
-  console.log(setUserType);
-
   const onSubmit = () => {
     setUserType(selectedType);
     setOpen(false);
@@ -47,7 +45,7 @@ const SwitchModalPage = ({ open, setOpen, setUserType }) => {
             <SelectItem value="Social Media Partner">
               Social Media Partner
             </SelectItem>
-            <SelectItem value="Restaurant">Restaurant</SelectItem>
+            <SelectItem value="Restaurant">F&B</SelectItem>
           </SelectContent>
         </Select>
         <DialogFooter>

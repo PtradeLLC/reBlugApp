@@ -4,7 +4,7 @@ import { account } from "../appwrite";
 import { useState, useEffect } from "react";
 import BloggerDashboard from "@/components/BloggerDashboardUI";
 import BrandModal from "@/components/BrandModal";
-import RestaurantModal from "@/components/RestaurantSignUp";
+import RestaurantDashboard from "@/components/RestaurantModal";
 import TogglePageModal from "@/components/SwitchPageModal";
 
 const DashboardPage = () => {
@@ -40,7 +40,7 @@ const DashboardPage = () => {
       case "Social Media Partner":
         return <SocialMedDashboard name={name} />;
       case "Restaurant":
-        return <RestaurantModal name={name} />;
+        return <RestaurantDashboard name={name} />;
       default:
         return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
     }
