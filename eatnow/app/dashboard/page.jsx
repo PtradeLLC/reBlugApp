@@ -36,11 +36,11 @@ const DashboardPage = () => {
       case "Blogger":
         return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
       case "Brand":
-        return <BrandModal name={name} />;
+        return <BrandModal name={name} setModalOpen={setModalOpen} />;
       case "Social Media Partner":
-        return <SocialMedDashboard name={name} />;
+        return <SocialMedDashboard name={name} setModalOpen={setModalOpen} />;
       case "Restaurant":
-        return <RestaurantDashboard name={name} />;
+        return <RestaurantDashboard name={name} setModalOpen={setModalOpen} />;
       default:
         return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
     }

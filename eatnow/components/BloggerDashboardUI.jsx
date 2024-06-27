@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
@@ -227,7 +228,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
               <span>You're logged in as:</span>
               <div className="text-xl font-bold">{userType.defaultType}</div>
               <div className="text-sm flex">
-                Niche: {niche ? niche : "Select a Niche "}
+                Niche: {niche ? niche : "Select a Niche"}
                 <Button
                   onClick={(e) => {
                     e.target.value;
@@ -244,7 +245,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                       onClick={handleUserType}
                       className="text-xs mx-1 cursor-pointer w-[115px] h-[20px] p-3"
                     >
-                      Switch User Type
+                      Switch User Role
                     </Button>
                   </div>
                 </span>
@@ -382,7 +383,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                     className="cursor-pointer text-xs hover:underline"
                     href={"/"}
                   >
-                    Where to begin
+                    How to Start
                   </Link>
                 </div>
               </div>
