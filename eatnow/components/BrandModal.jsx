@@ -15,15 +15,8 @@ import {
   Users,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,7 +38,7 @@ import {
 import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";
-import CampaignSummary from "@/components/BloggersFaq";
+import { useRouter } from "next/navigation";
 
 const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -57,8 +50,14 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [recentSubs, setRecentSubs] = useState(null);
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const router = useRouter();
   const [todayDate, setTodayDate] = useState("");
-  const [userType, setUserType] = useState("default");
+  const [userType, setUserType] = useState({
+    defaultType: "Blogger",
+    brandType: "Brand",
+    sMediaType: "Social Media Partner",
+    FandBType: "F&B",
+  });
 
   useEffect(() => {
     if (name) {
@@ -86,20 +85,15 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
     );
   }
 
-  const dynamicDashboard = () => {
-    if (name) {
-      router.push("/dashboard");
-    } else {
-      router.push("/");
-    }
-  };
-
   const handlePaymentClick = (e) => {
     console.log(e);
   };
 
   const handleCampaign = (e) => {
     console.log(e);
+  };
+  const handleDetails = (e) => {
+    router.push("/summary");
   };
 
   const handleSubChart = (e) => {
@@ -110,6 +104,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
 
   const handleLaunch = (e) => {
     setOpen(true);
+    setModalOpen(true);
   };
 
   const handleUserType = () => {
@@ -256,20 +251,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <span>You're logged in as:</span>
-              <div className="text-xl font-bold">Brand</div>
-              <div className="text-xs text-muted-foreground">
-                <span>
-                  <Button
-                    onClick={handleUserType}
-                    className="text-xs mx-1 cursor-pointer w-[115px] h-[20px] p-3"
-                  >
-                    Switch User Type
-                  </Button>
-                </span>
-              </div>
-              <div className="text-xs text-muted-foreground">
-                {/* <SwitchForm /> */}
+              <div className="text-xl font-bold">
+                <span className="text-xs font-normal">Using ReBlug as:</span>{" "}
+                {userType.brandType}
               </div>
             </CardContent>
           </Card>
@@ -286,8 +270,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 Get details on how your active campaign is doing.
               </p>
               <Button
-                type="button"
-                onClick={handleLaunch}
+                onClick={handleDetails}
                 className="text-xs text-white bg-blue-800"
               >
                 Get Details
@@ -422,7 +405,6 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
       {/* Pass setUserType here */}
       <ChartModal open={open} setOpen={setOpen} />
       <SubscriptionChartModal open={open} setOpen={setOpen} />
-      {open && <CampaignSummary open={open} setOpen={setOpen} />}
     </div>
   );
 };

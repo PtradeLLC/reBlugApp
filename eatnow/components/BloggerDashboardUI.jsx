@@ -12,7 +12,6 @@ import {
   Users,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -225,8 +224,10 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
               <CardTitle className="text-sm font-medium">Hey, {name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <span>You're logged in as:</span>
-              <div className="text-xl font-bold">{userType.defaultType}</div>
+              <div className="text-xl font-bold">
+                <span className="text-xs font-normal">Using ReBlug as:</span>{" "}
+                {userType.defaultType}
+              </div>
               <div className="text-sm flex">
                 Niche: {niche ? niche : "Select a Niche"}
                 <Button
@@ -238,7 +239,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                   {niche ? "Update" : "Select"}
                 </Button>
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground mt-3">
                 <span>
                   <div className="flex flex-col gap-4">
                     <Button
@@ -302,7 +303,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                 type="button"
                 onClick={handlePaymentClick}
               >
-                Get more info
+                Monetize your blog
               </Button>
             </CardContent>
           </Card>
