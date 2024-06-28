@@ -251,9 +251,6 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                   </div>
                 </span>
               </div>
-              <div className="text-xs text-muted-foreground">
-                {/* <SwitchForm /> */}
-              </div>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-1">
@@ -319,11 +316,11 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                 {connectedAccount}
                 <span className="text-sm">reach</span>
                 <span className="text-xs text-green-700 font-thin flex justify-end">
-                  Check your blog
+                  Test your blog
                 </span>
               </div>
               <span className="text-sm text-muted-foreground">
-                {`One of our services is provide tools to help you start and grow.`}
+                {`One of our services is to provide tools to help you start and grow.`}
               </span>
               <Button
                 className="text-xs m-auto bg-green-700 flex mt-1"
@@ -384,7 +381,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                     className="cursor-pointer text-xs hover:underline"
                     href={"/"}
                   >
-                    How to Start
+                    Start here
                   </Link>
                 </div>
               </div>

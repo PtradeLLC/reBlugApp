@@ -36,7 +36,7 @@ const TogglePageModal = ({ open, setOpen, setUserType }) => {
         <DialogHeader>
           <DialogTitle>Switch User Role</DialogTitle>
           <DialogDescription>
-            <span className="font-semibold">
+            <span className="font-semibold text-red-700">
               * Please note that the following action is NOT reversible. It is
               permanent.
             </span>

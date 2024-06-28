@@ -39,6 +39,9 @@ import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";
 import { useRouter } from "next/navigation";
+import CampaignLaunchBox from "./CampaignLaunch";
+import SummaryComponentBox from "./SummaryComponent";
+import BrandsRecent from "./RecentActivities/BrandsActivity";
 
 const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -52,6 +55,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [modalType, setModalType] = useState("");
   const router = useRouter();
   const [todayDate, setTodayDate] = useState("");
+  const [displayComponent, setDisplayComponent] = useState(
+    "SummaryComponentBox"
+  );
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
     brandType: "Brand",
@@ -93,7 +99,11 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
     console.log(e);
   };
   const handleDetails = (e) => {
-    router.push("/summary");
+    router.push("#summary");
+  };
+
+  const handleAccount = (e) => {
+    router.push("/account");
   };
 
   const handleSubChart = (e) => {
@@ -103,8 +113,11 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   };
 
   const handleLaunch = (e) => {
-    setOpen(true);
-    setModalOpen(true);
+    setDisplayComponent("CampaignLaunch");
+  };
+
+  const handleSummary = (e) => {
+    setDisplayComponent("SummaryComponentBox");
   };
 
   const handleUserType = () => {
@@ -270,8 +283,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 Get details on how your active campaign is doing.
               </p>
               <Button
-                onClick={handleDetails}
-                className="text-xs text-white bg-blue-800"
+                type="button"
+                onClick={handleSummary}
+                className="text-xs text-white mx-auto bg-blue-800"
               >
                 Get Details
               </Button>
@@ -279,7 +293,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-red-800">
+              <CardTitle className="text-sm font-medium mx-auto text-red-800">
                 Marketing
               </CardTitle>
               <Activity className="h-4 w-4 text-muted-foreground" />
@@ -290,8 +304,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 Launch a B2B or B2C campaign with AI-powered tools.
               </p>
               <Button
+                type="button"
                 onClick={handleLaunch}
-                className="text-xs text-white bg-red-800"
+                className="text-xs text-white mx-auto bg-red-800"
               >
                 Get started
               </Button>
@@ -310,64 +325,65 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 Quick glance of account overall health. Click to manage.
               </p>
               <Button
-                onClick={handleLaunch}
+                onClick={handleAccount}
                 className="text-xs text-white bg-green-800"
               >
-                Update
+                Setup | Update
               </Button>
             </CardContent>
           </Card>
         </div>
-        <div className="flex flex-col gap-4 md:flex-row md:gap-8">
+        <div id="summary" className="flex flex-col gap-4 md:flex-row md:gap-8">
           <Card className="w-full">
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
-              <div className="grid grid-cols-2 gap-4 justify-center items-center">
-                <div className="">
-                  <div className="w-full mb-3 h-[200px] shadow xl"></div>
-                  <div className="w-full h-[200px] shadow xl"></div>
-                </div>
-                <div className="">
-                  <div className="w-full mb-3 h-[200px] shadow xl"></div>
-                  <div className="w-full h-[200px] shadow xl"></div>
-                </div>
+              <div className="grid gap-4 justify-center items-center">
+                {displayComponent === "CampaignLaunch" && <CampaignLaunchBox />}
+                {displayComponent === "SummaryComponentBox" && (
+                  <SummaryComponentBox />
+                )}
               </div>
             </CardContent>
           </Card>
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-            </CardHeader>
-            <CardContent className="pl-2">
-              <div className="flex items-center gap-4">
-                <Avatar className="hidden h-9 w-9 sm:flex">
-                  <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                  <AvatarFallback>WA</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Welcome Aboard
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Thanks for joining ReBlug.
-                  </p>
+          {/* Recent Activity card below */}
+          {displayComponent === "CampaignLaunch" ? (
+            ""
+          ) : (
+            <Card className="w-full lg:w-[746px]">
+              <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+              </CardHeader>
+              <CardContent className="pl-2">
+                <div className="flex items-center gap-4">
+                  <Avatar className="hidden h-9 w-9 sm:flex">
+                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                    <AvatarFallback>WA</AvatarFallback>
+                  </Avatar>
+                  <div className="grid gap-1">
+                    <p className="text-sm font-medium leading-none">
+                      Welcome Aboard
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Thanks for joining ReBlug.
+                    </p>
+                  </div>
+                  <div className="ml-auto text-xs font-medium">
+                    <span className="">{todayDate}</span>
+                  </div>
+                  <div className="ml-auto font-medium">
+                    <Link
+                      className="cursor-pointer text-xs hover:underline"
+                      href={"/"}
+                    >
+                      Start here
+                    </Link>
+                  </div>
                 </div>
-                <div className="ml-auto text-xs font-medium">
-                  <span className="">{todayDate}</span>
-                </div>
-                <div className="ml-auto font-medium">
-                  <Link
-                    className="cursor-pointer text-xs hover:underline"
-                    href={"/"}
-                  >
-                    How to Start
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          )}
         </div>
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
           <Card className="w-full">
@@ -385,16 +401,25 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
+                  {payHistory ? (
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  ) : (
+                    <span className="flex justify-center items-center">
+                      You currently have no payment history
+                    </span>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
+
+          {/* <BrandsRecent /> */}
+          {/* <BrandsRecent /> */}
         </div>
       </main>
       <TogglePageModal
