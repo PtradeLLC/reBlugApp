@@ -31,18 +31,6 @@ const MyAccount = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     async function getUser() {
-  //       try {
-  //         const currentUser = await account.get();
-  //         setUser(currentUser);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //     getUser();
-  //   }, []);
-
   useEffect(() => {
     async function getUser() {
       try {

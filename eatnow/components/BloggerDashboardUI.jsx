@@ -2,15 +2,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import {
-  Activity,
-  CircleUser,
-  CreditCard,
-  Menu,
-  Package2,
-  Search,
-  Users,
-} from "lucide-react";
+import { Activity, CreditCard, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,17 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ChatBubble from "@/components/chat/chatBubble";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import TogglePageModal from "./SwitchPageModal";
+import PageHeader from "./HeaderComp";
 
 const BloggerDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -92,7 +75,8 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <PageHeader />
+      {/* <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
             href="#"
@@ -129,7 +113,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Analytics
+            Report
           </Link>
         </nav>
         <Sheet>
@@ -177,7 +161,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Analytics
+                Report
               </Link>
             </nav>
           </SheetContent>
@@ -210,7 +194,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </header>
+      </header> */}
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           <Card x-chunk="dashboard-01-chunk-0">
@@ -264,7 +248,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
               <div className="text-2xl font-bold">
                 {subscriptions ? subscriptions : 0}
                 <span className="text-sm">published</span>
-                <span className="text-xs text-red-700 font-thin flex justify-end">
+                <span className="text-xs text-red-700 font-semibold flex justify-end">
                   Check out tools
                 </span>
               </div>
@@ -288,7 +272,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
             <CardContent>
               <div className="text-2xl font-bold">
                 $0
-                <span className="text-xs text-blue-700 font-thin flex justify-end">
+                <span className="text-xs text-blue-700 font-semibold flex justify-end">
                   Setup account
                 </span>
               </div>
@@ -315,7 +299,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
               <div className="text-2xl font-bold">
                 {connectedAccount}
                 <span className="text-sm">reach</span>
-                <span className="text-xs text-green-700 font-thin flex justify-end">
+                <span className="text-xs text-green-700 font-semibold flex justify-end">
                   Test your blog
                 </span>
               </div>

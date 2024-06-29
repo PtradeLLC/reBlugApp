@@ -123,7 +123,7 @@ const FoodAndBev = ({ name }) => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Analytics
+            Report
           </Link>
         </nav>
         <Sheet>
@@ -171,7 +171,7 @@ const FoodAndBev = ({ name }) => {
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Analytics
+                Report
               </Link>
             </nav>
           </SheetContent>
