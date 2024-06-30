@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
 import { Activity, ArrowUpRight, CreditCard, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -62,7 +61,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
     }
   };
 
-  const handlePaymentClick = (e) => {
+  const handleOrders = (e) => {
     console.log(e);
   };
 
@@ -104,10 +103,31 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               <span>Restaurant</span>
             </CardContent>
           </Card>
+          <Card x-chunk="dashboard-01-chunk-3">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Build your menu
+              </CardTitle>
+              <Activity className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{menuItems} Items</div>
+              <p className="text-xs text-muted-foreground">
+                Setup your storefront and menus to begin taking orders today.
+              </p>
+              <Button
+                type="button"
+                className="text-xs bg-red-700 flex justify-end mt-1"
+                size="sm"
+              >
+                View | Setup
+              </Button>
+            </CardContent>
+          </Card>
           <Card x-chunk="dashboard-01-chunk-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Total Orders
+                Today's Orders
               </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -115,7 +135,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               <div className="text-2xl font-bold">{`${orders || 0}`}</div>
               <span className="text-xs text-muted-foreground">
                 <p className="text-xs text-muted-foreground">
-                  Account at{" "}
+                  Your account is at{" "}
                   {subscriptionGrowth
                     ? subscriptionGrowth
                     : `${subscriptionGrowth}% growth. There
@@ -125,7 +145,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               <Button
                 type="button"
                 onClick={handleSubChart}
-                className="text-xs flex bg-red-700 justify-end mt-1"
+                className="text-xs flex bg-blue-700 justify-end mt-1"
                 size="sm"
               >
                 Click to Review
@@ -149,28 +169,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 className="text-xs bg-lime-700 flex justify-end mt-1"
                 size="sm"
               >
-                Click to Change
-              </Button>
-            </CardContent>
-          </Card>
-          <Card x-chunk="dashboard-01-chunk-3">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Build your menu
-              </CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{menuItems} Items</div>
-              <p className="text-xs text-muted-foreground">
-                Setup your storefront and menus to begin taking orders today.
-              </p>
-              <Button
-                type="button"
-                className="text-xs bg-blue-700 flex justify-end mt-1"
-                size="sm"
-              >
-                Setup Now
+                Click to View
               </Button>
             </CardContent>
           </Card>
@@ -179,19 +178,83 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center">
               <div className="grid gap-2">
-                <CardTitle>Payment History</CardTitle>
+                <CardTitle>Incoming Orders</CardTitle>
                 <CardDescription>
-                  Recent payments deposited. {""}
-                  <Link className="text-red-700" href={""}>
-                    Click to Change
-                  </Link>
+                  Newly placed orders. {""}
+                  <span className="text-green-700" href={""}>
+                    Click <span className="underline">Accept</span> next to the
+                    ticket to accept the order.
+                  </span>
                 </CardDescription>
               </div>
-              <Button asChild size="sm" className="ml-auto gap-1">
-                <Link href="#">
-                  View All
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
+            </CardHeader>
+            {payHistory ? (
+              payHistory
+            ) : (
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-sm">Name on Ticket</TableHead>
+                      <TableHead className="text-sm">Order #</TableHead>
+                      <TableHead className="text-sm">Time</TableHead>
+                      <TableHead className="text-sm">Customer</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">--</TableCell>
+                      <TableCell className="text-sm">
+                        <Button
+                          type="button"
+                          className="text-xs bg-green-700 flex justify-end mt-1"
+                          size="sm"
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          type="button"
+                          className="text-xs bg-red-700 flex justify-end mt-1"
+                          size="sm"
+                        >
+                          Decline
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            )}
+          </Card>
+          <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
+            <CardHeader className="flex flex-row items-center">
+              <div className="grid gap-2">
+                <CardTitle>Kitchen</CardTitle>
+                <CardDescription>
+                  Kitchen Status. {""}
+                  <span className="text-red-700" href={""}>
+                    Click <span className="underline text-sm">Pause</span> to
+                    pause incoming orders
+                  </span>
+                </CardDescription>
+              </div>
+              <Button
+                type="button"
+                onClick={handleOrders}
+                className="text-xs ml-auto gap-1 bg-red-700 justify-end mt-1"
+                size="sm"
+              >
+                Pause Ordering
               </Button>
             </CardHeader>
             {payHistory ? (
@@ -201,86 +264,137 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Subscribers</TableHead>
-                      <TableHead className="hidden xl:table-column">
-                        Type
-                      </TableHead>
-                      <TableHead className="hidden xl:table-column">
-                        Status
-                      </TableHead>
-                      <TableHead className="hidden xl:table-column">
-                        Date
-                      </TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
+                      <TableHead className="text-sm">In Progress</TableHead>
+                      <TableHead className="text-sm">Order</TableHead>
+                      <TableHead className="text-sm">Status</TableHead>
+                      <TableHead className="text-sm">Time</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     <TableRow>
                       <TableCell>
-                        <div className="font-medium">None</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          You currently have no payment.
+                        <div className="font-thin text-sm">Order #</div>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
                         </div>
                       </TableCell>
-                      <TableCell className="text-right">$0</TableCell>
+                      <TableCell>
+                        <div className="font-thin text-sm">Menu Item</div>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">---</TableCell>
+                      <TableCell className="text-sm text-right">--</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
               </CardContent>
             )}
           </Card>
-          <Card x-chunk="dashboard-01-chunk-5">
-            <CardHeader>
-              <CardTitle>Campaign Posts</CardTitle>
+          <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
+            <CardHeader className="flex flex-row items-center">
+              <div className="grid gap-2">
+                <CardTitle>Outgoing Deliveries</CardTitle>
+                <CardDescription>Delivered Orders</CardDescription>
+              </div>
             </CardHeader>
-            <CardContent className="grid gap-8">
-              {recentSubs ? (
-                recentSubs
-              ) : (
-                <div className="flex items-center gap-4">
-                  <Avatar className="hidden h-9 w-9 sm:flex">
-                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                    <AvatarFallback>FR</AvatarFallback>
-                  </Avatar>
-                  <div className="grid gap-1">
-                    <p className="text-sm font-medium leading-none">
-                      Cos it's Free
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Update needed for this campaign post
-                      {/* olivia.martin@email.com */}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </CardContent>
+            {payHistory ? (
+              payHistory
+            ) : (
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-sm">Name on Ticket</TableHead>
+                      <TableHead className="text-sm">Order #</TableHead>
+                      <TableHead className="text-sm">Delivered</TableHead>
+                      <TableHead className="text-sm">Contact</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        <div className="font-thin text-sm">Yes | No</div>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                          {/* Time */}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        <Button
+                          type="button"
+                          className="text-xs bg-green-700 flex justify-end mt-1"
+                          size="sm"
+                        >
+                          Follow up
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            )}
           </Card>
-          <Card x-chunk="dashboard-01-chunk-5">
-            <CardHeader>
-              <CardTitle>Recent Subscriptions</CardTitle>
+          <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
+            <CardHeader className="flex flex-row items-center">
+              <div className="grid gap-2">
+                <CardTitle>Customer Feedback</CardTitle>
+                <CardDescription>
+                  Feedbacks, reviews on recent orders. {""}
+                </CardDescription>
+              </div>
             </CardHeader>
-            <CardContent className="grid gap-8">
-              {recentSubs ? (
-                recentSubs
-              ) : (
-                <div className="flex items-center gap-4">
-                  <Avatar className="hidden h-9 w-9 sm:flex">
-                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                    <AvatarFallback>OM</AvatarFallback>
-                  </Avatar>
-                  <div className="grid gap-1">
-                    <p className="text-sm font-medium leading-none">
-                      None{/* Olivia Martin */}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      You currently have no subscribers.
-                      {/* olivia.martin@email.com */}
-                    </p>
-                  </div>
-                  <div className="ml-auto font-medium">$0.00</div>
-                </div>
-              )}
-            </CardContent>
+            {payHistory ? (
+              payHistory
+            ) : (
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-sm">Name on Ticket</TableHead>
+                      <TableHead className="text-sm">Order #</TableHead>
+                      <TableHead className="text-sm">Sentiment</TableHead>
+                      <TableHead className="text-sm">Feedback</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          --
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">--</TableCell>
+                      <TableCell className="text-sm">
+                        <Button
+                          type="button"
+                          className="text-xs bg-green-700 flex justify-end mt-1"
+                          size="sm"
+                        >
+                          View Feedback
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            )}
           </Card>
         </div>
       </main>

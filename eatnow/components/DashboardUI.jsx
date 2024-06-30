@@ -106,7 +106,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           <Card x-chunk="dashboard-01-chunk-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Total Subscriptions
+                Total Subscribers
               </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -116,11 +116,11 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               </div>
               <span className="text-xs text-muted-foreground">
                 <p className="text-xs text-muted-foreground">
-                  Account at{" "}
+                  Your account is at{" "}
                   {subscriptionGrowth
                     ? subscriptionGrowth
                     : `${subscriptionGrowth}% growth. There
-                    are ${subscriptions} subscriptions from you this month.`}
+                    are ${subscriptions} subscribers referred this month.`}
                 </p>
               </span>
               <Button
@@ -143,7 +143,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                 ${`${payments || 0} / month`}
               </div>
               <p className="text-xs text-muted-foreground">
-                You may change when funds are deposited to your account.
+                You may change when funds are deposited into your account.
               </p>
               <Button
                 type="button"
@@ -258,7 +258,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
-              <CardTitle>Recent Subscriptions</CardTitle>
+              <CardTitle>Recent Subscribers</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-8">
               {recentSubs ? (
