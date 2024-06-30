@@ -82,6 +82,20 @@ model User {
   sponsors           Sponsors[]
   team               Team[]
   verificationTokens VerificationToken[]
+  referralCode       String              @unique
+  referrals          Referral[]          @relation("UserReferrals")
+  Referral           Referral[]
+}
+
+model Referral {
+  id             Int      @id @default(autoincrement())
+  referrerId     String
+  referrer       User     @relation("UserReferrals", fields: [referrerId], references: [id])
+  referredUserId String?
+  referredUser   User?    @relation(fields: [referredUserId], references: [id])
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Post {

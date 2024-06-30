@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { account, ID, functions } from "../app/appwrite";
+import { useState, useEffect } from "react";
+import { account, ID, databases } from "../app/appwrite";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +8,8 @@ import {
   faGoogle,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import Cookies from "js-cookie";
+import generateReferralCode from "../utils/generateReferralCode"; // Ensure you have this utility function as mentioned previously
 
 const backgroundClasses = {
   red: "bg-red-600",
@@ -36,11 +38,18 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    const referralCode = Cookies.get("referralCode");
+    if (referralCode) {
+      // Use referralCode if needed
+    }
+  }, []);
+
   const handleEmailLogin = async () => {
     try {
-      await account.createEmailPasswordSession(email, password);
+      await account.createEmailSession(email, password);
       const loggedInUser = await account.get();
-      if (loggedInUser.emailVerification === false) {
+      if (!loggedInUser.emailVerification) {
         router.push("/login");
       } else {
         setUser(loggedInUser);
@@ -53,26 +62,45 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     }
   };
 
-  const sendVerificationEmail = async (userId, email) => {
-    try {
-      await functions.createExecution("sendVerificationEmail", {
-        userId,
-        email,
-      });
-    } catch (error) {
-      console.error("Error sending verification email:", error);
-    }
-  };
-
   const register = async () => {
     try {
       const newUser = await account.create(ID.unique(), email, password, name);
-      const session = await account.createEmailPasswordSession(email, password);
+      const referralCode = generateReferralCode(email);
+
+      await databases.createDocument(
+        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        "users", // collectionId for users
+        newUser.$id,
+        { referralCode }
+      );
+
+      const referrerCode = Cookies.get("referralCode");
+      if (referrerCode) {
+        const referrer = await databases.listDocuments(
+          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          "users", // collectionId for users
+          [Query.equal("referralCode", referrerCode)]
+        );
+
+        if (referrer.documents.length > 0) {
+          await databases.createDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+            "referrals", // collectionId for referrals
+            ID.unique(),
+            {
+              referrerId: referrer.documents[0].$id,
+              referredUserId: newUser.$id,
+              status: "pending",
+            }
+          );
+        }
+      }
+
+      await account.createEmailSession(email, password);
       let link = await account.createVerification(
-        // "http://localhost:3000/verify"
         "https://www.reblug.com/verify"
       );
-      if (newUser.emailVerification === false) {
+      if (!newUser.emailVerification) {
         setEmail("");
         setPassword("");
         setName("");
@@ -87,12 +115,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 
   const handleLogin = async (provider) => {
     try {
-      await account.createOAuth2Session(
+      account.createOAuth2Session(
         provider,
-        // "http://localhost:3000/dashboard",
-        // "http://localhost:3000/login"
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/login"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
@@ -112,46 +138,6 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     <>
       <div className="bg-[#f97316] px-2 items-center mx-auto rounded-md mb-2">
         {verMessage}
-      </div>
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {showRegister && (
-          <input
-            type="text"
-            placeholder="Name"
-            className="w-full mt-4 bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg outline-none border border-transparent focus:border-green-600"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        )}
-        <button
-          className="bg-green-600 mt-4 text-white py-3 px-6 rounded w-full"
-          type="submit"
-        >
-          {showRegister ? "Register" : "Login"}
-        </button>
-      </form> */}
-      <div className="relative">
-        {/* <hr className="my-8 border-t border-gray-300" /> */}
-        {/* <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
-          Sign Up or Log In with one of these providers
-        </span> */}
       </div>
       <SocialLoginButton
         provider="google"
@@ -181,8 +167,8 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
 export default SignInForm;
 
 // "use client";
-// import { useEffect, useState } from "react";
-// import { account, ID } from "../app/appwrite";
+// import { useState } from "react";
+// import { account, ID, functions } from "../app/appwrite";
 // import { useRouter } from "next/navigation";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import {
@@ -235,9 +221,25 @@ export default SignInForm;
 //     }
 //   };
 
+//   const sendVerificationEmail = async (userId, email) => {
+//     try {
+//       await functions.createExecution("sendVerificationEmail", {
+//         userId,
+//         email,
+//       });
+//     } catch (error) {
+//       console.error("Error sending verification email:", error);
+//     }
+//   };
+
 //   const register = async () => {
 //     try {
 //       const newUser = await account.create(ID.unique(), email, password, name);
+//       const session = await account.createEmailPasswordSession(email, password);
+//       let link = await account.createVerification(
+//         // "http://localhost:3000/verify"
+//         "https://www.reblug.com/verify"
+//       );
 //       if (newUser.emailVerification === false) {
 //         setEmail("");
 //         setPassword("");
@@ -253,12 +255,12 @@ export default SignInForm;
 
 //   const handleLogin = async (provider) => {
 //     try {
-//       await account.createOAuth2Session(
+//       account.createOAuth2Session(
 //         provider,
-//         // "http://localhost:3000/dashboard",
-//         // "http://localhost:3000/login"
-//         "https://www.reblug.com/dashboard",
-//         "https://www.reblug.com"
+//         "http://localhost:3000/dashboard",
+//         "http://localhost:3000/login"
+//         // "https://www.reblug.com/dashboard",
+//         // "https://www.reblug.com"
 //       );
 //     } catch (error) {
 //       console.error(`Login with ${provider} error:`, error);
@@ -279,7 +281,7 @@ export default SignInForm;
 //       <div className="bg-[#f97316] px-2 items-center mx-auto rounded-md mb-2">
 //         {verMessage}
 //       </div>
-//       <form onSubmit={handleSubmit}>
+//       {/* <form onSubmit={handleSubmit}>
 //         <input
 //           type="email"
 //           placeholder="Email"
@@ -312,12 +314,12 @@ export default SignInForm;
 //         >
 //           {showRegister ? "Register" : "Login"}
 //         </button>
-//       </form>
+//       </form> */}
 //       <div className="relative">
-//         <hr className="my-8 border-t border-gray-300" />
-//         <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
-//           Or
-//         </span>
+//         {/* <hr className="my-8 border-t border-gray-300" /> */}
+//         {/* <span className="px-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800">
+//           Sign Up or Log In with one of these providers
+//         </span> */}
 //       </div>
 //       <SocialLoginButton
 //         provider="google"
