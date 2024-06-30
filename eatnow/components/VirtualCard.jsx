@@ -25,7 +25,7 @@ const CreditCartInput = () => {
 
   return (
     <div>
-      <div className="flex flex-col justify-around bg-gray-200 p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs">
+      <div className="flex flex-col justify-around bg-black p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs">
         <div className="flex flex-row items-center justify-between mb-3">
           <input
             className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow cursor-not-allowed rounded-sm"

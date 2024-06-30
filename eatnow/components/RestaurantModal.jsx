@@ -100,7 +100,16 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             <CardContent>
               <span>You're logged in as:</span>
               <div className="text-xl font-bold">Food & Beverages</div>
-              <span>Restaurant</span>
+
+              <span>
+                Restaurant{" "}
+                <span
+                  className="text-xs cursor-pointer text-green-950"
+                  href="#"
+                >
+                  Change Type
+                </span>
+              </span>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-3">
@@ -227,7 +236,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                           className="text-xs bg-red-700 flex justify-end mt-1"
                           size="sm"
                         >
-                          Decline
+                          Reject
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -325,7 +334,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                         </div>
                       </TableCell>
                       <TableCell className="text-sm">
-                        <div className="font-thin text-sm">Yes | No</div>
+                        <div className="font-thin text-sm">--</div>
                         <div className="text-sm text-muted-foreground md:inline">
                           --
                           {/* Time */}
