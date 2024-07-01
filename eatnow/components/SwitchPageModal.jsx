@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const TogglePageModal = ({ open, setOpen, setUserType }) => {
+const TogglePageModal = ({ open, setOpen, userType, setUserType }) => {
   const [selectedType, setSelectedType] = React.useState("");
 
   const handleChange = (event) => {
@@ -26,6 +26,7 @@ const TogglePageModal = ({ open, setOpen, setUserType }) => {
   };
 
   const onSubmit = () => {
+    console.log("Selected", selectedType);
     setUserType(selectedType);
     setOpen(false);
   };

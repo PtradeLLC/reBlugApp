@@ -24,6 +24,8 @@ import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";
 import PageHeader from "./HeaderComp";
+import CopyLink from "./CopyToFile";
+import { button } from "@nextui-org/react";
 
 const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -34,7 +36,15 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [payHistory, setPayHistory] = useState(null);
   const [recentSubs, setRecentSubs] = useState(null);
   const [open, setOpen] = useState(false);
+  const [campaignActive, setCampaignActive] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [userType, setUserType] = useState({
+    defaultType: "Blogger",
+    brandType: "Brand",
+    sMediaType: "Social Media Partner",
+    FandBType: "F&B",
+  });
+  const [updatedUserType, setUpdatedUserType] = useState("");
 
   useEffect(() => {
     if (name) {
@@ -71,14 +81,17 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   };
 
   const handleSubChart = (e) => {
-    console.log(e);
     setModalType("subscription");
     setOpen(true);
   };
 
   const handleUserType = () => {
     setOpen(true);
-    setModalType("toggle");
+    // setModalType("toggle");
+    setUserType("toggle");
+  };
+  const openCampaign = (e) => {
+    console.log(e);
   };
 
   return (
@@ -100,7 +113,10 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             </CardHeader>
             <CardContent>
               <span>You're logged in as:</span>
-              <div className="text-xl font-bold">Social Media Partner</div>
+              <div className="text-xl font-bold">{userType.sMediaType}</div>
+              <div className="text-xs">
+                Partner Link: <CopyLink link="https://example.com" />
+              </div>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-1">
@@ -135,7 +151,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Payment</CardTitle>
+              <CardTitle className="text-sm font-medium">Payout</CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -238,7 +254,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               {recentSubs ? (
                 recentSubs
               ) : (
-                <div className="flex items-center gap-4">
+                <div className="flex justify-between items-center gap-4">
                   <Avatar className="hidden h-9 w-9 sm:flex">
                     <AvatarImage src="/avatars/01.png" alt="Avatar" />
                     <AvatarFallback>FR</AvatarFallback>
@@ -248,10 +264,19 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                       Cos it's Free
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Update needed for this campaign post
+                      Campaign is currently Inactive. We will notify you when
+                      active and launched.
                       {/* olivia.martin@email.com */}
                     </p>
                   </div>
+                  <Button
+                    disabled={!campaignActive}
+                    type={button}
+                    size="sm"
+                    onClick={openCampaign}
+                  >
+                    Open Campaign
+                  </Button>
                 </div>
               )}
             </CardContent>
@@ -286,7 +311,11 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
         </div>
       </main>
       <div>
-        <TogglePageModal open={open} setOpen={setOpen} />
+        <TogglePageModal
+          open={open}
+          setOpen={setOpen}
+          userType={userType.sMediaType}
+        />
         <ChartModal open={open} setOpen={setOpen} />
         <SubscriptionChartModal open={open} setOpen={setOpen} />
       </div>
