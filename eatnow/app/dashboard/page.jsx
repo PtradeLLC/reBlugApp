@@ -1,16 +1,18 @@
 "use client";
-import SocialMedDashboard from "@/components/DashboardUI";
-import { account } from "../appwrite";
 import { useState, useEffect } from "react";
+import SocialMedDashboard from "@/components/DashboardUI";
 import BloggerDashboard from "@/components/BloggerDashboardUI";
 import BrandModal from "@/components/BrandModal";
 import RestaurantDashboard from "@/components/RestaurantModal";
 import TogglePageModal from "@/components/SwitchPageModal";
+import { account } from "../appwrite";
 
 const DashboardPage = () => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
-  const [selectedUserType, setSelectedUserType] = useState("Blogger");
+  const [selectedUserType, setSelectedUserType] = useState(() => {
+    return localStorage.getItem("selectedUserType") || "Blogger";
+  });
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -30,6 +32,10 @@ const DashboardPage = () => {
       setName(user.name);
     }
   }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedUserType", selectedUserType);
+  }, [selectedUserType]);
 
   const renderComponent = () => {
     switch (selectedUserType) {
@@ -53,6 +59,7 @@ const DashboardPage = () => {
         <TogglePageModal
           open={modalOpen}
           setOpen={setModalOpen}
+          userType={selectedUserType}
           setUserType={setSelectedUserType}
         />
       </div>

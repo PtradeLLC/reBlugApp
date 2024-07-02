@@ -37,6 +37,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [recentSubs, setRecentSubs] = useState(null);
   const [open, setOpen] = useState(false);
   const [campaignActive, setCampaignActive] = useState(false);
+  const [referralId, setReferralId] = useState("id93keemZjdl3ks2");
   const [modalType, setModalType] = useState("");
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
@@ -115,7 +116,10 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               <span>You're logged in as:</span>
               <div className="text-xl font-bold">{userType.sMediaType}</div>
               <div className="text-xs">
-                Partner Link: <CopyLink link="https://example.com" />
+                Partner Link:{" "}
+                <CopyLink
+                  link={`https:www.reblug.com/referral/${referralId}`}
+                />
               </div>
             </CardContent>
           </Card>

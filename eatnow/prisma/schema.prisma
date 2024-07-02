@@ -1,7 +1,3 @@
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -85,6 +81,8 @@ model User {
   referralCode       String              @unique
   referrals          Referral[]          @relation("UserReferrals")
   Referral           Referral[]
+  Restaurant         Restaurant[]
+  Order              Order[]
 }
 
 model Referral {
@@ -576,6 +574,64 @@ model Marketing_Creatives_files {
   creatives   ForgedAI @relation(fields: [creativesId], references: [id])
 }
 
+model Restaurant {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  ownerId     String // Changed from Int to String
+  user        User    @relation(fields: [ownerId], references: [id])
+  Menu        Menu[]
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  total     Float
+  status    OrderStatus
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  dishes    OrderDish[]
+  Dish      Dish?       @relation(fields: [dishId], references: [id])
+  dishId    Int?
+}
+
+model OrderDish {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  dishId    Int
+  dish      Dish     @relation(fields: [dishId], references: [id])
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dish {
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @unique
+  description String?
+  price       Float
+  menuId      Int?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  menu        Menu?       @relation(fields: [menuId], references: [id])
+  orders      Order[]
+  OrderDish   OrderDish[]
+}
+
+model Menu {
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String?
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  dishes       Dish[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
 enum Role {
   USER
   MANAGER
@@ -585,4 +641,10 @@ enum Role {
   RESTAURANT
   SOCIAL_MEDIA_PARTNER
   BRAND_MARKETER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
 }

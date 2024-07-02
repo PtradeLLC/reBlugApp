@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/select";
 
 const TogglePageModal = ({ open, setOpen, userType, setUserType }) => {
-  const [selectedType, setSelectedType] = React.useState("");
+  const [selectedType, setSelectedType] = useState(userType);
 
   const handleChange = (event) => {
-    setSelectedType(event.target.value);
+    setSelectedType(event);
   };
 
   const onSubmit = () => {
@@ -45,7 +45,7 @@ const TogglePageModal = ({ open, setOpen, userType, setUserType }) => {
             Select a User Role.
           </DialogDescription>
         </DialogHeader>
-        <Select onValueChange={setSelectedType}>
+        <Select onValueChange={handleChange} value={selectedType}>
           <SelectTrigger>
             <SelectValue placeholder="I want to use ReBlug as" />
           </SelectTrigger>
@@ -69,6 +69,7 @@ const TogglePageModal = ({ open, setOpen, userType, setUserType }) => {
 TogglePageModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
   setUserType: PropTypes.func.isRequired,
 };
 

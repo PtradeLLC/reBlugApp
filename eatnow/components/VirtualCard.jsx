@@ -25,10 +25,10 @@ const CreditCartInput = () => {
 
   return (
     <div>
-      <div className="flex flex-col justify-around bg-black p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs">
+      <div className="flex flex-col justify-around bg-slate-600 p-4 border border-white border-opacity-30 rounded-lg shadow-md max-w-xs">
         <div className="flex flex-row items-center justify-between mb-3">
           <input
-            className="w-full h-10 border-none outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 mb-3 flex-grow cursor-not-allowed rounded-sm"
+            className="w-full h-10 border-none outline-none text-sm bg-white text-gray-900 font-semibold caret-orange-500 pl-2 mb-3 flex-grow cursor-not-allowed rounded-sm"
             type="text"
             name="cardName"
             disabled
@@ -60,7 +60,7 @@ const CreditCartInput = () => {
         </div>
         <div className="flex flex-col space-y-3">
           <input
-            className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
+            className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-white text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
             type="text"
             name="cardNumber"
             disabled
@@ -69,7 +69,7 @@ const CreditCartInput = () => {
           />
           <div className="flex flex-row justify-between">
             <input
-              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2"
+              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-white text-gray-800 font-semibold caret-orange-500 pl-2"
               type="text"
               name="expiryDate"
               disabled
@@ -77,7 +77,7 @@ const CreditCartInput = () => {
               placeholder="11/28"
             />
             <input
-              className="w-full h-10 border-none mx-1 cursor-not-allowed outline-none text-sm bg-gray-300 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
+              className="w-full h-10 border-none mx-1 cursor-not-allowed outline-none text-sm bg-white text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
               type="text"
               name="cvv"
               disabled
@@ -85,7 +85,7 @@ const CreditCartInput = () => {
               placeholder="***"
             />
             <input
-              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-gray-200 text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
+              className="w-full h-10 border-none cursor-not-allowed outline-none text-sm bg-white text-gray-800 font-semibold caret-orange-500 pl-2 rounded-sm"
               type="text"
               name="fund"
               disabled
