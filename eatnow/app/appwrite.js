@@ -12,4 +12,4 @@ const storage = new Storage(client);
 const avatars = new Avatars(client);
 
 
-export { client, account, ID };
+export { client, account, ID, databases, storage, avatars };

@@ -26,7 +26,6 @@ const TogglePageModal = ({ open, setOpen, userType, setUserType }) => {
   };
 
   const onSubmit = () => {
-    console.log("Selected", selectedType);
     setUserType(selectedType);
     setOpen(false);
   };
