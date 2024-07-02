@@ -117,8 +117,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       await account.createOAuth2Session(
         provider,
-        "https://www.reblug.com/dashboard",
-        "https://www.reblug.com"
+        "http://localhost:3000/dashboard",
+        "http://localhost:3000/"
+        // "https://www.reblug.com/dashboard",
+        // "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SocialMedDashboard from "@/components/DashboardUI";
 import BloggerDashboard from "@/components/BloggerDashboardUI";
 import BrandModal from "@/components/BrandModal";
@@ -11,7 +10,8 @@ import { account } from "../appwrite";
 const DashboardPage = () => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
-  const [selectedUserType, setSelectedUserType] = useState("Blogger"); // Default value
+  const [selectedUserType, setSelectedUserType] = useState("Blogger");
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     // Check if running in the browser before accessing sessionStorage
@@ -39,6 +39,13 @@ const DashboardPage = () => {
     }
   }, [user]);
 
+  const handleLogout = () => {
+    // Clear sessionStorage on logout
+    sessionStorage.removeItem("selectedUserType");
+    setSelectedUserType("Blogger"); // Set default userType to Blogger upon logout
+    // Additional logout logic here
+  };
+
   const handleUserTypeChange = (newUserType) => {
     setSelectedUserType(newUserType);
     // Check if running in the browser before accessing sessionStorage
@@ -50,15 +57,15 @@ const DashboardPage = () => {
   const renderComponent = () => {
     switch (selectedUserType) {
       case "Blogger":
-        return <BloggerDashboard name={name} />;
+        return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
       case "Brand":
-        return <BrandModal name={name} />;
+        return <BrandModal name={name} setModalOpen={setModalOpen} />;
       case "Social Media Partner":
-        return <SocialMedDashboard name={name} />;
+        return <SocialMedDashboard name={name} setModalOpen={setModalOpen} />;
       case "Restaurant":
-        return <RestaurantDashboard name={name} />;
+        return <RestaurantDashboard name={name} setModalOpen={setModalOpen} />;
       default:
-        return <BloggerDashboard name={name} />;
+        return <BloggerDashboard name={name} setModalOpen={setModalOpen} />;
     }
   };
 
@@ -69,6 +76,9 @@ const DashboardPage = () => {
         <TogglePageModal
           userType={selectedUserType}
           setUserType={handleUserTypeChange}
+          open={modalOpen}
+          setOpen={setModalOpen}
+          onLogout={handleLogout}
         />
       </div>
     </>
@@ -90,10 +100,16 @@ export default DashboardPage;
 // const DashboardPage = () => {
 //   const [name, setName] = useState("");
 //   const [user, setUser] = useState(null);
-//   const [selectedUserType, setSelectedUserType] = useState(() => {
-//     return sessionStorage.getItem("selectedUserType") || "Blogger";
-//   });
+//   const [selectedUserType, setSelectedUserType] = useState("Blogger");
 //   const [modalOpen, setModalOpen] = useState(false);
+
+//   useEffect(() => {
+//     // Check if running in the browser before accessing sessionStorage
+//     if (typeof window !== "undefined") {
+//       const storedUserType = sessionStorage.getItem("selectedUserType");
+//       setSelectedUserType(storedUserType || "Blogger");
+//     }
+//   }, []);
 
 //   useEffect(() => {
 //     async function getUser() {
@@ -113,14 +129,20 @@ export default DashboardPage;
 //     }
 //   }, [user]);
 
-//   useEffect(() => {
-//     sessionStorage.setItem("selectedUserType", selectedUserType);
-//   }, [selectedUserType]);
-
 //   const handleLogout = () => {
 //     // Clear sessionStorage on logout
 //     sessionStorage.removeItem("selectedUserType");
+//     // Reset selectedUserType state
+//     setSelectedUserType("Blogger");
 //     // Additional logout logic here
+//   };
+
+//   const handleUserTypeChange = (newUserType) => {
+//     setSelectedUserType(newUserType);
+//     // Check if running in the browser before accessing sessionStorage
+//     if (typeof window !== "undefined") {
+//       sessionStorage.setItem("selectedUserType", newUserType);
+//     }
 //   };
 
 //   const renderComponent = () => {
@@ -143,10 +165,10 @@ export default DashboardPage;
 //       <div>
 //         {renderComponent()}
 //         <TogglePageModal
+//           userType={selectedUserType}
+//           setUserType={handleUserTypeChange}
 //           open={modalOpen}
 //           setOpen={setModalOpen}
-//           userType={selectedUserType}
-//           setUserType={setSelectedUserType}
 //           onLogout={handleLogout}
 //         />
 //       </div>
@@ -155,6 +177,8 @@ export default DashboardPage;
 // };
 
 // export default DashboardPage;
+
+// "use client";
 
 // import { useState, useEffect } from "react";
 // import SocialMedDashboard from "@/components/DashboardUI";
@@ -167,13 +191,16 @@ export default DashboardPage;
 // const DashboardPage = () => {
 //   const [name, setName] = useState("");
 //   const [user, setUser] = useState(null);
-//   const [selectedUserType, setSelectedUserType] = useState(() => {
-//     // Check if window is defined to safely use localStorage
-//     return typeof window !== "undefined"
-//       ? localStorage.getItem("selectedUserType") || "Blogger"
-//       : "Blogger";
-//   });
+//   const [selectedUserType, setSelectedUserType] = useState("Blogger");
 //   const [modalOpen, setModalOpen] = useState(false);
+
+//   useEffect(() => {
+//     // Check if running in the browser before accessing sessionStorage
+//     if (typeof window !== "undefined") {
+//       const storedUserType = sessionStorage.getItem("selectedUserType");
+//       setSelectedUserType(storedUserType || "Blogger");
+//     }
+//   }, []);
 
 //   useEffect(() => {
 //     async function getUser() {
@@ -193,12 +220,23 @@ export default DashboardPage;
 //     }
 //   }, [user]);
 
-//   useEffect(() => {
-//     // Check if window is defined to safely use localStorage
+//   // useEffect(() => {
+//   //   sessionStorage.setItem("selectedUserType", selectedUserType);
+//   // }, [selectedUserType]);
+
+//   const handleLogout = () => {
+//     // Clear sessionStorage on logout
+//     sessionStorage.removeItem("selectedUserType");
+//     // Additional logout logic here
+//   };
+
+//   const handleUserTypeChange = (newUserType) => {
+//     setSelectedUserType(newUserType);
+//     // Check if running in the browser before accessing sessionStorage
 //     if (typeof window !== "undefined") {
-//       localStorage.setItem("selectedUserType", selectedUserType);
+//       sessionStorage.setItem("selectedUserType", newUserType);
 //     }
-//   }, [selectedUserType]);
+//   };
 
 //   const renderComponent = () => {
 //     switch (selectedUserType) {
@@ -220,10 +258,11 @@ export default DashboardPage;
 //       <div>
 //         {renderComponent()}
 //         <TogglePageModal
+//           userType={selectedUserType}
+//           setUserType={handleUserTypeChange}
 //           open={modalOpen}
 //           setOpen={setModalOpen}
-//           userType={selectedUserType}
-//           setUserType={setSelectedUserType}
+//           onLogout={handleLogout}
 //         />
 //       </div>
 //     </>
