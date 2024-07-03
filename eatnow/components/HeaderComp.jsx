@@ -68,28 +68,10 @@ const PageHeader = () => {
           Dashboard
         </Link>
         <Link
-          href="#"
+          href="/orders"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Orders
-        </Link>
-        <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Products
-        </Link>
-        <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Customers
-        </Link>
-        <Link
-          href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Report
+          bCommerce
         </Link>
       </nav>
       <Sheet>
@@ -115,25 +97,7 @@ const PageHeader = () => {
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Orders
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Products
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Customers
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Report
+              bCommerce
             </Link>
           </nav>
         </SheetContent>
