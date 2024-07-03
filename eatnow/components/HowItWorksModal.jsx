@@ -31,8 +31,8 @@ const WorksModal = () => {
             className="fixed inset-0 bg-black bg-opacity-50"
             onClick={handleModalToggle}
           ></div>
-          <div className="relative p-4 w-full max-w-md">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div className="relative p-4 w-full max-w-[40rem] flex justify-center items-center">
+            <div className="relative bg-white rounded-lg shadow overflow-y-auto dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   How It works
@@ -62,27 +62,33 @@ const WorksModal = () => {
               </div>
               <div className="p-3">
                 <span className="mt-2">
-                  With b-Commerce you can include and sell your products or ones
-                  that are related to your niche from our partners in your blog
-                  articles and share with fans.
-                  <br />
-                  <br />
-                  For example let's say that your niche 'sports', and your blog
-                  is about 'golfing'. Partner products that are available to you
-                  are everything that is related to golfing - which you can
-                  include in your articles. <br /> Even better, the following
-                  are some of the benefits of using ReBlug:
+                  With <span className="italic">b</span>Commerce, you can sell
+                  your products or those from our partners in your blog
+                  articles. For example, if your blog is about golfing, you can
+                  include golfing-related products in your posts.
                 </span>
-                <ul className="mt-2">
-                  <li className="text-sm">Sell your own products</li>
-                  <li className="text-sm">Sell partner products</li>
-                  <li className="text-sm">
-                    No inventories to manage with partner products
+                <p>Benefits of using ReBlug:</p>
+                <ul className="mt-2 m-3 list-disc">
+                  <li className="text-md">Sell your own products</li>
+                  <li className="text-md">Sell partner products</li>
+                  <li className="text-md">
+                    No inventory management for partner products
                   </li>
-                  <li className="text-sm">
-                    Over 500 million products from Shopify, Amazon, Walmart...
+                  <li className="text-md">Keep 100% of your earnings</li>
+                  <li className="text-md">
+                    Access over 500 million products from Shopify, Amazon,
+                    Walmart, and more
+                  </li>
+                  <li className="text-md">
+                    Collaborate automatically with other bloggers to
+                    cross-promote articles and products
                   </li>
                 </ul>
+                <p className="text-md">
+                  To begin simply add products or scroll and select from the
+                  list of partner Products to your collection. Once added, they
+                  will be available to you when you write an article.
+                </p>
               </div>
             </div>
           </div>

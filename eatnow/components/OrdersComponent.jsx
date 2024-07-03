@@ -300,12 +300,15 @@ const Orders = ({ openModal, setOpenModal }) => {
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
                 <CardHeader className="pb-3">
-                  <CardTitle>b-Commerce</CardTitle>
-                  <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Earn revenue by selling anything from the internet in your
-                    contents or newsletters - no inventory needed. Start earning
-                    on every sale with no worries about fulfillment, returns, or
-                    even payments in three easy steps.
+                  <CardTitle>
+                    <span className="italic">b</span>Commerce
+                  </CardTitle>
+
+                  <CardDescription className="text-md leading-relaxed">
+                    Earn money by selling anything online through your content
+                    or newsletters—no inventory needed. Start earning from every
+                    sale without worrying about fulfillment, returns, or
+                    payments in three easy steps.
                   </CardDescription>
                 </CardHeader>
                 <div>
@@ -316,7 +319,7 @@ const Orders = ({ openModal, setOpenModal }) => {
                       </span>
                       <span>
                         <h3 className="font-medium leading-tight">
-                          Find and Include
+                          Include Products
                         </h3>
                         <p className="text-sm">
                           Insert "Niche Specific" products into your contents.
