@@ -123,7 +123,9 @@ const Orders = ({ openModal, setOpenModal }) => {
                   <span className="sr-only">bCommerce</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">bCommerce</TooltipContent>
+              <TooltipContent side="right">
+                <span className="italic">b</span>Commerce
+              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <TooltipProvider>
@@ -216,7 +218,7 @@ const Orders = ({ openModal, setOpenModal }) => {
                   className="flex items-center gap-4 px-2.5 text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  bCommerce
+                  <span className="italic">b</span>Commerce
                 </Link>
                 <Link
                   href="#"
@@ -393,8 +395,8 @@ const Orders = ({ openModal, setOpenModal }) => {
             <Tabs defaultValue="week">
               <div className="flex items-center">
                 <TabsList>
-                  <TabsTrigger value="week">Week</TabsTrigger>
-                  <TabsTrigger value="month">Month</TabsTrigger>
+                  <TabsTrigger value="week">Products</TabsTrigger>
+                  <TabsTrigger value="month">Niche</TabsTrigger>
                   <TabsTrigger value="year">Year</TabsTrigger>
                 </TabsList>
                 <div className="ml-auto flex items-center gap-2">
@@ -436,9 +438,10 @@ const Orders = ({ openModal, setOpenModal }) => {
               <TabsContent value="week">
                 <Card x-chunk="dashboard-05-chunk-3">
                   <CardHeader className="px-7">
-                    <CardTitle>Your Products</CardTitle>
+                    <CardTitle>My Product Collection</CardTitle>
                     <CardDescription>
-                      Include one or more of these products in your article.
+                      Include any one of these products when you write an
+                      article.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -447,10 +450,10 @@ const Orders = ({ openModal, setOpenModal }) => {
                         <TableRow>
                           <TableHead>Product name</TableHead>
                           <TableHead className="hidden sm:table-cell">
-                            Type
+                            Niche
                           </TableHead>
                           <TableHead className="hidden sm:table-cell">
-                            Count
+                            In Stock
                           </TableHead>
                           <TableHead className="hidden md:table-cell">
                             Commission

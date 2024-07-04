@@ -71,7 +71,7 @@ const PageHeader = () => {
           href="/orders"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          bCommerce
+          <span className="italic">b</span>Commerce
         </Link>
       </nav>
       <Sheet>
@@ -97,7 +97,7 @@ const PageHeader = () => {
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              bCommerce
+              <span className="italic">b</span>Commerce
             </Link>
           </nav>
         </SheetContent>
