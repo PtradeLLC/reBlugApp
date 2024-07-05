@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "./Hero";
 import Restaurants from "./RestaurantList";
-import Foodhini from "./Foodini";
+import Foodhini from "./Foodhini";
 import Footer from "./Footer";
 import Steps from "./StepperWorks";
 

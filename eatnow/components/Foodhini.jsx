@@ -1,7 +1,7 @@
 import React from "react";
 import { Tooltip } from "@nextui-org/tooltip";
 
-const Foodhini = () => {
+const FoodhiniPage = () => {
   return (
     <>
       {/* Features */}
@@ -223,4 +223,4 @@ const Foodhini = () => {
   );
 };
 
-export default Foodhini;
+export default FoodhiniPage;

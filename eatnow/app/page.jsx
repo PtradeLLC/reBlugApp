@@ -3,9 +3,9 @@ import { useState } from "react";
 // import Head from "next/head";
 import Hero from "../components/Hero";
 import AIBlog from "../components/BlogSection";
+import FoodiesComponent from "../components/Foodies";
 import EatNow from "../components/EatNow";
 import BrandInfo from "../components/BrandInfo";
-import Foodhini from "../components/Foodini";
 
 // import LogoTwo from "../components/LogoTwo";
 // import Document from "./_document";
@@ -106,11 +106,11 @@ const Home = () => {
           <div className="flex justify-center content-center">
             <AIBlog />
           </div>
+          <div className="flex justify-center content-center">
+            <FoodiesComponent />
+          </div>
           {/* <div className="flex justify-center content-center">
             <EatNow />
-          </div> */}
-          {/* <div className="flex justify-center content-center">
-            <Foodhini />
           </div> */}
           {/* <div className="flex justify-center content-center">
             <BrandInfo />
