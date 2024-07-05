@@ -19,6 +19,7 @@ import ChatBubble from "@/components/chat/chatBubble";
 import CategorySelected from "@/components/CategorySelector";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
+import { setCookie } from "nookies";
 
 // Define the BloggerDashboard component
 const BloggerDashboard = ({ user, name, setModalOpen }) => {
@@ -35,6 +36,7 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
   });
   const [todayDate, setTodayDate] = useState("");
   const [open, setOpen] = useState(false);
+  const [userNiche, setUserNiche] = useState("");
 
   useEffect(() => {
     if (name) {
@@ -49,6 +51,43 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
     };
     setTodayDate(today());
   }, []);
+
+  // fetching niche
+  const fetchNiche = async () => {
+    try {
+      const userId = user.$id;
+
+      // Set user ID cookie
+      setCookie(null, "userId", userId, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
+
+      const response = await fetch("/api/getNiche", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          niche,
+          user: { $id: user.$id },
+        }),
+      });
+
+      const data = await response.json();
+      if (data.userNiche) {
+        setUserNiche(data.userNiche.name);
+      }
+    } catch (error) {
+      console.error("Failed to fetch niche:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.$id) {
+      fetchNiche();
+    }
+  }, [user]);
 
   if (loading) {
     return (
@@ -92,12 +131,19 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
               <CardTitle className="text-sm font-medium">Hey, {name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-xl font-bold">
-                <span className="text-xs font-normal">Using ReBlug as:</span>{" "}
-                {userType.defaultType}
+              <div className="">
+                <span className="text-xs font-normal">Using as:</span>{" "}
+                <span className="text-xl font-bold">
+                  {userType.defaultType}
+                </span>{" "}
+                in {userNiche}
               </div>
               <div className="text-sm flex">
-                {niche ? niche : <CategorySelected user={user} />}
+                {niche ? (
+                  niche
+                ) : (
+                  <CategorySelected userNiche={userNiche} user={user} />
+                )}
               </div>
               <div className="text-xs text-muted-foreground mt-3">
                 <span>
@@ -219,6 +265,9 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
             <CardContent className="grid gap-8">
               <div>
                 <CreditCartInput />
+                <span className="text-sm underline">
+                  <Link href="">What is this, and how do I use it?</Link>
+                </span>
               </div>
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
@@ -258,6 +307,7 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
 
 // Define prop types for BloggerDashboard component
 BloggerDashboard.propTypes = {
+  user: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   setModalOpen: PropTypes.func.isRequired,
 };

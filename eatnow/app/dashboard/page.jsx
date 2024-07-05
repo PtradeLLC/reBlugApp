@@ -42,8 +42,7 @@ const DashboardPage = () => {
   const handleLogout = () => {
     // Clear sessionStorage on logout
     sessionStorage.removeItem("selectedUserType");
-    setSelectedUserType("Blogger"); // Set default userType to Blogger upon logout
-    // Additional logout logic here
+    setSelectedUserType("Blogger");
   };
 
   const handleUserTypeChange = (newUserType) => {

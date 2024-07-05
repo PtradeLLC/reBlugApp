@@ -18,15 +18,9 @@ const RightSide = () => {
           <h4 className="my-3 font-semibold">Is yours one of them?</h4>
           <a
             href="#blog-tool"
-            className="block mt-3 px-5 mb-2 py-3 rounded-md text-white w-48 bg-gray-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:mt-0 sm:ml-3 lg:w-auto"
+            className="block mt-5 px-5 mb-2 py-3 rounded-md text-white w-48 bg-black hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:ml-3 lg:w-auto"
           >
-            Run Quick Check
-          </a>
-          <a
-            href="#blog-tool"
-            className="block mt-5 px-5 mb-2 py-3 rounded-md text-white w-48 bg-red-700 hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:ml-3 lg:w-auto"
-          >
-            Do you Blog?
+            Running a Blog?
           </a>
         </span>
       </div>

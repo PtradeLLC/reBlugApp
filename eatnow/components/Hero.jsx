@@ -12,7 +12,7 @@ export default () => {
         <div className="max-w-screen-xl mx-auto text-gray-600 gap-x-12 items-center justify-between overflow-hidden md:flex md:px-8">
           <div className="flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
             <h2 className=" text-4xl text-gray-800 font-extrabold md:text-5xl lg:text-6xl">
-              Experience the ReBirth of Blogging
+              Experience the ReBirth of Blogging like you've never seen.
               <span className="font-semibold text-4xl "></span>
             </h2>
             <h3 className="text-green-900 text-3xl font-thin">
