@@ -64,7 +64,7 @@ const TogglePageModal = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="Blogger">Blogger</SelectItem>
-            <SelectItem value="Brand">Brand</SelectItem>
+            <SelectItem value="Brand">Brand / Org</SelectItem>
             <SelectItem value="Social Media Partner">
               Social Media Partner
             </SelectItem>

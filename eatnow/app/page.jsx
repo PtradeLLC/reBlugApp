@@ -106,15 +106,15 @@ const Home = () => {
           <div className="flex justify-center content-center">
             <AIBlog />
           </div>
-          <div className="flex justify-center content-center">
+          {/* <div className="flex justify-center content-center">
             <EatNow />
-          </div>
-          <div className="flex justify-center content-center">
+          </div> */}
+          {/* <div className="flex justify-center content-center">
             <Foodhini />
-          </div>
-          <div className="flex justify-center content-center">
+          </div> */}
+          {/* <div className="flex justify-center content-center">
             <BrandInfo />
-          </div>
+          </div> */}
         </span>
       </main>
     </div>

@@ -16,11 +16,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ChatBubble from "@/components/chat/chatBubble";
+import CategorySelected from "@/components/CategorySelector";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
 
 // Define the BloggerDashboard component
-const BloggerDashboard = ({ name, setModalOpen }) => {
+const BloggerDashboard = ({ user, name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState(0);
   const [modalSwitch, setModalSwitch] = useState(false);
@@ -48,10 +49,6 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
     };
     setTodayDate(today());
   }, []);
-
-  let handleNiche = (e) => {
-    e.target.value;
-  };
 
   if (loading) {
     return (
@@ -100,14 +97,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                 {userType.defaultType}
               </div>
               <div className="text-sm flex">
-                Niche: {niche ? niche : "Select a Niche"}
-                <Button
-                  type="button"
-                  onClick={handleNiche}
-                  className="text-xs mx-1 cursor-pointer w-[60px] h-[20px] p-3"
-                >
-                  {niche ? "Update" : "Select"}
-                </Button>
+                {niche ? niche : <CategorySelected user={user} />}
               </div>
               <div className="text-xs text-muted-foreground mt-3">
                 <span>
@@ -115,7 +105,7 @@ const BloggerDashboard = ({ name, setModalOpen }) => {
                     <Button
                       type="button"
                       onClick={handleUserType}
-                      className="text-xs mx-1 cursor-pointer w-[115px] h-[20px] p-3"
+                      className="text-xs ml-3 mr-1 cursor-pointer w-[115px] h-[30px] p-3"
                     >
                       Switch User Role
                     </Button>

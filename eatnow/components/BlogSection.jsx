@@ -42,7 +42,7 @@ const BlogComponent = () => {
                 <p className="font-thin text-xl lg:text-3xl text-gray-700">
                   Give your articles superpowers
                 </p>
-                <p className="text-gray-500">
+                <p className="text-gray-500 text-lg">
                   Include our AI-powered Article Assistant tool as part of your{" "}
                   <span className="text-green-500 text-2xl">
                     growth strategy.
@@ -67,10 +67,12 @@ const BlogComponent = () => {
                     </svg>
                   </span>
 
-                  <span className="text-sm sm:text-base text-gray-500">
-                    <span className="font-bold">AI Powered Assistant</span> –
-                    Give each of your article its own AI assistant to provide
-                    In-article research to your readers.
+                  <span className="text-lg text-gray-500">
+                    <span className="font-bold text-lg">
+                      AI Powered Assistant
+                    </span>{" "}
+                    – Give each of your article its own AI assistant to provide
+                    In-article research and support to your readers.
                   </span>
                 </li>
                 <li className="flex space-x-3">
@@ -89,11 +91,11 @@ const BlogComponent = () => {
                     </svg>
                   </span>
 
-                  <span className="text-sm sm:text-base text-gray-500">
-                    <span className="font-bold">Knowledge Base</span> – The tool
-                    reads and uses the content of the article as a knowledge
-                    base document, and also source various information from the
-                    web to provide in-depth information to readers.
+                  <span className="text-lg text-gray-500">
+                    <span className="font-bold text-lg">Knowledge Base</span> –
+                    The tool reads and uses the article's content as a knowledge
+                    base and sources additional information from the web to
+                    provide in-depth insights to readers.
                   </span>
                 </li>
                 <li className="flex space-x-3">
@@ -112,12 +114,14 @@ const BlogComponent = () => {
                     </svg>
                   </span>
 
-                  <span className="text-sm sm:text-base text-gray-500">
-                    <span className="font-bold">Reader Interaction</span> – Your
-                    readers can ask article-related questions. The AI assistant
-                    conducts web researches and provide information with sources
-                    on subject matter right on the article page when readers are
-                    engaged.
+                  <span className="text-lg text-gray-500">
+                    <span className="font-bold text-lg">
+                      Reader Interaction
+                    </span>{" "}
+                    – Your readers can ask article-related questions. The AI
+                    assistant conducts web researches and provide information
+                    with sources on subject matter right on the article page
+                    when readers are engaged.
                   </span>
                 </li>
               </ul>

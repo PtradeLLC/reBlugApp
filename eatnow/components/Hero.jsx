@@ -11,42 +11,75 @@ export default () => {
       <section className="py-20">
         <div className="max-w-screen-xl mx-auto text-gray-600 gap-x-12 items-center justify-between overflow-hidden md:flex md:px-8">
           <div className="flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
-            <h2 className="font-barlow-condensed text-4xl text-gray-800 font-extrabold md:text-5xl">
-              Every Brand and Marketer has an ongoing{" "}
-              <span className="font-barlow-condensed text-red-700 underline">
-                Thing
-              </span>{" "}
-              or two to tackle when it comes to{" "}
-              <span className="text-green-900 text-2xl font-barlow-condensed">
-                growth
-              </span>{" "}
-              marketing
+            <h2 className=" text-4xl text-gray-800 font-extrabold md:text-5xl lg:text-6xl">
+              Experience the ReBirth of Blogging
+              <span className="font-semibold text-4xl "></span>
             </h2>
-            <h3 className="text-green-900 text-lg">
-              We solve <span className="text-red-600">things</span> by providing
-              a “blogger-first” platform where brands and marketers connect with
-              talented bloggers, utilizing tools and technologies developed to
-              bolster growth.
+            <h3 className="text-green-900 text-3xl font-thin">
+              Start a blog for free with our:
             </h3>
-            <p>
-              Specifically by making blogging interactive, social and useful for
-              marketing through the use of software, AI-powered technologies,
-              and automation tools. Brands can accurately target specific
-              audience demographics in their chosen niches by using a
-              combination of AI-powered tools and user-generated content.
+            <ul className="text-lg">
+              <li>
+                <span className="font-semibold text-lg">
+                  Social Blogging Tools:
+                </span>{" "}
+                Engage and grow your audience.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  AI-Powered Features:
+                </span>{" "}
+                Solve common blogging pain points effortlessly.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Monetization Simplified:
+                </span>{" "}
+                Easy ways to earn from your blog.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Bloggers Marketplace:
+                </span>{" "}
+                Connect and collaborate with others.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Brand Marketing Tools:
+                </span>{" "}
+                Enhance your sponsors' reach.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Organic Growth Strategies:
+                </span>{" "}
+                Increase your influence naturally.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Beginner & Expert Tools:
+                </span>{" "}
+                Perfect for all experience levels.
+              </li>
+              <li className="font-semibold text-lg">
+                Universal Publishing: Write once, publish everywhere.
+              </li>
+            </ul>
+            <p className="text-2xl">
+              Pro-Blogging reimagined. Start blogging for free now!
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-              <a
+              {/* <a
                 href="#eat-now-pay-never"
                 className="block py-2 px-4 text-center text-white font-medium bg-green-600 duration-150 hover:bg-red-500 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
               >
                 Chef & Restaurants
-              </a>
+              </a> */}
               <a
-                href="#brand-info"
+                href="/login"
                 className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
               >
-                Brands & Marketers
+                Join us Today
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"

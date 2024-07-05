@@ -85,6 +85,19 @@ model User {
   Order              Order[]
 }
 
+model UserShadow {
+  id     Int    @id @default(autoincrement())
+  userId String @unique
+  niche  Niche?
+}
+
+model Niche {
+  id     Int        @id @default(autoincrement())
+  name   String
+  userId Int        @unique
+  user   UserShadow @relation(fields: [userId], references: [id])
+}
+
 model Referral {
   id             Int      @id @default(autoincrement())
   referrerId     String
