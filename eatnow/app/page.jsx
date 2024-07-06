@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-// import Head from "next/head";
+import Head from "next/head";
 import Hero from "../components/Hero";
 import AIBlog from "../components/BlogSection";
 import FoodiesComponent from "../components/Foodies";
@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <div className="overflow-hidden bg-white px-4 sm:px-6 lg:px-8">
-      {/* <Head>
+      <Head>
         <title>ReBlug</title>
         <meta
           name="description"
@@ -96,7 +96,7 @@ const Home = () => {
         <meta name="theme-color" content="#ffffff" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-      </Head> */}
+      </Head>
 
       <main className="flex flex-col justify-center items-center">
         <span className="">

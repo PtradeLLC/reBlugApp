@@ -1,5 +1,6 @@
 // app/_middleware.js
 import { NextResponse } from 'next/server';
+import { nanoid } from 'nanoid';
 
 export async function middleware(request) {
     const response = NextResponse.next();
@@ -23,35 +24,17 @@ export async function middleware(request) {
         });
     }
 
-    // Role-based access control
-    // const token = await getToken({ req: request });
-    // if (!token) {
-    //     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-    // }
+    // Handle user session or cookie management
+    const cookies = request.cookies;
+    let userId = cookies.get('userId');
 
-    // const user = await prisma.user.findUnique({
-    //     where: { email: token.email },
-    // });
-
-    // if (!user) {
-    //     return new NextResponse(JSON.stringify({ message: 'User not found' }), { status: 404 });
-    // }
-
-    // Define role-based access control logic
-    // const url = request.nextUrl.pathname;
-
-    // const roleBasedRoutes = {
-    //     '/blogger-path': 'BLOGGER',
-    //     '/chef-path': 'CHEF',
-    //     '/social-media-path': 'SOCIAL_MEDIA_PARTNER',
-    //     '/brand-marketer-path': 'BRAND_MARKETER',
-    // };
-
-    // for (const [path, role] of Object.entries(roleBasedRoutes)) {
-    //     if (url.startsWith(path) && user.role !== role) {
-    //         return new NextResponse(JSON.stringify({ message: 'Forbidden' }), { status: 403 });
-    //     }
-    // }
+    if (!userId) {
+        userId = nanoid();
+        response.cookies.set('userId', userId, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 });
+        console.log('New user ID set:', userId);
+    } else {
+        console.log('User ID from cookie:', userId);
+    }
 
     return response;
 }
@@ -60,11 +43,7 @@ export async function middleware(request) {
 
 
 
-// // app/_middleware.js
-
-// import { NextResponse } from 'next/server';
-
-// export function middleware(request) {
+// export async function middleware(request) {
 //     const response = NextResponse.next();
 
 //     // Set CORS headers

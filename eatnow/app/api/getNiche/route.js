@@ -1,60 +1,64 @@
-import { NextResponse } from 'next/server';
+// app/api/getNiche/route.js
+
+import { NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function GET(req) {
-    const url = new URL(req.url);
-    const userId = url.searchParams.get('userId');
-
-    if (!userId) {
-        return NextResponse.json({ message: "User ID is missing" }, { status: 400 });
-    }
-
+export async function POST(req) {
     try {
-        const userNiche = await prisma.niche.findUnique({
-            where: { userId: parseInt(userId, 10) }
+        const { niche, userId } = await req.json();
+
+        if (!userId || typeof userId !== 'string') {
+            return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
+        }
+
+        if (!niche || typeof niche !== 'string') {
+            return NextResponse.json({ error: 'Invalid niche' }, { status: 400 });
+        }
+
+        // Find or create the niche
+        const nicheRecord = await prisma.niche.upsert({
+            where: { name: niche },
+            update: {},
+            create: { name: niche },
         });
 
-        if (userNiche) {
-            return NextResponse.json({ userNiche });
-        } else {
-            return NextResponse.json({ message: "Niche not found for this user" }, { status: 404 });
-        }
+        // Update or create user shadow with the new niche
+        const updatedUserShadow = await prisma.userShadow.upsert({
+            where: { userId },
+            update: { niche: { connect: { id: nicheRecord.id } } },
+            create: { userId, niche: { connect: { id: nicheRecord.id } } },
+        });
+
+        return NextResponse.json({ message: 'Niche updated successfully', updatedUserShadow }, { status: 200 });
     } catch (error) {
-        console.error("Error fetching niche:", error);
-        return NextResponse.json({ message: "There is an error: " + error.message });
+        console.error(error);
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
     }
 }
 
-export async function POST(req) {
+export async function GET(req) {
     try {
-        const data = await req.json();
-        const { niche, userId } = data;
+        const { searchParams } = new URL(req.url);
+        const userId = searchParams.get('userId');
 
-        if (!niche || !userId) {
-            return NextResponse.json({ message: "Niche or user ID not provided" }, { status: 400 });
+        if (!userId || typeof userId !== 'string') {
+            return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
         }
 
-        let existingUser = await prisma.userShadow.findUnique({
-            where: { userId: parseInt(userId, 10) }
+        const userShadow = await prisma.userShadow.findUnique({
+            where: { userId },
+            include: { niche: true },
         });
 
-        if (!existingUser) {
-            existingUser = await prisma.userShadow.create({
-                data: { userId: parseInt(userId, 10) }
-            });
+        if (!userShadow) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        const userNiche = await prisma.niche.upsert({
-            where: { userId: existingUser.id },
-            update: { name: niche },
-            create: { userId: existingUser.id, name: niche }
-        });
-
-        return NextResponse.json({ userId: userId, userNiche });
+        return NextResponse.json({ userNiche: userShadow.niche?.name }, { status: 200 });
     } catch (error) {
-        console.error("Error submitting niche:", error);
-        return NextResponse.json({ message: "There is an error: " + error.message });
+        console.error(error);
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
     }
 }

@@ -86,17 +86,30 @@ model User {
 }
 
 model UserShadow {
-  id     Int    @id @default(autoincrement())
-  userId Int    @unique
-  niche  Niche?
+  id      Int    @id @default(autoincrement())
+  userId  String @unique
+  niche   Niche? @relation(fields: [nicheId], references: [id])
+  nicheId Int?
 }
 
 model Niche {
-  id     Int        @id @default(autoincrement())
-  name   String
-  userId Int        @unique
-  user   UserShadow @relation(fields: [userId], references: [id])
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  UserShadow UserShadow[]
 }
+
+// model UserShadow {
+//   id     Int    @id @default(autoincrement())
+//   userId String @unique
+//   niche  Niche?
+// }
+
+// model Niche {
+//   id     Int        @id @default(autoincrement())
+//   name   String
+//   userId String     @unique
+//   user   UserShadow @relation(fields: [userId], references: [userId])
+// }
 
 model Referral {
   id             Int      @id @default(autoincrement())

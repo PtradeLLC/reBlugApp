@@ -57,11 +57,15 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
     try {
       const userId = user.$id;
 
+      console.log(userId, "from BloggerDashboard before Cookie");
+
       // Set user ID cookie
       setCookie(null, "userId", userId, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
+
+      console.log(userId, "from BloggerDashboard after cookie");
 
       const response = await fetch("/api/getNiche", {
         method: "POST",
@@ -70,14 +74,16 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
         },
         body: JSON.stringify({
           niche,
-          user: { $id: user.$id },
+          userId,
+          user,
         }),
       });
 
       const data = await response.json();
-      // if (data.userNiche) {
-      //   setUserNiche(data.userNiche.name);
-      // }
+      console.log(data, "data from the backend success");
+      if (data) {
+        setUserNiche(data.userNiche);
+      }
     } catch (error) {
       console.error("Failed to fetch niche:", error);
     }
