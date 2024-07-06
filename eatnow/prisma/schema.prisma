@@ -87,7 +87,7 @@ model User {
 
 model UserShadow {
   id     Int    @id @default(autoincrement())
-  userId String @unique
+  userId Int    @unique
   niche  Niche?
 }
 

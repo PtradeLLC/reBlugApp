@@ -75,9 +75,9 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
       });
 
       const data = await response.json();
-      if (data.userNiche) {
-        setUserNiche(data.userNiche.name);
-      }
+      // if (data.userNiche) {
+      //   setUserNiche(data.userNiche.name);
+      // }
     } catch (error) {
       console.error("Failed to fetch niche:", error);
     }
