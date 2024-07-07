@@ -14,6 +14,7 @@ const ProfileDropDown = ({ className, logout, user }) => {
   const profileRef = useRef();
 
   const navigation = [
+    { title: "Dashboard", path: "/dashboard" },
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
@@ -139,6 +140,7 @@ const Navigation = () => {
   };
 
   const navigationItems = [
+    { title: "Dashboard", path: "/dashboard" },
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
