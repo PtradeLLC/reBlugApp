@@ -42,7 +42,7 @@ const CategorySelected = ({ user }) => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("ClientData", data);
+
           setStoreNiche(data.userNiche.name || "");
         } else {
           console.error("Error fetching niche");
@@ -79,7 +79,7 @@ const CategorySelected = ({ user }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+
         setClientMessage(`Niche is set to ${selectedOptionText}`);
         setStoreNiche(selectedOptionText); // Update the state with the new niche
       } else {

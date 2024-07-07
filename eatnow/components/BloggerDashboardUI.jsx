@@ -27,7 +27,6 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
   const [subscriptions, setSubscriptions] = useState(0);
   const [modalSwitch, setModalSwitch] = useState(false);
   const [connectedAccount, setConnectedAccount] = useState(0);
-  const [niche, setNiche] = useState(null);
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
     brandType: "Brand",
@@ -36,6 +35,7 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
   });
   const [todayDate, setTodayDate] = useState("");
   const [open, setOpen] = useState(false);
+  const [niche, setNiche] = useState(null);
   const [userNiche, setUserNiche] = useState("");
 
   useEffect(() => {
@@ -57,31 +57,21 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
     try {
       const userId = user.$id;
 
-      console.log(userId, "from BloggerDashboard before Cookie");
-
       // Set user ID cookie
       setCookie(null, "userId", userId, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
 
-      console.log(userId, "from BloggerDashboard after cookie");
-
-      const response = await fetch("/api/getNiche", {
-        method: "POST",
+      const response = await fetch(`/api/getNiche?userId=${userId}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          niche,
-          userId,
-          user,
-        }),
       });
 
       const data = await response.json();
-      console.log(data, "data from the backend success");
-      if (data) {
+      if (data && data.userNiche) {
         setUserNiche(data.userNiche);
       }
     } catch (error) {
@@ -139,14 +129,17 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
               </Avatar>
               <CardTitle className="text-sm font-medium">Hey, {name}</CardTitle>
             </CardHeader>
-            {/* Edit card flex here */}
-            <CardContent className="">
-              <div className="">
+            <CardContent>
+              <div>
                 <span className="text-xs font-normal">Using as:</span>{" "}
                 <span className="text-xl font-bold">
                   {userType.defaultType}
                 </span>{" "}
-                in {userNiche}
+                <br />
+                <span className="text-xs font-normal">Your Niche:</span>{" "}
+                <span className="text-sm font-semibold">
+                  {userNiche || "N/A"}
+                </span>
               </div>
               <div className="text-sm flex justify-center">
                 {niche ? (
