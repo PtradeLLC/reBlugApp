@@ -126,7 +126,10 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
       <PageHeader />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card
+            className="flex flex-col justify-center"
+            x-chunk="dashboard-01-chunk-0"
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
@@ -136,7 +139,8 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
               </Avatar>
               <CardTitle className="text-sm font-medium">Hey, {name}</CardTitle>
             </CardHeader>
-            <CardContent>
+            {/* Edit card flex here */}
+            <CardContent className="">
               <div className="">
                 <span className="text-xs font-normal">Using as:</span>{" "}
                 <span className="text-xl font-bold">
@@ -144,14 +148,14 @@ const BloggerDashboard = ({ user, name, setModalOpen }) => {
                 </span>{" "}
                 in {userNiche}
               </div>
-              <div className="text-sm flex">
+              <div className="text-sm flex justify-center">
                 {niche ? (
                   niche
                 ) : (
                   <CategorySelected userNiche={userNiche} user={user} />
                 )}
               </div>
-              <div className="text-xs text-muted-foreground mt-3">
+              <div className="text-xs text-muted-foreground flex justify-end mt-3">
                 <span>
                   <div className="flex flex-col gap-4">
                     <Button

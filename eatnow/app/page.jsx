@@ -7,9 +7,6 @@ import FoodiesComponent from "../components/Foodies";
 import EatNow from "../components/EatNow";
 import BrandInfo from "../components/BrandInfo";
 
-// import LogoTwo from "../components/LogoTwo";
-// import Document from "./_document";
-
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
 
