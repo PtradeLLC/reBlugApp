@@ -7,6 +7,7 @@ const CategorySelected = ({ user }) => {
   const [storeNiche, setStoreNiche] = useState("");
   const [clientMessage, setClientMessage] = useState("");
   const [userId, setUserId] = useState(null);
+  const [hideBlogger, setHideBlogger] = useState(false);
 
   // Handle userId from cookies or user prop
   useEffect(() => {
@@ -80,7 +81,7 @@ const CategorySelected = ({ user }) => {
       if (response.ok) {
         const data = await response.json();
 
-        setClientMessage(`Niche is set to ${selectedOptionText}`);
+        setClientMessage(`Niche set as ${selectedOptionText}`);
         setStoreNiche(selectedOptionText); // Update the state with the new niche
       } else {
         console.error("Error submitting niche");
@@ -101,7 +102,7 @@ const CategorySelected = ({ user }) => {
           value={storeNiche}
           onChange={(e) => setStoreNiche(e.target.value)}
         >
-          <option value="">Select your Niche</option>
+          <option value="">{storeNiche ? storeNiche : `Select a Niche`}</option>
           {/* Add all other options here */}
           <option value="AC">American Culture</option>
           <option value="AF">African Culture</option>
@@ -150,7 +151,7 @@ const CategorySelected = ({ user }) => {
           type="button"
           onClick={submitNiche}
         >
-          Submit selection
+          Click to submit
         </button>
         {clientMessage && <div>{clientMessage}</div>}
       </form>
