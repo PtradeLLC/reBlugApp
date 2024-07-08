@@ -45,7 +45,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
     sMediaType: "Social Media Partner",
     FandBType: "F&B",
   });
-  const [updatedUserType, setUpdatedUserType] = useState("");
+  // const [updatedUserType, setUpdatedUserType] = useState("");
 
   useEffect(() => {
     if (name) {

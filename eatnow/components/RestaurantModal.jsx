@@ -28,7 +28,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
   const [orders, setOders] = useState(0);
   const [subscriptionGrowth, setSubscriptionGrowth] = useState(0);
-  const [menuItems, setmenuItems] = useState(0);
+  const [menuItems, setMenuItems] = useState(0);
   const [payments, setPayments] = useState(null);
   const [payHistory, setPayHistory] = useState(null);
   const [recentSubs, setRecentSubs] = useState(null);
@@ -70,7 +70,6 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   };
 
   const handleSubChart = (e) => {
-    console.log(e);
     setModalType("subscription");
     setOpen(true);
   };

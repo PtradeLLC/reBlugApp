@@ -7,7 +7,6 @@ const CategorySelected = ({ user }) => {
   const [storeNiche, setStoreNiche] = useState("");
   const [clientMessage, setClientMessage] = useState("");
   const [userId, setUserId] = useState(null);
-  const [hideBlogger, setHideBlogger] = useState(false);
 
   // Handle userId from cookies or user prop
   useEffect(() => {

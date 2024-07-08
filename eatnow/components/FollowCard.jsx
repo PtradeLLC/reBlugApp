@@ -19,7 +19,7 @@ export default function App() {
             isBordered
             radius="full"
             size="md"
-            src="https://nextui.org/avatars/avatar-1.png"
+            src="https://nextui.org/avatars/01.png"
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">

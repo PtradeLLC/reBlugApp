@@ -1,44 +1,66 @@
-import React from "react";
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import ConnectedPayment from "./ConnectPayments";
 
 const MonetizeBlog = () => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleClick = () => {
+    setOpenModal(true);
+  };
+
+  //   const handleUserType = () => {
+  //     if (setModalOpen) {
+  //       setModalOpen(true);
+  //     } else {
+  //       console.error(
+  //         "setModalOpen function is not defined or passed correctly."
+  //       );
+  //     }
+  //   };
+
   return (
-    <div>
-      <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-          <div class="max-w-screen-md mb-8 lg:mb-16">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+    <div className="flex justify-center">
+      <section className="bg-white dark:bg-gray-900">
+        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+          <div className="max-w-screen-md mb-8 lg:mb-16">
+            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Opportunities awaits
             </h2>
-            <p class="text-gray-500 sm:text-xl dark:text-gray-400">
+            <p className="text-gray-500 sm:text-xl dark:text-gray-400">
               Our goal is to offer you various opportunities to monetize your
               blog. While we explore different methods to help you earn from
               your blog and its content, your active participation is essential.
             </p>
-            <p class="text-gray-500 sm:text-xl dark:text-gray-400">
+            <p className="text-gray-500 sm:text-xl dark:text-gray-400">
               Below are some of the many ways your blog can make money on
               ReBlug.
             </p>
           </div>
-          <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
                   <path
                     fill-rule="evenodd"
-                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                    d="M18.458 3.11A1 1 0 0 1 19 4v16a1 1 0 0 1-1.581.814L12 16.944V7.056l5.419-3.87a1 1 0 0 1 1.039-.076ZM22 12c0 1.48-.804 2.773-2 3.465v-6.93c1.196.692 2 1.984 2 3.465ZM10 8H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6V8Zm0 9H5v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3Z"
                     clip-rule="evenodd"
-                  ></path>
+                  />
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Foodhini Says
               </h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 Enable notifications to be alerted when brand partners need your
                 help. Foodhini is designed to help you monetize your
                 participation on our platform. To start, we've added $30 to your
@@ -49,20 +71,28 @@ const MonetizeBlog = () => {
               </p>
             </div>
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                  />
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Brand Sponsorship
               </h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 Nothing beats getting a big check from brands seeking media
                 partnerships with talented bloggers like you. ReBlug connects
                 you with brands looking for long-term marketing collaborations.
@@ -73,25 +103,27 @@ const MonetizeBlog = () => {
               </p>
             </div>
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
                   <path
                     fill-rule="evenodd"
-                    d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                    d="M14 7h-4v3a1 1 0 0 1-2 0V7H6a1 1 0 0 0-.997.923l-.917 11.924A2 2 0 0 0 6.08 22h11.84a2 2 0 0 0 1.994-2.153l-.917-11.924A1 1 0 0 0 18 7h-2v3a1 1 0 1 1-2 0V7Zm-2-3a2 2 0 0 0-2 2v1H8V6a4 4 0 0 1 8 0v1h-2V6a2 2 0 0 0-2-2Z"
                     clip-rule="evenodd"
-                  ></path>
-                  <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+                  />
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
                 <span className="italic">b</span>Commerce
               </h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 Selling products online can be challenging if you're not
                 familiar with eCommerce and how it works.{" "}
                 <span className="italic">b</span>
@@ -103,25 +135,29 @@ const MonetizeBlog = () => {
               </p>
             </div>
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                  <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
                   <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-                    clip-rule="evenodd"
-                  ></path>
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z"
+                  />
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
                 Cross-Promotion services
               </h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 If you have a large readership, offering Cross-Promotion
                 services is a great way to monetize your reach. Collaborate with
                 other bloggers in your niche who need help growing their
@@ -131,9 +167,9 @@ const MonetizeBlog = () => {
               </p>
             </div>
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -141,8 +177,10 @@ const MonetizeBlog = () => {
                   <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">Mentorship</h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
+                Mentorship
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400">
                 Your blogging expertise can be highly rewarding. Many novice
                 bloggers and writers want to improve their skills to share their
                 stories and monetize them on ReBlug. Offer a mentorship program
@@ -152,24 +190,27 @@ const MonetizeBlog = () => {
               </p>
             </div>
             <div>
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
                 <svg
-                  class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
                   <path
                     fill-rule="evenodd"
-                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                    d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
                     clip-rule="evenodd"
-                  ></path>
+                  />
                 </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold dark:text-white">
+              <h3 className="mb-2 text-xl font-bold dark:text-white">
                 MarketPlace (Beta)
               </h3>
-              <p class="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 Imagine an online portal that helps you effortlessly earn
                 passive income. Portal where brands are actively seeking media
                 partnership, and uses AI to identify and tailor opportunities
@@ -180,8 +221,16 @@ const MonetizeBlog = () => {
               </p>
             </div>
           </div>
+          <Button type="button" onClick={handleClick} className="mt-9">
+            Get started now
+          </Button>
         </div>
       </section>
+      <div>
+        {openModal && (
+          <ConnectedPayment openModal={openModal} setOpenModal={setOpenModal} />
+        )}
+      </div>
     </div>
   );
 };

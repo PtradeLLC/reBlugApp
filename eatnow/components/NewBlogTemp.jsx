@@ -205,30 +205,32 @@ const NewBlogTemp = () => {
               </p>
               <pre>
                 <code className="language-html">
-                  &lt;dl class="grid grid-cols-2 gap-8 max-w-screen-md
+                  &lt;dl className="grid grid-cols-2 gap-8 max-w-screen-md
                   text-gray-900 sm:grid-cols-3 dark:text-white"&gt;{"\n"}&lt;div
-                  class="flex flex-col justify-center items-center"&gt;{"\n"}
-                  {"  "}&lt;dt class="mb-2 text-3xl
+                  className="flex flex-col justify-center items-center"&gt;
+                  {"\n"}
+                  {"  "}&lt;dt className="mb-2 text-3xl
                   font-extrabold"&gt;73M+&lt;/dt&gt;
                   {"\n"}
-                  {"  "}&lt;dd class="text-lg font-normal text-gray-500
+                  {"  "}&lt;dd className="text-lg font-normal text-gray-500
                   dark:text-gray-400"&gt;developers&lt;/dd&gt;{"\n"}&lt;/div&gt;
                   {"\n"}
-                  &lt;div class="flex flex-col justify-center items-center"&gt;
-                  {"\n"}
-                  {"  "}&lt;dt class="mb-2 text-3xl
-                  font-extrabold"&gt;1B+&lt;/dt&gt;
-                  {"\n"}
-                  {"  "}&lt;dd class="text-lg font-normal text-gray-500
-                  dark:text-gray-400"&gt;contributors&lt;/dd&gt;{"\n"}
-                  &lt;/div&gt;
-                  {"\n"}&lt;div class="flex flex-col justify-center
+                  &lt;div className="flex flex-col justify-center
                   items-center"&gt;
                   {"\n"}
-                  {"  "}&lt;dt class="mb-2 text-3xl
+                  {"  "}&lt;dt className="mb-2 text-3xl
+                  font-extrabold"&gt;1B+&lt;/dt&gt;
+                  {"\n"}
+                  {"  "}&lt;dd className="text-lg font-normal text-gray-500
+                  dark:text-gray-400"&gt;contributors&lt;/dd&gt;{"\n"}
+                  &lt;/div&gt;
+                  {"\n"}&lt;div className="flex flex-col justify-center
+                  items-center"&gt;
+                  {"\n"}
+                  {"  "}&lt;dt className="mb-2 text-3xl
                   font-extrabold"&gt;4M+&lt;/dt&gt;
                   {"\n"}
-                  {"  "}&lt;dd class="text-lg font-normal text-gray-500
+                  {"  "}&lt;dd className="text-lg font-normal text-gray-500
                   dark:text-gray-400"&gt;organizations&lt;/dd&gt;{"\n"}
                   &lt;/div&gt;
                   {"\n"}&lt;/dl&gt;{"\n"}
