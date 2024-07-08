@@ -185,8 +185,7 @@ const MonetizeBlog = () => {
                 bloggers and writers want to improve their skills to share their
                 stories and monetize them on ReBlug. Offer a mentorship program
                 to guide and support active beginners. We bring the tools to
-                help you teach how to publish compelling articles, and you bring
-                your expertise.
+                help you teach how to publish compelling articles.
               </p>
             </div>
             <div>
@@ -213,11 +212,11 @@ const MonetizeBlog = () => {
               <p className="text-gray-500 dark:text-gray-400">
                 Imagine an online portal that helps you effortlessly earn
                 passive income. Portal where brands are actively seeking media
-                partnership, and uses AI to identify and tailor opportunities
-                for you. The AI negotiates with brands based on your
-                requirements, bids on your behalf, and all you have to do is
-                review and sign the contract. No more trying to outbid other
-                folks for gigs, AI can take care of that for you now.
+                partnership, and uses AI tools to identify and tailor
+                opportunities for you. The AI negotiates with brands based on
+                requirements you set, bids on your behalf so that all you have
+                to do is review and sign the contract. No more trying to outbid
+                other folks for gigs, AI can take care of that for you now.
               </p>
             </div>
           </div>
