@@ -99,16 +99,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             <CardContent>
               <span>You're logged in as:</span>
               <div className="text-xl font-bold">Food & Beverages</div>
-
-              <span>
-                Restaurant{" "}
-                <span
-                  className="text-xs cursor-pointer text-green-950"
-                  href="#"
-                >
-                  Change Type
-                </span>
-              </span>
+              <span>Restaurant</span>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-3">
