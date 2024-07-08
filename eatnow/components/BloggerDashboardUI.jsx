@@ -17,6 +17,7 @@ import ChatBubble from "@/components/chat/chatBubble";
 import CategorySelected from "@/components/CategorySelector";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
+import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
 
 // Define the BloggerDashboard component
@@ -31,6 +32,7 @@ const BloggerDashboard = ({
   const [subscriptions, setSubscriptions] = useState(0);
   const [modalSwitch, setModalSwitch] = useState(false);
   const [connectedAccount, setConnectedAccount] = useState(0);
+  const router = useRouter();
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
     brandType: "Brand",
@@ -81,8 +83,8 @@ const BloggerDashboard = ({
     }
   }, [user]);
 
-  const handlePaymentClick = (e) => {
-    console.log(e);
+  const handleMonetize = (e) => {
+    router.push("/monetize");
   };
 
   const handleUserType = () => {
@@ -198,7 +200,7 @@ const BloggerDashboard = ({
               <Button
                 type="button"
                 className="text-xs m-auto bg-red-700 flex mt-1"
-                onClick={handlePaymentClick}
+                onClick={handleMonetize}
               >
                 Monetize your blog
               </Button>
@@ -225,7 +227,7 @@ const BloggerDashboard = ({
               <Button
                 className="text-xs m-auto bg-green-700 flex mt-1"
                 type="button"
-                onClick={handlePaymentClick}
+                onClick={handleMonetize}
               >
                 Check out Tools
               </Button>
@@ -448,7 +450,7 @@ export default BloggerDashboard;
 //     );
 //   }
 
-//   const handlePaymentClick = (e) => {
+//   const handleMonetize = (e) => {
 //     console.log(e);
 //   };
 
@@ -553,7 +555,7 @@ export default BloggerDashboard;
 //               <Button
 //                 type="button"
 //                 className="text-xs m-auto bg-red-700 flex mt-1"
-//                 onClick={handlePaymentClick}
+//                 onClick={handleMonetize}
 //               >
 //                 Monetize your blog
 //               </Button>
@@ -580,7 +582,7 @@ export default BloggerDashboard;
 //               <Button
 //                 className="text-xs m-auto bg-green-700 flex mt-1"
 //                 type="button"
-//                 onClick={handlePaymentClick}
+//                 onClick={handleMonetize}
 //               >
 //                 Check out Tools
 //               </Button>

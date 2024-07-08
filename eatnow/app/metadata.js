@@ -1,7 +1,7 @@
 // app/metadata.js
 
 export const metadata = {
-    title: "reBlug App",
+    title: "reBlug",
     description: "Eat now, Pay Never.",
     manifest: "/manifest.json",
     icons: {

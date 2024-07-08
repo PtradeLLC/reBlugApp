@@ -9,12 +9,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Profile Dropdown
 const ProfileDropDown = ({ className, logout, user }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
   const profileRef = useRef();
 
   const navigation = [
-    { title: "Dashboard", path: "/dashboard" },
+    ...(user ? [{ title: "Dashboard", path: "/dashboard" }] : []),
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
@@ -22,13 +20,6 @@ const ProfileDropDown = ({ className, logout, user }) => {
     { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },
   ];
-
-  useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setEmail(user.email);
-    }
-  }, [user]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -56,43 +47,35 @@ const ProfileDropDown = ({ className, logout, user }) => {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-
-              {/* <img
-                src="https://randomuser.me/api/portraits/men/46.jpg"
-                alt="Profile"
-                className="w-full h-full rounded-full"
-              /> */}
             </button>
             <div className="lg:hidden">
-              <span className="block">{name}</span>
-              <span className="block text-sm text-gray-500">{email}</span>
+              <span className="block">{user.name}</span>
+              <span className="block text-sm text-gray-500">{user.email}</span>
             </div>
           </>
         )}
       </div>
       {isDropdownOpen && (
-        <>
-          <ul className="bg-white z-10 top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0">
-            {navigation.map((item, idx) => (
-              <li key={idx}>
-                <a
-                  className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
-                  href={item.path}
-                >
-                  {item.title}
-                </a>
-              </li>
-            ))}
-            <li>
-              <button
-                onClick={logout}
-                className="block w-full text-left text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+        <ul className="bg-white z-10 top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0">
+          {navigation.map((item, idx) => (
+            <li key={idx}>
+              <a
+                className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+                href={item.path}
               >
-                Logout
-              </button>
+                {item.title}
+              </a>
             </li>
-          </ul>
-        </>
+          ))}
+          <li>
+            <button
+              onClick={logout}
+              className="block w-full text-left text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
       )}
     </div>
   );
@@ -140,7 +123,7 @@ const Navigation = () => {
   };
 
   const navigationItems = [
-    { title: "Dashboard", path: "/dashboard" },
+    // ...(isLoggedIn ? [{ title: "Dashboard", path: "/dashboard" }] : []),
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
@@ -165,7 +148,9 @@ const Navigation = () => {
           </div>
           <div className="flex-1 flex items-center justify-between">
             <div
-              className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${menuOpen ? "" : "hidden"}`}
+              className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
+                menuOpen ? "" : "hidden"
+              }`}
             >
               <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
                 {navigationItems.map((item, idx) => (

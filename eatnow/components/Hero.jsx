@@ -16,7 +16,7 @@ export default () => {
               <span className="font-semibold text-4xl "></span>
             </h2>
             <h3 className="text-green-900 text-3xl font-thin">
-              Start a blog for free with our:
+              Start blogging with our:
             </h3>
             <ul className="text-lg">
               <li>
@@ -61,8 +61,17 @@ export default () => {
                 </span>{" "}
                 Perfect for all experience levels.
               </li>
-              <li className="font-semibold text-lg">
-                Universal Publishing: Write once, publish everywhere.
+              <li>
+                <span className="font-semibold text-lg">
+                  Blogging tools for content creators:
+                </span>{" "}
+                Transform social media contents to blogs.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Universal Publishing:
+                </span>{" "}
+                Write once, publish everywhere.
               </li>
             </ul>
             <p className="text-2xl">
@@ -79,7 +88,7 @@ export default () => {
                 href="/login"
                 className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
               >
-                Join us Today
+                Join for free Today
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
