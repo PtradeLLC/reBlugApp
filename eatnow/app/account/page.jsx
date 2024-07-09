@@ -198,7 +198,7 @@ const MyAccount = () => {
               General
             </Link>
             {/* <Link href="#">Security</Link> */}
-            <Link href="#">Integrations</Link>
+            <Link href="/integrate">Integrations</Link>
             <Link href="#">Support</Link>
             {/* <Link href="#">Organizations</Link> */}
             {/* <Link href="#">Advanced</Link> */}
