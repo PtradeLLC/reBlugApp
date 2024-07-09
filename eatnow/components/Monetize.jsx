@@ -2,13 +2,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ConnectedPayment from "./ConnectPayments";
+import Link from "next/link";
 
 const MonetizeBlog = () => {
   const [openModal, setOpenModal] = useState(false);
-
-  const handleClick = () => {
-    setOpenModal(true);
-  };
 
   //   const handleUserType = () => {
   //     if (setModalOpen) {
@@ -220,15 +217,15 @@ const MonetizeBlog = () => {
               </p>
             </div>
           </div>
-          <Button type="button" onClick={handleClick} className="mt-9">
-            Get started now
-          </Button>
+          <div className="mt-9 flex justify-center items-center bg-stone-600 rounded-md text-white h-9 w-32">
+            <Link href={"/account"}>Get started now</Link>
+          </div>
         </div>
       </section>
       <div>
-        {openModal && (
+        {/* {openModal && (
           <ConnectedPayment openModal={openModal} setOpenModal={setOpenModal} />
-        )}
+        )} */}
       </div>
     </div>
   );

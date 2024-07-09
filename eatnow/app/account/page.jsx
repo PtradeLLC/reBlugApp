@@ -23,13 +23,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Integrations from "@/components/Integrations";
+import PricingForBloggers from "@/components/BloggerPricing";
 
 const MyAccount = () => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
   const [selectedUserType, setSelectedUserType] = useState("Blogger");
   const [modalOpen, setModalOpen] = useState(false);
+  const [loadIntegrations, setLoadIntegrations] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedView, setSelectedView] = useState("General");
 
   useEffect(() => {
     async function getUser() {
@@ -48,9 +52,12 @@ const MyAccount = () => {
   useEffect(() => {
     if (user) {
       setName(user.name);
-      //   setLoading(false);
     }
   }, [user]);
+
+  const handleViewChange = (view) => {
+    setSelectedView(view);
+  };
 
   if (loading) {
     return (
@@ -67,7 +74,7 @@ const MyAccount = () => {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        {/* <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
             href="#"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
@@ -105,8 +112,8 @@ const MyAccount = () => {
           >
             Settings
           </Link>
-        </nav>
-        <Sheet>
+        </nav> */}
+        {/* <Sheet>
           <SheetTrigger asChild>
             <Button
               variant="outline"
@@ -155,9 +162,9 @@ const MyAccount = () => {
               </Link>
             </nav>
           </SheetContent>
-        </Sheet>
+        </Sheet> */}
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <form className="ml-auto flex-1 sm:flex-initial">
+          {/* <form className="ml-auto flex-1 sm:flex-initial">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
@@ -166,7 +173,7 @@ const MyAccount = () => {
                 className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
               />
             </div>
-          </form>
+          </form> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
@@ -177,8 +184,8 @@ const MyAccount = () => {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem>My Subscription</DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
@@ -194,62 +201,67 @@ const MyAccount = () => {
             className="grid gap-4 text-sm text-muted-foreground"
             x-chunk="MyAccount-04-chunk-0"
           >
-            <Link href="#" className="font-semibold text-primary">
-              General
-            </Link>
-            {/* <Link href="#">Security</Link> */}
-            <Link href="/integrate">Integrations</Link>
-            <Link href="#">Support</Link>
-            {/* <Link href="#">Organizations</Link> */}
-            {/* <Link href="#">Advanced</Link> */}
+            <button onClick={() => handleViewChange("General")}>General</button>
+            <button onClick={() => handleViewChange("Integrations")}>
+              Integrations
+            </button>
+            <button onClick={() => handleViewChange("MySubscription")}>
+              My Subscriptions
+            </button>
           </nav>
           <div className="grid gap-6">
-            <Card x-chunk="MyAccount-04-chunk-1">
-              <CardHeader>
-                <CardTitle>{name}</CardTitle>
-                <CardDescription>
-                  This is your Username. It can be your full name or name of
-                  your Brand.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <Input placeholder="Update Username." />
-                </form>
-              </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
-            <Card x-chunk="MyAccount-04-chunk-2">
-              <CardHeader>
-                <CardTitle>Plugins Directory</CardTitle>
-                <CardDescription>
-                  The directory within your project, in which your plugins are
-                  located.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form className="flex flex-col gap-4">
-                  <Input
-                    placeholder="Project Name"
-                    defaultValue="/content/plugins"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="include" defaultChecked />
-                    <label
-                      htmlFor="include"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Allow administrators to change the directory.
-                    </label>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
+            {selectedView === "General" && (
+              <>
+                <Card x-chunk="MyAccount-04-chunk-1">
+                  <CardHeader>
+                    <CardTitle>{name}</CardTitle>
+                    <CardDescription>
+                      This is your Username. It can be your full name or name of
+                      your Brand.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form>
+                      <Input placeholder="Update Username." />
+                    </form>
+                  </CardContent>
+                  <CardFooter className="border-t px-6 py-4">
+                    <Button>Save</Button>
+                  </CardFooter>
+                </Card>
+                <Card x-chunk="MyAccount-04-chunk-2">
+                  <CardHeader>
+                    <CardTitle>Plugins Directory</CardTitle>
+                    <CardDescription>
+                      The directory within your project, in which your plugins
+                      are located.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form className="flex flex-col gap-4">
+                      <Input
+                        placeholder="Project Name"
+                        defaultValue="/content/plugins"
+                      />
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="include" defaultChecked />
+                        <label
+                          htmlFor="include"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Allow administrators to change the directory.
+                        </label>
+                      </div>
+                    </form>
+                  </CardContent>
+                  <CardFooter className="border-t px-6 py-4">
+                    <Button>Save</Button>
+                  </CardFooter>
+                </Card>
+              </>
+            )}
+            {selectedView === "Integrations" && <Integrations />}
+            {selectedView === "MySubscription" && <PricingForBloggers />}
           </div>
         </div>
       </main>
