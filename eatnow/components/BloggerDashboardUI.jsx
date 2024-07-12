@@ -177,9 +177,13 @@ const BloggerDashboard = ({
               <span className="text-sm text-muted-foreground">
                 {`Ideate, brainstorm, write, and publish an article quickly.`}
               </span>
-              <Button className="text-xs m-auto flex bg-red-700 mt-1" size="sm">
+              <Link
+                href={"/pageChatBubble"}
+                className="text-xs m-auto flex justify-center items-center bg-red-700 mt-1 w-36 h-9 rounded-md text-white"
+                size="sm"
+              >
                 Write an article
-              </Button>
+              </Link>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
