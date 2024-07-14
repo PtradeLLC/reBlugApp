@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { account } from "../appwrite";
-const ReactQuill =
-  typeof window === "object" ? require("react-quill") : () => false;
-import "react-quill/dist/quill.snow.css";
+import { Textarea } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const variant = "bordered";
   const [articleData, setArticleData] = useState({
     articleTitle: "",
     coverImage: "",
@@ -33,6 +33,7 @@ const ChatAIBob = () => {
       publishEverywhere: null,
     },
   });
+  const router = useRouter();
 
   useEffect(() => {
     async function getUser() {
@@ -71,6 +72,10 @@ const ChatAIBob = () => {
     }
   };
 
+  const handlePreview = () => {
+    router.push("./previewarticle");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -90,6 +95,7 @@ const ChatAIBob = () => {
             title: articleData.articleTitle,
             cover: articleData.coverImage,
             niche: articleData.categoryNiche,
+            articleBody: articleData.articleBody.articleContent.bodyContent,
             features: articleData.articleFeatures,
           }),
         }
@@ -136,7 +142,7 @@ const ChatAIBob = () => {
                   They include AI-powered brainstorming, blogging tips, and
                   monetization features.
                 </p>
-                <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                <div className="mt-10 space-y-8 border-gray-900/10 pb-12 sm:space-y-0 sm:border-t sm:pb-0">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                     <label
                       htmlFor="title"
@@ -208,7 +214,7 @@ const ChatAIBob = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6 mb-3">
                     <label
                       htmlFor="niche"
                       className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
@@ -235,17 +241,30 @@ const ChatAIBob = () => {
                       </div>
                     </div>
                   </div>
-                  <div>
-                    {/* <ReactQuill
-                      className="h-40 px-4 mt-5"
-                      theme="snow"
-                      value={articleData.bodyContent}
-                      toolbar={true}
-                      formats={formats}
-                      modules={modules}
-                      onChange={setbodyContent}
-                      placeholder="Begin by typing here. You may select to highlight texts for format..."
-                    /> */}
+                  <div className="block h-60">
+                    <Textarea
+                      isRequired
+                      label="Article Content"
+                      height={50}
+                      labelPlacement="outside"
+                      placeholder="Write your content here"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      onChange={(e) =>
+                        setArticleData((prevData) => ({
+                          ...prevData,
+                          articleBody: {
+                            ...prevData.articleBody,
+                            articleContent: {
+                              ...prevData.articleBody.articleContent,
+                              bodyContent: e.target.value,
+                            },
+                          },
+                        }))
+                      }
+                      value={articleData.articleBody.articleContent.bodyContent}
+                      variant={variant}
+                      maxRows={10}
+                    />
                   </div>
                 </div>
               </div>
@@ -461,11 +480,12 @@ const ChatAIBob = () => {
                   Cancel
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
+                  onClick={handlePreview}
                   variant="primary"
                   className="text-sm font-semibold leading-6"
                 >
-                  Save
+                  Preview & Publish
                 </Button>
               </div>
             </div>
