@@ -8,15 +8,15 @@ export async function POST(request) {
         const formData = await request.json();
         const { userId, title, cover, niche, articleBody, features } = formData;
 
-        console.log("Received form data:", { userId, title, cover, niche, articleBody, features });
-
         const newArticle = await prisma.post.create({
             data: {
                 title: title || "", // Default to empty string if title is undefined
                 featureImage: cover || "", // Default to empty string if cover is undefined
                 content: articleBody || "",
                 categorySlug: niche || "", // Default to empty string if niche is undefined
-                published: features?.publishEverywhere || false, // Default to false if publishEverywhere is undefined
+                published: features?.publishEverywhere || false,
+                crossPromote: features?.crossPromotion || false,
+                commentingSys: features?.comments || true,
                 userId: userId,
             },
         });

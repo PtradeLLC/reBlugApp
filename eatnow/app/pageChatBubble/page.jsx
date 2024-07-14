@@ -72,10 +72,6 @@ const ChatAIBob = () => {
     }
   };
 
-  const handlePreview = () => {
-    router.push("./previewarticle");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -105,7 +101,7 @@ const ChatAIBob = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log("Response data:", data);
+      router.push("/pageChatBubble/previewarticle");
       // Optionally, reset articleData state here if needed
     } catch (error) {
       console.error("There was an error:", error);
@@ -475,13 +471,14 @@ const ChatAIBob = () => {
                 <Button
                   type="button"
                   variant="secondary"
+                  onClick={() => router.push("/dashboard")}
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
                   Cancel
                 </Button>
                 <Button
-                  type="button"
-                  onClick={handlePreview}
+                  type="submit"
+                  onClick={handleSubmit}
                   variant="primary"
                   className="text-sm font-semibold leading-6"
                 >

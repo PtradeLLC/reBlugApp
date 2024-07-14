@@ -95,14 +95,6 @@ model UserShadow {
   nicheId Int?
 }
 
-// model Niche {
-//   id         Int          @id @default(autoincrement())
-//   name       String       @unique
-//   userId     Int
-//   user       User         @relation(fields: [userId], references: [id])
-//   UserShadow UserShadow[]
-// }
-
 model Niche {
   id         Int          @id @default(autoincrement())
   name       String       @unique
@@ -143,6 +135,8 @@ model Post {
   author           String?
   categorySlug     String?
   blogger          String?
+  status           Boolean        @default(false)
+  commentingSys    String?
   userId           String?
   postSlug         String?
   categoryId       String?
