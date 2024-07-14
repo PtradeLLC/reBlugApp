@@ -18,7 +18,6 @@ import CategorySelected from "@/components/CategorySelector";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
 import { useRouter } from "next/navigation";
-import { setCookie } from "nookies";
 
 // Define the BloggerDashboard component
 const BloggerDashboard = ({

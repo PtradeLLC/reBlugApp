@@ -55,16 +55,17 @@ const MonetizeBlog = () => {
                 </svg>
               </div>
               <h3 className="mb-2 text-xl font-bold dark:text-white">
-                Foodhini Says
+                Foodhini Says...
               </h3>
               <p className="text-gray-500 dark:text-gray-400">
                 Enable notifications to be alerted when brand partners need your
-                help. Foodhini is designed to help you monetize your
-                participation on our platform. To start, we've added $30 to your
-                account via a virtual card. You can use this fund through our
-                'Eat Now, Pay Never' feature to order meals from local
-                restaurants. Your virtual card will be funded as you continue to
-                complete various tasks.
+                help. "Foodhini says..." is a 'Pay per task' feature designed to
+                help you monetize your participation on our platform. To start,
+                we've added $30 to your account via a virtual card that you
+                don't need to pay back. You can use this fund through our 'Eat
+                Now, Pay Never' feature to order meals from local restaurants.
+                From here on, your virtual card will be funded as you continue
+                to complete various tasks.
               </p>
             </div>
             <div>

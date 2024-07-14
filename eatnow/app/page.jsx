@@ -4,12 +4,8 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import AIBlog from "../components/BlogSection";
 import FoodiesComponent from "../components/Foodies";
-import EatNow from "../components/EatNow";
-import BrandInfo from "../components/BrandInfo";
 
 const Home = () => {
-  const [openModal, setOpenModal] = useState(false);
-
   return (
     <div className="overflow-hidden bg-white px-4 sm:px-6 lg:px-8">
       <Head>
@@ -106,12 +102,6 @@ const Home = () => {
           <div className="flex justify-center content-center">
             <FoodiesComponent />
           </div>
-          {/* <div className="flex justify-center content-center">
-            <EatNow />
-          </div> */}
-          {/* <div className="flex justify-center content-center">
-            <BrandInfo />
-          </div> */}
         </span>
       </main>
     </div>

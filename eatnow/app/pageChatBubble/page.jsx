@@ -1,12 +1,128 @@
-import React from "react";
-import QuillComponent from "../../components/Quill";
+"use client";
+import React, { useState, useEffect } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
+import { account } from "../appwrite";
+const ReactQuill =
+  typeof window === "object" ? require("react-quill") : () => false;
+import "react-quill/dist/quill.snow.css";
 
 const ChatAIBob = () => {
+  const [user, setUser] = useState(null);
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [articleData, setArticleData] = useState({
+    articleTitle: "",
+    coverImage: "",
+    articleBody: {
+      articleContent: {
+        bodyContent: "",
+        bodyImage: "",
+        sponsorship: {
+          productTitle: "",
+          productUrl: "",
+          productImage: "",
+          productMessage: "",
+        },
+      },
+    },
+    categoryNiche: "",
+    articleFeatures: {
+      comments: null,
+      crossPromotion: null,
+      publishEverywhere: null,
+    },
+  });
+
+  useEffect(() => {
+    async function getUser() {
+      setLoading(true);
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+    }
+  }, [user]);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setArticleData((prevData) => ({
+        ...prevData,
+        coverImage: reader.result,
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const userId = user.$id;
+
+      const response = await fetch(
+        `/api/blog/userPostArticle?userId=${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            title: articleData.articleTitle,
+            cover: articleData.coverImage,
+            niche: articleData.categoryNiche,
+            features: articleData.articleFeatures,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Response data:", data);
+      // Optionally, reset articleData state here if needed
+    } catch (error) {
+      console.error("There was an error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="text-gray-700 text-center font-bold text-xl">
+            Loading...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center mt-5 px-4">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-3 gap-4">
           <div className="col-span-2">
             <div className="space-y-12 sm:space-y-16">
@@ -15,12 +131,11 @@ const ChatAIBob = () => {
                   Write an article
                 </h2>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-                  Use the form below to compose and publish your article. Need
-                  inspiration? Check out the tools in the right column. They
-                  include AI-powered brainstorming, blogging tips, and
+                  Use the entries below to compose and publish your article.
+                  Need inspiration? Check out the tools in the right column.
+                  They include AI-powered brainstorming, blogging tips, and
                   monetization features.
                 </p>
-
                 <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                     <label
@@ -35,6 +150,13 @@ const ChatAIBob = () => {
                           id="title"
                           name="title"
                           type="text"
+                          onChange={(e) =>
+                            setArticleData({
+                              ...articleData,
+                              articleTitle: e.target.value,
+                            })
+                          }
+                          value={articleData.articleTitle}
                           placeholder="Give your article a title"
                           autoComplete="title"
                           className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -65,6 +187,7 @@ const ChatAIBob = () => {
                               <input
                                 id="file-upload"
                                 name="file-upload"
+                                onChange={handleFileChange}
                                 type="file"
                                 className="sr-only"
                               />
@@ -74,31 +197,55 @@ const ChatAIBob = () => {
                           <p className="text-xs leading-5 text-gray-600">
                             PNG, JPG, GIF up to 10MB
                           </p>
+                          {articleData.coverImage && (
+                            <img
+                              src={articleData.coverImage}
+                              alt="Cover"
+                              className="mt-4 h-40 w-40 object-contain"
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="">
-                    <div className="mb-28">
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-                      >
-                        Article
-                      </label>
-                      <QuillComponent />
+                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                    <label
+                      htmlFor="niche"
+                      className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                    >
+                      Your Niche
+                    </label>
+                    <div className="mt-2 sm:col-span-2 sm:mt-0">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
+                        <input
+                          id="niche"
+                          name="niche"
+                          type="text"
+                          onChange={(e) =>
+                            setArticleData({
+                              ...articleData,
+                              categoryNiche: e.target.value,
+                            })
+                          }
+                          value={articleData.categoryNiche}
+                          placeholder="Enter your niche"
+                          autoComplete="niche"
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </div>
-                    <div className="flex">
-                      <label
-                        htmlFor="niche"
-                        className=" text-sm font-medium leading-6 text-gray-900 sm:pt-1.0"
-                      >
-                        Your Niche
-                      </label>
-                      <p className="text-sm ml-2 font-medium leading-6 text-gray-900">
-                        Niche
-                      </p>
-                    </div>
+                  </div>
+                  <div>
+                    {/* <ReactQuill
+                      className="h-40 px-4 mt-5"
+                      theme="snow"
+                      value={articleData.bodyContent}
+                      toolbar={true}
+                      formats={formats}
+                      modules={modules}
+                      onChange={setbodyContent}
+                      placeholder="Begin by typing here. You may select to highlight texts for format..."
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -110,87 +257,193 @@ const ChatAIBob = () => {
                   You may choose additional services to bolster your blog in
                   these areas (Engagement, Growth)
                 </p>
-
                 <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
                   <fieldset>
                     <legend className="sr-only">Additional services</legend>
-                    <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:py-6">
-                      <div
-                        aria-hidden="true"
-                        className="text-sm font-semibold leading-6 text-gray-900"
-                      >
-                        Additional services
-                      </div>
-                      <div className="mt-4 sm:col-span-2 sm:mt-0">
-                        <div className="max-w-lg space-y-6">
-                          <div className="relative flex gap-x-3">
-                            <div className="flex h-6 items-center">
+                    <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
+                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                        <div className="text-sm font-semibold leading-6 text-gray-900">
+                          AI Powered Commenting
+                        </div>
+                        <div className="mt-4 sm:col-span-2 sm:mt-0">
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-x-3">
                               <input
-                                id="comments"
+                                id="comments-yes"
                                 name="comments"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures.comments === true
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      comments: true,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
                               />
-                            </div>
-                            <div className="text-sm leading-6">
                               <label
-                                htmlFor="comments"
-                                className="font-medium text-gray-900"
+                                htmlFor="comments-yes"
+                                className="block text-sm font-medium leading-6 text-gray-900"
                               >
-                                Comments
+                                Yes
                               </label>
-                              <p className="mt-1 text-gray-600">
-                                Get notified when someones posts a comment.
-                              </p>
+                            </div>
+                            <div className="flex items-center gap-x-3">
+                              <input
+                                id="comments-no"
+                                name="comments"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures.comments === false
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      comments: false,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                              />
+                              <label
+                                htmlFor="comments-no"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                              >
+                                No
+                              </label>
                             </div>
                           </div>
-                          <div className="relative flex gap-x-3">
-                            <div className="flex h-6 items-center">
+                        </div>
+                      </div>
+                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                        <div className="text-sm font-semibold leading-6 text-gray-900">
+                          Cross-Promotion
+                        </div>
+                        <div className="mt-4 sm:col-span-2 sm:mt-0">
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-x-3">
                               <input
-                                id="candidates"
-                                name="candidates"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                                id="cross-promotion-yes"
+                                name="cross-promotion"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures.crossPromotion ===
+                                  true
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      crossPromotion: true,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
                               />
-                            </div>
-                            <div className="text-sm leading-6">
                               <label
-                                htmlFor="candidates"
-                                className="font-medium text-gray-900"
+                                htmlFor="cross-promotion-yes"
+                                className="block text-sm font-medium leading-6 text-gray-900"
                               >
-                                Cross promotion
+                                Yes
                               </label>
-                              <p className="mt-1 text-gray-600">
-                                Enable to Cross-promote this article with other
-                                bloggers within your category/niche
-                              </p>
+                            </div>
+                            <div className="flex items-center gap-x-3">
+                              <input
+                                id="cross-promotion-no"
+                                name="cross-promotion"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures.crossPromotion ===
+                                  false
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      crossPromotion: false,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                              />
+                              <label
+                                htmlFor="cross-promotion-no"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                              >
+                                No
+                              </label>
                             </div>
                           </div>
-                          <div className="relative flex gap-x-3">
-                            <div className="flex h-6 items-center">
+                        </div>
+                      </div>
+                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                        <div className="text-sm font-semibold leading-6 text-gray-900">
+                          Publish Everywhere
+                        </div>
+                        <div className="mt-4 sm:col-span-2 sm:mt-0">
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-x-3">
                               <input
-                                id="offers"
-                                name="offers"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                                id="publish-everywhere-yes"
+                                name="publish-everywhere"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures
+                                    .publishEverywhere === true
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      publishEverywhere: true,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
                               />
-                            </div>
-                            <div className="text-sm leading-6">
                               <label
-                                htmlFor="offers"
-                                className="font-medium text-gray-900"
+                                htmlFor="publish-everywhere-yes"
+                                className="block text-sm font-medium leading-6 text-gray-900"
                               >
-                                Publish Everywhere{" "}
-                                <span className="text-sm text-red-800">
-                                  (Note: This feature needs to be configured)
-                                </span>
+                                Yes
                               </label>
-                              <p className="mt-1 text-gray-600">
-                                Publish this article here and on other platform.{" "}
-                                <span className="text-sm text-red-800">
-                                  (Click to configure)
-                                </span>
-                              </p>
+                            </div>
+                            <div className="flex items-center gap-x-3">
+                              <input
+                                id="publish-everywhere-no"
+                                name="publish-everywhere"
+                                type="radio"
+                                checked={
+                                  articleData.articleFeatures
+                                    .publishEverywhere === false
+                                }
+                                onChange={() =>
+                                  setArticleData((prevData) => ({
+                                    ...prevData,
+                                    articleFeatures: {
+                                      ...prevData.articleFeatures,
+                                      publishEverywhere: false,
+                                    },
+                                  }))
+                                }
+                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                              />
+                              <label
+                                htmlFor="publish-everywhere-no"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                              >
+                                No
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -199,21 +452,22 @@ const ChatAIBob = () => {
                   </fieldset>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6 flex items-center justify-end gap-x-6">
-              <button
-                type="button"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Save for later
-              </button>
-              <button
-                type="submit"
-                className="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-              >
-                Preview & Submit
-              </button>
+              <div className="mt-6 flex items-center justify-end gap-x-6">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="text-sm font-semibold leading-6"
+                >
+                  Save
+                </Button>
+              </div>
             </div>
           </div>
           <div className="flex flex-col">
@@ -229,9 +483,9 @@ const ChatAIBob = () => {
                 Include Sponsor
               </Button>
               <Button className="my-2 mx-2 bg-lime-700" type="button">
-                Generated with AI
+                Generate with AI
               </Button>
-              <Button className="my-2 mx-2 bg-blue-700" type="button">
+              <Button className="my-2 mx-2 bg-blue-800" type="button">
                 Article Assistant for your website
               </Button>
             </div>
@@ -243,311 +497,3 @@ const ChatAIBob = () => {
 };
 
 export default ChatAIBob;
-
-// import React from "react";
-// import QuillComponent from "../../components/Quill";
-// import { PhotoIcon } from "@heroicons/react/24/solid";
-// import { Button } from "@/components/ui/button";
-
-// const ChatAIBob = () => {
-//   return (
-//     <div className="flex justify-center mt-5 px-4">
-//       <form>
-//         <div div className="grid lg:grid-cols-3 gap-4 ">
-//           <div className="col-span-2">
-//             <div className="space-y-12 sm:space-y-16">
-//               <div className="my-4">
-//                 <h2 className="text-base font-semibold leading-7 text-gray-900">
-//                   Write an article
-//                 </h2>
-//                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-//                   Use the form below to compose and publish your article. Need
-//                   inspiration? Check out the tools in the right column. They
-//                   include AI-powered brainstorming, blogging tips, and
-//                   monetization features.
-//                 </p>
-
-//                 <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-//                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-//                     <label
-//                       htmlFor="title"
-//                       className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-//                     >
-//                       Article Title
-//                     </label>
-//                     <div className="mt-2 sm:col-span-2 sm:mt-0">
-//                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
-//                         <input
-//                           id="title"
-//                           name="title"
-//                           type="text"
-//                           placeholder="Give your article a title"
-//                           autoComplete="title"
-//                           className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-//                         />
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-//                     <label
-//                       htmlFor="cover-photo"
-//                       className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-//                     >
-//                       Cover photo
-//                     </label>
-//                     <div className="mt-2 sm:col-span-2 sm:mt-0">
-//                       <div className="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-//                         <div className="text-center">
-//                           <PhotoIcon
-//                             aria-hidden="true"
-//                             className="mx-auto h-12 w-12 text-gray-300"
-//                           />
-//                           <div className="mt-4 flex text-sm leading-6 text-gray-600">
-//                             <label
-//                               htmlFor="file-upload"
-//                               className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
-//                             >
-//                               <span>Upload a file</span>
-//                               <input
-//                                 id="file-upload"
-//                                 name="file-upload"
-//                                 type="file"
-//                                 className="sr-only"
-//                               />
-//                             </label>
-//                             <p className="pl-1">or drag and drop</p>
-//                           </div>
-//                           <p className="text-xs leading-5 text-gray-600">
-//                             PNG, JPG, GIF up to 10MB
-//                           </p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div className="">
-//                     <div className="mb-28">
-//                       <label
-//                         htmlFor="about"
-//                         className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-//                       >
-//                         Article
-//                       </label>
-//                       <QuillComponent />
-//                     </div>
-//                     <div className="flex">
-//                       <label
-//                         htmlFor="niche"
-//                         className=" text-sm font-medium leading-6 text-gray-900 sm:pt-1.0"
-//                       >
-//                         Your Niche
-//                       </label>
-//                       <p className="text-sm ml-2 font-medium leading-6 text-gray-900">
-//                         Niche
-//                       </p>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//               <div>
-//                 <h2 className="text-base font-semibold leading-7 text-gray-900">
-//                   Features
-//                 </h2>
-//                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-//                   You may choose additional services to bolster your blog in
-//                   these areas (Engagement, Growth)
-//                 </p>
-
-//                 <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-//                   <fieldset>
-//                     <legend className="sr-only">Additional services</legend>
-//                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:py-6">
-//                       <div
-//                         aria-hidden="true"
-//                         className="text-sm font-semibold leading-6 text-gray-900"
-//                       >
-//                         Additional services
-//                       </div>
-//                       <div className="mt-4 sm:col-span-2 sm:mt-0">
-//                         <div className="max-w-lg space-y-6">
-//                           <div className="relative flex gap-x-3">
-//                             <div className="flex h-6 items-center">
-//                               <input
-//                                 id="comments"
-//                                 name="comments"
-//                                 type="checkbox"
-//                                 className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                             </div>
-//                             <div className="text-sm leading-6">
-//                               <label
-//                                 htmlFor="comments"
-//                                 className="font-medium text-gray-900"
-//                               >
-//                                 Comments
-//                               </label>
-//                               <p className="mt-1 text-gray-600">
-//                                 Get notified when someones posts a comment.
-//                               </p>
-//                             </div>
-//                           </div>
-//                           <div className="relative flex gap-x-3">
-//                             <div className="flex h-6 items-center">
-//                               <input
-//                                 id="candidates"
-//                                 name="candidates"
-//                                 type="checkbox"
-//                                 className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                             </div>
-//                             <div className="text-sm leading-6">
-//                               <label
-//                                 htmlFor="candidates"
-//                                 className="font-medium text-gray-900"
-//                               >
-//                                 Cross promotion
-//                               </label>
-//                               <p className="mt-1 text-gray-600">
-//                                 Enable to Cross-promote this article with other
-//                                 bloggers within your category/niche
-//                               </p>
-//                             </div>
-//                           </div>
-//                           <div className="relative flex gap-x-3">
-//                             <div className="flex h-6 items-center">
-//                               <input
-//                                 id="offers"
-//                                 name="offers"
-//                                 type="checkbox"
-//                                 className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                             </div>
-//                             <div className="text-sm leading-6">
-//                               <label
-//                                 htmlFor="offers"
-//                                 className="font-medium text-gray-900"
-//                               >
-//                                 Publish Everywhere{" "}
-//                                 <span className="text-sm text-red-800">
-//                                   (Note: This feature needs to be configured)
-//                                 </span>
-//                               </label>
-//                               <p className="mt-1 text-gray-600">
-//                                 Publish this article here and on other platform.{" "}
-//                                 <span className="text-sm text-red-800">
-//                                   (Click to configure)
-//                                 </span>
-//                               </p>
-//                             </div>
-//                           </div>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </fieldset>
-//                   {/* <fieldset>
-//                     <legend className="sr-only">Push Notifications</legend>
-//                     <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-//                       <div
-//                         aria-hidden="true"
-//                         className="text-sm font-semibold leading-6 text-gray-900"
-//                       >
-//                         Push Notifications
-//                       </div>
-//                       <div className="mt-1 sm:col-span-2 sm:mt-0">
-//                         <div className="max-w-lg">
-//                           <p className="text-sm leading-6 text-gray-600">
-//                             These are delivered via SMS to your mobile phone.
-//                           </p>
-//                           <div className="mt-6 space-y-6">
-//                             <div className="flex items-center gap-x-3">
-//                               <input
-//                                 id="push-everything"
-//                                 name="push-notifications"
-//                                 type="radio"
-//                                 className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                               <label
-//                                 htmlFor="push-everything"
-//                                 className="block text-sm font-medium leading-6 text-gray-900"
-//                               >
-//                                 Everything
-//                               </label>
-//                             </div>
-//                             <div className="flex items-center gap-x-3">
-//                               <input
-//                                 id="push-email"
-//                                 name="push-notifications"
-//                                 type="radio"
-//                                 className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                               <label
-//                                 htmlFor="push-email"
-//                                 className="block text-sm font-medium leading-6 text-gray-900"
-//                               >
-//                                 Same as email
-//                               </label>
-//                             </div>
-//                             <div className="flex items-center gap-x-3">
-//                               <input
-//                                 id="push-nothing"
-//                                 name="push-notifications"
-//                                 type="radio"
-//                                 className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-//                               />
-//                               <label
-//                                 htmlFor="push-nothing"
-//                                 className="block text-sm font-medium leading-6 text-gray-900"
-//                               >
-//                                 No push notifications
-//                               </label>
-//                             </div>
-//                           </div>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </fieldset> */}
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="mt-6 flex items-center justify-end gap-x-6">
-//               <button
-//                 type="button"
-//                 className="text-sm font-semibold leading-6 text-gray-900"
-//               >
-//                 Save for later
-//               </button>
-//               <button
-//                 type="submit"
-//                 className="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-//               >
-//                 Preview & Submit
-//               </button>
-//             </div>
-//           </div>
-//           <div className="flex flex-col">
-//             <p className="font-semibold text-lg text-gray-600 pl-1">Tools</p>
-//             <div className=" border mt-3 mx-2 px-3">
-//               <Button className="my-2 mx-2" type="button">
-//                 Beginners Guide
-//               </Button>
-//               <Button className="my-2 mx-2 bg-stone-700" type="button">
-//                 Brainstorm Ideas
-//               </Button>
-//               <Button className="my-2 mx-2 bg-red-700" type="button">
-//                 Include Sponsor
-//               </Button>
-//               <Button className="my-2 mx-2 bg-lime-700" type="button">
-//                 Generated with AI
-//               </Button>
-//               <Button className="my-2 mx-2 bg-blue-700" type="button">
-//                 Article Assistant for your website
-//               </Button>
-//             </div>
-//           </div>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default ChatAIBob;

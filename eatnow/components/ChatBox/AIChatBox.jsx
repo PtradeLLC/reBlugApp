@@ -233,7 +233,6 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                           </div>
                         ) : (
                           <Link
-                            // onClick={() => handleClick("authorsGroup")}
                             href={"#"}
                             className="flex item-center rounded-lg text-gray-900 bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-700 dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-800"
                           >

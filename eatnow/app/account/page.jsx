@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { account } from "../appwrite";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import { CircleUser } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,7 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Integrations from "@/components/Integrations";
 import PricingForBloggers from "@/components/BloggerPricing";
 

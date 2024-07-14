@@ -1,10 +1,12 @@
-generator client {
-  provider = "prisma-client-js"
-}
+// schema.prisma
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model Account {
@@ -83,6 +85,7 @@ model User {
   Referral           Referral[]
   Restaurant         Restaurant[]
   Order              Order[]
+  Niche              Niche[]
 }
 
 model UserShadow {
@@ -92,24 +95,21 @@ model UserShadow {
   nicheId Int?
 }
 
+// model Niche {
+//   id         Int          @id @default(autoincrement())
+//   name       String       @unique
+//   userId     Int
+//   user       User         @relation(fields: [userId], references: [id])
+//   UserShadow UserShadow[]
+// }
+
 model Niche {
   id         Int          @id @default(autoincrement())
   name       String       @unique
   UserShadow UserShadow[]
+  User       User?        @relation(fields: [userId], references: [id])
+  userId     String?
 }
-
-// model UserShadow {
-//   id     Int    @id @default(autoincrement())
-//   userId String @unique
-//   niche  Niche?
-// }
-
-// model Niche {
-//   id     Int        @id @default(autoincrement())
-//   name   String
-//   userId String     @unique
-//   user   UserShadow @relation(fields: [userId], references: [userId])
-// }
 
 model Referral {
   id             Int      @id @default(autoincrement())
@@ -604,7 +604,7 @@ model Restaurant {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
-  ownerId     String // Changed from Int to String
+  ownerId     String
   user        User    @relation(fields: [ownerId], references: [id])
   Menu        Menu[]
 }
