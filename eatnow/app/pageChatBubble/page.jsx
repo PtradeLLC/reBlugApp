@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { account } from "../appwrite";
 import BCommerceArray from "@/components/bCommerceProd";
 import SponsorsModalComponent from "@/components/SponsorsModal";
-import ProductComponent from "@/components/productModal";
+import ProductComponent from "../../components/ProductModal";
 import { useRouter } from "next/navigation";
 
 const ChatAIBob = () => {
@@ -601,11 +601,12 @@ const ChatAIBob = () => {
                 setArticleData={setArticleData}
               />
             )}
-            {/* {prodComponent && (
-              <div className="mt-5">
-                <ProductComponent />
-              </div>
-            )} */}
+            {openModal && (
+              <ProductComponent
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+              />
+            )}
           </div>
         </div>
       </form>
