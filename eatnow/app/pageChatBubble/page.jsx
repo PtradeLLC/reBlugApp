@@ -1,16 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { account } from "../appwrite";
-import { Textarea } from "@nextui-org/react";
+import BCommerceArray from "@/components/bCommerceProd";
+import SponsorsModalComponent from "@/components/SponsorsModal";
+import ProductComponent from "@/components/productModal";
 import { useRouter } from "next/navigation";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const variant = "bordered";
+  const [openModal, setOpenModal] = useState(false);
+  const variant = "border-green";
   const [articleData, setArticleData] = useState({
     articleTitle: "",
     coverImage: "",
@@ -28,12 +31,12 @@ const ChatAIBob = () => {
     },
     categoryNiche: "",
     articleFeatures: {
-      comments: null,
       crossPromotion: null,
-      publishEverywhere: null,
+      publishedChannels: null,
     },
   });
   const router = useRouter();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     async function getUser() {
@@ -70,6 +73,49 @@ const ChatAIBob = () => {
     if (file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setArticleData((prevData) => ({
+        ...prevData,
+        articleBody: {
+          ...prevData.articleBody,
+          articleContent: {
+            ...prevData.articleBody.articleContent,
+            bodyImage: reader.result,
+          },
+        },
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAttachFileClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCodeFormatClick = () => {
+    setArticleData((prevData) => ({
+      ...prevData,
+      articleBody: {
+        ...prevData.articleBody,
+        articleContent: {
+          ...prevData.articleBody.articleContent,
+          bodyContent: `\`\`\`\n${prevData.articleBody.articleContent.bodyContent}\n\`\`\``,
+        },
+      },
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -135,7 +181,7 @@ const ChatAIBob = () => {
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
                   Use the entries below to compose and publish your article.
                   Need inspiration? Check out the tools in the right column.
-                  They include AI-powered brainstorming, blogging tips, and
+                  They include AI-powegreen brainstorming, blogging tips, and
                   monetization features.
                 </p>
                 <div className="mt-10 space-y-8 border-gray-900/10 pb-12 sm:space-y-0 sm:border-t sm:pb-0">
@@ -147,7 +193,7 @@ const ChatAIBob = () => {
                       Article Title
                     </label>
                     <div className="mt-2 sm:col-span-2 sm:mt-0">
-                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
                         <input
                           id="title"
                           name="title"
@@ -183,7 +229,7 @@ const ChatAIBob = () => {
                           <div className="mt-4 flex text-sm leading-6 text-gray-600">
                             <label
                               htmlFor="file-upload"
-                              className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
+                              className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 hover:text-green-500"
                             >
                               <span>Upload a file</span>
                               <input
@@ -218,7 +264,7 @@ const ChatAIBob = () => {
                       Your Niche
                     </label>
                     <div className="mt-2 sm:col-span-2 sm:mt-0">
-                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
                         <input
                           id="niche"
                           name="niche"
@@ -238,29 +284,134 @@ const ChatAIBob = () => {
                     </div>
                   </div>
                   <div className="block h-60">
-                    <Textarea
-                      isRequired
-                      label="Article Content"
-                      height={50}
-                      labelPlacement="outside"
-                      placeholder="Write your content here"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      onChange={(e) =>
-                        setArticleData((prevData) => ({
-                          ...prevData,
-                          articleBody: {
-                            ...prevData.articleBody,
-                            articleContent: {
-                              ...prevData.articleBody.articleContent,
-                              bodyContent: e.target.value,
-                            },
-                          },
-                        }))
-                      }
-                      value={articleData.articleBody.articleContent.bodyContent}
-                      variant={variant}
-                      maxRows={10}
-                    />
+                    <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                      <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+                        <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+                          <div className="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+                            <button
+                              type="button"
+                              variant={variant}
+                              onClick={handleAttachFileClick}
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            >
+                              <svg
+                                className="w-4 h-4"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 12 20"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
+                                />
+                              </svg>
+                              <span className="sr-only">Attach file</span>
+                            </button>
+                            <button
+                              type="button"
+                              variant={variant}
+                              onClick={() => fileInputRef.current.click()}
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            >
+                              <svg
+                                className="w-4 h-4"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 16 20"
+                              >
+                                <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+                                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+                              </svg>
+                              <span className="sr-only">Upload image</span>
+                            </button>
+                            <button
+                              type="button"
+                              variant={variant}
+                              onClick={handleCodeFormatClick}
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            >
+                              <svg
+                                className="w-4 h-4"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 16 20"
+                              >
+                                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
+                                <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z" />
+                              </svg>
+                              <span className="sr-only">Format code</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setOpenModal(true)}
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            >
+                              <span className="text-xs text-gray-700 font-semibold">
+                                Add Sponsorship
+                              </span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setOpenModal(true)}
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                            >
+                              <span className="sr-only">Insert Product</span>
+                              <span className="text-xs text-gray-700 font-semibold">
+                                Insert Product
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                        <label htmlFor="editor" className="sr-only">
+                          Publish post
+                        </label>
+                        <textarea
+                          id="body"
+                          name="body"
+                          rows="8"
+                          onChange={(e) =>
+                            setArticleData({
+                              ...articleData,
+                              articleBody: {
+                                ...articleData.articleBody,
+                                articleContent: {
+                                  ...articleData.articleBody.articleContent,
+                                  bodyContent: e.target.value,
+                                },
+                              },
+                            })
+                          }
+                          className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                          placeholder="Write an article..."
+                          value={
+                            articleData.articleBody.articleContent.bodyContent
+                          }
+                          required
+                        />
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                        {articleData.articleBody.articleContent.bodyImage && (
+                          <img
+                            src={
+                              articleData.articleBody.articleContent.bodyImage
+                            }
+                            alt="Article"
+                            className="mt-4 h-40 w-40 object-contain"
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -270,73 +421,12 @@ const ChatAIBob = () => {
                 </h2>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
                   You may choose additional services to bolster your blog in
-                  these areas (Engagement, Growth)
+                  user engagement and growth
                 </p>
                 <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
                   <fieldset>
                     <legend className="sr-only">Additional services</legend>
                     <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
-                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                        <div className="text-sm font-semibold leading-6 text-gray-900">
-                          AI Powered Commenting
-                        </div>
-                        <div className="mt-4 sm:col-span-2 sm:mt-0">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="comments-yes"
-                                name="comments"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures.comments === true
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      comments: true,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                              />
-                              <label
-                                htmlFor="comments-yes"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Yes
-                              </label>
-                            </div>
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="comments-no"
-                                name="comments"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures.comments === false
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      comments: false,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                              />
-                              <label
-                                htmlFor="comments-no"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                No
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                       <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                         <div className="text-sm font-semibold leading-6 text-gray-900">
                           Cross-Promotion
@@ -361,7 +451,7 @@ const ChatAIBob = () => {
                                     },
                                   }))
                                 }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
                               />
                               <label
                                 htmlFor="cross-promotion-yes"
@@ -413,18 +503,18 @@ const ChatAIBob = () => {
                                 type="radio"
                                 checked={
                                   articleData.articleFeatures
-                                    .publishEverywhere === true
+                                    .publishedChannels === true
                                 }
                                 onChange={() =>
                                   setArticleData((prevData) => ({
                                     ...prevData,
                                     articleFeatures: {
                                       ...prevData.articleFeatures,
-                                      publishEverywhere: true,
+                                      publishedChannels: true,
                                     },
                                   }))
                                 }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
                               />
                               <label
                                 htmlFor="publish-everywhere-yes"
@@ -440,14 +530,14 @@ const ChatAIBob = () => {
                                 type="radio"
                                 checked={
                                   articleData.articleFeatures
-                                    .publishEverywhere === false
+                                    .publishedChannels === false
                                 }
                                 onChange={() =>
                                   setArticleData((prevData) => ({
                                     ...prevData,
                                     articleFeatures: {
                                       ...prevData.articleFeatures,
-                                      publishEverywhere: false,
+                                      publishedChannels: false,
                                     },
                                   }))
                                 }
@@ -487,7 +577,7 @@ const ChatAIBob = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-4">
             <p className="font-semibold text-lg text-gray-600 pl-1">Tools</p>
             <div className="border mt-3 mx-2 px-3">
               <Button className="my-2 mx-2" type="button">
@@ -496,16 +586,26 @@ const ChatAIBob = () => {
               <Button className="my-2 mx-2 bg-stone-700" type="button">
                 Brainstorm Ideas
               </Button>
-              <Button className="my-2 mx-2 bg-red-700" type="button">
-                Include Sponsor
-              </Button>
               <Button className="my-2 mx-2 bg-lime-700" type="button">
                 Generate with AI
               </Button>
-              <Button className="my-2 mx-2 bg-blue-800" type="button">
-                Article Assistant for your website
-              </Button>
             </div>
+            <div className="mt-5">
+              <BCommerceArray />
+            </div>
+            {openModal && (
+              <SponsorsModalComponent
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+                articleData={articleData}
+                setArticleData={setArticleData}
+              />
+            )}
+            {/* {prodComponent && (
+              <div className="mt-5">
+                <ProductComponent />
+              </div>
+            )} */}
           </div>
         </div>
       </form>

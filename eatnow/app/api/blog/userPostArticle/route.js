@@ -10,19 +10,15 @@ export async function POST(request) {
 
         const newArticle = await prisma.post.create({
             data: {
-                title: title || "", // Default to empty string if title is undefined
-                featureImage: cover || "", // Default to empty string if cover is undefined
+                title: title || "",
+                featureImage: cover || "",
                 content: articleBody || "",
-                categorySlug: niche || "", // Default to empty string if niche is undefined
-                published: features?.publishEverywhere || false,
+                categorySlug: niche || "",
+                publishedChannels: features?.publishedChannels || false,
                 crossPromote: features?.crossPromotion || false,
-                commentingSys: features?.comments || true,
                 userId: userId,
             },
         });
-
-
-
         return NextResponse.json({ message: 'Article created successfully', newArticle });
     } catch (error) {
         console.error('Error creating article:', error);

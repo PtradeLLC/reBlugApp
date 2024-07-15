@@ -115,38 +115,39 @@ model Referral {
 }
 
 model Post {
-  id               String         @unique @default(cuid())
-  title            String?
-  featureImage     String?
-  contentImage     String?
-  views            Int            @default(0)
-  createdAt        DateTime       @default(now())
-  description      String?
-  crossPromote     String?
-  slug             String?        @unique
-  selectedValue    String?
-  paramsId         String?
-  image            String?
-  updatedAt        DateTime       @updatedAt
-  selectedFeatures String[]
-  published        Boolean        @default(false)
-  content          String?
-  email            String?
-  author           String?
-  categorySlug     String?
-  blogger          String?
-  status           Boolean        @default(false)
-  commentingSys    String?
-  userId           String?
-  postSlug         String?
-  categoryId       String?
-  aiResponses      AiResponse[]
-  AvatarOnPost     AvatarOnPost[]
-  Chat             Chat[]
-  comments         Comment[]
-  images           ImageOnPost[]
-  category         Category?      @relation(fields: [categoryId], references: [id])
-  sponsors         Sponsors[]
+  id                String         @unique @default(cuid())
+  title             String?
+  featureImage      String?
+  contentImage      String?
+  views             Int            @default(0)
+  createdAt         DateTime       @default(now())
+  description       String?
+  crossPromote      Boolean        @default(false)
+  slug              String?        @unique
+  selectedValue     String?
+  paramsId          String?
+  image             String?
+  updatedAt         DateTime       @updatedAt
+  selectedFeatures  String[]
+  publishedChannels Boolean        @default(true)
+  published         Boolean        @default(false)
+  content           String?
+  email             String?
+  author            String?
+  categorySlug      String?
+  blogger           String?
+  status            Boolean        @default(false)
+  commentingSys     String?
+  userId            String?
+  postSlug          String?
+  categoryId        String?
+  aiResponses       AiResponse[]
+  AvatarOnPost      AvatarOnPost[]
+  Chat              Chat[]
+  comments          Comment[]
+  images            ImageOnPost[]
+  category          Category?      @relation(fields: [categoryId], references: [id])
+  sponsors          Sponsors[]
 }
 
 model VerificationToken {

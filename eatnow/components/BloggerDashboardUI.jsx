@@ -135,10 +135,8 @@ const BloggerDashboard = ({
                   {userType.defaultType}
                 </span>{" "}
                 <br />
-                <span className="text-xs font-normal">Your Niche:</span>{" "}
-                <span className="text-sm font-semibold">
-                  {userNiche || "Select niche below"}
-                </span>
+                <span className="text-xs font-normal">Your Category:</span>{" "}
+                <span className="text-sm font-semibold">{userNiche}</span>
               </div>
               <div className="text-sm flex justify-center">
                 <CategorySelected userNiche={userNiche} user={user} />

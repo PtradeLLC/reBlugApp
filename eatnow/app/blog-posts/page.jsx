@@ -43,8 +43,6 @@ const Blog = () => {
   //   }
   // }, [data]);
 
-  // console.log("categories", categories);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setLoading(true);
@@ -212,43 +210,43 @@ const Blog = () => {
             </div>
             <Divider className="my-8 w-8/12 m-auto" />
           </div>
-          {/* <div className="my-3">
-          <h2 className="font-thin">Latest Posts</h2>
-        </div> */}
-          {/* <div className="mx-auto justify-center items-center mt-6 grid max-w-2xl grid-cols-1 gap-x-4 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts && posts.length > 0
-            ? posts
-                .slice(
-                  (currentPage - 1) * postsPerPage,
-                  currentPage * postsPerPage
-                )
-                .map((post) => <CardDisplay key={post.id} post={post} />)
-            : loading && (
-                <div className="flex justify-center items-center">
-                  <div className="flex justify-center">
-                    <CircularProgress
-                      aria-label="Loading..."
-                      size="sm"
-                      value={value}
-                      color="warning"
-                      className="mx-2"
-                      showValueLabel={true}
-                    />
+          <div className="my-3">
+            <h2 className="font-thin">Latest Posts</h2>
+          </div>
+          <div className="mx-auto justify-center items-center mt-6 grid max-w-2xl grid-cols-1 gap-x-4 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {posts && posts.length > 0
+              ? posts
+                  .slice(
+                    (currentPage - 1) * postsPerPage,
+                    currentPage * postsPerPage
+                  )
+                  .map((post) => <CardDisplay key={post.id} post={post} />)
+              : loading && (
+                  <div className="flex justify-center items-center">
+                    <div className="flex justify-center">
+                      <CircularProgress
+                        aria-label="Loading..."
+                        size="sm"
+                        value={value}
+                        color="warning"
+                        className="mx-2"
+                        showValueLabel={true}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
-        </div> */}
+                )}
+          </div>
         </div>
-        {/* <div className="flex justify-center mt-28 items-center my-2">
-        <Pagination
-          total={Math.ceil(posts.length / postsPerPage)}
-          color="success"
-          initialPage={1}
-          value={value}
-          page={currentPage}
-          onChange={handlePageChange}
-        />
-      </div> */}
+        <div className="flex justify-center mt-28 items-center my-2">
+          {/* <Pagination
+            total={Math.ceil(posts.length / postsPerPage)}
+            color="success"
+            initialPage={1}
+            value={value}
+            page={currentPage}
+            onChange={handlePageChange}
+          /> */}
+        </div>
       </div>
       <div>
         <div>

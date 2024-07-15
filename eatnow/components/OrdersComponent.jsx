@@ -84,7 +84,6 @@ const Orders = ({ openModal, setOpenModal }) => {
   };
   const handleButton = (e) => {
     e.preventDefault();
-    console.log("Button clicked");
   };
 
   return (
@@ -337,8 +336,8 @@ const Orders = ({ openModal, setOpenModal }) => {
                           Cross-Promote
                         </h3>
                         <p className="text-sm">
-                          Share with other bloggers and their fans in your
-                          category.
+                          Share with your fans, other bloggers in your category
+                          and their fans.
                         </p>
                       </span>
                     </li>
@@ -354,7 +353,6 @@ const Orders = ({ openModal, setOpenModal }) => {
                   </ol>
                 </div>
                 <CardFooter className="flex justify-end">
-                  {/* <button onClick={handleButton}>How this work</button> */}
                   {openModal && (
                     <WorksModal
                       openModal={openModal}
