@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
+  const [niche, setNiche] = useState("");
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const variant = "border-green";
+
   const [articleData, setArticleData] = useState({
     articleTitle: "",
     coverImage: "",
@@ -143,18 +145,46 @@ const ChatAIBob = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       const data = await response.json();
-      router.push("/pageChatBubble/previewarticle");
-      // Optionally, reset articleData state here if needed
+
+      if (response.ok) {
+        router.push("/pageChatBubble/previewarticle");
+      } else {
+        setMessage("Failed to create article");
+      }
     } catch (error) {
       console.error("There was an error:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  const fetchNiche = async () => {
+    try {
+      const userId = user.$id;
+
+      const response = await fetch(`/api/getNiche?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      if (data) {
+        console.log(data);
+        setNiche(data.userNiche);
+      }
+    } catch (error) {
+      console.error("Failed to fetch niche:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.$id) {
+      fetchNiche();
+    }
+  }, [user]);
 
   if (loading) {
     return (
@@ -263,7 +293,8 @@ const ChatAIBob = () => {
                     >
                       Your Niche
                     </label>
-                    <div className="mt-2 sm:col-span-2 sm:mt-0">
+                    <div className="mt-2 sm:col-span-2 text-gray-700 sm:mt-0">
+                      <span>Current category: {niche}</span>
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
                         <input
                           id="niche"
@@ -276,9 +307,9 @@ const ChatAIBob = () => {
                             })
                           }
                           value={articleData.categoryNiche}
-                          placeholder="Enter your niche"
+                          placeholder="Enter your niche within Category"
                           autoComplete="niche"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>

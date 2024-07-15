@@ -44,31 +44,7 @@ const SponsorsModalComponent = ({
                       Add Sponsorship
                     </Dialog.Title>
                     <div className="mt-2">
-                      {/* Add your form fields here */}
-                      <input
-                        type="text"
-                        placeholder="Product Title"
-                        value={
-                          articleData.articleBody.articleContent.sponsorship
-                            .productTitle
-                        }
-                        onChange={(e) =>
-                          setArticleData({
-                            ...articleData,
-                            articleBody: {
-                              ...articleData.articleBody,
-                              articleContent: {
-                                ...articleData.articleBody.articleContent,
-                                sponsorship: {
-                                  ...articleData.articleBody.articleContent
-                                    .sponsorship,
-                                  productTitle: e.target.value,
-                                },
-                              },
-                            },
-                          })
-                        }
-                      />
+                      <div className="mt-2">Something goes here</div>
                     </div>
                   </div>
                 </div>
