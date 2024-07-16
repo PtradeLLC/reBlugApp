@@ -291,7 +291,7 @@ const PostPage = ({ comments }) => {
                 <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <img className="w-7 h-7 mr-1" src="/images/category.png" />
                   {/* Category: {uniqPost?.category.title || "No category set yet"} */}
-                  Category: {"No category set"}
+                  Niche: {"None set"}
                 </li>
                 <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <img className="w-7 h-7 mr-1" src="/images/users.png" />

@@ -4,9 +4,11 @@ import { PhotoIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { account } from "../appwrite";
 import BCommerceArray from "@/components/bCommerceProd";
-import SponsorsModalComponent from "@/components/SponsorsModal";
+// import SponsorsModalComponent from "@/components/SponsorsModal";
 import ProductComponent from "../../components/ProductModal";
 import { useRouter } from "next/navigation";
+import SponsorsModalComponent from "@/components/SponsorsModalCompTwo";
+import SponsMessage from "@/components/SponsMessageBox";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -39,6 +41,29 @@ const ChatAIBob = () => {
   });
   const router = useRouter();
   const fileInputRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    brandName: "",
+    productName: "",
+    productImage: null,
+    website: "",
+    socialMedia: "",
+    productMessage: "",
+    additionalInfo: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleFormDataChange = (newFormData) => {
+    setFormData(newFormData);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     async function getUser() {
@@ -380,7 +405,7 @@ const ChatAIBob = () => {
                               </button>
                               <button
                                 type="button"
-                                onClick={() => setOpenModal(true)}
+                                onClick={handleModalOpen}
                                 className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                               >
                                 <span className="text-xs text-gray-700 font-semibold">
@@ -462,6 +487,10 @@ const ChatAIBob = () => {
                         <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                           <div className="text-sm font-semibold leading-6 text-gray-900">
                             Cross-Promotion
+                            <br />
+                            <span className="text-xs text-gray-700">
+                              Bloggers Network / Newsletter
+                            </span>
                           </div>
                           <div className="mt-4 sm:col-span-2 sm:mt-0">
                             <div className="space-y-4">
@@ -525,6 +554,10 @@ const ChatAIBob = () => {
                         <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
                           <div className="text-sm font-semibold leading-6 text-gray-900">
                             Publish Everywhere
+                            <br />
+                            <span className="text-xs text-gray-700">
+                              Medium, Dev.to, Blogger, Tumblr, Wordpress, Ghost
+                            </span>
                           </div>
                           <div className="mt-4 sm:col-span-2 sm:mt-0">
                             <div className="space-y-4">
@@ -625,14 +658,14 @@ const ChatAIBob = () => {
               <div className="mt-5">
                 <BCommerceArray />
               </div>
-              {openModal && (
+              {/* {openModal && (
                 <SponsorsModalComponent
                   openModal={openModal}
                   setOpenModal={setOpenModal}
                   articleData={articleData}
                   setArticleData={setArticleData}
                 />
-              )}
+              )} */}
               {openModal && (
                 <ProductComponent
                   openModal={openModal}
@@ -642,6 +675,26 @@ const ChatAIBob = () => {
             </div>
           </div>
         </form>
+        <div>
+          <SponsorsModalComponent
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            formData={formData}
+            setFormData={handleFormDataChange}
+          />
+          {formData.brandName &&
+            formData.productName &&
+            formData.productMessage &&
+            formData.productImage && <SponsMessage formData={formData} />}
+          {/* <BrandSponsorshipForm
+            formData={formData}
+            setFormData={handleFormDataChange}
+          />
+          {formData.brandName &&
+            formData.productName &&
+            formData.productMessage &&
+            formData.productImage && <SponsMessage formData={formData} />} */}
+        </div>
       </div>
     </>
   );
