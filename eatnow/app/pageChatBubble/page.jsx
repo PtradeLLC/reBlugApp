@@ -199,86 +199,246 @@ const ChatAIBob = () => {
   }
 
   return (
-    <div className="flex justify-center mt-5 px-4">
-      <form onSubmit={handleSubmit}>
-        <div className="grid lg:grid-cols-3 gap-4">
-          <div className="col-span-2">
-            <div className="space-y-12 sm:space-y-16">
-              <div className="my-4">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Write an article
-                </h2>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-                  Use the entries below to compose and publish your article.
-                  Need inspiration? Check out the tools in the right column.
-                  They include AI-powegreen brainstorming, blogging tips, and
-                  monetization features.
-                </p>
-                <div className="mt-10 space-y-8 border-gray-900/10 pb-12 sm:space-y-0 sm:border-t sm:pb-0">
-                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                    <label
-                      htmlFor="title"
-                      className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-                    >
-                      Article Title
-                    </label>
-                    <div className="mt-2 sm:col-span-2 sm:mt-0">
-                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
-                        <input
-                          id="title"
-                          name="title"
-                          type="text"
-                          onChange={(e) =>
-                            setArticleData({
-                              ...articleData,
-                              articleTitle: e.target.value,
-                            })
-                          }
-                          value={articleData.articleTitle}
-                          placeholder="Give your article a title"
-                          autoComplete="title"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                        />
+    <>
+      <div className="flex justify-center mt-5 px-4">
+        <form onSubmit={handleSubmit}>
+          <div className="grid lg:grid-cols-3 gap-4">
+            <div className="col-span-2">
+              <div className="space-y-12 sm:space-y-16">
+                <div className="my-4">
+                  <h2 className="text-base font-semibold leading-7 text-gray-900">
+                    Write an article
+                  </h2>
+                  <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
+                    Use the entries below to compose and publish your article.
+                    Need inspiration? Check out the tools in the right column.
+                    They include AI-powegreen brainstorming, blogging tips, and
+                    monetization features.
+                  </p>
+                  <div className="mt-10 space-y-8 border-gray-900/10 pb-12 sm:space-y-0 sm:border-t sm:pb-0">
+                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                      >
+                        Article Title
+                      </label>
+                      <div className="mt-2 sm:col-span-2 sm:mt-0">
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
+                          <input
+                            id="title"
+                            name="title"
+                            type="text"
+                            onChange={(e) =>
+                              setArticleData({
+                                ...articleData,
+                                articleTitle: e.target.value,
+                              })
+                            }
+                            value={articleData.articleTitle}
+                            placeholder="Give your article a title"
+                            autoComplete="title"
+                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                    <label
-                      htmlFor="cover-photo"
-                      className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-                    >
-                      Cover photo
-                    </label>
-                    <div className="mt-2 sm:col-span-2 sm:mt-0">
-                      <div className="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                        <div className="text-center">
-                          <PhotoIcon
-                            aria-hidden="true"
-                            className="mx-auto h-12 w-12 text-gray-300"
-                          />
-                          <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 hover:text-green-500"
-                            >
-                              <span>Upload a file</span>
-                              <input
-                                id="file-upload"
-                                name="file-upload"
-                                onChange={handleFileChange}
-                                type="file"
-                                className="sr-only"
+                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        htmlFor="cover-photo"
+                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                      >
+                        Cover photo
+                      </label>
+                      <div className="mt-2 sm:col-span-2 sm:mt-0">
+                        <div className="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                          <div className="text-center">
+                            <PhotoIcon
+                              aria-hidden="true"
+                              className="mx-auto h-12 w-12 text-gray-300"
+                            />
+                            <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                              <label
+                                htmlFor="file-upload"
+                                className="relative cursor-pointer rounded-md bg-white font-semibold text-green-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-600 focus-within:ring-offset-2 hover:text-green-500"
+                              >
+                                <span>Upload a file</span>
+                                <input
+                                  id="file-upload"
+                                  name="file-upload"
+                                  onChange={handleFileChange}
+                                  type="file"
+                                  className="sr-only"
+                                />
+                              </label>
+                              <p className="pl-1">or drag and drop</p>
+                            </div>
+                            <p className="text-xs leading-5 text-gray-600">
+                              PNG, JPG, GIF up to 10MB
+                            </p>
+                            {articleData.coverImage && (
+                              <img
+                                src={articleData.coverImage}
+                                alt="Cover"
+                                className="mt-4 h-40 w-40 object-contain"
                               />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
+                            )}
                           </div>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                          {articleData.coverImage && (
+                        </div>
+                      </div>
+                    </div>
+                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6 mb-3">
+                      <label
+                        htmlFor="niche"
+                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                      >
+                        Your Niche
+                      </label>
+                      <div className="mt-2 sm:col-span-2 text-gray-700 sm:mt-0">
+                        <span>Current category: {niche}</span>
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
+                          <input
+                            id="niche"
+                            name="niche"
+                            type="text"
+                            onChange={(e) =>
+                              setArticleData({
+                                ...articleData,
+                                categoryNiche: e.target.value,
+                              })
+                            }
+                            value={articleData.categoryNiche}
+                            placeholder="Please enter your niche within this category."
+                            autoComplete="niche"
+                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="block h-60">
+                      <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                        <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+                          <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+                            <div className="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+                              <button
+                                type="button"
+                                variant={variant}
+                                onClick={handleAttachFileClick}
+                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 12 20"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
+                                  />
+                                </svg>
+                                <span className="sr-only">Attach file</span>
+                              </button>
+                              <button
+                                type="button"
+                                variant={variant}
+                                onClick={() => fileInputRef.current.click()}
+                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="currentColor"
+                                  viewBox="0 0 16 20"
+                                >
+                                  <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+                                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+                                </svg>
+                                <span className="sr-only">Upload image</span>
+                              </button>
+                              <button
+                                type="button"
+                                variant={variant}
+                                onClick={handleCodeFormatClick}
+                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="currentColor"
+                                  viewBox="0 0 16 20"
+                                >
+                                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
+                                  <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z" />
+                                </svg>
+                                <span className="sr-only">Format code</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setOpenModal(true)}
+                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              >
+                                <span className="text-xs text-gray-700 font-semibold">
+                                  Add Sponsorship
+                                </span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setOpenModal(true)}
+                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              >
+                                <span className="sr-only">Insert Product</span>
+                                <span className="text-xs text-gray-700 font-semibold">
+                                  Insert Product
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                          <label htmlFor="editor" className="sr-only">
+                            Publish post
+                          </label>
+                          <textarea
+                            id="body"
+                            name="body"
+                            rows="8"
+                            onChange={(e) =>
+                              setArticleData({
+                                ...articleData,
+                                articleBody: {
+                                  ...articleData.articleBody,
+                                  articleContent: {
+                                    ...articleData.articleBody.articleContent,
+                                    bodyContent: e.target.value,
+                                  },
+                                },
+                              })
+                            }
+                            className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                            placeholder="Write an article..."
+                            value={
+                              articleData.articleBody.articleContent.bodyContent
+                            }
+                            required
+                          />
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleImageUpload}
+                            className="hidden"
+                          />
+                          {articleData.articleBody.articleContent.bodyImage && (
                             <img
-                              src={articleData.coverImage}
-                              alt="Cover"
+                              src={
+                                articleData.articleBody.articleContent.bodyImage
+                              }
+                              alt="Article"
                               className="mt-4 h-40 w-40 object-contain"
                             />
                           )}
@@ -286,362 +446,204 @@ const ChatAIBob = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6 mb-3">
-                    <label
-                      htmlFor="niche"
-                      className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-                    >
-                      Your Niche
-                    </label>
-                    <div className="mt-2 sm:col-span-2 text-gray-700 sm:mt-0">
-                      <span>Current category: {niche}</span>
-                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
-                        <input
-                          id="niche"
-                          name="niche"
-                          type="text"
-                          onChange={(e) =>
-                            setArticleData({
-                              ...articleData,
-                              categoryNiche: e.target.value,
-                            })
-                          }
-                          value={articleData.categoryNiche}
-                          placeholder="Enter your niche within Category"
-                          autoComplete="niche"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="block h-60">
-                    <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                      <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
-                        <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
-                          <div className="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                            <button
-                              type="button"
-                              variant={variant}
-                              onClick={handleAttachFileClick}
-                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 12 20"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
+                </div>
+                <div>
+                  <h2 className="text-base font-semibold leading-7 text-gray-900">
+                    Features
+                  </h2>
+                  <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
+                    You may choose additional services to bolster your blog in
+                    user engagement and growth
+                  </p>
+                  <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                    <fieldset>
+                      <legend className="sr-only">Additional services</legend>
+                      <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
+                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                          <div className="text-sm font-semibold leading-6 text-gray-900">
+                            Cross-Promotion
+                          </div>
+                          <div className="mt-4 sm:col-span-2 sm:mt-0">
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="cross-promotion-yes"
+                                  name="cross-promotion"
+                                  type="radio"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .crossPromotion === true
+                                  }
+                                  onChange={() =>
+                                    setArticleData((prevData) => ({
+                                      ...prevData,
+                                      articleFeatures: {
+                                        ...prevData.articleFeatures,
+                                        crossPromotion: true,
+                                      },
+                                    }))
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
                                 />
-                              </svg>
-                              <span className="sr-only">Attach file</span>
-                            </button>
-                            <button
-                              type="button"
-                              variant={variant}
-                              onClick={() => fileInputRef.current.click()}
-                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 16 20"
-                              >
-                                <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
-                                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
-                              </svg>
-                              <span className="sr-only">Upload image</span>
-                            </button>
-                            <button
-                              type="button"
-                              variant={variant}
-                              onClick={handleCodeFormatClick}
-                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 16 20"
-                              >
-                                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-                                <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z" />
-                              </svg>
-                              <span className="sr-only">Format code</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setOpenModal(true)}
-                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            >
-                              <span className="text-xs text-gray-700 font-semibold">
-                                Add Sponsorship
-                              </span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setOpenModal(true)}
-                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                            >
-                              <span className="sr-only">Insert Product</span>
-                              <span className="text-xs text-gray-700 font-semibold">
-                                Insert Product
-                              </span>
-                            </button>
+                                <label
+                                  htmlFor="cross-promotion-yes"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  Yes
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="cross-promotion-no"
+                                  name="cross-promotion"
+                                  type="radio"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .crossPromotion === false
+                                  }
+                                  onChange={() =>
+                                    setArticleData((prevData) => ({
+                                      ...prevData,
+                                      articleFeatures: {
+                                        ...prevData.articleFeatures,
+                                        crossPromotion: false,
+                                      },
+                                    }))
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                />
+                                <label
+                                  htmlFor="cross-promotion-no"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                          <div className="text-sm font-semibold leading-6 text-gray-900">
+                            Publish Everywhere
+                          </div>
+                          <div className="mt-4 sm:col-span-2 sm:mt-0">
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="publish-everywhere-yes"
+                                  name="publish-everywhere"
+                                  type="radio"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .publishedChannels === true
+                                  }
+                                  onChange={() =>
+                                    setArticleData((prevData) => ({
+                                      ...prevData,
+                                      articleFeatures: {
+                                        ...prevData.articleFeatures,
+                                        publishedChannels: true,
+                                      },
+                                    }))
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                                <label
+                                  htmlFor="publish-everywhere-yes"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  Yes
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="publish-everywhere-no"
+                                  name="publish-everywhere"
+                                  type="radio"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .publishedChannels === false
+                                  }
+                                  onChange={() =>
+                                    setArticleData((prevData) => ({
+                                      ...prevData,
+                                      articleFeatures: {
+                                        ...prevData.articleFeatures,
+                                        publishedChannels: false,
+                                      },
+                                    }))
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                />
+                                <label
+                                  htmlFor="publish-everywhere-no"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
-                        <label htmlFor="editor" className="sr-only">
-                          Publish post
-                        </label>
-                        <textarea
-                          id="body"
-                          name="body"
-                          rows="8"
-                          onChange={(e) =>
-                            setArticleData({
-                              ...articleData,
-                              articleBody: {
-                                ...articleData.articleBody,
-                                articleContent: {
-                                  ...articleData.articleBody.articleContent,
-                                  bodyContent: e.target.value,
-                                },
-                              },
-                            })
-                          }
-                          className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                          placeholder="Write an article..."
-                          value={
-                            articleData.articleBody.articleContent.bodyContent
-                          }
-                          required
-                        />
-                        <input
-                          type="file"
-                          ref={fileInputRef}
-                          onChange={handleImageUpload}
-                          className="hidden"
-                        />
-                        {articleData.articleBody.articleContent.bodyImage && (
-                          <img
-                            src={
-                              articleData.articleBody.articleContent.bodyImage
-                            }
-                            alt="Article"
-                            className="mt-4 h-40 w-40 object-contain"
-                          />
-                        )}
-                      </div>
-                    </div>
+                    </fieldset>
                   </div>
                 </div>
-              </div>
-              <div>
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Features
-                </h2>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-                  You may choose additional services to bolster your blog in
-                  user engagement and growth
-                </p>
-                <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-                  <fieldset>
-                    <legend className="sr-only">Additional services</legend>
-                    <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
-                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                        <div className="text-sm font-semibold leading-6 text-gray-900">
-                          Cross-Promotion
-                        </div>
-                        <div className="mt-4 sm:col-span-2 sm:mt-0">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="cross-promotion-yes"
-                                name="cross-promotion"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures.crossPromotion ===
-                                  true
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      crossPromotion: true,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                              />
-                              <label
-                                htmlFor="cross-promotion-yes"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Yes
-                              </label>
-                            </div>
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="cross-promotion-no"
-                                name="cross-promotion"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures.crossPromotion ===
-                                  false
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      crossPromotion: false,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                              />
-                              <label
-                                htmlFor="cross-promotion-no"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                No
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                        <div className="text-sm font-semibold leading-6 text-gray-900">
-                          Publish Everywhere
-                        </div>
-                        <div className="mt-4 sm:col-span-2 sm:mt-0">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="publish-everywhere-yes"
-                                name="publish-everywhere"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures
-                                    .publishedChannels === true
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      publishedChannels: true,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                              />
-                              <label
-                                htmlFor="publish-everywhere-yes"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Yes
-                              </label>
-                            </div>
-                            <div className="flex items-center gap-x-3">
-                              <input
-                                id="publish-everywhere-no"
-                                name="publish-everywhere"
-                                type="radio"
-                                checked={
-                                  articleData.articleFeatures
-                                    .publishedChannels === false
-                                }
-                                onChange={() =>
-                                  setArticleData((prevData) => ({
-                                    ...prevData,
-                                    articleFeatures: {
-                                      ...prevData.articleFeatures,
-                                      publishedChannels: false,
-                                    },
-                                  }))
-                                }
-                                className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                              />
-                              <label
-                                htmlFor="publish-everywhere-no"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                No
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
+                <div className="mt-6 flex items-center justify-end gap-x-6">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => router.push("/dashboard")}
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit}
+                    variant="primary"
+                    className="text-sm font-semibold leading-6"
+                  >
+                    Preview & Publish
+                  </Button>
                 </div>
               </div>
-              <div className="mt-6 flex items-center justify-end gap-x-6">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => router.push("/dashboard")}
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Cancel
+            </div>
+            <div className="flex flex-col mt-4">
+              <p className="font-semibold text-lg text-gray-600 pl-1">Tools</p>
+              <div className="border mt-3 mx-2 px-3">
+                <Button className="my-2 mx-2" type="button">
+                  Beginners Guide
                 </Button>
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  variant="primary"
-                  className="text-sm font-semibold leading-6"
-                >
-                  Preview & Publish
+                <Button className="my-2 mx-2 bg-stone-700" type="button">
+                  Brainstorm Ideas
+                </Button>
+                <Button className="my-2 mx-2 bg-lime-700" type="button">
+                  Generate with AI
                 </Button>
               </div>
+              <div className="mt-5">
+                <BCommerceArray />
+              </div>
+              {openModal && (
+                <SponsorsModalComponent
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                  articleData={articleData}
+                  setArticleData={setArticleData}
+                />
+              )}
+              {openModal && (
+                <ProductComponent
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                />
+              )}
             </div>
           </div>
-          <div className="flex flex-col mt-4">
-            <p className="font-semibold text-lg text-gray-600 pl-1">Tools</p>
-            <div className="border mt-3 mx-2 px-3">
-              <Button className="my-2 mx-2" type="button">
-                Beginners Guide
-              </Button>
-              <Button className="my-2 mx-2 bg-stone-700" type="button">
-                Brainstorm Ideas
-              </Button>
-              <Button className="my-2 mx-2 bg-lime-700" type="button">
-                Generate with AI
-              </Button>
-            </div>
-            <div className="mt-5">
-              <BCommerceArray />
-            </div>
-            {openModal && (
-              <SponsorsModalComponent
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                articleData={articleData}
-                setArticleData={setArticleData}
-              />
-            )}
-            {openModal && (
-              <ProductComponent
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-              />
-            )}
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 

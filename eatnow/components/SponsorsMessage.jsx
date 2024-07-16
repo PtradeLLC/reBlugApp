@@ -1,45 +1,161 @@
-import React from "react";
+import React, { useState } from "react";
 
-const SponsorsMessage = () => {
+const BrandSponsorshipForm = () => {
+  const [formData, setFormData] = useState({
+    brandName: "",
+    productName: "",
+    productImage: null,
+    website: "",
+    socialMedia: "",
+    productMessage: "",
+    additionalInfo: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "productImage") {
+      setFormData({ ...formData, productImage: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log(formData);
+  };
+
   return (
-    <div>
-      <section class="bg-white px-4 py-8 antialiased dark:bg-gray-900 md:py-16">
-        <div class="mx-auto grid max-w-screen-xl rounded-lg bg-gray-50 p-4 dark:bg-gray-800 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16">
-          <div class="lg:col-span-5 lg:mt-0">
-            <a href="#">
-              <img
-                class="mb-4 h-56 w-56 dark:hidden sm:h-96 sm:w-96 md:h-full md:w-full"
-                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-components.svg"
-                alt="peripherals"
-              />
-              <img
-                class="mb-4 hidden dark:block md:h-full"
-                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-components-dark.svg"
-                alt="peripherals"
-              />
-            </a>
-          </div>
-          <div class="me-auto place-self-center lg:col-span-7">
-            <h1 class="mb-3 text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-4xl">
-              Save $500 today on your purchase <br />
-              of a new iMac computer.
-            </h1>
-            <p class="mb-6 text-gray-500 dark:text-gray-400">
-              Reserve your new Apple iMac 27” today and enjoy exclusive savings
-              with qualified activation. Pre-order now to secure your discount.
-            </p>
-            <a
-              href="#"
-              class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+    <form
+      onSubmit={handleSubmit}
+      className="w-5/6 mx-auto p-6 bg-white shadow-md rounded-md"
+    >
+      <h2 className="text-2xl font-bold mb-6">Sponsorship</h2>
+      <div className="grid grid-cols-2">
+        <div>
+          <div className="mb-4 flex justify-center items-center">
+            <label
+              htmlFor="brandName"
+              className="block text-sm font-medium text-gray-700 mr-1"
             >
-              {" "}
-              Pre-order now{" "}
-            </a>
+              Brand Name
+            </label>
+            <input
+              type="text"
+              name="brandName"
+              id="brandName"
+              value={formData.brandName}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-2/3 p-2 border border-gray-300 rounded-md shadow-sm"
+            />
           </div>
         </div>
-      </section>
-    </div>
+        <div>
+          <div className="mb-4 flex justify-center items-center">
+            <label
+              htmlFor="productName"
+              className="block text-sm font-medium text-gray-700 mr-1"
+            >
+              Product Name
+            </label>
+            <input
+              type="text"
+              name="productName"
+              id="productName"
+              value={formData.productName}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-2/3 p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4 flex justify-center items-center">
+        <label
+          htmlFor="productImage"
+          className="block text-sm font-medium text-gray-700 mr-1"
+        >
+          Product Image
+        </label>
+        <input
+          type="file"
+          name="productImage"
+          id="productImage"
+          onChange={handleChange}
+          required
+          className="mt-1 block w-2/3  p-2 border border-gray-300 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div className="grid grid-cols-2">
+        <div>
+          <div className="mb-4 flex justify-center items-center">
+            <label
+              htmlFor="website"
+              className="block text-sm font-medium text-gray-700 mr-1"
+            >
+              Website
+            </label>
+            <input
+              type="url"
+              name="website"
+              id="website"
+              value={formData.website}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-2/3 p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="productMessage"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Product Message
+        </label>
+        <textarea
+          name="productMessage"
+          id="productMessage"
+          value={formData.productMessage}
+          onChange={handleChange}
+          required
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+          rows="4"
+        ></textarea>
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="additionalInfo"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Additional Information
+        </label>
+        <textarea
+          name="additionalInfo"
+          id="additionalInfo"
+          value={formData.additionalInfo}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div className="mb-4">
+        <button
+          type="submit"
+          className="w-1/4 p-2 bg-blue-600 text-white rounded-md shadow-sm"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   );
 };
 
-export default SponsorsMessage;
+export default BrandSponsorshipForm;
