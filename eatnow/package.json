@@ -16,6 +16,7 @@
   "dependencies": {
     "@apideck/node": "^3.1.2",
     "@auth/prisma-adapter": "^1.4.0",
+    "@babel/runtime": "^7.24.8",
     "@cloudinary/url-gen": "^1.19.0",
     "@deepgram/sdk": "^2.4.0",
     "@formatjs/intl-localematcher": "^0.5.2",
@@ -188,6 +189,7 @@
     "tremendous": "^3.0.1",
     "ts-loader": "^9.4.4",
     "twilio": "^5.2.1",
+    "typesense": "^1.8.2",
     "typewriter-effect": "^2.20.1",
     "unstructured-client": "^0.10.6",
     "utility-types": "^3.10.0",

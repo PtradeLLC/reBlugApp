@@ -209,6 +209,33 @@ const PostPage = ({ comments }) => {
       .trim();
   }
 
+  const handleFinalizeArticle = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+
+      const response = await fetch("/api/blog/finalizeArticle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postId: uniqPost.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to finalize the article");
+      }
+
+      const responseData = await response.json();
+      // Handle success (e.g., show a success message, redirect, etc.)
+      setLoading(false);
+      console.log("Article finalized successfully:", responseData);
+    } catch (error) {
+      console.error("Error finalizing the article:", error.message);
+      setLoading(false);
+    }
+  };
+
   // function cleanUpContent(content) {
   //   // Split the content based on double line breaks
   //   const paragraphs = content.split("\n\n");
@@ -394,7 +421,11 @@ const PostPage = ({ comments }) => {
                 <Button className="bg-red-800 text-center text-white font-bold rounded-md">
                   Back to Edit
                 </Button>
-                <Button className="bg-green-800 text-center text-white font-bold rounded-md">
+                <Button
+                  type="submit"
+                  onClick={handleFinalizeArticle}
+                  className="bg-green-800 text-center text-white font-bold rounded-md"
+                >
                   Publish Article
                 </Button>
               </div>

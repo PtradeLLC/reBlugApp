@@ -45,6 +45,7 @@ const BrandSponsorshipForm = () => {
               <input
                 type="text"
                 name="brandName"
+                placeholder="Enter brand's name"
                 id="brandName"
                 value={formData.brandName}
                 onChange={handleChange}
@@ -64,6 +65,7 @@ const BrandSponsorshipForm = () => {
               <input
                 type="text"
                 name="productName"
+                placeholder="Enter product name"
                 id="productName"
                 value={formData.productName}
                 onChange={handleChange}
@@ -104,6 +106,7 @@ const BrandSponsorshipForm = () => {
                 type="url"
                 name="website"
                 id="website"
+                placeholder="Enter product web page"
                 value={formData.website}
                 onChange={handleChange}
                 required
@@ -120,9 +123,11 @@ const BrandSponsorshipForm = () => {
           >
             Product Message
           </label>
+          <span className="text-xs">Show me an example</span>
           <textarea
             name="productMessage"
             id="productMessage"
+            placeholder="This is where you introduce the product and describe how it fits into your story"
             value={formData.productMessage}
             onChange={handleChange}
             required
@@ -135,24 +140,35 @@ const BrandSponsorshipForm = () => {
             htmlFor="additionalInfo"
             className="block text-sm font-medium text-gray-700"
           >
-            Additional Information
+            Note (private)
           </label>
+          <span className="text-xs">
+            You can take and save notes about this product and brand here
+          </span>
           <textarea
             name="additionalInfo"
             id="additionalInfo"
             value={formData.additionalInfo}
             onChange={handleChange}
+            required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             rows="4"
           ></textarea>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 flex flex-col md:flex-row w-full">
+          <button
+            type="email"
+            className="w-full p-2 mx-2 my-2 bg-red-600 text-white rounded-md shadow-sm"
+          >
+            Send for review/approval.
+          </button>
           <button
             type="submit"
-            className="w-1/4 p-2 bg-blue-600 text-white rounded-md shadow-sm"
+            disabled
+            className="w-full p-2 mx-2 my-2 bg-green-600 text-white rounded-md shadow-sm cursor-not-allowed"
           >
-            Submit
+            Submit Copy
           </button>
         </div>
       </form>

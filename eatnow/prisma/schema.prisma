@@ -123,6 +123,8 @@ model Post {
   createdAt         DateTime       @default(now())
   description       String?
   crossPromote      Boolean        @default(false)
+  podcastSingleCast Boolean        @default(false)
+  podcastMultiCast  Boolean        @default(false)
   slug              String?        @unique
   selectedValue     String?
   paramsId          String?
@@ -133,6 +135,7 @@ model Post {
   published         Boolean        @default(false)
   content           String?
   email             String?
+  isDraft           Boolean        @default(true)
   author            String?
   categorySlug      String?
   blogger           String?
