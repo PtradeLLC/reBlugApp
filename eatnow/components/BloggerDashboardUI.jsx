@@ -175,7 +175,7 @@ const BloggerDashboard = ({
                 {`Ideate, brainstorm, write, and publish an article quickly.`}
               </span>
               <Link
-                href={"/pageChatBubble"}
+                href={"/write"}
                 className="text-xs m-auto flex justify-center items-center bg-red-700 mt-1 w-36 h-9 rounded-md text-white"
                 size="sm"
               >

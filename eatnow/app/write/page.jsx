@@ -71,7 +71,7 @@ const ChatAIBob = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/pageChatBubble/previewarticle");
+        router.push("/write/previewarticle");
       } else {
         setMessage("Failed to create article");
       }
@@ -296,7 +296,7 @@ const ChatAIBob = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/pageChatBubble/previewarticle");
+        router.push("/write/previewarticle");
       } else {
         setMessage("Failed to create article");
       }

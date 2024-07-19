@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Modal from "./Modal";
+import SampleCopy from "./SampleAdCopy";
 
 const BrandSponsorshipForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
     productMessage: "",
     additionalInfo: "",
   });
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -26,11 +29,16 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
     console.log(formData);
   };
 
+  const openModalClick = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="overflow-y-auto h-96">
-      <p onClick={onClose} className="xs flex cursor-pointer justify-end">
-        Close
-      </p>
       <form
         onSubmit={handleSubmit}
         className="mx-auto p-6 bg-white shadow-md rounded-md"
@@ -41,7 +49,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
             <div className="mb-4 flex justify-center items-center">
               <label
                 htmlFor="brandName"
-                className="block text-sm font-medium text-gray-700 mr-1"
+                className="block text-xs md:text-sm font-medium text-gray-700 mr-1 "
               >
                 Brand Name
               </label>
@@ -61,7 +69,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
             <div className="mb-4 flex justify-center items-center">
               <label
                 htmlFor="productName"
-                className="block text-sm font-medium text-gray-700 mr-1"
+                className="block text-xs md:text-sm font-medium text-gray-700 mr-1"
               >
                 Product Name
               </label>
@@ -82,7 +90,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
         <div className="mb-4 flex justify-center items-center">
           <label
             htmlFor="productImage"
-            className="block text-sm font-medium text-gray-700 mr-1"
+            className="block text-xs md:text-sm font-medium text-gray-700 mr-1"
           >
             Product Image
           </label>
@@ -96,12 +104,12 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
           />
         </div>
 
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1">
           <div>
             <div className="mb-4 flex justify-center items-center">
               <label
                 htmlFor="website"
-                className="block text-sm font-medium text-gray-700 mr-1"
+                className="block text-xs md:text-sm font-medium text-gray-700 mr-1"
               >
                 Website
               </label>
@@ -122,15 +130,17 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
         <div className="mb-4">
           <label
             htmlFor="productMessage"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs md:text-sm font-medium text-gray-700"
           >
             Product Message
           </label>
-          <span className="text-xs">Show me an example</span>
+          <button type="button" onClick={openModalClick} className="text-xs">
+            Show me example in an article
+          </button>
           <textarea
             name="productMessage"
             id="productMessage"
-            placeholder="This is where you introduce the product and describe how it fits into your story"
+            placeholder="This is where you introduce the product and describe how it fits into your story. Click on 'Show me example in an article' to see how we integrate a hot sauce product in an article"
             value={formData.productMessage}
             onChange={handleChange}
             required
@@ -141,7 +151,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
         <div className="mb-4">
           <label
             htmlFor="additionalInfo"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs md:text-sm font-medium text-gray-700"
           >
             Note (optional)
           </label>
@@ -161,12 +171,17 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
         <div className="mb-4 flex flex-col md:flex-row w-full">
           <button
             type="submit"
-            className="w-1/4 p-2 mx-2 my-2 bg-green-600 text-white rounded-md shadow-sm"
+            className="w-full md:w-1/4 p-2 mx-2 my-2 bg-green-600 text-white rounded-md shadow-sm"
           >
-            Include Copy
+            Insert Copy
           </button>
         </div>
       </form>
+      {modalOpen && (
+        <Modal isOpen={modalOpen} onClose={closeModal}>
+          <SampleCopy />
+        </Modal>
+      )}
     </div>
   );
 };
