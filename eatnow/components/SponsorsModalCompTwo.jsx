@@ -5,7 +5,12 @@ import BrandSponsorshipForm from "@/components/SponsorsMessage";
 const SponsorsModalComponent = ({ isOpen, onClose, formData, setFormData }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <BrandSponsorshipForm formData={formData} setFormData={setFormData} />
+      <BrandSponsorshipForm
+        onClose={onClose}
+        isOpen={isOpen}
+        formData={formData}
+        setFormData={setFormData}
+      />
     </Modal>
   );
 };
