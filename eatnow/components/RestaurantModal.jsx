@@ -292,23 +292,28 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             )}
           </Card>
           <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
-            <CardHeader className="flex flex-row items-center">
+            <CardHeader className="flex flex-row items-center bg-slate-100">
               <div className="grid gap-2">
-                <CardTitle>Outgoing Deliveries</CardTitle>
-                <CardDescription>Delivered Orders</CardDescription>
+                <CardTitle>
+                  Foodhini's Pop-Up Kitchen
+                  <span className="text-xs mx-2 cursor-pointer underline text-green-600">
+                    Learn more
+                  </span>
+                </CardTitle>
+                <CardDescription>Chef Reservations</CardDescription>
               </div>
             </CardHeader>
             {payHistory ? (
               payHistory
             ) : (
-              <CardContent>
+              <CardContent className="bg-slate-50">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-sm">Name on Ticket</TableHead>
-                      <TableHead className="text-sm">Order #</TableHead>
-                      <TableHead className="text-sm">Delivered</TableHead>
-                      <TableHead className="text-sm">Contact</TableHead>
+                      <TableHead className="text-sm">Location</TableHead>
+                      <TableHead className="text-sm">Kitchen Space</TableHead>
+                      <TableHead className="text-sm">Availability</TableHead>
+                      <TableHead className="text-sm">Reservation</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -326,17 +331,16 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
                       <TableCell className="text-sm">
                         <div className="font-thin text-sm">--</div>
                         <div className="text-sm text-muted-foreground md:inline">
-                          --
                           {/* Time */}
                         </div>
                       </TableCell>
                       <TableCell className="text-sm">
                         <Button
                           type="button"
-                          className="text-xs bg-green-700 flex justify-end mt-1"
+                          className="text-xs text-gray-800 hover:text-white bg-gray-200 flex justify-end mt-1 disabled"
                           size="sm"
                         >
-                          Follow up
+                          Book Now
                         </Button>
                       </TableCell>
                     </TableRow>

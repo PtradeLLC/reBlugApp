@@ -603,7 +603,7 @@ const ChatAIBob = () => {
                               })
                             }
                             className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                            placeholder="Write an article..."
+                            placeholder="Start your article here..."
                             value={
                               articleData.articleBody.articleContent.bodyContent
                             }
@@ -767,7 +767,7 @@ const ChatAIBob = () => {
                             <span className="text-xs text-gray-700">
                               Turn your blog to Podcast? SingleCast features one
                               AI voice personality while MultiCast features
-                              multiple AI voice personalities
+                              multiple AI conversations
                             </span>
                           </div>
                           <div className="mt-4 sm:col-span-2 sm:mt-0">
