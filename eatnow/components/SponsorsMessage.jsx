@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import SampleCopy from "@/components/SampleAdCopy";
+import BrandCopyAd from "@/components/BrandCopyForProd";
 
 const BrandSponsorshipForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
     additionalInfo: "",
   });
   const [modalOpen, setModalOpen] = useState(false);
+  const [previewCopy, setPreviewCopy] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -25,8 +27,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    // SAVE TO THE DATABASE (YOU ARE HERE)
   };
 
   const openModalClick = () => {
@@ -35,6 +36,14 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const handlePrevCopy = () => {
+    setPreviewCopy(!previewCopy);
+  };
+
+  const handleInsertCopy = () => {
+    console.log("Hello from Message");
   };
 
   return (
@@ -168,13 +177,33 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
           ></textarea>
         </div>
 
+        <div>
+          {previewCopy && (
+            <>
+              <BrandCopyAd
+                productName={formData.productName}
+                image={formData.productImage}
+                message={formData.productMessage}
+                className="mb-3"
+              />
+            </>
+          )}
+        </div>
+
         <div className="mb-4 flex flex-col md:flex-row w-full">
           <button
-            type="submit"
+            type="button"
+            onClick={handleInsertCopy}
             className="w-full md:w-1/4 p-2 mx-2 my-2 bg-green-600 text-white rounded-md shadow-sm"
           >
             Insert Copy
           </button>
+          <p
+            className="text-green-800 text-sm my-6 cursor-pointer"
+            onClick={handlePrevCopy}
+          >
+            {previewCopy ? "Close Preview" : "Preview Copy"}
+          </p>
         </div>
       </form>
       {modalOpen && (

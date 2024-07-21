@@ -17,6 +17,7 @@ const ChatAIBob = () => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [drafts, setDrafts] = useState([]);
+  const [message, setMessage] = useState(" ");
   const variant = "border-green";
 
   const router = useRouter();

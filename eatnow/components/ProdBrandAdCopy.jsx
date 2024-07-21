@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, CardFooter, Image, CardBody, Button } from "@nextui-org/react";
 
-const BrandAd = () => {
+const ProdBrandAd = () => {
   return (
     <Card
       isFooterBlurred
       radius="lg"
-      className="border-none m-auto bg-slate-50 p-1 "
+      className="border-none m-auto bg-slate-50 p-1"
     >
       <div className="flex flex-col md:flex-row lg:flex-row mb-2">
         <img
@@ -17,9 +17,6 @@ const BrandAd = () => {
           width={200}
         />
         <CardBody className="px-3 py-0 mt-4 md:mt-0 lg:mt-0">
-          <h1 className="text-gray-800 font-semibold text-lg">
-            Blazn' Barry Hot sauce
-          </h1>
           <p className="text-black text-xl">
             So next time you find yourself at a trendy pop-up, remember to pack
             your Blazn' Barry's! It's the perfect way to add some sizzle to your
@@ -45,4 +42,4 @@ const BrandAd = () => {
   );
 };
 
-export default BrandAd;
+export default ProdBrandAd;

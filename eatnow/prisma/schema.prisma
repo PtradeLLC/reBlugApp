@@ -77,7 +77,7 @@ model User {
   recentUpdates      RecentUpdates[]
   sessions           Session[]
   social             Social[]
-  sponsors           Sponsors[]
+  sponsor            Sponsor[]
   team               Team[]
   verificationTokens VerificationToken[]
   referralCode       String              @unique
@@ -150,7 +150,8 @@ model Post {
   comments          Comment[]
   images            ImageOnPost[]
   category          Category?      @relation(fields: [categoryId], references: [id])
-  sponsors          Sponsors[]
+  sponsor           Sponsor[]
+  Message           Message[]
 }
 
 model VerificationToken {
@@ -283,12 +284,12 @@ model Event {
 }
 
 model Submission {
-  id          String     @unique @default(cuid())
+  id          String    @unique @default(cuid())
   fullName    String
   website     String
   email       String
   description String
-  Sponsors    Sponsors[]
+  Sponsor     Sponsor[]
 }
 
 model Image {
@@ -364,7 +365,7 @@ model AiResponse {
   Chat               Chat[]
 }
 
-model Sponsors {
+model Sponsor {
   id           String      @unique @default(cuid())
   title        String?
   postId       String?
@@ -373,6 +374,22 @@ model Sponsors {
   Post         Post?       @relation(fields: [postId], references: [id])
   submission   Submission? @relation(fields: [submissionId], references: [id])
   User         User?       @relation(fields: [userId], references: [id])
+  message      Message     @relation(fields: [messageId], references: [id])
+  messageId    String
+}
+
+model Message {
+  id            String    @unique @default(cuid())
+  brandName     String?
+  productName   String?
+  productImage  String?
+  website       String?
+  productMesage String?
+  notes         String?
+  postId        String?
+  post          Post?     @relation(fields: [postId], references: [id])
+  Sponsor       Sponsor[]
+  Chat          Chat[]
 }
 
 model EmailTool {
@@ -552,6 +569,8 @@ model Chat {
   AiResponse   AiResponse? @relation(fields: [aiResponseId], references: [id])
   Post         Post?       @relation(fields: [postId], references: [id])
   user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Message      Message?    @relation(fields: [messageId], references: [id])
+  messageId    String?
 }
 
 model Contact {

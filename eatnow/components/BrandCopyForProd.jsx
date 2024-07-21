@@ -1,7 +1,12 @@
-import React from "react";
-import { Card, CardFooter, Image, CardBody, Button } from "@nextui-org/react";
+import React, { useState } from "react";
+import { Card, CardFooter, CardBody, Button } from "@nextui-org/react";
 
-const BrandAd = () => {
+const BrandCopyAd = ({ productName, image, message }) => {
+  const [copyInstance, setCopyInstance] = useState({
+    productName,
+    image,
+    productMessage: message,
+  });
   return (
     <Card
       isFooterBlurred
@@ -10,22 +15,23 @@ const BrandAd = () => {
     >
       <div className="flex flex-col md:flex-row lg:flex-row mb-2">
         <img
-          alt="Hotsauce"
+          alt={copyInstance.productName}
           className="object-cover border rounded m-auto"
-          height={200}
-          src="/images/hotsauce.webp"
+          height={147}
+          src={
+            copyInstance.image
+              ? `${copyInstance.image.name}`
+              : "/images/coffeeprod.jpg"
+          }
           width={200}
         />
         <CardBody className="px-3 py-0 mt-4 md:mt-0 lg:mt-0">
           <h1 className="text-gray-800 font-semibold text-lg">
-            Blazn' Barry Hot sauce
+            {copyInstance.productName || "Product name"}
           </h1>
-          <p className="text-black text-xl">
-            So next time you find yourself at a trendy pop-up, remember to pack
-            your Blazn' Barry's! It's the perfect way to add some sizzle to your
-            culinary exploration. Ditch the dull, embrace the thrill! Head over
-            to BlaznBarrys.com to find out where to buy a bottle and unleash the
-            fiery potential of your food!
+          <p className="text-gray-800 text-lg">
+            {copyInstance.productMessage ||
+              "This is a sample copy for an article about retail stores, specifically coffee. Your actual message will be shown once you begin to edit by using the above form entries, and when done you may insert into your article by clicking on the button below."}
           </p>
         </CardBody>
       </div>
@@ -45,4 +51,4 @@ const BrandAd = () => {
   );
 };
 
-export default BrandAd;
+export default BrandCopyAd;
