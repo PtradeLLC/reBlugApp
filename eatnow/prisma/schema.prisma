@@ -379,17 +379,17 @@ model Sponsor {
 }
 
 model Message {
-  id            String    @unique @default(cuid())
-  brandName     String?
-  productName   String?
-  productImage  String?
-  website       String?
-  productMesage String?
-  notes         String?
-  postId        String?
-  post          Post?     @relation(fields: [postId], references: [id])
-  Sponsor       Sponsor[]
-  Chat          Chat[]
+  id             String    @unique @default(cuid())
+  brandName      String?
+  productName    String?
+  productImage   String?
+  website        String?
+  productMessage String?
+  notes          String?
+  postId         String?
+  post           Post?     @relation(fields: [postId], references: [id])
+  Sponsor        Sponsor[]
+  Chat           Chat[]
 }
 
 model EmailTool {

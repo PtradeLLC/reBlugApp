@@ -8,7 +8,9 @@ import ProductComponent from "../../components/ProductModal";
 import { useRouter } from "next/navigation";
 import SponsorsModalComponent from "@/components/SponsorsModalCompTwo";
 import SponsMessage from "@/components/SponsMessageBox";
-// import BlogCalendar from "@/components/Calendar";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -19,10 +21,12 @@ const ChatAIBob = () => {
   const [drafts, setDrafts] = useState([]);
   const [message, setMessage] = useState(" ");
   const variant = "border-green";
+  const [wordCount, setWordCount] = useState(0);
 
   const router = useRouter();
   const fileInputRef = useRef(null);
 
+  //Gets User from appwrite
   useEffect(() => {
     async function getUser() {
       setLoading(true);
@@ -380,6 +384,41 @@ const ChatAIBob = () => {
     }
   }, [user]);
 
+  const countWords = (text) => {
+    const words = text.trim().split(/\s+/);
+    return words.filter((word) => word.length > 0).length;
+  };
+
+  // const handleBodyChange = (e) => {
+  //   const bodyContent = e.target.value;
+  //   setArticleData({
+  //     ...articleData,
+  //     articleBody: {
+  //       ...articleData.articleBody,
+  //       articleContent: {
+  //         ...articleData.articleBody.articleContent,
+  //         bodyContent: bodyContent,
+  //       },
+  //     },
+  //   });
+  //   setWordCount(countWords(bodyContent));
+  // };
+
+  const handleBodyChange = (content, delta, source, editor) => {
+    const text = editor.getText();
+    setArticleData({
+      ...articleData,
+      articleBody: {
+        ...articleData.articleBody,
+        articleContent: {
+          ...articleData.articleBody.articleContent,
+          bodyContent: content,
+        },
+      },
+    });
+    setWordCount(countWords(text));
+  };
+
   return (
     <>
       <div className="flex justify-center mt-5 px-4">
@@ -397,7 +436,7 @@ const ChatAIBob = () => {
                     Avoid writers block with our AI-powered brainstorming tool,
                     blogging tips, and monetization features.
                   </p>
-                  <div className="mt-10 space-y-8 border-gray-900/10 pb-12 sm:space-y-0 sm:border-t sm:pb-0">
+                  <div className="mt-10 space-y-8 border-gray-900/10 pb-1 sm:space-y-0 sm:border-t sm:pb-0">
                     <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                       <label
                         htmlFor="title"
@@ -502,7 +541,7 @@ const ChatAIBob = () => {
                         <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
                           <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                             <div className="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                              <button
+                              {/* <button
                                 type="button"
                                 variant={variant}
                                 onClick={handleAttachFileClick}
@@ -523,8 +562,8 @@ const ChatAIBob = () => {
                                   />
                                 </svg>
                                 <span className="sr-only">Attach file</span>
-                              </button>
-                              <button
+                              </button> */}
+                              {/* <button
                                 type="button"
                                 variant={variant}
                                 onClick={() => fileInputRef.current.click()}
@@ -541,8 +580,8 @@ const ChatAIBob = () => {
                                   <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
                                 </svg>
                                 <span className="sr-only">Upload image</span>
-                              </button>
-                              <button
+                              </button> */}
+                              {/* <button
                                 type="button"
                                 variant={variant}
                                 onClick={handleCodeFormatClick}
@@ -559,7 +598,7 @@ const ChatAIBob = () => {
                                   <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z" />
                                 </svg>
                                 <span className="sr-only">Format code</span>
-                              </button>
+                              </button> */}
                               <button
                                 type="button"
                                 onClick={handleModalOpen}
@@ -586,10 +625,45 @@ const ChatAIBob = () => {
                           <label htmlFor="editor" className="sr-only">
                             Publish post
                           </label>
-                          <textarea
+                          <ReactQuill
+                            value={
+                              articleData.articleBody.articleContent.bodyContent
+                            }
+                            onChange={handleBodyChange}
+                            modules={{
+                              toolbar: [
+                                [
+                                  { header: "1" },
+                                  { header: "2" },
+                                  { font: [] },
+                                ],
+                                [{ list: "ordered" }, { list: "bullet" }],
+                                ["bold", "italic", "underline"],
+                                [{ align: [] }],
+                                ["link", "image"],
+                                ["clean"],
+                              ],
+                            }}
+                            formats={[
+                              "header",
+                              "font",
+                              "list",
+                              "bullet",
+                              "bold",
+                              "italic",
+                              "underline",
+                              "align",
+                              "link",
+                              "image",
+                            ]}
+                            className="min-h-48 max-h-96 overflow-y-auto mb-5 block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                            placeholder="Start your article here..."
+                          />
+                          {/* <textarea
                             id="body"
                             name="body"
                             rows="8"
+                            onChange={handleBodyChange}
                             onChange={(e) =>
                               setArticleData({
                                 ...articleData,
@@ -608,14 +682,14 @@ const ChatAIBob = () => {
                               articleData.articleBody.articleContent.bodyContent
                             }
                             required
-                          />
-                          <input
+                          /> */}
+                          {/* <input
                             type="file"
                             ref={fileInputRef}
                             onChange={handleImageUpload}
                             className="hidden"
-                          />
-                          {articleData.articleBody.articleContent.bodyImage && (
+                          /> */}
+                          {/* {articleData.articleBody.articleContent.bodyImage && (
                             <img
                               src={
                                 articleData.articleBody.articleContent.bodyImage
@@ -623,12 +697,18 @@ const ChatAIBob = () => {
                               alt="Article"
                               className="mt-4 h-40 w-40 object-contain"
                             />
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <span
+                  className={`mt-1 mb-1 ${wordCount >= 600 ? "text-green-500" : "text-red-500"} text-xs px-4`}
+                >
+                  You currently have: {wordCount} words. Your article must be at
+                  least 600 words at the minimum to publish.
+                </span>
                 <div>
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Features
