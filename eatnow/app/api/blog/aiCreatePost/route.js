@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
-
 // Function to fetch all categories
 async function fetchAllPosts() {
     try {
