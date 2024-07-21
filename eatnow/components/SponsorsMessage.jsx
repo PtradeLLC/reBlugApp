@@ -47,7 +47,15 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
       }
 
       const data = await response.json();
-      console.log(data);
+      setFormData({
+        brandName: "",
+        productName: "",
+        productImage: null,
+        website: "",
+        socialMedia: "",
+        productMessage: "",
+        additionalInfo: "",
+      });
     } catch (error) {
       console.error("Error:", error);
     }
