@@ -55,7 +55,8 @@ export async function POST(request) {
 
         const finalFilePath = `/images/${relativeUploadDir}/${filename}`;
         // const productImage = `http://localhost:3000${finalFilePath}`;
-        const productImage = `https://www.reblug.com${finalFilePath}`;
+        // const productImage = `https://www.reblug.com${finalFilePath}`;
+        const productImage = `${finalFilePath}`;
 
         const newArticle = await prisma.message.create({
             data: {
