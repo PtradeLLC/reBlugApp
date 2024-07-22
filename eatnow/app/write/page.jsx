@@ -231,40 +231,59 @@ const ChatAIBob = () => {
     }));
   };
 
-  const handleSaveDraft = async (e) => {
+  const handleSaveDraft = async (e, file, folder) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const userId = user.$id;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(`${articleData.coverImage}`, "your_upload_preset"); // Use a secure upload preset
+    formData.append("post/coverImage", folder);
 
-      const response = await fetch(
-        `/api/blog/userPostArticle?userId=${userId}`,
+    try {
+      const imageResponse = await fetch(
+        "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userId: userId,
-            title: articleData.articleTitle,
-            cover: articleData.coverImage,
-            niche: articleData.categoryNiche,
-            articleBody: articleData.articleBody.articleContent.bodyContent,
-            features: articleData.articleFeatures,
-            isDraft: true,
-          }),
+          body: JSON.stringify(formData),
         }
       );
+      let imageData = imageResponse.data.secure_url; //sHOULD RETURN THIS BUT NOT YET
 
-      const data = await response.json();
+      console.log("IMAGEDATA", imageData);
 
-      if (response.ok) {
-        setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
-        setMessage("Draft saved successfully");
-      } else {
-        setMessage("Failed to save draft");
-      }
+      const userId = user.$id;
+
+      // const response = await fetch(
+      //   `/api/blog/userPostArticle?userId=${userId}`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       userId: userId,
+      //       title: articleData.articleTitle,
+      //       cover: articleData.coverImage,
+      //       niche: articleData.categoryNiche,
+      //       articleBody: articleData.articleBody.articleContent.bodyContent,
+      //       features: articleData.articleFeatures,
+      //       isDraft: true,
+      //     }),
+      //   }
+      // );
+
+      // const data = await response.json();
+
+      // if (response.ok) {
+      //   setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
+      //   setMessage("Draft saved successfully");
+      // } else {
+      //   setMessage("Failed to save draft");
+      // }
     } catch (error) {
       console.error("There was an error:", error);
     } finally {
@@ -541,64 +560,6 @@ const ChatAIBob = () => {
                         <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
                           <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                             <div className="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                              {/* <button
-                                type="button"
-                                variant={variant}
-                                onClick={handleAttachFileClick}
-                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 12 20"
-                                >
-                                  <path
-                                    stroke="currentColor"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
-                                  />
-                                </svg>
-                                <span className="sr-only">Attach file</span>
-                              </button> */}
-                              {/* <button
-                                type="button"
-                                variant={variant}
-                                onClick={() => fileInputRef.current.click()}
-                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="currentColor"
-                                  viewBox="0 0 16 20"
-                                >
-                                  <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
-                                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
-                                </svg>
-                                <span className="sr-only">Upload image</span>
-                              </button> */}
-                              {/* <button
-                                type="button"
-                                variant={variant}
-                                onClick={handleCodeFormatClick}
-                                className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="currentColor"
-                                  viewBox="0 0 16 20"
-                                >
-                                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-                                  <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z" />
-                                </svg>
-                                <span className="sr-only">Format code</span>
-                              </button> */}
                               <button
                                 type="button"
                                 onClick={handleModalOpen}
@@ -621,95 +582,61 @@ const ChatAIBob = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                        <div className=" px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
                           <label htmlFor="editor" className="sr-only">
                             Publish post
                           </label>
-                          <ReactQuill
-                            value={
-                              articleData.articleBody.articleContent.bodyContent
-                            }
-                            onChange={handleBodyChange}
-                            modules={{
-                              toolbar: [
-                                [
-                                  { header: "1" },
-                                  { header: "2" },
-                                  { font: [] },
-                                ],
-                                [{ list: "ordered" }, { list: "bullet" }],
-                                ["bold", "italic", "underline"],
-                                [{ align: [] }],
-                                ["link", "image"],
-                                ["clean"],
-                              ],
-                            }}
-                            formats={[
-                              "header",
-                              "font",
-                              "list",
-                              "bullet",
-                              "bold",
-                              "italic",
-                              "underline",
-                              "align",
-                              "link",
-                              "image",
-                            ]}
-                            className="min-h-48 max-h-96 overflow-y-auto mb-5 block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                            placeholder="Start your article here..."
-                          />
-                          {/* <textarea
-                            id="body"
-                            name="body"
-                            rows="8"
-                            onChange={handleBodyChange}
-                            onChange={(e) =>
-                              setArticleData({
-                                ...articleData,
-                                articleBody: {
-                                  ...articleData.articleBody,
-                                  articleContent: {
-                                    ...articleData.articleBody.articleContent,
-                                    bodyContent: e.target.value,
-                                  },
-                                },
-                              })
-                            }
-                            className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                            placeholder="Start your article here..."
-                            value={
-                              articleData.articleBody.articleContent.bodyContent
-                            }
-                            required
-                          /> */}
-                          {/* <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleImageUpload}
-                            className="hidden"
-                          /> */}
-                          {/* {articleData.articleBody.articleContent.bodyImage && (
-                            <img
-                              src={
-                                articleData.articleBody.articleContent.bodyImage
+                          <div className="">
+                            <ReactQuill
+                              value={
+                                articleData.articleBody.articleContent
+                                  .bodyContent
                               }
-                              alt="Article"
-                              className="mt-4 h-40 w-40 object-contain"
+                              onChange={handleBodyChange}
+                              modules={{
+                                toolbar: [
+                                  [
+                                    { header: "1" },
+                                    { header: "2" },
+                                    { font: [] },
+                                  ],
+                                  [{ list: "ordered" }, { list: "bullet" }],
+                                  ["bold", "italic", "underline"],
+                                  [{ align: [] }],
+                                  ["link", "image"],
+                                  ["clean"],
+                                ],
+                              }}
+                              formats={[
+                                "header",
+                                "font",
+                                "list",
+                                "bullet",
+                                "bold",
+                                "italic",
+                                "underline",
+                                "align",
+                                "link",
+                                "image",
+                              ]}
+                              className=" max-h-48 overflow-y-auto block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                              placeholder="Start your article here..."
                             />
-                          )} */}
+                          </div>
+                          <div
+                            className={`mt-1 mb-1 ${wordCount >= 600 ? "text-green-500" : "text-red-500"} text-xs px-4`}
+                          >
+                            You currently have: {wordCount} words. Your article
+                            must be at least 600 words at the minimum to
+                            publish.
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <span
-                  className={`mt-1 mb-1 ${wordCount >= 600 ? "text-green-500" : "text-red-500"} text-xs px-4`}
-                >
-                  You currently have: {wordCount} words. Your article must be at
-                  least 600 words at the minimum to publish.
-                </span>
-                <div>
+
+                <div className="mt-4">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Features
                   </h2>
