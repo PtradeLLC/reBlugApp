@@ -10,10 +10,11 @@ function sanitizeFilename(filename) {
     return filename.replace(/[^a-zA-Z0-9_\u0600-\u06FF.]/g, '_');
 }
 
+
 const config = {
     api: {
         bodyParser: {
-            sizeLimit: '10mb', // Adjust the size limit as needed
+            sizeLimit: '20mb',
         },
     },
 };
@@ -90,7 +91,7 @@ export async function POST(request) {
     }
 }
 
-
+///////////////////////
 
 
 // import { PrismaClient } from '@prisma/client';
