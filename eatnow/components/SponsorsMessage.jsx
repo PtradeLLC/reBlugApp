@@ -15,7 +15,8 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [previewCopy, setPreviewCopy] = useState(false);
-  const [error, setError] = useState(""); // State to hold error message
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -59,9 +60,14 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
 
       if (!response.ok) {
         console.error("There has been an error");
+        setSuccessMessage(""); // Clear success message in case of error
+        return;
       }
 
       const data = await response.json();
+      setSuccessMessage("Form submitted successfully!"); // Set success message
+
+      // Reset form data
       setFormData({
         brandName: "",
         productName: "",
@@ -73,6 +79,7 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
       });
     } catch (error) {
       console.error("Error:", error);
+      setSuccessMessage(""); // Clear success message in case of error
     }
   };
 
@@ -248,6 +255,13 @@ const BrandSponsorshipForm = ({ isOpen, onClose }) => {
             {previewCopy ? "Close Preview" : "Preview Copy"}
           </p>
         </div>
+
+        {/* Display success message */}
+        {successMessage && (
+          <p className="text-green-600 text-lg mt-4 font-bold">
+            {successMessage}
+          </p>
+        )}
       </form>
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={closeModal}>
