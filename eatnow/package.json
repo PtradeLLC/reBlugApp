@@ -106,7 +106,7 @@
     "cheerio": "^1.0.0-rc.12",
     "class-variance-authority": "^0.7.0",
     "cloudflare": "^3.0.0",
-    "cloudinary": "^2.0.3",
+    "cloudinary": "^2.3.0",
     "clsx": "^2.1.1",
     "cross-fetch": "^4.0.0",
     "csrf-csrf": "^2.2.4",

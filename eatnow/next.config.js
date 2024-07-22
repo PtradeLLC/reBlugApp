@@ -17,7 +17,7 @@ const nextConfig = {
     // Add the bodyParser size limit configuration
     api: {
         bodyParser: {
-            sizeLimit: '20mb',
+            sizeLimit: '5mb',
         },
     },
 };
