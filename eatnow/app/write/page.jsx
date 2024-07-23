@@ -21,6 +21,7 @@ const ChatAIBob = () => {
   const [drafts, setDrafts] = useState([]);
   const [message, setMessage] = useState(" ");
   const [wordCount, setWordCount] = useState(0);
+  const [submissionMessage, setSubmissionMessage] = useState("");
 
   const variant = "border-green";
   const router = useRouter();
@@ -235,7 +236,7 @@ const ChatAIBob = () => {
   };
 
   //Saves Article as draft until approved before publishing
-  const handleSaveDraft = async (e, file, folder) => {
+  const handleSaveDraft = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -245,7 +246,7 @@ const ChatAIBob = () => {
       }
 
       const userId = user.$id;
-      const slug = generateSlug(articleData.articleTitle); // Generate a slug from the title or use an existing slug
+      const slug = generateSlug(articleData.articleTitle);
 
       const response = await fetch(`/api/blog/userPostArticle`, {
         method: "POST",
@@ -256,14 +257,14 @@ const ChatAIBob = () => {
           userId: userId,
           title: articleData.articleTitle,
           featureImage: articleData.coverImage,
-          content: articleData.articleBody.articleContent.bodyContent,
+          content: articleData.articleBody.articleContent.bodyContent, // Send raw content
           categorySlug: articleData.categoryNiche,
           publishedChannels: false,
           crossPromote: false,
           podcastSingleCast: true,
           podcastMultiCast: false,
           isDraft: true,
-          slug: slug, // Include the slug in the request
+          slug: slug,
         }),
       });
 
@@ -274,7 +275,23 @@ const ChatAIBob = () => {
 
       const data = await response.json();
       setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
-      setMessage("Draft saved successfully");
+      setMessage("Your draft has been saved successfully");
+
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+
+      // Reset form data//
+      // setArticleData({
+      //   articleTitle: "",
+      //   coverImage: null,
+      //   bodyContent: "",
+      //   categoryNiche: "",
+      //   publishedChannels: false,
+      //   crossPromote: false,
+      //   podcastSingleCast: false,
+      //   podcastMultiCast: false,
+      // });
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);
@@ -282,7 +299,6 @@ const ChatAIBob = () => {
       setLoading(false);
     }
   };
-
   // Utility function to generate a slug from a title
   const generateSlug = (title) => {
     return title
@@ -290,55 +306,6 @@ const ChatAIBob = () => {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)+/g, "");
   };
-
-  // const handleSaveDraft = async (e, file, folder) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     // Ensure user and userId are available before proceeding
-  //     if (!user || !user.$id) {
-  //       throw new Error("User is not available.");
-  //     }
-
-  //     const userId = user.$id;
-  //     console.log("User ID:", userId);
-  //     console.log("Cover Image:", articleData.coverImage);
-
-  //     const response = await fetch(
-  //       `/api/blog/userPostArticle?userId=${userId}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           userId: userId,
-  //           title: articleData.articleTitle,
-  //           cover: articleData.coverImage,
-  //           niche: articleData.categoryNiche,
-  //           articleBody: articleData.articleBody.articleContent.bodyContent,
-  //           features: articleData.articleFeatures,
-  //           isDraft: true,
-  //         }),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       const data = await response.json();
-  //       throw new Error(data.error || "Failed to save draft");
-  //     }
-
-  //     const data = await response.json();
-  //     setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
-  //     setMessage("Draft saved successfully");
-  //   } catch (error) {
-  //     console.error("There was an error:", error);
-  //     setMessage(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleFinalizeArticle = async (e) => {
     e.preventDefault();
@@ -456,21 +423,6 @@ const ChatAIBob = () => {
     const words = text.trim().split(/\s+/);
     return words.filter((word) => word.length > 0).length;
   };
-
-  // const handleBodyChange = (e) => {
-  //   const bodyContent = e.target.value;
-  //   setArticleData({
-  //     ...articleData,
-  //     articleBody: {
-  //       ...articleData.articleBody,
-  //       articleContent: {
-  //         ...articleData.articleBody.articleContent,
-  //         bodyContent: bodyContent,
-  //       },
-  //     },
-  //   });
-  //   setWordCount(countWords(bodyContent));
-  // };
 
   const handleBodyChange = (content, delta, source, editor) => {
     const text = editor.getText();
@@ -924,230 +876,6 @@ const ChatAIBob = () => {
                       </div>
                     </fieldset>
                   </div>
-
-                  {/* <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-                    <fieldset>
-                      <legend className="sr-only">Additional services</legend>
-                      <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
-                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                          <div className="text-sm font-semibold leading-6 text-gray-900">
-                            Cross-Promotion
-                            <br />
-                            <span className="text-xs text-gray-700">
-                              With Bloggers Network / Newsletter
-                            </span>
-                          </div>
-                          <div className="mt-4 sm:col-span-2 sm:mt-0">
-                            <div className="space-y-4">
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="cross-promotion-yes"
-                                  name="crossPromotion"
-                                  type="radio"
-                                  value={true}
-                                  checked={
-                                    articleData.articleFeatures.crossPromotion
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange("crossPromotion", true)
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                                />
-                                <label
-                                  htmlFor="cross-promotion-yes"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  Yes
-                                </label>
-                              </div>
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="cross-promotion-no"
-                                  name="crossPromotion"
-                                  type="radio"
-                                  value={false}
-                                  checked={
-                                    !articleData.articleFeatures.crossPromotion
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange("crossPromotion", false)
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                                />
-                                <label
-                                  htmlFor="cross-promotion-no"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  No
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                          <div className="text-sm font-semibold leading-6 text-gray-900">
-                            Publish Everywhere
-                            <br />
-                            <span className="text-xs text-gray-700">
-                              ReBlug, Medium, Dev.to, Blogger, Tumblr,
-                              Wordpress, Ghost e.t.c.
-                            </span>
-                          </div>
-                          <div className="mt-4 sm:col-span-2 sm:mt-0">
-                            <div className="space-y-4">
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="publish-everywhere-yes"
-                                  name="publishEverywhere"
-                                  type="radio"
-                                  value={true}
-                                  checked={
-                                    articleData.articleFeatures
-                                      .publishEverywhere
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange(
-                                      "publishEverywhere",
-                                      true
-                                    )
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                                />
-                                <label
-                                  htmlFor="publish-everywhere-yes"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  Yes
-                                </label>
-                              </div>
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="publish-everywhere-no"
-                                  name="publishEverywhere"
-                                  type="radio"
-                                  value={false}
-                                  checked={
-                                    !articleData.articleFeatures
-                                      .publishEverywhere
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange(
-                                      "publishEverywhere",
-                                      false
-                                    )
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                                />
-                                <label
-                                  htmlFor="publish-everywhere-no"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  No
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                          <div className="text-sm font-semibold leading-6 text-gray-900">
-                            Blog-2-Podcast
-                            <br />
-                            <span className="text-xs text-gray-700">
-                              Turn your blog to Podcast? SingleCast features one
-                              AI voice personality while MultiCast features
-                              multiple AI conversations
-                            </span>
-                          </div>
-                          <div className="mt-4 sm:col-span-2 sm:mt-0">
-                            <div className="space-y-4">
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="podcast-single-cast"
-                                  name="blog-to-podcast"
-                                  type="radio"
-                                  value="singleCast"
-                                  checked={
-                                    articleData.articleFeatures
-                                      .podcastSingleCast
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange(
-                                      "podcastSingleCast",
-                                      true
-                                    )
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                                />
-                                <label
-                                  htmlFor="podcast-single-cast"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  SingleCast
-                                </label>
-                              </div>
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="podcast-multi-cast"
-                                  name="blog-to-podcast"
-                                  disabled
-                                  type="radio"
-                                  value="multiCast"
-                                  checked={
-                                    articleData.articleFeatures.podcastMultiCast
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange(
-                                      "podcastMultiCast",
-                                      true
-                                    )
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
-                                />
-                                <label
-                                  htmlFor="podcast-multi-cast"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  MultiCast{" "}
-                                  <span className="text-xs">(coming soon)</span>
-                                </label>
-                              </div>
-                              <div className="flex items-center gap-x-3">
-                                <input
-                                  id="no-podcast"
-                                  name="blog-to-podcast"
-                                  type="radio"
-                                  value={false}
-                                  checked={
-                                    !articleData.articleFeatures
-                                      .podcastSingleCast &&
-                                    !articleData.articleFeatures
-                                      .podcastMultiCast
-                                  }
-                                  onChange={() =>
-                                    handleFeatureChange(
-                                      "podcastSingleCast",
-                                      false
-                                    ) &&
-                                    handleFeatureChange(
-                                      "podcastMultiCast",
-                                      false
-                                    )
-                                  }
-                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                                />
-                                <label
-                                  htmlFor="no-podcast"
-                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                >
-                                  No
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div> */}
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <Button
@@ -1162,11 +890,16 @@ const ChatAIBob = () => {
                     type="submit"
                     onClick={handleSaveDraft}
                     variant="primary"
-                    className="text-sm font-semibold leading-6"
+                    className="text-sm text-gray-900 font-semibold leading-6 hover:bg-slate-400 hover:text-white"
                   >
                     Save & Preview
                   </Button>
                 </div>
+                {message && (
+                  <div className="mt-4 flex justify-end font-semibold text-green-600 text-lg">
+                    {message}
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex flex-col mt-4">
