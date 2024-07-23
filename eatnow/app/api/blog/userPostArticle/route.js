@@ -1,168 +1,104 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { v2 as cloudinary } from 'cloudinary';
 
-const prisma = global.prisma || new PrismaClient();
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const prisma = new PrismaClient();
 
 export async function POST(request) {
+    if (request.method !== 'POST') {
+        return new NextResponse('Method Not Allowed', { status: 405 });
+    }
+
+    const {
+        userId,
+        title,
+        featureImage, // This will be a base64 or URL
+        content, // This may contain base64 images
+        categorySlug,
+        publishedChannels,
+        crossPromote,
+        podcastSingleCast,
+        podcastMultiCast,
+        isDraft,
+        slug,
+    } = await request.json();
+
     try {
-        const formData = await request.json();
-        const { userId, title, cover, niche, articleBody, features, isDraft } = formData;
-
-        let newArticle;
-
-        if (isDraft) {
-            // Saving a draft
-            newArticle = await prisma.post.upsert({
-                where: { userId: userId, isDraft: true },
-                update: {
-                    title: title || "",
-                    featureImage: cover || "",
-                    content: articleBody || "",
-                    categorySlug: niche || "",
-                    publishedChannels: features?.publishedChannels || false,
-                    crossPromote: features?.crossPromotion || false,
-                    podcastSingleCast: features?.podcastSingleCast || false,
-                    podcastMultiCast: features?.podcastMultiCast || false,
-                },
-                create: {
-                    title: title || "",
-                    featureImage: cover || "",
-                    content: articleBody || "",
-                    categorySlug: niche || "",
-                    publishedChannels: features?.publishedChannels || false,
-                    crossPromote: features?.crossPromotion || false,
-                    podcastSingleCast: features?.podcastSingleCast || false,
-                    podcastMultiCast: features?.podcastMultiCast || false,
-                    userId: userId,
-                    isDraft: true,
-                },
+        // Upload featureImage to Cloudinary
+        let uploadedFeatureImage = featureImage;
+        if (featureImage && featureImage.startsWith('data:')) {
+            const uploadResult = await cloudinary.uploader.upload(featureImage, {
+                folder: 'post/coverImage',
             });
-        } else {
-            // Finalizing an article
-            newArticle = await prisma.post.create({
-                data: {
-                    title: title || "",
-                    featureImage: cover || "",
-                    content: articleBody || "",
-                    categorySlug: niche || "",
-                    publishedChannels: features?.publishedChannels || false,
-                    crossPromote: features?.crossPromotion || false,
-                    podcastSingleCast: features?.podcastSingleCast || false,
-                    podcastMultiCast: features?.podcastMultiCast || false,
-                    userId: userId,
-                    isDraft: false,
-                },
-            });
+            uploadedFeatureImage = uploadResult.secure_url;
         }
 
-        let getNiche = null;
+        // Function to upload images within the content
+        const uploadContentImages = async (content) => {
+            const imgRegex = /<img[^>]+src="([^">]+)"/g;
+            let match;
+            const replacements = new Map();
 
-        if (userId) {
-            const uniqueNiche = await prisma.userShadow.findUnique({
-                where: { userId: userId },
-                select: { niche: true },
-            });
-
-            if (uniqueNiche && uniqueNiche.niche) {
-                getNiche = uniqueNiche.niche;
-                console.log("Niche from server", getNiche);
+            while ((match = imgRegex.exec(content)) !== null) {
+                const imgSrc = match[1];
+                if (imgSrc.startsWith('data:') && !replacements.has(imgSrc)) {
+                    const uploadResult = await cloudinary.uploader.upload(imgSrc, {
+                        folder: 'post/postBody',
+                    });
+                    replacements.set(imgSrc, uploadResult.secure_url);
+                }
             }
-        }
 
-        return NextResponse.json({
-            message: 'Article created successfully',
-            newArticle,
-            getNiche,
+            let updatedContent = content;
+            replacements.forEach((url, base64) => {
+                updatedContent = updatedContent.split(base64).join(url);
+            });
+
+            return updatedContent;
+        };
+
+        // Upload images within the content
+        const updatedContent = await uploadContentImages(content);
+
+        const post = await prisma.post.upsert({
+            where: {
+                slug: slug, // Ensure that `slug` is a unique identifier in your schema
+            },
+            update: {
+                title: title,
+                featureImage: uploadedFeatureImage,
+                content: updatedContent,
+                categorySlug: categorySlug,
+                publishedChannels: publishedChannels,
+                crossPromote: crossPromote,
+                podcastSingleCast: podcastSingleCast,
+                podcastMultiCast: podcastMultiCast,
+            },
+            create: {
+                userId: userId,
+                title: title,
+                featureImage: uploadedFeatureImage,
+                content: updatedContent,
+                categorySlug: categorySlug,
+                publishedChannels: publishedChannels,
+                crossPromote: crossPromote,
+                podcastSingleCast: podcastSingleCast,
+                podcastMultiCast: podcastMultiCast,
+                isDraft: isDraft,
+                slug: slug, // Ensure that the slug is included when creating a new post
+            },
         });
+
+        return NextResponse.json({ success: true, post });
     } catch (error) {
-        console.error('Error creating article:', error);
-        return NextResponse.json({ error: 'Failed to create article' }, { status: 500 });
+        console.error(error);
+        return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }
-
-
-
-
-// import { PrismaClient } from '@prisma/client';
-// import { NextResponse } from 'next/server';
-
-// const prisma = global.prisma || new PrismaClient();
-// if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
-
-// export async function POST(request) {
-//     try {
-//         const formData = await request.json();
-//         const { userId, title, cover, niche, articleBody, features, isDraft } = formData;
-
-//         let newArticle;
-
-//         if (isDraft) {
-//             // Saving a draft
-//             newArticle = await prisma.post.upsert({
-//                 where: { userId: userId, isDraft: true },
-//                 update: {
-//                     title: title || "",
-//                     featureImage: cover || "",
-//                     content: articleBody || "",
-//                     categorySlug: niche || "",
-//                     publishedChannels: features?.publishedChannels || false,
-//                     crossPromote: features?.crossPromotion || false,
-//                     podcastSingleCast: features?.podcastSingleCast || false,
-//                     podcastMultiCast: features?.podcastMultiCast || false,
-//                 },
-//                 create: {
-//                     title: title || "",
-//                     featureImage: cover || "",
-//                     content: articleBody || "",
-//                     categorySlug: niche || "",
-//                     publishedChannels: features?.publishedChannels || false,
-//                     crossPromote: features?.crossPromotion || false,
-//                     podcastSingleCast: features?.podcastSingleCast || false,
-//                     podcastMultiCast: features?.podcastMultiCast || false,
-//                     userId: userId,
-//                     isDraft: true,
-//                 },
-//             });
-//         } else {
-//             // Finalizing an article
-//             newArticle = await prisma.post.create({
-//                 data: {
-//                     title: title || "",
-//                     featureImage: cover || "",
-//                     content: articleBody || "",
-//                     categorySlug: niche || "",
-//                     publishedChannels: features?.publishedChannels || false,
-//                     crossPromote: features?.crossPromotion || false,
-//                     podcastSingleCast: features?.podcastSingleCast || false,
-//                     podcastMultiCast: features?.podcastMultiCast || false,
-//                     userId: userId,
-//                     isDraft: false,
-//                 },
-//             });
-//         }
-
-//         let getNiche = null;
-
-//         if (userId) {
-//             const uniqueNiche = await prisma.userShadow.findUnique({
-//                 where: { userId: userId },
-//                 select: { niche: true },
-//             });
-
-//             if (uniqueNiche && uniqueNiche.niche) {
-//                 getNiche = uniqueNiche.niche;
-//                 console.log("Niche from server", getNiche);
-//             }
-//         }
-
-//         return NextResponse.json({
-//             message: 'Article created successfully',
-//             newArticle,
-//             getNiche,
-//         });
-//     } catch (error) {
-//         console.error('Error creating article:', error);
-//         return NextResponse.json({ error: 'Failed to create article' }, { status: 500 });
-//     }
-// }

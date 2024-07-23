@@ -9,6 +9,7 @@ export async function POST(req) {
     try {
         const { niche, userId } = await req.json();
 
+
         if (!userId || typeof userId !== 'string') {
             return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
         }
@@ -17,12 +18,13 @@ export async function POST(req) {
             return NextResponse.json({ error: 'Invalid niche' }, { status: 400 });
         }
 
-        // Find or create the niche
+
         const nicheRecord = await prisma.niche.upsert({
             where: { name: niche },
             update: {},
             create: { name: niche },
         });
+
 
         // Update or create user shadow with the new niche
         const updatedUserShadow = await prisma.userShadow.upsert({
@@ -30,6 +32,7 @@ export async function POST(req) {
             update: { niche: { connect: { id: nicheRecord.id } } },
             create: { userId, niche: { connect: { id: nicheRecord.id } } },
         });
+
 
         return NextResponse.json({ message: 'Niche updated successfully', updatedUserShadow }, { status: 200 });
     } catch (error) {

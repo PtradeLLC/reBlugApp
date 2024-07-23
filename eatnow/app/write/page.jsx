@@ -20,9 +20,9 @@ const ChatAIBob = () => {
   const [openModal, setOpenModal] = useState(false);
   const [drafts, setDrafts] = useState([]);
   const [message, setMessage] = useState(" ");
-  const variant = "border-green";
   const [wordCount, setWordCount] = useState(0);
 
+  const variant = "border-green";
   const router = useRouter();
   const fileInputRef = useRef(null);
 
@@ -48,6 +48,7 @@ const ChatAIBob = () => {
     }
   }, [user]);
 
+  //Handles user submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -121,10 +122,10 @@ const ChatAIBob = () => {
     },
     categoryNiche: "",
     articleFeatures: {
-      crossPromotion: null,
-      publishEverywhere: null,
-      podcastSingleCast: null,
-      podcastMultiCast: null,
+      crossPromotion: false,
+      publishEverywhere: false,
+      podcastSingleCast: false,
+      podcastMultiCast: false,
     },
   });
 
@@ -172,6 +173,7 @@ const ChatAIBob = () => {
     }
   }, [user]);
 
+  //Converts cover image to base64
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -179,7 +181,7 @@ const ChatAIBob = () => {
     reader.onloadend = () => {
       setArticleData((prevData) => ({
         ...prevData,
-        coverImage: reader.result,
+        coverImage: reader.result, // This should be base64 encoded string
       }));
     };
 
@@ -188,6 +190,7 @@ const ChatAIBob = () => {
     }
   };
 
+  // converts Article body to base64
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -199,7 +202,7 @@ const ChatAIBob = () => {
           ...prevData.articleBody,
           articleContent: {
             ...prevData.articleBody.articleContent,
-            bodyImage: reader.result,
+            bodyImage: reader.result, // This should be base64 encoded string
           },
         },
       }));
@@ -231,65 +234,111 @@ const ChatAIBob = () => {
     }));
   };
 
+  //Saves Article as draft until approved before publishing
   const handleSaveDraft = async (e, file, folder) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append(`${articleData.coverImage}`, "your_upload_preset"); // Use a secure upload preset
-    formData.append("post/coverImage", folder);
-
     try {
-      const imageResponse = await fetch(
-        "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      let imageData = imageResponse.data.secure_url; //sHOULD RETURN THIS BUT NOT YET
-
-      console.log("IMAGEDATA", imageData);
+      if (!user || !user.$id) {
+        throw new Error("User is not available.");
+      }
 
       const userId = user.$id;
+      const slug = generateSlug(articleData.articleTitle); // Generate a slug from the title or use an existing slug
 
-      // const response = await fetch(
-      //   `/api/blog/userPostArticle?userId=${userId}`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       userId: userId,
-      //       title: articleData.articleTitle,
-      //       cover: articleData.coverImage,
-      //       niche: articleData.categoryNiche,
-      //       articleBody: articleData.articleBody.articleContent.bodyContent,
-      //       features: articleData.articleFeatures,
-      //       isDraft: true,
-      //     }),
-      //   }
-      // );
+      const response = await fetch(`/api/blog/userPostArticle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          title: articleData.articleTitle,
+          featureImage: articleData.coverImage,
+          content: articleData.articleBody.articleContent.bodyContent,
+          categorySlug: articleData.categoryNiche,
+          publishedChannels: false,
+          crossPromote: false,
+          podcastSingleCast: true,
+          podcastMultiCast: false,
+          isDraft: true,
+          slug: slug, // Include the slug in the request
+        }),
+      });
 
-      // const data = await response.json();
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to save draft");
+      }
 
-      // if (response.ok) {
-      //   setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
-      //   setMessage("Draft saved successfully");
-      // } else {
-      //   setMessage("Failed to save draft");
-      // }
+      const data = await response.json();
+      setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
+      setMessage("Draft saved successfully");
     } catch (error) {
       console.error("There was an error:", error);
+      setMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
+
+  // Utility function to generate a slug from a title
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
+
+  // const handleSaveDraft = async (e, file, folder) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     // Ensure user and userId are available before proceeding
+  //     if (!user || !user.$id) {
+  //       throw new Error("User is not available.");
+  //     }
+
+  //     const userId = user.$id;
+  //     console.log("User ID:", userId);
+  //     console.log("Cover Image:", articleData.coverImage);
+
+  //     const response = await fetch(
+  //       `/api/blog/userPostArticle?userId=${userId}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           userId: userId,
+  //           title: articleData.articleTitle,
+  //           cover: articleData.coverImage,
+  //           niche: articleData.categoryNiche,
+  //           articleBody: articleData.articleBody.articleContent.bodyContent,
+  //           features: articleData.articleFeatures,
+  //           isDraft: true,
+  //         }),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       throw new Error(data.error || "Failed to save draft");
+  //     }
+
+  //     const data = await response.json();
+  //     setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
+  //     setMessage("Draft saved successfully");
+  //   } catch (error) {
+  //     console.error("There was an error:", error);
+  //     setMessage(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleFinalizeArticle = async (e) => {
     e.preventDefault();
@@ -514,7 +563,7 @@ const ChatAIBob = () => {
                               <p className="pl-1">or drag and drop</p>
                             </div>
                             <p className="text-xs leading-5 text-gray-600">
-                              PNG, JPG, GIF up to 10MB
+                              PNG, JPG, GIF up to 5MB
                             </p>
                             {articleData.coverImage && (
                               <img
@@ -645,6 +694,238 @@ const ChatAIBob = () => {
                     user engagement and growth
                   </p>
                   <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                    <fieldset>
+                      <legend className="sr-only">Additional services</legend>
+                      <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
+                        {/* Cross-Promotion */}
+                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                          <div className="text-sm font-semibold leading-6 text-gray-900">
+                            Cross-Promotion
+                            <br />
+                            <span className="text-xs text-gray-700">
+                              With Bloggers Network / Newsletter
+                            </span>
+                          </div>
+                          <div className="mt-4 sm:col-span-2 sm:mt-0">
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="cross-promotion-yes"
+                                  name="crossPromotion"
+                                  type="radio"
+                                  value={true}
+                                  checked={
+                                    articleData.articleFeatures
+                                      .crossPromotion === true
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange("crossPromotion", true)
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                                <label
+                                  htmlFor="cross-promotion-yes"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  Yes
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="cross-promotion-no"
+                                  name="crossPromotion"
+                                  type="radio"
+                                  value={false}
+                                  checked={
+                                    articleData.articleFeatures
+                                      .crossPromotion === false
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange("crossPromotion", false)
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                />
+                                <label
+                                  htmlFor="cross-promotion-no"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Publish Everywhere */}
+                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                          <div className="text-sm font-semibold leading-6 text-gray-900">
+                            Publish Everywhere
+                            <br />
+                            <span className="text-xs text-gray-700">
+                              ReBlug, Medium, Dev.to, Blogger, Tumblr,
+                              Wordpress, Ghost e.t.c.
+                            </span>
+                          </div>
+                          <div className="mt-4 sm:col-span-2 sm:mt-0">
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="publish-everywhere-yes"
+                                  name="publishEverywhere"
+                                  type="radio"
+                                  value={true}
+                                  checked={
+                                    articleData.articleFeatures
+                                      .publishEverywhere === true
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange(
+                                      "publishEverywhere",
+                                      true
+                                    )
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                                <label
+                                  htmlFor="publish-everywhere-yes"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  Yes
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="publish-everywhere-no"
+                                  name="publishEverywhere"
+                                  type="radio"
+                                  value={false}
+                                  checked={
+                                    articleData.articleFeatures
+                                      .publishEverywhere === false
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange(
+                                      "publishEverywhere",
+                                      false
+                                    )
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                />
+                                <label
+                                  htmlFor="publish-everywhere-no"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Blog-2-Podcast */}
+                        <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
+                          <div className="text-sm font-semibold leading-6 text-gray-900">
+                            Blog-2-Podcast
+                            <br />
+                            <span className="text-xs text-gray-700">
+                              Turn your blog to Podcast? SingleCast features one
+                              AI voice personality while MultiCast features
+                              multiple AI conversations
+                            </span>
+                          </div>
+                          <div className="mt-4 sm:col-span-2 sm:mt-0">
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="podcast-single-cast"
+                                  name="blog-to-podcast"
+                                  type="radio"
+                                  value="singleCast"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .podcastSingleCast === true
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange(
+                                      "podcastSingleCast",
+                                      true
+                                    )
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                                <label
+                                  htmlFor="podcast-single-cast"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  SingleCast
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="podcast-multi-cast"
+                                  name="blog-to-podcast"
+                                  disabled
+                                  type="radio"
+                                  value="multiCast"
+                                  checked={
+                                    articleData.articleFeatures
+                                      .podcastMultiCast === true
+                                  }
+                                  onChange={() =>
+                                    handleFeatureChange(
+                                      "podcastMultiCast",
+                                      true
+                                    )
+                                  }
+                                  className="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                                />
+                                <label
+                                  htmlFor="podcast-multi-cast"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  MultiCast{" "}
+                                  <span className="text-xs">(coming soon)</span>
+                                </label>
+                              </div>
+                              <div className="flex items-center gap-x-3">
+                                <input
+                                  id="no-podcast"
+                                  name="blog-to-podcast"
+                                  type="radio"
+                                  value={false}
+                                  checked={
+                                    articleData.articleFeatures
+                                      .podcastSingleCast === false &&
+                                    articleData.articleFeatures
+                                      .podcastMultiCast === false
+                                  }
+                                  onChange={() => {
+                                    handleFeatureChange(
+                                      "podcastSingleCast",
+                                      false
+                                    );
+                                    handleFeatureChange(
+                                      "podcastMultiCast",
+                                      false
+                                    );
+                                  }}
+                                  className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                                />
+                                <label
+                                  htmlFor="no-podcast"
+                                  className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+
+                  {/* <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
                     <fieldset>
                       <legend className="sr-only">Additional services</legend>
                       <div className="space-y-6 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:gap-4 sm:py-6">
@@ -866,7 +1147,7 @@ const ChatAIBob = () => {
                         </div>
                       </div>
                     </fieldset>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <Button
