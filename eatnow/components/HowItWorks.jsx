@@ -7,6 +7,7 @@ import {
   faWindowRestore,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BreadCrumbs from "./CategoryBreadcrumbs";
 
 const contents = [
   {
@@ -71,20 +72,21 @@ ContentItem.propTypes = {
 const HowItWorks12 = () => {
   return (
     <>
-      <section className="ezy__howitworks12 light py-14 md:py-16 bg-white dark:bg-[#EEF5FF] text-zinc-900 dark:text-gray-900 relative overflow-hidden z-[1]">
+      <section className="ezy__howitworks12 light pb-14 md:pt-4 md:pb-4 bg-white dark:bg-[#EEF5FF] text-zinc-900 dark:text-gray-900 relative overflow-hidden z-[1]">
         <div className="container px-4 m-auto">
-          <div className="w-full text-center">
+          <BreadCrumbs />
+          <div className="w-full text-center mt-8">
             <h2 className="font-barlow-condensed font-bold text-left text-3xl lg:text-4xl text-black">
               Blogging on ReBlug is Easy
             </h2>
           </div>
-          <div className="grid grid-cols-12 gap-6 mt-12 md:mt-20">
+          {/* <div className="grid grid-cols-12 gap-6 mt-12 md:mt-20">
             {contents.map((item, i) => (
               <div className="col-span-12 sm:col-span-6 lg:col-span-3" key={i}>
                 <ContentItem index={i} item={item} />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
     </>

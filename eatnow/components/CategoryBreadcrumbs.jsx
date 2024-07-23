@@ -2,20 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
+import useSWR from "swr";
 
-export default function BreadCrumbs({ categories }) {
+// Define your fetcher function
+const fetcher = (url) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return res.json();
+  });
+
+export default function BreadCrumbs() {
   const [currentPage, setCurrentPage] = useState("Home");
-  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [showCrumbs, setShowCrumbs] = useState(true);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(0);
   const [valueddd, setValueddd] = useState(null);
 
   useEffect(() => {
+    setIsClient(true);
     setCurrentPage("Home");
   }, []);
-
-  console.log("CATEGORIES", categories);
 
   // Handles setting value for the loader
   useEffect(() => {
@@ -30,8 +40,28 @@ export default function BreadCrumbs({ categories }) {
     setCurrentPage(id);
     setShowCrumbs(true);
 
-    router.push(`/categories/${id}`);
+    if (isClient) {
+      const router = useRouter();
+      router.push(`/categories/${id}`);
+    }
   };
+
+  const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
+
+  useEffect(() => {
+    if (error) {
+      console.error("An error occurred:", error);
+    }
+    if (!isValidating) {
+      setLoading(false);
+    }
+  }, [error, isValidating]);
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data);
+    }
+  }, [data]);
 
   // Filter out duplicate categories based on ID
   const uniqueCategories = categories.filter(
@@ -39,7 +69,9 @@ export default function BreadCrumbs({ categories }) {
       categories.findIndex((c) => c.id === category.id) === index
   );
 
-  console.log("CAT FROM EATS", categories);
+  if (!isClient) {
+    return null; // Render nothing or a loading state until the component is mounted on the client side
+  }
 
   return (
     <>
@@ -91,6 +123,7 @@ export default function BreadCrumbs({ categories }) {
                 href={`/categories/${category.id}`}
                 isCurrent={currentPage === category.id}
                 onPress={() => handleClick(category.id)}
+                className="border rounded-md border-slate-300 text-sm"
               >
                 {category.title}
               </BreadcrumbItem>

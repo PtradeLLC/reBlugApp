@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 export async function GET(req) {
     try {
         const allCategories = await prisma.category.findMany();
+
         return new Response(JSON.stringify(allCategories), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },

@@ -6,7 +6,9 @@ import { Divider, Button } from "@nextui-org/react";
 import HowItWorks12 from "@/components/HowItWorks";
 import Image from "next/image";
 import ChatUI from "@/components/ChatBox/AIChatBox";
+import useSWR from "swr";
 
+// Define your fetcher function
 const fetcher = (url) =>
   fetch(url).then((res) => {
     if (!res.ok) {
@@ -26,22 +28,22 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
-  // const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
+  const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     console.error("An error occurred:", error);
-  //   }
-  //   if (!isValidating) {
-  //     setLoading(false);
-  //   }
-  // }, [error, isValidating]);
+  useEffect(() => {
+    if (error) {
+      console.error("An error occurred:", error);
+    }
+    if (!isValidating) {
+      setLoading(false);
+    }
+  }, [error, isValidating]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setCategories(data);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      setCategories(data);
+    }
+  }, [data]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -56,8 +58,10 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // if (error) return <div>Error loading data</div>;
+  if (error) return <div>Error loading data</div>;
   // if (isValidating) return <CircularProgress aria-label="Loading..." />;
+
+  // console.log(categories);
 
   return (
     <>
