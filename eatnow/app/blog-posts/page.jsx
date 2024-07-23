@@ -28,27 +28,74 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
+  // const { data, error, isValidating } = useSWR("/api/blog/categories", fetcher);
+  // const { data, error, isValidating } = useSWR("/api/blog/getPosts", fetcher);
+
+  const {
+    data: categoriesData,
+    error: categoriesError,
+    isValidating: isValidatingCategories,
+  } = useSWR("/api/blog/categories", fetcher);
+  const {
+    data: postsData,
+    error: postsError,
+    isValidating: isValidatingPosts,
+  } = useSWR("/api/blog/getPosts", fetcher);
 
   useEffect(() => {
-    if (error) {
-      console.error("An error occurred:", error);
+    if (categoriesError) {
+      console.error("An error occurred:", categoriesError);
     }
-    if (!isValidating) {
+    if (!isValidatingCategories) {
       setLoading(false);
     }
-  }, [error, isValidating]);
+  }, [categoriesError, isValidatingCategories]);
 
   useEffect(() => {
-    if (data) {
-      setCategories(data);
+    if (postsError) {
+      console.error("An error occurred:", postsError);
     }
-  }, [data]);
+    if (!isValidatingPosts) {
+      setLoading(false);
+    }
+  }, [postsError, isValidatingPosts]);
+
+  useEffect(() => {
+    if (categoriesData) {
+      setCategories(categoriesData);
+    }
+  }, [categoriesData]);
+
+  useEffect(() => {
+    if (postsData) {
+      setPosts(postsData);
+    }
+  }, [postsData]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setLoading(true);
   };
+
+  // useEffect(() => {
+  //   if (error) {
+  //     console.error("An error occurred:", error);
+  //   }
+  //   if (!isValidating) {
+  //     setLoading(false);
+  //   }
+  // }, [error, isValidating]);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setCategories(data);
+  //   }
+  // }, [data]);
+
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  //   setLoading(true);
+  // };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,10 +105,7 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (error) return <div>Error loading data</div>;
-  // if (isValidating) return <CircularProgress aria-label="Loading..." />;
-
-  // console.log(categories);
+  if (postsError || categoriesError) return <div>Error loading data</div>;
 
   return (
     <>
