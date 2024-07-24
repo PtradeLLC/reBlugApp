@@ -270,7 +270,10 @@ const ChatAIBob = () => {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to save draft");
+        throw new Error(
+          data.error ||
+            "Verify that the above input fields are correctly filled please. Failed to save draft"
+        );
       }
 
       const data = await response.json();
@@ -280,18 +283,6 @@ const ChatAIBob = () => {
       setTimeout(() => {
         setMessage("");
       }, 3000);
-
-      // Reset form data//
-      // setArticleData({
-      //   articleTitle: "",
-      //   coverImage: null,
-      //   bodyContent: "",
-      //   categoryNiche: "",
-      //   publishedChannels: false,
-      //   crossPromote: false,
-      //   podcastSingleCast: false,
-      //   podcastMultiCast: false,
-      // });
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);
@@ -469,6 +460,7 @@ const ChatAIBob = () => {
                           <input
                             id="title"
                             name="title"
+                            required
                             type="text"
                             onChange={(e) =>
                               setArticleData({
@@ -509,6 +501,7 @@ const ChatAIBob = () => {
                                   name="file-upload"
                                   onChange={handleFileChange}
                                   type="file"
+                                  required
                                   className="sr-only"
                                 />
                               </label>
@@ -541,6 +534,7 @@ const ChatAIBob = () => {
                           <input
                             id="niche"
                             name="niche"
+                            required
                             type="text"
                             onChange={(e) =>
                               setArticleData({
@@ -622,6 +616,7 @@ const ChatAIBob = () => {
                               ]}
                               className=" max-h-48 overflow-y-auto block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                               placeholder="Start your article here..."
+                              required
                             />
                           </div>
                           <div
