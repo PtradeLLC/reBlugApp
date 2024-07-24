@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 export async function GET(req) {
     try {
         const allPosts = await prisma.post.findMany();
-        console.log("ALL POSTS", allPosts);
 
         return new Response(JSON.stringify(allPosts), {
             status: 200,
