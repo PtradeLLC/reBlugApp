@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import { CircularProgress } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  CircularProgress,
+} from "@nextui-org/react";
 import useSWR from "swr";
 
 // Define your fetcher function
@@ -22,6 +25,8 @@ export default function BreadCrumbs() {
   const [value, setValue] = useState(0);
   const [valueddd, setValueddd] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     setIsClient(true);
     setCurrentPage("Home");
@@ -41,7 +46,6 @@ export default function BreadCrumbs() {
     setShowCrumbs(true);
 
     if (isClient) {
-      const router = useRouter();
       router.push(`/categories/${id}`);
     }
   };
