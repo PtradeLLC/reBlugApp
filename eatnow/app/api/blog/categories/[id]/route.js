@@ -6,7 +6,33 @@ export async function GET(req, { params }) {
 
     try {
         const category = await prisma.category.findUnique({
-            where: { id: id }
+            where: { id: id },
+            include: {
+                posts: {
+                    select: {
+                        id: true,
+                        title: true,
+                        author: true,
+                        category: true,
+                        featureImage: true,
+                        content: true,
+                        commentingSys: true,
+                        comments: true,
+                        createdAt: true,
+                        views: true,
+                        crossPromote: true,
+                        podcastSingleCast: true,
+                        podcastMultiCast: true,
+                        published: true,
+                        userId: true,
+                        sponsor: true,
+                        Message: true,
+                        Chat: true,
+                        aiResponses: true,
+                        status: true,
+                    }
+                },
+            },
         });
 
         if (!category) {

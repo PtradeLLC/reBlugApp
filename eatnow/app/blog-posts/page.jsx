@@ -284,12 +284,13 @@ const Blog = () => {
                 <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
                   <Button
                     as={Link}
+                    className=""
                     href={`/blog-posts/${post.id}`}
                     variant="outline"
                     color="primary"
                     size="sm"
                   >
-                    Click here to read more
+                    Click to read more
                   </Button>
                 </CardFooter>
               </Card>

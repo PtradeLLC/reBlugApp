@@ -124,7 +124,7 @@ export default function BreadCrumbs() {
             uniqueCategories.map((category) => (
               <BreadcrumbItem
                 key={category.id} // or category.slug if unique
-                href={`/categories/${category.id}`}
+                href={`/api/blog/categories/${category.id}`}
                 isCurrent={currentPage === category.id}
                 onPress={() => handleClick(category.id)}
                 className="border rounded-md border-slate-300 text-sm"
