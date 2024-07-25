@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CircularProgress } from "@nextui-org/react";
-import { useParams } from "next/navigation";
 import WisdomNugget from "./WisdomNugget";
 
 const extractPlainText = (htmlString) => {
