@@ -40,7 +40,7 @@ const WisdomNugget = () => {
                   href="#"
                   className="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-white bg-slate-600 rounded-lg hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-300 dark:bg-slate-500 dark:hover:bg-slate-600 dark:focus:ring-slate-800"
                 >
-                  Hide
+                  Deep Dive
                 </a>
               </div>
               <div>

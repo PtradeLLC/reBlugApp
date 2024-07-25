@@ -85,6 +85,9 @@ export default function CategoryPage() {
                           By: {post.author}
                         </span>
                         <span className="text-sm font-thin text-white mx-2">
+                          AI: Yes
+                        </span>
+                        <span className="text-sm font-thin text-white mx-2">
                           views: {post.views}
                         </span>
                         <Link

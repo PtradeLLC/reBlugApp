@@ -28,7 +28,7 @@ const features = [
       "Extend your brand's reach through social blogging by tapping into blogger's power of reach. Through 'six degrees of separation', benefit from the organic sharing of content and experiences, reaching a wider audience and driving traffic on a long term basis to your website.",
   },
   {
-    name: "Bloggers Directory",
+    name: "Bloggers Network",
     description:
       "Identify and collaborate with bloggers and writers whose audience and niche aligns with your target demographic. Build strategic alliances to leverage their influence for product reviews, feedback, sponsored content, brand recognition and endorsements.",
   },
