@@ -4,12 +4,9 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CircularProgress } from "@nextui-org/react";
 import WisdomNugget from "./WisdomNugget";
-
-// const extractPlainText = (htmlString) => {
-//   const tempDiv = document.createElement("div");
-//   tempDiv.innerHTML = htmlString;
-//   return tempDiv.textContent || tempDiv.innerText || "";
-// };
+import ChatUI from "./ChatBox/AIChatBox";
+import ArticleInfo from "./Blogs/ArticleInfo";
+import CommentBox from "./Blogs/CommentBox";
 
 const extractPlainText = (htmlString) => {
   const tempDiv = document.createElement("div");
@@ -166,7 +163,7 @@ const PostPage = ({ comments, post }) => {
         <>
           <div className="max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md">
             <span className="w-86 pr-4 sm:justify-center pl-2 my-4">
-              <h1 className="font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-3xl">
+              <h1 className="font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-2xl">
                 {post?.title}
               </h1>
               <ul className="mt-2 mb-4 text-sm bg-slate-100 rounded ">
@@ -221,16 +218,15 @@ const PostPage = ({ comments, post }) => {
                   </div>
                 )}
               </span>
-
               <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
-              {/* <span className="">
+              <span className="">
                 <CommentBox
                   showModal={showModal}
                   post={post}
                   comments={comments}
                   setShowModal={setShowModal}
                 />
-              </span> */}
+              </span>
               <form onSubmit={handleSubmit}>
                 <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                   <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -287,23 +283,23 @@ const PostPage = ({ comments, post }) => {
         </>
       )}
       <div>
-        {/* <ChatUI
+        <ChatUI
           postContent={post?.content}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-        /> */}
+        />
       </div>
-      <div className="mx-4 px-2">
-        {/* <SubmissionInfo
+      {/* <div className="mx-4 px-2">
+        <SubmissionInfo
           isOpen={isSubmissionModalOpen}
           setIsOpen={setIsSubmissionModalOpen}
-        /> */}
-      </div>
+        />
+      </div> */}
       <div className="mx-4 px-2">
-        {/* <ArticleInfo
+        <ArticleInfo
           isOpen={isArticleModalOpen}
           setIsOpen={setIsArticleModalOpen}
-        /> */}
+        />
       </div>
       <Button
         onClick={() => setIsOpen(true)}
