@@ -258,42 +258,44 @@ const Blog = () => {
         <div className="px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post, index) => (
-              <Card
-                key={index}
-                className="border border-gray-200 shadow-lg dark:bg-gray-800 dark:border-gray-700 rounded-xl"
-                radius="xl"
-                isPressable
-                isHoverable
-              >
-                <CardHeader className="relative p-0">
-                  <img
-                    className="object-cover rounded-t-xl"
-                    src={post.featureImage}
-                    alt="Post Feature"
-                    style={{ height: "220px", width: "100%" }}
-                  />
-                </CardHeader>
-                <CardBody className="p-4">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                    {post.title}
-                  </h3>
-                  <p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-4">
-                    {extractPlainText(post.content)}
-                  </p>
-                </CardBody>
-                <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
-                  <Button
-                    as={Link}
-                    className=""
-                    href={`/blog-posts/${post.id}`}
-                    variant="outline"
-                    color="primary"
-                    size="sm"
-                  >
-                    Click to read more
-                  </Button>
-                </CardFooter>
-              </Card>
+              <Link href={`/blog-posts/${post.id}`}>
+                <Card
+                  key={index}
+                  className="border border-gray-200 shadow-lg dark:bg-gray-800 dark:border-gray-700 rounded-xl"
+                  radius="xl"
+                  isPressable
+                  isHoverable
+                >
+                  <CardHeader className="relative p-0">
+                    <img
+                      className="object-cover rounded-t-xl"
+                      src={post.featureImage}
+                      alt="Post Feature"
+                      style={{ height: "220px", width: "100%" }}
+                    />
+                  </CardHeader>
+                  <CardBody className="p-4">
+                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                      {post.title}
+                    </h3>
+                    <p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-4">
+                      {extractPlainText(post.content)}
+                    </p>
+                  </CardBody>
+                  <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
+                    <Button
+                      as={Link}
+                      className=""
+                      href={`/blog-posts/${post.id}`}
+                      variant="outline"
+                      color="primary"
+                      size="sm"
+                    >
+                      Click to read more
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

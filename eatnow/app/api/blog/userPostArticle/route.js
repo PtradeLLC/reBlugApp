@@ -77,8 +77,6 @@ export async function POST(request) {
             },
         });
 
-        console.log(post);
-
         return NextResponse.json({ success: true, post });
     } catch (error) {
         console.error(error);
