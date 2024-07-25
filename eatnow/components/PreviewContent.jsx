@@ -25,8 +25,6 @@ const PostPage = ({ comments, post }) => {
     setNewComment(event.target.value);
   };
 
-  console.log(post, "From data");
-
   const handleTextAreaClick = () => {
     setShowModal(true);
   };
