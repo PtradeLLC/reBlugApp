@@ -16,7 +16,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             datasets: [
               {
                 label: "Facebook Reach",
-                data: [1200, 1900, 300, 500, 200],
+                data: [1, 1, 3, 5, 2],
                 backgroundColor: "rgba(54, 162, 235, 0.2)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
@@ -32,7 +32,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             datasets: [
               {
                 label: "Newsletter Subscribers",
-                data: [150, 200, 180, 220, 250],
+                data: [1, 2, 1, 2, 2],
                 borderColor: "rgba(255, 99, 132, 1)",
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 fill: true,
@@ -48,7 +48,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             datasets: [
               {
                 label: "Email Campaign",
-                data: [300, 150, 50],
+                data: [3, 1, 1],
                 backgroundColor: [
                   "rgba(75, 192, 192, 0.2)",
                   "rgba(153, 102, 255, 0.2)",
@@ -72,7 +72,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             datasets: [
               {
                 label: "Twitter Engagement",
-                data: [200, 300, 100],
+                data: [2, 3, 1],
                 backgroundColor: [
                   "rgba(255, 205, 86, 0.2)",
                   "rgba(54, 162, 235, 0.2)",
@@ -96,7 +96,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             datasets: [
               {
                 label: "Medium Post Performance",
-                data: [80, 70, 90, 85],
+                data: [1, 2, 2, 6],
                 backgroundColor: "rgba(255, 159, 64, 0.2)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
@@ -184,14 +184,12 @@ const Collaborate = ({ isOpen, onClose }) => {
           aria-hidden="true"
           className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
         >
-          <div className="relative w-full max-w-2xl max-h-full bg-white rounded-lg shadow">
+          <div className="relative w-full max-w-2xl max-h-full bg-white rounded-lg shadow mt-40">
             {/* Modal content */}
             <div className="p-4 bg-slate-50">
               {/* Modal header */}
               <div className="flex items-start justify-between p-4 border-b rounded-t">
-                <h3 className="text-xl font-semibold">
-                  Metrics &amp; Data Collection
-                </h3>
+                <h3 className="text-xl font-semibold">My Reach</h3>
                 <button
                   type="button"
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"

@@ -137,6 +137,7 @@ const PostPage = ({ comments, post }) => {
                 <img
                   src={post?.featureImage || "/images/bloger3.jpg"}
                   sizes="100vw"
+                  className="rounded-md"
                   style={{
                     width: "100%",
                     height: "auto",
@@ -170,7 +171,23 @@ const PostPage = ({ comments, post }) => {
               </h1>
               <ul className="mt-2 mb-4 text-sm bg-slate-100 rounded ">
                 <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                  {/* <img className="w-7 h-7 mr-1" src={`${post.image} `} />{" "} */}
+                  <svg
+                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
                   Author: {post.author || "No named Author"}
                 </li>
                 {/* <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
@@ -179,11 +196,43 @@ const PostPage = ({ comments, post }) => {
                   Niche: {"None set"}
                 </li> */}
                 <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                  <img className="w-7 h-7 mr-1" src="/images/users.png" />
-                  <div className="">Readership: N/A</div>
+                  <svg
+                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="2"
+                      d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                    />
+                  </svg>
+                  <div className="">Niche: </div>
                 </li>
                 <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                  <img className="w-7 h-7 mr-1" src="/images/submit.png" />
+                  <svg
+                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4"
+                    />
+                  </svg>
+
                   <button
                     onClick={() => setIsCollaborateModalOpen(true)}
                     className=""
@@ -206,12 +255,12 @@ const PostPage = ({ comments, post }) => {
               <WisdomNugget />
             </span>
 
-            <span className="col-span-2 my-4 p-2">
-              <span className="flex">
+            <span className="col-span-2 mt-10 mb-4 p-2">
+              {/* <span className="flex">
                 <span className="text-xs flex justify-end my-2">
                   Views: {post?.views}
                 </span>
-              </span>
+              </span> */}
               <span className="flex justify-center items-center">
                 {loading ? (
                   <div className="flex justify-center">

@@ -49,7 +49,6 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
       const data = await response.json();
       setInputValue("");
       setSentInput(inputValue);
-      console.log("DATA", data);
       setModelResponse(data.assistantResponse);
     } catch (error) {
       console.error("There was a problem sending data to the backend:", error);
@@ -89,7 +88,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 font-barlow-condensed">
+              <ModalHeader className="articleassist flex bg-slate-50 flex-col gap-1 font-barlow-condensed">
                 Article Assistant
               </ModalHeader>
               <ModalBody>
@@ -212,7 +211,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                               <p>
                                 {modelResponse
                                   ? modelResponse
-                                  : "Need more information? Article Assistant is here to answer your questions."}
+                                  : "Need more information? I am here to help you research this article, and answer your questions."}
                               </p>
                             </div>
                           )}
@@ -234,10 +233,10 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                         ) : (
                           <Link
                             href={"#"}
-                            className="flex item-center rounded-lg text-gray-900 bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-700 dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-800"
+                            className="flex item-center rounded-lg text-gray-50 bg-slate-500 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-300"
                           >
                             <svg
-                              className="w-6 h-6 text-gray-800 dark:text-black"
+                              className="w-6 h-6 text-gray-100 dark:text-white"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -267,7 +266,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                         ) : (
                           <Link
                             href={"/contact"}
-                            className="flex item-center rounded-lg text-gray-900 bg-slate-200 p-2 hover:bg-slate-600 hover:text-slate-700 dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-800"
+                            className="flex item-center rounded-lg text-gray-700 bg-slate-200 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-white"
                           >
                             <img
                               className="w-5 h-5 mr-1"

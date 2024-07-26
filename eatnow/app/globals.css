@@ -85,6 +85,15 @@
   margin-bottom: 1rem;
 }
 
+section#\:r0\: {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.articleassist {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
 @layer base {
   * {
     @apply border-border;
