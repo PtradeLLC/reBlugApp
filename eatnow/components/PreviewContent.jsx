@@ -8,6 +8,7 @@ import ChatUI from "./ChatBox/AIChatBox";
 import ArticleInfo from "./Blogs/ArticleInfo";
 import CommentBox from "./Blogs/CommentBox";
 import BrandCollaborate from "./Blogs/Collaborate";
+import BlogChatUI from "./ChatBox/AIBlogArticleAssistant";
 
 const extractPlainText = (htmlString) => {
   const tempDiv = document.createElement("div");
@@ -23,13 +24,28 @@ const extractPlainText = (htmlString) => {
 const PostPage = ({ comments, post }) => {
   const [newComment, setNewComment] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
   const [isArticleModalOpen, setIsArticleModalOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isCollaborateModalOpen, setIsCollaborateModalOpen] = useState(false);
+  const [llmArticle, setLLMArticle] = useState("");
 
+  //Save article to local storage
+  useEffect(() => {
+    if (post && post.content) {
+      localStorage.setItem("articleContent", JSON.stringify(post.content));
+      const savedContent = localStorage.getItem("articleContent");
+      setLLMArticle(savedContent);
+    }
+  }, [post]);
+
+  //handles cases if post is null
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
+  //Handle comment change
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
@@ -172,7 +188,7 @@ const PostPage = ({ comments, post }) => {
               <ul className="mt-2 mb-4 text-sm bg-slate-100 rounded ">
                 <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <svg
-                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    className="w-6 h-6 text-gray-600 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -182,9 +198,9 @@ const PostPage = ({ comments, post }) => {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                   </svg>
@@ -195,9 +211,9 @@ const PostPage = ({ comments, post }) => {
                   Category: {post?.category?.title || "No category set yet"}
                   Niche: {"None set"}
                 </li> */}
-                <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                {/* <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <svg
-                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    className="w-6 h-6 text-gray-600 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -207,16 +223,16 @@ const PostPage = ({ comments, post }) => {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeWidth="2"
                       d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                     />
                   </svg>
                   <div className="">Niche: </div>
-                </li>
-                <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                </li> */}
+                <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <svg
-                    class="w-6 h-6 text-gray-600 dark:text-white"
+                    className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -226,9 +242,31 @@ const PostPage = ({ comments, post }) => {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m11.5 11.5 2.071 1.994M4 10h5m11 0h-1.5M12 7V4M7 7V4m10 3V4m-7 13H8v-2l5.227-5.292a1.46 1.46 0 0 1 2.065 2.065L10 17Zm-5 3h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+                    />
+                  </svg>
+                  <div>
+                    Published: {new Date(post?.createdAt).toLocaleDateString()}
+                  </div>
+                </li>
+                <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                  <svg
+                    className="w-6 h-6 text-gray-600 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4"
                     />
                   </svg>
@@ -243,24 +281,12 @@ const PostPage = ({ comments, post }) => {
                     isOpen={isCollaborateModalOpen}
                     onClose={() => setIsCollaborateModalOpen(false)}
                   />
-                  {/* <button
-                    onClick={() => setIsCollaborateModalOpen(true)}
-                    name="ProductSubmission"
-                    type="button"
-                  >
-                    Collaborate with me
-                  </button> */}
                 </li>
               </ul>
               <WisdomNugget />
             </span>
 
             <span className="col-span-2 mt-10 mb-4 p-2">
-              {/* <span className="flex">
-                <span className="text-xs flex justify-end my-2">
-                  Views: {post?.views}
-                </span>
-              </span> */}
               <span className="flex justify-center items-center">
                 {loading ? (
                   <div className="flex justify-center">
@@ -348,18 +374,13 @@ const PostPage = ({ comments, post }) => {
         </>
       )}
       <div>
-        <ChatUI
+        <BlogChatUI
           postContent={post?.content}
           isOpen={isOpen}
+          llmArticle={llmArticle}
           setIsOpen={setIsOpen}
         />
       </div>
-      {/* <div className="mx-4 px-2">
-        <SubmissionInfo
-          isOpen={isSubmissionModalOpen}
-          setIsOpen={setIsSubmissionModalOpen}
-        />
-      </div> */}
       <div className="mx-4 px-2">
         <ArticleInfo
           isOpen={isArticleModalOpen}

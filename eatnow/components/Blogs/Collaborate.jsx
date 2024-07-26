@@ -5,18 +5,53 @@ const Collaborate = ({ isOpen, onClose }) => {
   const chartRefs = useRef({});
   const modalRef = useRef(null);
 
+  const getLastFiveMonths = () => {
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const lastFiveMonths = [];
+
+    for (let i = 4; i >= 0; i--) {
+      const monthIndex = (currentMonth - i + 12) % 12;
+      lastFiveMonths.push(monthNames[monthIndex]);
+    }
+
+    return lastFiveMonths;
+  };
+
+  const getLastFiveMonthsData = (data) => {
+    return data.slice(-5);
+  };
+
   useEffect(() => {
     const initializeCharts = () => {
+      const lastFiveMonths = getLastFiveMonths();
+
       const charts = [
         {
           id: "facebookChart",
           type: "bar",
           data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+            labels: lastFiveMonths,
             datasets: [
               {
                 label: "Facebook Reach",
-                data: [1, 1, 3, 5, 2],
+                data: getLastFiveMonthsData([
+                  1, 1, 3, 5, 2, 1, 2, 3, 4, 5, 6, 7,
+                ]), // Adjust this data accordingly
                 backgroundColor: "rgba(54, 162, 235, 0.2)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
@@ -28,11 +63,13 @@ const Collaborate = ({ isOpen, onClose }) => {
           id: "newsletterChart",
           type: "line",
           data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+            labels: lastFiveMonths,
             datasets: [
               {
                 label: "Newsletter Subscribers",
-                data: [1, 2, 1, 2, 2],
+                data: getLastFiveMonthsData([
+                  1, 2, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9,
+                ]), // Adjust this data accordingly
                 borderColor: "rgba(255, 99, 132, 1)",
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 fill: true,
@@ -214,169 +251,180 @@ const Collaborate = ({ isOpen, onClose }) => {
                 {/* Section 1: Charts */}
                 <div className="mb-14">
                   <h4 className="text-lg font-medium">Total Reach</h4>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">Facebook</h5>
                       <canvas id="facebookChart"></canvas>
-                      <p className="text-center pt-4">Facebook Reach</p>
                     </div>
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">Newsletter</h5>
                       <canvas id="newsletterChart"></canvas>
-                      <p className="text-center pt-4">Newsletter Reach</p>
                     </div>
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">
+                        Email Campaign
+                      </h5>
                       <canvas id="emailChart"></canvas>
-                      <p className="text-center pt-4">Email Reach</p>
                     </div>
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">Twitter</h5>
                       <canvas id="twitterChart"></canvas>
-                      <p className="text-center pt-4">Twitter Reach</p>
                     </div>
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">Medium</h5>
                       <canvas id="mediumChart"></canvas>
-                      <p className="text-center pt-4">Medium Reach</p>
                     </div>
-                    <div className="h-40 bg-gray-100 rounded-lg">
+                    <div className="p-4 bg-white rounded-lg shadow">
+                      <h5 className="text-base font-medium mb-2">ReBlug</h5>
                       <canvas id="reBlugChart"></canvas>
-                      <p className="text-center pt-4">ReBlug Reach</p>
                     </div>
                   </div>
                 </div>
-                {/* Section 2: Form */}
-                <div className="collabo">
-                  <h4 className="text-lg font-medium">Let's Collaborate</h4>
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label
-                          htmlFor="firstName"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          First Name
-                        </label>
-                        <input
-                          type="text"
-                          id="firstName"
-                          name="firstName"
-                          className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="lastName"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          id="lastName"
-                          name="lastName"
-                          className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                      </div>
-                    </div>
+              </div>
+              {/* Section 2: Form */}
+              <div className="collabo">
+                <h4 className="text-lg font-medium">Let's Collaborate</h4>
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label
-                        htmlFor="email"
+                        htmlFor="firstName"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="brandName"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Brand Name
+                        First Name
                       </label>
                       <input
                         type="text"
-                        id="brandName"
-                        name="brandName"
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        id="firstName"
+                        name="firstName"
+                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
                       />
                     </div>
                     <div>
                       <label
-                        htmlFor="productName"
+                        htmlFor="lastName"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Product Name
+                        Last Name
                       </label>
                       <input
                         type="text"
-                        id="productName"
-                        name="productName"
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        id="lastName"
+                        name="lastName"
+                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
                       />
                     </div>
-                    <div>
-                      <label
-                        htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Description
-                      </label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        rows={3}
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        defaultValue={""}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="website"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Website
-                      </label>
-                      <input
-                        type="url"
-                        id="website"
-                        name="website"
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="price"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Price
-                      </label>
-                      <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </form>
-                </div>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="brandName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Brand Name
+                    </label>
+                    <input
+                      type="text"
+                      id="brandName"
+                      name="brandName"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="productName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Product Name
+                    </label>
+                    <input
+                      type="text"
+                      id="productName"
+                      name="productName"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows={3}
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                      defaultValue={""}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="website"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Website
+                    </label>
+                    <input
+                      type="url"
+                      id="website"
+                      name="website"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="price"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Price
+                    </label>
+                    <input
+                      type="number"
+                      id="price"
+                      name="price"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={3}
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+                      defaultValue={""}
+                    />
+                  </div>
+                </form>
               </div>
               {/* Modal footer */}
-              <div className="flex items-center justify-end p-4 border-t rounded-b">
+              <div className="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                 <button
                   type="button"
-                  className="text-gray-500 bg-white border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+                  className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   onClick={onClose}
                 >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg text-sm px-5 py-2.5 text-center"
-                >
-                  Save changes
+                  Send
                 </button>
               </div>
             </div>

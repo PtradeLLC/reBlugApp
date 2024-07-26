@@ -219,62 +219,36 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                       </div>
 
                       <div className="mt-4 flex justify-end w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 sm:text-sm">
-                        {loading ? (
-                          <div className="flex justify-center">
-                            <CircularProgress
-                              aria-label="Loading..."
-                              size="sm"
-                              value={value}
-                              color="warning"
-                              className="mx-2"
-                              showValueLabel={true}
-                            />
-                          </div>
-                        ) : (
-                          <Link
-                            href={"#"}
-                            className="flex item-center rounded-lg text-gray-50 bg-slate-500 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-300"
+                        <Link
+                          href={"/login"}
+                          className="flex item-center rounded-lg text-gray-50 bg-slate-500 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-slate-300"
+                        >
+                          <svg
+                            className="w-6 h-6 text-gray-100 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              className="w-6 h-6 text-gray-100 dark:text-white"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeWidth="2"
-                                d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                              />
-                            </svg>
-                            Sign Up now
-                          </Link>
-                        )}
-                        {loading ? (
-                          <div className="flex justify-center">
-                            <CircularProgress
-                              aria-label="Loading..."
-                              size="sm"
-                              value={value}
-                              color="warning"
-                              className="mx-2"
-                              showValueLabel={true}
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeWidth="2"
+                              d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                             />
-                          </div>
-                        ) : (
-                          <Link
-                            href={"/contact"}
-                            className="flex item-center rounded-lg text-gray-700 bg-slate-200 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-white"
-                          >
-                            <img
-                              className="w-5 h-5 mr-1"
-                              src="/images/productreview.png"
-                            />
-                            Contact Us
-                          </Link>
-                        )}
+                          </svg>
+                          Sign Up now
+                        </Link>
+                        <Link
+                          href={"/contact"}
+                          className="flex item-center rounded-lg text-gray-700 bg-slate-200 p-2 hover:bg-slate-600 hover:text-white dark:bg-slate-50 dark:hover:bg-slate-100 dark:hover:text-white"
+                        >
+                          <img
+                            className="w-5 h-5 mr-1"
+                            src="/images/productreview.png"
+                          />
+                          Contact Us
+                        </Link>
                       </div>
                       <form onSubmit={handleSubmit} className="mt-2">
                         <label htmlFor="chat-input" className="sr-only">
@@ -284,7 +258,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                           <textarea
                             id="chat-input"
                             className="block w-full resize-none rounded-xl border bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:bg-slate-50 dark:text-slate-900 dark:placeholder-slate-900 dark:focus:ring-slate-500 sm:text-base"
-                            placeholder="Ask this article a question"
+                            placeholder="Ask me.."
                             rows="1"
                             value={inputValue}
                             onChange={handleChange}
@@ -296,7 +270,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                             className="absolute bottom-2 right-2.5 rounded-md bg-slate-50 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-white dark:hover:bg-slate-50 dark:focus:ring-slate-300 sm:text-base"
                           >
                             Send
-                            {loading && (
+                            {/* {loading && (
                               <div className="flex justify-center">
                                 <CircularProgress
                                   aria-label="Loading..."
@@ -307,7 +281,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                                   showValueLabel={true}
                                 />
                               </div>
-                            )}
+                            )} */}
                             <span className="sr-only">Send message</span>
                           </button>
                         </div>

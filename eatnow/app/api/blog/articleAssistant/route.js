@@ -8,7 +8,7 @@ export async function POST(request, response) {
         const formData = await request.json();
         const content = formData.content;
 
-        const noviceInfo = `This program uses AI powered tool to help kids learn to write by building compelling blog articles. Kids are taught how to express their thoughts through the power of writing and storytelling.
+        const noviceInfo = `This program uses AI powered tool to help users learn to write by building compelling blog articles. Users are taught how to express their thoughts through the power of writing and storytelling.
         Become an Expert: The act of writing forces you to delve deeper into your chosen field, solidifying your knowledge and establishing you as a thought leader.
         Connect with a Community: Blogging fosters a sense of connection. Engage with your readers, build a loyal following, and share your voice with the world.
         Storytelling Simplified: Learn to craft compelling narratives within your chosen niche. ReBlug provides frameworks and templates to structure your blog posts for maximum impact.
@@ -70,8 +70,6 @@ export async function POST(request, response) {
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
         const responseMessage = `You sent: ${content}`;
-
-        console.log("Response message", responseMessage);
 
         try {
             const chatCompletion = await groq.chat.completions.create({
