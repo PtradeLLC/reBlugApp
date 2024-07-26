@@ -186,7 +186,7 @@ const PostPage = ({ comments, post }) => {
                   <img className="w-7 h-7 mr-1" src="/images/submit.png" />
                   <button
                     onClick={() => setIsCollaborateModalOpen(true)}
-                    className="px-4 py-2 mt-4 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+                    className=""
                   >
                     Collaborate with me
                   </button>

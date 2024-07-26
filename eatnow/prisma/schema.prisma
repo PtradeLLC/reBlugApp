@@ -154,6 +154,68 @@ model Post {
   Message           Message[]
 }
 
+model FacebookMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  reach       Int
+  impressions Int
+}
+
+model TwitterMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  likes       Int
+  retweets    Int
+  replies     Int
+  impressions Int
+}
+
+model MediumMetrics {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  month     String
+  readTime  Int
+  shares    Int
+  comments  Int
+  views     Int
+}
+
+model ReblugMetrics {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  month      String
+  upvotes    Int
+  shares     Int
+  comments   Int
+  engagement Int
+}
+
+model NewsletterMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  subscribers Int
+  opens       Int
+  clicks      Int
+}
+
+model EmailCampaignMetrics {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  month        String
+  opened       Int
+  clicked      Int
+  unsubscribed Int
+}
+
 model VerificationToken {
   id          String    @unique @default(cuid())
   userId      String
