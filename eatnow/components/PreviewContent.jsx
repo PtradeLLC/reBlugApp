@@ -7,6 +7,7 @@ import WisdomNugget from "./WisdomNugget";
 import ChatUI from "./ChatBox/AIChatBox";
 import ArticleInfo from "./Blogs/ArticleInfo";
 import CommentBox from "./Blogs/CommentBox";
+import BrandCollaborate from "./Blogs/Collaborate";
 
 const extractPlainText = (htmlString) => {
   const tempDiv = document.createElement("div");
@@ -27,6 +28,7 @@ const PostPage = ({ comments, post }) => {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isCollaborateModalOpen, setIsCollaborateModalOpen] = useState(false);
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -162,7 +164,7 @@ const PostPage = ({ comments, post }) => {
       {post && (
         <>
           <div className="max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-4 justify-center px-6 mx-auto bg-slate-50 rounded-md">
-            <span className="w-86 pr-4 sm:justify-center pl-2 my-4">
+            <span className="w-86 pr-4 sm:justify-center pl-2 my-12">
               <h1 className="font-semibold border border-gray-300 rounded-lg p-2 text-gray-700 text-2xl">
                 {post?.title}
               </h1>
@@ -182,9 +184,23 @@ const PostPage = ({ comments, post }) => {
                 </li>
                 <li className="flex item-center border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                   <img className="w-7 h-7 mr-1" src="/images/submit.png" />
-                  <button name="ProductSubmission" type="button">
+                  <button
+                    onClick={() => setIsCollaborateModalOpen(true)}
+                    className="px-4 py-2 mt-4 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300"
+                  >
                     Collaborate with me
                   </button>
+                  <BrandCollaborate
+                    isOpen={isCollaborateModalOpen}
+                    onClose={() => setIsCollaborateModalOpen(false)}
+                  />
+                  {/* <button
+                    onClick={() => setIsCollaborateModalOpen(true)}
+                    name="ProductSubmission"
+                    type="button"
+                  >
+                    Collaborate with me
+                  </button> */}
                 </li>
               </ul>
               <WisdomNugget />
@@ -266,7 +282,7 @@ const PostPage = ({ comments, post }) => {
                   </div>
                 </div>
               </form>
-              <div className="flex justify-en space-x-2">
+              {/* <div className="flex justify-en space-x-2">
                 <Button className="bg-red-800 text-center text-white font-bold rounded-md">
                   Back to Edit
                 </Button>
@@ -277,7 +293,7 @@ const PostPage = ({ comments, post }) => {
                 >
                   Publish Article
                 </Button>
-              </div>
+              </div> */}
             </span>
           </div>
         </>
