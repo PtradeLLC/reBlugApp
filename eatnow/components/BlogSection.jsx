@@ -71,8 +71,10 @@ const BlogComponent = () => {
                     <span className="font-bold text-lg">
                       AI Powered Assistant
                     </span>{" "}
-                    – Give each of your article its own AI assistant to provide
-                    In-article research and support to your readers.
+                    – Transform your blog articles into interactive research
+                    tools by equipping each one with our AI-powered Article
+                    Assistant. Readers can explore in-depth information, gather
+                    facts, and interact with the tool without leaving the page.
                   </span>
                 </li>
                 <li className="flex space-x-3">

@@ -9,7 +9,6 @@ export async function POST(req) {
     try {
         const { niche, userId } = await req.json();
 
-
         if (!userId || typeof userId !== 'string') {
             return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
         }

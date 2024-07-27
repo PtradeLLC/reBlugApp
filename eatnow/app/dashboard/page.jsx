@@ -80,17 +80,7 @@ const DashboardPage = () => {
           />
         );
       default:
-        return (
-          <>
-            {/* <BloggerDashboard
-              user={user}
-              name={name}
-              setModalOpen={setModalOpen}
-              userNiche={userNiche}
-              setUserNiche={setUserNiche}
-            /> */}
-          </>
-        );
+        return <></>;
     }
   };
 

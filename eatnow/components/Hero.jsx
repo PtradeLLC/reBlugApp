@@ -2,13 +2,14 @@
 import { useState } from "react";
 import StepTwo from "./SteppersTwo";
 import RightSide from "./HeroRightSide";
+import AppStore from "./AppStore";
 
 export default () => {
   const [state, setState] = useState(false);
 
   return (
     <>
-      <section className="py-20">
+      <section className="">
         <div className="max-w-screen-xl mx-auto text-gray-600 gap-x-12 items-center justify-between overflow-hidden md:flex md:px-8">
           <div className="flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
             <h2 className=" text-4xl text-gray-800 font-extrabold md:text-5xl lg:text-6xl">
@@ -38,9 +39,7 @@ export default () => {
                 Easy ways to earn from your blog.
               </li>
               <li>
-                <span className="font-semibold text-lg">
-                  Bloggers Marketplace:
-                </span>{" "}
+                <span className="font-semibold text-lg">Bloggers Network:</span>{" "}
                 Connect and collaborate with others.
               </li>
               <li>
@@ -109,7 +108,10 @@ export default () => {
             {/* <img src="/images/heroimgetwo.png" className="" alt="hero-image" /> */}
           </div>
         </div>
-        <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3">
+        <div>
+          <AppStore />
+        </div>
+        {/* <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3">
           <p className="text-center text-sm text-gray-700 font-semibold pt-3">
             Free Food Alert: Eat Now, Pay Never
           </p>
@@ -133,7 +135,7 @@ export default () => {
               alt="apple-store"
             />
           </div>
-        </div>
+        </div> */}
       </section>
     </>
   );

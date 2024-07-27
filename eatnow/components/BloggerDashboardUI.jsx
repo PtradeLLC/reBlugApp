@@ -60,6 +60,9 @@ const BloggerDashboard = ({
     try {
       const userId = user.$id;
 
+      console.log("Uid", userId);
+      console.log("User", user);
+
       const response = await fetch(`/api/getNiche?userId=${userId}`, {
         method: "GET",
         headers: {
@@ -68,6 +71,7 @@ const BloggerDashboard = ({
       });
 
       const data = await response.json();
+      console.log("DataFrom", data); // There is data
       if (data && data.userNiche) {
         setUserNiche(data.userNiche);
       }
@@ -75,6 +79,8 @@ const BloggerDashboard = ({
       console.error("Failed to fetch niche:", error);
     }
   };
+
+  console.log("Nicher from BDashbaordUI", userNiche);
 
   useEffect(() => {
     if (user && user.$id) {

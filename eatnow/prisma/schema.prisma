@@ -428,16 +428,22 @@ model AiResponse {
 }
 
 model Sponsor {
-  id           String      @unique @default(cuid())
-  title        String?
-  postId       String?
-  submissionId String?
-  userId       String?
-  Post         Post?       @relation(fields: [postId], references: [id])
-  submission   Submission? @relation(fields: [submissionId], references: [id])
-  User         User?       @relation(fields: [userId], references: [id])
-  message      Message     @relation(fields: [messageId], references: [id])
-  messageId    String
+  id              String      @unique @default(cuid())
+  firstName       String?
+  lastName        String?
+  product         String?
+  productDesc     String?
+  brandName       String?
+  website         String?
+  clientOnboarded Boolean?    @default(false)
+  postId          String?
+  submissionId    String?
+  userId          String?
+  Post            Post?       @relation(fields: [postId], references: [id])
+  submission      Submission? @relation(fields: [submissionId], references: [id])
+  User            User?       @relation(fields: [userId], references: [id])
+  message         Message?    @relation(fields: [messageId], references: [id])
+  messageId       String
 }
 
 model Message {

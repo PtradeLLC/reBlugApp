@@ -4,6 +4,7 @@ import { CircularProgress } from "@nextui-org/react";
 import PropTypes from 'prop-types';
 import Comment from './Comment';
 import { account } from "../../app/appwrite";
+import Link from 'next/link';
 
 const CommentBox = ({ comments, showModal, setShowModal }) => {
     // eslint-disable-next-line no-unused-vars
@@ -102,7 +103,7 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                            Please create an account or login to share your thoughts on this article
+                                            Please create a free account or login to share your thoughts on this article.
                                         </h3>
                                     </div>
                                 </div>
@@ -115,6 +116,12 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                                 >
                                     Close
                                 </button>
+                                <Link
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                    href='/login'
+                                >
+                                    Login
+                                </Link>
                             </div>
                         </div>
                     </div>

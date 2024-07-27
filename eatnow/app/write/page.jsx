@@ -486,10 +486,7 @@ const ChatAIBob = () => {
                       <div className="mt-2 sm:col-span-2 sm:mt-0">
                         <div className="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                           <div className="text-center">
-                            <PhotoIcon
-                              aria-hidden="true"
-                              className="mx-auto h-12 w-12 text-gray-300"
-                            />
+                            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" />
                             <div className="mt-4 flex text-sm leading-6 text-gray-600">
                               <label
                                 htmlFor="file-upload"

@@ -7,6 +7,7 @@ import WisdomNugget from "./WisdomNugget";
 import ChatUI from "./ChatBox/AIChatBox";
 import ArticleInfo from "./Blogs/ArticleInfo";
 import CommentBox from "./Blogs/CommentBox";
+import { account } from "../app/appwrite";
 import BrandCollaborate from "./Blogs/Collaborate";
 import BlogChatUI from "./ChatBox/AIBlogArticleAssistant";
 
@@ -30,6 +31,30 @@ const PostPage = ({ comments, post }) => {
   const [showModal, setShowModal] = useState(false);
   const [isCollaborateModalOpen, setIsCollaborateModalOpen] = useState(false);
   const [llmArticle, setLLMArticle] = useState("");
+  const [name, setName] = useState("");
+  const [user, setUser] = useState(null);
+
+  //Getting User data
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+    }
+  }, [user]);
 
   //Save article to local storage
   useEffect(() => {
@@ -124,7 +149,7 @@ const PostPage = ({ comments, post }) => {
   return (
     <div className="mt-20">
       <div className="relative mt-2 bg-[#ced4da] pb-20 sm:pb-24 xl:pb-0">
-        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 overflow-hidden">
           <div className="absolute left-[calc(50%-19rem)] top-[calc(50%-36rem)] transform-gpu blur-3xl">
             <div
               className="aspect-[1097/1023] w-[68.5625rem] bg-gradient-to-r from-[#707070] to-[#44434b] opacity-25"
@@ -162,18 +187,15 @@ const PostPage = ({ comments, post }) => {
                   width={500}
                   height={500}
                   alt={post?.title}
-                  fallback={
-                    <CircularProgress
-                      aria-label="Loading..."
-                      size="sm"
-                      value={value}
-                      color="warning"
-                      className="mx-2"
-                      showValueLabel={true}
-                    />
-                  }
                 />
               )}
+              <span className="absolute bottom-4 left-4">
+                <img
+                  className="rounded-full border border-white w-20 h-20  lg:w-24 lg:h-24"
+                  src={"https://github.com/shadcn.png"}
+                  alt="Avatar"
+                />
+              </span>
             </div>
           </div>
         </div>
