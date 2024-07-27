@@ -80,7 +80,7 @@ model User {
   sponsor            Sponsor[]
   team               Team[]
   verificationTokens VerificationToken[]
-  referralCode       String              @unique
+  referralCode       String?             @unique
   referrals          Referral[]          @relation("UserReferrals")
   Referral           Referral[]
   Restaurant         Restaurant[]

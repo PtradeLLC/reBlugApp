@@ -97,9 +97,9 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <span>You're logged in as:</span>
+              <span>You're logged in:</span>
               <div className="text-xl font-bold">Food & Beverages</div>
-              <span>Restaurant</span>
+              <span>as Restaurant | Chef</span>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-3">

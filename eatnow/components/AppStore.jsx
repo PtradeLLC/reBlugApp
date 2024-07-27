@@ -23,9 +23,6 @@ export default function AppStore() {
                 key={stat.id}
                 className="flex flex-col mx-auto p-8 bg-gray-400/5 lg:bg-none"
               >
-                {/* <dt className="text-sm font-semibold leading-6 text-gray-600">
-                  {stat.name}
-                </dt> */}
                 <img
                   src={stat.image}
                   className="w-32 order-first text-3xl font-semibold tracking-tight text-gray-900"

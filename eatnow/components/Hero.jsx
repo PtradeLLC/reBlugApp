@@ -77,12 +77,6 @@ export default () => {
               Pro-Blogging reimagined. Start blogging for free now!
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-              {/* <a
-                href="#eat-now-pay-never"
-                className="block py-2 px-4 text-center text-white font-medium bg-green-600 duration-150 hover:bg-red-500 active:bg-red-700 rounded-lg shadow-lg hover:shadow-none"
-              >
-                Chef & Restaurants
-              </a> */}
               <a
                 href="/login"
                 className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
@@ -105,37 +99,11 @@ export default () => {
           </div>
           <div className="flex-none mt-14 md:mt-0 md:max-w-xl">
             <RightSide />
-            {/* <img src="/images/heroimgetwo.png" className="" alt="hero-image" /> */}
           </div>
         </div>
         <div>
           <AppStore />
         </div>
-        {/* <div className="m-auto px-4 md:px-8 flex flex-col justify-center bg-gray-50 mt-3">
-          <p className="text-center text-sm text-gray-700 font-semibold pt-3">
-            Free Food Alert: Eat Now, Pay Never
-          </p>
-          <span>
-            <StepTwo />
-          </span>
-          <div className="flex flex-col lg:flex-row justify-center items-center pb-2 flex-wrap gap-x-6 gap-y-6 mt-6">
-            <img
-              src="/images/foodini/gplay.png"
-              className="w-32"
-              alt="googleplay"
-            />
-            <img
-              src="/images/foodini/appleimg.webp"
-              className="w-32"
-              alt="apple-store"
-            />
-            <img
-              src="/images/foodini/micsoft.png"
-              className="w-32"
-              alt="apple-store"
-            />
-          </div>
-        </div> */}
       </section>
     </>
   );
