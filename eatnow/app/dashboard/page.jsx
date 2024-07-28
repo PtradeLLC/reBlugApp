@@ -6,37 +6,98 @@ import BrandModal from "@/components/BrandModal";
 import RestaurantDashboard from "@/components/RestaurantModal";
 import TogglePageModal from "@/components/SwitchPageModal";
 import { account } from "../appwrite";
+import { setCookie } from "nookies"; // Add this import
 
 const DashboardPage = () => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
+  const [accountUser, setAccountUser] = useState(null);
   const [userNiche, setUserNiche] = useState("");
   const [selectedUserType, setSelectedUserType] = useState("Blogger");
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Fetch the user on component mount
   useEffect(() => {
-    async function getUser() {
+    const getUser = async () => {
       try {
         const currentUser = await account.get();
+        setAccountUser(currentUser);
         setUser(currentUser);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching user:", error);
       }
-    }
+    };
+
     getUser();
   }, []);
 
+  // Save user information when user is set
   useEffect(() => {
     if (user) {
       setName(user.name);
+
+      const saveUser = async () => {
+        try {
+          const response = await fetch("/api/savedUser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: user.$id,
+              name: user.name,
+              email: user.email,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Error saving user");
+          }
+
+          const data = await response.json();
+        } catch (error) {
+          console.error("Error saving user:", error);
+        }
+      };
+
+      saveUser();
     }
   }, [user]);
 
+  // Fetch niche information when userNiche changes
+  useEffect(() => {
+    if (user) {
+      const nicheFunction = async () => {
+        let userId = user.$id;
+        let email = user.email;
+        try {
+          const params = new URLSearchParams({ userId, email });
+          const response = await fetch(`/api/getNiche?${params.toString()}`, {
+            method: "GET",
+          });
+          if (!response.ok) {
+            throw new Error("Response is not okay");
+          }
+
+          const data = await response.json();
+          console.log("Niche Data", data);
+        } catch (error) {
+          console.error("Error fetching niche data:", error);
+        }
+      };
+
+      nicheFunction();
+    }
+  }, [userNiche, user]); // Added 'user' as a dependency to avoid conditional effect
+
+  // Handle user logout
   const handleLogout = () => {
     sessionStorage.removeItem("selectedUserType");
     setSelectedUserType("Blogger");
+    setCookie(null, "userId", "", { maxAge: -1, path: "/" });
   };
 
+  // Render appropriate component based on selectedUserType
   const renderComponent = () => {
     switch (selectedUserType) {
       case "Blogger":
@@ -85,19 +146,17 @@ const DashboardPage = () => {
   };
 
   return (
-    <>
-      <div>
-        {renderComponent()}
-        <TogglePageModal
-          userType={selectedUserType}
-          user={user}
-          setUserType={setSelectedUserType}
-          open={modalOpen}
-          setOpen={setModalOpen}
-          onLogout={handleLogout}
-        />
-      </div>
-    </>
+    <div>
+      {renderComponent()}
+      <TogglePageModal
+        userType={selectedUserType}
+        user={user}
+        setUserType={setSelectedUserType}
+        open={modalOpen}
+        setOpen={setModalOpen}
+        onLogout={handleLogout}
+      />
+    </div>
   );
 };
 

@@ -55,7 +55,10 @@ const Banner = () => {
           >
             <circle r={1} cx={1} cy={1} />
           </svg>
-          Eat Now, Pay Never is Live
+          <span className="text-green-700 font-semibold text-sm">
+            Pay Per Task
+          </span>{" "}
+          feature is Live! Get compensated to perform Foodhini's easy tasks
         </p>
         <button
           onClick={handleClick}

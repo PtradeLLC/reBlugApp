@@ -1,14 +1,12 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 
-const CategorySelected = ({ user }) => {
+const CategorySelected = ({ userNiche, user }) => {
   const [storeNiche, setStoreNiche] = useState("");
   const [clientMessage, setClientMessage] = useState("");
   const [userId, setUserId] = useState(null);
 
-  // Handle userId from cookies or user prop
   useEffect(() => {
     const cookies = parseCookies();
     const userIdFromCookies = cookies.userId;
@@ -24,7 +22,12 @@ const CategorySelected = ({ user }) => {
     }
   }, [user]);
 
-  // Fetch niche based on userId
+  useEffect(() => {
+    if (userNiche) {
+      setStoreNiche(userNiche);
+    }
+  }, [userNiche]);
+
   useEffect(() => {
     const fetchNiche = async () => {
       try {
@@ -42,8 +45,8 @@ const CategorySelected = ({ user }) => {
 
         if (response.ok) {
           const data = await response.json();
-
-          setStoreNiche(data.userNiche.name || "");
+          console.log(data, "FROM SELECTOR");
+          // setStoreNiche(data.userNiche.name || "");
         } else {
           console.error("Error fetching niche");
         }
@@ -57,7 +60,6 @@ const CategorySelected = ({ user }) => {
     }
   }, [userId]);
 
-  // Submit selected niche
   const submitNiche = async () => {
     try {
       const selectElement = document.getElementById("small");
@@ -69,25 +71,41 @@ const CategorySelected = ({ user }) => {
         return;
       }
 
+      // Ensure user details are included
+      const email = user?.email;
+      const name = user?.name;
+
+      if (!email || !name) {
+        setClientMessage("User information is incomplete");
+        return;
+      }
+
       const response = await fetch("/api/getNiche", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ niche: selectedOptionText, userId }),
+        body: JSON.stringify({
+          niche: selectedOptionText,
+          userId,
+          email,
+          name,
+        }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      const responseData = await response.json();
 
+      if (response.ok) {
         setClientMessage(`Niche set as ${selectedOptionText}`);
-        setStoreNiche(selectedOptionText); // Update the state with the new niche
+        setStoreNiche(selectedOptionText);
       } else {
-        console.error("Error submitting niche");
-        setClientMessage("Error submitting niche");
+        console.error("Error submitting niche:", responseData);
+        setClientMessage(
+          `Error submitting niche: ${responseData.error || responseData.message}`
+        );
       }
     } catch (error) {
-      console.error("Network error", error);
+      console.error("Network error:", error);
       setClientMessage("Network error");
     }
   };
@@ -102,7 +120,6 @@ const CategorySelected = ({ user }) => {
           onChange={(e) => setStoreNiche(e.target.value)}
         >
           <option value="">{storeNiche ? storeNiche : `Select a Niche`}</option>
-          {/* Add all other options here */}
           <option value="AC">American Culture</option>
           <option value="AF">African Culture</option>
           <option value="AU">Australian Culture</option>

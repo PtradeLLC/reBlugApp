@@ -7,7 +7,7 @@ import FoodiesComponent from "../components/Foodies";
 
 const Home = () => {
   return (
-    <div className="overflow-hidden bg-white px-4 sm:px-6 lg:px-8">
+    <div className="overflow-hidden mt-5 bg-white px-4 sm:px-6 lg:px-8">
       <Head>
         <title>ReBlug</title>
         <meta

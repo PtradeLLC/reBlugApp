@@ -21,11 +21,11 @@ export default function AppStore() {
             {stats.map((stat) => (
               <div
                 key={stat.id}
-                className="flex flex-col mx-auto p-8 bg-gray-400/5 lg:bg-none"
+                className="flex flex-col mx-auto p-8 bg-gray-700/5 w-full lg:bg-none"
               >
                 <img
                   src={stat.image}
-                  className="w-32 order-first text-3xl font-semibold tracking-tight text-gray-900"
+                  className="w-[48%] rounded-md m-auto order-first text-3xl font-semibold tracking-tight text-gray-900"
                 />
               </div>
             ))}

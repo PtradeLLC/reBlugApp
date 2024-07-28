@@ -4,76 +4,78 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+
+// Handle GET request
 export async function GET(req) {
     try {
-        console.log("GET request received");
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get('userId');
-        const email = searchParams.get('email');
 
-        console.log("Extracted userId:", userId);
-        console.log("Extracted email:", email);
+        console.log("id from server", userId);
 
-        if (!userId || typeof userId !== 'string') {
-            console.log("Invalid user ID");
-            return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
+
+        if (!userId) {
+            return NextResponse.json({ error: 'userId is required' }, { status: 400 });
         }
 
-        if (!email || typeof email !== 'string') {
-            console.log("Invalid email");
-            return NextResponse.json({ error: "Invalid email" }, { status: 400 });
-        }
+        console.log("searchParams", searchParams);
 
-        // Upsert user
-        const user = await prisma.user.upsert({
-            where: { id: userId },
-            update: { email },
-            create: { id: userId, email },
-        });
+        // const niches = await prisma.niche.findMany({
+        //     where: {
+        //         userShadows: {
+        //             some: {
+        //                 userId: userId,
+        //             },
+        //         },
+        //     },
+        // });
 
-        const userShadow = await prisma.userShadow.findUnique({
-            where: { userId },
-            include: { niche: true },
-        });
-
-        console.log("Database ShadowQuery result:", userShadow);
-        console.log("Database UserQuery result:", user);
-
-        if (!userShadow) {
-            console.log("UserShadow not found");
-            return NextResponse.json({ error: "User not found" }, { status: 404 });
-        }
-
-        return NextResponse.json({ userNiche: userShadow.niche?.name }, { status: 200 });
+        // return NextResponse.json(niches, { status: 200 });
+        return NextResponse.json({ message: "successfully done" });
     } catch (error) {
-        console.error("Internal Server Error:", error);
-        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+        console.error(error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 
-
-
-
-
-// // app/api/getNiche/route.js
-// import { NextResponse } from "next/server";
-// import { PrismaClient } from '@prisma/client';
-
-// const prisma = new PrismaClient();
-
+// Handle POST request
 // export async function POST(req) {
 //     try {
-//         const { niche, userId } = await req.json();
+//         const { niche, userId, email, name } = await req.json();
 
 //         if (!userId || typeof userId !== 'string') {
 //             return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
+//         }
+
+//         if (!email || typeof email !== 'string') {
+//             return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
+//         }
+
+//         if (!name || typeof name !== 'string') {
+//             return NextResponse.json({ error: 'Invalid name' }, { status: 400 });
 //         }
 
 //         if (!niche || typeof niche !== 'string') {
 //             return NextResponse.json({ error: 'Invalid niche' }, { status: 400 });
 //         }
 
+//         let user = await prisma.user.findUnique({
+//             where: { id: userId },
+//         });
+
+//         if (user) {
+//             user = await prisma.user.update({
+//                 where: { id: userId },
+//                 data: { email, name },
+//             });
+//         } else {
+//             user = await prisma.user.create({
+//                 data: { id: userId, email, name },
+//             });
+//         }
 
 //         const nicheRecord = await prisma.niche.upsert({
 //             where: { name: niche },
@@ -81,55 +83,20 @@ export async function GET(req) {
 //             create: { name: niche },
 //         });
 
-
-//         console.log("NICHE REC", nicheRecord);
-//         console.log("ID FROM API", userId);
-
-
-//         // Update or create user shadow with the new niche
 //         const updatedUserShadow = await prisma.userShadow.upsert({
 //             where: { userId },
 //             update: { niche: { connect: { id: nicheRecord.id } } },
 //             create: { userId, niche: { connect: { id: nicheRecord.id } } },
 //         });
 
-
 //         return NextResponse.json({ message: 'Niche updated successfully', updatedUserShadow }, { status: 200 });
 //     } catch (error) {
-//         console.error(error);
-//         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
-//     }
-// }
-
-
-// export async function GET(req) {
-//     try {
-//         console.log("GET request received");
-//         const { searchParams } = new URL(req.url);
-//         const userId = searchParams.get('userId');
-
-//         console.log("Extracted userId:", userId); //APPWRITE USER
-
-//         if (!userId || typeof userId !== 'string') {
-//             console.log("Invalid user ID");
-//             return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
+//         console.error("Server error:", error);
+//         if (error.code === 'P2002' && error.meta.target.includes('email')) {
+//             return NextResponse.json({ error: "A user with this email already exists." }, { status: 400 });
 //         }
-
-//         const userShadow = await prisma.userShadow.findUnique({
-//             where: { userId },
-//             include: { niche: true },
-//         });
-
-//         console.log("Database query result:", userShadow);
-
-//         if (!userShadow) {
-//             console.log("User not found");
-//             return NextResponse.json({ error: "User not found" }, { status: 404 });
-//         }
-
-//         return NextResponse.json({ userNiche: userShadow.niche?.name }, { status: 200 });
-//     } catch (error) {
-//         console.error("Internal Server Error:", error);
 //         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+//     } finally {
+//         await prisma.$disconnect();
 //     }
 // }

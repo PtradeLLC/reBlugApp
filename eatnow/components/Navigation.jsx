@@ -116,7 +116,8 @@ const Navigation = () => {
       await account.deleteSession("current");
       setIsLoggedIn(false);
       setUser(null); // Clear user data on logout
-      router.push("/"); // Redirect to homepage after logout
+      router.push("/");
+      setCookie(null, "userId", "", { maxAge: -1, path: "/" });
     } catch (error) {
       console.error("Logout error:", error);
     }
