@@ -41,7 +41,7 @@ model User {
   id                 String              @unique @default(cuid())
   userId             Int?
   name               String?
-  externalId         String?
+  externalId         String?             @unique
   brandName          String?
   firstName          String?
   profileImage       String?
@@ -55,7 +55,7 @@ model User {
   email              String              @unique
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
-  profileId          String?
+  profileId          String?             @unique
   role               Role                @default(MANAGER)
   emailVerified      DateTime?
   userType           String?
@@ -82,25 +82,29 @@ model User {
   verificationTokens VerificationToken[]
   referralCode       String?             @unique
   referrals          Referral[]          @relation("UserReferrals")
-  Referral           Referral[]
   Restaurant         Restaurant[]
   Order              Order[]
-  Niche              Niche[]
-}
-
-model UserShadow {
-  id      Int    @id @default(autoincrement())
-  userId  String @unique
-  niche   Niche? @relation(fields: [nicheId], references: [id])
-  nicheId Int?
+  UserShadow         UserShadow[]
+  niches             Niche[]
+  Referral           Referral[]
 }
 
 model Niche {
-  id         Int          @id @default(autoincrement())
-  name       String       @unique
-  UserShadow UserShadow[]
-  User       User?        @relation(fields: [userId], references: [id])
-  userId     String?
+  id          String       @id @default(uuid())
+  name        String       @unique
+  userId      String
+  userShadows UserShadow[]
+  user        User         @relation(fields: [userId], references: [id])
+}
+
+model UserShadow {
+  id      String @id @default(uuid())
+  userId  String
+  nicheId String
+  user    User   @relation(fields: [userId], references: [id])
+  niche   Niche  @relation(fields: [nicheId], references: [id])
+
+  @@unique([userId, nicheId])
 }
 
 model Referral {

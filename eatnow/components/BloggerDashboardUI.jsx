@@ -68,7 +68,6 @@ const BloggerDashboard = ({
       }
 
       const data = await response.json();
-      console.log(data.userNiche, "DATA USERNICHE");
       return;
     } catch (error) {
       console.error("Error fetching user niche:", error.message);
@@ -168,14 +167,14 @@ const BloggerDashboard = ({
                   {userType.defaultType}
                 </span>{" "}
                 <br />
-                <span className="text-sm">Your Niche: </span>{" "}
-                {userNiche ? (
+                {/* <span className="text-sm">Your Niche: </span>{" "} */}
+                {/* {userNiche ? (
                   <span className="text-sm font-semibold">{userNiche}</span>
                 ) : (
                   <div className="text-sm flex justify-center">
                     <CategorySelected userNiche={userNiche} user={user} />
                   </div>
-                )}
+                )} */}
               </div>
 
               <div className="text-xs text-muted-foreground flex justify-end mt-3">

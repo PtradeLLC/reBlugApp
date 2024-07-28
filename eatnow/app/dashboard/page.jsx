@@ -55,6 +55,7 @@ const DashboardPage = () => {
           }
 
           const data = await response.json();
+          console.log(data, "from Dashboard");
         } catch (error) {
           console.error("Error saving user:", error);
         }
@@ -65,30 +66,28 @@ const DashboardPage = () => {
   }, [user]);
 
   // Fetch niche information when userNiche changes
-  useEffect(() => {
-    if (user) {
-      const nicheFunction = async () => {
-        let userId = user.$id;
-        let email = user.email;
-        try {
-          const params = new URLSearchParams({ userId, email });
-          const response = await fetch(`/api/getNiche?${params.toString()}`, {
-            method: "GET",
-          });
-          if (!response.ok) {
-            throw new Error("Response is not okay");
-          }
+  // useEffect(() => {
+  //   if (user) {
+  //     const nicheFunction = async () => {
+  //       let userId = user.$id;
+  //       let email = user.email;
+  //       try {
+  //         const params = new URLSearchParams({ userId, email });
+  //         const response = await fetch(`/api/getNiche?${params.toString()}`, {
+  //           method: "GET",
+  //         });
+  //         if (!response.ok) {
+  //           throw new Error("Response is not okay");
+  //         }
+  //         const data = await response.json();
+  //       } catch (error) {
+  //         console.error("Error fetching niche data:", error);
+  //       }
+  //     };
 
-          const data = await response.json();
-          console.log("Niche Data", data);
-        } catch (error) {
-          console.error("Error fetching niche data:", error);
-        }
-      };
-
-      nicheFunction();
-    }
-  }, [userNiche, user]); // Added 'user' as a dependency to avoid conditional effect
+  //     nicheFunction();
+  //   }
+  // }, [userNiche, user]);
 
   // Handle user logout
   const handleLogout = () => {
