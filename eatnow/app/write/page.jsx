@@ -258,6 +258,7 @@ const ChatAIBob = () => {
           categorySlug: articleData.categoryNiche,
           publishedChannels: false,
           crossPromote: false,
+          author: user,
           podcastSingleCast: true,
           podcastMultiCast: false,
           isDraft: true,

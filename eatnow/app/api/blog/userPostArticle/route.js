@@ -21,6 +21,7 @@ export async function POST(request) {
         categorySlug,
         publishedChannels,
         crossPromote,
+        author,
         podcastSingleCast,
         podcastMultiCast,
         isDraft,
@@ -54,6 +55,7 @@ export async function POST(request) {
                 content: updatedContent,
                 categorySlug: categorySlug,
                 publishedChannels: publishedChannels,
+                author: author.name,
                 crossPromote: crossPromote,
                 podcastSingleCast: podcastSingleCast,
                 podcastMultiCast: podcastMultiCast,
@@ -65,6 +67,7 @@ export async function POST(request) {
                 featureImage: uploadedFeatureImage,
                 content: updatedContent,
                 categorySlug: categorySlug,
+                author: author.name,
                 publishedChannels: publishedChannels,
                 crossPromote: crossPromote,
                 podcastSingleCast: podcastSingleCast,
@@ -73,6 +76,9 @@ export async function POST(request) {
                 slug: slug,
             },
         });
+
+
+        // if post is truthy, and isDraft is 'true'....
 
         if (isDraft) {
             await prisma.draft.upsert({
