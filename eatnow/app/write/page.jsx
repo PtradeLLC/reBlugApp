@@ -47,8 +47,6 @@ const ChatAIBob = () => {
 
   //Handles user submit
 
-  console.log(user, "from ChatBob");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -256,7 +254,7 @@ const ChatAIBob = () => {
           userId: userId,
           title: articleData.articleTitle,
           featureImage: articleData.coverImage,
-          content: articleData.articleBody.articleContent.bodyContent, // Send raw content
+          content: articleData.articleBody.articleContent.bodyContent,
           categorySlug: articleData.categoryNiche,
           publishedChannels: false,
           crossPromote: false,
@@ -282,6 +280,8 @@ const ChatAIBob = () => {
       setTimeout(() => {
         setMessage("");
       }, 3000);
+      //Redirect user to the preview page
+      router.push("/write/previewarticle");
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);
@@ -289,6 +289,7 @@ const ChatAIBob = () => {
       setLoading(false);
     }
   };
+
   // Utility function to generate a slug from a title
   const generateSlug = (title) => {
     return title
@@ -919,6 +920,14 @@ const ChatAIBob = () => {
               </div>
             </div>
             <div className="flex flex-col mt-4">
+              <div className="flex flex-col mt-4">
+                <p className="font-semibold text-lg text-gray-600 pl-1">
+                  Saved Drafts
+                </p>
+                <div className="border mt-3 mx-2 px-3">
+                  Array of saved articles
+                </div>
+              </div>
               <div className="flex flex-col mt-4">
                 <p className="font-semibold text-lg text-gray-600 pl-1">
                   Tools

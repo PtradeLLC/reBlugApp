@@ -203,6 +203,9 @@ const BloggerDashboard = ({
               <div className="text-2xl font-bold">
                 {subscriptions ? subscriptions : 0}
                 <span className="text-sm">published</span>
+                {" | "}
+                {subscriptions ? subscriptions : 0}
+                <span className="text-sm">draft saved</span>
                 <span className="text-xs text-red-700 font-semibold flex justify-end">
                   Check out tools
                 </span>

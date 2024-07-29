@@ -160,6 +160,16 @@ model Post {
   sponsor           Sponsor[]
   Message           Message[]
   Niche             Niche[]
+  Draft             Draft[]
+}
+
+model Draft {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String?
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
 }
 
 model FacebookMetrics {
