@@ -169,7 +169,7 @@ model Draft {
   updatedAt DateTime @updatedAt
   title     String?
   Post      Post?    @relation(fields: [postId], references: [id])
-  postId    String?
+  postId    String?  @unique
 }
 
 model FacebookMetrics {

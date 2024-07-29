@@ -54,8 +54,8 @@ export async function POST(request) {
                 featureImage: uploadedFeatureImage,
                 content: updatedContent,
                 categorySlug: categorySlug,
-                publishedChannels: publishedChannels,
                 author: author.name,
+                publishedChannels: publishedChannels,
                 crossPromote: crossPromote,
                 podcastSingleCast: podcastSingleCast,
                 podcastMultiCast: podcastMultiCast,
@@ -77,17 +77,30 @@ export async function POST(request) {
             },
         });
 
-
-        // if post is truthy, and isDraft is 'true'....
-
         if (isDraft) {
-            await prisma.draft.upsert({
+            const existingDraft = await prisma.draft.findUnique({
                 where: {
                     postId: post.id,
                 },
-                update: {},
-                create: { title: post.title, postId: post.id },
             });
+
+            if (existingDraft) {
+                await prisma.draft.update({
+                    where: {
+                        id: existingDraft.id,
+                    },
+                    data: {
+                        title: post.title,
+                    },
+                });
+            } else {
+                await prisma.draft.create({
+                    data: {
+                        title: post.title,
+                        postId: post.id,
+                    },
+                });
+            }
         }
 
         return NextResponse.json({ success: true, post });
