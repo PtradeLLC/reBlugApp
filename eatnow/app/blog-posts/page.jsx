@@ -229,11 +229,13 @@ const Blog = () => {
           </div>
           <Divider />
           <div className="mt-7 lg:mt-14">
-            <div className="max-w-3xl text-center mx-auto">
-              <h2 className="text-2xl sm:text-4xl font-bold text-gray-900">
-                Latest
-              </h2>
-            </div>
+            {postsData && (
+              <div className="max-w-3xl text-center mx-auto">
+                <h2 className="text-2xl sm:text-4xl font-bold text-gray-900">
+                  Latest
+                </h2>
+              </div>
+            )}
           </div>
         </div>
         <div className="px-4 py-8 sm:px-6 lg:px-8">
@@ -280,9 +282,6 @@ const Blog = () => {
           </div>
         </div>
       </div>
-      {/* <div className="fixed bottom-4 right-4">
-        <ChatUI />
-      </div> */}
     </>
   );
 };

@@ -34,8 +34,7 @@ const PostPage = ({ comments, post }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
 
-  //Getting User data
-
+  // Getting User data
   useEffect(() => {
     async function getUser() {
       try {
@@ -56,7 +55,7 @@ const PostPage = ({ comments, post }) => {
     }
   }, [user]);
 
-  //Save article to local storage
+  // Save article to local storage
   useEffect(() => {
     if (post && post.content) {
       localStorage.setItem("articleContent", JSON.stringify(post.content));
@@ -65,12 +64,12 @@ const PostPage = ({ comments, post }) => {
     }
   }, [post]);
 
-  //handles cases if post is null
+  // Handles cases if post is null
   if (!post) {
     return <div>Loading...</div>;
   }
 
-  //Handle comment change
+  // Handle comment change
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
@@ -308,121 +307,102 @@ const PostPage = ({ comments, post }) => {
               <WisdomNugget />
             </span>
 
-            <span className="col-span-2 mt-10 mb-4 p-2">
-              <span className="flex justify-center items-center">
-                {loading ? (
-                  <div className="flex justify-center">
-                    <CircularProgress
-                      aria-label="Loading..."
-                      size="sm"
-                      value={value}
-                      color="warning"
-                      className="mx-2"
-                      showValueLabel={true}
-                    />
-                  </div>
-                ) : (
-                  <div className="text-lg">
-                    {extractPlainText(post.content).map((paragraph, index) => (
-                      <p key={index} className="mb-4">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </span>
-              <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
-              <span className="">
-                <CommentBox
-                  showModal={showModal}
-                  post={post}
-                  comments={comments}
-                  setShowModal={setShowModal}
+            <span className="col-span-2 mt-11">
+              <article className="mx-auto">
+                <h2 className="text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl dark:text-white">
+                  {post.title}
+                </h2>
+                <div
+                  className="mt-6 prose prose-lg prose-gray dark:prose-dark"
+                  dangerouslySetInnerHTML={{ __html: post.content }}
                 />
-              </span>
-              <form onSubmit={handleSubmit}>
-                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                  <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-                    <label htmlFor="comment" className="sr-only">
-                      Share your thoughts
-                    </label>
-                    <textarea
-                      id="comment"
-                      rows="4"
-                      className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                      placeholder="Share your thoughts..."
-                      value={newComment}
-                      onChange={handleCommentChange}
-                      onClick={handleTextAreaClick}
-                      required
-                    />
+              </article>
+
+              <hr className="w-48 h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-700"></hr>
+              <div>
+                <span className="">
+                  <CommentBox
+                    showModal={showModal}
+                    post={post}
+                    comments={comments}
+                    setShowModal={setShowModal}
+                  />
+                </span>
+                <form onSubmit={handleSubmit}>
+                  <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                    <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                      <label htmlFor="comment" className="sr-only">
+                        Share your thoughts
+                      </label>
+                      <textarea
+                        id="comment"
+                        rows="4"
+                        className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                        placeholder="Share your thoughts..."
+                        value={newComment}
+                        onChange={handleCommentChange}
+                        onClick={handleTextAreaClick}
+                        required
+                      />
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+                      <button
+                        type="submit"
+                        className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
+                      >
+                        Post comment
+                        {loading && (
+                          <div className="flex justify-center">
+                            <CircularProgress
+                              aria-label="Loading..."
+                              size="sm"
+                              value={value}
+                              color="warning"
+                              className="mx-2"
+                              showValueLabel={true}
+                            />
+                          </div>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-                    <button
-                      type="submit"
-                      className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
-                    >
-                      Post comment
-                      {loading && (
-                        <div className="flex justify-center">
-                          <CircularProgress
-                            aria-label="Loading..."
-                            size="sm"
-                            value={value}
-                            color="warning"
-                            className="mx-2"
-                            showValueLabel={true}
-                          />
-                        </div>
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </form>
-              {/* <div className="flex justify-en space-x-2">
-                <Button className="bg-red-800 text-center text-white font-bold rounded-md">
-                  Back to Edit
-                </Button>
-                <Button
-                  type="submit"
-                  onClick={handleFinalizeArticle}
-                  className="bg-green-800 text-center text-white font-bold rounded-md"
-                >
-                  Publish Article
-                </Button>
-              </div> */}
+                </form>
+              </div>
             </span>
           </div>
+          <div className="mt-6">
+            <ChatUI post={post} />
+          </div>
+          <div>
+            <BlogChatUI
+              postContent={post?.content}
+              isOpen={isOpen}
+              llmArticle={llmArticle}
+              setIsOpen={setIsOpen}
+            />
+          </div>
+          <div className="mx-4 px-2">
+            <ArticleInfo
+              isOpen={isArticleModalOpen}
+              setIsOpen={setIsArticleModalOpen}
+            />
+          </div>
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
+          >
+            <span className="flex">
+              <Image
+                src="/images/questionmark.png"
+                width={25}
+                height={25}
+                alt="Ask the article"
+              />
+            </span>
+            Chat with this Article
+          </Button>
         </>
       )}
-      <div>
-        <BlogChatUI
-          postContent={post?.content}
-          isOpen={isOpen}
-          llmArticle={llmArticle}
-          setIsOpen={setIsOpen}
-        />
-      </div>
-      <div className="mx-4 px-2">
-        <ArticleInfo
-          isOpen={isArticleModalOpen}
-          setIsOpen={setIsArticleModalOpen}
-        />
-      </div>
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
-      >
-        <span className="flex">
-          <Image
-            src="/images/questionmark.png"
-            width={25}
-            height={25}
-            alt="Ask the article"
-          />
-        </span>
-        Chat with this Article
-      </Button>
     </div>
   );
 };
