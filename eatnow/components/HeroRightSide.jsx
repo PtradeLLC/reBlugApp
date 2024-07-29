@@ -20,7 +20,7 @@ const RightSide = () => {
             href="#blog-tool"
             className="block mt-5 px-5 mb-2 py-3 rounded-md text-white w-48 bg-black hover:bg-gray-500 active:bg-gray-700 duration-150 outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-red-600 sm:ml-3 lg:w-auto"
           >
-            Running a Blog?
+            Learn More
           </a>
         </span>
       </div>

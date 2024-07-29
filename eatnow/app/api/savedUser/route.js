@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req) {
-    const { id, name, email } = await req.json();
+    const { id, name, email, isVerified } = await req.json();
     try {
         let user = await prisma.user.findUnique({
             where: { email: email }
@@ -13,11 +13,11 @@ export async function POST(req) {
         if (user) {
             user = await prisma.user.update({
                 where: { email: email },
-                data: { id, name },
+                data: { id, name, isVerified },
             });
         } else {
             user = await prisma.user.create({
-                data: { id: id, email, name },
+                data: { id: id, email, name, isVerified },
             });
         }
 

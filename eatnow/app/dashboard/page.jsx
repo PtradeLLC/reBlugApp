@@ -15,6 +15,7 @@ const DashboardPage = () => {
   const [userNiche, setUserNiche] = useState("");
   const [selectedUserType, setSelectedUserType] = useState("Blogger");
   const [modalOpen, setModalOpen] = useState(false);
+  // const [isVerified, setIsVerified] = useState(false);
 
   // Fetch the user on component mount
   useEffect(() => {
@@ -47,6 +48,7 @@ const DashboardPage = () => {
               id: user.$id,
               name: user.name,
               email: user.email,
+              isVerified: user.emailVerification,
             }),
           });
 
@@ -64,30 +66,6 @@ const DashboardPage = () => {
       saveUser();
     }
   }, [user]);
-
-  // Fetch niche information when userNiche changes
-  // useEffect(() => {
-  //   if (user) {
-  //     const nicheFunction = async () => {
-  //       let userId = user.$id;
-  //       let email = user.email;
-  //       try {
-  //         const params = new URLSearchParams({ userId, email });
-  //         const response = await fetch(`/api/getNiche?${params.toString()}`, {
-  //           method: "GET",
-  //         });
-  //         if (!response.ok) {
-  //           throw new Error("Response is not okay");
-  //         }
-  //         const data = await response.json();
-  //       } catch (error) {
-  //         console.error("Error fetching niche data:", error);
-  //       }
-  //     };
-
-  //     nicheFunction();
-  //   }
-  // }, [userNiche, user]);
 
   // Handle user logout
   const handleLogout = () => {

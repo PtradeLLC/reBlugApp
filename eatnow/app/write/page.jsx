@@ -11,6 +11,7 @@ import SponsMessage from "@/components/SponsMessageBox";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import CategorySelected from "@/components/CategorySelector";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -27,29 +28,27 @@ const ChatAIBob = () => {
   const router = useRouter();
   const fileInputRef = useRef(null);
 
-  //Gets User from appwrite
-  useEffect(() => {
-    async function getUser() {
-      setLoading(true);
-      try {
-        const currentUser = await account.get();
-        setUser(currentUser);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getUser();
-  }, []);
+  //Gets User from database
+  const getUserDb = async () => {
+    const response = await fetch("/api/savedUser", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  useEffect(() => {
-    if (user) {
-      setName(user.name);
+    if (!response.ok) {
+      throw new Error("Error with the response.");
     }
-  }, [user]);
+
+    const data = await response.json();
+    setUser(data);
+  };
 
   //Handles user submit
+
+  console.log(user, "from ChatBob");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -170,7 +169,7 @@ const ChatAIBob = () => {
   useEffect(() => {
     if (user) {
       setName(user.name);
-      fetchDrafts();
+      // fetchDrafts();
     }
   }, [user]);
 
@@ -358,25 +357,25 @@ const ChatAIBob = () => {
     }
   };
 
-  const fetchDrafts = async () => {
-    try {
-      const userId = user.$id;
+  // const fetchDrafts = async () => {
+  //   try {
+  //     const userId = user.$id;
 
-      const response = await fetch(`/api/getDrafts?userId=${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  //     const response = await fetch(`/api/getDrafts?userId=${userId}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      const data = await response.json();
-      if (data) {
-        setDrafts(data.drafts);
-      }
-    } catch (error) {
-      console.error("Failed to fetch drafts:", error);
-    }
-  };
+  //     const data = await response.json();
+  //     if (data) {
+  //       setDrafts(data.drafts);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch drafts:", error);
+  //   }
+  // };
 
   const handleEditDraft = (draft) => {
     setArticleData({
@@ -429,6 +428,30 @@ const ChatAIBob = () => {
     });
     setWordCount(countWords(text));
   };
+
+  // Fetch niche information when userNiche changes
+  // useEffect(() => {
+  //   if (user) {
+  //     const nicheFunction = async () => {
+  //       let userId = user.$id;
+  //       let email = user.email;
+  //       try {
+  //         const params = new URLSearchParams({ userId, email });
+  //         const response = await fetch(`/api/getNiche?${params.toString()}`, {
+  //           method: "GET",
+  //         });
+  //         if (!response.ok) {
+  //           throw new Error("Response is not okay");
+  //         }
+  //         const data = await response.json();
+  //       } catch (error) {
+  //         console.error("Error fetching niche data:", error);
+  //       }
+  //     };
+
+  //     nicheFunction();
+  //   }
+  // }, [userNiche, user]);
 
   return (
     <>
@@ -528,7 +551,8 @@ const ChatAIBob = () => {
                       <div className="mt-2 sm:col-span-2 text-gray-700 sm:mt-0">
                         <span>Current category: {niche}</span>
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
-                          <input
+                          {/* <CategorySelected /> */}
+                          {/* <input
                             id="niche"
                             name="niche"
                             required
@@ -543,7 +567,7 @@ const ChatAIBob = () => {
                             placeholder="Please enter your niche within this category."
                             autoComplete="niche"
                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                          />
+                          /> */}
                         </div>
                       </div>
                     </div>

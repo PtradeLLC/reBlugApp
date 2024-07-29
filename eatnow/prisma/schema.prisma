@@ -50,7 +50,7 @@ model User {
   password           String?
   image              String?
   lastName           String?
-  isVerified         Boolean?
+  isVerified         Boolean?            @default(false)
   provider           String?
   email              String              @unique
   createdAt          DateTime            @default(now())
@@ -95,6 +95,8 @@ model Niche {
   userId      String
   userShadows UserShadow[]
   user        User         @relation(fields: [userId], references: [id])
+  Post        Post?        @relation(fields: [postId], references: [id])
+  postId      String?
 }
 
 model UserShadow {
@@ -146,6 +148,7 @@ model Post {
   status            Boolean        @default(false)
   commentingSys     String?
   userId            String?
+  postNiche         String? //Review this entry
   postSlug          String?
   categoryId        String?
   aiResponses       AiResponse[]
@@ -156,6 +159,7 @@ model Post {
   category          Category?      @relation(fields: [categoryId], references: [id])
   sponsor           Sponsor[]
   Message           Message[]
+  Niche             Niche[]
 }
 
 model FacebookMetrics {

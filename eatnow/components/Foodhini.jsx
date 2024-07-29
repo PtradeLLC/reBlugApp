@@ -41,9 +41,8 @@ const FoodhiniPage = () => {
                         The Legend
                       </span>
                       <span className="font-thin block text-lg mt-1 text-gray-800">
-                        As rumor has it, when chefs prays to the food gods at
-                        the 11 O'clock hour hoping for a miracle, Foodhini
-                        answers.
+                        As rumor has it, when brands prays to the gods at the 11
+                        O'clock hour hoping for a miracle, Foodhini answers.
                       </span>
                     </span>
                   </span>
@@ -68,26 +67,27 @@ const FoodhiniPage = () => {
                       </span>
                       <span className="grow">
                         <span className="font-thin block text-lg mt-1 text-gray-800 dark:hs-tab-active:text-gray-200">
-                          As a result, he collaborates with brands and chefs
-                          from all works of life to bring you &nbsp;
+                          As a result, he collaborates with brands from all
+                          works of life to bring you &nbsp;
                           <Tooltip
                             className="w-60 bg-white"
                             showArrow={true}
                             content="Actually we work with various brands to cover the cost."
                           >
                             <span className="border-b border-dashed border-black">
-                              their finest offerings for free{" "}
+                              their finest Pay-per-Task offerings at the best
+                              rate{" "}
                             </span>
                           </Tooltip>
                           <br />
                           1. Download the app to explore all the exciting
-                          options Foodhini has to offer.
+                          opportunities Foodhini has to offer.
                           <br />
                           2. If you receive &nbsp;
                           <Tooltip
                             className="w-80 bg-white"
                             showArrow={true}
-                            content="'Foodhini says: Google is buying dinner for 5,000 members who blogs about this product: sample-product.com'."
+                            content="example: 'Foodhini says: Google is buying dinner for 5,000 members who blogs about this product: sample-product.com'."
                           >
                             <span className="border-b border-dashed border-black">
                               a notification from Foodhini{" "}
@@ -96,12 +96,13 @@ const FoodhiniPage = () => {
                           , act quickly to enable cash deposited onto your
                           virtual card.
                           <br />
-                          3. Search or browse through local restaurant and chef
-                          menus in the app, place your order with your virtual
-                          card, and enjoy.
+                          3. Looking for ways to spend your cash? Search or
+                          browse through local restaurants and chef menus, place
+                          your order with your virtual card, and enjoy.
                         </span>
                         <p className="font-semibold block text-sm  my-3">
-                          Download now to enjoy your first order on us.
+                          Download now, complete your first task, and enjoy your
+                          first order.
                         </p>
                         <div className="grid grid-cols-3 mt-5 mb-3 mx-auto">
                           <span className="flex justify-center mx-1 cursor-pointer">
