@@ -96,9 +96,9 @@ const FoodhiniPage = () => {
                           , act quickly to enable cash deposited onto your
                           virtual card.
                           <br />
-                          3. Looking for ways to spend your cash? Search or
-                          browse through local restaurants and chef menus, place
-                          your order with your virtual card, and enjoy.
+                          3. Looking for ways to spend your cash? Browse through
+                          local restaurants and chef menus, place your order
+                          with your virtual card, and enjoy.
                         </span>
                         <p className="font-semibold block text-sm  my-3">
                           Download now, complete your first task, and enjoy your

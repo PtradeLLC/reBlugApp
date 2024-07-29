@@ -16,7 +16,7 @@ export default () => {
               Experience the ReBirth of Blogging like you've never seen.
               <span className="font-semibold text-4xl "></span>
             </h2>
-            <h3 className="text-green-900 text-3xl font-thin">
+            <h3 className="text-green-900 text-2xl font-thin">
               Start blogging with our:
             </h3>
             <ul className="text-lg">
@@ -62,7 +62,7 @@ export default () => {
               </li>
               <li>
                 <span className="font-semibold text-lg">
-                  Blogging tools for content creators:
+                  Tools for content creators:
                 </span>{" "}
                 Transform social media contents to blogs.
               </li>

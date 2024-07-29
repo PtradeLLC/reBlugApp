@@ -15,7 +15,7 @@ export default function AppStore() {
             </h2>
             <p className="mt-4 text-lg leading-8 text-gray-600">
               Together, let's make AI efficient, creative, and useful for
-              marketing, storytelling, and journalism.
+              marketing, storytelling, and journalism. Download our app today.
             </p>
           </div>
           <dl className="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden justify-center items-center rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-3">

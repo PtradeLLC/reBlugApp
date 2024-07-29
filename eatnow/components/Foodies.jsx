@@ -64,8 +64,8 @@ const FoodiesComponent = () => {
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                 Foodhini is the link that connects brands with bloggers,
-                bloggers with chefs, chefs with foodies - The centerpiece. Learn
-                how Foodhini can help you win as a brand, as a blogger or as a
+                bloggers with chefs, chefs with foodies - The Liaison. Learn how
+                Foodhini can help you win as a brand, as a blogger or as a
                 professional in the food & beverage industry.
               </p>
               <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
