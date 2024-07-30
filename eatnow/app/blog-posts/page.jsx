@@ -249,6 +249,7 @@ const Blog = () => {
                     isPressable
                     isHoverable
                   >
+                    {console.log(post)}
                     <CardHeader className="relative p-0">
                       <img
                         className="object-cover rounded-t-xl"
@@ -266,6 +267,7 @@ const Blog = () => {
                       </p>
                     </CardBody>
                     <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
+                      <span>{post.categories}</span>
                       <Button
                         as={Link}
                         href={`/blog-posts/${post.id}`}

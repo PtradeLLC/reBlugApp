@@ -22,17 +22,19 @@ export async function POST(request) {
         publishedChannels,
         crossPromote,
         author,
+        categories,
         podcastSingleCast,
         podcastMultiCast,
         isDraft,
         slug,
     } = await request.json();
 
-    if (!title || !featureImage || !content) {
+    if (!title || !featureImage || !content || !categories) {
         return NextResponse.json({ success: false, message: "Please fill out all required fields." }, { status: 400 });
     }
 
     try {
+        console.log(categories, "Selected");
         // Upload featureImage to Cloudinary if it's a base64 string
         let uploadedFeatureImage = featureImage;
         if (featureImage && featureImage.startsWith('data:')) {
@@ -43,9 +45,8 @@ export async function POST(request) {
             console.log(`Feature image uploaded: ${featureImage} -> ${uploadedFeatureImage}`);
         }
 
-        console.log('Original Content:', content);
         const updatedContent = await uploadContentImages(content);
-        console.log('Updated Content:', updatedContent);
+
 
         const post = await prisma.post.upsert({
             where: {
@@ -58,6 +59,7 @@ export async function POST(request) {
                 categorySlug: categorySlug,
                 author: author.name,
                 postSlug: slug,
+                categories: categories,
                 publishedChannels: publishedChannels,
                 crossPromote: crossPromote,
                 podcastSingleCast: podcastSingleCast,
@@ -72,6 +74,7 @@ export async function POST(request) {
                 categorySlug: categorySlug,
                 postSlug: slug,
                 author: author.name,
+                categories: categories,
                 publishedChannels: publishedChannels,
                 crossPromote: crossPromote,
                 podcastSingleCast: podcastSingleCast,

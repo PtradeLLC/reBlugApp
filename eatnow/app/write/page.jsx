@@ -232,65 +232,6 @@ const ChatAIBob = () => {
     }));
   };
 
-  //Saves Article as draft until approved before publishing
-  const handleSaveDraft = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      if (!user || !user.$id) {
-        throw new Error("User is not available.");
-      }
-
-      const userId = user.$id;
-      const slug = generateSlug(articleData.articleTitle);
-
-      const response = await fetch(`/api/blog/userPostArticle`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          title: articleData.articleTitle,
-          featureImage: articleData.coverImage,
-          content: articleData.articleBody.articleContent.bodyContent,
-          categorySlug: articleData.categoryNiche,
-          publishedChannels: false,
-          crossPromote: false,
-          author: user,
-          podcastSingleCast: true,
-          podcastMultiCast: false,
-          isDraft: true,
-          slug: slug,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(
-          data.error ||
-            "Verify that the above input fields are correctly filled please. Failed to save draft"
-        );
-      }
-
-      const data = await response.json();
-      setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
-      setMessage("Your draft has been saved successfully");
-
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
-      //Redirect user to the preview page
-      router.push("/write/previewarticle");
-    } catch (error) {
-      console.error("There was an error:", error);
-      setMessage(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Utility function to generate a slug from a title
   const generateSlug = (title) => {
     return title
@@ -359,25 +300,125 @@ const ChatAIBob = () => {
     }
   };
 
-  // const fetchDrafts = async () => {
-  //   try {
-  //     const userId = user.$id;
+  const optionList = {
+    AC: "American Culture",
+    AF: "African Culture",
+    AU: "Australian Culture",
+    BL: "Books and Literature",
+    CE: "Current Events",
+    CC: "Chinese Culture",
+    DI: "DIY and Crafts",
+    PC: "Pop Culture",
+    EL: "Environmentalism",
+    EN: "Entertainment",
+    EC: "European Culture",
+    FI: "Finance",
+    FP: "Food Photography",
+    FB: "Fashion and Beauty",
+    FC: "Food and Cooking",
+    HW: "Health and Wellness",
+    HE: "Healthy Eating",
+    IC: "Indian Culture",
+    JA: "Japanese Culture",
+    KO: "Korean Culture",
+    LI: "Lifestyle",
+    LE: "Learning",
+    LG: "LGBTQ",
+    PA: "Parenting",
+    MU: "Music",
+    MC: "Middle Eastern Culture",
+    MX: "Mexican Culture",
+    PH: "Photography",
+    PE: "Pets",
+    RE: "Relationships",
+    RS: "Religion and Spirituality",
+    SC: "Science and Technology",
+    SF: "Sports and Fitness",
+    SP: "Spirituality",
+    ST: "Style",
+    SO: "Social Media",
+    TR: "Travel",
+    TE: "Television",
+    VE: "Veganism",
+    WE: "Wellness",
+    WR: "Writing",
+  };
 
-  //     const response = await fetch(`/api/getDrafts?userId=${userId}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
+  //Saves Article as draft until approved before publishing
+  const handleSaveDraft = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  //     const data = await response.json();
-  //     if (data) {
-  //       setDrafts(data.drafts);
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to fetch drafts:", error);
-  //   }
-  // };
+    try {
+      if (!user || !user.$id) {
+        throw new Error("User is not available.");
+      }
+
+      const userId = user.$id;
+      const slug = generateSlug(articleData.articleTitle);
+
+      const selectedOptionText =
+        optionList[articleData.categoryNiche] || "None";
+
+      if (!selectedOptionText) {
+        setClientMessage("Please make a selection");
+        return;
+      }
+
+      const response = await fetch(`/api/blog/userPostArticle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          title: articleData.articleTitle,
+          featureImage: articleData.coverImage,
+          content: articleData.articleBody.articleContent.bodyContent,
+          categorySlug: selectedOptionText, // Ensure this is included
+          publishedChannels: false,
+          crossPromote: false,
+          author: user,
+          categories: selectedOptionText, // Ensure this is included
+          podcastSingleCast: true,
+          podcastMultiCast: false,
+          isDraft: true,
+          slug: slug,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(
+          data.error ||
+            "Verify that the above input fields are correctly filled please. Failed to save draft"
+        );
+      }
+
+      const data = await response.json();
+      setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
+      setMessage("Your draft has been saved successfully");
+      // setStoreNiche(selectedOptionText);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      // Redirect user to the preview page
+      router.push("/write/previewarticle");
+    } catch (error) {
+      console.error("There was an error:", error);
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    setArticleData({
+      ...articleData,
+      categoryNiche: event.target.value,
+    });
+  };
 
   const handleEditDraft = (draft) => {
     setArticleData({
@@ -430,30 +471,6 @@ const ChatAIBob = () => {
     });
     setWordCount(countWords(text));
   };
-
-  // Fetch niche information when userNiche changes
-  // useEffect(() => {
-  //   if (user) {
-  //     const nicheFunction = async () => {
-  //       let userId = user.$id;
-  //       let email = user.email;
-  //       try {
-  //         const params = new URLSearchParams({ userId, email });
-  //         const response = await fetch(`/api/getNiche?${params.toString()}`, {
-  //           method: "GET",
-  //         });
-  //         if (!response.ok) {
-  //           throw new Error("Response is not okay");
-  //         }
-  //         const data = await response.json();
-  //       } catch (error) {
-  //         console.error("Error fetching niche data:", error);
-  //       }
-  //     };
-
-  //     nicheFunction();
-  //   }
-  // }, [userNiche, user]);
 
   return (
     <>
@@ -544,34 +561,19 @@ const ChatAIBob = () => {
                       </div>
                     </div>
                     <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6 mb-3">
-                      <label
-                        htmlFor="niche"
-                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                      <label htmlFor="category">Select Category:</label>
+                      <select
+                        id="category"
+                        onChange={handleCategoryChange}
+                        value={articleData.categoryNiche}
                       >
-                        Your Niche
-                      </label>
-                      <div className="mt-2 sm:col-span-2 text-gray-700 sm:mt-0">
-                        <span>Current category: {niche}</span>
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
-                          {/* <CategorySelected /> */}
-                          {/* <input
-                            id="niche"
-                            name="niche"
-                            required
-                            type="text"
-                            onChange={(e) =>
-                              setArticleData({
-                                ...articleData,
-                                categoryNiche: e.target.value,
-                              })
-                            }
-                            value={articleData.categoryNiche}
-                            placeholder="Please enter your niche within this category."
-                            autoComplete="niche"
-                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                          /> */}
-                        </div>
-                      </div>
+                        <option value="">Select...</option>
+                        {Object.entries(optionList).map(([key, name]) => (
+                          <option key={key} value={key}>
+                            {name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="block h-60">
                       <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">

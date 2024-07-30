@@ -121,46 +121,58 @@ model Referral {
 }
 
 model Post {
-  id                String         @unique @default(cuid())
+  id                String   @id @default(cuid())
   title             String?
   featureImage      String?
   contentImage      String?
-  views             Int            @default(0)
-  createdAt         DateTime       @default(now())
+  views             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   description       String?
-  crossPromote      Boolean        @default(false)
-  podcastSingleCast Boolean        @default(false)
-  podcastMultiCast  Boolean        @default(false)
-  slug              String?        @unique
+  crossPromote      Boolean  @default(false)
+  podcastSingleCast Boolean  @default(false)
+  podcastMultiCast  Boolean  @default(false)
+  slug              String?  @unique
   selectedValue     String?
   paramsId          String?
   image             String?
-  updatedAt         DateTime       @updatedAt
   selectedFeatures  String[]
-  publishedChannels Boolean        @default(true)
-  published         Boolean        @default(false)
+  publishedChannels Boolean  @default(true)
+  published         Boolean  @default(false)
   content           String?
   email             String?
-  isDraft           Boolean        @default(true)
+  isDraft           Boolean  @default(true)
   author            String?
   categorySlug      String?
   blogger           String?
-  status            Boolean        @default(false)
+  status            Boolean  @default(false)
   commentingSys     String?
   userId            String?
-  postNiche         String? //Review this entry
+  postNiche         String?
   postSlug          String?
   categoryId        String?
-  aiResponses       AiResponse[]
-  AvatarOnPost      AvatarOnPost[]
-  Chat              Chat[]
-  comments          Comment[]
-  images            ImageOnPost[]
-  category          Category?      @relation(fields: [categoryId], references: [id])
-  sponsor           Sponsor[]
-  Message           Message[]
-  Niche             Niche[]
-  Draft             Draft[]
+
+  // Relationships
+  aiResponses   AiResponse[]
+  avatarsOnPost AvatarOnPost[]
+  chats         Chat[]
+  comments      Comment[]
+  images        ImageOnPost[]
+  categories    PostCategory[] // Assuming a Post can have multiple categories
+  sponsors      Sponsor[]
+  messages      Message[]
+  niches        Niche[] // Assuming a Post can have multiple niches
+  drafts        Draft[]
+  Category      Category?      @relation(fields: [categoryId], references: [id])
+}
+
+model PostCategory {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String?
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
 }
 
 model Draft {
