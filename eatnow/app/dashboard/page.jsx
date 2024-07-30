@@ -57,7 +57,6 @@ const DashboardPage = () => {
           }
 
           const data = await response.json();
-          console.log(data, "from Dashboard");
         } catch (error) {
           console.error("Error saving user:", error);
         }

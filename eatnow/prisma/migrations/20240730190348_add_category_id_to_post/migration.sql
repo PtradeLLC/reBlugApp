@@ -1,5 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'MANAGER', 'MEMBER', 'ADMIN', 'BLOGGER');
+CREATE TYPE "Role" AS ENUM ('USER', 'MANAGER', 'MEMBER', 'ADMIN', 'BLOGGER', 'RESTAURANT', 'SOCIAL_MEDIA_PARTNER', 'BRAND_MARKETER');
+
+-- CreateEnum
+CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'PAID', 'CANCELLED');
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -41,7 +44,7 @@ CREATE TABLE "User" (
     "password" TEXT,
     "image" TEXT,
     "lastName" TEXT,
-    "isVerified" BOOLEAN,
+    "isVerified" BOOLEAN DEFAULT false,
     "provider" TEXT,
     "email" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -49,7 +52,39 @@ CREATE TABLE "User" (
     "profileId" TEXT,
     "role" "Role" NOT NULL DEFAULT 'MANAGER',
     "emailVerified" TIMESTAMP(3),
-    "userType" TEXT
+    "userType" TEXT,
+    "referralCode" TEXT
+);
+
+-- CreateTable
+CREATE TABLE "Niche" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "postId" TEXT,
+
+    CONSTRAINT "Niche_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserShadow" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "nicheId" TEXT NOT NULL,
+
+    CONSTRAINT "UserShadow_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Referral" (
+    "id" SERIAL NOT NULL,
+    "referrerId" TEXT NOT NULL,
+    "referredUserId" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Referral_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -60,23 +95,141 @@ CREATE TABLE "Post" (
     "contentImage" TEXT,
     "views" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "description" TEXT,
-    "crossPromote" TEXT,
-    "slug" TEXT,
+    "crossPromote" BOOLEAN NOT NULL DEFAULT false,
+    "podcastSingleCast" BOOLEAN NOT NULL DEFAULT false,
+    "podcastMultiCast" BOOLEAN NOT NULL DEFAULT false,
+    "slug" TEXT NOT NULL,
     "selectedValue" TEXT,
     "paramsId" TEXT,
     "image" TEXT,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
     "selectedFeatures" TEXT[],
+    "publishedChannels" BOOLEAN NOT NULL DEFAULT true,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "content" TEXT,
     "email" TEXT,
+    "isDraft" BOOLEAN NOT NULL DEFAULT true,
     "author" TEXT,
     "categorySlug" TEXT,
     "blogger" TEXT,
+    "status" BOOLEAN NOT NULL DEFAULT false,
+    "commentingSys" TEXT,
     "userId" TEXT,
+    "postNiche" TEXT,
     "postSlug" TEXT,
-    "categoryId" TEXT
+    "categoryId" TEXT,
+
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Category" (
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "slug" TEXT NOT NULL,
+    "userId" TEXT,
+
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PostCategory" (
+    "postId" TEXT NOT NULL,
+    "categoryId" TEXT NOT NULL,
+
+    CONSTRAINT "PostCategory_pkey" PRIMARY KEY ("postId","categoryId")
+);
+
+-- CreateTable
+CREATE TABLE "Draft" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "title" TEXT,
+    "postId" TEXT,
+
+    CONSTRAINT "Draft_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FacebookMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "reach" INTEGER NOT NULL,
+    "impressions" INTEGER NOT NULL,
+
+    CONSTRAINT "FacebookMetrics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TwitterMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "likes" INTEGER NOT NULL,
+    "retweets" INTEGER NOT NULL,
+    "replies" INTEGER NOT NULL,
+    "impressions" INTEGER NOT NULL,
+
+    CONSTRAINT "TwitterMetrics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "MediumMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "readTime" INTEGER NOT NULL,
+    "shares" INTEGER NOT NULL,
+    "comments" INTEGER NOT NULL,
+    "views" INTEGER NOT NULL,
+
+    CONSTRAINT "MediumMetrics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ReblugMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "upvotes" INTEGER NOT NULL,
+    "shares" INTEGER NOT NULL,
+    "comments" INTEGER NOT NULL,
+    "engagement" INTEGER NOT NULL,
+
+    CONSTRAINT "ReblugMetrics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "NewsletterMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "subscribers" INTEGER NOT NULL,
+    "opens" INTEGER NOT NULL,
+    "clicks" INTEGER NOT NULL,
+
+    CONSTRAINT "NewsletterMetrics_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EmailCampaignMetrics" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "month" TEXT NOT NULL,
+    "opened" INTEGER NOT NULL,
+    "clicked" INTEGER NOT NULL,
+    "unsubscribed" INTEGER NOT NULL,
+
+    CONSTRAINT "EmailCampaignMetrics_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -235,14 +388,6 @@ CREATE TABLE "AvatarOnPost" (
 );
 
 -- CreateTable
-CREATE TABLE "Category" (
-    "id" TEXT NOT NULL,
-    "title" TEXT,
-    "slug" TEXT NOT NULL,
-    "userId" TEXT
-);
-
--- CreateTable
 CREATE TABLE "Comment" (
     "id" TEXT NOT NULL,
     "title" TEXT,
@@ -269,12 +414,31 @@ CREATE TABLE "AiResponse" (
 );
 
 -- CreateTable
-CREATE TABLE "Sponsors" (
+CREATE TABLE "Sponsor" (
     "id" TEXT NOT NULL,
-    "title" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "product" TEXT,
+    "productDesc" TEXT,
+    "brandName" TEXT,
+    "website" TEXT,
+    "clientOnboarded" BOOLEAN DEFAULT false,
     "postId" TEXT,
     "submissionId" TEXT,
-    "userId" TEXT
+    "userId" TEXT,
+    "messageId" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Message" (
+    "id" TEXT NOT NULL,
+    "brandName" TEXT,
+    "productName" TEXT,
+    "productImage" TEXT,
+    "website" TEXT,
+    "productMessage" TEXT,
+    "notes" TEXT,
+    "postId" TEXT
 );
 
 -- CreateTable
@@ -435,7 +599,8 @@ CREATE TABLE "Chat" (
     "postId" TEXT,
     "userEmail" TEXT,
     "userId" TEXT,
-    "aiResponseId" TEXT
+    "aiResponseId" TEXT,
+    "messageId" TEXT
 );
 
 -- CreateTable
@@ -446,8 +611,7 @@ CREATE TABLE "Contact" (
     "company" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "reason" TEXT NOT NULL,
-    "message" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "message" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -485,6 +649,67 @@ CREATE TABLE "Marketing_Creatives_files" (
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Restaurant" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "ownerId" TEXT NOT NULL,
+
+    CONSTRAINT "Restaurant_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" SERIAL NOT NULL,
+    "userId" TEXT NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "status" "OrderStatus" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "dishId" INTEGER,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "OrderDish" (
+    "id" SERIAL NOT NULL,
+    "orderId" INTEGER NOT NULL,
+    "dishId" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "OrderDish_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Dish" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "description" TEXT,
+    "price" DOUBLE PRECISION NOT NULL,
+    "menuId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Dish_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Menu" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "restaurantId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Menu_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_id_key" ON "Account"("id");
 
@@ -501,13 +726,31 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_externalId_key" ON "User"("externalId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Post_id_key" ON "Post"("id");
+CREATE UNIQUE INDEX "User_profileId_key" ON "User"("profileId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_referralCode_key" ON "User"("referralCode");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Niche_name_key" ON "Niche"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UserShadow_userId_nicheId_key" ON "UserShadow"("userId", "nicheId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Post_slug_key" ON "Post"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_slug_key" ON "Category"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Draft_postId_key" ON "Draft"("postId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_id_key" ON "VerificationToken"("id");
@@ -564,12 +807,6 @@ CREATE UNIQUE INDEX "Avatar_id_key" ON "Avatar"("id");
 CREATE UNIQUE INDEX "AvatarOnPost_id_key" ON "AvatarOnPost"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Category_id_key" ON "Category"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Category_slug_key" ON "Category"("slug");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Comment_id_key" ON "Comment"("id");
 
 -- CreateIndex
@@ -579,7 +816,10 @@ CREATE UNIQUE INDEX "AiResponse_id_key" ON "AiResponse"("id");
 CREATE UNIQUE INDEX "AiResponse_articleCommentId_key" ON "AiResponse"("articleCommentId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Sponsors_id_key" ON "Sponsors"("id");
+CREATE UNIQUE INDEX "Sponsor_id_key" ON "Sponsor"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Message_id_key" ON "Message"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "EmailTool_id_key" ON "EmailTool"("id");
@@ -638,6 +878,9 @@ CREATE UNIQUE INDEX "Marketing_Plan_files_id_key" ON "Marketing_Plan_files"("id"
 -- CreateIndex
 CREATE UNIQUE INDEX "Marketing_Creatives_files_id_key" ON "Marketing_Creatives_files"("id");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Dish_slug_key" ON "Dish"("slug");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -645,7 +888,37 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Niche" ADD CONSTRAINT "Niche_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Niche" ADD CONSTRAINT "Niche_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserShadow" ADD CONSTRAINT "UserShadow_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserShadow" ADD CONSTRAINT "UserShadow_nicheId_fkey" FOREIGN KEY ("nicheId") REFERENCES "Niche"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Referral" ADD CONSTRAINT "Referral_referrerId_fkey" FOREIGN KEY ("referrerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Referral" ADD CONSTRAINT "Referral_referredUserId_fkey" FOREIGN KEY ("referredUserId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Post" ADD CONSTRAINT "Post_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Category" ADD CONSTRAINT "Category_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PostCategory" ADD CONSTRAINT "PostCategory_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PostCategory" ADD CONSTRAINT "PostCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Draft" ADD CONSTRAINT "Draft_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "VerificationToken" ADD CONSTRAINT "VerificationToken_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -696,9 +969,6 @@ ALTER TABLE "AvatarOnPost" ADD CONSTRAINT "AvatarOnPost_avatarId_fkey" FOREIGN K
 ALTER TABLE "AvatarOnPost" ADD CONSTRAINT "AvatarOnPost_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Category" ADD CONSTRAINT "Category_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -711,13 +981,19 @@ ALTER TABLE "AiResponse" ADD CONSTRAINT "AiResponse_articleCommentId_fkey" FOREI
 ALTER TABLE "AiResponse" ADD CONSTRAINT "AiResponse_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sponsor" ADD CONSTRAINT "Sponsor_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "Submission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sponsor" ADD CONSTRAINT "Sponsor_submissionId_fkey" FOREIGN KEY ("submissionId") REFERENCES "Submission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sponsors" ADD CONSTRAINT "Sponsors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sponsor" ADD CONSTRAINT "Sponsor_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Sponsor" ADD CONSTRAINT "Sponsor_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES "Message"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Message" ADD CONSTRAINT "Message_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EmailTool" ADD CONSTRAINT "EmailTool_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -789,6 +1065,9 @@ ALTER TABLE "Chat" ADD CONSTRAINT "Chat_postId_fkey" FOREIGN KEY ("postId") REFE
 ALTER TABLE "Chat" ADD CONSTRAINT "Chat_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES "Message"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Trends_files" ADD CONSTRAINT "Trends_files_iaId_fkey" FOREIGN KEY ("iaId") REFERENCES "ForgedAI"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -796,3 +1075,24 @@ ALTER TABLE "Marketing_Plan_files" ADD CONSTRAINT "Marketing_Plan_files_planId_f
 
 -- AddForeignKey
 ALTER TABLE "Marketing_Creatives_files" ADD CONSTRAINT "Marketing_Creatives_files_creativesId_fkey" FOREIGN KEY ("creativesId") REFERENCES "ForgedAI"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Restaurant" ADD CONSTRAINT "Restaurant_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_dishId_fkey" FOREIGN KEY ("dishId") REFERENCES "Dish"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderDish" ADD CONSTRAINT "OrderDish_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderDish" ADD CONSTRAINT "OrderDish_dishId_fkey" FOREIGN KEY ("dishId") REFERENCES "Dish"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Dish" ADD CONSTRAINT "Dish_menuId_fkey" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Menu" ADD CONSTRAINT "Menu_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

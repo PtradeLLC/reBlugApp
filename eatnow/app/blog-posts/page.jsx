@@ -266,14 +266,15 @@ const Blog = () => {
                       </p>
                     </CardBody>
                     <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
-                      <div className="flex justify-end items-center">
+                      <div className="flex justify-center items-center">
                         <span className="text-sm text-green-700">
-                          {post.categorySlug}
+                          {post.categorySlug} |
                         </span>
                         <Button
                           as={Link}
                           href={`/blog-posts/${post.id}`}
                           variant="outline"
+                          className="bg-slate-500 rounded-md mx-5 text-white"
                           color="primary"
                           size="sm"
                         >

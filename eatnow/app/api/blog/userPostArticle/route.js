@@ -7,6 +7,10 @@ import cloudinary from 'cloudinary';
 const prisma = new PrismaClient();
 
 // Configure Cloudinary
+if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    throw new Error('Missing Cloudinary environment variables');
+}
+
 cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -30,7 +34,7 @@ export async function POST(request) {
         slug,
     } = await request.json();
 
-    if (!title || !featureImage || !content || !categories) {
+    if (!title || !featureImage || !content || !categories || !userId || !categorySlug || !slug) {
         return NextResponse.json({ success: false, message: "Please fill out all required fields." }, { status: 400 });
     }
 
@@ -39,7 +43,7 @@ export async function POST(request) {
         const categoriesArray = Array.isArray(categories) ? categories : [categories];
 
         // Upload featureImage to Cloudinary if it's a base64 string
-        let uploadedFeatureImage = await handleFeatureImageUpload(featureImage);
+        const uploadedFeatureImage = await handleFeatureImageUpload(featureImage);
 
         // Upload content images to Cloudinary
         const updatedContent = await uploadContentImages(content);
@@ -51,7 +55,7 @@ export async function POST(request) {
             featureImage: uploadedFeatureImage,
             content: updatedContent,
             categorySlug,
-            author,
+            author: author.name,
             categories: categoriesArray,
             publishedChannels,
             crossPromote,
@@ -69,7 +73,7 @@ export async function POST(request) {
         console.error(error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     } finally {
-        await prisma.$disconnect();
+        prisma.$disconnect().catch(error => console.error('Error disconnecting Prisma Client:', error));
     }
 }
 
@@ -106,72 +110,58 @@ async function upsertPost(postData) {
         slug,
     } = postData;
 
-    // First, handle the categories
-    const categoryLinks = await Promise.all(categories.map(async (categorySlug) => {
-        // Try to find the category by its slug
-        const category = await prisma.category.findUnique({
-            where: { slug: categorySlug },
+    try {
+        // Upsert the post
+        const post = await prisma.post.upsert({
+            where: { slug },
+            update: {
+                title,
+                featureImage,
+                content,
+                categorySlug,
+                slug,
+                author,
+                categories: {
+                    deleteMany: {}, // Clear existing categories
+                    connectOrCreate: categories.map((categorySlug) => ({
+                        where: { slug: categorySlug },
+                        create: { slug: categorySlug, title: categorySlug }, // Adjust title as needed
+                    })),
+                },
+                publishedChannels,
+                crossPromote,
+                podcastSingleCast,
+                podcastMultiCast,
+                isDraft,
+            },
+            create: {
+                userId,
+                title,
+                featureImage,
+                content,
+                slug,
+                categorySlug,
+                author,
+                categories: {
+                    connectOrCreate: categories.map((categorySlug) => ({
+                        where: { slug: categorySlug },
+                        create: { slug: categorySlug, title: categorySlug }, // Adjust title as needed
+                    })),
+                },
+                publishedChannels,
+                crossPromote,
+                podcastSingleCast,
+                podcastMultiCast,
+                isDraft,
+                slug,
+            },
         });
 
-        if (category) {
-            // If category exists, return its ID
-            return { id: category.id };
-        } else {
-            // If category does not exist, create it and return its ID
-            const newCategory = await prisma.category.create({
-                data: {
-                    title: categorySlug, // Assuming the title is the same as the slug, adjust if needed
-                    slug: categorySlug,
-                },
-            });
-            return { id: newCategory.id };
-        }
-    }));
-
-    // Upsert the post
-    return prisma.post.upsert({
-        where: { slug },
-        update: {
-            title,
-            featureImage,
-            content,
-            categorySlug,
-            author,
-            categories: {
-                // Update the categories relation
-                connectOrCreate: categoryLinks.map(({ id }) => ({
-                    where: { id },
-                    create: { id },
-                })),
-            },
-            publishedChannels,
-            crossPromote,
-            podcastSingleCast,
-            podcastMultiCast,
-            isDraft,
-        },
-        create: {
-            userId,
-            title,
-            featureImage,
-            content,
-            categorySlug,
-            author,
-            categories: {
-                // Create categories if they don't exist
-                connectOrCreate: categoryLinks.map(({ id }) => ({
-                    where: { id },
-                    create: { id },
-                })),
-            },
-            publishedChannels,
-            crossPromote,
-            podcastSingleCast,
-            podcastMultiCast,
-            isDraft,
-            slug,
-        },
-    });
+        return post;
+    } catch (error) {
+        console.error('Error in upsertPost:', error);
+        throw new Error('Failed to upsert post');
+    }
 }
 
 async function handleDraftLogic(post, isDraft) {
@@ -195,3 +185,205 @@ async function handleDraftLogic(post, isDraft) {
         }
     }
 }
+
+
+
+// import { PrismaClient } from '@prisma/client';
+// import { NextResponse } from 'next/server';
+// import { uploadContentImages } from '../../../../utils/imageUtils';
+// import cloudinary from 'cloudinary';
+
+// // Initialize Prisma Client
+// const prisma = new PrismaClient();
+
+// // Configure Cloudinary
+// cloudinary.v2.config({
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+
+// export async function POST(request) {
+//     const {
+//         userId,
+//         title,
+//         featureImage,
+//         content,
+//         categorySlug,
+//         publishedChannels,
+//         crossPromote,
+//         author,
+//         categories,
+//         podcastSingleCast,
+//         podcastMultiCast,
+//         isDraft,
+//         slug,
+//     } = await request.json();
+
+//     if (!title || !featureImage || !content || !categories) {
+//         return NextResponse.json({ success: false, message: "Please fill out all required fields." }, { status: 400 });
+//     }
+
+//     try {
+//         // Ensure categories is an array
+//         const categoriesArray = Array.isArray(categories) ? categories : [categories];
+
+//         // Upload featureImage to Cloudinary if it's a base64 string
+//         let uploadedFeatureImage = await handleFeatureImageUpload(featureImage);
+
+//         // Upload content images to Cloudinary
+//         const updatedContent = await uploadContentImages(content);
+
+//         const name = author.name
+
+//         // Upsert post in the database
+//         const post = await upsertPost({
+//             userId,
+//             title,
+//             featureImage: uploadedFeatureImage,
+//             content: updatedContent,
+//             categorySlug,
+//             author: name,
+//             categories: categoriesArray,
+//             publishedChannels,
+//             crossPromote,
+//             podcastSingleCast,
+//             podcastMultiCast,
+//             isDraft,
+//             slug,
+//         });
+
+//         // Handle draft logic
+//         await handleDraftLogic(post, isDraft);
+
+//         return NextResponse.json({ success: true, post });
+//     } catch (error) {
+//         console.error(error);
+//         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
+//     } finally {
+//         await prisma.$disconnect();
+//     }
+// }
+
+// async function handleFeatureImageUpload(featureImage) {
+//     if (featureImage && featureImage.startsWith('data:')) {
+//         try {
+//             const uploadResult = await cloudinary.v2.uploader.upload(featureImage, {
+//                 folder: 'post/coverImage',
+//             });
+//             console.log(`Feature image uploaded: ${featureImage} -> ${uploadResult.secure_url}`);
+//             return uploadResult.secure_url;
+//         } catch (error) {
+//             console.error('Error uploading feature image:', error);
+//             throw new Error('Failed to upload feature image');
+//         }
+//     }
+//     return featureImage;
+// }
+
+// async function upsertPost(postData) {
+//     const {
+//         userId,
+//         title,
+//         featureImage,
+//         content,
+//         categorySlug,
+//         author: name,
+//         categories,
+//         publishedChannels,
+//         crossPromote,
+//         podcastSingleCast,
+//         podcastMultiCast,
+//         isDraft,
+//         slug,
+//     } = postData;
+
+//     // First, handle the categories
+//     const categoryLinks = await Promise.all(categories.map(async (categorySlug) => {
+//         // Try to find the category by its slug
+//         const category = await prisma.category.findUnique({
+//             where: { slug: categorySlug },
+//         });
+
+//         if (category) {
+//             // If category exists, return its ID
+//             return { id: category.id };
+//         } else {
+//             // If category does not exist, create it and return its ID
+//             const newCategory = await prisma.category.create({
+//                 data: {
+//                     title: categorySlug, // Assuming the title is the same as the slug, adjust if needed
+//                     slug: categorySlug,
+//                 },
+//             });
+//             return { id: newCategory.id };
+//         }
+//     }));
+
+//     // Upsert the post
+//     return prisma.post.upsert({
+//         where: { slug },
+//         update: {
+//             title,
+//             featureImage,
+//             content,
+//             categorySlug,
+//             author: name,
+//             categories: {
+//                 // Update the categories relation
+//                 connectOrCreate: categoryLinks.map(({ id }) => ({
+//                     where: { id },
+//                     create: { id },
+//                 })),
+//             },
+//             publishedChannels,
+//             crossPromote,
+//             podcastSingleCast,
+//             podcastMultiCast,
+//             isDraft,
+//         },
+//         create: {
+//             userId,
+//             title,
+//             featureImage,
+//             content,
+//             categorySlug,
+//             author: name,
+//             categories: {
+//                 // Create categories if they don't exist
+//                 connectOrCreate: categoryLinks.map(({ id }) => ({
+//                     where: { id },
+//                     create: { id },
+//                 })),
+//             },
+//             publishedChannels,
+//             crossPromote,
+//             podcastSingleCast,
+//             podcastMultiCast,
+//             isDraft,
+//             slug,
+//         },
+//     });
+// }
+
+// async function handleDraftLogic(post, isDraft) {
+//     if (isDraft) {
+//         const existingDraft = await prisma.draft.findUnique({
+//             where: { postId: post.id },
+//         });
+
+//         if (existingDraft) {
+//             await prisma.draft.update({
+//                 where: { id: existingDraft.id },
+//                 data: { title: post.title },
+//             });
+//         } else {
+//             await prisma.draft.create({
+//                 data: {
+//                     title: post.title,
+//                     postId: post.id,
+//                 },
+//             });
+//         }
+//     }
+// }

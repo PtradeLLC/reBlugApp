@@ -132,7 +132,7 @@ model Post {
   crossPromote      Boolean  @default(false)
   podcastSingleCast Boolean  @default(false)
   podcastMultiCast  Boolean  @default(false)
-  slug              String?  @unique
+  slug              String   @unique
   selectedValue     String?
   paramsId          String?
   image             String?
@@ -150,7 +150,7 @@ model Post {
   userId            String?
   postNiche         String?
   postSlug          String?
-  categoryId        String?
+  categoryId        String? // Add this line to define the categoryId field
 
   // Relationships
   aiResponses   AiResponse[]
@@ -158,22 +158,99 @@ model Post {
   chats         Chat[]
   comments      Comment[]
   images        ImageOnPost[]
-  categories    PostCategory[] // Assuming a Post can have multiple categories
+  categories    PostCategory[]
   sponsors      Sponsor[]
   messages      Message[]
-  niches        Niche[] // Assuming a Post can have multiple niches
+  niches        Niche[]
   drafts        Draft[]
   Category      Category?      @relation(fields: [categoryId], references: [id])
 }
 
-model PostCategory {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String?
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id])
+model Category {
+  id     String         @id @default(cuid())
+  title  String?
+  slug   String         @unique
+  userId String?
+  user   User?          @relation(fields: [userId], references: [id])
+  posts  PostCategory[]
+  Post   Post[]
 }
+
+model PostCategory {
+  postId     String
+  categoryId String
+
+  post     Post     @relation(fields: [postId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId])
+}
+
+// model Post {
+//   id                String   @id @default(cuid())
+//   title             String?
+//   featureImage      String?
+//   contentImage      String?
+//   views             Int      @default(0)
+//   createdAt         DateTime @default(now())
+//   updatedAt         DateTime @updatedAt
+//   description       String?
+//   crossPromote      Boolean  @default(false)
+//   podcastSingleCast Boolean  @default(false)
+//   podcastMultiCast  Boolean  @default(false)
+//   slug              String?  @unique
+//   selectedValue     String?
+//   paramsId          String?
+//   image             String?
+//   selectedFeatures  String[]
+//   publishedChannels Boolean  @default(true)
+//   published         Boolean  @default(false)
+//   content           String?
+//   email             String?
+//   isDraft           Boolean  @default(true)
+//   author            String?
+//   categorySlug      String?
+//   blogger           String?
+//   status            Boolean  @default(false)
+//   commentingSys     String?
+//   userId            String?
+//   postNiche         String?
+//   postSlug          String?
+//   categoryId        String?
+
+//   // Relationships
+//   aiResponses   AiResponse[]
+//   avatarsOnPost AvatarOnPost[]
+//   chats         Chat[]
+//   comments      Comment[]
+//   images        ImageOnPost[]
+//   categories    PostCategory[]
+//   sponsors      Sponsor[]
+//   messages      Message[]
+//   niches        Niche[]
+//   drafts        Draft[]
+//   Category      Category?      @relation(fields: [categoryId], references: [id])
+// }
+
+// model Category {
+//   id     String         @id @default(cuid())
+//   title  String?
+//   slug   String         @unique
+//   userId String?
+//   user   User?          @relation(fields: [userId], references: [id])
+//   posts  PostCategory[]
+//   Post   Post[]
+// }
+
+// model PostCategory {
+//   id         String   @id @default(cuid())
+//   postId     String
+//   categoryId String
+//   post       Post     @relation(fields: [postId], references: [id])
+//   category   Category @relation(fields: [categoryId], references: [id])
+
+//   @@unique([postId, categoryId])
+// }
 
 model Draft {
   id        String   @id @default(cuid())
@@ -416,15 +493,6 @@ model AvatarOnPost {
   avatarId String
   avatar   Avatar @relation(fields: [avatarId], references: [id])
   post     Post   @relation(fields: [postId], references: [id])
-}
-
-model Category {
-  id     String  @unique @default(cuid())
-  title  String?
-  slug   String  @unique
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id])
-  posts  Post[]
 }
 
 model Comment {

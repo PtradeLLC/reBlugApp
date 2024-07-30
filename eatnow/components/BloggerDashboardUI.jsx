@@ -13,18 +13,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ChatBubble from "@/components/chat/chatBubble";
-import CategorySelected from "@/components/CategorySelector";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
 import { useRouter } from "next/navigation";
+import { account } from "../app/appwrite";
 
-const BloggerDashboard = ({
-  user,
-  name,
-  setModalOpen,
-  userNiche,
-  setUserNiche,
-}) => {
+const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
   const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState(0);
   const [modalSwitch, setModalSwitch] = useState(false);
@@ -39,6 +33,29 @@ const BloggerDashboard = ({
   const [todayDate, setTodayDate] = useState("");
   const [open, setOpen] = useState(false);
   const [emailVerification, setEmailVerification] = useState(false);
+  const [drafts, setDrafts] = useState([]);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const [accountUser, setAccountUser] = useState(null);
+
+  // Fetch the user on component mount
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const currentUser = await account.get();
+        setAccountUser(currentUser);
+        setUser(currentUser);
+        setLoading(false); // Set loading to false after fetching user
+      } catch (error) {
+        console.log("Error fetching user:", error);
+        setLoading(false); // Set loading to false even if fetching fails
+      }
+    };
+
+    getUser();
+  }, []);
+
+  // console.log("USER", user);
 
   useEffect(() => {
     if (name) {
@@ -118,6 +135,39 @@ const BloggerDashboard = ({
     router.push("/monetize");
   };
 
+  // Save Drafts
+  const allSavedDrafts = async () => {
+    if (!user) return; // Ensure user is defined before proceeding
+
+    try {
+      console.log("userFirst", user);
+      console.log("Account", accountUser);
+
+      const baseUrl = "/api/blog/savedDrafts";
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user.$id }), // Ensure userId is sent correctly
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error with response: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setDrafts(data);
+    } catch (error) {
+      setError(error.message);
+      console.error("Fetch error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    allSavedDrafts();
+  }, [user]);
+
   const handleUserType = () => {
     if (setModalOpen) {
       setModalOpen(true);
@@ -156,7 +206,7 @@ const BloggerDashboard = ({
                   CN
                 </AvatarFallback>
               </Avatar>
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-lg font-semibold">
                 Hello, {name}
               </CardTitle>
             </CardHeader>
@@ -167,14 +217,6 @@ const BloggerDashboard = ({
                   {userType.defaultType}
                 </span>{" "}
                 <br />
-                {/* <span className="text-sm">Your Niche: </span>{" "} */}
-                {/* {userNiche ? (
-                  <span className="text-sm font-semibold">{userNiche}</span>
-                ) : (
-                  <div className="text-sm flex justify-center">
-                    <CategorySelected userNiche={userNiche} user={user} />
-                  </div>
-                )} */}
               </div>
 
               <div className="text-xs text-muted-foreground flex justify-end mt-3">
@@ -204,8 +246,9 @@ const BloggerDashboard = ({
                 {subscriptions ? subscriptions : 0}
                 <span className="text-sm">published</span>
                 {" | "}
-                {subscriptions ? subscriptions : 0}
-                <span className="text-sm">saved draft</span>
+                {/* {subscriptions ? subscriptions : 0} */}
+                <span>{drafts && drafts.length > 0 ? drafts.length : 0}</span>
+                <span className="text-sm">draft saved</span>
                 <span className="text-xs text-red-700 font-semibold flex justify-end">
                   Check out tools
                 </span>
