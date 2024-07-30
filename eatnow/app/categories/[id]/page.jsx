@@ -58,7 +58,7 @@ export default function CategoryPage() {
                     {post.title}
                   </h2>
                   <h6 className="text-white/90 text-tiny font-thin">
-                    {post.category.title}
+                    {/* {post.category.title} */}
                   </h6>
                 </CardHeader>
                 <img

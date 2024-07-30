@@ -35,8 +35,6 @@ export async function POST(request) {
     }
 
     try {
-        console.log(categories, "Selected");
-
         // Ensure categories is an array
         const categoriesArray = Array.isArray(categories) ? categories : [categories];
 

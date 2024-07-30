@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 export async function GET(req, { params }) {
     const { id } = params;
 
+    console.log("Category ID:", id);
     try {
         const category = await prisma.category.findUnique({
             where: { id: id },
@@ -12,24 +13,34 @@ export async function GET(req, { params }) {
                     select: {
                         id: true,
                         title: true,
-                        author: true,
-                        category: true,
                         featureImage: true,
-                        content: true,
-                        commentingSys: true,
-                        comments: true,
-                        createdAt: true,
+                        contentImage: true,
                         views: true,
+                        createdAt: true,
+                        updatedAt: true,
+                        description: true,
                         crossPromote: true,
                         podcastSingleCast: true,
                         podcastMultiCast: true,
+                        slug: true,
+                        selectedValue: true,
+                        paramsId: true,
+                        image: true,
+                        selectedFeatures: true,
+                        publishedChannels: true,
                         published: true,
-                        userId: true,
-                        sponsor: true,
-                        Message: true,
-                        Chat: true,
-                        aiResponses: true,
+                        content: true,
+                        email: true,
+                        isDraft: true,
+                        author: true,
+                        categorySlug: true,
+                        blogger: true,
                         status: true,
+                        commentingSys: true,
+                        userId: true,
+                        postNiche: true,
+                        postSlug: true,
+                        categoryId: true,
                     }
                 },
             },
@@ -41,6 +52,8 @@ export async function GET(req, { params }) {
                 headers: { 'Content-Type': 'application/json' },
             });
         }
+
+        console.log("Category with posts:", category);
 
         return new Response(JSON.stringify(category), {
             status: 200,
