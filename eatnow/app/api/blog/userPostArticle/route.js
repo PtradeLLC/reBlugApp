@@ -106,6 +106,29 @@ async function upsertPost(postData) {
         slug,
     } = postData;
 
+    // First, handle the categories
+    const categoryLinks = await Promise.all(categories.map(async (categorySlug) => {
+        // Try to find the category by its slug
+        const category = await prisma.category.findUnique({
+            where: { slug: categorySlug },
+        });
+
+        if (category) {
+            // If category exists, return its ID
+            return { id: category.id };
+        } else {
+            // If category does not exist, create it and return its ID
+            const newCategory = await prisma.category.create({
+                data: {
+                    title: categorySlug, // Assuming the title is the same as the slug, adjust if needed
+                    slug: categorySlug,
+                },
+            });
+            return { id: newCategory.id };
+        }
+    }));
+
+    // Upsert the post
     return prisma.post.upsert({
         where: { slug },
         update: {
@@ -113,9 +136,13 @@ async function upsertPost(postData) {
             featureImage,
             content,
             categorySlug,
-            author: author.name,
+            author,
             categories: {
-                create: categories.map(category => ({ title: category })),
+                // Update the categories relation
+                connectOrCreate: categoryLinks.map(({ id }) => ({
+                    where: { id },
+                    create: { id },
+                })),
             },
             publishedChannels,
             crossPromote,
@@ -129,9 +156,13 @@ async function upsertPost(postData) {
             featureImage,
             content,
             categorySlug,
-            author: author.name,
+            author,
             categories: {
-                create: categories.map(category => ({ title: category })),
+                // Create categories if they don't exist
+                connectOrCreate: categoryLinks.map(({ id }) => ({
+                    where: { id },
+                    create: { id },
+                })),
             },
             publishedChannels,
             crossPromote,
