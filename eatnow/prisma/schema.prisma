@@ -191,7 +191,7 @@ model Draft {
   postId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String   @unique
+  userId    String
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 

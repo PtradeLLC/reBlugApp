@@ -193,9 +193,6 @@ export async function POST(request) {
         // Upload content images to Cloudinary
         const updatedContent = await uploadContentImages(content);
 
-        console.log("Cat", categorySlug);
-        console.log("Egories", categories);
-
         // Find or create the category
         const category = await prisma.category.upsert({
             where: { slug: normalizeSlug(categorySlug) },
