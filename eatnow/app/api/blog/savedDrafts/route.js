@@ -23,9 +23,12 @@ export async function POST(req) {
         }
 
         // Find all posts
-        const allPosts = await prisma.draft.findMany();
-
-        console.log("AllPosts", allPosts);
+        const allPosts = await prisma.draft.findMany({
+            where: {
+                id: userId
+            }
+        }
+        );
 
         // Return all posts if user is found
         return new Response(JSON.stringify(allPosts), {

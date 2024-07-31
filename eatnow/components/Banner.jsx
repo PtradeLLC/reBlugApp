@@ -58,7 +58,7 @@ const Banner = () => {
           <span className="text-green-700 font-semibold text-sm">
             Pay Per Task
           </span>{" "}
-          feature is Live! Get compensated to perform Foodhini's easy tasks
+          is Live! Get compensated to perform Foodhini's easy tasks
         </p>
         <button
           onClick={handleClick}

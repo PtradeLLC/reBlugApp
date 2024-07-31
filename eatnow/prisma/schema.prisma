@@ -87,6 +87,7 @@ model User {
   UserShadow         UserShadow[]
   niches             Niche[]
   Referral           Referral[]
+  drafts             Draft[]
 }
 
 model Niche {
@@ -167,32 +168,34 @@ model Post {
 }
 
 model Category {
-  id     String         @id @default(cuid())
+  id     String  @id @default(cuid())
   title  String?
-  slug   String         @unique
+  slug   String  @unique
   userId String?
-  user   User?          @relation(fields: [userId], references: [id])
-  posts  PostCategory[]
-  Post   Post[]
+  user   User?   @relation(fields: [userId], references: [id])
+
+  Post Post[]
 }
 
 model PostCategory {
   postId     String
   categoryId String
-
-  post     Post     @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  post       Post   @relation(fields: [postId], references: [id])
 
   @@id([postId, categoryId])
 }
 
 model Draft {
   id        String   @id @default(cuid())
+  title     String?
+  postId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String?
-  Post      Post?    @relation(fields: [postId], references: [id])
-  postId    String?  @unique
+  userId    String   @unique
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model FacebookMetrics {

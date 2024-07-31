@@ -55,8 +55,6 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
     getUser();
   }, []);
 
-  // console.log("USER", user);
-
   useEffect(() => {
     if (name) {
       setLoading(false);
