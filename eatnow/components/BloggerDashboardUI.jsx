@@ -138,9 +138,6 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
     if (!user) return; // Ensure user is defined before proceeding
 
     try {
-      console.log("userFirst", user);
-      console.log("Account", accountUser);
-
       const baseUrl = "/api/blog/savedDrafts";
       const response = await fetch(baseUrl, {
         method: "POST",

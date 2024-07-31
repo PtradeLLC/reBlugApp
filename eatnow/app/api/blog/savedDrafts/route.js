@@ -25,7 +25,7 @@ export async function POST(req) {
         // Find all posts
         const allPosts = await prisma.draft.findMany({
             where: {
-                id: userId
+                userId: userId
             }
         }
         );
