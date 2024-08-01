@@ -245,7 +245,9 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                 <span>{drafts && drafts.length > 0 ? drafts.length : 0}</span>
                 <span className="text-sm">draft saved</span>
                 <span className="text-xs text-red-700 font-semibold flex justify-end">
-                  <Link href={"/write"}>Continue editing</Link>
+                  {drafts && drafts.length >= 1 ? (
+                    <Link href={"/write"}>Continue editing</Link>
+                  ) : null}
                 </span>
               </div>
               <span className="text-sm text-muted-foreground">

@@ -41,8 +41,8 @@ const FoodhiniPage = () => {
                         The Legend
                       </span>
                       <span className="font-thin block text-lg mt-1 text-gray-800">
-                        As rumor has it, when brands prays to the gods at the 11
-                        O'clock hour hoping for a miracle, Foodhini answers.
+                        As rumor has it, when brands prays to the gods at the
+                        11th hour hoping for a miracle, Foodhini answers.
                       </span>
                     </span>
                   </span>

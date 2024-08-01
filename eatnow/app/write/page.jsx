@@ -11,7 +11,7 @@ import SponsMessage from "@/components/SponsMessageBox";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import CategorySelected from "@/components/CategorySelector";
+import DraftSidebar from "@/components/Blogs/Draft";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -925,14 +925,6 @@ const ChatAIBob = () => {
             <div className="flex flex-col mt-4">
               <div className="flex flex-col mt-4">
                 <p className="font-semibold text-lg text-gray-600 pl-1">
-                  Saved Drafts
-                </p>
-                <div className="border mt-3 mx-2 px-3">
-                  Array of saved articles
-                </div>
-              </div>
-              <div className="flex flex-col mt-4">
-                <p className="font-semibold text-lg text-gray-600 pl-1">
                   Tools
                 </p>
                 <div className="border mt-3 mx-2 px-3">
@@ -947,6 +939,15 @@ const ChatAIBob = () => {
                   <BCommerceArray />
                 </div>
               </div>
+              <div className="flex flex-col mt-4">
+                <p className="font-semibold text-lg text-gray-600 pl-1">
+                  Blog Status
+                </p>
+                <div className="border mt-3 mx-2 px-3">
+                  <DraftSidebar />
+                </div>
+              </div>
+
               {openModal && (
                 <ProductComponent
                   openModal={openModal}
