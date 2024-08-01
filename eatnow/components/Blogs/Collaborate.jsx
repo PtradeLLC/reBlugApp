@@ -373,7 +373,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                         type="text"
                         name="firstName"
                         id="firstName"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                         value={brandCollab.firstName}
                         onChange={handleChange}
                       />
@@ -389,7 +389,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                         type="text"
                         name="lastName"
                         id="lastName"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                         value={brandCollab.lastName}
                         onChange={handleChange}
                       />
@@ -406,7 +406,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                       type="email"
                       name="email"
                       id="email"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.email}
                       onChange={handleChange}
                     />
@@ -422,7 +422,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                       type="text"
                       name="product"
                       id="product"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.product}
                       onChange={handleChange}
                     />
@@ -437,7 +437,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                     <textarea
                       name="prodDesc"
                       id="prodDesc"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.prodDesc}
                       onChange={handleChange}
                     ></textarea>
@@ -453,7 +453,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                       type="text"
                       name="brandName"
                       id="brandName"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.brandName}
                       onChange={handleChange}
                     />
@@ -469,7 +469,7 @@ const Collaborate = ({ isOpen, onClose }) => {
                       type="text"
                       name="website"
                       id="website"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.website}
                       onChange={handleChange}
                     />
@@ -484,16 +484,16 @@ const Collaborate = ({ isOpen, onClose }) => {
                     <textarea
                       name="message"
                       id="message"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                       value={brandCollab.message}
                       onChange={handleChange}
                     ></textarea>
                   </div>
                   <button
                     type="submit"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+                    className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"
                   >
-                    Submit
+                    Submit proposal
                   </button>
                 </form>
               </div>

@@ -40,7 +40,8 @@ export default function CategoryPage() {
   return (
     <div>
       <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-6xl ml-3">
-        In: {data.title}
+        {console.log("Data from the front", data)}
+        In: {data.category.title}
       </h1>
       {data.posts &&
         data.posts.map((post) => {

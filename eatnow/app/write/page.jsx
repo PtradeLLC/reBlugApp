@@ -75,7 +75,7 @@ const ChatAIBob = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/app/blog-posts/[id]");
+        router.push("/app/blog-posts/[id]"); //Find out the ID for the post.
       } else {
         setMessage("Failed to create article");
       }
@@ -269,7 +269,7 @@ const ChatAIBob = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/app/blog-posts/[id]");
+        router.push("/blog-posts/[id]"); //Find out the ID for the post.
       } else {
         setMessage("Failed to create article");
       }
@@ -404,7 +404,7 @@ const ChatAIBob = () => {
         setMessage("");
       }, 3000);
       // Redirect user to the preview page
-      router.push("/app/blog-posts/[id]");
+      router.push("/blog-posts/[id]"); //Find out the ID for the post.
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);

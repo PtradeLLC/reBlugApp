@@ -268,8 +268,9 @@ const Blog = () => {
                     <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
                       <div className="flex justify-center items-center">
                         <span className="text-sm text-green-700">
-                          {post.categorySlug} |
+                          {post.Category} |
                         </span>
+                        {/* {console.log("PostCat", post)} */}
                         <Button
                           as={Link}
                           href={`/blog-posts/${post.id}`}

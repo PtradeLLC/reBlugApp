@@ -145,6 +145,15 @@ const PostPage = ({ comments, post }) => {
     }
   };
 
+  function formatCategorySlug(slug) {
+    if (!slug) return "";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
     <div className="mt-20">
       <div className="relative mt-2 bg-[#ced4da] pb-20 sm:pb-24 xl:pb-0">
@@ -225,7 +234,7 @@ const PostPage = ({ comments, post }) => {
                     />
                   </svg>
                   <div className="">
-                    Niche: {post.categorySlug || "Not set"}{" "}
+                    Niche: {formatCategorySlug(post.categorySlug) || "Not set"}
                   </div>
                 </li>
                 <li className="flex item-center  focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">

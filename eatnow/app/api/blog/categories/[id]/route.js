@@ -1,15 +1,19 @@
+import { NextResponse } from 'next/server';
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(req, { params }) {
     const { id } = params;
 
-    console.log("Category ID:", id);
+    if (!id) {
+        return new Response('ID not provided', { status: 400 });
+    }
+
     try {
-        const category = await prisma.category.findUnique({
-            where: { id: id },
+        const categoryWithPosts = await prisma.category.findUnique({
+            where: { id },
             include: {
-                posts: {
+                Post: {
                     select: {
                         id: true,
                         title: true,
@@ -40,32 +44,21 @@ export async function GET(req, { params }) {
                         userId: true,
                         postNiche: true,
                         postSlug: true,
-                        categoryId: true,
+                        categoryId: true
                     }
-                },
-            },
+                }
+            }
         });
 
-        if (!category) {
-            return new Response(JSON.stringify({ error: 'Category not found' }), {
-                status: 404,
-                headers: { 'Content-Type': 'application/json' },
-            });
+        if (!categoryWithPosts) {
+            return NextResponse.json({ success: false, message: 'Category not found.' }, { status: 404 });
         }
 
-        console.log("Category with posts:", category);
+        console.log("Cat with post", categoryWithPosts);
 
-        return new Response(JSON.stringify(category), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        return NextResponse.json({ success: true, category: categoryWithPosts });
     } catch (error) {
-        console.error("Error fetching category:", error);
-        return new Response(JSON.stringify({ error: error.message }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    } finally {
-        await prisma.$disconnect();
+        console.error('Error fetching category:', error);
+        return NextResponse.json({ success: false, message: 'Failed to fetch category.' }, { status: 500 });
     }
 }

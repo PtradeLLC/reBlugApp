@@ -159,12 +159,11 @@ model Post {
   chats         Chat[]
   comments      Comment[]
   images        ImageOnPost[]
-  categories    PostCategory[]
+  categories    Category[]
   sponsors      Sponsor[]
   messages      Message[]
   niches        Niche[]
   drafts        Draft[]
-  Category      Category?      @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -173,16 +172,7 @@ model Category {
   slug   String  @unique
   userId String?
   user   User?   @relation(fields: [userId], references: [id])
-
-  Post Post[]
-}
-
-model PostCategory {
-  postId     String
-  categoryId String
-  post       Post   @relation(fields: [postId], references: [id])
-
-  @@id([postId, categoryId])
+  Post   Post[]
 }
 
 model Draft {

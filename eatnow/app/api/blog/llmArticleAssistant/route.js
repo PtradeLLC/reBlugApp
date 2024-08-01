@@ -3,8 +3,6 @@ import { Groq } from 'groq-sdk';
 export async function POST(req) {
     try {
         const { content, llmArticle } = await req.json();
-        console.log('Received content:', content);
-        console.log('Received llmArticle:', llmArticle);
 
         // Simulate a delay to mimic processing time
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -40,8 +38,6 @@ export async function POST(req) {
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
         const responseMessage = `You sent: ${content}`;
-
-        console.log("Response message", responseMessage);
 
         try {
             const chatCompletion = await groq.chat.completions.create({
