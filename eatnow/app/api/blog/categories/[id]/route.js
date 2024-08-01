@@ -54,8 +54,6 @@ export async function GET(req, { params }) {
             return NextResponse.json({ success: false, message: 'Category not found.' }, { status: 404 });
         }
 
-        console.log("Cat with post", categoryWithPosts);
-
         return NextResponse.json({ success: true, category: categoryWithPosts });
     } catch (error) {
         console.error('Error fetching category:', error);

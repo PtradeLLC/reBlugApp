@@ -3,39 +3,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BreadCrumbs from "./CategoryBreadcrumbs";
 
-// Dynamically create the color classes
-// const colorClasses = contents.reduce((acc, item) => {
-//   acc[item.color] = {
-//     backgroundColor: item.color,
-//   };
-//   return acc;
-// }, {});
-
-// const ContentItem = ({ item, index }) => {
-//   const style = colorClasses[item.color];
-//   return (
-//     <div
-//       className={`flex flex-col items-center justify-center text-white rounded-2xl text-center p-6 md:py-10 h-full ${
-//         index % 2 === 1 ? "lg:mt-16" : ""
-//       }`}
-//       style={style}
-//     >
-//       <div className="text-5xl mb-6">
-//         <FontAwesomeIcon icon={item.icon} />
-//       </div>
-//       <h4 className="font-barlow-condensed text-2xl font-medium mb-2">
-//         {item.title}
-//       </h4>
-//       <p className="opacity-75 mt-4">{item.text}</p>
-//     </div>
-//   );
-// };
-
-// ContentItem.propTypes = {
-//   item: PropTypes.object.isRequired,
-//   index: PropTypes.number.isRequired,
-// };
-
 const HowItWorks12 = () => {
   return (
     <>

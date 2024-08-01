@@ -80,16 +80,25 @@ const Blog = () => {
     );
   }
 
+  function formatCategorySlug(slug) {
+    if (!slug) return "";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
     <>
       <div className="bg-white mt-7 pb-24 sm:pb-8">
         <div className="mx-auto px-6 lg:px-8">
           <div className="mx-auto text-center">
-            <BlogCategories categories={categoriesData || []} />
+            <BlogCategories />
           </div>
           <div>
             <div className="my-2">
-              <HowItWorks12 />
+              <HowItWorks12 categories={categoriesData || []} />
             </div>
             <div className="flex justify-center items-center">
               <div>
@@ -267,10 +276,10 @@ const Blog = () => {
                     </CardBody>
                     <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
                       <div className="flex justify-center items-center">
-                        <span className="text-sm text-green-700">
-                          {post.Category} |
+                        <span className="text-xs text-green-700">
+                          {post.author}
+                          {"|"} {formatCategorySlug(post.categorySlug)}
                         </span>
-                        {/* {console.log("PostCat", post)} */}
                         <Button
                           as={Link}
                           href={`/blog-posts/${post.id}`}
