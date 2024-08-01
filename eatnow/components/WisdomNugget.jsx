@@ -11,7 +11,7 @@ const WisdomNugget = () => {
         <div className="flex">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-slate-500 bg-slate-100 rounded-lg dark:text-slate-300 dark:bg-slate-900">
             <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
+              className="w-6 h-6 text-gray-800 dark:text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"

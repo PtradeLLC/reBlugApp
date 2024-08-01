@@ -5,7 +5,7 @@ const RightSide = () => {
     <section className="max-w-[450px] h-[450px] bg-red-500 rounded-full p-2 mt-4 mx-auto px-4 md:px-8">
       <div className="space-y-3 text-center p-9">
         <svg
-          class="flex w-32 mx-auto text-white"
+          className="flex w-32 mx-auto text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
