@@ -37,17 +37,27 @@ export default function CategoryPage() {
   if (error) return <div>Error loading category</div>;
   if (!data) return <div>Loading..</div>;
 
+  function formatCategorySlug(slug) {
+    if (!slug) return "";
+
+    return slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
     <div>
       <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-6xl ml-3">
-        {console.log("Data from the front", data)}
-        In: {data.category.title}
+        In:{" "}
+        {data.category[0]?.categorySlug &&
+          formatCategorySlug(data.category[0]?.categorySlug)}
       </h1>
-      {data.posts &&
-        data.posts.map((post) => {
+      {data.category &&
+        data.category.map((item) => {
           return (
             <div
-              key={post.id} // Make sure each element in a list has a unique key
+              key={item.id} // Make sure each element in a list has a unique key
               className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-8 mt-6"
             >
               <Card
@@ -56,7 +66,7 @@ export default function CategoryPage() {
               >
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                   <h2 className="text-tiny text-white font-bold">
-                    {post.title}
+                    {item.title}
                   </h2>
                   <h6 className="text-white/90 text-tiny font-thin">
                     {/* {post.category.title} */}
@@ -66,7 +76,7 @@ export default function CategoryPage() {
                   removeWrapper
                   alt="Feature image"
                   className="z-0 w-full h-full object-cover"
-                  src={post.featureImage}
+                  src={item.featureImage}
                   onError={(e) => console.error("Image load error:", e)}
                 />
                 <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
@@ -78,20 +88,20 @@ export default function CategoryPage() {
                     />
                     <div className="flex flex-col">
                       <p className="text-tiny text-white line-clamp-3">
-                        {extractPlainText(post.content)}
+                        {extractPlainText(item.content)}
                       </p>
                       <div className="bg-white/40 rounded-sm p-2 flex justify-end items-center">
                         <span className="text-sm font-thin text-white mx-2">
-                          By: {post.author}
+                          By: {item.author}
                         </span>
                         <span className="text-sm font-thin text-white mx-2">
                           AI: Yes
                         </span>
                         <span className="text-sm font-thin text-white mx-2">
-                          views: {post.views}
+                          views: {item.views}
                         </span>
                         <Link
-                          href={`/blog-posts/${post.id}`}
+                          href={`/blog-posts/${item.id}`}
                           className="bg-gray-300 p-2 rounded-sm"
                           radius="full"
                           size="sm"
