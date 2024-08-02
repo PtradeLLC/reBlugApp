@@ -1,48 +1,71 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
+// Initialize Prisma Client
 const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
-        // Parse the request body
-        const { userId } = await req.json();
+        const { userId, fetchPublished } = await req.json();
 
-        // Find the user
-        const user = await prisma.user.findUnique({
+        // Fetch drafts
+        const drafts = await prisma.post.findMany({
             where: {
-                id: userId,
+                userId: userId,
+                isDraft: true,
             },
         });
 
-        if (!user) {
-            // User not found
-            return new Response(JSON.stringify({ message: "User not found" }), {
-                status: 404,
-                headers: { 'Content-Type': 'application/json' },
+        let publishedPosts = [];
+        if (fetchPublished) {
+            publishedPosts = await prisma.post.findMany({
+                where: {
+                    userId: userId,
+                    isDraft: false,
+                    published: true,
+                    status: true,
+                },
             });
         }
 
-        // Find all posts
-        const allPosts = await prisma.draft.findMany({
-            where: {
-                userId: userId
-            }
-        }
-        );
-
-        // Return all posts if user is found
-        return new Response(JSON.stringify(allPosts), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-        });
-
+        return NextResponse.json({ success: true, drafts, publishedPosts });
     } catch (error) {
-        console.error("Error fetching posts:", error);
-        return new Response(JSON.stringify({ error: error.message }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    } finally {
-        await prisma.$disconnect();
+        console.error('Error fetching drafts or published posts:', error);
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
     }
 }
+
+
+
+// import { PrismaClient } from '@prisma/client';
+// import { NextResponse } from 'next/server';
+
+// // Initialize Prisma Client using a singleton pattern
+// const prisma = global.prisma || new PrismaClient();
+// if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
+
+// export async function POST(req) {
+//     try {
+//         const { userId, fetchPublished } = await req.json();
+
+//         if (!userId) {
+//             return NextResponse.json({ message: 'Invalid input' }, { status: 400 });
+//         }
+
+//         const drafts = await prisma.post.findMany({
+//             where: { userId, isDraft: true },
+//         });
+
+//         let publishedPosts = [];
+//         if (fetchPublished) {
+//             publishedPosts = await prisma.post.findMany({
+//                 where: { userId, published: true },
+//             });
+//         }
+
+//         return NextResponse.json({ success: true, drafts, publishedPosts });
+//     } catch (error) {
+//         console.error('Error fetching drafts or published posts:', error);
+//         return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+//     }
+// }

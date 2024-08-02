@@ -9,6 +9,7 @@ const Collaborate = ({ isOpen, onClose }) => {
     lastName: "",
     email: "",
     product: "",
+    reason: "",
     prodDesc: "",
     brandName: "",
     website: "",
@@ -19,8 +20,6 @@ const Collaborate = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     const baseUrl = "/api/blog/collaborate";
-
-    console.log("BRANDCOLLAB", brandCollab);
 
     const response = await fetch(baseUrl, {
       method: "POST",
@@ -40,6 +39,7 @@ const Collaborate = ({ isOpen, onClose }) => {
       lastName: "",
       email: "",
       product: "",
+      reason: "",
       prodDesc: "",
       brandName: "",
       website: "",
@@ -195,7 +195,7 @@ const Collaborate = ({ isOpen, onClose }) => {
           id: "reBlugChart",
           type: "doughnut",
           data: {
-            labels: ["ReBlug UpVotes", "Comments", "Shares"],
+            labels: ["ReBlug UpBlug", "Comments", "Shares"],
             datasets: [
               {
                 label: "ReBlug Engagement",
@@ -272,7 +272,9 @@ const Collaborate = ({ isOpen, onClose }) => {
           <div className="relative w-full max-w-2xl max-h-full bg-white rounded-lg shadow mt-40">
             <div className="p-4 bg-slate-50">
               <div className="flex items-start justify-between p-4 border-b rounded-t">
-                <h3 className="text-xl font-semibold">My Reach</h3>
+                <h3 className="text-xl font-semibold">
+                  My Reach across all media
+                </h3>
                 <button
                   type="button"
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -292,25 +294,6 @@ const Collaborate = ({ isOpen, onClose }) => {
                     />
                   </svg>
                 </button>
-
-                {/* <button
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                  onClick={onClose}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button> */}
               </div>
               <div className="p-4">
                 <div className="flex flex-wrap -mx-2">
@@ -360,6 +343,10 @@ const Collaborate = ({ isOpen, onClose }) => {
               </div>
 
               <div className="p-6 space-y-4">
+                <p>
+                  Let's partner up and collaborate for my next (or yours)
+                  article.
+                </p>
                 <form className="space-y-4" onSubmit={handleCollab}>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
@@ -441,6 +428,25 @@ const Collaborate = ({ isOpen, onClose }) => {
                       value={brandCollab.prodDesc}
                       onChange={handleChange}
                     ></textarea>
+                  </div>
+                  <div>
+                    <label htmlFor="reason" className="block mb-1 font-medium">
+                      Reason for Collaboration?
+                    </label>
+                    <select
+                      id="reason"
+                      name="reason"
+                      value={brandCollab.reason}
+                      onChange={handleChange}
+                      className="w-full p-2 border border-gray-300 rounded"
+                    >
+                      <option value="" disabled>
+                        Select a reason
+                      </option>
+                      <option value="Promotion">Sponsorship/Promotion</option>
+                      <option value="Partnership">Guest Blog</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                   <div className="w-full">
                     <label

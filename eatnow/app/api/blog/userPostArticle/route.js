@@ -34,6 +34,7 @@ async function handleFeatureImageUpload(featureImage) {
 
 // Handle draft logic
 async function handleDraftLogic(post, isDraft, userId) {
+    let draft = null;
     if (isDraft) {
         const existingDraft = await prisma.draft.findUnique({
             where: { postId: post.id },
@@ -44,14 +45,15 @@ async function handleDraftLogic(post, isDraft, userId) {
             postId: post.id,
         };
         if (existingDraft) {
-            await prisma.draft.update({
+            draft = await prisma.draft.update({
                 where: { id: existingDraft.id },
                 data: draftData,
             });
         } else {
-            await prisma.draft.create({ data: draftData });
+            draft = await prisma.draft.create({ data: draftData });
         }
     }
+    return draft ? draft.id : null;
 }
 
 // Upsert post in the database
@@ -199,14 +201,17 @@ export async function POST(request) {
             crossPromote,
             podcastSingleCast,
             podcastMultiCast,
-            isDraft,
+            isDraft: false,
+            published: true,
             slug,
             categoryId: category.id,
         });
+        // Get the draft ID if the post is a draft
+        const draftId = await handleDraftLogic(post, isDraft, userId);
 
-        await handleDraftLogic(post, isDraft, userId);
+        console.log("DraftId", draftId);
 
-        return NextResponse.json({ success: true, post });
+        return NextResponse.json({ success: true, post, draftId });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });

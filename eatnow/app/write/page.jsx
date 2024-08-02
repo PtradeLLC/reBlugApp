@@ -375,11 +375,11 @@ const ChatAIBob = () => {
           title: articleData.articleTitle,
           featureImage: articleData.coverImage,
           content: articleData.articleBody.articleContent.bodyContent,
-          categorySlug: selectedOptionText, // Ensure this is included
+          categorySlug: selectedOptionText,
           publishedChannels: false,
           crossPromote: false,
           author: user,
-          categories: selectedOptionText, // Ensure this is included
+          categories: selectedOptionText,
           podcastSingleCast: true,
           podcastMultiCast: false,
           isDraft: true,
@@ -387,24 +387,31 @@ const ChatAIBob = () => {
         }),
       });
 
+      const data = await response.json();
+      console.log("Full response data:", data);
+
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(
           data.error ||
             "Verify that the above input fields are correctly filled please. Failed to save draft"
         );
       }
 
-      const data = await response.json();
-      setDrafts((prevDrafts) => [...prevDrafts, data.newArticle]);
+      const draftId = data.draftId;
+
+      if (!draftId) {
+        throw new Error("Draft ID not found in the response.");
+      }
+
+      setDrafts((prevDrafts) => [...prevDrafts, data.post]);
       setMessage("Your draft has been saved successfully");
-      // setStoreNiche(selectedOptionText);
 
       setTimeout(() => {
         setMessage("");
       }, 3000);
+
       // Redirect user to the preview page
-      router.push("/blog-posts/[id]"); //Find out the ID for the post.
+      router.push(`/blog-posts/${draftId}`);
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);
@@ -413,6 +420,7 @@ const ChatAIBob = () => {
     }
   };
 
+  // Handles category change
   const handleCategoryChange = (event) => {
     setArticleData({
       ...articleData,
@@ -420,31 +428,31 @@ const ChatAIBob = () => {
     });
   };
 
-  const handleEditDraft = (draft) => {
-    setArticleData({
-      articleTitle: draft.title,
-      coverImage: draft.featureImage,
-      articleBody: {
-        articleContent: {
-          bodyContent: draft.content,
-          bodyImage: "",
-          sponsorship: {
-            productTitle: "",
-            productUrl: "",
-            productImage: "",
-            productMessage: "",
-          },
-        },
-      },
-      categoryNiche: draft.categorySlug,
-      articleFeatures: {
-        crossPromotion: draft.crossPromote,
-        publishEverywhere: draft.publishedChannels,
-        podcastSingleCast: draft.podcastSingleCast,
-        podcastMultiCast: draft.podcastMultiCast,
-      },
-    });
-  };
+  // const handleEditDraft = (draft) => {
+  //   setArticleData({
+  //     articleTitle: draft.title,
+  //     coverImage: draft.featureImage,
+  //     articleBody: {
+  //       articleContent: {
+  //         bodyContent: draft.content,
+  //         bodyImage: "",
+  //         sponsorship: {
+  //           productTitle: "",
+  //           productUrl: "",
+  //           productImage: "",
+  //           productMessage: "",
+  //         },
+  //       },
+  //     },
+  //     categoryNiche: draft.categorySlug,
+  //     articleFeatures: {
+  //       crossPromotion: draft.crossPromote,
+  //       publishEverywhere: draft.publishedChannels,
+  //       podcastSingleCast: draft.podcastSingleCast,
+  //       podcastMultiCast: draft.podcastMultiCast,
+  //     },
+  //   });
+  // };
 
   useEffect(() => {
     if (user && user.$id) {
@@ -912,7 +920,7 @@ const ChatAIBob = () => {
                     variant="primary"
                     className="text-sm text-gray-900 font-semibold leading-6 hover:bg-slate-400 hover:text-white"
                   >
-                    Save & Preview
+                    Save & Publish
                   </Button>
                 </div>
                 {message && (

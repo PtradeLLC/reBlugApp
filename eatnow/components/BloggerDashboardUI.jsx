@@ -37,6 +37,7 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [accountUser, setAccountUser] = useState(null);
+  const [publishedPosts, setPublishedPosts] = useState([]);
 
   // Fetch the user on component mount
   useEffect(() => {
@@ -135,7 +136,7 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
 
   // Save Drafts
   const allSavedDrafts = async () => {
-    if (!user) return; // Ensure user is defined before proceeding
+    if (!user) return;
 
     try {
       const baseUrl = "/api/blog/savedDrafts";
@@ -158,6 +159,36 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
       console.error("Fetch error: ", error);
     }
   };
+
+  // Get PublishedPosts
+  const allPubPosts = async () => {
+    if (!user) return; // Ensure user is defined before proceeding
+
+    try {
+      const baseUrl = "/api/blog/getPublishedPos";
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user.$id }), // Ensure userId is sent correctly
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error with response: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setPublishedPosts(data);
+    } catch (error) {
+      setError(error.message);
+      console.error("Fetch error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    allPubPosts();
+  }, [user]);
 
   useEffect(() => {
     allSavedDrafts();
@@ -237,18 +268,38 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
+              {console.log("PpOST", publishedPosts)}
               <div className="text-2xl font-bold">
-                {subscriptions ? subscriptions : 0}
-                <span className="text-sm">published</span>
-                {" | "}
-                {/* {subscriptions ? subscriptions : 0} */}
-                <span>{drafts && drafts.length > 0 ? drafts.length : 0}</span>
-                <span className="text-sm">draft saved</span>
-                <span className="text-xs text-red-700 font-semibold flex justify-end">
-                  {drafts && drafts.length >= 1 ? (
+                {publishedPosts.publishedPosts?.length > 1 ? (
+                  <>
+                    {publishedPosts.publishedPosts.length}
+                    <span className="text-sm"> posts published</span>
+                  </>
+                ) : (
+                  <>
+                    {publishedPosts.publishedPosts?.length === 1 ? (
+                      <>
+                        1<span className="text-sm"> post published</span>
+                      </>
+                    ) : (
+                      <>
+                        0<span className="text-sm"> posts published</span>
+                      </>
+                    )}
+                  </>
+                )}
+                {/* {" | "} */}
+                {/* <span>
+                  {drafts && drafts?.drafts?.length > 0
+                    ? drafts?.drafts?.length
+                    : 0}
+                </span> */}
+                {/* <span className="text-sm">draft saved</span> */}
+                {/* <span className="text-xs text-red-700 font-semibold flex justify-end">
+                  {drafts && drafts?.drafts?.length >= 1 ? (
                     <Link href={"/write"}>Continue editing</Link>
                   ) : null}
-                </span>
+                </span> */}
               </div>
               <span className="text-sm text-muted-foreground">
                 {`Ideate, brainstorm, write, and publish an article quickly.`}
