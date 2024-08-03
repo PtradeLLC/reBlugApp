@@ -3,9 +3,9 @@ import WhyBrandENPN from "../../components/ENPNBrands";
 
 const features = [
   {
-    name: "Eat Now, Pay Never",
+    name: "Pay Per Task",
     description:
-      "Modeled after the 'Buy Now, Pay Later' concept, 'Eat Now, Pay Never' is a marketing tool on reBlug that allows members to order food without paying anything out of pocket. Whether running an enterprise, a midsize company, or a startup, you can use this tool to increase sales, launch new product, promote existing product, raise product awareness, fundraising, and acquire new customers. By working with 'Foodhini', you can leverage the power and reach of our community to amplify your campaign like never before.",
+      "Modeled after the 'Buy Now, Pay Later' concept, 'Pay Per Task' is a marketing tool on reBlug that allows members to order food without paying anything out of pocket. Whether running an enterprise, a midsize company, or a startup, you can use this tool to increase sales, launch new product, promote existing product, raise product awareness, fundraising, and acquire new customers. By working with 'Foodhini', you can leverage the power and reach of our community to amplify your campaign like never before.",
   },
   {
     name: "Article Assistant",

@@ -26,8 +26,8 @@ export default function WhyENPN() {
       <span className="text-lg my-3 font-bold">The Tool</span>
       <div className="text-md my-3">
         Modeled after the "Buy Now, Pay Later" concept,{" "}
-        <span className="italic">Eat Now, Pay Never</span> is a marketing tool
-        that lets users order food without paying anything out of pocket.
+        <span className="italic">Pay Per Task</span> is a marketing tool that
+        lets users order food without paying anything out of pocket.
       </div>
       <div className="text-md my-3">
         Here are some of the notable questions we have been asked.

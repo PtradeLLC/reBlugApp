@@ -268,22 +268,29 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {console.log("PpOST", publishedPosts)}
               <div className="text-2xl font-bold">
                 {publishedPosts.publishedPosts?.length > 1 ? (
                   <>
                     {publishedPosts.publishedPosts.length}
-                    <span className="text-sm"> posts published</span>
+                    <span className="text-sm cursor-pointer">
+                      <Link href={"/profile#my-posts"}>posts published</Link>{" "}
+                    </span>
                   </>
                 ) : (
                   <>
                     {publishedPosts.publishedPosts?.length === 1 ? (
                       <>
-                        1<span className="text-sm"> post published</span>
+                        1
+                        <span className="text-sm cursor-pointer">
+                          {" "}
+                          <Link href={"/profile#my-posts"}>
+                            post published
+                          </Link>{" "}
+                        </span>
                       </>
                     ) : (
                       <>
-                        0<span className="text-sm"> posts published</span>
+                        0<span className="text-sm"> post published</span>
                       </>
                     )}
                   </>

@@ -3,11 +3,14 @@ export async function POST(req) {
     try {
         const body = await req.json();
 
-        const { firstName, lastName, email, product, prodDesc, brandName, website, message } = body;
+        const { firstName, lastName, email, product, reason, prodDesc, brandName, website, message } = body;
 
         try {
             // To do
             //1. Save data to database.
+            console.log(firstName, lastName, email, product, reason, prodDesc, brandName, website, message);
+
+
             //2. Send email to blogger.
             return new Response(JSON.stringify({ message: "hello" }), {
                 status: 200,

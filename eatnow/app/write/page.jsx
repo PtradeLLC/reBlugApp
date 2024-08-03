@@ -23,6 +23,7 @@ const ChatAIBob = () => {
   const [message, setMessage] = useState(" ");
   const [wordCount, setWordCount] = useState(0);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [series, setSeries] = useState([]);
 
   const variant = "border-green";
   const router = useRouter();
@@ -125,6 +126,8 @@ const ChatAIBob = () => {
       podcastSingleCast: false,
       podcastMultiCast: false,
     },
+    isSeries: false,
+    seriesTitle: "",
   });
 
   const handleFeatureChange = (feature, value) => {
@@ -345,6 +348,7 @@ const ChatAIBob = () => {
   };
 
   //Saves Article as draft until approved before publishing
+
   const handleSaveDraft = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -356,7 +360,6 @@ const ChatAIBob = () => {
 
       const userId = user.$id;
       const slug = generateSlug(articleData.articleTitle);
-
       const selectedOptionText =
         optionList[articleData.categoryNiche] || "None";
 
@@ -365,13 +368,32 @@ const ChatAIBob = () => {
         return;
       }
 
+      // Log the data to be sent
+      console.log("Data being sent:", {
+        userId,
+        title: articleData.articleTitle,
+        featureImage: articleData.coverImage,
+        content: articleData.articleBody.articleContent.bodyContent,
+        categorySlug: selectedOptionText,
+        publishedChannels: false,
+        crossPromote: false,
+        author: user,
+        categories: selectedOptionText,
+        podcastSingleCast: true,
+        podcastMultiCast: false,
+        isDraft: true,
+        slug,
+        isSeries: articleData.isSeries,
+        seriesTitle: articleData.seriesTitle,
+      });
+
       const response = await fetch(`/api/blog/userPostArticle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          userId,
           title: articleData.articleTitle,
           featureImage: articleData.coverImage,
           content: articleData.articleBody.articleContent.bodyContent,
@@ -383,12 +405,15 @@ const ChatAIBob = () => {
           podcastSingleCast: true,
           podcastMultiCast: false,
           isDraft: true,
-          slug: slug,
+          slug,
+          isSeries: articleData.isSeries,
+          seriesTitle: articleData.seriesTitle,
         }),
       });
 
       const data = await response.json();
-      console.log("Full response data:", data);
+
+      console.log("Data from Write", data);
 
       if (!response.ok) {
         throw new Error(
@@ -397,12 +422,7 @@ const ChatAIBob = () => {
         );
       }
 
-      const draftId = data.draftId;
-
-      if (!draftId) {
-        throw new Error("Draft ID not found in the response.");
-      }
-
+      // Handle success and update state
       setDrafts((prevDrafts) => [...prevDrafts, data.post]);
       setMessage("Your draft has been saved successfully");
 
@@ -410,8 +430,8 @@ const ChatAIBob = () => {
         setMessage("");
       }, 3000);
 
-      // Redirect user to the preview page
-      router.push(`/blog-posts/${draftId}`);
+      // Redirect user to the profile page
+      router.push(`/profile`);
     } catch (error) {
       console.error("There was an error:", error);
       setMessage(error.message);
@@ -427,32 +447,6 @@ const ChatAIBob = () => {
       categoryNiche: event.target.value,
     });
   };
-
-  // const handleEditDraft = (draft) => {
-  //   setArticleData({
-  //     articleTitle: draft.title,
-  //     coverImage: draft.featureImage,
-  //     articleBody: {
-  //       articleContent: {
-  //         bodyContent: draft.content,
-  //         bodyImage: "",
-  //         sponsorship: {
-  //           productTitle: "",
-  //           productUrl: "",
-  //           productImage: "",
-  //           productMessage: "",
-  //         },
-  //       },
-  //     },
-  //     categoryNiche: draft.categorySlug,
-  //     articleFeatures: {
-  //       crossPromotion: draft.crossPromote,
-  //       publishEverywhere: draft.publishedChannels,
-  //       podcastSingleCast: draft.podcastSingleCast,
-  //       podcastMultiCast: draft.podcastMultiCast,
-  //     },
-  //   });
-  // };
 
   useEffect(() => {
     if (user && user.$id) {
@@ -479,6 +473,12 @@ const ChatAIBob = () => {
     });
     setWordCount(countWords(text));
   };
+
+  // Handles series fetch
+
+  // const getSeries = () =>{
+
+  // }
 
   return (
     <>
@@ -522,6 +522,76 @@ const ChatAIBob = () => {
                             placeholder="Give your article a title"
                             autoComplete="title"
                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                      >
+                        Part of a Series?
+                      </label>
+                      <div className="mt-2 sm:col-span-2 sm:mt-0">
+                        <div className="flex items-center gap-x-3">
+                          <input
+                            id="series-no"
+                            name="series-option"
+                            type="radio"
+                            value="no"
+                            defaultChecked
+                            onChange={(e) =>
+                              setArticleData((prev) => ({
+                                ...prev,
+                                isSeries: e.target.value === "yes",
+                              }))
+                            }
+                            className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
+                          />
+                          <label
+                            htmlFor="series-no"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            No
+                          </label>
+
+                          <input
+                            id="series-yes"
+                            name="series-option"
+                            type="radio"
+                            value="yes"
+                            onChange={(e) =>
+                              setArticleData((prev) => ({
+                                ...prev,
+                                isSeries: e.target.value === "yes",
+                              }))
+                            }
+                            className="ml-4 h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600"
+                          />
+                          <label
+                            htmlFor="series-yes"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div className="mt-4 flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 sm:max-w-md">
+                          <input
+                            id="series"
+                            name="series"
+                            type="text"
+                            disabled={!articleData.isSeries}
+                            onChange={(e) =>
+                              setArticleData({
+                                ...articleData,
+                                seriesTitle: e.target.value,
+                              })
+                            }
+                            value={articleData.seriesTitle}
+                            placeholder="If yes, please enter series title"
+                            autoComplete="off"
+                            className="block disabled:cursor-not-allowed flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                           />
                         </div>
                       </div>

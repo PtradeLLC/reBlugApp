@@ -127,7 +127,7 @@ const BrandInfo = () => {
           </div>
           <div className="mt-7">
             <p className="text-xl text-gray-800 font-semibold sm:text-xl">
-              Eat Now, Pay Never
+              Pay Per Task
             </p>
             <p className="text-sm text-gray-800 font-semibold sm:text-sm">
               B2C

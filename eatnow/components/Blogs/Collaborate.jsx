@@ -273,7 +273,7 @@ const Collaborate = ({ isOpen, onClose }) => {
             <div className="p-4 bg-slate-50">
               <div className="flex items-start justify-between p-4 border-b rounded-t">
                 <h3 className="text-xl font-semibold">
-                  My Reach across all media
+                  My reach across these available media
                 </h3>
                 <button
                   type="button"

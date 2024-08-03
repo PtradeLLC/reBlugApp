@@ -2,7 +2,7 @@
 
 export const metadata = {
     title: "reBlug",
-    description: "Eat now, Pay Never.",
+    description: "Pay Per Task.",
     manifest: "/manifest.json",
     icons: {
         icon: "/icon.png",

@@ -32,30 +32,6 @@ async function handleFeatureImageUpload(featureImage) {
     return featureImage;
 }
 
-// Handle draft logic
-async function handleDraftLogic(post, isDraft, userId) {
-    let draft = null;
-    if (isDraft) {
-        const existingDraft = await prisma.draft.findUnique({
-            where: { postId: post.id },
-        });
-        const draftData = {
-            title: post.title,
-            userId,
-            postId: post.id,
-        };
-        if (existingDraft) {
-            draft = await prisma.draft.update({
-                where: { id: existingDraft.id },
-                data: draftData,
-            });
-        } else {
-            draft = await prisma.draft.create({ data: draftData });
-        }
-    }
-    return draft ? draft.id : null;
-}
-
 // Upsert post in the database
 async function upsertPost(postData) {
     const {
@@ -75,7 +51,6 @@ async function upsertPost(postData) {
         publishedChannels,
         published,
         email,
-        isDraft,
         author,
         blogger,
         status,
@@ -84,6 +59,7 @@ async function upsertPost(postData) {
         postSlug,
         categoryId,
         slug,
+        seriesId, // Added for series support
     } = postData;
 
     const normalizedSlug = normalizeSlug(slug);
@@ -109,7 +85,6 @@ async function upsertPost(postData) {
                 publishedChannels,
                 published,
                 email,
-                isDraft,
                 author,
                 blogger,
                 status,
@@ -117,6 +92,7 @@ async function upsertPost(postData) {
                 postNiche,
                 postSlug,
                 categoryId,
+                seriesId, // Added for series support
             },
             create: {
                 userId,
@@ -135,7 +111,6 @@ async function upsertPost(postData) {
                 publishedChannels,
                 published,
                 email,
-                isDraft,
                 author,
                 blogger,
                 status,
@@ -144,6 +119,7 @@ async function upsertPost(postData) {
                 postSlug,
                 categoryId,
                 slug: normalizedSlug,
+                seriesId, // Added for series support
             },
         });
 
@@ -154,6 +130,7 @@ async function upsertPost(postData) {
     }
 }
 
+// Handle POST request
 export async function POST(request) {
     try {
         const {
@@ -170,9 +147,11 @@ export async function POST(request) {
             podcastMultiCast,
             isDraft,
             slug,
+            isSeries,
+            seriesTitle,
         } = await request.json();
 
-        if (!title || !featureImage || !content || !categories || !userId || !categorySlug || !slug) {
+        if (!title || !featureImage || !content) {
             return NextResponse.json({ success: false, message: "Please fill out all required fields." }, { status: 400 });
         }
 
@@ -189,6 +168,32 @@ export async function POST(request) {
             },
         });
 
+        let seriesId = null;
+        let seriesPosts = [];
+
+        if (isSeries && seriesTitle) {
+            const normalizedSeriesTitle = normalizeSlug(seriesTitle);
+            const series = await prisma.series.upsert({
+                where: { title: normalizedSeriesTitle },
+                update: {
+                    categoryId: category.id,
+                },
+                create: {
+                    title: seriesTitle,
+                    categoryId: category.id,
+                },
+            });
+            seriesId = series.id;
+
+            // Fetch all posts in the series for the current user
+            seriesPosts = await prisma.post.findMany({
+                where: {
+                    seriesId: series.id,
+                    userId,
+                },
+            });
+        }
+
         const post = await upsertPost({
             userId,
             title,
@@ -201,17 +206,17 @@ export async function POST(request) {
             crossPromote,
             podcastSingleCast,
             podcastMultiCast,
-            isDraft: false,
+            isDraft,
             published: true,
             slug,
             categoryId: category.id,
+            seriesId, // Added for series support
         });
-        // Get the draft ID if the post is a draft
-        const draftId = await handleDraftLogic(post, isDraft, userId);
 
-        console.log("DraftId", draftId);
+        // If a draft ID is needed, handle the draft logic here (assuming you have such a function)
+        // const draftId = await handleDraftLogic(post, isDraft, userId);
 
-        return NextResponse.json({ success: true, post, draftId });
+        return NextResponse.json({ success: true, post, seriesPosts });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });

@@ -6,7 +6,7 @@ import WhyENPN from "./WhyUs";
 
 const subNavigation = [
   {
-    name: "Why Eat Now, Pay Never?",
+    name: "Why Pay Per Task?",
     href: "#",
     icon: CreditCardIcon,
     current: true,
@@ -79,7 +79,7 @@ export default function Restaurant() {
             </aside>
 
             <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-              {currentTab === "Why Eat Now, Pay Never?" ? (
+              {currentTab === "Why Pay Per Task?" ? (
                 <section aria-labelledby="why-us-heading">
                   <div>
                     <WhyENPN />

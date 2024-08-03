@@ -39,7 +39,7 @@ export default function RestaurantsFaq() {
             </span>
             <div className="text-md my-3">
               Drawing inspiration from the popular "Buy Now, Pay Later" trend,
-              "Eat Now, Pay Never" is a novel marketing tool and strategy that
+              "Pay Per Task" is a novel marketing tool and strategy that
               disrupts the traditional food ordering process. This system allows
               our members to indulge in their cravings, without the need for
               payment. The responsibility for settling the bill falls on our
