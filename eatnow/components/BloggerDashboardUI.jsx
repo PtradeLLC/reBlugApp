@@ -307,13 +307,17 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                     <Link href={"/write"}>Continue editing</Link>
                   ) : null}
                 </span> */}
+                <br />
+                <span className="text-xs text-slate-700 font-semibold flex justify-end">
+                  <Link href={"/write"}>Start a series</Link>
+                </span>
               </div>
               <span className="text-sm text-muted-foreground">
                 {`Ideate, brainstorm, write, and publish an article quickly.`}
               </span>
               <Link
                 href={"/write"}
-                className="text-xs m-auto flex justify-center items-center bg-red-700 mt-1 w-36 h-9 rounded-md text-white"
+                className="text-xs m-auto flex justify-center items-center bg-slate-700 mt-1 w-36 h-9 rounded-md text-white"
                 size="sm"
               >
                 Write an article

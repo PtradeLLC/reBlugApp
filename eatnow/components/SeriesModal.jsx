@@ -33,7 +33,6 @@ const SeriesModalComponent = ({ user }) => {
   const [message, setMessage] = useState(" ");
   const [seriesPosts, setSeriesPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  // const [getSeries, setGetSeries] = useState(null);
   const [getSeries, setGetSeries] = useState([]);
   const [articleData, setArticleData] = useState({
     articleTitle: "",
@@ -292,20 +291,48 @@ const SeriesModalComponent = ({ user }) => {
     }
   };
 
-  //GETS SERIES FROM THE SERVER
+  // GETS SERIES FROM THE SERVER
   useEffect(() => {
-    async function fetchPostsAndSeries() {
-      try {
-        const response = await fetch("/api/seriesPost");
-        const data = await response.json();
+    async function fetchSeriesWithPosts() {
+      console.log(user);
 
+      const userId = `${user?.$id}`;
+
+      console.log("uID", userId);
+
+      try {
+        const response = await fetch("/api/seriesPost", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "user-id": userId,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch series with posts");
+        }
+
+        const data = await response.json();
+        // Handle the data as needed
         setGetSeries(data);
       } catch (error) {
-        console.error("Error fetching posts and series:", error);
+        console.error("Error fetching series with posts:", error);
       }
     }
 
-    fetchPostsAndSeries();
+    // async function fetchPostsAndSeries() {
+    //   try {
+    //     const response = await fetch("/api/seriesPost");
+    //     const data = await response.json();
+
+    //     setGetSeries(data);
+    //   } catch (error) {
+    //     console.error("Error fetching posts and series:", error);
+    //   }
+    // }
+
+    fetchSeriesWithPosts();
   }, []);
 
   return (

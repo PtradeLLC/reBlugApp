@@ -88,6 +88,8 @@ model User {
   niches             Niche[]
   Referral           Referral[]
   drafts             Draft[]
+  Series             Series[]
+  Post               Post[]
 }
 
 model Niche {
@@ -167,6 +169,8 @@ model Post {
 
   category Category? @relation(fields: [categoryId], references: [id])
   series   Series?   @relation(fields: [seriesId], references: [id])
+
+  user User? @relation(fields: [userId], references: [id])
 }
 
 model Category {
@@ -179,11 +183,21 @@ model Category {
   series Series[] // One category can have multiple Series
 }
 
+// model Series {
+//   id         String   @id @default(cuid())
+//   title      String?  @unique
+//   categoryId String // Foreign key to Category model
+//   category   Category @relation(fields: [categoryId], references: [id])
+//   posts      Post[] // One Series can have multiple posts
+// }
+
 model Series {
   id         String   @id @default(cuid())
   title      String?  @unique
   categoryId String // Foreign key to Category model
+  userId     String? // Foreign key to User model
   category   Category @relation(fields: [categoryId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
   posts      Post[] // One Series can have multiple posts
 }
 
