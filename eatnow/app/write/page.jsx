@@ -504,7 +504,7 @@ const ChatAIBob = () => {
                         htmlFor="title"
                         className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
                       >
-                        Part of a Series?
+                        New Series?
                       </label>
                       <div className="mt-2 sm:col-span-2 sm:mt-0">
                         <div className="flex items-center gap-x-3">

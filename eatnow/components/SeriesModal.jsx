@@ -309,30 +309,40 @@ const SeriesModalComponent = ({ user }) => {
   }, []);
 
   return (
-    <div>
+    <div className="mb-3">
       {/* Blug Status Section */}
-      <div className="blug-status-section">
-        <h3>Blug Series</h3>
-        <div className="flex flex-col gap-3 bg-slate-50 rounded-md">
+      <div className="blug-status-section space-y-1">
+        <h3 className="px-3 text-md my-1 font-bold text-gray-900">
+          Blug Series
+        </h3>
+        <div className="flex my-1 px-2 flex-col gap-3 rounded-md">
           {getSeries.length > 0 ? (
             getSeries.map((series) => (
               <div key={series.id}>
-                <h2>{series.title}</h2>
+                <div className="flex">
+                  <h2 className="text-sm font-semibold mx-1">{series.title}</h2>
+                  <span className="text-xs cursor-pointer underline font-thin">
+                    Add to the series
+                  </span>
+                </div>
+
                 <ul>
-                  {/* {series.Posts.map((post) => (
-                    <li key={post.id}>{post.title}</li>
-                  ))} */}
+                  {series.posts.map((post) => (
+                    <li
+                      className="group bg-slate-50 flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      key={post.id}
+                    >
+                      {post.title}
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))
           ) : (
-            <p>No series found.</p>
+            <p className="group bg-slate-50 flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+              No series found.
+            </p>
           )}
-          {/* {seriesPosts?.map((post, index) => (
-            <Button key={index} onPress={() => handleOpen(post)}>
-              {series.title}
-            </Button>
-          ))} */}
         </div>
       </div>
 
