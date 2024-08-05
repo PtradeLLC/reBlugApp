@@ -32,7 +32,6 @@ async function handleFeatureImageUpload(featureImage) {
     return featureImage;
 }
 
-// Upsert post in the database
 async function upsertPost(postData) {
     const {
         userId,
@@ -121,6 +120,9 @@ async function upsertPost(postData) {
                 slug: normalizedSlug,
                 seriesId, // Added for series support
             },
+            include: {
+                series: true, // Include the series relation in the response
+            },
         });
 
         return post;
@@ -133,6 +135,7 @@ async function upsertPost(postData) {
 // Handle POST request
 export async function POST(request) {
     try {
+        // Extract request data
         const {
             userId,
             title,
@@ -151,14 +154,17 @@ export async function POST(request) {
             seriesTitle,
         } = await request.json();
 
+        // Validate required fields
         if (!title || !featureImage || !content) {
             return NextResponse.json({ success: false, message: "Please fill out all required fields." }, { status: 400 });
         }
 
+        // Handle image upload and content processing
         const sluggedCategory = normalizeSlug(categorySlug);
         const uploadedFeatureImage = await handleFeatureImageUpload(featureImage);
         const updatedContent = await uploadContentImages(content);
 
+        // Upsert category
         const category = await prisma.category.upsert({
             where: { slug: sluggedCategory },
             update: {},
@@ -168,6 +174,7 @@ export async function POST(request) {
             },
         });
 
+        // Handle series upsert and post retrieval
         let seriesId = null;
         let seriesPosts = [];
 
@@ -191,9 +198,13 @@ export async function POST(request) {
                     seriesId: series.id,
                     userId,
                 },
+                select: {
+                    title: true,
+                },
             });
         }
 
+        // Upsert post with series relation
         const post = await upsertPost({
             userId,
             title,
@@ -210,12 +221,12 @@ export async function POST(request) {
             published: true,
             slug,
             categoryId: category.id,
-            seriesId, // Added for series support
+            seriesId,
         });
 
-        // If a draft ID is needed, handle the draft logic here (assuming you have such a function)
-        // const draftId = await handleDraftLogic(post, isDraft, userId);
+        console.log("Post from the back", post, seriesPosts);
 
+        // Return the post data with series title included
         return NextResponse.json({ success: true, post, seriesPosts });
     } catch (error) {
         console.error(error);

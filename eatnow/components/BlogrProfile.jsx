@@ -7,18 +7,7 @@ import {
   DialogPanel,
   TransitionChild,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  CalendarIcon,
-  CogIcon,
-  HomeIcon,
-  MagnifyingGlassCircleIcon,
-  MapIcon,
-  MegaphoneIcon,
-  SquaresPlusIcon,
-  UserGroupIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronLeftIcon,
   EnvelopeIcon,
@@ -287,8 +276,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProfilePg = () => {
+const ProfilePg = ({ user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  //   console.log("finding nemo", user?.name);
 
   return (
     <>
@@ -330,14 +321,12 @@ const ProfilePg = () => {
                     <div>
                       <img
                         alt=""
-                        src={user.imageUrl}
+                        src={""}
                         className="inline-block h-10 w-10 rounded-full"
                       />
                     </div>
                     <div className="ml-3">
-                      <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                        {user.name}
-                      </p>
+                      <p className="text-base font-medium text-gray-700 group-hover:text-gray-900"></p>
                       <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
                         View profile
                       </p>
@@ -397,7 +386,7 @@ const ProfilePg = () => {
                       <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                         <div className="mt-6 min-w-0 flex-1 sm:hidden 2xl:block">
                           <h1 className="truncate text-2xl font-bold text-gray-900">
-                            {profile.name}
+                            {user?.name}
                           </h1>
                         </div>
                         <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
@@ -416,7 +405,7 @@ const ProfilePg = () => {
                     </div>
                     <div className="mt-6 hidden min-w-0 flex-1 sm:block 2xl:hidden">
                       <h1 className="truncate text-2xl font-bold text-gray-900">
-                        {profile.name}
+                        {user?.name}
                       </h1>
                     </div>
                   </div>

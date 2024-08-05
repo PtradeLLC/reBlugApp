@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import DraftSidebar from "@/components/Blogs/Draft";
+import SeriesModalComponent from "@/components/SeriesModal";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -348,7 +349,6 @@ const ChatAIBob = () => {
   };
 
   //Saves Article as draft until approved before publishing
-
   const handleSaveDraft = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -367,25 +367,6 @@ const ChatAIBob = () => {
         setClientMessage("Please make a selection");
         return;
       }
-
-      // Log the data to be sent
-      console.log("Data being sent:", {
-        userId,
-        title: articleData.articleTitle,
-        featureImage: articleData.coverImage,
-        content: articleData.articleBody.articleContent.bodyContent,
-        categorySlug: selectedOptionText,
-        publishedChannels: false,
-        crossPromote: false,
-        author: user,
-        categories: selectedOptionText,
-        podcastSingleCast: true,
-        podcastMultiCast: false,
-        isDraft: true,
-        slug,
-        isSeries: articleData.isSeries,
-        seriesTitle: articleData.seriesTitle,
-      });
 
       const response = await fetch(`/api/blog/userPostArticle`, {
         method: "POST",
@@ -412,8 +393,6 @@ const ChatAIBob = () => {
       });
 
       const data = await response.json();
-
-      console.log("Data from Write", data);
 
       if (!response.ok) {
         throw new Error(
@@ -473,12 +452,6 @@ const ChatAIBob = () => {
     });
     setWordCount(countWords(text));
   };
-
-  // Handles series fetch
-
-  // const getSeries = () =>{
-
-  // }
 
   return (
     <>
@@ -984,14 +957,18 @@ const ChatAIBob = () => {
                   >
                     Cancel
                   </Button>
-                  <Button
-                    type="submit"
-                    onClick={handleSaveDraft}
-                    variant="primary"
-                    className="text-sm text-gray-900 font-semibold leading-6 hover:bg-slate-400 hover:text-white"
-                  >
-                    Save & Publish
-                  </Button>
+                  {loading ? (
+                    <p className="text-xs">publishing..</p>
+                  ) : (
+                    <Button
+                      type="submit"
+                      onClick={handleSaveDraft}
+                      variant="primary"
+                      className="text-sm text-gray-900 font-semibold leading-6 hover:bg-slate-400 hover:text-white"
+                    >
+                      Save & Publish
+                    </Button>
+                  )}
                 </div>
                 {message && (
                   <div className="mt-4 flex justify-end font-semibold text-green-600 text-lg">
@@ -1023,6 +1000,9 @@ const ChatAIBob = () => {
                 </p>
                 <div className="border mt-3 mx-2 px-3">
                   <DraftSidebar />
+                </div>
+                <div className="border mt-3 mx-2 px-3">
+                  <SeriesModalComponent user={user} />
                 </div>
               </div>
 
