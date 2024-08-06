@@ -20,7 +20,7 @@ const CampaignLaunchBox = () => {
         </svg>
       ),
       title: "Email Marketing",
-      desc: "Select for your B2C & B2C Campaign.",
+      desc: "Select for your B2B & B2C Campaign.",
       bestFor: "Sales, Surveys, Promotions, Surveys, Fundraising, Political.",
       link: {
         tools: "Email Conversational Tool",
@@ -50,9 +50,9 @@ const CampaignLaunchBox = () => {
       ),
 
       title: "Social Marketing",
-      desc: "Select to target B2C. Get immediate feedback",
+      desc: "Select to target B2C. Collect immediate feedback",
       bestFor:
-        "Product Feedback, Subscriptions, Promotions, Product Awareness.",
+        "Immediate Product Feedback, Gather Subscriptions, Promotions, Product Awareness.",
       link: {
         tools: "Blog, Pay per Task",
         // href: "javascript:void(0)",

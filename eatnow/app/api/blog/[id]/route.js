@@ -16,8 +16,6 @@ export async function GET(request, { params }) {
             where: { id: id },
         });
 
-        console.log("Post from Blog/id", post);
-
         if (!post) {
             return NextResponse.json({ error: "Post not found" }, { status: 404 });
         }

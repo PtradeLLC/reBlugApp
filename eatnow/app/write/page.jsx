@@ -962,7 +962,6 @@ const ChatAIBob = () => {
                   ) : (
                     <Button
                       type="submit"
-                      onClick={handleSaveDraft}
                       variant="primary"
                       className="text-sm text-gray-900 font-semibold leading-6 hover:bg-slate-400 hover:text-white"
                     >

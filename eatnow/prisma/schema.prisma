@@ -183,14 +183,6 @@ model Category {
   series Series[] // One category can have multiple Series
 }
 
-// model Series {
-//   id         String   @id @default(cuid())
-//   title      String?  @unique
-//   categoryId String // Foreign key to Category model
-//   category   Category @relation(fields: [categoryId], references: [id])
-//   posts      Post[] // One Series can have multiple posts
-// }
-
 model Series {
   id         String   @id @default(cuid())
   title      String?  @unique

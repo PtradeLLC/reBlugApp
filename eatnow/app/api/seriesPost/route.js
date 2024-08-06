@@ -86,9 +86,6 @@ export async function POST(req) {
         const body = await req.json();
         const { seriesIds, userId } = body;
 
-
-
-
         if (!userId) {
             return new Response(JSON.stringify({ error: "User ID is required" }), {
                 status: 400,
