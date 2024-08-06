@@ -33,6 +33,10 @@ export default () => {
                 Solve common blogging pain points effortlessly.
               </li>
               <li>
+                <span className="font-semibold text-lg">Series Blogging:</span>{" "}
+                Write posts and publish them sequentially.
+              </li>
+              <li>
                 <span className="font-semibold text-lg">
                   Monetization Simplified:
                 </span>{" "}

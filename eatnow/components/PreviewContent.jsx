@@ -10,6 +10,8 @@ import CommentBox from "./Blogs/CommentBox";
 import { account } from "../app/appwrite";
 import BrandCollaborate from "./Blogs/Collaborate";
 import BlogChatUI from "./ChatBox/AIBlogArticleAssistant";
+import InSeries from "./Series";
+import PostSubscription from "./PostSubscription";
 
 const extractPlainText = (htmlString) => {
   const tempDiv = document.createElement("div");
@@ -154,6 +156,14 @@ const PostPage = ({ comments, post }) => {
       .join(" ");
   }
 
+  //Retrieve series
+  // const allSeries = () => {
+  //   const baseUrl = "";
+
+  // };
+
+  console.log("Psssss", post);
+
   return (
     <div className="mt-20">
       <div className="relative mt-2 bg-[#ced4da] pb-20 sm:pb-24 xl:pb-0">
@@ -291,6 +301,13 @@ const PostPage = ({ comments, post }) => {
                 </li>
               </ul>
               <WisdomNugget />
+              {post && post.seriesId ? (
+                <>
+                  <InSeries />
+                </>
+              ) : (
+                <PostSubscription />
+              )}
             </span>
 
             <span className="col-span-2 mt-11">
