@@ -161,6 +161,7 @@ const Blog = () => {
                           Your article: Sponsored
                         </span>
                       </div>
+
                       <div className="mt-7">
                         <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600">
                           Expert Bloggers
@@ -251,7 +252,7 @@ const Blog = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {postsData &&
               postsData.map((post) => (
-                <Link key={post.id} href={`/blog-posts/${post.id}`}>
+                <Link key={post?.id} href={`/blog-posts/${post?.id}`}>
                   <Card
                     className="border border-gray-200 shadow-lg dark:bg-gray-800 dark:border-gray-700 rounded-xl"
                     radius="xl"
@@ -268,21 +269,21 @@ const Blog = () => {
                     </CardHeader>
                     <CardBody className="p-4">
                       <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                        {post.title}
+                        {post?.title}
                       </h3>
                       <p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-4">
-                        {extractPlainText(post.content)}
+                        {extractPlainText(post?.content)}
                       </p>
                     </CardBody>
                     <CardFooter className="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-b-xl">
                       <div className="flex justify-center items-center">
                         <span className="text-xs text-green-700">
-                          {post.author}
-                          {"|"} {formatCategorySlug(post.categorySlug)}
+                          {post?.author}
+                          {"|"} {formatCategorySlug(post?.categorySlug)}
                         </span>
                         <Button
                           as={Link}
-                          href={`/blog-posts/${post.id}`}
+                          href={`/blog-posts/${post?.id}`}
                           variant="outline"
                           className="bg-slate-500 rounded-md mx-5 text-white"
                           color="primary"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
+import { account } from "../app/appwrite";
 import SponsorsModalComponent from "@/components/SponsorsModalCompTwo";
 import {
   Modal,
@@ -24,15 +25,18 @@ const fetcher = (url) =>
     return res.json();
   });
 
-const SeriesModalComponent = ({ user }) => {
+const SeriesModalComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = useState("md");
   const [loading, setLoading] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const [message, setMessage] = useState(" ");
   const [seriesPosts, setSeriesPosts] = useState([]);
+  const [accountUser, setAccountUser] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [Error, setError] = useState(null);
   const [getSeries, setGetSeries] = useState([]);
   const [articleData, setArticleData] = useState({
     articleTitle: "",
@@ -60,9 +64,27 @@ const SeriesModalComponent = ({ user }) => {
     seriesTitle: "",
   });
 
+  // Fetch the user on component mount
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const currentUser = await account.get();
+        setAccountUser(currentUser);
+        setUser(currentUser);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching user:", error);
+        setLoading(false);
+      }
+    };
+
+    getUser();
+  }, []);
+
   // Fetch posts related to the user
+
   const { data: postsData, error: postsError } = useSWR(
-    `/api/blog/getPosts?userId=${user}`,
+    user ? `/api/blog/getPosts?userId=${user.$id}` : null,
     fetcher
   );
 
@@ -226,11 +248,11 @@ const SeriesModalComponent = ({ user }) => {
     setLoading(true);
 
     try {
-      if (!user || !user.$id) {
+      if (!user || !user?.$id) {
         throw new Error("User is not available.");
       }
 
-      const userId = user.$id;
+      const userId = user?.$id;
       const slug = generateSlug(articleData.articleTitle);
       const selectedOptionText =
         optionList[articleData.categoryNiche] || "None";
@@ -293,47 +315,90 @@ const SeriesModalComponent = ({ user }) => {
 
   // GETS SERIES FROM THE SERVER
   useEffect(() => {
-    async function fetchSeriesWithPosts() {
-      console.log(user);
+    const userId = user?.$id;
 
-      const userId = `${user?.$id}`;
+    console.log("USER-id", userId);
 
-      console.log("uID", userId);
-
-      try {
-        const response = await fetch("/api/seriesPost", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "user-id": userId,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch series with posts");
-        }
-
-        const data = await response.json();
-        // Handle the data as needed
-        setGetSeries(data);
-      } catch (error) {
-        console.error("Error fetching series with posts:", error);
-      }
+    if (!userId) {
+      console.error("User ID is not available");
+      setError("User ID is not available");
+      setLoading(false);
+      return;
     }
 
-    // async function fetchPostsAndSeries() {
-    //   try {
-    //     const response = await fetch("/api/seriesPost");
-    //     const data = await response.json();
+    console.log("uID2:", userId);
 
-    //     setGetSeries(data);
-    //   } catch (error) {
-    //     console.error("Error fetching posts and series:", error);
-    //   }
-    // }
+    // Fetch the series with posts
+    fetch("/api/seriesPost", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "user-id": userId,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setGetSeries(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching series with posts:", err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [user]);
 
-    fetchSeriesWithPosts();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchSeriesWithPosts() {
+  //     console.log(user);
+
+  //     const userId = `${user?.$id}`;
+
+  //     console.log("uID", userId);
+  //     console.log("uID2", user);
+
+  //     try {
+  //       const response = await fetch("/api/seriesPost", {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "user-id": userId,
+  //         },
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch series with posts");
+  //       }
+
+  //       const data = await response.json();
+  //       // Handle the data as needed
+  //       setGetSeries(data);
+  //     } catch (error) {
+  //       console.error("Error fetching series with posts:", error);
+  //     }
+  //   }
+
+  //   console.log("user from outside", user);
+  //   console.log("user from outside Again", user?.$id);
+
+  //   // async function fetchPostsAndSeries() {
+  //   //   try {
+  //   //     const response = await fetch("/api/seriesPost");
+  //   //     const data = await response.json();
+
+  //   //     setGetSeries(data);
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching posts and series:", error);
+  //   //   }
+  //   // }
+
+  //   fetchSeriesWithPosts();
+  // }, []);
 
   return (
     <div className="mb-3">

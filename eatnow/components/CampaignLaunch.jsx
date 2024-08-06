@@ -20,8 +20,8 @@ const CampaignLaunchBox = () => {
         </svg>
       ),
       title: "Email Marketing",
-      desc: "Select for your B2B Campaign.",
-      bestFor: "Sales, Surveys, Promotions, Surveys, Fundraising, Politics.",
+      desc: "Select for your B2C & B2C Campaign.",
+      bestFor: "Sales, Surveys, Promotions, Surveys, Fundraising, Political.",
       link: {
         tools: "Email Conversational Tool",
         // href: "javascript:void(0)",
@@ -54,7 +54,7 @@ const CampaignLaunchBox = () => {
       bestFor:
         "Product Feedback, Subscriptions, Promotions, Product Awareness.",
       link: {
-        tools: "Blog, EatNow, PayLater",
+        tools: "Blog, Pay per Task",
         // href: "javascript:void(0)",
       },
     },
