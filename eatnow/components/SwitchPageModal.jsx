@@ -45,8 +45,6 @@ const TogglePageModal = ({
       setShowComponent("Brand");
     } else if (selectedType === "Social Media Partner") {
       setShowComponent("Social Media Partner");
-    } else if (selectedType === "Restaurant") {
-      setShowComponent("Restaurant");
     }
     setOpen(false);
   };
@@ -82,7 +80,7 @@ const TogglePageModal = ({
               <SelectItem value="Social Media Partner">
                 Social Media Partner
               </SelectItem>
-              <SelectItem value="Restaurant">Food & Beverages</SelectItem>
+              {/* <SelectItem value="Restaurant">Food & Beverages</SelectItem> */}
             </SelectContent>
           </Select>
           <DialogFooter>

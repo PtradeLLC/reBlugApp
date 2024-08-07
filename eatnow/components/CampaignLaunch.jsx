@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import SeriesModalComponent from "@/components/EmailMarketingTool";
+import { useDisclosure } from "@nextui-org/react";
 
 const CampaignLaunchBox = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const contactMethods = [
     {
       icon: (
@@ -85,7 +90,7 @@ const CampaignLaunchBox = () => {
                 <p>{item.desc}</p>
                 <p className="text-sm">Best For: {item.bestFor}</p>
                 <Button
-                  href={item.link.href}
+                  onClick={onOpen}
                   className="flex bg-white hover:bg-slate-400 border items-center gap-1 text-sm text-red-600 hover:text-white duration-150 font-medium"
                 >
                   {item.link.tools}
@@ -95,6 +100,7 @@ const CampaignLaunchBox = () => {
           </ul>
         </div>
       </div>
+      <SeriesModalComponent isOpen={isOpen} onClose={onClose} />
     </section>
   );
 };

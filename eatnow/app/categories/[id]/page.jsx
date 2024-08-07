@@ -1,14 +1,10 @@
 "use client";
 import { useParams } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 import useSWR from "swr";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-} from "@nextui-org/react";
+import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
+import { HeartIcon } from "../HeartIcon";
 
 const extractPlainText = (htmlString) => {
   const tempDiv = document.createElement("div");
@@ -25,7 +21,9 @@ const fetcher = (url) =>
     return res.json();
   });
 
-export default function CategoryPage() {
+export default function App() {
+  const [liked, setLiked] = React.useState(false);
+
   const params = useParams();
   const { id } = params;
 
@@ -47,60 +45,82 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-700 sm:text-6xl ml-3">
-        In:{" "}
-        {data.category[0]?.categorySlug &&
-          formatCategorySlug(data.category[0]?.categorySlug)}
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 mx-3">
-        {data.category &&
+    <>
+      <div>
+        <span>
+          <h1 className="font-bold mt-2 mx-4 text-4xl line-clamp-1">
+            In:{" "}
+            {data.category[0]?.categorySlug &&
+              formatCategorySlug(data.category[0]?.categorySlug)}
+          </h1>
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        {data?.category &&
+          Array.isArray(data.category) &&
           data.category.map((item) => {
             return (
               <Card
-                key={item.id} // Make sure each element in a list has a unique key
-                isFooterBlurred
-                className="h-[300px] w-full lg:w-[375px] rounded-sm"
+                key={item.id}
+                isBlurred
+                className="border-none bg-background/60 dark:bg-default-100/50"
+                shadow="sm"
               >
-                <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                  <h2 className="text-tiny text-white font-bold">
-                    {item.title}
-                  </h2>
-                  <h6 className="text-white/90 text-tiny font-thin">
-                    {formatCategorySlug(item?.categorySlug)}
-                  </h6>
-                </CardHeader>
-                <img
-                  removeWrapper
-                  alt="Feature image"
-                  className="z-0 w-full h-full object-cover"
-                  src={item.featureImage}
-                  onError={(e) => console.error("Image load error:", e)}
-                />
-                <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                  <div className="flex flex-grow gap-2 items-center">
-                    <img
-                      alt="Breathing app icon"
-                      className="rounded-full w-10 h-11 bg-black"
-                      src="https://nextui.org/images/breathing-app-icon.jpeg"
-                    />
-                    <div className="flex flex-col">
-                      <p className="text-tiny text-white line-clamp-3">
-                        {extractPlainText(item.content)}
-                      </p>
-                      <div className="bg-gray-900 rounded-sm p-2 flex flex-col mt-2 space-y-2">
-                        <span className="text-sm font-thin text-white">
-                          By: {item.author}
-                        </span>
-                        <span className="text-sm font-thin text-white">
-                          AI: Yes
-                        </span>
-                        <span className="text-sm font-thin text-white">
-                          views: {item.views}
-                        </span>
+                <CardBody>
+                  <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center bg-slate-300 justify-center">
+                    <div className="relative col-span-6 md:col-span-4 h-[200px]">
+                      <img
+                        alt="Album cover"
+                        className="object-cover h-48 p-2"
+                        height={200}
+                        shadow="md"
+                        src={item.featureImage}
+                        width="100%"
+                      />
+                    </div>
+
+                    <div className="flex flex-col col-span-6 mx-3 my-2 md:col-span-8">
+                      <div className="flex justify-between items-start">
+                        <div className="flex flex-col gap-0">
+                          <h2 className="text-large font-medium mt-2">
+                            {item.title}
+                          </h2>
+                          <p className="text-small text-foreground/80">
+                            Views: {item.views}
+                          </p>
+                          <h3 className="font-semibold text-foreground/90">
+                            {item?.categorySlug &&
+                              formatCategorySlug(item.categorySlug)}
+                          </h3>
+                          <span className="text-sm font-thin text-gray-700">
+                            By: {item.author}
+                          </span>
+                          <span className="text-sm font-thin text-gray-700">
+                            AI Assistant: Enabled
+                          </span>
+                        </div>
+                        <Button
+                          isIconOnly
+                          className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 mx-2 mt-2 translate-x-2"
+                          radius="full"
+                          variant="light"
+                          onPress={() => setLiked((v) => !v)}
+                        >
+                          <HeartIcon
+                            className={
+                              liked ? "[&>path]:stroke-transparent" : ""
+                            }
+                            fill={liked ? "currentColor" : "none"}
+                          />
+                        </Button>
+                      </div>
+                      <div className="flex flex-col w-full items-center justify-center">
+                        <p className="text-tiny text-gray-800 line-clamp-3">
+                          {extractPlainText(item.content)}
+                        </p>
                         <Link
                           href={`/blog-posts/${item.id}`}
-                          className="bg-gray-300 p-2 rounded-sm text-center"
+                          className="bg-gray-700 p-2 text-white text-xs rounded-sm text-center w-1/3"
                           radius="full"
                           size="sm"
                         >
@@ -109,11 +129,11 @@ export default function CategoryPage() {
                       </div>
                     </div>
                   </div>
-                </CardFooter>
+                </CardBody>
               </Card>
             );
           })}
       </div>
-    </div>
+    </>
   );
 }

@@ -97,18 +97,20 @@ export default function BeginnerBlogger() {
           </li>
         </ol>
       </div>
-      <p className="text-md font-normal mb-2">
-        Ready to embark on your blogging adventure?
-      </p>
-      <button
-        onClick={() => {
-          setOpenModal(true);
-        }}
-        type="submit"
-        className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-      >
-        Join the waiting list
-      </button>
+      <div className="px-6">
+        <p className="text-md font-normal mb-2">
+          Ready to embark on your blogging adventure?
+        </p>
+        <button
+          onClick={() => {
+            setOpenModal(true);
+          }}
+          type="submit"
+          className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        >
+          Join the waiting list
+        </button>
+      </div>
       <div>
         <span className="mt-3">
           {openModal && <JuniorProgram setOpenModal={setOpenModal} />}

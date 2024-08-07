@@ -1,0 +1,1114 @@
+import { useState, useEffect, useRef } from "react";
+import { Select, SelectItem } from "@nextui-org/react";
+import Campaign from "@/components/Campaigns/campaignType";
+import Geosuggest from "@ubilabs/react-geosuggest";
+
+const RaiseFunds = () => {
+  const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
+  const [loadingStateIndex, setLoadingStateIndex] = useState(0);
+  const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
+  const [textData, setTextData] = useState(null);
+  const geosuggestEl = useRef(null);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [campaignType, setCampaignType] = useState("");
+  const [location, setLocation] = useState(null);
+  const [showLoadingStatus, setShowLoadingStatus] = useState(false);
+  const [loadingStateStatus, setLoadingStateStatus] = useState([
+    {
+      id: 1,
+      goal: "Product Launch",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 1, status: "Conducting Product Analysis" },
+        { id: 2, status: "Conducting Competitive Analysis" },
+        { id: 3, status: "Researching Ideal Customer Profile" },
+        { id: 4, status: "Defining Ideal Customer Profile" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 2,
+      goal: "Generate Leads",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 3,
+      goal: "Raise Awareness",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 4,
+      goal: "SaaS Subscription",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 5,
+      goal: "Sell Tickets",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 6,
+      goal: "Product Sales",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 7,
+      goal: "Raise Funds",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 8,
+      goal: "Newsletter - Communication",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+    {
+      id: 9,
+      goal: "Newsletter - Marketing",
+      loadingStatus: [
+        { id: 1, status: "Preparing data for Channel Distribution" },
+        { id: 2, status: "Identifying Complementary Brands" },
+        { id: 3, status: "Configuring Lead Magnets" },
+        { id: 4, status: "Conducting Competitive Analysis" },
+        { id: 5, status: "Developing Customer Personas" },
+      ],
+    },
+  ]);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    feature01: "",
+    feature02: "",
+    feature03: "",
+    demographic: "",
+    company: "",
+    geographic: "",
+    job_title: "",
+    about: "",
+    objectives: "",
+    client_type: "",
+    pain_point01: "",
+    pain_point02: "",
+    pain_point03: "",
+    pain_point04: "",
+    unique01: "",
+    unique02: "",
+    unique03: "",
+    unique04: "",
+    tool01: "",
+    tool02: "",
+    tool03: "",
+    tool04: "",
+  });
+
+  const items = [
+    "Non Profit",
+    "Political Campaign",
+    "Movement",
+    "Cause",
+    "Other Campaigns",
+  ];
+
+  const fixtures = [
+    { label: "New York", location: { lat: 40.7033127, lng: -73.979681 } },
+    { label: "Rio", location: { lat: -22.066452, lng: -42.9232368 } },
+    { label: "Tokyo", location: { lat: 35.673343, lng: 139.710388 } },
+  ];
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleRadioChange = (event) => {
+    const { value } = event.target;
+    setFormData({
+      ...formData,
+      client_type: value,
+    });
+  };
+
+  const handleCampaignTypeChange = (e) => {
+    setCampaignType(e.target.value);
+  };
+
+  //POST Request to submit Form
+  const handleLaunch = async () => {
+    setShowLoadingStatus(true);
+    loadNextStatus();
+
+    try {
+      // Make the POST request to the API endpoint
+      const response = await fetch("/api/productLaunchStatus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setTextData(data);
+      } else {
+        console.log("Response not okay:", response.statusText);
+      }
+    } catch (error) {
+      // Handle any unexpected errors
+      console.error("Error making POST request:", error.message);
+    } finally {
+      // Hide loading status after API call completes
+      setShowLoadingStatus(false);
+    }
+  };
+
+  // Selecting an item from the dropdown to Update state when item is selected
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+  };
+
+  // Call handleLaunch when component mounts
+  useEffect(() => {
+    console.log("type of text data INSIDE useEffect:", typeof textData);
+  }, [textData]);
+
+  const loadNextStatus = () => {
+    if (loadingStateIndex >= loadingStateStatus.length) {
+      setShowLoadingStatus(false);
+      return;
+    }
+
+    const currentStatuses = loadingStateStatus[loadingStateIndex].loadingStatus;
+    if (loadingStatusIndex >= currentStatuses.length) {
+      setLoadingStateIndex((prevIndex) => prevIndex + 1);
+      setLoadingStatusIndex(0);
+      const id = setTimeout(loadNextStatus, 3000); // Load next loading state after 3 seconds
+      setTimeoutId(id); // Set the timeoutId
+      return;
+    }
+
+    // Access the status if it exists
+    const status = currentStatuses[loadingStatusIndex]?.status || "Unknown";
+
+    setLoadingStatusIndex((prevIndex) => prevIndex + 1);
+
+    // Check if loadingStateIndex is still within bounds before scheduling the next iteration
+    if (loadingStateIndex < loadingStateStatus.length) {
+      const id = setTimeout(loadNextStatus, 3000);
+      setTimeoutId(id); // Set the timeoutId
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const baseUrl = "/api/someendpoint";
+
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const responseData = data.text;
+
+        setTextData(responseData);
+      } else {
+        console.log("Response not okay:", response.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSuggestSelect = (suggest) => console.log(suggest);
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-12">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Fundraising
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              To effectively identify your ideal donor, please provide details
+              about your organization, campaign, and desired outcomes.
+            </p>
+          </div>
+
+          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+            <div className="col-span-full">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name of your Organization
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="block flex-1 w-full border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Your organization name"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="website"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Website
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="website"
+                    id="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="www.example.org"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="relative inline-block text-left z-50 col-span-full">
+              <select
+                value={selectedItem}
+                onChange={(e) => setSelectedItem(e.target.value)}
+              >
+                <option value="Select Campaign Type" disabled>
+                  Select Campaign Type
+                </option>
+                {items.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="about"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Tell us about the campaign
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="about"
+                  name="about"
+                  value={formData.about}
+                  onChange={handleChange}
+                  rows={3}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                  defaultValue={""}
+                  placeholder="Write a few sentences about this campaign."
+                />
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="objectives"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Your Objectives
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="objectives"
+                  name="objectives"
+                  value={formData.objectives}
+                  onChange={handleChange}
+                  rows={3}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                  defaultValue={""}
+                  placeholder="Clearly outline what you aim to achieve through this research. Identify specific questions you want to answer about your target donor. (This is optional field)"
+                />
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Defining Donor demographics
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Reason for this Campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature01"
+                      id="feature01"
+                      value={formData.feature01}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Geographic location
+                    </label>
+                    {/* <Geosuggest
+                      ref={geosuggestEl}
+                      placeholder="Start typing!"
+                      initialValue="New York"
+                      fixtures={fixtures}
+                      onSuggestSelect={onSuggestSelect}
+                      location={new google.maps.LatLng(53.558572, 9.9278215)}
+                      radius="20"
+                    /> */}
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #3
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Professional Information
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Reason for this Campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature01"
+                      id="feature01"
+                      value={formData.feature01}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #2
+                    </label>
+                    <input
+                      type="text"
+                      name="feature02"
+                      id="feature02"
+                      value={formData.feature02}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #2"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #3
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Engagement History
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Reason for this Campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature01"
+                      id="feature01"
+                      value={formData.feature01}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #2
+                    </label>
+                    <input
+                      type="text"
+                      name="feature02"
+                      id="feature02"
+                      value={formData.feature02}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #2"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #3
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Wealth Indicators
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Reason for this Campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature01"
+                      id="feature01"
+                      value={formData.feature01}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #2
+                    </label>
+                    <input
+                      type="text"
+                      name="feature02"
+                      id="feature02"
+                      value={formData.feature02}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #2"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #3
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Relationship Information
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Reason for this Campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature01"
+                      id="feature01"
+                      value={formData.feature01}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #2
+                    </label>
+                    <input
+                      type="text"
+                      name="feature02"
+                      id="feature02"
+                      value={formData.feature02}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #2"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Feature #3
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter feature #3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="demographic"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Donation History
+              </label>
+              <div className="isolate -space-y-px rounded-md shadow-sm">
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="demographic"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Industry
+                  </label>
+                  <input
+                    type="text"
+                    name="demographic"
+                    value={formData.demographic}
+                    onChange={handleChange}
+                    id="demographic"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Industry, company size, geographic location, job titles."
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="company"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Company Type
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Start Up"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="geographic"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Geographic location
+                  </label>
+                  <input
+                    type="text"
+                    name="geographic"
+                    id="geographic"
+                    value={formData.geographic}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="US"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="job_title"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    User job title (if applicable)
+                  </label>
+                  <input
+                    type="text"
+                    name="job_title"
+                    id="job_title"
+                    value={formData.job_title}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Sales Manager"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="pain-point"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Donors Personal Interests and Affiliations
+              </label>
+              <div className="isolate -space-y-px rounded-md shadow-sm">
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="pain_point01"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Pain point #1
+                  </label>
+                  <input
+                    type="text"
+                    name="pain_point01"
+                    id="pain_point01"
+                    value={formData.pain_point01}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="What are specific problems that your product solves."
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="pain_point02"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Pain point #2
+                  </label>
+                  <input
+                    type="text"
+                    name="pain_point02"
+                    id="pain_point02"
+                    value={formData.pain_point02}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter pain point #2"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="pain_point03"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Pain point #3
+                  </label>
+                  <input
+                    type="text"
+                    name="pain_point03"
+                    id="pain_point03"
+                    value={formData.pain_point03}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter pain point #3"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="pain_point04"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Pain point #4
+                  </label>
+                  <input
+                    type="text"
+                    name="pain_point04"
+                    value={formData.pain_point04}
+                    onChange={handleChange}
+                    id="pain_point04"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter pain point #4"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="pain-point"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Donors Communication Preferences:
+              </label>
+              <div className="isolate -space-y-px rounded-md shadow-sm">
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="unique01"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Unique Selling proposition
+                  </label>
+                  <input
+                    type="text"
+                    name="unique01"
+                    value={formData.unique01}
+                    onChange={handleChange}
+                    id="unique01"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="What makes your product unique."
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="unique02"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Unique Selling proposition
+                  </label>
+                  <input
+                    type="text"
+                    name="unique02"
+                    id="unique02"
+                    value={formData.unique02}
+                    onChange={handleChange}
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="How is your product different from similar products"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="unique03"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Unique Selling proposition
+                  </label>
+                  <input
+                    type="text"
+                    name="unique03"
+                    value={formData.unique03}
+                    onChange={handleChange}
+                    id="unique03"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter Unique Selling Point #3"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="unique04"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Unique Selling proposition
+                  </label>
+                  <input
+                    type="text"
+                    name="unique04"
+                    value={formData.unique04}
+                    onChange={handleChange}
+                    id="unique04"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter Unique Selling Point #4"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* <div className="col-span-full">
+              <label
+                htmlFor="pain-point"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Your Tech Stack
+              </label>
+              <div className="isolate -space-y-px rounded-md shadow-sm">
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="tool01"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    List some of the tools that your product is built on
+                  </label>
+                  <input
+                    type="text"
+                    name="tool01"
+                    value={formData.tool01}
+                    onChange={handleChange}
+                    id="tool01"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="This can help identify potential partnerships - e.g: Python"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="tool02"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Tool
+                  </label>
+                  <input
+                    type="text"
+                    name="tool02"
+                    value={formData.tool02}
+                    onChange={handleChange}
+                    id="tool02"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Javascript"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="tool03"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Tool
+                  </label>
+                  <input
+                    type="text"
+                    name="tool03"
+                    value={formData.tool03}
+                    onChange={handleChange}
+                    id="tool03"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter Tool #3"
+                  />
+                </div>
+                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="tool04"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Tool
+                  </label>
+                  <input
+                    type="text"
+                    name="tool04"
+                    value={formData.tool04}
+                    onChange={handleChange}
+                    id="tool04"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Enter Tool #4"
+                  />
+                </div>
+              </div>
+            </div> */}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Strategies and Tactics
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Click the button so we can launch a strategy for your product,
+              define Ideal Customer Profile, and ultimately find their contact
+              information.
+            </p>
+          </div>
+
+          <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+            <div className="col-span-full">
+              <>
+                <button
+                  className="bg-green-700 mt-2 rounded-md text-white p-2"
+                  onClick={handleLaunch}
+                  disabled={
+                    showLoadingStatus || (textData && textData.length > 0)
+                  }
+                >
+                  {showLoadingStatus ? "Generating Leads..." : "Begin Strategy"}
+                </button>
+
+                {showLoadingStatus && (
+                  <div>
+                    <h2>{loadingStateStatus[loadingStateIndex].goal}</h2>
+                    <p>
+                      Status:{" "}
+                      {loadingStateIndex < loadingStateStatus.length &&
+                      loadingStatusIndex <
+                        loadingStateStatus[loadingStateIndex].loadingStatus
+                          .length
+                        ? loadingStateStatus[loadingStateIndex]?.loadingStatus[
+                            loadingStatusIndex
+                          ]?.status
+                        : "Ideal Customer Profile has been defined below. Now deploying AI model/agents for the next set of tasks..."}
+                    </p>
+                  </div>
+                )}
+              </>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Proposed Plan
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Based on the provided information, here are data driven summaries
+              that addresses the following key points:
+              <span className="font-semibold"> Customer behavior</span> and{" "}
+              <span className="font-semibold">Motivation</span>,
+              <span className="font-semibold"> Ideal Customer Profile</span>,
+              <span className="font-semibold"> Demands</span>, and
+              <span className="font-semibold"> Lead generation</span>.
+            </p>
+          </div>
+
+          <div className="max-w-2xl space-y-10 md:col-span-2">
+            {/* {textData && (
+                            <div>
+                                {textData.map((item, index) => (
+                                    <div key={index}>
+                                        <h3>{Object.keys(item)[0]}</h3>
+                                        <p>{Object.values(item)[0]}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )} */}
+            {showLoadingStatus && <p>Loading your Ideal Customers...</p>}
+          </div>
+        </div>
+      </div>
+      <div className="mt-6 flex items-center justify-end gap-x-6">
+        <button
+          type="submit"
+          className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+        >
+          Save and Continue
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default RaiseFunds;

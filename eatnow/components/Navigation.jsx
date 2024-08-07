@@ -16,8 +16,8 @@ const ProfileDropDown = ({ className, logout, user }) => {
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
-    { title: "Chefs", path: "/chef-faq" },
-    { title: "Restaurants", path: "/restaurants" },
+    // { title: "Chefs", path: "/chef-faq" },
+    // { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },
   ];
 
@@ -128,8 +128,8 @@ const Navigation = () => {
     { title: "Bloggers", path: "/bloggers" },
     { title: "Brands", path: "/brands" },
     { title: "Blogs", path: "/blog-posts" },
-    { title: "Chefs", path: "/chef-faq" },
-    { title: "Restaurants", path: "/restaurants" },
+    // { title: "Chefs", path: "/chef-faq" },
+    // { title: "Restaurants", path: "/restaurants" },
     { title: "Contact", path: "/contact" },
   ];
 

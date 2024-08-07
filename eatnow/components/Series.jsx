@@ -39,7 +39,7 @@ const InSeries = () => {
               These articles below are also in this series
             </div>
             <Button className="bg-lime-800 text-sm text-white border border-white h-8 rounded-md">
-              Subscribe to Series
+              Subscribe to the Series
             </Button>
           </div>
         </div>
