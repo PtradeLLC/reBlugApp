@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { Select, SelectItem } from "@nextui-org/react";
 import Campaign from "@/components/Campaigns/campaignType";
-import Geosuggest from "@ubilabs/react-geosuggest";
+import { Country, State, City } from "country-state-city";
+import { Select, SelectItem } from "@nextui-org/react";
 
 const RaiseFunds = () => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
+  const [professional, setProfessional] = useState("Yes/No");
   const [loadingStateIndex, setLoadingStateIndex] = useState(0);
   const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
   const [textData, setTextData] = useState(null);
-  const geosuggestEl = useRef(null);
   const [timeoutId, setTimeoutId] = useState(null);
   const [campaignType, setCampaignType] = useState("");
   const [location, setLocation] = useState(null);
@@ -121,6 +121,7 @@ const RaiseFunds = () => {
     feature01: "",
     feature02: "",
     feature03: "",
+    feature04: "",
     demographic: "",
     company: "",
     geographic: "",
@@ -150,11 +151,48 @@ const RaiseFunds = () => {
     "Other Campaigns",
   ];
 
-  const fixtures = [
-    { label: "New York", location: { lat: 40.7033127, lng: -73.979681 } },
-    { label: "Rio", location: { lat: -22.066452, lng: -42.9232368 } },
-    { label: "Tokyo", location: { lat: 35.673343, lng: 139.710388 } },
-  ];
+  const profession = ["Yes|No", "Yes", "No"];
+
+  //Handling Country selection
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      setStates(State.getStatesOfCountry(selectedCountry));
+      setCities([]); // Reset cities when country changes
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (selectedState) {
+      setCities(City.getCitiesOfState(selectedCountry, selectedState));
+    }
+  }, [selectedState, selectedCountry]);
+
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+    setSelectedState("");
+    setSelectedCity("");
+  };
+
+  const handleStateChange = (event) => {
+    setSelectedState(event.target.value);
+    setSelectedCity("");
+  };
+
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -164,6 +202,7 @@ const RaiseFunds = () => {
     });
   };
 
+  //Handles radio change
   const handleRadioChange = (event) => {
     const { value } = event.target;
     setFormData({
@@ -211,9 +250,17 @@ const RaiseFunds = () => {
     setSelectedItem(item);
   };
 
+  // Handle Multi-selection
+  const strategies = [
+    { key: " Email", label: " Email" },
+    { key: " Social media", label: " Social media" },
+    { key: " Events", label: " Events" },
+    { key: " Regular mail", label: " Regular mail" },
+  ];
+
   // Call handleLaunch when component mounts
   useEffect(() => {
-    console.log("type of text data INSIDE useEffect:", typeof textData);
+    console.log("type of text data INSIDE useEffect:");
   }, [textData]);
 
   const loadNextStatus = () => {
@@ -278,7 +325,7 @@ const RaiseFunds = () => {
     }
   };
 
-  const onSuggestSelect = (suggest) => console.log(suggest);
+  // Country/State/City Module
 
   return (
     <form onSubmit={handleSubmit}>
@@ -289,8 +336,9 @@ const RaiseFunds = () => {
               Fundraising
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              To effectively identify your ideal donor, please provide details
-              about your organization, campaign, and desired outcomes.
+              To effectively define and identify your ideal donor, please
+              provide details about your organization, campaign, and desired
+              outcomes.
             </p>
           </div>
 
@@ -332,7 +380,7 @@ const RaiseFunds = () => {
                     value={formData.website}
                     onChange={handleChange}
                     className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="www.example.org"
+                    placeholder=" my-nonprofit.org"
                   />
                 </div>
               </div>
@@ -377,7 +425,7 @@ const RaiseFunds = () => {
                 htmlFor="objectives"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Your Objectives
+                Your Goals & Objectives
               </label>
               <div className="mt-2">
                 <textarea
@@ -388,7 +436,7 @@ const RaiseFunds = () => {
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                   defaultValue={""}
-                  placeholder="Clearly outline what you aim to achieve through this research. Identify specific questions you want to answer about your target donor. (This is optional field)"
+                  placeholder="What are the specific goals of the campaign beyond just raising funds? (e.g., increasing awareness, engaging new donors)"
                 />
               </div>
             </div>
@@ -425,22 +473,94 @@ const RaiseFunds = () => {
                     >
                       Geographic location
                     </label>
-                    {/* <Geosuggest
-                      ref={geosuggestEl}
-                      placeholder="Start typing!"
-                      initialValue="New York"
-                      fixtures={fixtures}
-                      onSuggestSelect={onSuggestSelect}
-                      location={new google.maps.LatLng(53.558572, 9.9278215)}
-                      radius="20"
-                    /> */}
+                    <div className="mb-3">
+                      <label
+                        className="block text-xs font-medium text-gray-900"
+                        htmlFor="country"
+                      >
+                        Country:{" "}
+                      </label>
+                      <select
+                        id="country"
+                        value={selectedCountry}
+                        onChange={handleCountryChange}
+                      >
+                        <option
+                          className="block text-xs font-medium text-gray-900"
+                          value=""
+                        >
+                          Select Country
+                        </option>
+                        {countries.map((country) => (
+                          <option key={country.isoCode} value={country.isoCode}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {states.length > 0 && (
+                      <div className="mb-3">
+                        <label
+                          className="block text-xs font-medium text-gray-900"
+                          htmlFor="state"
+                        >
+                          State:{" "}
+                        </label>
+                        <select
+                          id="state"
+                          value={selectedState}
+                          onChange={handleStateChange}
+                        >
+                          <option
+                            className="block text-xs font-medium text-gray-900"
+                            value=""
+                          >
+                            Select State/Region
+                          </option>
+                          {states.map((state) => (
+                            <option key={state.isoCode} value={state.isoCode}>
+                              {state.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {cities.length > 0 && (
+                      <div className="mb-3">
+                        <label
+                          className="block text-xs font-medium text-gray-900"
+                          htmlFor="city"
+                        >
+                          City:{" "}
+                        </label>
+                        <select
+                          id="city"
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                        >
+                          <option
+                            className="block text-xs font-medium text-gray-900"
+                            value=""
+                          >
+                            Select City
+                          </option>
+                          {cities.map((city) => (
+                            <option key={city.name} value={city.name}>
+                              {city.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="feature03"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Feature #3
+                      Target Donor: Who are the primary donors?
                     </label>
                     <input
                       type="text"
@@ -449,7 +569,150 @@ const RaiseFunds = () => {
                       value={formData.feature03}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #3"
+                      placeholder="e.g: Gen Z, Baby Boomers, Gen X"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature04"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Gender (optional)
+                    </label>
+                    <input
+                      type="text"
+                      name="feature04"
+                      id="feature04"
+                      value={formData.feature04}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="E.g: 'Male' or 'Female' "
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature04"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Age
+                    </label>
+                    <input
+                      type="text"
+                      name="feature04"
+                      id="feature04"
+                      value={formData.feature04}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Enter age range for your target audience - e.g: 20-64"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="intention"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Donor Intention: How do you currently (or previously)
+                      identify your donor intentions
+                    </label>
+                    <input
+                      type="text"
+                      name="intention"
+                      value={formData.demographic}
+                      onChange={handleChange}
+                      id="intention"
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="e.g: One-on-one street outreach, Events"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="features"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Campaign Strategy
+              </label>
+              <div className="mt-2">
+                <div className="isolate -space-y-px rounded-md shadow-sm">
+                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature01"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      What strategies have you previously tried
+                    </label>
+                    <div className="flex justify-between">
+                      <Select
+                        label=""
+                        placeholder="Click to Select (multiple if needed)"
+                        selectionMode="multiple"
+                        className="bg-white"
+                      >
+                        {strategies.map((selection) => (
+                          <SelectItem className="bg-white" key={selection.key}>
+                            {selection.label}
+                          </SelectItem>
+                        ))}
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Plans to hire a professional fundraiser?
+                    </label>
+                    <div className="relative inline-block text-left z-50 col-span-full">
+                      <select
+                        value={professional}
+                        onChange={(e) => setProfessional(e.target.value)}
+                      >
+                        <option value="Select Professional" disabled>
+                          Yes/No?
+                        </option>
+                        {profession.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature03"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      What is the timeline for the campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="feature03"
+                      id="feature03"
+                      value={formData.feature03}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="ASAP or Within 3 months"
+                    />
+                  </div>
+                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="momentum"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      How will you maintain momentum throughout the campaign
+                    </label>
+                    <input
+                      type="text"
+                      name="momentum"
+                      id="momentum"
+                      value={formData.feature02}
+                      onChange={handleChange}
+                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Via Press releases, email"
                     />
                   </div>
                 </div>
@@ -466,39 +729,28 @@ const RaiseFunds = () => {
                 <div className="isolate -space-y-px rounded-md shadow-sm">
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature01"
+                      htmlFor="employment"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Reason for this Campaign
+                      Does target donor have to be employed?
                     </label>
-                    <input
-                      type="text"
-                      name="feature01"
-                      id="feature01"
-                      value={formData.feature01}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="E.g: Politics, Fight against HIV/AIDS"
-                    />
+                    <div className="relative inline-block text-left z-50 col-span-full">
+                      <select
+                        value={professional}
+                        onChange={(e) => setProfessional(e.target.value)}
+                      >
+                        <option value="Select Professional" disabled>
+                          Yes/No?
+                        </option>
+                        {profession.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature02"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #2
-                    </label>
-                    <input
-                      type="text"
-                      name="feature02"
-                      id="feature02"
-                      value={formData.feature02}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #2"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="feature03"
                       className="block text-xs font-medium text-gray-900"
@@ -514,7 +766,7 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Enter feature #3"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -523,7 +775,7 @@ const RaiseFunds = () => {
                 htmlFor="features"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Engagement History
+                Engagement Strategy
               </label>
               <div className="mt-2">
                 <div className="isolate -space-y-px rounded-md shadow-sm">
@@ -532,7 +784,8 @@ const RaiseFunds = () => {
                       htmlFor="feature01"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Reason for this Campaign
+                      How will you keep supporters engaged and informed during
+                      the campaign
                     </label>
                     <input
                       type="text"
@@ -541,41 +794,25 @@ const RaiseFunds = () => {
                       value={formData.feature01}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                      placeholder="e.g: Via email, media outreach"
                     />
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature02"
+                      htmlFor="post-campaign"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Feature #2
+                      Post-Campaign Evaluation: How will you gather feedback and
+                      evaluate the success of the campaign
                     </label>
                     <input
                       type="text"
-                      name="feature02"
-                      id="feature02"
+                      name="post-campaign"
+                      id="post-campaign"
                       value={formData.feature02}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #2"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature03"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #3
-                    </label>
-                    <input
-                      type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #3"
+                      placeholder="Email, Polls"
                     />
                   </div>
                 </div>
@@ -592,19 +829,19 @@ const RaiseFunds = () => {
                 <div className="isolate -space-y-px rounded-md shadow-sm">
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature01"
+                      htmlFor="wealth"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Reason for this Campaign
+                      Does wealth matter to this campaign?
                     </label>
                     <input
                       type="text"
-                      name="feature01"
-                      id="feature01"
+                      name="wealth"
+                      id="wealth"
                       value={formData.feature01}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="E.g: Politics, Fight against HIV/AIDS"
+                      placeholder="E.g: Yes or No"
                     />
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
@@ -712,7 +949,7 @@ const RaiseFunds = () => {
                 htmlFor="demographic"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Donation History
+                Fundraising Goals
               </label>
               <div className="isolate -space-y-px rounded-md shadow-sm">
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
@@ -720,7 +957,7 @@ const RaiseFunds = () => {
                     htmlFor="demographic"
                     className="block text-xs font-medium text-gray-900"
                   >
-                    Industry
+                    How much are your trying to raise
                   </label>
                   <input
                     type="text"
@@ -729,58 +966,43 @@ const RaiseFunds = () => {
                     onChange={handleChange}
                     id="demographic"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Industry, company size, geographic location, job titles."
+                    placeholder="What is the desired monetary goal - e.g: $10,000 or €10,000"
                   />
                 </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
-                    htmlFor="company"
+                    htmlFor="retention"
                     className="block text-xs font-medium text-gray-900"
                   >
-                    Company Type
+                    Donor retention
                   </label>
                   <input
                     type="text"
-                    name="company"
-                    id="company"
-                    value={formData.company}
+                    name="retention"
+                    value={formData.demographic}
                     onChange={handleChange}
+                    id="retention"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="e.g: Start Up"
+                    placeholder="How do you track 'Donor Retention Rate'?"
                   />
                 </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
-                    htmlFor="geographic"
+                    htmlFor="recurring"
                     className="block text-xs font-medium text-gray-900"
                   >
-                    Geographic location
+                    Recurring giving: How would you encourage donor to donate to
+                    your cause again?
                   </label>
                   <input
                     type="text"
-                    name="geographic"
-                    id="geographic"
-                    value={formData.geographic}
+                    name="recurring"
+                    value={formData.demographic}
                     onChange={handleChange}
+                    id="recurring"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="US"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="job_title"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    User job title (if applicable)
-                  </label>
-                  <input
-                    type="text"
-                    name="job_title"
-                    id="job_title"
-                    value={formData.job_title}
-                    onChange={handleChange}
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Sales Manager"
+                    placeholder="e.g: Email follow-up, By Phone"
                   />
                 </div>
               </div>

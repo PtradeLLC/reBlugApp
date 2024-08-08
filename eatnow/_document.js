@@ -8,7 +8,6 @@ export default function Document() {
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="apple-touch-icon" href="/icon.png"></link>
                 <meta name="#6c6b6a" content="#fff" />
-                <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places"></script>
             </Head>
             <body>
                 <Main />
