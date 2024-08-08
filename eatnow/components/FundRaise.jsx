@@ -369,7 +369,7 @@ const RaiseFunds = () => {
                 htmlFor="website"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Website
+                Campaign Website
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
@@ -712,7 +712,7 @@ const RaiseFunds = () => {
                       value={formData.feature02}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Via Press releases, email"
+                      placeholder="via Press releases, social media, email"
                     />
                   </div>
                 </div>
@@ -750,23 +750,6 @@ const RaiseFunds = () => {
                       </select>
                     </div>
                   </div>
-                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature03"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #3
-                    </label>
-                    <input
-                      type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #3"
-                    />
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -794,7 +777,7 @@ const RaiseFunds = () => {
                       value={formData.feature01}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="e.g: Via email, media outreach"
+                      placeholder="e.g: via email, social media, traditional media outreach"
                     />
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
@@ -812,7 +795,7 @@ const RaiseFunds = () => {
                       value={formData.feature02}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Email, Polls"
+                      placeholder="e.g: via email, Social media polls"
                     />
                   </div>
                 </div>
@@ -832,7 +815,7 @@ const RaiseFunds = () => {
                       htmlFor="wealth"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Does wealth matter to this campaign?
+                      Does individual wealth matter to this campaign?
                     </label>
                     <input
                       type="text"
@@ -842,103 +825,6 @@ const RaiseFunds = () => {
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="E.g: Yes or No"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature02"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #2
-                    </label>
-                    <input
-                      type="text"
-                      name="feature02"
-                      id="feature02"
-                      value={formData.feature02}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #2"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature03"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #3
-                    </label>
-                    <input
-                      type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #3"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="features"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Relationship Information
-              </label>
-              <div className="mt-2">
-                <div className="isolate -space-y-px rounded-md shadow-sm">
-                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature01"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Reason for this Campaign
-                    </label>
-                    <input
-                      type="text"
-                      name="feature01"
-                      id="feature01"
-                      value={formData.feature01}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="E.g: Politics, Fight against HIV/AIDS"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature02"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #2
-                    </label>
-                    <input
-                      type="text"
-                      name="feature02"
-                      id="feature02"
-                      value={formData.feature02}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #2"
-                    />
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature03"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Feature #3
-                    </label>
-                    <input
-                      type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter feature #3"
                     />
                   </div>
                 </div>
@@ -993,7 +879,7 @@ const RaiseFunds = () => {
                     className="block text-xs font-medium text-gray-900"
                   >
                     Recurring giving: How would you encourage donor to donate to
-                    your cause again?
+                    your campaign again?
                   </label>
                   <input
                     type="text"
@@ -1007,240 +893,6 @@ const RaiseFunds = () => {
                 </div>
               </div>
             </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="pain-point"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Donors Personal Interests and Affiliations
-              </label>
-              <div className="isolate -space-y-px rounded-md shadow-sm">
-                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="pain_point01"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Pain point #1
-                  </label>
-                  <input
-                    type="text"
-                    name="pain_point01"
-                    id="pain_point01"
-                    value={formData.pain_point01}
-                    onChange={handleChange}
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="What are specific problems that your product solves."
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="pain_point02"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Pain point #2
-                  </label>
-                  <input
-                    type="text"
-                    name="pain_point02"
-                    id="pain_point02"
-                    value={formData.pain_point02}
-                    onChange={handleChange}
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter pain point #2"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="pain_point03"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Pain point #3
-                  </label>
-                  <input
-                    type="text"
-                    name="pain_point03"
-                    id="pain_point03"
-                    value={formData.pain_point03}
-                    onChange={handleChange}
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter pain point #3"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="pain_point04"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Pain point #4
-                  </label>
-                  <input
-                    type="text"
-                    name="pain_point04"
-                    value={formData.pain_point04}
-                    onChange={handleChange}
-                    id="pain_point04"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter pain point #4"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="pain-point"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Donors Communication Preferences:
-              </label>
-              <div className="isolate -space-y-px rounded-md shadow-sm">
-                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="unique01"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Unique Selling proposition
-                  </label>
-                  <input
-                    type="text"
-                    name="unique01"
-                    value={formData.unique01}
-                    onChange={handleChange}
-                    id="unique01"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="What makes your product unique."
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="unique02"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Unique Selling proposition
-                  </label>
-                  <input
-                    type="text"
-                    name="unique02"
-                    id="unique02"
-                    value={formData.unique02}
-                    onChange={handleChange}
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="How is your product different from similar products"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="unique03"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Unique Selling proposition
-                  </label>
-                  <input
-                    type="text"
-                    name="unique03"
-                    value={formData.unique03}
-                    onChange={handleChange}
-                    id="unique03"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter Unique Selling Point #3"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="unique04"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Unique Selling proposition
-                  </label>
-                  <input
-                    type="text"
-                    name="unique04"
-                    value={formData.unique04}
-                    onChange={handleChange}
-                    id="unique04"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter Unique Selling Point #4"
-                  />
-                </div>
-              </div>
-            </div>
-            {/* <div className="col-span-full">
-              <label
-                htmlFor="pain-point"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Your Tech Stack
-              </label>
-              <div className="isolate -space-y-px rounded-md shadow-sm">
-                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="tool01"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    List some of the tools that your product is built on
-                  </label>
-                  <input
-                    type="text"
-                    name="tool01"
-                    value={formData.tool01}
-                    onChange={handleChange}
-                    id="tool01"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="This can help identify potential partnerships - e.g: Python"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="tool02"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Tool
-                  </label>
-                  <input
-                    type="text"
-                    name="tool02"
-                    value={formData.tool02}
-                    onChange={handleChange}
-                    id="tool02"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="e.g: Javascript"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="tool03"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Tool
-                  </label>
-                  <input
-                    type="text"
-                    name="tool03"
-                    value={formData.tool03}
-                    onChange={handleChange}
-                    id="tool03"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter Tool #3"
-                  />
-                </div>
-                <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                  <label
-                    htmlFor="tool04"
-                    className="block text-xs font-medium text-gray-900"
-                  >
-                    Tool
-                  </label>
-                  <input
-                    type="text"
-                    name="tool04"
-                    value={formData.tool04}
-                    onChange={handleChange}
-                    id="tool04"
-                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Enter Tool #4"
-                  />
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
 
@@ -1251,8 +903,8 @@ const RaiseFunds = () => {
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Click the button so we can launch a strategy for your product,
-              define Ideal Customer Profile, and ultimately find their contact
-              information.
+              define Ideal Donor Profile, their contact details, and ultimately
+              launch a targeted campaign.
             </p>
           </div>
 
