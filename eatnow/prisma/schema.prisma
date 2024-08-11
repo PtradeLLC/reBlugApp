@@ -183,6 +183,50 @@ model Category {
   series Series[] // One category can have multiple Series
 }
 
+model FundraisingCampaign {
+  id              String      @id @default(cuid())
+  title           String
+  website         String?
+  selectedItem    String?
+  about           String?
+  objectives      String?
+  demographic     Demographic @relation(fields: [demographicId], references: [id])
+  demographicId   String      @unique
+  strategy        String[]
+  proHire         String?
+  timeline        String?
+  momentum        String?
+  employment      String?
+  engagementEval  String?
+  postCampaign    String?
+  wealthIndicator String?
+  fundingGoals    String?
+  donorRetention  String?
+  recurringGiving String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Demographic {
+  id                  String               @id @default(cuid())
+  campaignReason      String?
+  geographic          Geographic           @relation(fields: [geographicId], references: [id])
+  geographicId        String               @unique
+  targetDonor         String?
+  gender              String?
+  age                 String?
+  intention           String?
+  fundraisingCampaign FundraisingCampaign? @relation
+}
+
+model Geographic {
+  id          String       @id @default(cuid())
+  country     String?
+  state       String?
+  city        String?
+  demographic Demographic?
+}
+
 model Series {
   id         String   @id @default(cuid())
   title      String?  @unique

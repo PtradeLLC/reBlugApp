@@ -16,96 +16,7 @@ const RaiseFunds = () => {
   const [loadingStateStatus, setLoadingStateStatus] = useState([
     {
       id: 1,
-      goal: "Product Launch",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 1, status: "Conducting Product Analysis" },
-        { id: 2, status: "Conducting Competitive Analysis" },
-        { id: 3, status: "Researching Ideal Customer Profile" },
-        { id: 4, status: "Defining Ideal Customer Profile" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 2,
-      goal: "Generate Leads",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 3,
-      goal: "Raise Awareness",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 4,
-      goal: "SaaS Subscription",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 5,
-      goal: "Sell Tickets",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 6,
-      goal: "Product Sales",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 7,
       goal: "Raise Funds",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 8,
-      goal: "Newsletter - Communication",
-      loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
-      ],
-    },
-    {
-      id: 9,
-      goal: "Newsletter - Marketing",
       loadingStatus: [
         { id: 1, status: "Preparing data for Channel Distribution" },
         { id: 2, status: "Identifying Complementary Brands" },
@@ -118,29 +29,33 @@ const RaiseFunds = () => {
 
   const [formData, setFormData] = useState({
     title: "",
-    feature01: "",
-    feature02: "",
-    feature03: "",
-    feature04: "",
-    demographic: "",
-    company: "",
-    geographic: "",
-    job_title: "",
+    website: "",
+    selectedItem: "",
     about: "",
     objectives: "",
-    client_type: "",
-    pain_point01: "",
-    pain_point02: "",
-    pain_point03: "",
-    pain_point04: "",
-    unique01: "",
-    unique02: "",
-    unique03: "",
-    unique04: "",
-    tool01: "",
-    tool02: "",
-    tool03: "",
-    tool04: "",
+    demographic: {
+      geographic: {
+        country: "",
+        state: "",
+        city: "",
+      },
+      targetDonor: "",
+      gender: "",
+      age: "",
+      intention: "",
+    },
+    campaignReason: "",
+    strategy: "",
+    proHire: "",
+    timeline: "",
+    momentum: "",
+    employment: "",
+    engagementEval: "",
+    postCampaign: "",
+    wealthIndicator: "",
+    fundingGoals: "",
+    donorRetention: "",
+    recurringGiving: "",
   });
 
   const items = [
@@ -185,6 +100,28 @@ const RaiseFunds = () => {
     setSelectedCity("");
   };
 
+  const handleGeographicChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      demographic: {
+        ...prevFormData.demographic,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleDemographicChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      demographic: {
+        ...prevFormData.demographic,
+        [name]: value,
+      },
+    }));
+  };
+
   const handleStateChange = (event) => {
     setSelectedState(event.target.value);
     setSelectedCity("");
@@ -199,15 +136,6 @@ const RaiseFunds = () => {
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
-
-  //Handles radio change
-  const handleRadioChange = (event) => {
-    const { value } = event.target;
-    setFormData({
-      ...formData,
-      client_type: value,
     });
   };
 
@@ -355,6 +283,7 @@ const RaiseFunds = () => {
                   <input
                     type="text"
                     name="title"
+                    required
                     id="title"
                     value={formData.title}
                     onChange={handleChange}
@@ -376,6 +305,7 @@ const RaiseFunds = () => {
                   <input
                     type="text"
                     name="website"
+                    required
                     id="website"
                     value={formData.website}
                     onChange={handleChange}
@@ -411,6 +341,7 @@ const RaiseFunds = () => {
                 <textarea
                   id="about"
                   name="about"
+                  required
                   value={formData.about}
                   onChange={handleChange}
                   rows={3}
@@ -431,6 +362,7 @@ const RaiseFunds = () => {
                 <textarea
                   id="objectives"
                   name="objectives"
+                  required
                   value={formData.objectives}
                   onChange={handleChange}
                   rows={3}
@@ -449,23 +381,6 @@ const RaiseFunds = () => {
               </label>
               <div className="mt-2">
                 <div className="isolate -space-y-px rounded-md shadow-sm">
-                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature01"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Reason for this Campaign
-                    </label>
-                    <input
-                      type="text"
-                      name="feature01"
-                      id="feature01"
-                      value={formData.feature01}
-                      onChange={handleChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="E.g: Politics, Fight against HIV/AIDS"
-                    />
-                  </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="feature02"
@@ -526,7 +441,6 @@ const RaiseFunds = () => {
                         </select>
                       </div>
                     )}
-
                     {cities.length > 0 && (
                       <div className="mb-3">
                         <label
@@ -557,51 +471,54 @@ const RaiseFunds = () => {
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature03"
+                      htmlFor="targetDonor"
                       className="block text-xs font-medium text-gray-900"
                     >
                       Target Donor: Who are the primary donors?
                     </label>
                     <input
                       type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
-                      onChange={handleChange}
+                      name="targetDonor"
+                      required
+                      id="targetDonor"
+                      value={formData.demographic.targetDonor}
+                      onChange={handleGeographicChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: Gen Z, Baby Boomers, Gen X"
                     />
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature04"
+                      htmlFor="gender"
                       className="block text-xs font-medium text-gray-900"
                     >
-                      Gender (optional)
+                      Gender
                     </label>
                     <input
                       type="text"
-                      name="feature04"
-                      id="feature04"
-                      value={formData.feature04}
-                      onChange={handleChange}
+                      name="gender"
+                      id="gender"
+                      required
+                      value={formData.demographic.gender}
+                      onChange={handleGeographicChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="E.g: 'Male' or 'Female' "
                     />
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature04"
+                      htmlFor="age"
                       className="block text-xs font-medium text-gray-900"
                     >
                       Age
                     </label>
                     <input
                       type="text"
-                      name="feature04"
-                      id="feature04"
-                      value={formData.feature04}
-                      onChange={handleChange}
+                      name="age"
+                      required
+                      id="age"
+                      value={formData.demographic.age}
+                      onChange={handleGeographicChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Enter age range for your target audience - e.g: 20-64"
                     />
@@ -617,8 +534,9 @@ const RaiseFunds = () => {
                     <input
                       type="text"
                       name="intention"
-                      value={formData.demographic}
-                      onChange={handleChange}
+                      required
+                      value={formData.demographic.intention}
+                      onChange={handleGeographicChange}
                       id="intention"
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: One-on-one street outreach, Events"
@@ -660,39 +578,17 @@ const RaiseFunds = () => {
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature02"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Plans to hire a professional fundraiser?
-                    </label>
-                    <div className="relative inline-block text-left z-50 col-span-full">
-                      <select
-                        value={professional}
-                        onChange={(e) => setProfessional(e.target.value)}
-                      >
-                        <option value="Select Professional" disabled>
-                          Yes/No?
-                        </option>
-                        {profession.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature03"
+                      htmlFor="timeline"
                       className="block text-xs font-medium text-gray-900"
                     >
                       What is the timeline for the campaign
                     </label>
                     <input
                       type="text"
-                      name="feature03"
-                      id="feature03"
-                      value={formData.feature03}
+                      name="timeline"
+                      id="timeline"
+                      required
+                      value={formData.timeline}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="ASAP or Within 3 months"
@@ -708,47 +604,13 @@ const RaiseFunds = () => {
                     <input
                       type="text"
                       name="momentum"
+                      required
                       id="momentum"
-                      value={formData.feature02}
+                      value={formData.momentum}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="via Press releases, social media, email"
                     />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label
-                htmlFor="features"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Professional Information
-              </label>
-              <div className="mt-2">
-                <div className="isolate -space-y-px rounded-md shadow-sm">
-                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="employment"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Does target donor have to be employed?
-                    </label>
-                    <div className="relative inline-block text-left z-50 col-span-full">
-                      <select
-                        value={professional}
-                        onChange={(e) => setProfessional(e.target.value)}
-                      >
-                        <option value="Select Professional" disabled>
-                          Yes/No?
-                        </option>
-                        {profession.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -764,7 +626,7 @@ const RaiseFunds = () => {
                 <div className="isolate -space-y-px rounded-md shadow-sm">
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature01"
+                      htmlFor="strategy"
                       className="block text-xs font-medium text-gray-900"
                     >
                       How will you keep supporters engaged and informed during
@@ -772,9 +634,10 @@ const RaiseFunds = () => {
                     </label>
                     <input
                       type="text"
-                      name="feature01"
-                      id="feature01"
-                      value={formData.feature01}
+                      name="strategy"
+                      id="strategy"
+                      required
+                      value={formData.strategy}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: via email, social media, traditional media outreach"
@@ -782,7 +645,7 @@ const RaiseFunds = () => {
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="post-campaign"
+                      htmlFor="postCampaign"
                       className="block text-xs font-medium text-gray-900"
                     >
                       Post-Campaign Evaluation: How will you gather feedback and
@@ -790,9 +653,10 @@ const RaiseFunds = () => {
                     </label>
                     <input
                       type="text"
-                      name="post-campaign"
-                      id="post-campaign"
-                      value={formData.feature02}
+                      name="postCampaign"
+                      required
+                      id="postCampaign"
+                      value={formData.postCampaign}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: via email, Social media polls"
@@ -812,16 +676,17 @@ const RaiseFunds = () => {
                 <div className="isolate -space-y-px rounded-md shadow-sm">
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="wealth"
+                      htmlFor="wealthIndicator"
                       className="block text-xs font-medium text-gray-900"
                     >
                       Does individual wealth matter to this campaign?
                     </label>
                     <input
                       type="text"
-                      name="wealth"
-                      id="wealth"
-                      value={formData.feature01}
+                      name="wealthIndicator"
+                      required
+                      id="wealthIndicator"
+                      value={formData.wealthIndicator}
                       onChange={handleChange}
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="E.g: Yes or No"
@@ -840,34 +705,36 @@ const RaiseFunds = () => {
               <div className="isolate -space-y-px rounded-md shadow-sm">
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
-                    htmlFor="demographic"
+                    htmlFor="fundingGoals"
                     className="block text-xs font-medium text-gray-900"
                   >
                     How much are your trying to raise
                   </label>
                   <input
                     type="text"
-                    name="demographic"
-                    value={formData.demographic}
+                    name="fundingGoals"
+                    required
+                    value={formData.fundingGoals}
                     onChange={handleChange}
-                    id="demographic"
+                    id="fundingGoals"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="What is the desired monetary goal - e.g: $10,000 or €10,000"
                   />
                 </div>
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
-                    htmlFor="retention"
+                    htmlFor="donorRetention"
                     className="block text-xs font-medium text-gray-900"
                   >
                     Donor retention
                   </label>
                   <input
                     type="text"
-                    name="retention"
-                    value={formData.demographic}
+                    name="donorRetention"
+                    required
+                    value={formData.donorRetention}
                     onChange={handleChange}
-                    id="retention"
+                    id="donorRetention"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="How do you track 'Donor Retention Rate'?"
                   />
@@ -875,7 +742,7 @@ const RaiseFunds = () => {
 
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
-                    htmlFor="recurring"
+                    htmlFor="recurringGiving"
                     className="block text-xs font-medium text-gray-900"
                   >
                     Recurring giving: How would you encourage donor to donate to
@@ -883,10 +750,11 @@ const RaiseFunds = () => {
                   </label>
                   <input
                     type="text"
-                    name="recurring"
-                    value={formData.demographic}
+                    name="recurringGiving"
+                    required
+                    value={formData.recurringGiving}
                     onChange={handleChange}
-                    id="recurring"
+                    id="recurringGiving"
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="e.g: Email follow-up, By Phone"
                   />

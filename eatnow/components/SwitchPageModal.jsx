@@ -84,7 +84,7 @@ const TogglePageModal = ({
             </SelectContent>
           </Select>
           <DialogFooter>
-            <Button onClick={onSubmit}>Submit</Button>
+            <Button onClick={onSubmit}>Switch Role</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
