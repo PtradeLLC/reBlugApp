@@ -28,6 +28,7 @@ const RaiseFunds = () => {
     },
   ]);
 
+  // State initialization
   const [formData, setFormData] = useState({
     title: "",
     website: "",
@@ -35,6 +36,7 @@ const RaiseFunds = () => {
     about: "",
     objectives: "",
     demographic: {
+      campaignReason: "",
       geographic: {
         country: "",
         state: "",
@@ -42,15 +44,11 @@ const RaiseFunds = () => {
       },
       targetDonor: "",
       gender: "",
-      age: "",
       intention: "",
     },
-    campaignReason: "",
-    strategy: "",
-    proHire: "",
+    // strategy: [],
     timeline: "",
     momentum: "",
-    employment: "",
     engagementEval: "",
     postCampaign: "",
     wealthIndicator: "",
@@ -58,6 +56,33 @@ const RaiseFunds = () => {
     donorRetention: "",
     recurringGiving: "",
   });
+
+  // const [formData, setFormData] = useState({
+  //   title: "",
+  //   website: "",
+  //   selectedItem: "",
+  //   about: "",
+  //   objectives: "",
+  //   demographic: {
+  //     geographic: {
+  //       country: "",
+  //       state: "",
+  //       city: "",
+  //     },
+  //     targetDonor: "",
+  //     gender: "",
+  //     intention: "",
+  //   },
+  //   campaignReason: "",
+  //   timeline: "",
+  //   momentum: "",
+  //   engagementEval: "",
+  //   postCampaign: "",
+  //   wealthIndicator: "",
+  //   fundingGoals: "",
+  //   donorRetention: "",
+  //   recurringGiving: "",
+  // });
 
   const items = [
     "Non Profit",
@@ -67,7 +92,7 @@ const RaiseFunds = () => {
     "Other Campaigns",
   ];
 
-  const profession = ["Yes|No", "Yes", "No"];
+  // const profession = ["Yes|No", "Yes", "No"];
 
   //Handling Country selection
   const [countries, setCountries] = useState([]);
@@ -78,28 +103,106 @@ const RaiseFunds = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
+  // Fetch countries on mount
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
 
+  // Fetch states when country is selected
   useEffect(() => {
-    if (selectedCountry) {
-      setStates(State.getStatesOfCountry(selectedCountry));
+    if (formData.demographic.geographic.country) {
+      setStates(
+        State.getStatesOfCountry(formData.demographic.geographic.country)
+      );
       setCities([]); // Reset cities when country changes
     }
-  }, [selectedCountry]);
+  }, [formData.demographic.geographic.country]);
 
+  // useEffect(() => {
+  //   if (selectedCountry) {
+  //     setStates(State.getStatesOfCountry(selectedCountry));
+  //     setCities([]); // Reset cities when country changes
+  //   }
+  // }, [selectedCountry]);
+
+  // useEffect(() => {
+  //   if (selectedState) {
+  //     setCities(City.getCitiesOfState(selectedCountry, selectedState));
+  //   }
+  // }, [selectedState, selectedCountry]);
+
+  // Fetch cities when state is selected
   useEffect(() => {
-    if (selectedState) {
-      setCities(City.getCitiesOfState(selectedCountry, selectedState));
+    if (formData.demographic.geographic.state) {
+      setCities(
+        City.getCitiesOfState(
+          formData.demographic.geographic.country,
+          formData.demographic.geographic.state
+        )
+      );
     }
-  }, [selectedState, selectedCountry]);
+  }, [formData.demographic.geographic.state]);
 
+  // const handleCountryChange = (event) => {
+  //   setSelectedCountry(event.target.value);
+  //   setSelectedState("");
+  //   setSelectedCity("");
+  // };
+
+  // Handlers
   const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
-    setSelectedState("");
-    setSelectedCity("");
+    const selectedCountry = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      demographic: {
+        ...prevFormData.demographic,
+        geographic: {
+          ...prevFormData.demographic.geographic,
+          country: selectedCountry,
+          state: "", // Reset state and city when country changes
+          city: "",
+        },
+      },
+    }));
   };
+
+  const handleStateChange = (event) => {
+    const selectedState = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      demographic: {
+        ...prevFormData.demographic,
+        geographic: {
+          ...prevFormData.demographic.geographic,
+          state: selectedState,
+          city: "", // Reset city when state changes
+        },
+      },
+    }));
+  };
+
+  const handleCityChange = (event) => {
+    const selectedCity = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      demographic: {
+        ...prevFormData.demographic,
+        geographic: {
+          ...prevFormData.demographic.geographic,
+          city: selectedCity,
+        },
+      },
+    }));
+  };
+
+  // const handleStateChange = (event) => {
+  //   setSelectedState(event.target.value);
+  //   setSelectedCity("");
+  // };
+
+  // const handleCityChange = (event) => {
+  //   setSelectedCity(event.target.value);
+  // };
 
   const handleGeographicChange = (event) => {
     const { name, value } = event.target;
@@ -112,25 +215,16 @@ const RaiseFunds = () => {
     }));
   };
 
-  const handleDemographicChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      demographic: {
-        ...prevFormData.demographic,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleStateChange = (event) => {
-    setSelectedState(event.target.value);
-    setSelectedCity("");
-  };
-
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-  };
+  // const handleDemographicChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     demographic: {
+  //       ...prevFormData.demographic,
+  //       [name]: value,
+  //     },
+  //   }));
+  // };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -150,21 +244,22 @@ const RaiseFunds = () => {
     loadNextStatus();
 
     try {
-      // Make the POST request to the API endpoint
-      const response = await fetch("/api/productLaunchStatus", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      console.log("FormData", formData);
 
-      if (response.ok) {
-        const data = await response.json();
-        setTextData(data);
-      } else {
-        console.log("Response not okay:", response.statusText);
-      }
+      // Make the POST request to the API endpoint
+      // const response = await fetch("/api/productLaunchStatus", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
+      // if (response.ok) {
+      //   const data = await response.json();
+      //   setTextData(data);
+      // } else {
+      //   console.log("Response not okay:", response.statusText);
+      // }
     } catch (error) {
       // Handle any unexpected errors
       console.error("Error making POST request:", error.message);
@@ -189,7 +284,7 @@ const RaiseFunds = () => {
 
   // Call handleLaunch when component mounts
   useEffect(() => {
-    console.log("type of text data INSIDE useEffect:");
+    console.log("");
   }, [textData]);
 
   const loadNextStatus = () => {
@@ -289,7 +384,7 @@ const RaiseFunds = () => {
                 htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Name of your Organization
+                Name of your Organization | Party
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
@@ -337,6 +432,7 @@ const RaiseFunds = () => {
             <div className="relative inline-block text-left z-50 col-span-full">
               <select
                 value={selectedItem}
+                aria-labelledby="campaignType"
                 onChange={(e) => setSelectedItem(e.target.value)}
               >
                 <option value="Select Campaign Type" disabled>
@@ -370,7 +466,6 @@ const RaiseFunds = () => {
                   onChange={handleChange}
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                  defaultValue={""}
                   placeholder="Write a few sentences about this campaign."
                 />
               </div>
@@ -394,7 +489,6 @@ const RaiseFunds = () => {
                   onChange={handleChange}
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                  defaultValue={""}
                   placeholder="What are the specific goals of the campaign beyond just raising funds? (e.g., increasing awareness, engaging new donors)"
                 />
               </div>
@@ -423,10 +517,103 @@ const RaiseFunds = () => {
                         className="block text-xs font-medium text-gray-900"
                         htmlFor="country"
                       >
+                        Country:
+                      </label>
+                      <select
+                        id="country"
+                        aria-labelledby="country"
+                        value={formData.demographic.geographic.country}
+                        onChange={handleCountryChange}
+                      >
+                        <option
+                          className="block text-xs font-medium text-gray-900"
+                          value=""
+                        >
+                          Select Country
+                        </option>
+                        {countries.map((country) => (
+                          <option key={country.isoCode} value={country.isoCode}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {states.length > 0 && (
+                      <div className="mb-3">
+                        <label
+                          className="block text-xs font-medium text-gray-900"
+                          htmlFor="state"
+                        >
+                          State/Region:
+                        </label>
+                        <select
+                          id="state"
+                          aria-labelledby="state"
+                          value={formData.demographic.geographic.state}
+                          onChange={handleStateChange}
+                        >
+                          <option
+                            className="block text-xs font-medium text-gray-900"
+                            value=""
+                          >
+                            Select State/Region
+                          </option>
+                          {states.map((state) => (
+                            <option key={state.isoCode} value={state.isoCode}>
+                              {state.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {cities.length > 0 && (
+                      <div className="mb-3">
+                        <label
+                          className="block text-xs font-medium text-gray-900"
+                          htmlFor="city"
+                        >
+                          City:
+                        </label>
+                        <select
+                          id="city"
+                          aria-labelledby="city"
+                          value={formData.demographic.geographic.city}
+                          onChange={handleCityChange}
+                        >
+                          <option
+                            className="block text-xs font-medium text-gray-900"
+                            value=""
+                          >
+                            Select City
+                          </option>
+                          {cities.map((city) => (
+                            <option key={city.name} value={city.name}>
+                              {city.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                    <label
+                      htmlFor="feature02"
+                      className="block text-xs font-medium text-gray-900"
+                    >
+                      Geographic location
+                    </label>
+                    <div className="mb-3">
+                      <label
+                        className="block text-xs font-medium text-gray-900"
+                        htmlFor="country"
+                      >
                         Country:{" "}
                       </label>
                       <select
                         id="country"
+                        aria-labelledby="country"
                         value={selectedCountry}
                         onChange={handleCountryChange}
                       >
@@ -454,6 +641,7 @@ const RaiseFunds = () => {
                         </label>
                         <select
                           id="state"
+                          aria-labelledby="state"
                           value={selectedState}
                           onChange={handleStateChange}
                         >
@@ -481,6 +669,7 @@ const RaiseFunds = () => {
                         </label>
                         <select
                           id="city"
+                          aria-labelledby="city"
                           value={selectedCity}
                           onChange={handleCityChange}
                         >
@@ -498,7 +687,7 @@ const RaiseFunds = () => {
                         </select>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="targetDonor"
@@ -600,16 +789,17 @@ const RaiseFunds = () => {
               </label>
               <div className="mt-2">
                 <div className="isolate -space-y-px rounded-md shadow-sm">
-                  <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  {/* <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
-                      htmlFor="feature01"
+                      htmlFor="strategies"
                       className="block text-xs font-medium text-gray-900"
                     >
                       What strategies have you previously tried
                     </label>
                     <div className="flex justify-between">
                       <Select
-                        label=""
+                        label="strategies"
+                        aria-labelledby="strategies"
                         placeholder="Click to Select (multiple if needed)"
                         selectionMode="multiple"
                         className="bg-white"
@@ -621,7 +811,7 @@ const RaiseFunds = () => {
                         ))}
                       </Select>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="timeline"
@@ -851,9 +1041,9 @@ const RaiseFunds = () => {
               Strategies and Tactics
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Click the button so we can launch a strategy for your product,
-              define Ideal Donor Profile, their contact details, and ultimately
-              launch a targeted campaign.
+              Click the button so we can launch a strategy, and define an Ideal
+              Donor Profile, their contact details, and ultimately launch a
+              targeted campaign.
             </p>
           </div>
 
