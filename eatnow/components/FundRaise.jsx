@@ -12,6 +12,7 @@ const RaiseFunds = () => {
   const [timeoutId, setTimeoutId] = useState(null);
   const [campaignType, setCampaignType] = useState("");
   const [location, setLocation] = useState(null);
+  const [errors, setErrors] = useState({});
   const [showLoadingStatus, setShowLoadingStatus] = useState(false);
   const [loadingStateStatus, setLoadingStateStatus] = useState([
     {
@@ -226,34 +227,46 @@ const RaiseFunds = () => {
     };
   }, [timeoutId]);
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.title) newErrors.title = "Organization name is required.";
+    if (!formData.website) newErrors.website = "Campaign website is required.";
+    if (selectedItem === "Select Campaign Type")
+      newErrors.selectedItem = "Please select a campaign type.";
+    if (!formData.about) newErrors.about = "Campaign details are required.";
+    if (!formData.objectives)
+      newErrors.objectives = "Campaign objectives are required.";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const baseUrl = "/api/someendpoint";
+    if (!validateForm()) return;
 
-      const response = await fetch(baseUrl, {
+    try {
+      const response = await fetch("/api/productLaunchStatus", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        const responseData = data.text;
-
-        setTextData(responseData);
+        console.log("Form submitted successfully:", data);
       } else {
-        console.log("Response not okay:", response.statusText);
+        console.error("Error submitting form:", response.statusText);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Unexpected error:", error);
     }
   };
-
-  // Country/State/City Module
 
   return (
     <form onSubmit={handleSubmit}>
@@ -291,6 +304,9 @@ const RaiseFunds = () => {
                     placeholder="Your organization name"
                   />
                 </div>
+                {errors.title && (
+                  <p className="text-red-600 text-sm mt-1">{errors.title}</p>
+                )}
               </div>
             </div>
             <div className="col-span-full">
@@ -313,6 +329,9 @@ const RaiseFunds = () => {
                     placeholder=" my-nonprofit.org"
                   />
                 </div>
+                {errors.website && (
+                  <p className="text-red-600 text-sm mt-1">{errors.website}</p>
+                )}
               </div>
             </div>
             <div className="relative inline-block text-left z-50 col-span-full">
@@ -329,6 +348,11 @@ const RaiseFunds = () => {
                   </option>
                 ))}
               </select>
+              {errors.selectedItem && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.selectedItem}
+                </p>
+              )}
             </div>
             <div className="col-span-full">
               <label
@@ -350,6 +374,9 @@ const RaiseFunds = () => {
                   placeholder="Write a few sentences about this campaign."
                 />
               </div>
+              {errors.about && (
+                <p className="text-red-600 text-sm mt-1">{errors.about}</p>
+              )}
             </div>
             <div className="col-span-full">
               <label
@@ -371,6 +398,9 @@ const RaiseFunds = () => {
                   placeholder="What are the specific goals of the campaign beyond just raising funds? (e.g., increasing awareness, engaging new donors)"
                 />
               </div>
+              {errors.objectives && (
+                <p className="text-red-600 text-sm mt-1">{errors.objectives}</p>
+              )}
             </div>
             <div className="col-span-full">
               <label
@@ -486,7 +516,13 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: Gen Z, Baby Boomers, Gen X"
                     />
+                    {errors.targetDonor && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.targetDonor}
+                      </p>
+                    )}
                   </div>
+
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="gender"
@@ -504,8 +540,13 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="E.g: 'Male' or 'Female' "
                     />
+                    {errors.gender && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.gender}
+                      </p>
+                    )}
                   </div>
-                  <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="age"
                       className="block text-xs font-medium text-gray-900"
@@ -522,7 +563,7 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Enter age range for your target audience - e.g: 20-64"
                     />
-                  </div>
+                  </div> */}
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="intention"
@@ -542,6 +583,11 @@ const RaiseFunds = () => {
                       placeholder="e.g: One-on-one street outreach, Events"
                     />
                   </div>
+                  {errors.intention && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.intention}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -593,6 +639,11 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="ASAP or Within 3 months"
                     />
+                    {errors.timeline && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.timeline}
+                      </p>
+                    )}
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
@@ -611,6 +662,11 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="via Press releases, social media, email"
                     />
+                    {errors.momentum && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.momentum}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -642,6 +698,11 @@ const RaiseFunds = () => {
                       className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="e.g: via email, social media, traditional media outreach"
                     />
+                    {errors.strategy && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.strategy}
+                      </p>
+                    )}
                   </div>
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
@@ -662,6 +723,11 @@ const RaiseFunds = () => {
                       placeholder="e.g: via email, Social media polls"
                     />
                   </div>
+                  {errors.postCampaign && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.postCampaign}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -692,6 +758,11 @@ const RaiseFunds = () => {
                       placeholder="E.g: Yes or No"
                     />
                   </div>
+                  {errors.wealthIndicator && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.wealthIndicator}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -720,6 +791,11 @@ const RaiseFunds = () => {
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="What is the desired monetary goal - e.g: $10,000 or €10,000"
                   />
+                  {errors.fundingGoals && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.fundingGoals}
+                    </p>
+                  )}
                 </div>
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                   <label
@@ -738,6 +814,11 @@ const RaiseFunds = () => {
                     className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="How do you track 'Donor Retention Rate'?"
                   />
+                  {errors.donorRetention && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.donorRetention}
+                    </p>
+                  )}
                 </div>
 
                 <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
