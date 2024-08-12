@@ -19,11 +19,14 @@ const RaiseFunds = () => {
       id: 1,
       goal: "Raise Funds",
       loadingStatus: [
-        { id: 1, status: "Preparing data for Channel Distribution" },
-        { id: 2, status: "Identifying Complementary Brands" },
-        { id: 3, status: "Configuring Lead Magnets" },
-        { id: 4, status: "Conducting Competitive Analysis" },
-        { id: 5, status: "Developing Customer Personas" },
+        { id: 1, status: "Data" },
+        { id: 2, status: "Data Collection and Organization" },
+        { id: 3, status: "Consolidating Data" },
+        { id: 4, status: "Segmenting Data" },
+        { id: 5, status: "Conducting Data Analysis" },
+        { id: 6, status: "Conducting Descriptive Analytics" },
+        { id: 7, status: "Conducting Diagnostic Analytics" },
+        { id: 8, status: "Conducting Predictive Analytics" },
       ],
     },
   ]);
@@ -32,11 +35,9 @@ const RaiseFunds = () => {
   const [formData, setFormData] = useState({
     title: "",
     website: "",
-    selectedItem: "",
     about: "",
     objectives: "",
     demographic: {
-      campaignReason: "",
       geographic: {
         country: "",
         state: "",
@@ -46,43 +47,14 @@ const RaiseFunds = () => {
       gender: "",
       intention: "",
     },
-    // strategy: [],
     timeline: "",
     momentum: "",
-    engagementEval: "",
     postCampaign: "",
     wealthIndicator: "",
     fundingGoals: "",
     donorRetention: "",
     recurringGiving: "",
   });
-
-  // const [formData, setFormData] = useState({
-  //   title: "",
-  //   website: "",
-  //   selectedItem: "",
-  //   about: "",
-  //   objectives: "",
-  //   demographic: {
-  //     geographic: {
-  //       country: "",
-  //       state: "",
-  //       city: "",
-  //     },
-  //     targetDonor: "",
-  //     gender: "",
-  //     intention: "",
-  //   },
-  //   campaignReason: "",
-  //   timeline: "",
-  //   momentum: "",
-  //   engagementEval: "",
-  //   postCampaign: "",
-  //   wealthIndicator: "",
-  //   fundingGoals: "",
-  //   donorRetention: "",
-  //   recurringGiving: "",
-  // });
 
   const items = [
     "Non Profit",
@@ -91,8 +63,6 @@ const RaiseFunds = () => {
     "Cause",
     "Other Campaigns",
   ];
-
-  // const profession = ["Yes|No", "Yes", "No"];
 
   //Handling Country selection
   const [countries, setCountries] = useState([]);
@@ -118,19 +88,6 @@ const RaiseFunds = () => {
     }
   }, [formData.demographic.geographic.country]);
 
-  // useEffect(() => {
-  //   if (selectedCountry) {
-  //     setStates(State.getStatesOfCountry(selectedCountry));
-  //     setCities([]); // Reset cities when country changes
-  //   }
-  // }, [selectedCountry]);
-
-  // useEffect(() => {
-  //   if (selectedState) {
-  //     setCities(City.getCitiesOfState(selectedCountry, selectedState));
-  //   }
-  // }, [selectedState, selectedCountry]);
-
   // Fetch cities when state is selected
   useEffect(() => {
     if (formData.demographic.geographic.state) {
@@ -142,12 +99,6 @@ const RaiseFunds = () => {
       );
     }
   }, [formData.demographic.geographic.state]);
-
-  // const handleCountryChange = (event) => {
-  //   setSelectedCountry(event.target.value);
-  //   setSelectedState("");
-  //   setSelectedCity("");
-  // };
 
   // Handlers
   const handleCountryChange = (event) => {
@@ -195,15 +146,6 @@ const RaiseFunds = () => {
     }));
   };
 
-  // const handleStateChange = (event) => {
-  //   setSelectedState(event.target.value);
-  //   setSelectedCity("");
-  // };
-
-  // const handleCityChange = (event) => {
-  //   setSelectedCity(event.target.value);
-  // };
-
   const handleGeographicChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -214,17 +156,6 @@ const RaiseFunds = () => {
       },
     }));
   };
-
-  // const handleDemographicChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     demographic: {
-  //       ...prevFormData.demographic,
-  //       [name]: value,
-  //     },
-  //   }));
-  // };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -247,19 +178,19 @@ const RaiseFunds = () => {
       console.log("FormData", formData);
 
       // Make the POST request to the API endpoint
-      // const response = await fetch("/api/productLaunchStatus", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   setTextData(data);
-      // } else {
-      //   console.log("Response not okay:", response.statusText);
-      // }
+      const response = await fetch("/api/partner/nationbuilderV1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: formData }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTextData(data);
+      } else {
+        console.log("Response not okay:", response.statusText);
+      }
     } catch (error) {
       // Handle any unexpected errors
       console.error("Error making POST request:", error.message);
@@ -597,97 +528,6 @@ const RaiseFunds = () => {
                       </div>
                     )}
                   </div>
-                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="feature02"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Geographic location
-                    </label>
-                    <div className="mb-3">
-                      <label
-                        className="block text-xs font-medium text-gray-900"
-                        htmlFor="country"
-                      >
-                        Country:{" "}
-                      </label>
-                      <select
-                        id="country"
-                        aria-labelledby="country"
-                        value={selectedCountry}
-                        onChange={handleCountryChange}
-                      >
-                        <option
-                          className="block text-xs font-medium text-gray-900"
-                          value=""
-                        >
-                          Select Country
-                        </option>
-                        {countries.map((country) => (
-                          <option key={country.isoCode} value={country.isoCode}>
-                            {country.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {states.length > 0 && (
-                      <div className="mb-3">
-                        <label
-                          className="block text-xs font-medium text-gray-900"
-                          htmlFor="state"
-                        >
-                          State:{" "}
-                        </label>
-                        <select
-                          id="state"
-                          aria-labelledby="state"
-                          value={selectedState}
-                          onChange={handleStateChange}
-                        >
-                          <option
-                            className="block text-xs font-medium text-gray-900"
-                            value=""
-                          >
-                            Select State/Region
-                          </option>
-                          {states.map((state) => (
-                            <option key={state.isoCode} value={state.isoCode}>
-                              {state.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    {cities.length > 0 && (
-                      <div className="mb-3">
-                        <label
-                          className="block text-xs font-medium text-gray-900"
-                          htmlFor="city"
-                        >
-                          City:{" "}
-                        </label>
-                        <select
-                          id="city"
-                          aria-labelledby="city"
-                          value={selectedCity}
-                          onChange={handleCityChange}
-                        >
-                          <option
-                            className="block text-xs font-medium text-gray-900"
-                            value=""
-                          >
-                            Select City
-                          </option>
-                          {cities.map((city) => (
-                            <option key={city.name} value={city.name}>
-                              {city.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                  </div> */}
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="targetDonor"
@@ -735,24 +575,6 @@ const RaiseFunds = () => {
                       </p>
                     )}
                   </div>
-                  {/* <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="age"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      Age
-                    </label>
-                    <input
-                      type="text"
-                      name="age"
-                      required
-                      id="age"
-                      value={formData.demographic.age}
-                      onChange={handleGeographicChange}
-                      className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Enter age range for your target audience - e.g: 20-64"
-                    />
-                  </div> */}
                   <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="intention"
@@ -789,29 +611,6 @@ const RaiseFunds = () => {
               </label>
               <div className="mt-2">
                 <div className="isolate -space-y-px rounded-md shadow-sm">
-                  {/* <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
-                    <label
-                      htmlFor="strategies"
-                      className="block text-xs font-medium text-gray-900"
-                    >
-                      What strategies have you previously tried
-                    </label>
-                    <div className="flex justify-between">
-                      <Select
-                        label="strategies"
-                        aria-labelledby="strategies"
-                        placeholder="Click to Select (multiple if needed)"
-                        selectionMode="multiple"
-                        className="bg-white"
-                      >
-                        {strategies.map((selection) => (
-                          <SelectItem className="bg-white" key={selection.key}>
-                            {selection.label}
-                          </SelectItem>
-                        ))}
-                      </Select>
-                    </div>
-                  </div> */}
                   <div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
                     <label
                       htmlFor="timeline"
@@ -1057,10 +856,12 @@ const RaiseFunds = () => {
                     showLoadingStatus || (textData && textData.length > 0)
                   }
                 >
-                  {showLoadingStatus ? "Generating Leads..." : "Begin Strategy"}
+                  {showLoadingStatus
+                    ? "Generating Donor List..."
+                    : "Begin Strategy"}
                 </button>
 
-                {showLoadingStatus && (
+                {/* {showLoadingStatus && (
                   <div>
                     <h2>{loadingStateStatus[loadingStateIndex].goal}</h2>
                     <p>
@@ -1075,13 +876,13 @@ const RaiseFunds = () => {
                         : "Ideal Customer Profile has been defined below. Now deploying AI model/agents for the next set of tasks..."}
                     </p>
                   </div>
-                )}
+                )} */}
               </>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+        {/* <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Proposed Plan
@@ -1098,7 +899,7 @@ const RaiseFunds = () => {
           </div>
 
           <div className="max-w-2xl space-y-10 md:col-span-2">
-            {/* {textData && (
+            {textData && (
                             <div>
                                 {textData.map((item, index) => (
                                     <div key={index}>
@@ -1107,18 +908,10 @@ const RaiseFunds = () => {
                                     </div>
                                 ))}
                             </div>
-                        )} */}
+                        )}
             {showLoadingStatus && <p>Loading your Ideal Customers...</p>}
           </div>
-        </div>
-      </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="submit"
-          className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-        >
-          Save and Continue
-        </button>
+        </div> */}
       </div>
     </form>
   );

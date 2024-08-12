@@ -80,8 +80,13 @@ const SeriesModalComponent = ({ isOpen, onClose, title }) => {
         </ModalBody>
 
         <ModalFooter className="bg-slate-50">
-          <Button color="success" onClick={onClose}>
-            Save
+          <Button
+            color="success"
+            onClick={onClose}
+            disabled
+            className="disabled:cursor-not-allowed"
+          >
+            Submit
           </Button>
           <Button color="error" onClick={onClose}>
             Close
