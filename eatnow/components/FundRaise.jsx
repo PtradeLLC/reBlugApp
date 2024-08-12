@@ -5,31 +5,33 @@ import { Select, SelectItem } from "@nextui-org/react";
 
 const RaiseFunds = () => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
-  const [professional, setProfessional] = useState("Yes/No");
-  const [loadingStateIndex, setLoadingStateIndex] = useState(0);
-  const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
   const [textData, setTextData] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
   const [campaignType, setCampaignType] = useState("");
-  const [location, setLocation] = useState(null);
   const [errors, setErrors] = useState({});
+  const [loadingStateIndex, setLoadingStateIndex] = useState(0);
+  const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
   const [showLoadingStatus, setShowLoadingStatus] = useState(false);
-  const [loadingStateStatus, setLoadingStateStatus] = useState([
-    {
-      id: 1,
-      goal: "Raise Funds",
-      loadingStatus: [
-        { id: 1, status: "Data" },
-        { id: 2, status: "Data Collection and Organization" },
-        { id: 3, status: "Consolidating Data" },
-        { id: 4, status: "Segmenting Data" },
-        { id: 5, status: "Conducting Data Analysis" },
-        { id: 6, status: "Conducting Descriptive Analytics" },
-        { id: 7, status: "Conducting Diagnostic Analytics" },
-        { id: 8, status: "Conducting Predictive Analytics" },
-      ],
-    },
-  ]);
+  //Handling Country selection
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [showFinalMessage, setShowFinalMessage] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
+  const loadingStateStatus = [
+    "Generating Donor List...",
+    "Data Collection and Organization",
+    "Consolidating Data",
+    "Segmenting Data",
+    "Conducting Data Analysis",
+    "Conducting Descriptive Analytics",
+    "Conducting Diagnostic Analytics",
+    "Conducting Predictive Analytics",
+    "Ideal Donor Profile has been successfully generated.",
+  ];
 
   // State initialization
   const [formData, setFormData] = useState({
@@ -63,15 +65,6 @@ const RaiseFunds = () => {
     "Cause",
     "Other Campaigns",
   ];
-
-  //Handling Country selection
-  const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
-
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
 
   // Fetch countries on mount
   useEffect(() => {
@@ -169,14 +162,26 @@ const RaiseFunds = () => {
     setCampaignType(e.target.value);
   };
 
-  //POST Request to submit Form
+  const loadNextStatus = () => {
+    if (loadingStateIndex >= loadingStateStatus.length) {
+      setShowLoadingStatus(false);
+      setShowFinalMessage(true);
+      return;
+    }
+
+    const id = setTimeout(() => {
+      setLoadingStateIndex((prevIndex) => prevIndex + 1);
+    }, 3000);
+
+    setTimeoutId(id);
+  };
+
   const handleLaunch = async () => {
     setShowLoadingStatus(true);
-    loadNextStatus();
+    setShowFinalMessage(false);
+    setLoadingStateIndex(0);
 
     try {
-      console.log("FormData", formData);
-
       // Make the POST request to the API endpoint
       const response = await fetch("/api/partner/nationbuilderV1", {
         method: "POST",
@@ -185,20 +190,33 @@ const RaiseFunds = () => {
         },
         body: JSON.stringify({ data: formData }),
       });
+
       if (response.ok) {
         const data = await response.json();
         setTextData(data);
       } else {
-        console.log("Response not okay:", response.statusText);
+        console.error("Response not okay:", response.statusText);
       }
     } catch (error) {
-      // Handle any unexpected errors
       console.error("Error making POST request:", error.message);
     } finally {
-      // Hide loading status after API call completes
-      setShowLoadingStatus(false);
+      loadNextStatus();
     }
   };
+
+  useEffect(() => {
+    if (showLoadingStatus) {
+      loadNextStatus();
+    }
+  }, [loadingStateIndex]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   // Selecting an item from the dropdown to Update state when item is selected
   const handleSelect = (item) => {
@@ -217,33 +235,6 @@ const RaiseFunds = () => {
   useEffect(() => {
     console.log("");
   }, [textData]);
-
-  const loadNextStatus = () => {
-    if (loadingStateIndex >= loadingStateStatus.length) {
-      setShowLoadingStatus(false);
-      return;
-    }
-
-    const currentStatuses = loadingStateStatus[loadingStateIndex].loadingStatus;
-    if (loadingStatusIndex >= currentStatuses.length) {
-      setLoadingStateIndex((prevIndex) => prevIndex + 1);
-      setLoadingStatusIndex(0);
-      const id = setTimeout(loadNextStatus, 3000); // Load next loading state after 3 seconds
-      setTimeoutId(id); // Set the timeoutId
-      return;
-    }
-
-    // Access the status if it exists
-    const status = currentStatuses[loadingStatusIndex]?.status || "Unknown";
-
-    setLoadingStatusIndex((prevIndex) => prevIndex + 1);
-
-    // Check if loadingStateIndex is still within bounds before scheduling the next iteration
-    if (loadingStateIndex < loadingStateStatus.length) {
-      const id = setTimeout(loadNextStatus, 3000);
-      setTimeoutId(id); // Set the timeoutId
-    }
-  };
 
   useEffect(() => {
     return () => {
@@ -848,36 +839,35 @@ const RaiseFunds = () => {
 
           <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
             <div className="col-span-full">
-              <>
+              {!showLoadingStatus && !showFinalMessage && (
                 <button
                   className="bg-green-700 mt-2 rounded-md text-white p-2"
                   onClick={handleLaunch}
-                  disabled={
-                    showLoadingStatus || (textData && textData.length > 0)
-                  }
                 >
-                  {showLoadingStatus
-                    ? "Generating Donor List..."
-                    : "Begin Strategy"}
+                  Begin Strategy
                 </button>
+              )}
 
-                {/* {showLoadingStatus && (
-                  <div>
-                    <h2>{loadingStateStatus[loadingStateIndex].goal}</h2>
-                    <p>
-                      Status:{" "}
-                      {loadingStateIndex < loadingStateStatus.length &&
-                      loadingStatusIndex <
-                        loadingStateStatus[loadingStateIndex].loadingStatus
-                          .length
-                        ? loadingStateStatus[loadingStateIndex]?.loadingStatus[
-                            loadingStatusIndex
-                          ]?.status
-                        : "Ideal Customer Profile has been defined below. Now deploying AI model/agents for the next set of tasks..."}
-                    </p>
-                  </div>
-                )} */}
-              </>
+              {showLoadingStatus && (
+                <div>
+                  <h2>{loadingStateStatus[loadingStateIndex]}</h2>
+                </div>
+              )}
+
+              {showFinalMessage && (
+                <div>
+                  <h2>Here is our proposed plan for your campaign.</h2>
+                  <button
+                    className="bg-green-700 mt-2 rounded-md text-white p-2"
+                    onClick={() => {
+                      // Handle the "Next" button click action here
+                      console.log("Next button clicked");
+                    }}
+                  >
+                    Go to plan
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
