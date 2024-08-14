@@ -5,7 +5,7 @@ export async function POST(req) {
         const { content, llmArticle } = await req.json();
 
         // Simulate a delay to mimic processing time
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Instruction template
         const articleInfo = `${llmArticle}

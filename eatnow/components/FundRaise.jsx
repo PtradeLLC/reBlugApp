@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import Campaign from "@/components/Campaigns/campaignType";
+import DonorsFormula from "@/components/DonorsFormula";
 import { Country, State, City } from "country-state-city";
-import { Select, SelectItem } from "@nextui-org/react";
+import { button, Select, SelectItem } from "@nextui-org/react";
 
 const RaiseFunds = () => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
@@ -12,6 +13,7 @@ const RaiseFunds = () => {
   const [loadingStateIndex, setLoadingStateIndex] = useState(0);
   const [loadingStatusIndex, setLoadingStatusIndex] = useState(0);
   const [showLoadingStatus, setShowLoadingStatus] = useState(false);
+  const [donorFormula, setDonorFormula] = useState(false);
   //Handling Country selection
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -25,11 +27,19 @@ const RaiseFunds = () => {
     "Generating Donor List...",
     "Data Collection and Organization",
     "Consolidating Data",
+    "Generating baseline profile",
     "Segmenting Data",
     "Conducting Data Analysis",
     "Conducting Descriptive Analytics",
     "Conducting Diagnostic Analytics",
     "Conducting Predictive Analytics",
+    "Developing Strategies...",
+    "Performing Target Donor Segmentation",
+    "Personalizing Donor Communication",
+    "Preparing Donor Retention Strategies",
+    "Implement Strategies...",
+    "Evaluating Outcomes",
+    "Setting up system to Learn and Iterate",
     "Ideal Donor Profile has been successfully generated.",
   ];
 
@@ -39,6 +49,17 @@ const RaiseFunds = () => {
     website: "",
     about: "",
     objectives: "",
+    campaignSolution: {
+      problem: "",
+      supporters: "",
+      influencers: "",
+      unique_aspects: "",
+      donor_behavior: "",
+      upcoming_events: "",
+      donor_skills: "",
+      donor_motivations: "",
+      seasonal_trends: "",
+    },
     demographic: {
       geographic: {
         country: "",
@@ -177,6 +198,7 @@ const RaiseFunds = () => {
   };
 
   const handleLaunch = async () => {
+    setDonorFormula(false);
     setShowLoadingStatus(true);
     setShowFinalMessage(false);
     setLoadingStateIndex(0);
@@ -283,6 +305,10 @@ const RaiseFunds = () => {
     } catch (error) {
       console.error("Unexpected error:", error);
     }
+  };
+
+  const showDonorFormula = () => {
+    setDonorFormula(true);
   };
 
   return (
@@ -394,6 +420,285 @@ const RaiseFunds = () => {
               {errors.about && (
                 <p className="text-red-600 text-sm mt-1">{errors.about}</p>
               )}
+            </div>
+            <div className="col-span-full">
+              <label
+                htmlFor="problem"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Causes & Effects
+              </label>
+              <div className="isolate -space-y-px rounded-md shadow-sm">
+                {/* Problem Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="problem"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    What specific problem or need does this campaign address?
+                  </label>
+                  <input
+                    type="text"
+                    name="problem"
+                    required
+                    value={formData.campaignSolution.problem}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          problem: e.target.value,
+                        },
+                      })
+                    }
+                    id="problem"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Youth Basketball program"
+                  />
+                  {errors.problem && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.problem}
+                    </p>
+                  )}
+                </div>
+
+                {/* Supporters Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="supporters"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Who has shown interest in similar causes in the past?
+                  </label>
+                  <input
+                    type="text"
+                    name="supporters"
+                    required
+                    value={formData.campaignSolution.supporters}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          supporters: e.target.value,
+                        },
+                      })
+                    }
+                    id="supporters"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Basketball coaches"
+                  />
+                  {errors.supporters && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.supporters}
+                    </p>
+                  )}
+                </div>
+
+                {/* Influencers Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="influencers"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Are there any notable supporters or Influencers associated
+                    with this cause?
+                  </label>
+                  <input
+                    type="text"
+                    name="influencers"
+                    required
+                    value={formData.campaignSolution.influencers}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          influencers: e.target.value,
+                        },
+                      })
+                    }
+                    id="influencers"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Oprah Winfrey"
+                  />
+                  {errors.influencers && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.influencers}
+                    </p>
+                  )}
+                </div>
+
+                {/* Unique Aspects Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="unique_aspects"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    What unique aspects of this campaign might appeal to certain
+                    donor segments?
+                  </label>
+                  <input
+                    type="text"
+                    name="unique_aspects"
+                    required
+                    value={formData.campaignSolution.unique_aspects}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          unique_aspects: e.target.value,
+                        },
+                      })
+                    }
+                    id="unique_aspects"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Free tickets to games"
+                  />
+                  {errors.unique_aspects && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.unique_aspects}
+                    </p>
+                  )}
+                </div>
+
+                {/* Donor Behavior Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="donor_behavior"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Have you identified any patterns in donor behavior from
+                    previous similar campaigns?
+                  </label>
+                  <input
+                    type="text"
+                    name="donor_behavior"
+                    required
+                    value={formData.campaignSolution.donor_behavior}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          donor_behavior: e.target.value,
+                        },
+                      })
+                    }
+                    id="donor_behavior"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Donation pools"
+                  />
+                  {errors.donor_behavior && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.donor_behavior}
+                    </p>
+                  )}
+                </div>
+
+                {/* Upcoming Events Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="upcoming_events"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Are there any upcoming events or milestones related to this
+                    cause that might influence donor interest?
+                  </label>
+                  <input
+                    type="text"
+                    name="upcoming_events"
+                    required
+                    value={formData.campaignSolution.upcoming_events}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          upcoming_events: e.target.value,
+                        },
+                      })
+                    }
+                    id="upcoming_events"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Summer Championship Games"
+                  />
+                  {errors.upcoming_events && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.upcoming_events}
+                    </p>
+                  )}
+                </div>
+
+                {/* Donor Motivations Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="donor_motivations"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    What are the primary motivations you believe drive donors to
+                    support this particular cause?
+                  </label>
+                  <input
+                    type="text"
+                    name="donor_motivations"
+                    required
+                    value={formData.campaignSolution.donor_motivations}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          donor_motivations: e.target.value,
+                        },
+                      })
+                    }
+                    id="donor_motivations"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Free tickets to games"
+                  />
+                  {errors.donor_motivations && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.donor_motivations}
+                    </p>
+                  )}
+                </div>
+
+                {/* Seasonal Trends Field */}
+                <div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-red-600">
+                  <label
+                    htmlFor="seasonal_trends"
+                    className="block text-xs font-medium text-gray-900"
+                  >
+                    Are there any seasonal or cyclical trends you have noticed
+                    in donor support for this cause?
+                  </label>
+                  <input
+                    type="text"
+                    name="seasonal_trends"
+                    required
+                    value={formData.campaignSolution.seasonal_trends}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        campaignSolution: {
+                          ...formData.campaignSolution,
+                          seasonal_trends: e.target.value,
+                        },
+                      })
+                    }
+                    id="seasonal_trends"
+                    className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="e.g: Increased support during holiday seasons"
+                  />
+                  {errors.seasonal_trends && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.seasonal_trends}
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="col-span-full">
               <label
@@ -826,7 +1131,7 @@ const RaiseFunds = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-          <div>
+          <div className="">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Strategies and Tactics
             </h2>
@@ -835,13 +1140,20 @@ const RaiseFunds = () => {
               Donor Profile, their contact details, and ultimately launch a
               targeted campaign.
             </p>
+            <button
+              type="button"
+              onClick={showDonorFormula}
+              className="cursor-pointer text-xs font-semibold mt-3 underline"
+            >
+              How Ideal Donors Profile is derived
+            </button>
           </div>
 
           <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
             <div className="col-span-full">
               {!showLoadingStatus && !showFinalMessage && (
                 <button
-                  className="bg-green-700 mt-2 rounded-md text-white p-2"
+                  className="bg-green-700 mt-2 mb-3 rounded-md text-white p-2"
                   onClick={handleLaunch}
                 >
                   Begin Strategy
@@ -856,7 +1168,7 @@ const RaiseFunds = () => {
 
               {showFinalMessage && (
                 <div>
-                  <h2>Here is our proposed plan for your campaign.</h2>
+                  <h2>We have a plan to propose for your campaign.</h2>
                   <button
                     className="bg-green-700 mt-2 rounded-md text-white p-2"
                     onClick={() => {
@@ -868,6 +1180,7 @@ const RaiseFunds = () => {
                   </button>
                 </div>
               )}
+              {donorFormula && <DonorsFormula />}
             </div>
           </div>
         </div>

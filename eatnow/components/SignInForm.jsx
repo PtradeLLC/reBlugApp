@@ -9,7 +9,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import Cookies from "js-cookie";
-import generateReferralCode from "../utils/generateReferralCode"; // Note to self: Ensure you have this utility function as mentioned previously
+import generateReferralCode from "../utils/generateReferralCode";
 
 const backgroundClasses = {
   red: "bg-red-600",
@@ -117,10 +117,10 @@ const SignInForm = ({ showRegister, setShowRegister }) => {
     try {
       account.createOAuth2Session(
         provider,
-        "http://localhost:3000/dashboard",
-        "http://localhost:3000/"
-        // "https://www.reblug.com/dashboard",
-        // "https://www.reblug.com"
+        // "http://localhost:3000/dashboard",
+        // "http://localhost:3000/"
+        "https://www.reblug.com/dashboard",
+        "https://www.reblug.com"
       );
     } catch (error) {
       console.error(`Login with ${provider} error:`, error);
