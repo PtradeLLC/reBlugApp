@@ -47,6 +47,7 @@ const RaiseFunds = () => {
   const [formData, setFormData] = useState({
     title: "",
     website: "",
+    campaignType: "",
     about: "",
     objectives: "",
     campaignSolution: {
@@ -124,7 +125,7 @@ const RaiseFunds = () => {
         geographic: {
           ...prevFormData.demographic.geographic,
           country: selectedCountry,
-          state: "", // Reset state and city when country changes
+          state: "",
           city: "",
         },
       },
@@ -204,13 +205,22 @@ const RaiseFunds = () => {
     setLoadingStateIndex(0);
 
     try {
+      const message = {
+        messages: [
+          {
+            role: "user",
+            content: formData,
+          },
+        ],
+      };
+
       // Make the POST request to the API endpoint
       const response = await fetch("/api/partner/nationbuilderV1", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: formData }),
+        body: JSON.stringify(message),
       });
 
       if (response.ok) {
