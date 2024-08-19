@@ -273,7 +273,7 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                   <>
                     {publishedPosts.publishedPosts.length}
                     <span className="text-sm cursor-pointer">
-                      <Link href={"/profile#my-posts"}>posts published</Link>{" "}
+                      <Link href={"/profile#my-posts"}> posts published</Link>{" "}
                     </span>
                   </>
                 ) : (

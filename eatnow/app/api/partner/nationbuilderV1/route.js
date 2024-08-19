@@ -18,7 +18,6 @@ export async function POST(req) {
             data = [data];
         }
 
-
         const processedResults = [];
 
         for (const item of data) {
@@ -27,8 +26,6 @@ export async function POST(req) {
             if (typeof item !== 'object') {
                 return NextResponse.json({ error: 'Invalid input data' }, { status: 400 });
             }
-
-            console.log("ITEM:", item);
 
             const definitions = `
             {
@@ -113,7 +110,6 @@ export async function POST(req) {
 
             Analyze ${JSON.stringify(item)} to comprehend campaign goals, objectives, and available data points.
             Identify relevant data points within ${JSON.stringify(item)} to construct the 'Ideal Donor Profile'.
-            
             Baseline Profile Creation:
 
             Structure a baseline profile using data from ${JSON.stringify(item)} in the following format:
@@ -140,66 +136,6 @@ export async function POST(req) {
             Continuously refine the 'Ideal Donor Profile' based on campaign performance.
             
             Note: Specific data points and desired output format may vary depending on the project. Please provide additional details if necessary.
-
-
- Lastly, in addition to a comprehensive report from the above instructions, breakdown the various characteristics of the Ideal Donor into key/value pair, specifying the data points (age_range, target demographic, gender, geoLocation, recommendations, and other important key/value pair as you see fit) shown in the example below:
-
- EXAMPLE:
- 
- Based on the provided data, the 'Ideal Donor Profile' for the "Star Basketball Team" campaign can be structured as follows:\n +
-      '\n' +
-      'Campaign Details:\n' +
-      '- Name: "Star Basketball Team"\n' +
-      '- About: "The campaign is to raise money for a basket ball team for gym repairs, equipment purchase, and other items to boost team morale"\n' +
-      '- Goals and Objectives: "Develop team morale and self-esteem among players"\n' +
-      '\n' +
-      'Target Donor Demographics:\n' +
-      '- Gender: Male\n' +
-      '- Age: Gen Z\n' +
-      '- Wealth: Not indicated\n' +
-      '- Location: Alexandria, IN, US\n' +
-      '\n' +
-      'Ideal Donor Profile:\n' +
-      '- Interests: Basketball, youth development, sports equipment\n' +
-      '- Values: Teamwork, community support, youth development\n' +
-      '- Motivations: Free tickets to games, supporting local sports teams\n' +
-      '- Communication Preferences: Email, social media\n' +
-      '- Professional Background: Sports industry, coaching, sports management\n' +
-      '- Philanthropic Interests: Youth sports development, community support, sports equipment\n' +
-      '- Political Affiliation: Not indicated\n' +
-      '- Wealth Indicators: Property ownership, business affiliations, stock holdings\n' +
-      '\n' +
-      'Recommendations and Strategies:\n' +
-      '1. Utilize email and social media to target potential donors, focusing on Gen Z males interested in basketball and youth development.\n' +
-      '2. Highlight the unique aspect of free tickets to games as a key motivation for donors.\n' +
-      '3. Engage local sports influencers and coaches as supporters to increase visibility and credibility of the campaign.\n' +
-      '4. Identify potential donors with interests in youth sports development, community support, and sports equipment.\n' +
-      '5. Leverage upcoming championship games to create urgency and encourage donations.\n' +
-      '6. Consider implementing recurring giving strategies to increase donor retention and overall funding goals.'
-
-            
-      '{\n' +
-      '  "ideal_donor_profile": {\n' +
-      '    "demographics": {\n' +
-      '      "age_range": [18, 25],\n' +
-      '      "income_level": "middle",\n' +
-      '      "education": "high_school"\n' +
-      '    },\n' +
-      '    "interests": ["sports", "community"],\n' +
-      '    "behavior": {\n' +
-      '      "donation_history": "new_donor",\n' +
-      '      "engagement": "medium"\n' +
-      '    },\n' +
-      '    "location": {\n' +
-      '      "urban_density": "medium"\n' +
-      '    }\n' +
-      '  },\n' +
-      '  "recommendations": [\n' +
-      '    "Target Gen Z males with personalized campaigns.",\n' +
-           "Implement social media campaigns to leverage the 'free tickets to games' unique aspect.",\n +
-      '    "Prioritize email outreach channels based on donor preferences."\n' +
-      '  ]\n' +
-      '}'
             `;
 
             // Call the Groq API for chat completion
@@ -207,7 +143,7 @@ export async function POST(req) {
                 "messages": [
                     { "role": "user", "content": donorProfileString }
                 ],
-                "model": "llama3-groq-70b-8192-tool-use-preview",
+                "model": "llama-3.1-70b-versatile",
                 "temperature": 0.5,
                 "max_tokens": 8000,
                 "top_p": 1,
@@ -224,7 +160,7 @@ export async function POST(req) {
             processedResults.push({ item, assistantResponse });
         }
 
-        console.log(processedResults);
+        console.log("Results from server", processedResults);
 
         return NextResponse.json({ results: processedResults }, { status: 200 });
     } catch (error) {

@@ -39,7 +39,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   );
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
-    brandType: "Brand",
+    brandType: "Company|Org.",
     sMediaType: "Social Media Partner",
     FandBType: "F&B",
   });
@@ -127,7 +127,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
             <CardContent>
               <div className="text-xl font-bold">
                 <span className="text-xs font-normal">Using ReBlug as:</span>{" "}
-                {userType.brandType}
+                <span className="text-base"> {userType.brandType}</span>
               </div>
             </CardContent>
           </Card>
