@@ -17,20 +17,20 @@ export default () => {
               <span className="font-semibold text-4xl "></span>
             </h2>
             <h3 className="text-green-900 text-2xl font-thin">
-              Start blogging with our:
+              Start blogging with:
             </h3>
             <ul className="text-lg">
-              <li>
-                <span className="font-semibold text-lg">
-                  Social Blogging Tools:
-                </span>{" "}
-                Engage and grow your audience.
-              </li>
               <li>
                 <span className="font-semibold text-lg">
                   AI-Powered Features:
                 </span>{" "}
                 Solve common blogging pain points effortlessly.
+              </li>
+              <li>
+                <span className="font-semibold text-lg">
+                  Social Blogging Tools:
+                </span>{" "}
+                Engage and grow your audience.
               </li>
               <li>
                 <span className="font-semibold text-lg">Series Blogging:</span>{" "}

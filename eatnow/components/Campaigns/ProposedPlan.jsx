@@ -1,112 +1,212 @@
-import { PaperClipIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
+import { PlusIcon, PhotoIcon } from "@heroicons/react/20/solid";
+import { Button } from "@nextui-org/react";
+import * as XLSX from "xlsx";
 
 const Plan = ({ textData }) => {
-  if (!textData || textData.length === 0) {
-    return <div>No content available</div>;
-  }
+  const [emailBuild, setEmailBuild] = useState(false);
+  const [emails, setEmails] = useState([]);
+  const [singleEmail, setSingleEmail] = useState("");
+
+  const providers = [
+    {
+      name: "Google Drive",
+      imageUrl: "/images/google_drive.png",
+    },
+    {
+      name: "Google Sheets",
+      imageUrl: "/images/google-sheets.png",
+    },
+  ];
+
+  // Function to handle file upload and extract emails
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(sheet);
+      const emailList = json.map((row) => row.Email); // Assuming the column header is 'Email'
+      setEmails(emailList);
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+  // Function to handle sending emails
+  const handleSendEmail = async () => {
+    if (emails || singleEmail) {
+      const baseUrl = "/api/partner/getEmails";
+      const response = fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([emails, singleEmail]),
+      });
+    }
+  };
+
+  // Function to connect to external sources (e.g., Salesforce, Google Drive)
+  const handleConnectSource = (source) => {
+    console.log(`Connecting to ${source}`);
+    // Logic to connect to the source and fetch emails
+  };
 
   return (
-    <div className="mt-6 border-t border-gray-100">
-      {textData.map((data, index) => {
-        const { assistantResponse } = data;
-        return (
-          <div key={index} className="mt-6">
-            <dl className="divide-y divide-gray-100">
-              <div className="mt-6 border-t border-gray-100">
-                <dl className="divide-y divide-gray-100">
+    <>
+      {emailBuild ? (
+        <div className="mx-auto max-w-md sm:max-w-3xl">
+          <div className="text-center">
+            <PhotoIcon
+              aria-hidden="true"
+              className="mx-auto h-12 w-12 text-gray-400"
+            />
+            <h2 className="mt-2 text-base font-semibold leading-6 text-gray-900">
+              Build Email list
+            </h2>
+            <p className="mt-1 text-sm text-gray-500">
+              Launch an email campaign. Let's find some donors
+            </p>
+          </div>
+
+          {/* File Upload Section */}
+          <div className="col-span-full">
+            <label
+              htmlFor="file-upload"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Upload file of your contact list below or build one with our API
+            </label>
+            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <div className="text-center">
+                <PhotoIcon
+                  aria-hidden="true"
+                  className="mx-auto h-12 w-12 text-gray-300"
+                />
+                <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                  <label
+                    htmlFor="file-upload"
+                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      accept=".xlsx, .xls"
+                      onChange={handleFileUpload}
+                      className="sr-only"
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+                <p className="text-xs leading-5 text-gray-600">
+                  Excel files only (.xlsx, .xls)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Single Email Input Section */}
+          <div className="mt-6">
+            <label
+              htmlFor="single-email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Enter a single email
+            </label>
+            <input
+              type="email"
+              id="single-email"
+              value={singleEmail}
+              onChange={(e) => setSingleEmail(e.target.value)}
+              placeholder="Enter an email"
+              className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div className="mt-4">
+            <Button
+              onClick={handleSendEmail}
+              className="bg-red-600 text-white w-full"
+            >
+              Send Email
+            </Button>
+          </div>
+
+          {/* External Sources Section */}
+          <div className="mt-10">
+            <h3 className="text-sm font-medium text-gray-500">
+              Connect Email Sources
+            </h3>
+            <ul
+              role="list"
+              className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2"
+            >
+              {providers.map((source, index) => (
+                <li key={index}>
+                  <button
+                    type="button"
+                    onClick={() => handleConnectSource(source)}
+                    className="group flex w-full items-center justify-between space-x-3 rounded-full border border-gray-300 p-2 text-left shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  >
+                    <span className="flex min-w-0 flex-1 items-center space-x-3">
+                      <span className="block flex-shrink-0">
+                        <img
+                          alt={source.name}
+                          src={source.imageUrl}
+                          className="h-10 w-10 rounded-full"
+                        />
+                      </span>
+                      <span className="block truncate text-sm font-medium text-gray-900">
+                        {source.name}
+                      </span>
+                    </span>
+                    <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center">
+                      <PlusIcon
+                        aria-hidden="true"
+                        className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                      />
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-6 border-t border-gray-100">
+          {textData.map((data, index) => (
+            <div key={index} className="mt-6">
+              <dl className="divide-y divide-gray-100">
+                <div className="mt-6 border-t border-gray-100">
                   <div className="px-4 py-6 flex flex-col sm:px-0">
                     <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 whitespace-pre-line">
-                      {assistantResponse}
+                      {data.assistantResponse}
                     </p>
                   </div>
-                </dl>
+                </div>
+              </dl>
+              <div className="flex justify-center flex-col text-gray-700">
+                Next, let's find and build an email list of donors based on the
+                ideal profile.
+                <Button
+                  type="button"
+                  onClick={() => setEmailBuild(true)}
+                  className="build-email bg-slate-500 rounded-md my-3 text-white w-[200px] m-auto"
+                >
+                  Let's Build Email
+                </Button>
               </div>
-              {/* Attachment section can be conditionally rendered if needed */}
-            </dl>
-          </div>
-        );
-      })}
-    </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 
 export default Plan;
-
-// import { PaperClipIcon } from "@heroicons/react/20/solid";
-
-// const Plan = ({ textData }) => {
-//   if (!textData || textData.length === 0) {
-//     return <div>No content available</div>;
-//   }
-
-//   // Helper function to render objects recursively
-//   const renderContent = (value) => {
-//     if (typeof value === "object" && !Array.isArray(value)) {
-//       return (
-//         <div className="pl-4">
-//           {Object.entries(value).map(([subKey, subValue]) => (
-//             <div key={subKey}>
-//               <span className="font-semibold">
-//                 {subKey.charAt(0).toUpperCase() + subKey.slice(1)}:
-//               </span>{" "}
-//               {renderContent(subValue)}
-//             </div>
-//           ))}
-//         </div>
-//       );
-//     }
-//     return value;
-//   };
-
-//   return (
-//     <div className="mt-6 border-t border-gray-100">
-//       {textData.map((data, index) => {
-//         const { messages } = data.item;
-
-//         console.log("Messages frontend", messages);
-//         console.log("Data Item frontend", data.item);
-//         console.log("Data frontend", data);
-
-//         return (
-//           <div key={index} className="mt-6">
-//             <dl className="divide-y divide-gray-100">
-//               <div className="px-4 sm:px-0">
-//                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-//                   Campaign Analysis
-//                 </h3>
-//               </div>
-//               <div className="mt-6 border-t border-gray-100">
-//                 <dl className="divide-y divide-gray-100">
-//                   {messages.map((item, i) => (
-//                     <div key={i} className="px-4 py-6 flex flex-col sm:px-0">
-//                       {typeof item.content === "object" &&
-//                       !Array.isArray(item.content) ? (
-//                         Object.entries(item.content).map(([key, value]) => (
-//                           <div key={key}>
-//                             <dt className="text-sm font-medium leading-6 text-gray-900">
-//                               {key.charAt(0).toUpperCase() + key.slice(1)}
-//                             </dt>
-//                             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-//                               {renderContent(value)}
-//                             </dd>
-//                           </div>
-//                         ))
-//                       ) : (
-//                         <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-//                           {item.content}
-//                         </p>
-//                       )}
-//                     </div>
-//                   ))}
-//                 </dl>
-//               </div>
-//               {/* Attachment section can be conditionally rendered if needed */}
-//             </dl>
-//           </div>
-//         );
-//       })}
-//     </div>
-//   );
-// };
-
-// export default Plan;

@@ -82,9 +82,9 @@ const DonorsFormula = () => {
       <div>
         <p className="font-bold text-2xl my-3">Donor Profiling Formula</p>
         <div>
-          Based on the data points, the formula to derive an Ideal Donor Profile
-          look like this:
-          <div className="font-thin my-3 bg-slate-100 p-3 text-wrap">
+          {/* Based on the data points, the formula to derive an Ideal Donor Profile
+          look like this: */}
+          {/* <div className="font-thin my-3 bg-slate-100 p-3 text-wrap">
             Ideal Donor Profile = ( Geographic Fit × Target Donor Type ×
             Gender Alignment × Intention ) + ( Wealth Indicator × Funding Goals
             ) + ( Donor Motivations × Behavior × Skills and Expertise ) + (
@@ -94,11 +94,13 @@ const DonorsFormula = () => {
             (Wealth Indicator×Funding Goals)+(Donor Motivations×Behavior×Skills and Expertise)+
             (Seasonal Trends×Upcoming Events)+(Problem Alignment×Supporters and Influencers×Unique 
             Aspects)
-          </div>
+          </div> */}
           <p>
-            Where each factor can be assigned a weight based on its importance
-            for the specific campaign. These weights can be adjusted based on
-            real-time data and insights, allowing for dynamic donor profiling.
+            Based on the data points, the formula to derive an Ideal Donor
+            Profile is where each factor can be assigned a weight based on its
+            importance for the specific campaign. These weights can be adjusted
+            based on real-time data and insights, allowing for dynamic donor
+            profiling.
           </p>
         </div>
         <div>
@@ -106,8 +108,8 @@ const DonorsFormula = () => {
           <div>
             <ul className="list-disc">
               <li>
-                We prioritize donors with the highest overall score from the
-                above formula.
+                We prioritize donors with the highest overall score based on
+                mathematical formula.
               </li>
               <li>
                 Segment donors based on specific criteria (e.g., high wealth,

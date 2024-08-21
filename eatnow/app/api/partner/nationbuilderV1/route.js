@@ -160,8 +160,6 @@ export async function POST(req) {
             processedResults.push({ item, assistantResponse });
         }
 
-        console.log("Results from server", processedResults);
-
         return NextResponse.json({ results: processedResults }, { status: 200 });
     } catch (error) {
         console.error('Error processing request:', error);
