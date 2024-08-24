@@ -116,7 +116,7 @@ section#\:r0\: {
 .details-image {
   @media (max-width: 640px) {
     img {
-      position: absolute;
+      /* position: absolute; */
       bottom: 0;
       left: 0;
       object-position: bottom left;
