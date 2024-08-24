@@ -156,14 +156,6 @@ const PostPage = ({ comments, post }) => {
       .join(" ");
   }
 
-  //Retrieve series
-  // const allSeries = () => {
-  //   const baseUrl = "";
-
-  // };
-
-  console.log("Psssss", post);
-
   return (
     <div className="mt-20">
       <div className="relative mt-2 bg-[#ced4da] pb-20 sm:pb-24 xl:pb-0">
@@ -180,7 +172,7 @@ const PostPage = ({ comments, post }) => {
         </div>
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
           <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
-            <div className="relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+            <div className="details-image relative flex justify-center items-center aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
               {loading ? (
                 <div className="flex justify-center">
                   <CircularProgress
@@ -207,9 +199,9 @@ const PostPage = ({ comments, post }) => {
                   alt={post?.title}
                 />
               )}
-              <span className="absolute bottom-4 left-4">
+              <span className="absolute bottom-4 left-4 lg:bottom-0 lg:left-0 lg:m-4">
                 <img
-                  className="rounded-full border border-white w-20 h-20  lg:w-24 lg:h-24"
+                  className="rounded-full border border-white w-20 h-20 lg:w-24 lg:h-24"
                   src={"https://github.com/shadcn.png"}
                   alt="Avatar"
                 />

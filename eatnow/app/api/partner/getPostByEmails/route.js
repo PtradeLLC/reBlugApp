@@ -1,9 +1,11 @@
-// app/api/getNiche/route.js
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Groq from 'groq-sdk';
+import axios from 'axios';
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const groq = new Groq({ apiKey: GROQ_API_KEY });
+
 const prisma = new PrismaClient();
 
 export async function POST(req) {
@@ -15,22 +17,58 @@ export async function POST(req) {
             data = [data];
         }
 
-        console.log("Data from the frontend", data);
-
         const processedResults = [];
 
         for (const item of data) {
-            const groq = new Groq({ apiKey: GROQ_API_KEY });
+            const { emails, subjectLine, message } = item;
 
-            if (typeof item !== 'object') {
-                return NextResponse.json({ error: 'Invalid input data' }, { status: 400 });
+            const accessToken = `${process.env.FACEBOOK_ACCESS_TOKEN}`
+
+            // 1. Fetch Facebook data using emails and name in the emails array
+            let facebookData = null;
+            if (accessToken) {
+                for (const emailObj of emails) {
+                    const { email, name } = emailObj;
+
+                    console.log("Email::", email, name);
+
+                    try {
+                        const fbResponse = await axios.get('https://graph.facebook.com/v12.0/me', {
+                            params: {
+                                fields: 'id,name,photos,email,political,education,age_range,feed,fundraisers,gender,posts,groups',
+                                access_token: accessToken,
+                                email,
+                                name,
+                            },
+                        });
+                        facebookData = fbResponse.data;
+
+                        // Only break out of the loop if successful data is retrieved
+                        if (facebookData) break;
+                    } catch (error) {
+                        console.error('Error fetching Facebook data:', error);
+                        // Continue processing even if the Facebook API request fails
+                    }
+                }
             }
 
-            const composeSubjectLine = `${item.subject || 'Default Subject'}`;
+            console.log("Facebook Data", facebookData);
+
+            const emailSubjectLine = `
+            Task: Compose Subject line based on posts.
+
+            Objective:
+
+            Use 'KeyName' as the keyword to dynamically compose a subject line for an email.
+
+            Data:
+
+            data: Initial data about the Cause and its target audience.
+            `;
 
             const chatCompletion = await groq.chat.completions.create({
                 "messages": [
-                    { "role": "user", "content": `Subject: ${composeSubjectLine}\n\n${item.message || ''}` }
+                    { "role": "user", "content": `Subject: ${emailSubjectLine}` }
                 ],
                 "model": "llama-3.1-70b-versatile",
                 "temperature": 0.5,
@@ -39,12 +77,12 @@ export async function POST(req) {
                 "stream": true
             });
 
-            let assistantResponse = "";
+            let composedEmailLine = "";
             for await (const chunk of chatCompletion) {
-                assistantResponse += chunk.choices[0]?.delta?.content || '';
+                composedEmailLine += chunk.choices[0]?.delta?.content || '';
             }
 
-            processedResults.push({ item, assistantResponse });
+            processedResults.push({ item, composedEmailLine, facebookData });
         }
 
         return NextResponse.json({ results: processedResults }, { status: 200 });

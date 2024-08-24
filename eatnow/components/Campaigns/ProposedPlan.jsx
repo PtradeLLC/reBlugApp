@@ -5,8 +5,20 @@ import * as XLSX from "xlsx";
 
 const Plan = ({ textData }) => {
   const [emailBuild, setEmailBuild] = useState(false);
-  const [emails, setEmails] = useState([]);
-  const [singleEmail, setSingleEmail] = useState("");
+  const [emails, setEmails] = useState([]); // Array of emails
+  const [singleEmail, setSingleEmail] = useState(""); // Single email
+  const [name, setName] = useState("");
+  const [fallbackSubjectLine, setFallbackSubjectLine] = useState("");
+  const [composeEmail, setComposeEmail] = useState(false);
+  const [buttonText, setButtonText] = useState("Compose your Email");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      window.scrollTo(0, 0);
+    }
+  }, [isOpen]); // Re-run effect when isOpen changes
 
   const providers = [
     {
@@ -19,7 +31,6 @@ const Plan = ({ textData }) => {
     },
   ];
 
-  // Function to handle file upload and extract emails
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -29,29 +40,65 @@ const Plan = ({ textData }) => {
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(sheet);
-      const emailList = json.map((row) => row.Email); // Assuming the column header is 'Email'
+
+      // Extract emails and names
+      const emailList = json.map((row) => {
+        const firstName =
+          row.Firstname ||
+          row.firstName ||
+          row.first_name ||
+          row.firstname ||
+          "";
+        const lastName =
+          row.Lastname || row.lastName || row.last_name || row.lastname || "";
+
+        const fileName = row.name || name || `${firstName} ${lastName}`.trim();
+
+        // Return an object containing email, firstName, and lastName
+        return { email: row.Email, firstName, lastName, name: fileName };
+      });
+
+      // Store the emailList in the emails state
       setEmails(emailList);
     };
     reader.readAsArrayBuffer(file);
   };
 
-  // Function to handle sending emails
   const handleSendEmail = async () => {
-    if (emails || singleEmail) {
-      const baseUrl = "/api/partner/getEmails";
-      const response = fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify([emails, singleEmail]),
-      });
+    if (emails.length > 0 || singleEmail) {
+      setComposeEmail(true);
+      setButtonText("Send Email");
+
+      if (composeEmail) {
+        const emailData =
+          emails.length > 0
+            ? emails
+            : [{ email: singleEmail, firstName, lastName, name }];
+
+        const response = await fetch("/api/partner/getPostByEmails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            emails: emailData,
+            subjectLine: fallbackSubjectLine,
+          }),
+        });
+
+        // Handle the response if needed
+        if (response.ok) {
+          console.log("Emails sent successfully");
+        } else {
+          console.error("Failed to send emails");
+        }
+      }
     }
   };
 
   // Function to connect to external sources (e.g., Salesforce, Google Drive)
   const handleConnectSource = (source) => {
-    console.log(`Connecting to ${source}`);
+    console.log(`Connecting to ${source.name}`);
     // Logic to connect to the source and fetch emails
   };
 
@@ -89,7 +136,7 @@ const Plan = ({ textData }) => {
                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
                   <label
                     htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
                   >
                     <span>Upload a file</span>
                     <input
@@ -116,24 +163,61 @@ const Plan = ({ textData }) => {
               htmlFor="single-email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Enter a single email
+              Enter Donor's email
             </label>
             <input
               type="email"
               id="single-email"
               value={singleEmail}
               onChange={(e) => setSingleEmail(e.target.value)}
-              placeholder="Enter an email"
-              className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="Enter Donor's email"
+              className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
             />
           </div>
+          <div className="mt-6">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Enter Donor's Name
+            </label>
+            <input
+              type="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Donor's Name"
+              className="mt-2 block w-full rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm h-[38px]"
+            />
+          </div>
+          {singleEmail && (
+            <>
+              <div className="mt-6">
+                <label
+                  htmlFor="subject-line"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Subject Line
+                </label>
+                <input
+                  type="text"
+                  id="subject-line"
+                  value={fallbackSubjectLine}
+                  onChange={(e) => setFallbackSubjectLine(e.target.value)}
+                  placeholder="Enter a 'Fallback Subject Line'"
+                  className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
+                />
+              </div>
+            </>
+          )}
 
           <div className="mt-4">
             <Button
+              type="button"
               onClick={handleSendEmail}
               className="bg-red-600 text-white w-full"
             >
-              Send Email
+              {buttonText}
             </Button>
           </div>
 

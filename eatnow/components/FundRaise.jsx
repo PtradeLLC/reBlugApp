@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import Campaign from "@/components/Campaigns/campaignType";
 import Plan from "@/components/Campaigns/ProposedPlan";
 import DonorsFormula from "@/components/DonorsFormula";
 import { Country, State, City } from "country-state-city";
-import { button, Select, SelectItem } from "@nextui-org/react";
 
 const RaiseFunds = () => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
@@ -27,16 +25,16 @@ const RaiseFunds = () => {
     "Data Collection and Organization",
     "Consolidating Data",
     "Generating baseline profile",
-    "Segmenting Data",
+    "Segmenting Data Analysis",
     "Conducting Data Analysis",
-    "Conducting Descriptive Analytics",
-    "Conducting Diagnostic Analytics",
-    "Conducting Predictive Analytics",
+    "Conducting Descriptive Analysis",
+    "Conducting Diagnostic Analysis",
+    "Conducting Predictive Analysis",
     "Developing Strategies...",
     "Performing Target Donor Segmentation",
     "Personalizing Donor Communication",
     "Preparing Donor Retention Strategies",
-    "Implement Strategies...",
+    "Implementing Strategies...",
     "Evaluating Outcomes",
     "Setting up system to Learn and Iterate",
     "Ideal Donor Profile has been successfully generated.",
@@ -1187,7 +1185,7 @@ const RaiseFunds = () => {
                       className="bg-green-700 mt-2 mb-3 rounded-md text-white p-2"
                       onClick={handleLaunch}
                     >
-                      Begin Strategy
+                      Begin Campaign Strategy
                     </button>
                   )}
 

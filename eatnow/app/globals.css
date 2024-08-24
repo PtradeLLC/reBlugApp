@@ -112,3 +112,14 @@ section#\:r0\: {
     rgba(14, 63, 126, 0.04) 0px 12px 12px -6px,
     rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
 }
+
+.details-image {
+  @media (max-width: 640px) {
+    img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      object-position: bottom left;
+    }
+  }
+}
