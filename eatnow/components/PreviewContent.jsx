@@ -188,20 +188,20 @@ const PostPage = ({ comments, post }) => {
                 <img
                   src={post?.featureImage || "/images/bloger3.jpg"}
                   sizes="100vw"
-                  className="rounded-md"
+                  className="rounded-md w-10 h-10 lg:w-24 lg:h-24"
                   style={{
                     width: "100%",
                     height: "auto",
                     objectPosition: "top",
                   }}
-                  width={500}
-                  height={500}
+                  width={300}
+                  height={300}
                   alt={post?.title}
                 />
               )}
               <span className="absolute bottom-4 left-4 lg:bottom-0 lg:left-0 lg:m-4">
                 <img
-                  className="rounded-full border border-white w-20 h-20 lg:w-24 lg:h-24"
+                  className="rounded-full border border-white w-10 h-10 lg:w-24 lg:h-24"
                   src={"https://github.com/shadcn.png"}
                   alt="Avatar"
                 />
