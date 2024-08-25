@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PlusIcon, PhotoIcon } from "@heroicons/react/20/solid";
-import { Button } from "@nextui-org/react";
+import { Tooltip, Button } from "@nextui-org/react";
 import * as XLSX from "xlsx";
 
-const Plan = ({ textData }) => {
+const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);
   const [emails, setEmails] = useState([]); // Array of emails
   const [singleEmail, setSingleEmail] = useState(""); // Single email
@@ -83,6 +83,7 @@ const Plan = ({ textData }) => {
           body: JSON.stringify({
             emails: emailData,
             subjectLine: fallbackSubjectLine,
+            plan: textData,
           }),
         });
 
@@ -98,7 +99,6 @@ const Plan = ({ textData }) => {
 
   // Function to connect to external sources (e.g., Salesforce, Google Drive)
   const handleConnectSource = (source) => {
-    console.log(`Connecting to ${source.name}`);
     // Logic to connect to the source and fetch emails
   };
 
@@ -125,7 +125,8 @@ const Plan = ({ textData }) => {
               htmlFor="file-upload"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Upload file of your contact list below or build one with our API
+              If you already have contact list, please upload the file below OR
+              build one below using our API
             </label>
             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
               <div className="text-center">
@@ -159,6 +160,7 @@ const Plan = ({ textData }) => {
 
           {/* Single Email Input Section */}
           <div className="mt-6">
+            <p className="my-2 text-gray-600">Sending to a single donor?</p>
             <label
               htmlFor="single-email"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -186,19 +188,41 @@ const Plan = ({ textData }) => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Donor's Name"
+              placeholder="Enter single donor's name"
               className="mt-2 block w-full rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm h-[38px]"
             />
           </div>
           {singleEmail && (
             <>
               <div className="mt-6">
-                <label
-                  htmlFor="subject-line"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Subject Line
-                </label>
+                <span className="flex text-center">
+                  <label
+                    htmlFor="subject-line"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Subject Line
+                  </label>
+                  <Tooltip
+                    content={
+                      <div className="px-1">
+                        <div className="text-sm w-3/4 lg:w-1/4 bg-slate-600 p-4 text-white font-bold">
+                          Composing subject line
+                        </div>
+                        <div className="text-xs w-3/4 lg:w-1/4 bg-slate-600 text-white p-4 rounded-t-none rounded-b-md">
+                          We use artificial intelligence to create personalized
+                          email subject lines based on what you post on social
+                          media. This helps your emails get opened more often.
+                          If we don't have enough information from your social
+                          media, we'll use a default subject line.
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Button className="text-xs mx-2 cursor-pointer justify-center">
+                      Why I need this
+                    </Button>
+                  </Tooltip>
+                </span>
                 <input
                   type="text"
                   id="subject-line"
@@ -211,11 +235,11 @@ const Plan = ({ textData }) => {
             </>
           )}
 
-          <div className="mt-4">
+          <div className="mt-4 w-72 flex justify-center items-center m-auto">
             <Button
               type="button"
               onClick={handleSendEmail}
-              className="bg-red-600 text-white w-full"
+              className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
             >
               {buttonText}
             </Button>

@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Groq from 'groq-sdk';
+import attr from '../../../attributes.json'
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
@@ -11,7 +12,8 @@ export async function POST(req) {
     try {
         let data = await req.json();
 
-        const idealDonorProfile = `(Geographic Fit×Target Donor Type×Gender Alignment×Intention)+(Wealth Indicator×Funding Goals)+(Donor Motivations×Behavior×Skills and Expertise)+(Seasonal Trends×Upcoming Events)+(Problem Alignment×Supporters and Influencers×Unique Aspects)`;
+        // const idealDonorProfile = `(Geographic Fit×Target Donor Type×Gender Alignment×Intention)+(Wealth Indicator×Funding Goals)+(Donor Motivations×Behavior×Skills and Expertise)+(Seasonal Trends×Upcoming Events)+(Problem Alignment×Supporters and Influencers×Unique Aspects)`;
+        const idealDonorProfile = `(Age Score * 10) + (Income Score * 20) + (Wealth Score * 15) +(Disposable Income Score * 15) + (Liquid Assets Score * 10) +(Home Ownership Score * 5) + (Mail Purchases Score * 5) +(Potential Investor Score * 10) + (Registered Voter Score * 5) +(Email Deliverability Score * 5)`;
 
         // If data is not an array, convert it to one
         if (!Array.isArray(data)) {
@@ -26,6 +28,9 @@ export async function POST(req) {
             if (typeof item !== 'object') {
                 return NextResponse.json({ error: 'Invalid input data' }, { status: 400 });
             }
+
+            //Description of Formula data point attributes
+            const Description = attr.filter(att => typeof att.Description === 'string' && att.Description.trim() !== '');
 
             const definitions = `
             {
@@ -99,17 +104,19 @@ export async function POST(req) {
 
             Objective:
 
-            Identify and derive an 'Ideal Donor Profile' based on provided data to optimize fundraising for a given Cause.
+            Your task and goal is to derive 'Ideal Donor Profile' dynamically based on provided data to optimize fundraising for a given Cause.
 
             Data:
 
             data: Initial data about the Cause and its target audience.
+
             Process:
 
             Data Understanding:
 
             Analyze ${JSON.stringify(item)} to comprehend campaign goals, objectives, and available data points.
             Identify relevant data points within ${JSON.stringify(item)} to construct the 'Ideal Donor Profile'.
+            
             Baseline Profile Creation:
 
             Structure a baseline profile using data from ${JSON.stringify(item)} in the following format:
@@ -120,9 +127,90 @@ export async function POST(req) {
             Ideal Donor Profile Development:
 
             Employ data science techniques to analyze ${JSON.stringify(item)} and create an 'Ideal Donor Profile'.
-            Utilize ${definitions} for data clarification.
+            Utilize ${definitions} for input data clarification from the user.
+            
             Consider using the provided ${idealDonorProfile} formula if applicable.
             Provide actionable recommendations and strategies based on the derived profile.
+
+            By using a weighted scoring system based on the most relevant attributes from the provided ${attr} data,
+            follow the following steps to derive an Ideal Donor for any given campaign:
+
+1. Attributes:
+    * Age (age)
+    * Estimated Income (family.estimated_income)
+    * Estimated Wealth (family.estimated_wealth)
+    * Estimated Disposable Income (family.estimated_disposable_income)
+    * Estimated Liquid Assets (family.estimated_liquid_assets)
+    * Home Ownership (family.home_owner or family.estimated_home_owner)
+    * Mail Purchases (family.mail_purchases)
+    * Potential Investor (family.potential_investor)
+    * Registered Voter (registered_voter)
+    * Email Deliverability (emails.deliverable)
+
+2. Assign weights to each attribute (total should equal 100):
+    * Age: 10
+    * Estimated Income: 20
+    * Estimated Wealth: 15
+    * Estimated Disposable Income: 15
+    * Estimated Liquid Assets: 10
+    * Home Ownership: 5
+    * Mail Purchases: 5
+    * Potential Investor: 10
+    * Registered Voter: 5
+    * Email Deliverability: 5
+
+    3. Create scoring criteria for each attribute:
+    * Age: 5 points if 50-70, 3 points if 40-49 or 71-80, 1 point otherwise
+    * Estimated Income: 5 points for top 20%, 3 points for next 30%, 1 point otherwise
+    * Estimated Wealth: 5 points for top 20%, 3 points for next 30%, 1 point otherwise
+    * Estimated Disposable Income: 5 points for top 20%, 3 points for next 30%, 1 point otherwise
+    * Estimated Liquid Assets: 5 points for top 20%, 3 points for next 30%, 1 point otherwise
+    * Home Ownership: 5 points if true, 0 if false
+    * Mail Purchases: 5 points if true, 0 if false
+    * Potential Investor: 5 points if true, 0 if false
+    * Registered Voter: 5 points if true, 0 if false
+    * Email Deliverability: 5 points if true, 0 if false
+
+
+4. Formula: Ideal Donor Score = (Age Score * 10) + (Income Score * 20) + (Wealth Score * 15) +(Disposable Income Score * 15) + (Liquid Assets Score * 10) +(Home Ownership Score * 5) + (Mail Purchases Score * 5) +(Potential Investor Score * 10) + (Registered Voter Score * 5) +(Email Deliverability Score * 5)
+
+5. Interpretation:
+    * Maximum possible score: 500
+    * Ideal Donor Threshold: Set a cutoff score (e.g., 400) to identify ideal donors
+
+To implement this formula:
+1. Calculate the score for each attribute based on the scoring criteria.
+2. Multiply each attribute score by its weight.
+3. Sum all weighted scores to get the Ideal Donor Score.
+4. Compare the score to your set threshold to identify ideal donors.
+
+If the Ideal Donor Score is above the threshold of 400, it indicates that the individual is considered an ideal donor prospect for your nonprofit organization. 
+
+This high score suggests that the person possesses a combination of attributes that make them more likely to be a valuable supporter. Here's what this means and how you should proceed:
+Priority targeting: These individuals should be given priority in your fundraising and outreach efforts. They represent your best prospects for donations and long-term support.
+
+Personalized approach: Develop a tailored communication strategy for these high-scoring donors. Use the information from their profile to create personalized messages that resonate with their interests and giving capacity.
+
+Major gift potential: Donors with scores above 400 may be candidates for major gifts. Consider assigning them to your major gifts team for more focused cultivation.
+
+Stewardship focus: Invest more resources in stewarding these donors. This could include personalized thank-you notes, exclusive event invitations, or one-on-one meetings with organizational leadership.
+
+Engagement opportunities: Offer these donors more ways to engage with your organization beyond just giving money. This could include volunteer opportunities, advisory roles, or involvement in special projects.
+
+Recurring giving programs: Encourage these high-scoring donors to consider recurring giving options, as they are more likely to have the financial capacity for sustained support.
+
+Peer-to-peer potential: These donors may be good candidates for peer-to-peer fundraising initiatives, as they likely have networks of similarly positioned individuals.
+
+Data refinement: Use the information from these high-scoring donors to refine ideal donor profile further. Look for common characteristics among best prospects to improve future targeting.
+
+ROI tracking: Monitor the return on investment from your outreach to these high-scoring donors. This will help you validate and improve scoring model over time.
+
+Cross-channel engagement: Utilize multiple communication channels (email, direct mail, phone, social media) to reach these valuable prospects, as they are worth the extra effort to connect.
+
+Remember, while a high score indicates strong potential, it's still important to approach each donor as an individual. Use the score as a guide for prioritization, but always tailor the approach based on the specific interests, motivations, and preferences of each donor.
+
+The above ${idealDonorProfile} formula provides a quantitative method to identify ideal donors based on the most relevant attributes. You can adjust the weights and scoring criteria based on your organization's specific needs and historical data on successful donors.
+Remember to regularly update and refine this formula based on the performance of your fundraising campaigns and new insights gained from donor interactions.
             
             Output:
 

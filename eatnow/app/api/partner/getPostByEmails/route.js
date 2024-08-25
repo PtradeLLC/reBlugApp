@@ -20,69 +20,89 @@ export async function POST(req) {
         const processedResults = [];
 
         for (const item of data) {
-            const { emails, subjectLine, message } = item;
+            const { emails, plan } = item;
 
-            const accessToken = `${process.env.FACEBOOK_ACCESS_TOKEN}`
+            let arrayPlanned;
+            let userEmail;
+            let userName;
 
-            // 1. Fetch Facebook data using emails and name in the emails array
-            let facebookData = null;
-            if (accessToken) {
+            for (const planArray of plan) {
+                arrayPlanned = planArray.assistantResponse;
+            }
+
+            if (item) {
                 for (const emailObj of emails) {
                     const { email, name } = emailObj;
-
-                    console.log("Email::", email, name);
-
                     try {
-                        const fbResponse = await axios.get('https://graph.facebook.com/v12.0/me', {
-                            params: {
-                                fields: 'id,name,photos,email,political,education,age_range,feed,fundraisers,gender,posts,groups',
-                                access_token: accessToken,
-                                email,
-                                name,
-                            },
-                        });
-                        facebookData = fbResponse.data;
-
-                        // Only break out of the loop if successful data is retrieved
-                        if (facebookData) break;
+                        userEmail = email;
+                        userName = name;
                     } catch (error) {
-                        console.error('Error fetching Facebook data:', error);
-                        // Continue processing even if the Facebook API request fails
+                        console.error('Error fetching email data:', error);
+                        // Continue processing even if an error occurs
                     }
                 }
             }
 
-            console.log("Facebook Data", facebookData);
+            // Construct the prompt for the LLM
+            const emailPrompt = `
+            Task:
+            1. Write a catchy email subject line that increases open rates. 
+            2. Write an effective email body to promote a non-profit campaign to potential donors.
 
-            const emailSubjectLine = `
-            Task: Compose Subject line based on posts.
+            Objectives and goals: ${arrayPlanned}
+            Audience: ${userEmail} (${userName})
 
-            Objective:
+            Instructions:
+            - The subject line should summarize the objectives and goals in 9 words or less.
+            - The email body should be persuasive, emphasize the importance of the campaign, and make a clear call to action.
 
-            Use 'KeyName' as the keyword to dynamically compose a subject line for an email.
+            Example Subject Line:
+            "${userName}, help unlock support for the next generation."
 
-            Data:
+            Example Email Body:
+            "Dear ${userName},
 
-            data: Initial data about the Cause and its target audience.
+            We need your support to help unlock opportunities for the next generation. Our campaign focuses on [insert key points from objectives and goals]. 
+
+            By contributing, you can make a significant impact on the lives of [target audience], ensuring they receive the support they need to thrive. Your generosity can make all the difference.
+
+            Please consider donating today to help us achieve our mission.
+
+            Best regards,
+            [Your Organization Name]"
             `;
 
             const chatCompletion = await groq.chat.completions.create({
                 "messages": [
-                    { "role": "user", "content": `Subject: ${emailSubjectLine}` }
+                    { "role": "user", "content": emailPrompt }
                 ],
                 "model": "llama-3.1-70b-versatile",
-                "temperature": 0.5,
-                "max_tokens": 8000,
+                "temperature": 0.7,
+                "max_tokens": 500,
                 "top_p": 1,
                 "stream": true
             });
 
-            let composedEmailLine = "";
+            let responseText = "";
             for await (const chunk of chatCompletion) {
-                composedEmailLine += chunk.choices[0]?.delta?.content || '';
+                responseText += chunk.choices[0]?.delta?.content || '';
             }
 
-            processedResults.push({ item, composedEmailLine, facebookData });
+            // Separate the subject line from the body using regex or specific markers
+            const [composedEmailLine, composedEmailBody] = responseText.split("\n\n");
+
+            // Trim the responses to ensure they are clean
+            const trimmedSubjectLine = composedEmailLine?.trim();
+            const trimmedEmailBody = composedEmailBody?.trim();
+
+            console.log("Composed Email Subject Line:", trimmedSubjectLine);
+            console.log("Composed Email Body:", trimmedEmailBody);
+
+            processedResults.push({
+                item,
+                composedEmailLine: trimmedSubjectLine,
+                composedEmailBody: trimmedEmailBody
+            });
         }
 
         return NextResponse.json({ results: processedResults }, { status: 200 });
@@ -91,3 +111,95 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+
+
+
+// import { NextResponse } from 'next/server';
+// import { PrismaClient } from '@prisma/client';
+// import Groq from 'groq-sdk';
+// import axios from 'axios';
+
+// const GROQ_API_KEY = process.env.GROQ_API_KEY;
+// const groq = new Groq({ apiKey: GROQ_API_KEY });
+
+// const prisma = new PrismaClient();
+
+// export async function POST(req) {
+//     try {
+//         let data = await req.json();
+
+//         // If data is not an array, convert it to one
+//         if (!Array.isArray(data)) {
+//             data = [data];
+//         }
+
+//         const processedResults = [];
+
+//         for (const item of data) {
+//             const { emails, plan } = item;
+
+//             let arrayPlanned;
+//             let userEmail;
+//             let userName;
+
+//             for (const planArray of plan) {
+//                 arrayPlanned = planArray.assistantResponse;
+//             }
+
+//             if (item) {
+//                 for (const emailObj of emails) {
+//                     const { email, name } = emailObj;
+//                     try {
+//                         userEmail = email;
+//                         userName = name;
+//                     } catch (error) {
+//                         console.error('Error fetching email data:', error);
+//                         // Continue processing even if an error occurs
+//                     }
+//                 }
+//             }
+
+//             const emailSubjectLine = `
+//             Write a catchy email subject line that increases open rates. The subject line should summarize the following: 
+//             1. objectives and goals: ${arrayPlanned} 
+//             2. Audience: ${userEmail} (${userName})
+
+//             <INSTRUCTION>
+//             Use details in the ${arrayPlanned} to personalize each email's subject line.
+
+//             Example:
+//             1. ${userName}, help unlock support for the next generation.
+//             2. Campaign needs comprehensive support for every child from you ${userName}.
+//             3. Keep subject line down to nine words or less.
+//             </INSTRUCTION>
+//             `;
+
+//             const chatCompletion = await groq.chat.completions.create({
+//                 "messages": [
+//                     { "role": "user", "content": emailSubjectLine }
+//                 ],
+//                 "model": "llama-3.1-70b-versatile",
+//                 "temperature": 0.7,
+//                 "max_tokens": 100,
+//                 "top_p": 1,
+//                 "stream": true
+//             });
+
+//             let composedEmailLine = "";
+//             for await (const chunk of chatCompletion) {
+//                 composedEmailLine += chunk.choices[0]?.delta?.content || '';
+//             }
+
+//             // Trim the response to ensure it's a single line
+//             composedEmailLine = composedEmailLine.trim();
+//             console.log("Composed Email Subject Line:", composedEmailLine);
+
+//             processedResults.push({ item, composedEmailLine });
+//         }
+
+//         return NextResponse.json({ results: processedResults }, { status: 200 });
+//     } catch (error) {
+//         console.error('Error processing request:', error);
+//         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+//     }
+// }
