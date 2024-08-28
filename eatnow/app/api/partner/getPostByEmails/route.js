@@ -39,6 +39,10 @@ export async function POST(req) {
                         userEmail = email;
                         userName = name;
 
+                        console.log(userEmail);
+                        console.log(item);
+
+
                         // Make a request to RESEND API HERE with name and email
 
 

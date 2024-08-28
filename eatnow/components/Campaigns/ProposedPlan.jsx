@@ -8,8 +8,8 @@ import "react-quill/dist/quill.snow.css";
 
 const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);
-  const [emails, setEmails] = useState([]); // Array of emails
-  const [singleEmail, setSingleEmail] = useState(""); // Single email
+  const [emails, setEmails] = useState([]);
+  const [singleEmail, setSingleEmail] = useState("");
   const [name, setName] = useState("");
   const [fallbackSubjectLine, setFallbackSubjectLine] = useState("");
   const [campaignPage, setCampaignPage] = useState("");
@@ -21,12 +21,7 @@ const Plan = ({ textData, isOpen }) => {
   const [emailBody, setEmailBody] = useState("");
   const [editedContent, setEditedContent] = useState(false);
   const [isComposed, setIsComposed] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      window.scrollTo(0, 0);
-    }
-  }, [isOpen]); // Re-run effect when isOpen changes
+  const [loading, setLoading] = useState(false);
 
   const providers = [
     {
@@ -49,7 +44,6 @@ const Plan = ({ textData, isOpen }) => {
       const sheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(sheet);
 
-      // Extract emails and names
       const emailList = json.map((row) => {
         const firstName =
           row.Firstname ||
@@ -59,14 +53,11 @@ const Plan = ({ textData, isOpen }) => {
           "";
         const lastName =
           row.Lastname || row.lastName || row.last_name || row.lastname || "";
-
         const fileName = row.name || name || `${firstName} ${lastName}`.trim();
 
-        // Return an object containing email, firstName, and lastName
         return { email: row.Email, firstName, lastName, name: fileName };
       });
 
-      // Store the emailList in the emails state
       setEmails(emailList);
     };
     reader.readAsArrayBuffer(file);
@@ -74,21 +65,20 @@ const Plan = ({ textData, isOpen }) => {
 
   const handleSendEmail = async () => {
     if (emails.length > 0 || singleEmail) {
-      setComposeEmail(true);
-      setButtonText("Compose Email");
-      setIsComposed(true);
-
-      if (buttonText === "Compose Email") {
-        setButtonText("Send Email");
-      }
-
-      if (composeEmail) {
+      if (buttonText === "Prepare Content") {
+        setComposeEmail(true);
+        setIsComposed(true);
+        setButtonText("Compose Email");
+      } else if (buttonText === "Compose Email") {
         const emailData =
           emails.length > 0
             ? emails
             : [{ email: singleEmail, firstName, lastName, name }];
 
         try {
+          setLoading(true); // Set loading to true before the async operation
+          setButtonText("Send Email");
+
           const response = await fetch("/api/partner/getPostByEmails", {
             method: "POST",
             headers: {
@@ -99,37 +89,149 @@ const Plan = ({ textData, isOpen }) => {
               subjectLine: fallbackSubjectLine,
               plan: textData,
               campaignPage,
-              emailBody, // Send emailBody content to the server
             }),
           });
 
           if (response.ok) {
-            const data = await response.json(); // Parse the JSON response
-            console.log("Emails sent successfully");
+            const data = await response.json();
+            console.log("Emails prepared successfully");
 
-            // Assuming you want to display the email content in your UI:
             data.results.forEach((result) => {
               setEmailSubject(result.composedEmailLine);
               setEmailBody(result.composedEmailBody);
             });
 
-            // If response comes back from the server okay with email sent - setButtonText("Email sent");
+            setIsComposed(false);
+          } else {
+            console.error("Failed to prepare emails");
+          }
+        } catch (error) {
+          console.error("Error during email preparation:", error);
+        } finally {
+          setLoading(false); // Set loading to false after the async operation
+        }
+      } else if (buttonText === "Send Email") {
+        const emailData =
+          emails.length > 0
+            ? emails
+            : [{ email: singleEmail, firstName, lastName, name }];
+
+        try {
+          setLoading(true); // Set loading to true before the async operation
+          const response = await fetch("/api/partner/getPostByEmails", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emails: emailData,
+              subjectLine: fallbackSubjectLine,
+              campaignPage,
+              plan: textData,
+              emailBody,
+            }),
+          });
+
+          if (response.ok) {
+            console.log("Emails sent successfully");
+            setButtonText("Email Sent");
           } else {
             console.error("Failed to send emails");
           }
         } catch (error) {
           console.error("Error during email send request:", error);
+        } finally {
+          setLoading(false); // Ensure loading is false after the operation
         }
       }
     }
   };
 
-  // Function to handle "Edit Content" button click
+  // const handleSendEmail = async () => {
+  //   if (emails.length > 0 || singleEmail) {
+  //     if (buttonText === "Prepare Content") {
+  //       setComposeEmail(true);
+  //       setIsComposed(true);
+  //       setButtonText("Compose Email");
+  //     } else if (buttonText === "Compose Email") {
+  //       const emailData =
+  //         emails.length > 0
+  //           ? emails
+  //           : [{ email: singleEmail, firstName, lastName, name }];
+
+  //       try {
+  //         setLoading(true);
+  //         setButtonText("Send Email");
+
+  //         const response = await fetch("/api/partner/getPostByEmails", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             emails: emailData,
+  //             subjectLine: fallbackSubjectLine,
+  //             plan: textData,
+  //             campaignPage,
+  //           }),
+  //         });
+
+  //         if (response.ok) {
+  //           const data = await response.json();
+  //           console.log("Emails prepared successfully");
+
+  //           data.results.forEach((result) => {
+  //             setEmailSubject(result.composedEmailLine);
+  //             setEmailBody(result.composedEmailBody);
+  //           });
+
+  //           setIsComposed(false);
+  //         } else {
+  //           console.error("Failed to prepare emails");
+  //         }
+  //       } catch (error) {
+  //         console.error("Error during email preparation:", error);
+  //       }
+  //     } else if (buttonText === "Send Email") {
+  //       const emailData =
+  //         emails.length > 0
+  //           ? emails
+  //           : [{ email: singleEmail, firstName, lastName, name }];
+
+  //       try {
+  //         const response = await fetch("/api/partner/getPostByEmails", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             emails: emailData,
+  //             subjectLine: fallbackSubjectLine,
+  //             campaignPage,
+  //             plan: textData,
+  //             emailBody,
+  //           }),
+  //         });
+
+  //         if (response.ok) {
+  //           console.log("Emails sent successfully");
+  //           setButtonText("Email Sent");
+  //         } else {
+  //           console.error("Failed to send emails");
+  //         }
+  //       } catch (error) {
+  //         console.error("Error during email send request:", error);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   }
+  // };
+
   const handleEditClick = () => {
     setEditedContent(true);
     setButtonText("Send Email");
   };
-
   // Function to connect to external sources (e.g., Salesforce, Google Drive)
   const handleConnectSource = (source) => {
     // Logic to connect to the source and fetch emails
@@ -347,25 +449,38 @@ const Plan = ({ textData, isOpen }) => {
           )}
 
           <div className="mt-4 w-72 flex flex-col justify-center items-center m-auto">
-            {isComposed && (
-              <p className="text-sm mb-2 mt-2 text-gray-700">
-                Employ AI to compose content for your campaign. Click button
-                below to proceed.
-              </p>
+            {isComposed ? (
+              <>
+                <p className="text-sm mb-2 mt-2 text-gray-700">
+                  Employ AI to compose content for your campaign. Click button
+                  below to proceed.
+                </p>
+              </>
+            ) : (
+              ""
             )}
-
+            {/* <Button
+              type="button"
+              onClick={handleSendEmail}
+              className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+            >
+              <PlusIcon className="h-5 w-5 mr-2" />
+              {buttonText}
+            </Button> */}
             <Button
               type="button"
               onClick={handleSendEmail}
               className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
-              // disabled={buttonText === "Compose Email"} // Disable button when buttonText is "Compose Email"
-              // className={`my-4 flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm ${
-              //   buttonText === "Compose Email"
-              //     ? "bg-gray-400 cursor-not-allowed" // Disabled styling
-              //     : "bg-red-600 text-white hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-              // }`}
             >
-              {buttonText}
+              <PlusIcon className="h-5 w-5 mr-2" />
+              {!loading && buttonText ? (
+                buttonText
+              ) : (
+                <div className="flex justify-center items-center">
+                  <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                  <p className="ml-2 text-white">Processing...</p>
+                </div>
+              )}
             </Button>
           </div>
 
@@ -432,7 +547,16 @@ const Plan = ({ textData, isOpen }) => {
                   onClick={() => setEmailBuild(true)}
                   className="build-email bg-slate-500 rounded-md mb-3 text-white w-[200px] m-auto"
                 >
+                  <PlusIcon className="h-5 w-5 mr-2" />
                   Build email list{" "}
+                  {!loading && textData ? (
+                    textData.name
+                  ) : (
+                    <div className="flex justify-center items-center">
+                      <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                      <p className="ml-2 text-white">Processing...</p>
+                    </div>
+                  )}
                 </Button>
               </div>
             </div>
@@ -444,381 +568,3 @@ const Plan = ({ textData, isOpen }) => {
 };
 
 export default Plan;
-
-// import { useState, useEffect } from "react";
-// import { PlusIcon, PhotoIcon } from "@heroicons/react/20/solid";
-// import { Tooltip, Button } from "@nextui-org/react";
-// import * as XLSX from "xlsx";
-// import dynamic from "next/dynamic";
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-// import "react-quill/dist/quill.snow.css";
-
-// const Plan = ({ textData, isOpen }) => {
-//   const [emailBuild, setEmailBuild] = useState(false);
-//   const [emails, setEmails] = useState([]); // Array of emails
-//   const [singleEmail, setSingleEmail] = useState(""); // Single email
-//   const [name, setName] = useState("");
-//   const [fallbackSubjectLine, setFallbackSubjectLine] = useState("");
-//   const [campaignPage, setCampaignPage] = useState("");
-//   const [composeEmail, setComposeEmail] = useState(false);
-//   const [buttonText, setButtonText] = useState("Prepare Content");
-//   const [firstName, setFirstName] = useState("");
-//   const [lastName, setLastName] = useState("");
-//   const [emailSubject, setEmailSubject] = useState("");
-//   const [emailBody, setEmailBody] = useState("");
-//   const [editedContent, setEditedContent] = useState(false);
-//   const [isEditing, setIsEditing] = useState(false);
-
-//   useEffect(() => {
-//     if (isOpen) {
-//       window.scrollTo(0, 0);
-//     }
-//   }, [isOpen]); // Re-run effect when isOpen changes
-
-//   const providers = [
-//     {
-//       name: "Google Drive",
-//       imageUrl: "/images/google_drive.png",
-//     },
-//     {
-//       name: "Google Sheets",
-//       imageUrl: "/images/google-sheets.png",
-//     },
-//   ];
-
-//   const handleFileUpload = (event) => {
-//     const file = event.target.files[0];
-//     const reader = new FileReader();
-//     reader.onload = (e) => {
-//       const data = new Uint8Array(e.target.result);
-//       const workbook = XLSX.read(data, { type: "array" });
-//       const sheetName = workbook.SheetNames[0];
-//       const sheet = workbook.Sheets[sheetName];
-//       const json = XLSX.utils.sheet_to_json(sheet);
-
-//       // Extract emails and names
-//       const emailList = json.map((row) => {
-//         const firstName =
-//           row.Firstname ||
-//           row.firstName ||
-//           row.first_name ||
-//           row.firstname ||
-//           "";
-//         const lastName =
-//           row.Lastname || row.lastName || row.last_name || row.lastname || "";
-
-//         const fileName = row.name || name || `${firstName} ${lastName}`.trim();
-
-//         // Return an object containing email, firstName, and lastName
-//         return { email: row.Email, firstName, lastName, name: fileName };
-//       });
-
-//       // Store the emailList in the emails state
-//       setEmails(emailList);
-//     };
-//     reader.readAsArrayBuffer(file);
-//   };
-
-//   const handleSendEmail = async () => {
-//     if (emails.length > 0 || singleEmail) {
-//       setComposeEmail(true);
-//       setButtonText("Compose Email");
-
-//       if (composeEmail) {
-//         const emailData =
-//           emails.length > 0
-//             ? emails
-//             : [{ email: singleEmail, firstName, lastName, name }];
-
-//         try {
-//           const response = await fetch("/api/partner/getPostByEmails", {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//               emails: emailData,
-//               subjectLine: fallbackSubjectLine,
-//               plan: textData,
-//               campaignPage,
-//               emailBody, // Send emailBody content to the server
-//             }),
-//           });
-
-//           if (response.ok) {
-//             const data = await response.json(); // Parse the JSON response
-//             console.log("Emails sent successfully");
-
-//             // Assuming you want to display the email content in your UI:
-//             data.results.forEach((result) => {
-//               setEmailSubject(result.composedEmailLine);
-//               setEmailBody(result.composedEmailBody);
-//             });
-//           } else {
-//             console.error("Failed to send emails");
-//           }
-//         } catch (error) {
-//           console.error("Error during email send request:", error);
-//         }
-//       }
-//     }
-//   };
-
-//   // Function to handle "Edit Content" button click
-//   const handleEditClick = () => {
-//     setEditedContent(true);
-//     setButtonText("Send Email");
-//   };
-
-//   // Function to connect to external sources (e.g., Salesforce, Google Drive)
-//   const handleConnectSource = (source) => {
-//     // Logic to connect to the source and fetch emails
-//   };
-
-//   return (
-//     <>
-//       {emailBuild ? (
-//         <div className="mx-auto max-w-md sm:max-w-3xl">
-//           <div className="text-center">
-//             <PhotoIcon
-//               aria-hidden="true"
-//               className="mx-auto h-12 w-12 text-gray-400"
-//             />
-//             <h2 className="mt-2 text-base font-semibold leading-6 text-gray-900">
-//               Build Email list
-//             </h2>
-//             <p className="mt-1 text-sm text-gray-500">
-//               Launch an email campaign. Let's find some donors
-//             </p>
-//           </div>
-
-//           {/* File Upload Section */}
-//           <div className="col-span-full">
-//             <label
-//               htmlFor="file-upload"
-//               className="block text-sm font-medium leading-6 text-gray-900"
-//             >
-//               If you already have contact list, please upload the file below OR
-//               build one below using our API
-//             </label>
-//             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-//               <div className="text-center">
-//                 <PhotoIcon
-//                   aria-hidden="true"
-//                   className="mx-auto h-12 w-12 text-gray-300"
-//                 />
-//                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
-//                   <label
-//                     htmlFor="file-upload"
-//                     className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
-//                   >
-//                     <span>Upload a file</span>
-//                     <input
-//                       id="file-upload"
-//                       name="file-upload"
-//                       type="file"
-//                       accept=".xlsx, .xls"
-//                       onChange={handleFileUpload}
-//                       className="sr-only"
-//                     />
-//                   </label>
-//                   <p className="pl-1">or drag and drop</p>
-//                 </div>
-//                 <p className="text-xs leading-5 text-gray-600">
-//                   Excel files only (.xlsx, .xls)
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Single Email Input Section */}
-//           <div className="mt-6">
-//             <p className="my-2 text-gray-600">Sending to a single donor?</p>
-//             <label
-//               htmlFor="single-email"
-//               className="block text-sm font-medium leading-6 text-gray-900"
-//             >
-//               Enter Donor's email
-//             </label>
-//             <input
-//               type="email"
-//               id="single-email"
-//               value={singleEmail}
-//               onChange={(e) => setSingleEmail(e.target.value)}
-//               placeholder="Enter Donor's email"
-//               className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
-//             />
-//           </div>
-//           <div className="mt-6">
-//             <label
-//               htmlFor="name"
-//               className="block text-sm font-medium leading-6 text-gray-900"
-//             >
-//               Enter Donor's Name
-//             </label>
-//             <input
-//               type="name"
-//               id="name"
-//               value={name}
-//               onChange={(e) => setName(e.target.value)}
-//               placeholder="Enter single donor's name"
-//               className="mt-2 px-2 block w-full rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm h-[38px]"
-//             />
-//           </div>
-//           {emailSubject && emailBody ? (
-//             <div className="my-2">
-//               <p className="my-2 bg-slate-200 rounded-sm p-3 text-gray-500">
-//                 Below is a preview of your AI generated campaign email{" "}
-//               </p>
-//               <p className="mb-2">{emailSubject} </p>
-//               <p>{emailBody}</p>
-//               <span className="text-xs flex cursor-pointer my-3">
-//                 {editedContent ? (
-//                   <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
-//                     <label htmlFor="editor" className="sr-only">
-//                       Publish post
-//                     </label>
-//                     <div className="">
-//                       <ReactQuill
-//                         value={emailBody} // Display the current email body in the editor
-//                         onChange={setEmailBody} // Update the email body as the user edits
-//                         modules={{
-//                           toolbar: [
-//                             [{ header: "1" }, { header: "2" }, { font: [] }],
-//                             [{ size: [] }],
-//                             ["bold", "italic", "underline", "strike"],
-//                             [{ list: "ordered" }, { list: "bullet" }],
-//                             ["link", "image", "video"],
-//                             ["clean"],
-//                           ],
-//                         }}
-//                       />
-//                     </div>
-//                   </div>
-//                 ) : (
-//                   <Tooltip content="Make Changes" color="invert">
-//                     <Button
-//                       auto
-//                       color="invert"
-//                       size="sm"
-//                       onClick={handleEditClick}
-//                     >
-//                       Edit Content
-//                     </Button>
-//                   </Tooltip>
-//                 )}
-//               </span>
-//             </div>
-//           ) : null}
-
-//           <button
-//             onClick={handleSendEmail}
-//             className="my-4 flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-//           >
-//             {buttonText}
-//           </button>
-//         </div>
-//       ) : (
-//         <div>
-//           <div className="col-span-full">
-//             <label
-//               htmlFor="cover-photo"
-//               className="block text-sm font-medium leading-6 text-gray-900"
-//             >
-//               Campaign Material
-//             </label>
-//             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-//               <div className="text-center">
-//                 <PhotoIcon
-//                   aria-hidden="true"
-//                   className="mx-auto h-12 w-12 text-gray-300"
-//                 />
-//                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
-//                   <label
-//                     htmlFor="file-upload"
-//                     className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
-//                   >
-//                     <span>Upload a file</span>
-//                     <input
-//                       id="file-upload"
-//                       name="file-upload"
-//                       type="file"
-//                       accept=".pdf, .doc, .docx"
-//                       className="sr-only"
-//                     />
-//                   </label>
-//                   <p className="pl-1">or drag and drop</p>
-//                 </div>
-//                 <p className="text-xs leading-5 text-gray-600">
-//                   PDF, DOC up to 10MB
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-//           <div className="col-span-full">
-//             <label
-//               htmlFor="campaign-page"
-//               className="block text-sm font-medium leading-6 text-gray-900"
-//             >
-//               URL of Campaign Page
-//             </label>
-//             <div className="mt-2 flex rounded-md shadow-sm">
-//               <input
-//                 type="url"
-//                 name="campaign-page"
-//                 id="campaign-page"
-//                 value={campaignPage}
-//                 onChange={(e) => setCampaignPage(e.target.value)}
-//                 className="block w-full flex-1 rounded-none rounded-l-md border-gray-300 focus:border-red-500 focus:ring-red-500 sm:text-sm"
-//                 placeholder="https://example.com/campaign-page"
-//               />
-//             </div>
-//           </div>
-//           <div className="mt-6 col-span-full">
-//             <div className="flex items-center justify-between">
-//               <h2 className="text-lg font-medium text-gray-900">
-//                 {textData ? textData.name : "Loading..."}
-//               </h2>
-//               <button
-//                 onClick={() => setEmailBuild(true)}
-//                 className="flex items-center justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-//               >
-//                 Start an email campaign
-//               </button>
-//             </div>
-//             <div className="mt-4 text-sm text-gray-600">
-//               {textData ? textData.content : "Loading..."}
-//             </div>
-//           </div>
-//           <div className="mt-6 col-span-full">
-//             <h3 className="text-sm font-medium text-gray-900">
-//               Connect to External Sources
-//             </h3>
-//             <ul className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
-//               {providers.map((provider) => (
-//                 <li key={provider.name} className="col-span-1 flex shadow-sm">
-//                   <div className="flex-shrink-0 flex items-center justify-center w-16 text-sm font-medium text-red-600 bg-red-50 rounded-l-md">
-//                     <img src={provider.imageUrl} alt={provider.name} />
-//                   </div>
-//                   <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
-//                     <div className="flex-1 px-4 py-2 text-sm truncate">
-//                       <a
-//                         href="#"
-//                         className="font-medium text-gray-900 hover:text-gray-600"
-//                         onClick={() => handleConnectSource(provider.name)}
-//                       >
-//                         {provider.name}
-//                       </a>
-//                     </div>
-//                   </div>
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Plan;
