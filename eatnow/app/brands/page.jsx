@@ -23,14 +23,14 @@ const features = [
       "'Foodhini Says' are tasks designed to help brands achieve their marketing goals by tasking members to complete specific actions brought forth by 'Foodhini'. In return for completing these tasks, we issue a virtual card, and fund it regularly as incentives to the members, but the ultimate goal is to accomplish marketing goals for our partners. This mutually beneficial arrangement allows brands to effectively reach their target audience while managing expenses strategically.",
   },
   {
-    name: "Social blogging",
+    name: "Blog Pages",
     description:
-      "Extend your brand's reach through social blogging by tapping into blogger's power of reach. Through 'six degrees of separation', benefit from the organic sharing of content and experiences, reaching a wider audience and driving traffic on a long term basis to your website.",
+      "Extend your blog pages with Article Assistant. Install a simple script and let the assistant chat with visitors on your blog pages. The assistant provides support, answers questions, sales or just chat with visitors about the product or service.",
   },
   {
-    name: "Bloggers Network",
+    name: "Companies and Organizations",
     description:
-      "Identify and collaborate with bloggers and writers whose audience and niche aligns with your target demographic. Build strategic alliances to leverage their influence for product reviews, feedback, sponsored content, brand recognition and endorsements.",
+      "Our tools are custom-built to meet the needs of businesses and nonprofits, regardless of size. Whether you're looking to boost sales, improve support, or raise funds, we have a solution for you. Start using our tools today.",
   },
 ];
 

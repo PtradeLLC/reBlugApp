@@ -1210,37 +1210,6 @@ const RaiseFunds = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-        <div>
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Proposed Plan
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Based on the provided information, here are data driven summaries
-            that addresses the following key points:
-            <span className="font-semibold"> Customer behavior</span> and{" "}
-            <span className="font-semibold">Motivation</span>,
-            <span className="font-semibold"> Ideal Customer Profile</span>,
-            <span className="font-semibold"> Demands</span>, and
-            <span className="font-semibold"> Lead generation</span>.
-          </p>
-        </div>
-
-        <div className="max-w-2xl space-y-10 md:col-span-2">
-          {textData && (
-                          <div>
-                              {textData.map((item, index) => (
-                                  <div key={index}>
-                                      <h3>{Object.keys(item)[0]}</h3>
-                                      <p>{Object.values(item)[0]}</p>
-                                  </div>
-                              ))}
-                          </div>
-                      )}
-          {showLoadingStatus && <p>Loading your Ideal Customers...</p>}
-        </div>
-      </div> */}
           </div>
         </form>
       )}

@@ -224,7 +224,111 @@ Remember to regularly update and refine this formula based on the performance of
             Continuously refine the 'Ideal Donor Profile' based on campaign performance.
             
             Note: Specific data points and desired output format may vary depending on the project. Please provide additional details if necessary.
-            `;
+
+            The following is an example of a campaign that is fundraising for 'Children of Grace'.
+
+            Example:
+
+            Based on the provided data, We will derive an 'Ideal Donor Profile' for the campaign.
+
+**Data Understanding:**
+
+The campaign aims to lift vulnerable children out of poverty by providing education, medical aid, and mentorship. The campaign targets Gen X and Baby Boomers, with a focus on both males and females. The campaign has a strong online presence, with social media outreach and email marketing.
+
+**Baseline Profile Creation:**
+
+Based on the provided data, I will create a baseline profile for the campaign:
+
+* **Campaign Details:**
++ Name: Children of Grace
++ About: The campaign aims to lift vulnerable children out of poverty by providing education, medical aid, and mentorship.
++ Goals: To empower children to overcome and discover their potential.
++ Objectives: To provide education, medical aid, and mentorship to vulnerable children.
+* **Target Demographics:**
++ Gender: Male and Female
++ Age: Gen X and Baby Boomers
++ Wealth: Middle to upper-middle class
+* **Location:**
++ City: Buchanan
++ State: GB
++ Country: LR
+
+**Ideal Donor Profile Development:**
+
+Using the provided data and the weighted scoring system, I will derive an 'Ideal Donor Profile' for the campaign:
+
+* **Attributes:**
++ Age: 50-70 (5 points)
++ Estimated Income: Top 20% (5 points)
++ Estimated Wealth: Top 20% (5 points)
++ Estimated Disposable Income: Top 20% (5 points)
++ Estimated Liquid Assets: Top 20% (5 points)
++ Home Ownership: True (5 points)
++ Mail Purchases: True (5 points)
++ Potential Investor: True (5 points)
++ Registered Voter: True (5 points)
++ Email Deliverability: True (5 points)
+* **Ideal Donor Score:** 450
+
+**Interpretation:**
+
+Based on the 'Ideal Donor Profile', the campaign should target individuals who are:
+
+* Between 50-70 years old
+* Have a high estimated income and wealth
+* Have a high estimated disposable income and liquid assets
+* Are homeowners
+* Have made mail purchases
+* Are potential investors
+* Are registered voters
+* Have a deliverable email address
+
+These individuals are likely to be middle to upper-middle class, with a strong financial capacity to support the campaign. They are also likely to be interested in education and children's welfare, making them a good fit for the campaign.
+
+**Actionable Recommendations:**
+
+1. **Priority Targeting:** Target individuals who match the 'Ideal Donor Profile' with personalized communication and outreach efforts.
+2. **Major Gift Potential:** Consider assigning these individuals to the major gifts team for more focused cultivation.
+3. **Stewardship Focus:** Invest more resources in stewarding these donors, including personalized thank-you notes and exclusive event invitations.
+4. **Engagement Opportunities:** Offer these donors more ways to engage with the organization, including volunteer opportunities and advisory roles.
+5. **Recurring Giving Programs:** Encourage these donors to consider recurring giving options, as they are more likely to have the financial capacity for sustained support.
+
+**Additional Considerations:**
+
+1. **Data Quality and Consistency:** Prioritize data quality and consistency to ensure accurate targeting and engagement.
+2. **Advanced Data Analysis Techniques:** Explore advanced data analysis techniques, such as machine learning and predictive modeling, to further refine the 'Ideal Donor Profile'.
+3. **Continuous Refinement:** Continuously refine the 'Ideal Donor Profile' based on campaign performance and new insights gained from donor interactions.
+
+**Donor Personas:**
+
+Based on the 'Ideal Donor Profile', we can create the following donor personas:
+
+* **Persona 1:** "The Philanthropic Investor"
++ Age: 55-65
++ Estimated Income: $150,000+
++ Estimated Wealth: $1 million+
++ Estimated Disposable Income: $50,000+
++ Estimated Liquid Assets: $200,000+
++ Home Ownership: True
++ Mail Purchases: True
++ Potential Investor: True
++ Registered Voter: True
++ Email Deliverability: True
+* **Persona 2:** "The Educated Advocate"
++ Age: 50-60
++ Estimated Income: $100,000+
++ Estimated Wealth: $500,000+
++ Estimated Disposable Income: $30,000+
++ Estimated Liquid Assets: $100,000+
++ Home Ownership: True
++ Mail Purchases: True
++ Potential Investor: True
++ Registered Voter: True
++ Email Deliverability: True
+
+These donor personas can be used to guide communication and outreach efforts, as well as to inform the development of targeted marketing campaigns.
+
+`;
 
             // Call the Groq API for chat completion
             const chatCompletion = await groq.chat.completions.create({
