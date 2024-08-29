@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import CampaignLaunchBox from "./CampaignLaunch";
 import SummaryComponentBox from "./SummaryComponent";
 import PageHeader from "./HeaderComp";
+import BrandActivity from "./BrandActivities";
 
 const SocialMedDashboard = ({ name, setModalOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -247,39 +248,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
           )}
         </div>
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>Payment History</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Item</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payHistory ? (
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  ) : (
-                    <TableRow>
-                      <TableCell>
-                        You currently have no payment history
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <BrandActivity />
         </div>
       </main>
       <TogglePageModal
