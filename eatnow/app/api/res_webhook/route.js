@@ -20,6 +20,13 @@ export async function POST(req) {
             const arrayPlanned = Array.isArray(plan) && plan.length > 0 ? plan[0]?.assistantResponse : '';
             const { email: userEmail = '', name: userName = '' } = Array.isArray(emails) && emails.length > 0 ? emails[0] : {};
 
+            ///////////Scrape website to use as knowledge base////////////
+
+            const knowledgeBase = "";
+
+
+            ///////////////////////////////////////
+
             // Construct the prompt for the LLM
             const emailPrompt = `
             Write a catchy email subject line and an effective email body to promote a non-profit campaign to potential donors.
@@ -31,18 +38,11 @@ export async function POST(req) {
             1. Subject Line: Summarize the objectives and goals in 9 words or less.
             2. Email Body: Write a persuasive email emphasizing the importance of the campaign, with a clear call to action. Make sure to directly address ${userName} and tailor the message to their interests. Keep email message friendly, short, and concise.
             3. Encourage recipients to start a conversation with a trained assistant.
-            4. Reference ${campaignPage} as the website of the campaign.
-            5. Currency: Use the currency based on the selected country or symbol used for the currency (e.g: $ for United States, ₦ for Nigeria).
+            4. Currency: Use the currency based on the selected country or symbol used for the currency (e.g: $ for United States, ₦ for Nigeria).
 
             Example Email:
              Subject: "${userName}, help unlock support for the next generation."
-             We need your support to help unlock opportunities for the next generation. Our campaign focuses on [insert key points from objectives and goals].
-
-             By contributing, you can make a significant impact on the lives of [target audience], ensuring they receive the support they need to thrive. Your generosity can make all the difference.
-
-             Please consider donating today by visiting ${campaignPage} to help us achieve our mission.
- 
-             If you have any questions or would like to learn more about our campaign, please respond to this very email to promptly chat with our AI assistant trained specifically to assist and answer your questions.
+             
 
              Best regards,
              [Your Organization Name]
@@ -71,7 +71,7 @@ export async function POST(req) {
 
             // Extract the subject line and email body
             const subjectMatch = responseText.match(/Subject:\s*"([^"]+)"/i);
-            const composedEmailLine = subjectMatch ? subjectMatch[1] : 'No Subject Found';
+            const composedEmailLine = subjectMatch ? subjectMatch[1] : 'How do we Win Tyrese!!!';
             const composedEmailBody = responseText.split("\n\n").slice(1).join("\n\n").trim();
 
             // Format the email body with proper HTML
@@ -93,7 +93,7 @@ export async function POST(req) {
                             from: 'marketing@reblug.com',
                             to: [userEmail],
                             subject: composedEmailLine,
-                            html: `<p>${formattedEmailBody}</p>`,
+                            html: formattedEmailBody,
                         }),
                     });
 

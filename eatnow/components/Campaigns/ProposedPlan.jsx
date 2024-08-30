@@ -22,6 +22,7 @@ const Plan = ({ textData, isOpen }) => {
   const [editedContent, setEditedContent] = useState(false);
   const [isComposed, setIsComposed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fileName, setFileName] = useState("");
 
   const providers = [
     {
@@ -36,32 +37,66 @@ const Plan = ({ textData, isOpen }) => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json(sheet);
 
-      const emailList = json.map((row) => {
-        const firstName =
-          row.Firstname ||
-          row.firstName ||
-          row.first_name ||
-          row.firstname ||
-          "";
-        const lastName =
-          row.Lastname || row.lastName || row.last_name || row.lastname || "";
-        const fileName = row.name || name || `${firstName} ${lastName}`.trim();
+    if (file) {
+      setFileName(file.name); // Update file name state
 
-        return { email: row.Email, firstName, lastName, name: fileName };
-      });
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(sheet);
 
-      setEmails(emailList);
-    };
-    reader.readAsArrayBuffer(file);
+        const emailList = json.map((row) => {
+          const firstName =
+            row.Firstname ||
+            row.firstName ||
+            row.first_name ||
+            row.firstname ||
+            "";
+          const lastName =
+            row.Lastname || row.lastName || row.last_name || row.lastname || "";
+          const fullName = row.name || `${firstName} ${lastName}`.trim();
+
+          return { email: row.Email, firstName, lastName, name: fullName };
+        });
+
+        setEmails(emailList);
+      };
+      reader.readAsArrayBuffer(file);
+    }
   };
+
+  // const handleFileUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     const data = new Uint8Array(e.target.result);
+  //     const workbook = XLSX.read(data, { type: "array" });
+  //     const sheetName = workbook.SheetNames[0];
+  //     const sheet = workbook.Sheets[sheetName];
+  //     const json = XLSX.utils.sheet_to_json(sheet);
+
+  //     const emailList = json.map((row) => {
+  //       const firstName =
+  //         row.Firstname ||
+  //         row.firstName ||
+  //         row.first_name ||
+  //         row.firstname ||
+  //         "";
+  //       const lastName =
+  //         row.Lastname || row.lastName || row.last_name || row.lastname || "";
+  //       const fileName = row.name || name || `${firstName} ${lastName}`.trim();
+
+  //       return { email: row.Email, firstName, lastName, name: fileName };
+  //     });
+
+  //     setEmails(emailList);
+  //   };
+  //   reader.readAsArrayBuffer(file);
+  // };
 
   const handleSendEmail = async () => {
     if (emails.length > 0 || singleEmail) {
@@ -179,7 +214,48 @@ const Plan = ({ textData, isOpen }) => {
               htmlFor="file-upload"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              If you already have contact list, please upload the file below OR
+              If you have a contact list to share, please upload the file below
+              OR build one below using our API
+            </label>
+            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <div className="text-center">
+                {/* Your PhotoIcon or any other icon */}
+                <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                  <label
+                    htmlFor="file-upload"
+                    className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      accept=".xlsx, .xls"
+                      onChange={handleFileUpload}
+                      className="sr-only"
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+                <p className="text-xs leading-5 text-gray-600">
+                  Excel files only (.xlsx, .xls)
+                </p>
+
+                {/* Display the file name if a file is uploaded */}
+                {fileName && (
+                  <p className="mt-2 text-sm text-gray-700">
+                    Uploaded File: <strong>{fileName}</strong>
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          {/* <div className="col-span-full">
+            <label
+              htmlFor="file-upload"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              If you have contact list share, please upload the file below OR
               build one below using our API
             </label>
             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -210,7 +286,7 @@ const Plan = ({ textData, isOpen }) => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Single Email Input Section */}
           <div className="mt-6">
