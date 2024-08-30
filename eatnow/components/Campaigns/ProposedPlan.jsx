@@ -37,66 +37,75 @@ const Plan = ({ textData, isOpen }) => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-
     if (file) {
-      setFileName(file.name); // Update file name state
-
+      setFileName(file.name); // Set the file name to the state
       const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(sheet);
 
-        const emailList = json.map((row) => {
-          const firstName =
-            row.Firstname ||
-            row.firstName ||
-            row.first_name ||
-            row.firstname ||
-            "";
-          const lastName =
-            row.Lastname || row.lastName || row.last_name || row.lastname || "";
-          const fullName = row.name || `${firstName} ${lastName}`.trim();
+      reader.onload = () => {
+        // Convert ArrayBuffer to Uint8Array
+        const arrayBuffer = reader.result;
+        const data = new Uint8Array(arrayBuffer);
 
-          return { email: row.Email, firstName, lastName, name: fullName };
-        });
+        try {
+          // Read workbook from Uint8Array
+          const workbook = XLSX.read(data, { type: "array" });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        setEmails(emailList);
+          // Assuming the first row contains headers
+          const headers = jsonData[0].map((header) =>
+            header.trim().toLowerCase()
+          );
+
+          // Identify the indices of relevant columns
+          const emailIndex = headers.findIndex((header) =>
+            header.includes("email")
+          );
+          const firstNameIndex = headers.findIndex(
+            (header) =>
+              header.includes("Firstname") ||
+              header.includes("first-name") ||
+              header.includes("firstName") ||
+              header.includes("firstname") ||
+              header.includes("first name") ||
+              header.includes("first_name")
+          );
+          const lastNameIndex = headers.findIndex(
+            (header) =>
+              header.includes("Lastname") ||
+              header.includes("last-name") ||
+              header.includes("lastName") ||
+              header.includes("lastname") ||
+              header.includes("last name") ||
+              header.includes("last_name")
+          );
+
+          // Skip the header row and process the remaining rows
+          const emailList = jsonData.slice(1).map((row) => {
+            const email = emailIndex >= 0 ? row[emailIndex] : "";
+            const firstName = firstNameIndex >= 0 ? row[firstNameIndex] : "";
+            const lastName = lastNameIndex >= 0 ? row[lastNameIndex] : "";
+            return {
+              email,
+              firstName,
+              lastName,
+              name: `${firstName} ${lastName}`.trim(),
+            };
+          });
+
+          setEmails(emailList);
+        } catch (error) {
+          console.error("Error reading Excel file:", error);
+          alert(
+            "There was an error processing the Excel file. Please ensure it is a valid .xlsx or .xls file."
+          );
+        }
       };
-      reader.readAsArrayBuffer(file);
+
+      reader.readAsArrayBuffer(file); // Read file as array buffer for Excel
     }
   };
-
-  // const handleFileUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     const data = new Uint8Array(e.target.result);
-  //     const workbook = XLSX.read(data, { type: "array" });
-  //     const sheetName = workbook.SheetNames[0];
-  //     const sheet = workbook.Sheets[sheetName];
-  //     const json = XLSX.utils.sheet_to_json(sheet);
-
-  //     const emailList = json.map((row) => {
-  //       const firstName =
-  //         row.Firstname ||
-  //         row.firstName ||
-  //         row.first_name ||
-  //         row.firstname ||
-  //         "";
-  //       const lastName =
-  //         row.Lastname || row.lastName || row.last_name || row.lastname || "";
-  //       const fileName = row.name || name || `${firstName} ${lastName}`.trim();
-
-  //       return { email: row.Email, firstName, lastName, name: fileName };
-  //     });
-
-  //     setEmails(emailList);
-  //   };
-  //   reader.readAsArrayBuffer(file);
-  // };
 
   const handleSendEmail = async () => {
     if (emails.length > 0 || singleEmail) {
@@ -113,6 +122,8 @@ const Plan = ({ textData, isOpen }) => {
         try {
           setLoading(true); // Set loading to true before the async operation
           setButtonText("Send Email");
+
+          console.log("Email Data::", emailData);
 
           const response = await fetch("/api/partner/getPostByEmails", {
             method: "POST",
@@ -250,44 +261,6 @@ const Plan = ({ textData, isOpen }) => {
               </div>
             </div>
           </div>
-          {/* <div className="col-span-full">
-            <label
-              htmlFor="file-upload"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              If you have contact list share, please upload the file below OR
-              build one below using our API
-            </label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center">
-                <PhotoIcon
-                  aria-hidden="true"
-                  className="mx-auto h-12 w-12 text-gray-300"
-                />
-                <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      accept=".xlsx, .xls"
-                      onChange={handleFileUpload}
-                      className="sr-only"
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
-                <p className="text-xs leading-5 text-gray-600">
-                  Excel files only (.xlsx, .xls)
-                </p>
-              </div>
-            </div>
-          </div> */}
-
           {/* Single Email Input Section */}
           <div className="mt-6">
             <p className="my-2 text-sm text-gray-600">
