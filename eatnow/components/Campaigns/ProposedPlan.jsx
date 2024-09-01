@@ -5,6 +5,7 @@ import * as XLSX from "xlsx";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import Link from "next/link";
 
 const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);
@@ -24,15 +25,29 @@ const Plan = ({ textData, isOpen }) => {
   const [loading, setLoading] = useState(false);
   const [fileName, setFileName] = useState("");
 
+  // const providers = [
+  //   {
+  //     name: "Google Drive",
+  //     imageUrl: "/images/google_drive.png",
+  //   },
+  //   {
+  //     name: "Google Sheets",
+  //     imageUrl: "/images/google-sheets.png",
+  //   },
+  // ];
+
   const providers = [
     {
       name: "Google Drive",
       imageUrl: "/images/google_drive.png",
+      type: "google",
     },
     {
       name: "Google Sheets",
       imageUrl: "/images/google-sheets.png",
+      type: "google",
     },
+    // ... other providers
   ];
 
   const handleFileUpload = (event) => {
@@ -197,9 +212,49 @@ const Plan = ({ textData, isOpen }) => {
     setEditedContent(true);
     setButtonText("Send Email");
   };
+
   // Function to connect to external sources (e.g., Salesforce, Google Drive)
-  const handleConnectSource = (source) => {
-    // Logic to connect to the source and fetch emails
+  const handleConnectSource = async (source) => {
+    if (source.type === "google") {
+      if (!googleToken) {
+        alert("Please sign in with Google first");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/google/${source.name.toLowerCase().replace(" ", "-")}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: googleToken }),
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (source.name === "Google Sheets") {
+            processGoogleSheetsData(data);
+          } else if (source.name === "Google Drive") {
+            console.log("Google Drive files:", data);
+          }
+        } else {
+          console.error(`Failed to fetch ${source.name} data`);
+        }
+      } catch (error) {
+        console.error(`Error fetching ${source.name} data:`, error);
+      }
+    }
+  };
+
+  const processGoogleSheetsData = (data) => {
+    const emailList = data.values.slice(1).map((row) => ({
+      email: row[0] || "",
+      firstName: row[1] || "",
+      lastName: row[2] || "",
+      name: `${row[1] || ""} ${row[2] || ""}`.trim(),
+    }));
+    setEmails(emailList);
   };
 
   return (
@@ -454,10 +509,13 @@ const Plan = ({ textData, isOpen }) => {
 
           {/* External Sources Section */}
           <div className="mt-10">
-            <h3 className="text-sm font-medium text-gray-500">
+            <Link href={"/account?view=Integrations"}>
+              Connect data from external sources
+            </Link>
+            {/* <h3 className="text-sm font-medium text-gray-500">
               Connect Email Sources
-            </h3>
-            <ul
+            </h3> */}
+            {/* <ul
               role="list"
               className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2"
             >
@@ -489,7 +547,7 @@ const Plan = ({ textData, isOpen }) => {
                   </button>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       ) : (
