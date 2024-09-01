@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Groq from 'groq-sdk';
 
+//READ THIS
+// This route is for Builder.io / Resend web scraper tool
+// The tool uses Builder.io to scrape a website based on URL submitted by the user
+// If the scrapper successfully scraped the website based on the URL, "Resend" is then used to respond to an email to that was sent to the user
+
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const prisma = new PrismaClient();
@@ -21,11 +26,8 @@ export async function POST(req) {
             const { email: userEmail = '', name: userName = '' } = Array.isArray(emails) && emails.length > 0 ? emails[0] : {};
 
             ///////////Scrape website to use as knowledge base////////////
-
             const knowledgeBase = "";
-
-
-            ///////////////////////////////////////
+            /////////////////////////////////////////////////////////////
 
             // Construct the prompt for the LLM
             const emailPrompt = `

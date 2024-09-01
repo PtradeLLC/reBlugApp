@@ -1,45 +1,32 @@
 import { NextResponse } from "next/server";
-import { google } from 'googleapis';
 
+// This route uses Nango to connect external data sources to the app.
 export async function POST(req) {
     try {
-        const { emails, subjectLine, plan, campaignPage, emailBody, token } = await req.json();
+        const { data } = await req.json(); // Expecting data from Nango webhook
 
-        // If Google token is provided, fetch data from Google services
-        if (token) {
-            const auth = new google.auth.OAuth2();
-            auth.setCredentials({ access_token: token });
+        console.log("Data from Nango", data);
 
-            // Fetch Google Drive files
-            const drive = google.drive({ version: 'v3', auth });
-            const driveResponse = await drive.files.list({
-                pageSize: 10,
-                fields: 'nextPageToken, files(id, name)',
-            });
+        // Here, save data to your database
+        // For example, if using Prisma:
+        // await prisma.integrationData.create({ data });
 
-            // Fetch Google Sheets data
-            const sheets = google.sheets({ version: 'v4', auth });
-            const sheetsResponse = await sheets.spreadsheets.values.get({
-                spreadsheetId: 'YOUR_SPREADSHEET_ID',
-                range: 'Sheet1!A1:C1000',
-            });
-
-            // Process the data as needed
-            // ...
-
-            return NextResponse.json({
-                driveFiles: driveResponse.data.files,
-                sheetsData: sheetsResponse.data.values,
-                // Include other processed data here
-            });
-        }
-
-        // Your existing email processing logic here
-        // ...
-
-        return NextResponse.json({ message: "Emails processed successfully" });
+        return NextResponse.json({ message: "Data processed successfully" });
     } catch (error) {
         console.error("Error processing request:", error);
         return NextResponse.json({ message: "There is an error: " + error.message }, { status: 500 });
     }
+}
+
+// Handle other HTTP methods
+export async function GET() {
+    return NextResponse.json({ message: "GET method is not supported for this endpoint." }, { status: 405 });
+}
+
+export async function PUT() {
+    return NextResponse.json({ message: "PUT method is not supported for this endpoint." }, { status: 405 });
+}
+
+export async function DELETE() {
+    return NextResponse.json({ message: "DELETE method is not supported for this endpoint." }, { status: 405 });
 }
