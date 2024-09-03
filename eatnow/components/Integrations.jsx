@@ -14,19 +14,27 @@ const integrationData = {
       connected: false,
     },
     {
-      name: "Box",
+      name: "Google Sheets",
       url: "",
-      image: "/images/box.png",
-      integrationId: "box",
+      image: "/images/gsheet.png",
+      integrationId: "google-sheet",
       connected: false,
     },
     {
-      name: "Dropbox",
+      name: "Google Drive",
       url: "",
-      image: "/images/dropbx.png",
-      integrationId: "dropbox",
+      image: "/images/gdriver.png",
+      integrationId: "box",
       connected: false,
     },
+
+    // {
+    //   name: "Dropbox",
+    //   url: "",
+    //   image: "/images/dropbx.png",
+    //   integrationId: "dropbox",
+    //   connected: false,
+    // },
   ],
   contents: [
     {
@@ -37,13 +45,6 @@ const integrationData = {
       connected: false,
     },
     {
-      name: "NationBuilder",
-      url: "",
-      image: "/images/nationbuild.png",
-      integrationId: "nationbuilder",
-      connected: false,
-    },
-    {
       name: "Webflow",
       url: "",
       image: "/images/webflow.png",
@@ -51,26 +52,34 @@ const integrationData = {
       connected: false,
     },
     {
-      name: "Medium",
+      name: "NationBuilder",
       url: "",
-      image: "/images/med.png",
-      integrationId: "medium",
+      image: "/images/nationbuild.png",
+      integrationId: "nationbuilder",
       connected: false,
     },
-    {
-      name: "Blogger",
-      url: "",
-      image: "/images/blog.png",
-      integrationId: "blogger",
-      connected: false,
-    },
-    {
-      name: "Dev",
-      url: "",
-      image: "/images/dev.png",
-      integrationId: "dev",
-      connected: false,
-    },
+
+    // {
+    //   name: "Medium",
+    //   url: "",
+    //   image: "/images/med.png",
+    //   integrationId: "medium",
+    //   connected: false,
+    // },
+    // {
+    //   name: "Blogger",
+    //   url: "",
+    //   image: "/images/blog.png",
+    //   integrationId: "blogger",
+    //   connected: false,
+    // },
+    // {
+    //   name: "Dev",
+    //   url: "",
+    //   image: "/images/dev.png",
+    //   integrationId: "dev",
+    //   connected: false,
+    // },
   ],
   payments: [
     {
