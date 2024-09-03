@@ -30,17 +30,17 @@ const integrationData = {
   ],
   contents: [
     {
-      name: "Wordpress",
-      url: "",
-      image: "/images/wordpress.png",
-      integrationId: "wordpress",
-      connected: false,
-    },
-    {
       name: "Tumblr",
       url: "",
       image: "/images/tumblr.png",
       integrationId: "tumblr",
+      connected: false,
+    },
+    {
+      name: "NationBuilder",
+      url: "",
+      image: "/images/nationbuild.png",
+      integrationId: "nationbuilder",
       connected: false,
     },
     {
@@ -80,27 +80,38 @@ const integrationData = {
       integrationId: "",
       connected: true, // Set to true by default
     },
-    {
-      name: "Paypal",
-      url: "",
-      image: "/images/paypal.png",
-      integrationId: "paypal",
-      connected: false,
-    },
-    {
-      name: "Square",
-      url: "",
-      image: "/images/square.png",
-      integrationId: "square",
-      connected: false,
-    },
-    {
-      name: "Braintree",
-      url: "",
-      image: "/images/paypal.png",
-      integrationId: "braintree",
-      connected: false,
-    },
+    // {
+    //   name: "Contentstack",
+    //   url: "",
+    //   image: "/images/contentsta-svg.png",
+    //   integrationId: "contentstack",
+    //   connected: false,
+    //   connectionConfig: {
+    //     subdomain: `compass-starter---blt1482cdc67e-production`,
+    //     appId: `${process.env.NEXT_PUBLIC_CONTENTSTACK_APP_ID}`,
+    //   },
+    // },
+    // {
+    //   name: "Paypal",
+    //   url: "",
+    //   image: "/images/paypal.png",
+    //   integrationId: "paypal",
+    //   connected: false,
+    // },
+    // {
+    //   name: "Square",
+    //   url: "",
+    //   image: "/images/square.png",
+    //   integrationId: "squareup",
+    //   connected: false,
+    // },
+    // {
+    //   name: "Braintree",
+    //   url: "",
+    //   image: "/images/paypal.png",
+    //   integrationId: "braintree",
+    //   connected: false,
+    // },
   ],
 };
 
@@ -244,7 +255,7 @@ const Integrations = () => {
 
           <IntegrationSection
             title="Monetize"
-            subtitle="Manage your payment methods"
+            subtitle="Connect your payment methods"
             integrations={integrationData.payments.map((integration) => ({
               ...integration,
               connected:
@@ -268,7 +279,7 @@ const Integrations = () => {
 
           <IntegrationSection
             title="Contacts"
-            subtitle="Import your contact list"
+            subtitle="Connect to import your contact list"
             integrations={integrationData.contacts.map((integration) => ({
               ...integration,
               connected:
