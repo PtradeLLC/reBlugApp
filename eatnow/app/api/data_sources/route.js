@@ -12,6 +12,8 @@ export async function POST(req) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
+        console.log("Now in the server", connectionId, integrationId, userId);
+
         // Save the integration data to the database
         const integration = await prisma.integration.create({
             data: {
@@ -20,6 +22,9 @@ export async function POST(req) {
                 userId,
             },
         });
+
+        console.log("Integrationnns", integration);
+
 
         return NextResponse.json({ message: "Integration saved successfully", integration });
     } catch (error) {
