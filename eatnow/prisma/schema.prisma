@@ -227,6 +227,17 @@ model Geographic {
   demographic Demographic?
 }
 
+model Integration {
+  id            String   @id @default(cuid())
+  connectionId  String
+  integrationId String
+  userId        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, integrationId])
+}
+
 model Series {
   id         String   @id @default(cuid())
   title      String?  @unique
