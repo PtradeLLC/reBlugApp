@@ -60,11 +60,32 @@ const integrationData = {
   ],
   payments: [
     {
-      name: "ReBlug Card",
+      name: "Facebook",
       url: "",
-      image: "/images/faviconfb.png",
+      image: "/images/facebooklogo.png",
       integrationId: "",
-      connected: true, // Set to true by default
+      connected: false, // Set to true by default
+    },
+    {
+      name: "LinkedIn",
+      url: "",
+      image: "/images/linkedIn.png",
+      integrationId: "",
+      connected: false, // Set to true by default
+    },
+    {
+      name: "Instagram",
+      url: "",
+      image: "/images/instagram.png",
+      integrationId: "",
+      connected: false, // Set to true by default
+    },
+    {
+      name: "X",
+      url: "",
+      image: "/images/xlogo.png",
+      integrationId: "",
+      connected: false, // Set to true by default
     },
   ],
 };
@@ -242,8 +263,8 @@ const Integrations = () => {
           </div>
 
           <IntegrationSection
-            title="Monetize"
-            subtitle="Connect your payment methods"
+            title="Social"
+            subtitle="Connect your social media account"
             integrations={integrations.payments}
             handleSources={handleSources}
           />
