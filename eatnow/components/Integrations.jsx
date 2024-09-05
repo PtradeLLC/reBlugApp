@@ -14,26 +14,26 @@ const integrationData = {
       connected: false,
     },
     {
-      name: "Google Sheets",
-      url: "",
-      image: "/images/gsheet.png",
-      integrationId: "google-sheet",
-      connected: false,
-    },
-    {
-      name: "Google Drive",
-      url: "",
-      image: "/images/gdriver.png",
-      integrationId: "box",
-      connected: false,
-    },
-    {
       name: "Salesforce",
       url: "",
       image: "/images/salesforcelogo.png",
       integrationId: "salesforce",
       connected: false,
     },
+    // {
+    //   name: "Google Sheets",
+    //   url: "",
+    //   image: "/images/gsheet.png",
+    //   integrationId: "google-sheet",
+    //   connected: false,
+    // },
+    // {
+    //   name: "Google Drive",
+    //   url: "",
+    //   image: "/images/gdriver.png",
+    //   integrationId: "box",
+    //   connected: false,
+    // },
   ],
   contents: [
     {
@@ -108,7 +108,7 @@ const IntegrationSection = ({
             className="w-full"
             disabled={integration.connected}
           >
-            <div className="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <div className="flex items-between items-center mx-auto rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
               <Image
                 src={integration.image}
                 alt={integration.name}
