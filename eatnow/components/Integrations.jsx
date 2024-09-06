@@ -58,35 +58,28 @@ const integrationData = {
       connected: false,
     },
   ],
-  payments: [
-    {
-      name: "Facebook",
-      url: "",
-      image: "/images/facebooklogo.png",
-      integrationId: "",
-      connected: false, // Set to true by default
-    },
+  social: [
     {
       name: "LinkedIn",
       url: "",
       image: "/images/linkedIn.png",
-      integrationId: "",
+      integrationId: "linkedin",
       connected: false, // Set to true by default
     },
-    {
-      name: "Instagram",
-      url: "",
-      image: "/images/instagram.png",
-      integrationId: "",
-      connected: false, // Set to true by default
-    },
-    {
-      name: "X",
-      url: "",
-      image: "/images/xlogo.png",
-      integrationId: "",
-      connected: false, // Set to true by default
-    },
+    // {
+    //   name: "Facebook",
+    //   url: "",
+    //   image: "/images/facebooklogo.png",
+    //   integrationId: "facebook",
+    //   connected: false, // Set to true by default
+    // },
+    // {
+    //   name: "X",
+    //   url: "",
+    //   image: "/images/xlogo.png",
+    //   integrationId: "twitter",
+    //   connected: false, // Set to true by default
+    // },
   ],
 };
 
@@ -265,7 +258,7 @@ const Integrations = () => {
           <IntegrationSection
             title="Social"
             subtitle="Connect your social media account"
-            integrations={integrations.payments}
+            integrations={integrations.social}
             handleSources={handleSources}
           />
 

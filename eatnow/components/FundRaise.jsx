@@ -19,6 +19,7 @@ const RaiseFunds = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const loadingStateStatus = [
     "Generating Donor List...",
@@ -84,6 +85,43 @@ const RaiseFunds = () => {
     "Cause",
     "Other Campaigns",
   ];
+
+  const checkFormValidity = () => {
+    const requiredFields = [
+      formData.title,
+      formData.website,
+      formData.about,
+      formData.objectives,
+      formData.campaignSolution.problem,
+      formData.campaignSolution.supporters,
+      formData.campaignSolution.influencers,
+      formData.campaignSolution.unique_aspects,
+      formData.campaignSolution.donor_behavior,
+      formData.campaignSolution.upcoming_events,
+      formData.campaignSolution.donor_motivations,
+      formData.campaignSolution.seasonal_trends,
+      formData.demographic.targetDonor,
+      formData.demographic.gender,
+      formData.demographic.intention,
+      formData.timeline,
+      formData.momentum,
+      formData.strategy,
+      formData.postCampaign,
+      formData.wealthIndicator,
+      formData.fundingGoals,
+      formData.donorRetention,
+      formData.recurringGiving,
+    ];
+
+    return (
+      requiredFields.every((field) => field.trim() !== "") &&
+      selectedItem !== "Select Campaign Type"
+    );
+  };
+
+  useEffect(() => {
+    setIsFormValid(checkFormValidity());
+  }, [formData, selectedItem]);
 
   // Fetch countries on mount
   useEffect(() => {
@@ -338,7 +376,10 @@ const RaiseFunds = () => {
                 <p className="mt-1 text-sm leading-6 text-gray-600">
                   To effectively define and identify your ideal donor, please
                   provide details about your organization, campaign, and desired
-                  outcomes.
+                  outcomes. <br />
+                  <span className="text-red-700">
+                    (All fields are required)
+                  </span>
                 </p>
               </div>
 
@@ -1180,10 +1221,23 @@ const RaiseFunds = () => {
 
               <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                 <div className="col-span-full">
-                  {!showLoadingStatus && !showFinalMessage && (
+                  {/* {!showLoadingStatus && !showFinalMessage && (
                     <button
                       className="bg-green-700 mt-2 mb-3 rounded-md text-white p-2"
                       onClick={handleLaunch}
+                    >
+                      Begin Campaign Strategy
+                    </button>
+                  )} */}
+                  {!showLoadingStatus && !showFinalMessage && (
+                    <button
+                      className={`mt-2 mb-3 rounded-md text-white p-2 ${
+                        isFormValid
+                          ? "bg-green-700"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
+                      onClick={handleLaunch}
+                      disabled={!isFormValid}
                     >
                       Begin Campaign Strategy
                     </button>
