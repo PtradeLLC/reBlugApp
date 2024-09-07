@@ -360,19 +360,18 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                 {connectedAccount}
                 <span className="text-sm">reach</span>
                 <span className="text-xs text-green-700 font-semibold flex justify-end">
-                  Test your blog
+                  Grow | Monetize
                 </span>
               </div>
               <span className="text-sm text-muted-foreground">
-                {`One of our services is to provide tools to help you start and grow.`}
+                {`Connect one or more data sources.`}
               </span>
-              <Button
-                className="text-xs m-auto bg-green-700 flex mt-1"
-                type="button"
-                onClick={handleMonetize}
+              <Link
+                className="text-sm text-white justify-center items-center m-auto bg-green-700 flex mt-1 w-[144px] h-[40px] rounded-md"
+                href="/account?view=Integrations"
               >
-                Check out Tools
-              </Button>
+                Connect Data
+              </Link>
             </CardContent>
           </Card>
         </div>

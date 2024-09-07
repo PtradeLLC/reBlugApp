@@ -114,7 +114,7 @@ const RaiseFunds = () => {
     ];
 
     return (
-      requiredFields.every((field) => field.trim() !== "") &&
+      requiredFields.every((field) => field?.trim() !== "") &&
       selectedItem !== "Select Campaign Type"
     );
   };

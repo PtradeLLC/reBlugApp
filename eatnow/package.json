@@ -35,7 +35,7 @@
     "@leap-ai/workflows": "^1.1.2",
     "@mistralai/mistralai": "^0.1.3",
     "@nangohq/frontend": "^0.42.6",
-    "@nangohq/node": "^0.36.69",
+    "@nangohq/node": "^0.42.9",
     "@neondatabase/serverless": "^0.6.0",
     "@nextui-org/calendar": "^2.0.2",
     "@nextui-org/card": "^2.0.33",

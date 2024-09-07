@@ -40,7 +40,7 @@ const SocialMedDashboard = ({ name, setModalOpen }) => {
   );
   const [userType, setUserType] = useState({
     defaultType: "Blogger",
-    brandType: "Company|Org.",
+    brandType: "Agency|Org.",
     sMediaType: "Social Media Partner",
     FandBType: "F&B",
   });
