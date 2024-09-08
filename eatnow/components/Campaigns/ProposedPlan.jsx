@@ -496,70 +496,95 @@ const Plan = ({ textData, isOpen }) => {
             )
           )}
 
-          <div className="mt-4 w-72 flex flex-col justify-center items-center m-auto">
+          <div className="mt-4 flex flex-col justify-center items-center m-auto">
             {isComposed && (
               <p className="text-sm mb-2 mt-2 text-gray-700">
                 Employ AI to compose content for your campaign. Click button
                 below to proceed.
               </p>
             )}
-            <Button
-              type="button"
-              onClick={handleSendEmail}
-              className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
-            >
-              <PlusIcon className="h-5 w-5 mr-2" />
-              {!loading && buttonText ? (
-                buttonText
-              ) : (
-                <div className="flex justify-center items-center">
-                  <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
-                  <p className="ml-2 text-white">Processing...</p>
-                </div>
-              )}
-            </Button>
-          </div>
 
-          <div className="mt-10 mb-10">
-            <h3 className="text-sm font-medium text-gray-500 mt-4">
-              Connect your contact data from external sources
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {providers.map((provider) => (
-                <div key={provider.integrationId} className="flex-none">
-                  <Button
-                    onClick={() => handleConnectSource(provider)}
-                    className="flex justify-between items-center w-full"
-                    disabled={provider.connected}
-                  >
-                    <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                      <div className="flex items-center">
-                        <Image
-                          src={provider.image}
-                          alt={provider.name}
-                          width={24}
-                          height={24}
-                          className="mr-2 h-4 w-4 shrink-0"
-                        />
-                        <span className="text-sm font-medium text-gray-900 dark:text-white mx-2">
-                          {provider.name}
-                        </span>
+            <div className="mt-10 mb-10">
+              <h3 className="text-sm font-medium text-gray-500 mt-4">
+                You can also connect your contact data from external sources
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {providers.map((provider) => (
+                  <div key={provider.integrationId} className="flex-none">
+                    <Button
+                      onClick={() => handleConnectSource(provider)}
+                      className="flex justify-between items-center w-full"
+                      disabled={provider.connected}
+                    >
+                      <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <div className="flex items-center">
+                          <Image
+                            src={provider.image}
+                            alt={provider.name}
+                            width={24}
+                            height={24}
+                            className="mr-2 h-4 w-4 shrink-0"
+                          />
+                          <span className="text-sm font-medium text-gray-900 dark:text-white mx-2">
+                            {provider.name}
+                          </span>
+                        </div>
+                        {provider.connected ? (
+                          <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                          </span>
+                        ) : (
+                          <span className="relative flex h-3 w-3">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                          </span>
+                        )}
                       </div>
-                      {provider.connected ? (
-                        <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                        </span>
-                      ) : (
-                        <span className="relative flex h-3 w-3">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>
-                      )}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-between px-2">
+              <div className="mx-1">
+                <Button
+                  type="button"
+                  onClick={handleSendEmail}
+                  className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+                >
+                  <PlusIcon className="h-5 w-5 mr-2" />
+                  {!loading && buttonText ? (
+                    <>
+                      {buttonText}
+                      <span className="text-xs flex justify-end">
+                        (Included)
+                      </span>
+                    </>
+                  ) : (
+                    <div className="flex justify-center items-center">
+                      <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                      <p className="ml-2 text-white">Processing...</p>
                     </div>
-                  </Button>
-                </div>
-              ))}
+                  )}
+                </Button>
+              </div>
+              <div className="mx-1">
+                <Button
+                  type="button"
+                  onClick={""}
+                  className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+                >
+                  <PlusIcon className="h-5 w-5 mr-2" />
+                  Get More Emails
+                  <span className="text-xs flex justify-end">
+                    (Additional cost)
+                  </span>
+                </Button>
+                <span className="text-sm flex justify-end">
+                  Based on Ideal profile
+                </span>
+              </div>
             </div>
           </div>
         </div>

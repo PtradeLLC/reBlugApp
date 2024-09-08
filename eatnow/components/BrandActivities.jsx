@@ -2,9 +2,9 @@ import { useState } from "react";
 
 // Initial tabs data with default counts
 const initialTabs = [
-  { name: "Email Marketing", href: "#", count: 0, current: true }, // Assume 5 active campaigns for demonstration
+  { name: "Email Marketing", href: "#", count: 0, current: true },
   { name: "Social Marketing", href: "#", count: 0, current: false },
-  { name: "Contracts", href: "#", count: 0, current: false },
+  { name: "Your Clients", href: "#", count: 0, current: false },
   { name: "Partners", href: "#", count: 0, current: false },
   { name: "Payments", href: "#", count: 0, current: false },
 ];
