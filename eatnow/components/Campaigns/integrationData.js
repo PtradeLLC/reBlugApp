@@ -16,10 +16,10 @@ export const integrationData = {
             connected: false,
         },
         {
-            name: "Google Drive",
+            name: "Google Sheets",
             url: "",
-            image: "/images/gdriver.png",
-            integrationId: "google-drive",
+            image: "/images/google-sheets.png",
+            integrationId: "google-sheet",
             connected: false,
         },
     ],

@@ -364,7 +364,7 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                 </span>
               </div>
               <span className="text-sm text-muted-foreground">
-                {`Connect one or more data sources.`}
+                {`Connect one or more data sources to broaden your reach.`}
               </span>
               <Link
                 className="text-sm text-white justify-center items-center m-auto bg-green-700 flex mt-1 w-[144px] h-[40px] rounded-md"

@@ -17,8 +17,6 @@ export async function POST(req) {
             data.map(async (item) => {
                 const { emails, plan, campaignPage } = item;
 
-                console.log("LOG IT", emails, plan, campaignPage);
-
                 // Safely destructure and provide default values
                 const arrayPlanned = Array.isArray(plan) && plan.length > 0 ? plan[0]?.assistantResponse || '' : '';
                 const { email: userEmail = '', name: userName = '' } = Array.isArray(emails) && emails.length > 0 ? emails[0] : {};
