@@ -130,8 +130,6 @@ export async function POST(req) {
             })
         );
 
-        console.log("PRORES", processedResults);
-
         // Return all processed results
         return NextResponse.json({ results: processedResults }, { status: 200 });
     } catch (error) {

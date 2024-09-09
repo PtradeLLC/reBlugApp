@@ -4,6 +4,8 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import AIBlog from "../components/BlogSection";
 import FoodiesComponent from "../components/Foodies";
+import ProfitNonProfit from "@/components/ProfitNonProfit";
+import Clouds from "@/components/Clouds";
 
 const Home = () => {
   return (
@@ -100,7 +102,13 @@ const Home = () => {
             <AIBlog />
           </div>
           <div className="flex justify-center content-center">
+            <ProfitNonProfit />
+          </div>
+          <div className="flex justify-center content-center">
             <FoodiesComponent />
+          </div>
+          <div className="flex justify-center content-center">
+            <Clouds />
           </div>
         </span>
       </main>
