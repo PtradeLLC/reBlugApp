@@ -64,31 +64,6 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                     </div>
                 </div>
             </div>
-            {/* COMMENT OUT THE DIV BELOW IF CUTTING TOO CLOSE TO PRESENTATION */}
-            {/* <div className="overflow-y-auto h-[320px]">
-                {!loading ? (
-                    <>
-                        {comments.length > 0 ? comments.map((comment) => (
-                            <Comment key={comment.id} comment={comment} />
-                        )) : (
-                            <p className='text-sm font-normal text-gray-900 dark:text-white'>
-                                There is no comment posted yet for this article
-                            </p>
-                        )}
-                    </>
-                ) : (
-                    <div className="flex justify-center">
-                        <CircularProgress
-                            aria-label="Loading..."
-                            size="sm"
-                            value={value}
-                            color="warning"
-                            className='mx-2'
-                            showValueLabel={true}
-                        />
-                    </div>
-                )}
-            </div> */}
             {!user && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

@@ -522,7 +522,7 @@ const PostPage = ({ initialComments, post }) => {
               setIsOpen={setIsArticleModalOpen}
             />
           </div>
-          <Button
+          {/* <Button
             onClick={() => setIsOpen(true)}
             className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
           >
@@ -535,7 +535,7 @@ const PostPage = ({ initialComments, post }) => {
               />
             </span>
             Chat with this Article
-          </Button>
+          </Button> */}
         </>
       )}
     </div>
