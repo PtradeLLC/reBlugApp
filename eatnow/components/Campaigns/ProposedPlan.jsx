@@ -451,11 +451,11 @@ const Plan = ({ textData, isOpen }) => {
                           </div>
                           <div className="text-xs w-3/4 lg:w-1/4 bg-slate-600 text-white p-4 rounded-t-none rounded-b-md">
                             We use artificial intelligence to create
-                            personalized email subject lines based on what you
-                            post on social media. This helps your emails get
-                            opened more often. If we don't have enough
-                            information from your social media, we'll use a
-                            default subject line.
+                            personalized email subject lines based on what
+                            recipients post on social media. This helps your
+                            email's open rate. However, if we don't have enough
+                            information from their social media post, then we'll
+                            use this default subject line.
                           </div>
                         </div>
                       }
@@ -498,10 +498,15 @@ const Plan = ({ textData, isOpen }) => {
 
           <div className="mt-4 flex flex-col justify-center items-center m-auto">
             {isComposed && (
-              <p className="text-sm mb-2 mt-2 text-gray-700">
-                Employ AI to compose content for your campaign. Click button
-                below to proceed.
-              </p>
+              <span className="outline-dashed outline-2 outline-offset-2 px-4 w-3/4">
+                <p className="text-sm mb-2 mt-2 text-gray-600">
+                  Let's employ AI to compose content for your email campaign.
+                  Click 'Compose Email' button below to proceed with your
+                  contact list you uploaded and/or you may use the 'Get More
+                  Emails' button to find email addresses based on the Ideal
+                  Profiles generated for the campaign.
+                </p>
+              </span>
             )}
 
             <div className="mt-10 mb-10">

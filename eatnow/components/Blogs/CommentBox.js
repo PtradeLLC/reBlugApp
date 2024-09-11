@@ -64,6 +64,7 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                     </div>
                 </div>
             </div>
+            {/* COMMENT OUT THE DIV BELOW IF CUTTING TOO CLOSE TO PRESENTATION */}
             {/* <div className="overflow-y-auto h-[320px]">
                 {!loading ? (
                     <>

@@ -238,7 +238,7 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
             </CardHeader>
             <CardContent>
               <div>
-                <span className="text-xs font-normal">Signed in as:</span>{" "}
+                <span className="text-xs font-normal">Using portal as:</span>{" "}
                 <span className="text-xl font-bold">
                   {userType.defaultType}
                 </span>{" "}
