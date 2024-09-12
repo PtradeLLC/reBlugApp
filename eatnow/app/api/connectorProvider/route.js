@@ -47,6 +47,9 @@ export async function POST(req) {
             },
         });
 
+        console.log("Integration", integration);
+
+
         return NextResponse.json({ message: "Provider connected successfully", integration });
     } catch (error) {
         console.error("Error connecting provider:", error);
@@ -55,53 +58,3 @@ export async function POST(req) {
         await prisma.$disconnect();
     }
 }
-
-
-// import { NextResponse } from "next/server";
-// import { PrismaClient } from '@prisma/client';
-// import { Nango } from '@nangohq/node';
-
-// const prisma = new PrismaClient();
-
-// export const dynamic = "force-dynamic";
-
-// export async function POST(req) {
-//     try {
-//         const { integrationId, userId } = await req.json();
-
-//         if (!integrationId || !userId) {
-//             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
-//         }
-
-//         if (!process.env.NANGO_SECRET_KEY_PROD) {
-//             throw new Error("NANGO_SECRET_KEY is not set in the environment variables");
-//         }
-
-//         const nango = new Nango({ secretKey: process.env.NANGO_SECRET_KEY_PROD });
-
-//         const existingIntegration = await prisma.integration.findFirst({
-//             where: { integrationId, userId },
-//         });
-
-//         if (existingIntegration) {
-//             return NextResponse.json({ message: "Integration already exists" }, { status: 400 });
-//         }
-
-//         const connection = await nango.createConnection(integrationId, userId);
-
-//         const integration = await prisma.integration.create({
-//             data: {
-//                 connectionId: connection.id,
-//                 integrationId,
-//                 userId,
-//             },
-//         });
-
-//         return NextResponse.json({ message: "Provider connected successfully", integration });
-//     } catch (error) {
-//         console.error("Error connecting provider:", error);
-//         return NextResponse.json({ message: "There is an error: " + error.message }, { status: 500 });
-//     } finally {
-//         await prisma.$disconnect();
-//     }
-// }
