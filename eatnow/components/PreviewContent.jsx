@@ -526,6 +526,7 @@ const PostPage = ({ initialComments, post }) => {
             onClick={() => setIsOpen(true)}
             className="article-assistant-button rotate-90 z-50 bg-[#878784] hover:bg-slate-700 hover:text-white text-black h-8 text-center font-semibold px-4 rounded-md animate-pulse"
           >
+          //THIS BUTTON SHOWS Article Assistance ON THE SIDE OF THE PAGE (Please revise)
             <span className="flex">
               <Image
                 src="/images/questionmark.png"

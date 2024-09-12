@@ -33,6 +33,7 @@ const Plan = ({ textData, isOpen }) => {
   const [providers, setProviders] = useState(integrationData.contacts);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [inputMessage, setInputMessage] = useState("Included");
 
   const fetchConnectedProviders = useCallback(async (userId) => {
     try {
@@ -73,6 +74,30 @@ const Plan = ({ textData, isOpen }) => {
   useEffect(() => {
     fetchConnectedProviders();
   }, []);
+
+  // New useEffect to handle dynamic button text changes
+  useEffect(() => {
+    if (
+      emails.length > 0 ||
+      singleEmail ||
+      name ||
+      fallbackSubjectLine ||
+      campaignPage
+    ) {
+      if (buttonText === "Please fill out the required fields") {
+        setButtonText("Compose Email");
+      }
+    } else if (buttonText === "Compose Email") {
+      setButtonText("Please fill out the required fields");
+    }
+  }, [
+    emails,
+    singleEmail,
+    name,
+    fallbackSubjectLine,
+    campaignPage,
+    buttonText,
+  ]);
 
   const updateProviders = (connectedProviders) => {
     setProviders((prevProviders) =>
@@ -227,6 +252,9 @@ const Plan = ({ textData, isOpen }) => {
           setLoading(false);
         }
       }
+    } else {
+      setButtonText("Please fill out the required fields");
+      setInputMessage("");
     }
   };
 
@@ -275,6 +303,7 @@ const Plan = ({ textData, isOpen }) => {
       setError(`Error connecting to ${provider.name}: ${error.message}`);
     }
   };
+
   return (
     <>
       {error && (
@@ -316,10 +345,14 @@ const Plan = ({ textData, isOpen }) => {
                     htmlFor="file-upload"
                     className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
                   >
-                    <span>Upload a file</span>
+                    <span>
+                      Upload a file{" "}
+                      <span className="text-xs">(** Required)</span>
+                    </span>
                     <input
                       id="file-upload"
                       name="file-upload"
+                      required
                       type="file"
                       accept=".xlsx, .xls"
                       onChange={handleFileUpload}
@@ -348,11 +381,12 @@ const Plan = ({ textData, isOpen }) => {
               htmlFor="single-email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Enter Donor's email
+              Enter Donor's email <span className="text-xs">(** Required)</span>
             </label>
             <input
               type="email"
               id="single-email"
+              required
               value={singleEmail}
               onChange={(e) => setSingleEmail(e.target.value)}
               placeholder="Enter Donor's email"
@@ -365,11 +399,12 @@ const Plan = ({ textData, isOpen }) => {
               htmlFor="name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Enter Donor's Name
+              Enter Donor's Name <span className="text-xs">(** Required)</span>
             </label>
             <input
               type="text"
               id="name"
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter single donor's name"
@@ -393,6 +428,7 @@ const Plan = ({ textData, isOpen }) => {
                     <div className="">
                       <ReactQuill
                         value={emailBody}
+                        required
                         onChange={setEmailBody}
                         modules={{
                           toolbar: [
@@ -418,7 +454,6 @@ const Plan = ({ textData, isOpen }) => {
                         ]}
                         className="max-h-48 overflow-y-auto block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                         placeholder="Start your article here..."
-                        required
                       />
                     </div>
                   </div>
@@ -467,6 +502,7 @@ const Plan = ({ textData, isOpen }) => {
                   </span>
                   <input
                     type="text"
+                    required
                     id="subject-line"
                     value={fallbackSubjectLine}
                     onChange={(e) => setFallbackSubjectLine(e.target.value)}
@@ -486,6 +522,7 @@ const Plan = ({ textData, isOpen }) => {
                   <input
                     type="text"
                     id="campaignPage"
+                    required
                     value={campaignPage}
                     onChange={(e) => setCampaignPage(e.target.value)}
                     placeholder="Enter your donation webpage"
@@ -563,7 +600,7 @@ const Plan = ({ textData, isOpen }) => {
                     <>
                       {buttonText}
                       <span className="text-xs flex justify-end">
-                        (Included)
+                        {inputMessage}
                       </span>
                     </>
                   ) : (
