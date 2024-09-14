@@ -58,7 +58,6 @@ export async function POST(request, response) {
                         E-commerce Features:
                         Earn revenue by selling products based on your blog's niche. Use 'bCommerce' feature allow you to sell products directly to your readers without inventory management, product sourcing. We will provide the product and inventory management features, AI tools trained to provide sales and support to your readers.
 
-
                         ReBlug App:
                         The ReBlug app can be downloaded for user at all the app stores including Apple store, Google Play, Microsoft app store.
 

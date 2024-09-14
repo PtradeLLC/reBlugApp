@@ -6,15 +6,15 @@ import * as XLSX from "xlsx";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import Link from "next/link";
 import Nango from "@nangohq/frontend";
 import { account } from "../../app/appwrite";
 import { integrationData } from "./integrationData";
 import Image from "next/image";
-import Icon from "@mdi/react";
-import { mdiArrowUpBoldBox } from "@mdi/js";
 import axios from "axios";
 import CampaignAutomation from "./campaignAutomation";
+import Icon from "@mdi/react";
+import { mdiArrowUpBoldBox } from "@mdi/js";
+import Link from "next/link";
 
 const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);
@@ -38,6 +38,7 @@ const Plan = ({ textData, isOpen }) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [inputMessage, setInputMessage] = useState("Included");
+  const [automationFrequency, setAutomationFrequency] = useState("none");
   const [details, setDetails] = useState({
     first_name: "",
     last_name: "",
@@ -146,7 +147,7 @@ const Plan = ({ textData, isOpen }) => {
           );
           const firstNameIndex = headers.findIndex(
             (header) =>
-              header.includes("firstname") ||
+              header.includes("firstName") ||
               header.includes("first-name") ||
               header.includes("firstname") ||
               header.includes("first name") ||
@@ -154,7 +155,7 @@ const Plan = ({ textData, isOpen }) => {
           );
           const lastNameIndex = headers.findIndex(
             (header) =>
-              header.includes("lastname") ||
+              header.includes("lastName") ||
               header.includes("last-name") ||
               header.includes("lastname") ||
               header.includes("last name") ||
@@ -326,6 +327,33 @@ const Plan = ({ textData, isOpen }) => {
       console.error("Error enriching data:", error);
     }
   };
+
+  const handleFrequencyChange = (frequency) => {
+    setAutomationFrequency(frequency);
+  };
+
+  const scheduleAutomation = useCallback(() => {
+    if (automationFrequency === "none") return;
+
+    const runCampaign = async () => {
+      // Implement your campaign logic here
+      await handleSendEmail();
+    };
+
+    const interval =
+      automationFrequency === "twoWeeks"
+        ? 14 * 24 * 60 * 60 * 1000
+        : 30 * 24 * 60 * 60 * 1000;
+
+    const timer = setInterval(runCampaign, interval);
+
+    return () => clearInterval(timer);
+  }, [automationFrequency, handleSendEmail]);
+
+  useEffect(() => {
+    const cleanup = scheduleAutomation();
+    return cleanup;
+  }, [scheduleAutomation]);
 
   return (
     <>
@@ -617,7 +645,9 @@ const Plan = ({ textData, isOpen }) => {
                 API to find emails based on the generated Ideal Donor Profile.
               </h3>
             </div>
-            <CampaignAutomation />
+            <div className="my-3">
+              <CampaignAutomation onFrequencyChange={handleFrequencyChange} />
+            </div>
             <div className="flex justify-between px-2">
               <div className="mx-1">
                 <Button
@@ -656,6 +686,7 @@ const Plan = ({ textData, isOpen }) => {
               </div>
             </div>
           </div>
+          <p className="fixed bottom-4 right-4 z-50">Hellooo</p>
         </div>
       ) : (
         <div className="mt-6 border-t border-gray-100">
