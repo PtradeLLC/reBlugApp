@@ -364,7 +364,9 @@ const RaiseFunds = () => {
   return (
     <>
       {proposedPlan ? (
-        <Plan textData={textData} />
+        <>
+          <Plan textData={textData} />
+        </>
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="space-y-12">

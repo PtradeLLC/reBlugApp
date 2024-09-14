@@ -15,10 +15,19 @@ import {
 
 const SeriesModalComponent = ({ isOpen, onClose, title }) => {
   const [campaignEmail, setCampaignEmail] = useState("");
+  const [isSelectionMade, setIsSelectionMade] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("Form Data Submitted:", campaignEmail);
+  };
+
+  const handleCampaignTypeChange = (e) => {
+    const selectedValue = e.target.value;
+    setCampaignEmail(selectedValue);
+    if (selectedValue !== "") {
+      setIsSelectionMade(true);
+    }
   };
 
   return (
@@ -46,7 +55,11 @@ const SeriesModalComponent = ({ isOpen, onClose, title }) => {
                   <select
                     name="campaignType"
                     value={campaignEmail}
-                    onChange={(e) => setCampaignEmail(e.target.value)}
+                    onChange={handleCampaignTypeChange}
+                    disabled={isSelectionMade}
+                    className={
+                      isSelectionMade ? "cursor-not-allowed opacity-50" : ""
+                    }
                   >
                     <option value="">Select campaign type</option>
                     <option value="Fundraising">Fundraising</option>
@@ -79,14 +92,14 @@ const SeriesModalComponent = ({ isOpen, onClose, title }) => {
         </ModalBody>
 
         <ModalFooter className="bg-slate-50">
-          <Button
+          {/* <Button
             color="success"
             onClick={onClose}
             disabled
             className="disabled:cursor-not-allowed"
           >
             Submit
-          </Button>
+          </Button> */}
           <Button color="error" onClick={onClose}>
             Close
           </Button>

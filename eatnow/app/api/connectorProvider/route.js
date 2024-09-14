@@ -48,8 +48,6 @@ export async function POST(req) {
         });
 
         console.log("Integration", integration);
-
-
         return NextResponse.json({ message: "Provider connected successfully", integration });
     } catch (error) {
         console.error("Error connecting provider:", error);

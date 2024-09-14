@@ -3,6 +3,7 @@ import React from "react";
 const DonorsFormula = () => {
   return (
     <div>
+      <p>Donor profile is derived based on the following data points:</p>
       <ul className="list-disc">
         <li>
           Demographic Alignment Geographic Fit: Ensures the donor's location
@@ -85,11 +86,13 @@ const DonorsFormula = () => {
           {/* Based on the data points, the formula to derive an Ideal Donor Profile
           look like this: */}
           {/* <div className="font-thin my-3 bg-slate-100 p-3 text-wrap">
+
             Ideal Donor Profile = ( Geographic Fit × Target Donor Type ×
             Gender Alignment × Intention ) + ( Wealth Indicator × Funding Goals
             ) + ( Donor Motivations × Behavior × Skills and Expertise ) + (
             Seasonal Trends × Upcoming Events ) + ( Problem Alignment ×
             Supporters and Influencers × Unique Aspects )
+
             Ideal Donor Profile=(Geographic Fit×Target Donor Type×Gender Alignment×Intention)+
             (Wealth Indicator×Funding Goals)+(Donor Motivations×Behavior×Skills and Expertise)+
             (Seasonal Trends×Upcoming Events)+(Problem Alignment×Supporters and Influencers×Unique 
