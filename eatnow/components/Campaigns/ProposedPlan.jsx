@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { PlusIcon, PhotoIcon } from "@heroicons/react/20/solid";
 import { Tooltip, Button } from "@nextui-org/react";
 import * as XLSX from "xlsx";
@@ -45,6 +45,7 @@ const Plan = ({ textData, isOpen }) => {
     website: "",
     // ... other fields ...
   });
+  const modalRef = useRef(null);
 
   const fetchConnectedProviders = useCallback(async (userId) => {
     try {
@@ -355,8 +356,23 @@ const Plan = ({ textData, isOpen }) => {
     return cleanup;
   }, [scheduleAutomation]);
 
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
+  const scrollToTop = () => {
+    if (modalRef.current) {
+      modalRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <>
+    <div ref={modalRef} className="max-h-[90vh] overflow-y-auto">
       {error && (
         <div
           className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -639,16 +655,17 @@ const Plan = ({ textData, isOpen }) => {
                 ))}
               </div>
             </div>
+            <div className="my-3">
+              <CampaignAutomation onFrequencyChange={handleFrequencyChange} />
+            </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500 mt-2 mb-2">
                 Additionally, you can enrich your contact list data by using our
                 API to find emails based on the generated Ideal Donor Profile.
               </h3>
             </div>
-            <div className="my-3">
-              <CampaignAutomation onFrequencyChange={handleFrequencyChange} />
-            </div>
             <div className="flex justify-between px-2">
+              {/* SET THIS TO COLUMN FOR SM SCREENS */}
               <div className="mx-1">
                 <Button
                   type="button"
@@ -686,7 +703,7 @@ const Plan = ({ textData, isOpen }) => {
               </div>
             </div>
           </div>
-          <p className="fixed bottom-4 right-4 z-50">Hellooo</p>
+          {/* <p className="fixed bottom-4 right-4 z-50">Hellooo</p> */}
         </div>
       ) : (
         <div className="mt-6 border-t border-gray-100">
@@ -700,6 +717,7 @@ const Plan = ({ textData, isOpen }) => {
                     </p>
                   </div>
                 </div>
+                <div className="fixed right-4 z-50">Scroll up</div>
               </dl>
               <div className="flex justify-center text-sm flex-col text-gray-600">
                 <p className="mb-4">
@@ -727,7 +745,15 @@ const Plan = ({ textData, isOpen }) => {
           ))}
         </div>
       )}
-    </>
+      <div className="fixed bottom-4 right-4 z-50">
+        <button
+          onClick={scrollToTop}
+          className="bg-gray-200 hover:bg-gray-300 rounded-full p-2"
+        >
+          <Icon path={mdiArrowUpBoldBox} size={1} />
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -130,9 +130,11 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                       ) : (
                         <p className="my-2">
                           You have no published article. However, this is where
-                          you'll be able to interact with your fans and readers.
-                          As a moderator I will help keep things interesting for
-                          your audience on your behalf.
+                          you'll be able to interact with your fans/readers of
+                          your articles. As a moderator I will help keep things
+                          interesting for your audience on your behalf. Start by
+                          writing an article. You may enable 'Just Me' button
+                          above to only chat with me.
                         </p>
                       )}
                     </>
@@ -148,7 +150,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
             <textarea
               id="chat-input"
               className="block w-full resize-none rounded-md bg-slate-200 p-4 text-sm dark:bg-slate-50 dark:text-slate-900"
-              placeholder="Start chatting..."
+              placeholder="Select any published article to chat"
               rows="1"
               value={inputValue}
               onChange={handleInputChange}

@@ -1258,7 +1258,7 @@ const RaiseFunds = () => {
                         className="bg-green-700 mt-2 rounded-md text-white p-2"
                         onClick={handleProposedPlan}
                       >
-                        Here's your Proposed plan
+                        Here's our Proposed plan
                       </button>
                     </div>
                   )}
