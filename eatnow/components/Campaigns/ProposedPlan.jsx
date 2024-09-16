@@ -319,6 +319,7 @@ const Plan = ({ textData, isOpen }) => {
   //Get emails from external sources
   const handleMoreEmail = async (e) => {
     e.preventDefault();
+
     const baseUrl = "/api/contact_enrichment";
     try {
       const response = await axios.post(baseUrl, { details });

@@ -1,23 +1,40 @@
 import { NextResponse } from "next/server";
-import axios from 'axios'
+import axios from 'axios';
 
-const APOLLO_API_KEY = process.env.APOLLO_API_KEY
-const APOLLO_API_URL = 'https://api.apollo.io/api/v1/people/bulk_match'
+const APOLLO_API_KEY = process.env.APOLLO_API_KEY;
+const APOLLO_API_URL = "https://api.apollo.io/v1/people/search";
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method Not Allowed' })
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
     try {
-        const { details } = req.body
+        const { details } = req.body;
 
         const apolloPayload = {
             api_key: APOLLO_API_KEY,
+            person_titles: [],
+            person_locations: [],
+            contact_email_status: ["verified"],
             reveal_personal_emails: true,
-            reveal_phone_number: true,
-            details: details
+            reveal_phone_number: true
+        };
+
+        // Map the details to Apollo API parameters
+        if (details.first_name) apolloPayload.first_name = details.first_name;
+        if (details.last_name) apolloPayload.last_name = details.last_name;
+        if (details.email) apolloPayload.email = details.email;
+        if (details.age) apolloPayload.person_age_range = [details.age, details.age];
+        if (details.country || details.state || details.city) {
+            apolloPayload.person_locations.push({
+                country: details.country,
+                state: details.state,
+                city: details.city
+            });
         }
+        if (details.gender) apolloPayload.person_genders = [details.gender];
+        if (details.investor) apolloPayload.investor = details.investor;
 
         const response = await axios.post(APOLLO_API_URL, apolloPayload, {
             headers: {
@@ -25,11 +42,11 @@ export default async function handler(req, res) {
                 'Cache-Control': 'no-cache',
                 'X-Api-Key': APOLLO_API_KEY
             }
-        })
+        });
 
-        return res.status(200).json(response.data)
+        return res.status(200).json(response.data);
     } catch (error) {
-        console.error('Apollo API Error:', error)
-        return res.status(500).json({ message: 'Internal Server Error' })
+        console.error('Apollo API Error:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 }

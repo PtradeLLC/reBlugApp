@@ -100,9 +100,9 @@ const SeriesModalComponent = ({ isOpen, onClose, title }) => {
           >
             Submit
           </Button> */}
-          <Button color="error" onClick={onClose}>
+          {/* <Button color="error" onClick={onClose}>
             Close
-          </Button>
+          </Button> */}
         </ModalFooter>
       </ModalContent>
     </Modal>

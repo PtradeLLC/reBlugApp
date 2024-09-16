@@ -28,7 +28,7 @@ const CampaignAutomation = ({ onFrequencyChange }) => {
           htmlFor="bordered-radio-1"
           className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
-          No, don't automate
+          This is a Single Run
         </label>
       </div>
       <div className="flex px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
