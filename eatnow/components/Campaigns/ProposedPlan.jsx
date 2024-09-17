@@ -42,9 +42,15 @@ const Plan = ({ textData, isOpen }) => {
   const [details, setDetails] = useState({
     first_name: "",
     last_name: "",
-    website: "",
-    // ... other fields ...
+    gender: "",
+    age: "",
+    income: "",
+    investor: "",
+    country: "",
+    city: "",
+    state: "",
   });
+
   const modalRef = useRef(null);
 
   const fetchConnectedProviders = useCallback(async (userId) => {
@@ -708,7 +714,7 @@ const Plan = ({ textData, isOpen }) => {
         </div>
       ) : (
         <div className="mt-6 border-t border-gray-100">
-          {textData.map((data, index) => (
+          {textData?.map((data, index) => (
             <div key={index} className="mt-6">
               <dl className="divide-y divide-gray-100">
                 <div className="mt-6 border-t border-gray-100">

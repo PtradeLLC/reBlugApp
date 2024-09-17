@@ -12,8 +12,97 @@ export async function POST(req) {
     try {
         let data = await req.json();
 
-        // const idealDonorProfile = `(Geographic Fit×Target Donor Type×Gender Alignment×Intention)+(Wealth Indicator×Funding Goals)+(Donor Motivations×Behavior×Skills and Expertise)+(Seasonal Trends×Upcoming Events)+(Problem Alignment×Supporters and Influencers×Unique Aspects)`;
-        const idealDonorProfile = `(Age Score * 10) + (Income Score * 20) + (Wealth Score * 15) +(Disposable Income Score * 15) + (Liquid Assets Score * 10) +(Home Ownership Score * 5) + (Mail Purchases Score * 5) +(Potential Investor Score * 10) + (Registered Voter Score * 5) +(Email Deliverability Score * 5)`;
+        const content = data.messages[0].content;
+        console.log("Content From Post Request:", content);
+
+        //////////////////////////
+
+        //  Ideal Donor Profile for "Environmental Campaign":
+
+        // - C1: Environmental Campaign, Objective: Reduce Pollution
+        // - C2: Causes: Environmental Sustainability, Problem: Pollution
+        // - C3: Unique Appeal: Sustainable Future, Motivation: Protecting the Planet
+
+        // - D1: Geolocation: New York, Target Donor: Tech Professionals
+        // - D2: Gender: Any, Wealth Indicators: Owns Property, Business Affiliations
+
+        // - B1: Donation History: Frequent, Amount: $100-$500
+        // - B2: Common Patterns: Supports Green Initiatives
+
+        // - P1: Interests: Sustainability, Clean Energy
+        // - P2: Communication: Prefers Email
+        // - P3: Professional Background: Tech Industry
+        // - P4: Philanthropic Interests: Environmental Projects
+        // - P5: Political Affiliation: Moderate or Progressive (if relevant)
+        // - P6: Wealth Indicators: Property Ownership, Business Affiliations, Stock Holdings
+
+
+        // 1. Campaign Characteristics
+        // * C1: Campaign Type and Objectives
+        //     * Match the campaign type (e.g., environmental, educational, health) and objectives with the donor’s interests.
+        // * C2: Causes and Problems Addressed
+        //     * Align the specific problems or needs the campaign addresses with the donor’s preferred causes and philanthropic interests.
+        // * C3: Unique Appeals and Motivations
+        //     * Identify and emphasize unique aspects of the campaign that appeal to the donor’s motivations and psychological triggers.
+        // 2. Donor Demographics
+        // * D1: Geolocation and Target Donor
+        //     * Ensure the donor's location aligns with the campaign's geographic target.
+        //     * Match the target donor demographics with the campaign's audience.
+        // * D2: Gender and Wealth Indicators
+        //     * Check if the donor's gender matches the target demographic.
+        //     * Evaluate wealth indicators such as property ownership, business affiliations, and stock holdings.
+        // 3. Donor Behavior
+        // * B1: Giving Patterns (History, Frequency, Amounts)
+        //     * Analyze past donation history, frequency, and typical donation amounts to predict future giving.
+        // * B2: Trends and Commonalities
+        //     * Identify trends and common patterns in donor behavior from similar campaigns.
+        // 4. Donor Personas
+        // * P1: Interests and Values
+        //     * Match the donor's interests and values with the campaign’s objectives and cause.
+        // * P2: Communication Preferences
+        //     * Use the donor's communication preferences (e.g., email, phone, social media) for effective engagement.
+        // * P3: Professional Background
+        //     * Consider the donor’s industry, job, and professional background in relation to the campaign.
+        // * P4: Philanthropic Interests
+        //     * Align the donor's philanthropic interests and causes they support with the campaign.
+        // * P5: Political Affiliation
+        //     * If relevant, consider the donor’s political affiliation and how it might influence their support for the campaign.
+        // * P6: Wealth Indicators
+        //     * Evaluate indicators of wealth to assess the donor's capacity to give.
+
+
+        // Implementation Steps
+        // 1. Data Collection
+        //     * Collect data on potential donors using surveys, past donation records, and publicly available information.
+        // 2. Data Analysis
+        //     * Use statistical methods and machine learning algorithms to analyze the data, identify patterns, and rank potential donors based on the framework components.
+        // 3. Profile Creation
+        //     * Develop donor profiles by highlighting key attributes that align with the campaign characteristics and donor personas.
+        // 4. Targeted Outreach
+        //     * Tailor marketing and outreach efforts to focus on donors who fit the ideal profile, leveraging the identified patterns and commonalities.
+        // Example Logic to Derive Ideal Donor Profile
+        // 1. Identify Campaign Characteristics (C)
+        //     * Example: Environmental Campaign, Objectives: Reduce Pollution, Appeal: Sustainable Future.
+        // 2. Analyze Donor Demographics (D)
+        //     * Example:
+        //         * Location: New York
+        //         * Gender: Any
+        //         * Wealth Indicators: Owns Property, Business Affiliations
+        // 3. Evaluate Donor Behavior (B)
+        //     * Example:
+        //         * Donation History: Frequent donations to environmental causes
+        //         * Typical Amount: $100-$500
+        // 4. Define Donor Personas (P)
+        //     * Example:
+        //         * Interests: Sustainability, Clean Energy
+        //         * Values: Environmental Responsibility
+        //         * Communication: Prefers email
+        //         * Professional Background: Works in tech industry
+        //         * Philanthropic Interests: Supports environmental projects
+
+        // The formula can be expressed as:
+        // const Ideal_Donor_Profile = C1 + C2 + C3 + D1 + D2 + B1 + B2 + P1 + P2 + P3 + P4 + P5 + P6
+
 
         // If data is not an array, convert it to one
         if (!Array.isArray(data)) {
@@ -28,6 +117,9 @@ export async function POST(req) {
             if (typeof item !== 'object') {
                 return NextResponse.json({ error: 'Invalid input data' }, { status: 400 });
             }
+
+
+            let idealDonorProfile = {}
 
             //Description of Formula data point attributes
             const Description = attr.filter(att => typeof att.Description === 'string' && att.Description.trim() !== '');

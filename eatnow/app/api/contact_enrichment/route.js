@@ -12,6 +12,14 @@ export default async function handler(req, res) {
     try {
         const { details } = req.body;
 
+        const ageRange = {
+            "The Silent Generation": "Born 1928–1945",
+            "Baby Boom Generation": "Born 1946–1964",
+            "Generation X": "Born 1965–1980",
+            "Millennial Generation or Generation Y": "Born 1981–1996",
+            "Generation Z or iGen": "Born 1997–2010",
+        };
+
         const apolloPayload = {
             api_key: APOLLO_API_KEY,
             person_titles: [],
@@ -25,7 +33,23 @@ export default async function handler(req, res) {
         if (details.first_name) apolloPayload.first_name = details.first_name;
         if (details.last_name) apolloPayload.last_name = details.last_name;
         if (details.email) apolloPayload.email = details.email;
-        if (details.age) apolloPayload.person_age_range = [details.age, details.age];
+        if (details.income) apolloPayload.income = details.income;
+
+        // Handle age range based on generation
+        if (details.generation) {
+            const generationRange = ageRange[details.generation];
+            if (generationRange) {
+                const [startYear, endYear] = generationRange.match(/\d+/g);
+                const currentYear = new Date().getFullYear();
+                apolloPayload.person_age_range = [
+                    currentYear - parseInt(endYear),
+                    currentYear - parseInt(startYear)
+                ];
+            }
+        } else if (details.age) {
+            apolloPayload.person_age_range = [details.age, details.age];
+        }
+
         if (details.country || details.state || details.city) {
             apolloPayload.person_locations.push({
                 country: details.country,
