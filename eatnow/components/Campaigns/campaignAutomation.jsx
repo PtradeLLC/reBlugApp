@@ -14,7 +14,7 @@ const CampaignAutomation = ({ onFrequencyChange }) => {
       <p className="text-sm font-medium text-gray-500">
         Automate this process:
       </p>
-      <div className="flex px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+      <div className="flex w-full px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
         <input
           checked={frequency === "none"}
           id="bordered-radio-1"
@@ -31,7 +31,7 @@ const CampaignAutomation = ({ onFrequencyChange }) => {
           This is a Single Run
         </label>
       </div>
-      <div className="flex px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+      <div className="flex w-full px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
         <input
           checked={frequency === "twoWeeks"}
           id="bordered-radio-2"
@@ -43,12 +43,12 @@ const CampaignAutomation = ({ onFrequencyChange }) => {
         />
         <label
           htmlFor="bordered-radio-2"
-          className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          className="sm:w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
           Every Two Weeks
         </label>
       </div>
-      <div className="flex px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+      <div className="flex w-full px-2 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
         <input
           checked={frequency === "monthly"}
           id="bordered-radio-3"

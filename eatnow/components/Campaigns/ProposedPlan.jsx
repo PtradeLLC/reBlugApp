@@ -52,6 +52,7 @@ const Plan = ({ textData, isOpen }) => {
   });
 
   const modalRef = useRef(null);
+  const automationIntervalRef = useRef(null);
 
   const fetchConnectedProviders = useCallback(async (userId) => {
     try {
@@ -93,7 +94,6 @@ const Plan = ({ textData, isOpen }) => {
     fetchConnectedProviders();
   }, []);
 
-  // New useEffect to handle dynamic button text changes
   useEffect(() => {
     if (
       emails.length > 0 ||
@@ -322,7 +322,6 @@ const Plan = ({ textData, isOpen }) => {
     }
   };
 
-  //Get emails from external sources
   const handleMoreEmail = async (e) => {
     e.preventDefault();
 
@@ -340,28 +339,73 @@ const Plan = ({ textData, isOpen }) => {
     setAutomationFrequency(frequency);
   };
 
-  const scheduleAutomation = useCallback(() => {
-    if (automationFrequency === "none") return;
+  const runCampaign = useCallback(async () => {
+    try {
+      setLoading(true);
 
-    const runCampaign = async () => {
-      // Implement your campaign logic here
+      // Generate Ideal Donor Profiles
+      const idealDonorResponse = await fetch("/api/partner/nationbuilderV1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: textData }],
+        }),
+      });
+
+      if (!idealDonorResponse.ok) {
+        throw new Error("Failed to generate Ideal Donor Profiles");
+      }
+
+      const idealDonorData = await idealDonorResponse.json();
+
+      // Use the generated profiles to fetch emails
+      const emailResponse = await fetch("/api/contact_enrichment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ details: idealDonorData }),
+      });
+
+      if (!emailResponse.ok) {
+        throw new Error("Failed to fetch emails");
+      }
+
+      const emailData = await emailResponse.json();
+      setEmails(emailData);
+
+      // Send emails
       await handleSendEmail();
-    };
+
+      console.log("Campaign run completed successfully");
+    } catch (error) {
+      console.error("Error running campaign:", error);
+      setError("Failed to run campaign. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }, [textData, handleSendEmail]);
+
+  useEffect(() => {
+    if (automationFrequency === "none" || automationFrequency === "single") {
+      if (automationIntervalRef.current) {
+        clearInterval(automationIntervalRef.current);
+      }
+      return;
+    }
 
     const interval =
       automationFrequency === "twoWeeks"
         ? 14 * 24 * 60 * 60 * 1000
         : 30 * 24 * 60 * 60 * 1000;
 
-    const timer = setInterval(runCampaign, interval);
+    runCampaign(); // Run immediately
+    automationIntervalRef.current = setInterval(runCampaign, interval);
 
-    return () => clearInterval(timer);
-  }, [automationFrequency, handleSendEmail]);
-
-  useEffect(() => {
-    const cleanup = scheduleAutomation();
-    return cleanup;
-  }, [scheduleAutomation]);
+    return () => {
+      if (automationIntervalRef.current) {
+        clearInterval(automationIntervalRef.current);
+      }
+    };
+  }, [automationFrequency, runCampaign]);
 
   useEffect(() => {
     if (isOpen && modalRef.current) {
@@ -504,46 +548,6 @@ const Plan = ({ textData, isOpen }) => {
             </div>
           ) : (
             <>
-              {/* <div className="mt-6">
-                <p className="my-2 text-sm text-gray-600">
-                  Sending to a single donor?
-                </p>
-                <label
-                  htmlFor="single-email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Enter Donor's email{" "}
-                  <span className="text-xs">(** Required)</span>
-                </label>
-                <input
-                  type="email"
-                  id="single-email"
-                  required
-                  value={singleEmail}
-                  onChange={(e) => setSingleEmail(e.target.value)}
-                  placeholder="Enter Donor's email"
-                  className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
-                />
-              </div>
-
-              <div className="mt-6">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Enter Donor's Name{" "}
-                  <span className="text-xs">(** Required)</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter single donor's name"
-                  className="mt-2 px-2 block w-full rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm h-[38px]"
-                />
-              </div> */}
               <div className="mt-6">
                 <span className="flex text-center">
                   <label
@@ -620,10 +624,6 @@ const Plan = ({ textData, isOpen }) => {
             )}
 
             <div className="mt-10 mb-10">
-              {/* Under Review */}
-              {/* <h3 className="text-sm font-medium text-gray-500 mt-4">
-                You can also connect your contact data from external sources
-              </h3> */}
               <div className="flex flex-wrap gap-2">
                 {providers.map((provider) => (
                   <div key={provider.integrationId} className="flex-none">
@@ -672,7 +672,6 @@ const Plan = ({ textData, isOpen }) => {
               </h3>
             </div>
             <div className="flex justify-between px-2">
-              {/* SET THIS TO COLUMN FOR SM SCREENS */}
               <div className="mx-1">
                 <Button
                   type="button"
@@ -710,7 +709,6 @@ const Plan = ({ textData, isOpen }) => {
               </div>
             </div>
           </div>
-          {/* <p className="fixed bottom-4 right-4 z-50">Hellooo</p> */}
         </div>
       ) : (
         <div className="mt-6 border-t border-gray-100">
