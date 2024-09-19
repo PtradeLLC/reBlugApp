@@ -186,18 +186,41 @@ async function processContent(content, retryCount = 0) {
              </Instruction>
             `;
 
-            const chatCompletion = await groq.chat.completions.create({
-                messages: [{ role: "user", content: donorProfileString }],
-                model: "llama-3.1-70b-versatile",
-                temperature: 0.5,
-                max_tokens: 8000,
-                top_p: 1,
-                stream: true
-            });
 
             let assistantResponse = "";
-            for await (const chunk of chatCompletion) {
-                assistantResponse += chunk.choices[0]?.delta?.content || '';
+            let attempts = 0;
+            const maxAttempts = 3;
+
+            while (assistantResponse.trim() === "" && attempts < maxAttempts) {
+                try {
+                    const chatCompletion = await groq.chat.completions.create({
+                        messages: [{ role: "user", content: donorProfileString }],
+                        model: "llama-3.1-70b-versatile",
+                        temperature: 0.5,
+                        max_tokens: 8000,
+                        top_p: 1,
+                        stream: true
+                    });
+
+                    for await (const chunk of chatCompletion) {
+                        assistantResponse += chunk.choices[0]?.delta?.content || '';
+                    }
+
+                    if (assistantResponse.trim() === "") {
+                        console.log(`Attempt ${attempts + 1} produced an empty response. Retrying...`);
+                        attempts++;
+                    }
+                } catch (error) {
+                    console.error(`Error in Groq API call (attempt ${attempts + 1}):`, error);
+                    attempts++;
+                    if (attempts >= maxAttempts) {
+                        throw error;
+                    }
+                }
+            }
+
+            if (assistantResponse.trim() === "") {
+                throw new Error("Failed to get a non-empty response from Groq API after multiple attempts");
             }
 
             return { item, assistantResponse };
@@ -220,6 +243,8 @@ async function processContent(content, retryCount = 0) {
 }
 
 
+// In nationbuilderV1/route.js
+
 export async function POST(req) {
     try {
         const data = await req.json();
@@ -228,14 +253,38 @@ export async function POST(req) {
         const processedResults = await processContent(content);
 
         if (processedResults.length === 0) {
-            return NextResponse.json({ error: 'No results found after multiple attempts' }, { status: 404 });
+            // Return a specific status code to indicate no results
+            return NextResponse.json({ error: 'No results found after multiple attempts', status: 'NO_RESULTS' }, { status: 204 });
         }
-        return NextResponse.json({ results: processedResults }, { status: 200 });
+
+        console.log("PROCESSED RESULTS", JSON.stringify(processedResults, null, 2));
+
+        return NextResponse.json({ results: processedResults, status: 'SUCCESS' }, { status: 200 });
     } catch (error) {
         console.error('Error processing request:', error);
-        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: error.message || 'Internal Server Error', status: 'ERROR', stack: error.stack }, { status: 500 });
     }
 }
+
+// export async function POST(req) {
+//     try {
+//         const data = await req.json();
+//         const content = Array.isArray(data.messages[0].content) ? data.messages[0].content : [data.messages[0].content];
+
+//         const processedResults = await processContent(content);
+
+//         if (processedResults.length === 0) {
+//             return NextResponse.json({ error: 'No results found after multiple attempts' }, { status: 404 });
+//         }
+
+//         console.log("PROCESSED RESULTS", JSON.stringify(processedResults, null, 2));
+
+//         return NextResponse.json({ results: processedResults }, { status: 200 });
+//     } catch (error) {
+//         console.error('Error processing request:', error);
+//         return NextResponse.json({ error: error.message || 'Internal Server Error', stack: error.stack }, { status: 500 });
+//     }
+// }
 
 
 

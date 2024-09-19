@@ -16,6 +16,7 @@ const RaiseFunds = () => {
   const [cities, setCities] = useState([]);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [apiStatus, setApiStatus] = useState(null);
 
   const loadingStateStatus = [
     "Generating Donor List...",
@@ -117,8 +118,6 @@ const RaiseFunds = () => {
       return true;
     });
 
-    console.log("Invalid fields:", invalidFields);
-
     return isValid;
   };
 
@@ -210,6 +209,7 @@ const RaiseFunds = () => {
     setShowLoadingStatus(true);
     setShowFinalMessage(false);
     setLoadingStateIndex(0);
+    setApiStatus(null);
 
     try {
       const response = await fetch("/api/partner/nationbuilderV1", {
@@ -222,18 +222,56 @@ const RaiseFunds = () => {
         }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
-        setTextData(data.results);
+        if (data.status === "SUCCESS") {
+          setTextData(data.results);
+          setApiStatus("SUCCESS");
+        } else if (data.status === "NO_RESULTS") {
+          setApiStatus("NO_RESULTS");
+        }
       } else {
         console.error("Response not okay:", response.statusText);
+        setApiStatus("ERROR");
       }
     } catch (error) {
       console.error("Error making POST request:", error.message);
+      setApiStatus("ERROR");
     } finally {
       loadNextStatus();
     }
   };
+
+  // const handleLaunch = async () => {
+  //   setDonorFormula(false);
+  //   setShowLoadingStatus(true);
+  //   setShowFinalMessage(false);
+  //   setLoadingStateIndex(0);
+
+  //   try {
+  //     const response = await fetch("/api/partner/nationbuilderV1", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         messages: [{ role: "user", content: formData }],
+  //       }),
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setTextData(data.results);
+  //     } else {
+  //       console.error("Response not okay:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error making POST request:", error.message);
+  //   } finally {
+  //     loadNextStatus();
+  //   }
+  // };
 
   useEffect(() => {
     if (showLoadingStatus) {
@@ -443,6 +481,52 @@ const RaiseFunds = () => {
                           : "bg-gray-400 cursor-not-allowed"
                       }`}
                       disabled={!isFormValid}
+                    >
+                      Begin Campaign Strategy
+                    </button>
+                  )}
+                  {showLoadingStatus && (
+                    <div>
+                      <h2>{loadingStateStatus[loadingStateIndex]}</h2>
+                    </div>
+                  )}
+
+                  {showFinalMessage && (
+                    <div>
+                      <h2>We have a plan to propose for your campaign.</h2>
+                      {apiStatus === "SUCCESS" ? (
+                        <button
+                          className="bg-green-700 mt-2 rounded-md text-white p-2 hover:bg-green-600"
+                          onClick={() => setProposedPlan(true)}
+                        >
+                          Here's our Proposed plan
+                        </button>
+                      ) : (
+                        <button
+                          className="bg-yellow-600 mt-2 rounded-md text-white p-2 hover:bg-yellow-500"
+                          onClick={() => setProposedPlan(true)}
+                        >
+                          See our plan
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {donorFormula && <DonorsFormula />}
+                </div>
+              </div>
+
+              {/* <div className="grid max-w-2xl justify-center items-center grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+                <div className="col-span-full">
+                  {!showLoadingStatus && !showFinalMessage && (
+                    <button
+                      type="submit"
+                      className={`mt-2 mb-3 rounded-md text-white p-2 ${
+                        isFormValid
+                          ? "bg-green-700 hover:bg-green-600"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
+                      disabled={!isFormValid}
                       onClick={() => {
                         console.log(
                           "Button clicked, form validity:",
@@ -475,7 +559,7 @@ const RaiseFunds = () => {
 
                   {donorFormula && <DonorsFormula />}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </form>
