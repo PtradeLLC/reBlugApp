@@ -3,6 +3,7 @@ import Plan from "@/components/Campaigns/ProposedPlan";
 import DonorsFormula from "@/components/DonorsFormula";
 import { Country, State, City } from "country-state-city";
 import SeriesModalComponent from "@/components/EmailMarketingTool";
+import { useNationBuild } from "@/app/api/partner/nationbuilderV1/nationHook";
 
 const RaiseFunds = ({ onProposedPlanClick }) => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");
@@ -19,6 +20,7 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [apiStatus, setApiStatus] = useState(null);
   const [askQuestion, setAskQuestion] = useState(false);
+  const { makeRequest, isLoading, apiResponse } = useNationBuild();
 
   const loadingStateStatus = [
     "Generating Donor List...",
@@ -207,45 +209,89 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
     setShowLoadingStatus(true);
     setShowFinalMessage(false);
     setLoadingStateIndex(0);
-    setApiStatus(null);
+    setApiStatus(null); // Reset API status
 
     try {
-      const response = await fetch("/api/partner/nationbuilderV1", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [{ role: "user", content: formData }],
-        }),
+      const response = await makeRequest({
+        messages: [{ role: "user", content: formData }],
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        if (data.status === "SUCCESS") {
-          setTextData(data.results);
-          setApiStatus("SUCCESS");
-        } else if (data.status === "NO_RESULTS") {
-          setApiStatus("NO_RESULTS");
-        }
+      if (response && response.status === "SUCCESS") {
+        setTextData(response.results);
+        setApiStatus("SUCCESS");
+      } else if (response && response.status === "NO_RESULTS") {
+        setApiStatus("NO_RESULTS");
       } else {
-        console.error("Response not okay:", response.statusText);
         setApiStatus("ERROR");
       }
     } catch (error) {
-      console.error("Error making POST request:", error.message);
+      console.error("Error in handleLaunch:", error);
       setApiStatus("ERROR");
     } finally {
-      loadNextStatus();
+      setShowLoadingStatus(false);
+      setShowFinalMessage(true);
     }
   };
 
+  // const handleLaunch = async () => {
+  //   setDonorFormula(false);
+  //   setShowLoadingStatus(true);
+  //   setShowFinalMessage(false);
+  //   setLoadingStateIndex(0);
+  //   setApiStatus(null);
+
+  //   try {
+  //     const response = await fetch("/api/partner/nationbuilderV1", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         messages: [{ role: "user", content: formData }],
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       if (data.status === "SUCCESS") {
+  //         setTextData(data.results);
+  //         setApiStatus("SUCCESS");
+  //       } else if (data.status === "NO_RESULTS") {
+  //         setApiStatus("NO_RESULTS");
+  //       }
+  //     } else {
+  //       console.error("Response not okay:", response.statusText);
+  //       setApiStatus("ERROR");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error making POST request:", error.message);
+  //     setApiStatus("ERROR");
+  //   } finally {
+  //     loadNextStatus();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (showLoadingStatus) {
+  //     loadNextStatus();
+  //   }
+  // }, [loadingStateIndex, showLoadingStatus]);
+
   useEffect(() => {
     if (showLoadingStatus) {
-      loadNextStatus();
+      const timer = setTimeout(() => {
+        if (loadingStateIndex < loadingStateStatus.length - 1) {
+          setLoadingStateIndex((prevIndex) => prevIndex + 1);
+        } else {
+          setShowLoadingStatus(false);
+          setShowFinalMessage(true);
+        }
+      }, 3000);
+
+      return () => clearTimeout(timer);
     }
-  }, [loadingStateIndex, showLoadingStatus]);
+  }, [loadingStateIndex, showLoadingStatus, loadingStateStatus.length]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -463,7 +509,6 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
                       <h2>{loadingStateStatus[loadingStateIndex]}</h2>
                     </div>
                   )}
-
                   {showFinalMessage && (
                     <div>
                       <h2>We have a plan to propose for your campaign.</h2>
@@ -475,12 +520,6 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
                           Here's our Proposed plan
                         </button>
                       ) : (
-                        // <button
-                        //   className="bg-green-700 mt-2 rounded-md text-white p-2 hover:bg-green-600"
-                        //   onClick={handleProposedPlan}
-                        // >
-                        //   Here's our Proposed plan
-                        // </button>
                         <button
                           className="bg-yellow-600 mt-2 rounded-md text-white p-2 hover:bg-yellow-500"
                           onClick={handleProposedPlan}
@@ -490,6 +529,27 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
                       )}
                     </div>
                   )}
+
+                  {/* {showFinalMessage && (
+                    <div>
+                      <h2>We have a plan to propose for your campaign.</h2>
+                      {apiStatus === "SUCCESS" ? (
+                        <button
+                          className="bg-green-700 mt-2 rounded-md text-white p-2 hover:bg-green-600"
+                          onClick={handleProposedPlan}
+                        >
+                          Here's our Proposed plan
+                        </button>
+                      ) : (
+                        <button
+                          className="bg-yellow-600 mt-2 rounded-md text-white p-2 hover:bg-yellow-500"
+                          onClick={handleProposedPlan}
+                        >
+                          See our plan
+                        </button>
+                      )}
+                    </div>
+                  )} */}
                   {donorFormula && <DonorsFormula />}
                 </div>
               </div>

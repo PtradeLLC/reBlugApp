@@ -66,6 +66,12 @@
   }
 }
 
+@media (max-width: 600px) {
+  #fetchButton {
+    margin-top: 122px;
+  }
+}
+
 .article-assistant-button {
   position: fixed;
   float: right;

@@ -242,9 +242,6 @@ async function processContent(content, retryCount = 0) {
     }
 }
 
-
-// In nationbuilderV1/route.js
-
 export async function POST(req) {
     try {
         const data = await req.json();
@@ -265,79 +262,3 @@ export async function POST(req) {
         return NextResponse.json({ error: error.message || 'Internal Server Error', status: 'ERROR', stack: error.stack }, { status: 500 });
     }
 }
-
-// export async function POST(req) {
-//     try {
-//         const data = await req.json();
-//         const content = Array.isArray(data.messages[0].content) ? data.messages[0].content : [data.messages[0].content];
-
-//         const processedResults = await processContent(content);
-
-//         if (processedResults.length === 0) {
-//             return NextResponse.json({ error: 'No results found after multiple attempts' }, { status: 404 });
-//         }
-
-//         console.log("PROCESSED RESULTS", JSON.stringify(processedResults, null, 2));
-
-//         return NextResponse.json({ results: processedResults }, { status: 200 });
-//     } catch (error) {
-//         console.error('Error processing request:', error);
-//         return NextResponse.json({ error: error.message || 'Internal Server Error', stack: error.stack }, { status: 500 });
-//     }
-// }
-
-
-
-//////////////////////////////
-
-
-
-// export async function POST(req) {
-//     try {
-//         const data = await req.json();
-//         const content = Array.isArray(data.messages[0].content) ? data.messages[0].content : [data.messages[0].content];
-
-//         const processedResults = await Promise.all(content.map(async (item) => {
-//             if (typeof item !== 'object') {
-//                 throw new Error('Invalid input data');
-//             }
-
-//             const groq = new Groq({ apiKey: GROQ_API_KEY });
-
-
-
-//             const chatCompletion = await groq.chat.completions.create({
-//                 messages: [{ role: "user", content: donorProfileString }],
-//                 model: "llama-3.1-70b-versatile",
-//                 temperature: 0.5,
-//                 max_tokens: 8000,
-//                 top_p: 1,
-//                 stream: true
-//             });
-
-//             let assistantResponse = "";
-//             for await (const chunk of chatCompletion) {
-//                 assistantResponse += chunk.choices[0]?.delta?.content || '';
-//             }
-
-//             return { item, assistantResponse };
-//         }));
-
-
-//         if (processedResults.length === 0) {
-//             return NextResponse.json({ error: 'No results found' }, { status: 404 });
-//         }
-
-//         // Save processedResults to a file
-//         const resultsFilePath = path.join(process.cwd(), 'data', 'processedResults.json');
-//         await fs.writeFile(resultsFilePath, JSON.stringify(processedResults, null, 2));
-
-//         console.log("Processed Results:", processedResults);
-
-
-//         return NextResponse.json({ results: processedResults, savedPath: resultsFilePath }, { status: 200 });
-//     } catch (error) {
-//         console.error('Error processing request:', error);
-//         return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
-//     }
-// }

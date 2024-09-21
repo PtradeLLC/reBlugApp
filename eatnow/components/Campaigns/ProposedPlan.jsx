@@ -14,7 +14,6 @@ import axios from "axios";
 import CampaignAutomation from "./campaignAutomation";
 import Icon from "@mdi/react";
 import { mdiArrowUpBoldBox } from "@mdi/js";
-import Link from "next/link";
 
 const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);
@@ -127,6 +126,13 @@ const Plan = ({ textData, isOpen }) => {
         ),
       }))
     );
+  };
+
+  const componentStyle = {
+    margin: "20px 0", // Add margin to prevent overlap
+    padding: "15px", // Add padding if needed
+    position: "relative", // Use relative positioning to ensure correct stacking
+    zIndex: 1, // Set z-index to ensure the component appears above other elements
   };
 
   const handleFileUpload = (event) => {
@@ -662,62 +668,124 @@ const Plan = ({ textData, isOpen }) => {
                 ))}
               </div>
             </div>
-            <div className="my-3">
-              <CampaignAutomation onFrequencyChange={handleFrequencyChange} />
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mt-2 mb-2">
-                Additionally, you can enrich your contact list data by using our
-                API to find emails based on the generated Ideal Donor Profile.
-              </h3>
-            </div>
-            <div className="flex justify-between px-2">
-              <div className="mx-1">
-                <Button
-                  type="button"
-                  onClick={handleMoreEmail}
-                  className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
-                >
-                  <PlusIcon className="h-5 w-5 mr-2" />
-                  Get More Emails
-                  <span className="text-xs flex justify-end">
-                    (Additional cost)
-                  </span>
-                </Button>
+            <div className="my-3 flex flex-col gap-2">
+              <div>
+                <CampaignAutomation
+                  className="mb-4"
+                  onFrequencyChange={handleFrequencyChange}
+                  style={componentStyle}
+                />
               </div>
-              <div className="mx-1">
-                <Button
-                  type="button"
-                  onClick={handleSendEmail}
-                  className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+
+              <div className="flex flex-col lg:flex-row justify-between px-2 sm:mt-9 md:mt-6">
+                <div
+                  id="fetchButton"
+                  className="mb-4 lg:mb-0 lg:mr-4 lg:flex-1"
                 >
-                  <PlusIcon className="h-5 w-5 mr-2" />
-                  {!loading && buttonText ? (
-                    <>
-                      {buttonText}
-                      <span className="text-xs flex justify-end">
-                        {inputMessage}
+                  <h3 className="text-sm font-medium text-gray-500">
+                    Additionally, you can enrich your contact list data by using
+                    our API to find emails based on the generated Ideal Donor
+                    Profile.
+                  </h3>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 lg:flex-1">
+                  <div className="flex-1 mb-2 sm:mb-0 sm:mr-2">
+                    <Button
+                      type="button"
+                      onClick={handleMoreEmail}
+                      className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500 h-full"
+                    >
+                      <PlusIcon className="h-5 w-5 mr-2" />
+                      <span className="flex flex-col items-start">
+                        <span>Get More Emails</span>
+                        <span className="text-xs">(Additional cost)</span>
                       </span>
-                    </>
-                  ) : (
-                    <div className="flex justify-center items-center">
-                      <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
-                      <p className="ml-2 text-white">Processing...</p>
-                    </div>
-                  )}
-                </Button>
+                    </Button>
+                  </div>
+                  <div className="flex-1">
+                    <Button
+                      type="button"
+                      onClick={handleSendEmail}
+                      className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500 h-full"
+                    >
+                      <PlusIcon className="h-5 w-5 mr-2" />
+                      {!loading && buttonText ? (
+                        <span className="flex flex-col items-start">
+                          <span>{buttonText}</span>
+                          <span className="text-xs">{inputMessage}</span>
+                        </span>
+                      ) : (
+                        <div className="flex justify-center items-center">
+                          <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                          <p className="ml-2 text-white">Processing...</p>
+                        </div>
+                      )}
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
+            {/* <div className="my-3 flex flex-col gap-2">
+              <CampaignAutomation
+                className="mb-4"
+                onFrequencyChange={handleFrequencyChange}
+                style={componentStyle}
+              />
+              <div className="flex-col lg:flex-row justify-between px-2 sm:mt-36">
+                <div className="md:mt-4 lg:mt-4 flex flex-col gap-2 h-9 my-3 md:flex-row lg:flex-row">
+                  <h3 className="text-sm font-medium text-gray-500 mt-2 mb-2">
+                    Additionally, you can enrich your contact list data by using
+                    our API to find emails based on the generated Ideal Donor
+                    Profile.
+                  </h3>
+                </div>
+                <div className="mx-1 my-1">
+                  <Button
+                    type="button"
+                    onClick={handleMoreEmail}
+                    className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+                  >
+                    <PlusIcon className="h-5 w-5 mr-2" />
+                    Get More Emails
+                    <span className="text-xs flex justify-end">
+                      (Additional cost)
+                    </span>
+                  </Button>
+                </div>
+                <div className="mx-1 my-1">
+                  <Button
+                    type="button"
+                    onClick={handleSendEmail}
+                    className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
+                  >
+                    <PlusIcon className="h-5 w-5 mr-2" />
+                    {!loading && buttonText ? (
+                      <>
+                        {buttonText}
+                        <span className="text-xs flex justify-end">
+                          {inputMessage}
+                        </span>
+                      </>
+                    ) : (
+                      <div className="flex justify-center items-center">
+                        <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                        <p className="ml-2 text-white">Processing...</p>
+                      </div>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div> */}
           </div>
         </div>
       ) : (
-        <div className="mt-6 border-t border-gray-100">
+        <div className="flex justify-center items-center mt-6 border-t border-gray-100 sm:mx-auto">
           {textData?.map((data, index) => (
             <div key={index} className="mt-6">
               <dl className="divide-y divide-gray-100">
-                <div className="mt-6 border-t border-gray-100">
+                <div className="mt-6 border-t border-gray-100 ">
                   <div className="px-4 py-6 flex flex-col sm:px-0">
-                    <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 whitespace-pre-line">
+                    <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 whitespace-pre-line sm:px-3 md:px-4">
                       {data.assistantResponse}
                     </p>
                   </div>

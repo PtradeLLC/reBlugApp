@@ -120,7 +120,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                   showValueLabel={true}
                 />
               ) : (
-                <p>
+                <span>
                   {modelResponse || (
                     <>
                       {showChat ? (
@@ -139,7 +139,7 @@ const ChatUI = ({ isOpen, setIsOpen }) => {
                       )}
                     </>
                   )}
-                </p>
+                </span>
               )}
             </div>
           </div>
