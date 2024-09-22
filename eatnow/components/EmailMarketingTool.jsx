@@ -24,7 +24,7 @@ const SeriesModalComponent = ({
 }) => {
   const [campaignEmail, setCampaignEmail] = useState("");
   const [isSelectionMade, setIsSelectionMade] = useState(false);
-  const [showAskButton, setShowAskButton] = useState(false); // State to control Ask a Question button visibility
+  const [showAskButton, setShowAskButton] = useState(false);
   const {
     isOpen: isEmailModalOpen,
     onOpen: onEmailModalOpen,

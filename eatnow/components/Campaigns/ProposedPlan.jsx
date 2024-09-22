@@ -725,107 +725,60 @@ const Plan = ({ textData, isOpen }) => {
                 </div>
               </div>
             </div>
-            {/* <div className="my-3 flex flex-col gap-2">
-              <CampaignAutomation
-                className="mb-4"
-                onFrequencyChange={handleFrequencyChange}
-                style={componentStyle}
-              />
-              <div className="flex-col lg:flex-row justify-between px-2 sm:mt-36">
-                <div className="md:mt-4 lg:mt-4 flex flex-col gap-2 h-9 my-3 md:flex-row lg:flex-row">
-                  <h3 className="text-sm font-medium text-gray-500 mt-2 mb-2">
-                    Additionally, you can enrich your contact list data by using
-                    our API to find emails based on the generated Ideal Donor
-                    Profile.
-                  </h3>
-                </div>
-                <div className="mx-1 my-1">
-                  <Button
-                    type="button"
-                    onClick={handleMoreEmail}
-                    className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
-                  >
-                    <PlusIcon className="h-5 w-5 mr-2" />
-                    Get More Emails
-                    <span className="text-xs flex justify-end">
-                      (Additional cost)
-                    </span>
-                  </Button>
-                </div>
-                <div className="mx-1 my-1">
-                  <Button
-                    type="button"
-                    onClick={handleSendEmail}
-                    className="bg-red-600 text-white w-full rounded-sm hover:bg-red-500"
-                  >
-                    <PlusIcon className="h-5 w-5 mr-2" />
-                    {!loading && buttonText ? (
-                      <>
-                        {buttonText}
-                        <span className="text-xs flex justify-end">
-                          {inputMessage}
-                        </span>
-                      </>
-                    ) : (
-                      <div className="flex justify-center items-center">
-                        <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
-                        <p className="ml-2 text-white">Processing...</p>
-                      </div>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center mt-6 border-t border-gray-100 sm:mx-auto">
-          {textData?.map((data, index) => (
-            <div key={index} className="mt-6">
-              <dl className="divide-y divide-gray-100">
-                <div className="mt-6 border-t border-gray-100 ">
-                  <div className="px-4 py-6 flex flex-col sm:px-0">
-                    <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 whitespace-pre-line sm:px-3 md:px-4">
-                      {data.assistantResponse}
-                    </p>
-                  </div>
+        <div className="flex flex-col justify-center items-center mt-6 border-t border-gray-100 sm:mx-auto">
+          <div className="mt-6 w-full max-w-lg">
+            {" "}
+            {/* Container for the text data */}
+            <dl className="divide-y divide-gray-100 bg-white rounded-lg shadow-md">
+              {" "}
+              {/* Card styling */}
+              <div className="border-t border-gray-100">
+                <div className="px-4 py-6 flex flex-col sm:px-0">
+                  <p className="mt-1 text-sm leading-6 text-gray-700 whitespace-pre-line sm:px-3 md:px-4">
+                    {textData} {/* Directly render the textData string */}
+                  </p>
                 </div>
-                <div className="fixed right-4 z-50">Scroll up</div>
-              </dl>
-              <div className="flex justify-center text-sm flex-col text-gray-600">
-                <p className="mb-4">
-                  Next, let's find and build an email list of donors based on
-                  the ideal profile.
-                </p>
-                <Button
-                  type="button"
-                  onClick={() => setEmailBuild(true)}
-                  className="build-email bg-slate-500 rounded-md mb-3 text-white w-[200px] m-auto"
-                >
-                  <PlusIcon className="h-5 w-5 mr-2" />
-                  Build email list{" "}
-                  {!loading && textData ? (
-                    textData.name
-                  ) : (
-                    <div className="flex justify-center items-center">
-                      <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
-                      <p className="ml-2 text-white">Processing...</p>
-                    </div>
-                  )}
-                </Button>
               </div>
-            </div>
-          ))}
+            </dl>
+          </div>
+
+          <div className="flex flex-col justify-center items-center text-sm text-gray-600 mt-4">
+            <p className="mb-4 text-center">
+              Next, let's find and build an email list of donors based on the
+              ideal profile.
+            </p>
+            <Button
+              type="button"
+              onClick={() => setEmailBuild(true)}
+              className="build-email bg-slate-500 rounded-md mb-3 text-white w-52 flex items-center justify-center"
+            >
+              <PlusIcon className="h-5 w-5 mr-2" />
+              Build email list
+              {!loading ? (
+                <span>{/* Optionally, show a name or relevant info */}</span>
+              ) : (
+                <div className="flex items-center ml-2">
+                  <div className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full border-t-white border-red-500"></div>
+                  <p className="ml-2 text-white">Processing...</p>
+                </div>
+              )}
+            </Button>
+          </div>
+
+          <div className="absolute right-4 z-50 top-6 bg-gray-50 p-2 rounded-full shadow-md">
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="text-sm text-blue-500 hover:text-blue-700"
+            >
+              Scroll up
+            </button>
+          </div>
         </div>
       )}
-      <div className="fixed bottom-4 right-4 z-50">
-        <button
-          onClick={scrollToTop}
-          className="bg-gray-200 hover:bg-gray-300 rounded-full p-2"
-        >
-          <Icon path={mdiArrowUpBoldBox} size={1} />
-        </button>
-      </div>
     </div>
   );
 };

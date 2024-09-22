@@ -19,8 +19,6 @@ export function useNationBuild() {
             const data = await response.json();
             setApiResponse(data);
 
-            console.log("API Response:", data);
-
             return data;
         } catch (error) {
             console.error("Error in makeRequest:", error);
