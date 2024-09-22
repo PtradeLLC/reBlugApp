@@ -132,7 +132,7 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
       >
         <ModalContent
           className="max-h-[90vh] overflow-y-auto"
-          style={{ borderRadius: "10px" }} // Set the border-radius property here
+          style={{ borderRadius: "10px" }}
         >
           {(onClose) => (
             <>
@@ -160,7 +160,7 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
                           {/* Card */}
                           <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-3 dark:bg-neutral-900 dark:border-neutral-700">
                             <h2 className="font-medium text-base text-gray-800 dark:text-white">
-                              Ask our proposed plan
+                              Chat with our proposed plan
                             </h2>
                             <div className="space-y-1.5">
                               <p className="mb-1.5 text-sm text-gray-800 dark:text-white">
@@ -320,7 +320,8 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
                                 {/* End Mic Button */}
                                 {/* Send Button */}
                                 <button
-                                  type="button"
+                                  type="submit"
+                                  onClick={handleSubmit}
                                   className="inline-flex justify-center items-center size-8 rounded-lg text-gray-500 hover:bg-gray-100 focus:z-10 focus:outline-none focus:bg-gray-100 dark:text-neutral-500 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                                 >
                                   <svg

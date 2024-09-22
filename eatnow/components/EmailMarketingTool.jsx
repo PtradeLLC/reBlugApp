@@ -146,7 +146,7 @@ const SeriesModalComponent = ({
                 }
                 disabled={!isSelectionMade} // Disable the button if no selection
               >
-                Chat with Tool
+                Chat with this Tool
               </Button>
             )}
             <Button color="error" onClick={onClose}>

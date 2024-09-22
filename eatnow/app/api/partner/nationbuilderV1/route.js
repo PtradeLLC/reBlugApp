@@ -1,4 +1,3 @@
-// app/api/getNiche/route.js
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Groq from 'groq-sdk';
