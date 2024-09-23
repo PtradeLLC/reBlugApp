@@ -25,26 +25,6 @@ async function processContent({ firstMessage, textMessage }, retryCount = 0) {
     }
 }
 
-// async function processContent({ firstMessage, textMessage }, retryCount = 0) {
-//     try {
-//         // Check if firstMessage is provided and valid
-//         if (!firstMessage || !firstMessage.role || !firstMessage.content) {
-//             throw new Error("Invalid firstMessage data");
-//         }
-
-//         // Process each message individually and return the results
-//         const processedResults = await Promise.all([
-//             processSingleMessage(firstMessage, 'User Input'), // Pass firstMessage to processSingleMessage
-//             processSingleMessage(textMessage, 'Chatbot Response' || ""), // Pass textMessage to processSingleMessage
-//         ]);
-
-//         return processedResults;
-//     } catch (error) {
-//         console.error('Error in processContent:', error);
-//         throw error;
-//     }
-// }
-
 
 async function processSingleMessage(message, source) {
     if (typeof message !== 'object' || !message || !message.content) {
@@ -417,41 +397,3 @@ export async function POST(req) {
         return NextResponse.json({ error: error.message || 'Internal Server Error', status: 'ERROR' }, { status: 500 });
     }
 }
-
-// export async function POST(req) {
-//     try {
-//         const data = await req.json();
-
-//         if (!data.messages || !Array.isArray(data.messages) || data.messages.length === 0) {
-//             return NextResponse.json({ error: 'Invalid messages format', status: 'INVALID_MESSAGES' }, { status: 400 });
-//         }
-
-
-//         const firstMessage = data.messages[0] || null;
-//         const textMessage = data.messages[1] || null;
-
-//         // console.log("Text Message:", textMessage);
-//         console.log("firstMessage:", firstMessage);
-
-//         if (!firstMessage?.content || !textMessage) {
-//             return NextResponse.json({ error: 'No valid content found in messages', status: 'NO_CONTENT' }, { status: 400 });
-//         }
-
-//         const result = await processContent({ firstMessage, textMessage });
-
-//         console.log("RESULT from nationbuilderV1", result);
-
-//         return NextResponse.json(
-//             {
-//                 userInput: result[0].assistantResponse,
-//                 chatbotResponse: result[1].assistantResponse,
-//                 status: 'SUCCESS'
-//             },
-//             { status: 200 }
-//         );
-
-//     } catch (error) {
-//         console.error('Error processing request:', error);
-//         return NextResponse.json({ error: error.message || 'Internal Server Error', status: 'ERROR' }, { status: 500 });
-//     }
-// }

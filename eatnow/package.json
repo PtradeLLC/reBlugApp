@@ -160,6 +160,7 @@
     "openai": "^4.19.0",
     "openai-edge": "^1.2.0",
     "pdf-parse": "^1.1.1",
+    "peerjs": "^1.5.4",
     "pg": "^8.11.5",
     "pgvector": "^0.1.4",
     "preline": "^2.0.3",

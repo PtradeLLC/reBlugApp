@@ -54,34 +54,70 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
     }
 
     try {
-      const response = await fetch("/api/partner/nationbuilderV1", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            {
-              content: newQuestion,
-              textData: textData,
-            },
-          ],
-        }),
+      const response = await makeRequest({
+        messages: [
+          {
+            role: "user",
+            content: newQuestion,
+          },
+          {
+            role: "assistant",
+            content: textData,
+          },
+        ],
       });
 
-      const data = await response.json();
-      if (response.ok) {
+      if (response.status === "SUCCESS") {
         setUserQuestion(newQuestion);
-        setNewResponse(data.results || "");
+        setNewResponse(response.assistantResponse || "");
         setNewQuestion("");
       } else {
-        setError(data.error || "Failed to fetch response.");
+        setError(response.error || "Failed to fetch response.");
       }
     } catch (error) {
       console.error("Error posting question:", error);
       setError("Failed to post question. Please try again later.");
     }
   };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setError("");
+
+  //   if (!user || !user.$id) {
+  //     console.error("User not authenticated");
+  //     setError("Please log in to post a comment.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch("/api/partner/nationbuilderV1", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         messages: [
+  //           {
+  //             content: newQuestion,
+  //             textData: textData,
+  //           },
+  //         ],
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       setUserQuestion(newQuestion);
+  //       setNewResponse(data.results || "");
+  //       setNewQuestion("");
+  //     } else {
+  //       setError(data.error || "Failed to fetch response.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error posting question:", error);
+  //     setError("Failed to post question. Please try again later.");
+  //   }
+  // };
 
   return (
     <>
