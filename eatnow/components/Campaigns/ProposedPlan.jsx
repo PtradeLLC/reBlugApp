@@ -12,8 +12,6 @@ import { integrationData } from "./integrationData";
 import Image from "next/image";
 import axios from "axios";
 import CampaignAutomation from "./campaignAutomation";
-import Icon from "@mdi/react";
-import { mdiArrowUpBoldBox } from "@mdi/js";
 
 const Plan = ({ textData, isOpen }) => {
   const [emailBuild, setEmailBuild] = useState(false);

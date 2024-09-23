@@ -219,6 +219,7 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
     setLoadingStateIndex(0);
     setApiStatus(null);
     setTextData(null);
+
     try {
       // Start displaying loading messages
       const messagePromise = iterateLoadingMessages();
@@ -231,22 +232,65 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
       // Wait for loading messages to complete
       await messagePromise;
 
-      if (response && response.status === "SUCCESS") {
-        setTextData(response.assistantResponse);
-        setApiStatus("SUCCESS");
-      } else if (response && response.status === "NO_RESULTS") {
-        setApiStatus("NO_RESULTS");
+      if (response) {
+        if (response.status === "SUCCESS") {
+          console.log("RESPONSE", response);
+          setTextData(response.assistantResponse);
+          setApiStatus("SUCCESS");
+        } else if (response.status === "NO_RESULTS") {
+          setApiStatus("NO_RESULTS");
+        } else {
+          setApiStatus("ERROR");
+        }
       } else {
         setApiStatus("ERROR");
       }
     } catch (error) {
-      console.error("Error in handleLaunch:", error);
+      console.error("Error in handleLaunch:", error.message || error);
       setApiStatus("ERROR");
     } finally {
       setShowLoadingStatus(false);
       setShowFinalMessage(true);
     }
   };
+
+  // const handleLaunch = async () => {
+  //   setDonorFormula(false);
+  //   setShowLoadingStatus(true);
+  //   setShowFinalMessage(false);
+  //   setLoadingStateIndex(0);
+  //   setApiStatus(null);
+  //   setTextData(null);
+  //   try {
+  //     // Start displaying loading messages
+  //     const messagePromise = iterateLoadingMessages();
+
+  //     // Make the API request
+  //     const response = await makeRequest({
+  //       messages: [{ role: "user", content: formData }],
+  //     });
+
+  //     // Wait for loading messages to complete
+  //     await messagePromise;
+
+  //     if (response && response.status === "SUCCESS") {
+  //       console.log("RESPONSE", response);
+
+  //       setTextData(response.assistantResponse);
+  //       setApiStatus("SUCCESS");
+  //     } else if (response && response.status === "NO_RESULTS") {
+  //       setApiStatus("NO_RESULTS");
+  //     } else {
+  //       setApiStatus("ERROR");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in handleLaunch:", error);
+  //     setApiStatus("ERROR");
+  //   } finally {
+  //     setShowLoadingStatus(false);
+  //     setShowFinalMessage(true);
+  //   }
+  // };
 
   const validateForm = () => {
     const newErrors = {};
