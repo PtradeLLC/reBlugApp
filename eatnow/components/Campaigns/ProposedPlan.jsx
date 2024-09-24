@@ -770,7 +770,7 @@ const Plan = ({ textData, isOpen }) => {
             <button
               type="button"
               onClick={scrollToTop}
-              className="text-sm text-blue-500 hover:text-blue-700"
+              className="text-sm text-green-500 hover:text-green-700"
             >
               Scroll up
             </button>

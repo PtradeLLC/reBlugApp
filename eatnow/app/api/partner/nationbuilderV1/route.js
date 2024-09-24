@@ -27,13 +27,14 @@ async function processContent({ firstMessage, textMessage }, retryCount = 0) {
 
 
 async function processSingleMessage(message, source) {
-    if (typeof message !== 'object' || !message || !message.content) {
-        throw new Error(`Invalid ${source} data`);
-    }
+    // if (typeof message !== 'object' || !message || !message.content) {
+    //     throw new Error(`Invalid ${source} data`);
+    // }
 
     const groq = new Groq({ apiKey: GROQ_API_KEY });
 
     const userData = message.content;
+    let chatAssistantResponse = "";
 
     // Check if the message is a `firstMessage`
     if (source === 'User Input') {
@@ -238,6 +239,8 @@ async function processSingleMessage(message, source) {
             throw new Error(`Failed to get a non-empty response for ${source} after multiple attempts`);
         }
 
+        chatAssistantResponse = assistantResponse;
+
         return { message, assistantResponse };
 
     } else if (source === 'Chatbot Response') {
@@ -320,7 +323,10 @@ async function processSingleMessage(message, source) {
              </Instruction>
             `;
 
-        let assistantResponse = "";
+        let assistantResponse = chatAssistantResponse;  // Assigned the value of chatAssistantResponse to assistantResponse
+
+        console.log("ASSISTANT RESPONSE from TextData", assistantResponse);
+
         let attempts = 0;
 
         while (assistantResponse.trim() === "" && attempts < MAX_RETRIES) {
@@ -352,16 +358,11 @@ async function processSingleMessage(message, source) {
             throw new Error(`Failed to get a non-empty response for ${source} after multiple attempts`);
         }
 
-        console.log("ASSISTANT RESPONSE from TextData", assistantResponse);
-        console.log("MESSAGE from TextData", message);
-
         return { message, assistantResponse };
     } else {
         return;
     }
 }
-
-
 
 export async function POST(req) {
     try {
@@ -374,15 +375,12 @@ export async function POST(req) {
         const firstMessage = data.messages[0] || null;
         const textMessage = data.messages[1] || null;
 
-        console.log("firstMessage:", firstMessage);
-
         if (!firstMessage?.content) {
             return NextResponse.json({ error: 'No valid content found in messages', status: 'NO_CONTENT' }, { status: 400 });
         }
 
         const result = await processContent({ firstMessage, textMessage });
 
-        console.log("RESULT from nationbuilderV1", result);
 
         return NextResponse.json(
             {
