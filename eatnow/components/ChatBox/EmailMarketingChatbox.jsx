@@ -43,7 +43,6 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
   }, [user]);
 
   //Handling new question
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
@@ -79,91 +78,11 @@ const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {
       } else {
         setError(nationbuilderData.error || "Failed to fetch response.");
       }
-
-      console.log("NATIONBUILDER DATA:", nationbuilderData);
     } catch (error) {
       console.error("Error posting question:", error);
       setError("Failed to post question. Please try again later.");
     }
   };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   setError("");
-
-  //   if (!user || !user.$id) {
-  //     console.error("User not authenticated");
-  //     setError("Please log in to post a comment.");
-  //     return;
-  //   }
-
-  //   try {
-  //     // Step 1: Make a POST request to /api/responseUrl
-  //     const nationbuilderResponse = await fetch("/api/responseUrl", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         messages: [
-  //           { role: "user", content: newQuestion },
-  //           { role: "assistant", content: textData },
-  //         ],
-  //       }),
-  //     });
-
-  //     if (!nationbuilderResponse.ok) {
-  //       throw new Error("Failed to fetch response from nationbuilderV1");
-  //     }
-
-  //     const nationbuilderData = await nationbuilderResponse.json();
-
-  //     console.log("NATIONBULDER DATA:", nationbuilderData);
-  //   } catch (error) {
-  //     console.error("Error posting question:", error);
-  //     setError("Failed to post question. Please try again later.");
-  //   }
-  // };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   setError("");
-
-  //   if (!user || !user.$id) {
-  //     console.error("User not authenticated");
-  //     setError("Please log in to post a comment.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch("/api/partner/nationbuilderV1", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         messages: [
-  //           {
-  //             content: newQuestion,
-  //             textData: textData,
-  //           },
-  //         ],
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-  //     if (response.ok) {
-  //       setUserQuestion(newQuestion);
-  //       setNewResponse(data.results || "");
-  //       setNewQuestion("");
-  //     } else {
-  //       setError(data.error || "Failed to fetch response.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error posting question:", error);
-  //     setError("Failed to post question. Please try again later.");
-  //   }
-  // };
 
   return (
     <>

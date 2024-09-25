@@ -92,7 +92,7 @@ export async function POST(req) {
             }
 
             const data = await response.json();
-            console.log("Data from nationbuilderV1:", data);
+            console.log("Data from responseUrl:", data);
 
             return NextResponse.json({ status: 'SUCCESS' }, { status: 200 });
         } else {
