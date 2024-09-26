@@ -134,7 +134,7 @@ async function processSingleMessage(message, source) {
         try {
             const chatCompletion = await groq.chat.completions.create({
                 messages: [{ role: "user", content: donorProfileString }],
-                model: "llama-3.1-70b-versatile",
+                model: "llama-3.2-90b-text-preview",
                 temperature: 0.5,
                 max_tokens: 8000,
                 top_p: 1,
@@ -182,7 +182,7 @@ async function generateFinalResponse(idealDonorProfileAnalysis, firstMessage) {
                     content: userContent
                 }
             ],
-            model: "llama-3.1-70b-versatile",
+            model: "llama-3.2-90b-text-preview",
             temperature: 1,
             max_tokens: 8000,
             top_p: 1,
