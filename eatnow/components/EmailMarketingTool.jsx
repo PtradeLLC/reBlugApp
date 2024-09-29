@@ -63,7 +63,7 @@ const SeriesModalComponent = ({
 
   // Function passed to RaiseFunds component to control button visibility
   const handleProposedPlanClick = () => {
-    setShowAskButton(true); // Show the Ask a Question button
+    setShowAskButton(true);
   };
 
   return (

@@ -8,6 +8,7 @@ export function useNationBuild() {
     const makeRequest = async (payload) => {
         setIsLoading(true);
         try {
+
             const response = await fetch("/api/partner/nationbuilderV1", {
                 method: "POST",
                 headers: {
@@ -19,7 +20,6 @@ export function useNationBuild() {
             const data = await response.json();
             setApiResponse(data);
 
-            console.log("API Response from nationHook:", data);
             return data;
         } catch (error) {
             console.error("Error in makeRequest:", error);

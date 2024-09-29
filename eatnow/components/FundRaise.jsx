@@ -234,7 +234,6 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
 
       if (response) {
         if (response.status === "SUCCESS") {
-          console.log("RESPONSE", response);
           setTextData(response.assistantResponse);
           setApiStatus("SUCCESS");
         } else if (response.status === "NO_RESULTS") {

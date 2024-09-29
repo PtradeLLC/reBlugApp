@@ -13,48 +13,6 @@ function isValidChatbotResponse(response) {
     return response.trim().length > 0;
 }
 
-// async function processSingleMessage(message) {
-//     const groq = new Groq({
-//         apiKey: GROQ_API_KEY,
-//     });
-
-//     let retries = 0;
-//     let assistantResponse = '';
-
-//     while (retries < MAX_RETRIES) {
-//         try {
-//             const chatCompletion = await groq.chat.completions.create({
-//                 messages: [message],
-//                 model: "llama-3.1-70b-versatile",
-//                 temperature: 0.5,
-//                 max_tokens: 8000,
-//                 top_p: 1,
-//                 stream: true,
-//             });
-
-//             for await (const chunk of chatCompletion) {
-//                 assistantResponse += chunk.choices[0]?.delta?.content || '';
-//             }
-
-//             if (isValidChatbotResponse(assistantResponse)) {
-//                 return assistantResponse;
-//             } else {
-//                 console.log(`Attempt ${retries + 1} produced an invalid response. Retrying...`);
-//                 retries++;
-//             }
-//         } catch (error) {
-//             console.error(`Attempt ${retries + 1} failed:`, error);
-//             retries++;
-//             if (retries === MAX_RETRIES) {
-//                 throw new Error('Max retries reached');
-//             }
-//             await new Promise(resolve => setTimeout(resolve, 1000 * retries)); // Exponential backoff
-//         }
-//     }
-
-//     throw new Error('Failed to generate valid response after max retries');
-// }
-
 export async function POST(req) {
     try {
         const { messages } = await req.json();
@@ -75,7 +33,7 @@ export async function POST(req) {
         const userMessage = getContent[0].content;
 
         if (userMessage) {
-            //Fetch aiResponse from `/api/partner/nationbuilderV1`
+            //Fetch aiResponse from `nationbuilderV1`
             const response = await fetch("/api/partner/nationbuilderV1", {
                 method: "POST",
                 headers: {
@@ -98,25 +56,7 @@ export async function POST(req) {
         } else {
             return NextResponse.json({ error: 'Invalid userMessage', status: 'INVALID_USER_MESSAGE' }, { status: 400 });
         }
-
-
-        // const assistantResponse = await processSingleMessage(messages);
-
-        // Save the response to the database
-        // try {
-        //     await prisma.conversation.create({
-        //         data: {
-        //             messages: content.messages,
-        //             response: assistantResponse,
-        //         },
-        //     });
-        // } catch (dbError) {
-        //     console.error('Error saving to database:', dbError);
-        //     // Continue with the response even if database save fails
-        // }
-
-        // return NextResponse.json({ assistantResponse, status: 'SUCCESS' }, { status: 200 });
-        return NextResponse.json({ status: 'SUCCESS' }, { status: 200 });
+        // return NextResponse.json({ status: 'SUCCESS' }, { status: 200 });
     } catch (error) {
         console.error('Error processing request:', error);
         return NextResponse.json({
