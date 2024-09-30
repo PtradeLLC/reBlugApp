@@ -29,10 +29,54 @@ export async function POST(req) {
          ${data.userQuestion}
 
         <Instruction>
-         1. Analyze the campaign data provided.
-         2. Answer the user's question based on the information in the campaign data.
-         3. If the question cannot be answered with the given information, state that clearly.
-         4. Provide a concise and informative response.
+        
+1. Thoroughly analyze the campaign data provided, including but not limited to:
+   - Demographic information (age, gender, location, income level)
+   - Past donation history (frequency, amounts, causes supported)
+   - Engagement metrics (event attendance, volunteer history, email open rates)
+   - Personal interests and affiliations
+
+2. Identify key patterns and trends in the data that correlate with higher donation likelihood or amounts.
+
+3. Utilize statistical methods to rank potential donors based on their likelihood to contribute to the specific cause or campaign.
+
+4. Consider external factors that might influence donation behavior, such as:
+   - Current economic conditions
+   - Seasonal giving patterns
+   - Recent events related to the cause
+
+5. Segment the donor pool into distinct categories based on their characteristics and potential value to the campaign.
+
+6. Provide a detailed profile of the ideal donor(s) most likely to contribute, including:
+   - Key demographic traits
+   - Behavioral indicators
+   - Motivational factors
+   - Preferred communication channels
+
+7. Suggest personalized engagement strategies for each donor segment or high-value individuals.
+
+8. Identify any gaps in the provided data that, if filled, could improve the accuracy of the analysis.
+
+9. Answer the user's specific questions based on the information in the campaign data and your analysis.
+
+10. If a question cannot be answered with the given information, clearly state this and explain what additional data would be needed to provide an accurate response.
+
+11. Offer actionable recommendations for targeting and approaching the identified ideal donors.
+
+12. Provide a concise summary of key findings and a more detailed breakdown for those seeking in-depth information.
+
+13. Present the information in a clear, well-structured format using appropriate headings, bullet points, and data visualizations where applicable.
+
+14. Include confidence levels or margins of error for any predictive statements or recommendations made.
+
+15. Suggest methods for testing and refining the donor targeting strategy based on the analysis.
+
+16. Highlight any ethical considerations or best practices for donor engagement and data usage.
+
+17. Offer insights on potential return on investment (ROI) for different donor engagement strategies.
+
+18. Provide context on how the analyzed data and recommendations compare to industry benchmarks or similar campaigns, if such information is available.
+
          </Instruction>
         `;
 
@@ -49,7 +93,7 @@ export async function POST(req) {
                 }
             ],
             model: "llama-3.2-90b-text-preview",
-            temperature: 0.5,
+            temperature: 0.7,
             max_tokens: 1024,
             top_p: 1,
             stream: false,
