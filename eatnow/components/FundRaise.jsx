@@ -225,22 +225,37 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
       const messagePromise = iterateLoadingMessages();
 
       // Make the API request
-      const response = await makeRequest({
-        messages: [{ role: "user", content: formData }],
+      const response = await fetch("/api/partner/nationbuilderV1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: formData }],
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch response from nationbuilderV1");
+      }
+
+      const data = await response.json();
 
       // Wait for loading messages to complete
       await messagePromise;
 
-      if (response) {
-        if (response.status === "SUCCESS") {
-          setTextData(response.assistantResponse);
-          setApiStatus("SUCCESS");
-        } else if (response.status === "NO_RESULTS") {
-          setApiStatus("NO_RESULTS");
-        } else {
-          setApiStatus("ERROR");
-        }
+      if (data.status === "SUCCESS") {
+        setTextData(data.assistantResponse);
+        setApiStatus("SUCCESS");
+
+        // Save the response to local storage
+        localStorage.setItem(
+          "finalResponse",
+          JSON.stringify(data.assistantResponse)
+        );
+        console.log("Saved to local storage:", data.assistantResponse);
+      } else if (data.status === "NO_RESULTS") {
+        setApiStatus("NO_RESULTS");
       } else {
         setApiStatus("ERROR");
       }
@@ -252,6 +267,47 @@ const RaiseFunds = ({ onProposedPlanClick }) => {
       setShowFinalMessage(true);
     }
   };
+
+  // const handleLaunch = async () => {
+  //   setDonorFormula(false);
+  //   setShowLoadingStatus(true);
+  //   setShowFinalMessage(false);
+  //   setLoadingStateIndex(0);
+  //   setApiStatus(null);
+  //   setTextData(null);
+
+  //   try {
+  //     // Start displaying loading messages
+  //     const messagePromise = iterateLoadingMessages();
+
+  //     // Make the API request
+  //     const response = await makeRequest({
+  //       messages: [{ role: "user", content: formData }],
+  //     });
+
+  //     // Wait for loading messages to complete
+  //     await messagePromise;
+
+  //     if (response) {
+  //       if (response.status === "SUCCESS") {
+  //         setTextData(response.assistantResponse);
+  //         setApiStatus("SUCCESS");
+  //       } else if (response.status === "NO_RESULTS") {
+  //         setApiStatus("NO_RESULTS");
+  //       } else {
+  //         setApiStatus("ERROR");
+  //       }
+  //     } else {
+  //       setApiStatus("ERROR");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in handleLaunch:", error.message || error);
+  //     setApiStatus("ERROR");
+  //   } finally {
+  //     setShowLoadingStatus(false);
+  //     setShowFinalMessage(true);
+  //   }
+  // };
 
   const validateForm = () => {
     const newErrors = {};

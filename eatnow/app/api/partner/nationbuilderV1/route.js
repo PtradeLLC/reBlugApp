@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Groq from 'groq-sdk';
-import { sub } from 'date-fns';
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const prisma = new PrismaClient();
@@ -11,10 +10,6 @@ const MAX_RETRIES = 3;
 async function processContent({ firstMessage }) {
     try {
         const processedResults = await processSingleMessage(firstMessage, 'User Input');
-
-        // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        // console.log("PROCESSED RESULTS:", processedResults); // Returned data from the frontend submission (JSON)
-        // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         return [processedResults].filter(result => result !== null);
     } catch (error) {
@@ -205,11 +200,6 @@ async function generateFinalResponse(idealDonorProfileAnalysis, firstMessage) {
 
         const userContent = typeof firstMessage === 'string' ? firstMessage : JSON.stringify(firstMessage);
 
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>");
-        console.log("SYSTEM CONTENT:", parsedSystemContent);
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>");
-        console.log("USER CONTENT:", userContent);
-
         const promptTemplate = `
         Based on the provided data, create an Ideal Donor Profile for the campaign.
 
@@ -313,14 +303,8 @@ export async function POST(req) {
 
         const firstMessage = data.messages[0]?.content || '';
 
-        // We no longer need to process the content separately
-        // const result = await processContent({ firstMessage });
-        // const idealDonorProfileAnalysis = result[0]?.assistantResponse || '';
-
-        // Instead, we pass the firstMessage directly to generateFinalResponse
         const finalResponse = await generateFinalResponse(null, firstMessage);
 
-        console.log("ASSISTANT RESPONSE from generateFinalResponse:", finalResponse);
 
         return NextResponse.json(
             {
@@ -339,117 +323,3 @@ export async function POST(req) {
         }, { status: 500 });
     }
 }
-
-
-// export async function POST(req) {
-//     try {
-//         const data = await req.json();
-
-//         if (!data.messages || !Array.isArray(data.messages) || data.messages.length === 0) {
-//             return NextResponse.json({ error: 'Invalid messages format', status: 'INVALID_MESSAGES' }, { status: 400 });
-//         }
-
-//         const firstMessage = data.messages[0]?.content || '';
-
-//         const result = await processContent({ firstMessage });
-
-//         const idealDonorProfileAnalysis = result[0]?.assistantResponse || '';
-
-//         const finalResponse = await generateFinalResponse(idealDonorProfileAnalysis, firstMessage);
-
-//         console.log("ASSISTANT RESPONSE from generateFinalResponse:", finalResponse);
-
-//         return NextResponse.json(
-//             {
-//                 assistantResponse: finalResponse,
-//                 status: 'SUCCESS'
-//             },
-//             { status: 200 }
-//         );
-
-//     } catch (error) {
-//         console.error('Error processing request:', error);
-//         return NextResponse.json({
-//             error: error.message || 'Internal Server Error',
-//             status: 'ERROR',
-//             details: error.error?.error || {}
-//         }, { status: 500 });
-//     }
-// }
-
-
-
-
-// async function generateFinalResponse(idealDonorProfileAnalysis, firstMessage) {
-//     const groq = new Groq({ apiKey: GROQ_API_KEY });
-//     let assistantResponse = "";
-
-//     try {
-//         let parsedSystemContent;
-//         if (typeof idealDonorProfileAnalysis === 'string') {
-//             try {
-//                 parsedSystemContent = JSON.parse(idealDonorProfileAnalysis);
-//             } catch (e) {
-//                 parsedSystemContent = idealDonorProfileAnalysis;
-//             }
-//         } else {
-//             parsedSystemContent = idealDonorProfileAnalysis;
-//         }
-
-//         // Use firstMessage as userContent
-//         const userContent = typeof firstMessage === 'string' ? firstMessage : JSON.stringify(firstMessage);
-
-//         // console.log(">>>>>>>>>>>>>>>>>>>>>>>");
-//         // console.log("SYSTEM CONTENT:", parsedSystemContent);
-//         // console.log(">>>>>>>>>>>>>>>>>>>>>>>");
-//         // console.log("USER CONTENT:", userContent); 
-//         // console.log(">>>>>>>>>>>>>>>>>>>>>>>");
-
-//         // Call processSingleMessage with parsedSystemContent and userContent
-//         assistantResponse = await processSingleMessage(parsedSystemContent, userContent, firstMessage);
-
-//         console.log("ASSISTANT RESPONSE from generateFinalResponse:", assistantResponse);
-
-//         return assistantResponse;
-//     } catch (error) {
-//         console.error('Error in generateFinalResponse:', error);
-//         throw error;
-//     }
-// }
-
-
-// export async function POST(req) {
-//     try {
-//         const data = await req.json();
-
-//         if (!data.messages || !Array.isArray(data.messages) || data.messages.length === 0) {
-//             return NextResponse.json({ error: 'Invalid messages format', status: 'INVALID_MESSAGES' }, { status: 400 });
-//         }
-
-//         const firstMessage = data.messages[0]?.content || '';
-
-//         const result = await processContent({ firstMessage });
-
-//         const idealDonorProfileAnalysis = result[0]?.assistantResponse || '';
-
-//         const finalResponse = await generateFinalResponse(idealDonorProfileAnalysis, firstMessage);
-
-//         // console.log("finalResponse from nationBuilder:", finalResponse);
-
-//         return NextResponse.json(
-//             {
-//                 assistantResponse: finalResponse,
-//                 status: 'SUCCESS'
-//             },
-//             { status: 200 }
-//         );
-
-//     } catch (error) {
-//         console.error('Error processing request:', error);
-//         return NextResponse.json({
-//             error: error.message || 'Internal Server Error',
-//             status: 'ERROR',
-//             details: error.error?.error || {}
-//         }, { status: 500 });
-//     }
-// }
