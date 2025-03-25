@@ -10,3 +10,6 @@
 [submodule "frontend/chat-clarity-widget"]
 	path = frontend/chat-clarity-widget
 	url = https://github.com/PtradeLLC/chat-clarity-widget.git
+[submodule "frontend/article-assistant"]
+	path = frontend/article-assistant
+	url = https://github.com/PtradeLLC/chat-clarity-widget.git
