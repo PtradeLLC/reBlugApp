@@ -1,54 +1,81 @@
+const withPWA = require('next-pwa')({
+    dest: 'public',
+    register: true,
+    skipWaiting: true,
+    // Optional: Adjust Workbox configuration if needed
+    // workboxOpts: {
+    //     swSrc: 'public/sw.js',
+    //     swDest: 'sw.js',
+    // },
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.ts$/,
-      use: "ts-loader",
-      exclude: /node_modules/,
-    });
-    config.resolve.extensions.push(".ts", ".tsx");
-
-    return config;
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "replicate.com",
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: "lh3.googleusercontent.com",
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: "https://0ayhovuii0guag6u.public.blob.vercel-storage.com",
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: "https://replicate.delivery/pbxt/",
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: "images.unsplash.com",
-        pathname: '**',
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.delivery",
-      },
-    ],
-  },
-  env: {
-    // @see https://github.com/facebookexperimental/Recoil/issues/2135#issuecomment-1362197710
-    RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED: "false",
-  }
+    reactStrictMode: true,
+    swcMinify: true,
+    webpack(config) {
+        // No need to filter out GenerateSW manually
+        return config;
+    },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
+
+
+
+
+
+
+// const withPWA = require('next-pwa')({
+//     dest: 'public',
+//     register: true,
+//     skipWaiting: true,
+// });
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//     reactStrictMode: true,
+//     swcMinify: true,
+//     // Add the bodyParser size limit configuration
+//     api: {
+//         bodyParser: {
+//             sizeLimit: '5mb',
+//         },
+//     },
+//     webpack(config) {
+//         // Do not manually filter out GenerateSW
+//         return config;
+//     },
+// };
+
+// module.exports = withPWA(nextConfig);
+
+
+
+// const withPWA = require('next-pwa')({
+//     dest: 'public',
+//     register: true,
+//     skipWaiting: true,
+// });
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//     reactStrictMode: true,
+//     swcMinify: true,
+//     webpack(config) {
+//         config.plugins = config.plugins.filter(
+//             plugin => plugin.constructor.name !== 'GenerateSW'
+//         );
+//         return config;
+//     },
+//     // Add the bodyParser size limit configuration
+//     api: {
+//         bodyParser: {
+//             sizeLimit: '5mb',
+//         },
+//     },
+// };
+
+// module.exports = withPWA({
+//     ...nextConfig,
+// });

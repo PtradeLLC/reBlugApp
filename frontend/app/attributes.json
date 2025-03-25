@@ -1,0 +1,2801 @@
+[
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "person_id",
+        "Display Name": "Person ID",
+        "Packages": "Core, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The unique identifier for the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "first_name",
+        "Display Name": "First Name",
+        "Packages": "Core, Core, Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "The first name of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "middle_initial",
+        "Display Name": "Middle Initial",
+        "Packages": "Core, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The person's middle initial.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "last_name",
+        "Display Name": "Last Name",
+        "Packages": "Core, Core, Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "The last name of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "generational_suffix",
+        "Display Name": "Generational Suffix",
+        "Packages": "Core, Core, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "The generational suffix of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "gender",
+        "Display Name": "Gender",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "The gender of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "age",
+        "Display Name": "Age",
+        "Packages": "Age, Generations, Generations, People Enhanced",
+        "Description": "The age of the individual.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "date_of_birth",
+        "Display Name": "Date Of Birth",
+        "Packages": "Age, Generations, Generations, People Enhanced",
+        "Description": "The person's date of birth.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Identifiers",
+        "Attribute": "estimated_date_of_birth",
+        "Display Name": "Estimated Date Of Birth",
+        "Packages": "Age, Generations, Generations, People Enhanced",
+        "Description": "A range representing an estimation of the person's date of birth.",
+        "Type": "date_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "active",
+        "Display Name": "Active",
+        "Packages": "People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the person is an active consumer.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "suppressed",
+        "Display Name": "Suppressed",
+        "Packages": "BU MyPlaces, Data Operations Research, Licensing Full, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation",
+        "Description": "The person is suppressed from customer feeds.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "suppressed_fields",
+        "Display Name": "Suppressed Fields",
+        "Packages": "BU MyPlaces, Enhanced, Enhanced, Licensing Full, People Public Attributes, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation",
+        "Description": "The list of fields that are suppressed from deliveries.",
+        "Type": "array"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "suppressed_fields_count",
+        "Display Name": "Suppressed Fields Count",
+        "Packages": "Public Attributes",
+        "Description": "The total number of Suppressed Fields associated with the person.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "created_at",
+        "Display Name": "Created At",
+        "Packages": "BU MyPlaces, Data Operations Research, Enhanced, Licensing Full, People Public Attributes, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation",
+        "Description": "The date and time the person record was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "updated_at",
+        "Display Name": "Updated At",
+        "Packages": "Licensing Full, People Public Attributes, Places Standard Full, Places Standard Marketing, Public Attributes, Search & Navigation",
+        "Description": "The date and time when the person was last updated.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Status & Recency",
+        "Attribute": "updated_on",
+        "Display Name": "Updated On",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The date when the latest information was obtained or confirmed for the individual.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.id",
+        "Display Name": "Emails: Id",
+        "Packages": "Emails, Emails",
+        "Description": "The unique ID for the email.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.created_at",
+        "Display Name": "Emails: Created At",
+        "Packages": "Emails, Emails",
+        "Description": "The date and time the email record was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.address",
+        "Display Name": "Emails: Address",
+        "Packages": "Emails, Emails",
+        "Description": "The email address of the person or family.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.address_md5",
+        "Display Name": "Emails: Address MD5",
+        "Packages": "Emails, Emails",
+        "Description": "MD5 encrypted hash of the email address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.address_sha256",
+        "Display Name": "Emails: Address SHA-256",
+        "Packages": "Emails, Emails",
+        "Description": "SHA-256 encrypted hash of the email address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.deliverable",
+        "Display Name": "Emails: Deliverable",
+        "Packages": "Emails, Emails",
+        "Description": "The deliverability status of the email address.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.deployable",
+        "Display Name": "Emails: Deployable",
+        "Packages": "",
+        "Description": "Indicates if the email address is deployable.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.family_level",
+        "Display Name": "Emails: Family Level",
+        "Packages": "Emails, Emails",
+        "Description": "Indicates whether the email was matched to the person's family.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.match_only",
+        "Display Name": "Emails: Match Only",
+        "Packages": "",
+        "Description": "Indicates the email is licensed for match only.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.marketable",
+        "Display Name": "Emails: Marketable",
+        "Packages": "Emails, Emails",
+        "Description": "The marketable status of the email address.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.reputation_risk",
+        "Display Name": "Emails: Reputation Risk",
+        "Packages": "",
+        "Description": "The likelihood of reputation risk in marketing campaigns.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.suppressed_fields",
+        "Display Name": "Emails: Suppressed Fields",
+        "Packages": "Emails, Emails",
+        "Description": "The list of fields on the email that are suppressed.",
+        "Type": "array"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.suppressed_fields_count",
+        "Display Name": "Emails: Suppressed Fields Count",
+        "Packages": "Emails, Emails",
+        "Description": "The total number of suppressed fields for the email.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.vendor_id",
+        "Display Name": "Emails: Vendor",
+        "Packages": "Emails, Emails",
+        "Description": "The source of the email address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails.verified_on",
+        "Display Name": "Emails: Verified On",
+        "Packages": "Emails, Emails",
+        "Description": "The date the email address was most recently verified.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Emails",
+        "Attribute": "emails_count",
+        "Display Name": "Emails Count",
+        "Packages": "Emails, Emails",
+        "Description": "The number of emails on the person record.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "phones",
+        "Display Name": "Phones",
+        "Packages": "Landline Phones, People Public Attributes",
+        "Description": "Telephone numbers associated with the family.",
+        "Type": "array"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "phones_count",
+        "Display Name": "Phones Count",
+        "Packages": "Landline Phones, People Enhanced, People Standard",
+        "Description": "The total number of Phones associated with the person.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.id",
+        "Display Name": "Cell Phones: Id",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Unique id for the cell phone.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.created_at",
+        "Display Name": "Cell Phones: Created At",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "The date and time the cell phone detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.phone",
+        "Display Name": "Cell Phones: Phone",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Phone number of the cell phone.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.prepaid",
+        "Display Name": "Cell Phones: Prepaid",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Cell phone is prepaid.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.account_level",
+        "Display Name": "Cell Phones: Account Level",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Cell phone matched to a cell phone plan in the family.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.active",
+        "Display Name": "Cell Phones: Active",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Cell phone number was used to make a call within the last month.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.suppressed",
+        "Display Name": "Cell Phones: Suppressed",
+        "Packages": "",
+        "Description": "Cell phone is on the National Do Not Call Registry.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones.vendor_id",
+        "Display Name": "Cell Phones: Vendor",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "The vendor that owns the cell phone.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Phones",
+        "Attribute": "cell_phones_count",
+        "Display Name": "Cell Phones Count",
+        "Packages": "Cell Phones, Cell Phones",
+        "Description": "Total number of cell phones associated with the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family_id",
+        "Display Name": "Family ID",
+        "Packages": "Core, Core, Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "The unique identifier for the family.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.id",
+        "Display Name": "Family: Id",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The unique ID for the family detail.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.created_at",
+        "Display Name": "Family: Created At",
+        "Packages": "People Enhanced, People Public Attributes, People Standard",
+        "Description": "The date and time the family was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.active_military",
+        "Display Name": "Family: Active Military",
+        "Packages": "",
+        "Description": "Indicates that someone in the family is active duty military.  Includes all military branches.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.adult_count",
+        "Display Name": "Family: Adult Count",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The number of adults in the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.appeared_on",
+        "Display Name": "Family: Appeared On",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The date the family moved into the location.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.behaviors",
+        "Display Name": "Family: Behaviors",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Estimated behaviors associated with the family.",
+        "Type": "array"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.behaviors_count",
+        "Display Name": "Family: Behaviors Count",
+        "Packages": "People Enhanced, People Standard",
+        "Description": "The total number of Behaviors associated with the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.children_count",
+        "Display Name": "Family: Children Count",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "Estimates the number of children in the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.confirmed_on",
+        "Display Name": "Family: Confirmed On",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The date when the family was last confirmed.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_appeared_on",
+        "Display Name": "Family: Estimated Appeared On",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "A range that estimates the date the family moved into the residence.",
+        "Type": "date_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_credit_card_revolver",
+        "Display Name": "Family: Credit Card Revolver",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Estimates if the family uses credit cards as revolving loans.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_disposable_income",
+        "Display Name": "Family: Disposable Income",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Estimates disposable income of the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_education_level",
+        "Display Name": "Family: Estimated Education Level",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The highest education level within the family.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_has_children",
+        "Display Name": "Family: Estimated Has Children",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "Estimates there are children in the family.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_home_owner",
+        "Display Name": "Family: Estimated Home Owner",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Estimates if the family owns their home.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_income",
+        "Display Name": "Family: Estimated Income",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The estimated income of the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_income_range",
+        "Display Name": "Family: Estimated Income Range",
+        "Packages": "",
+        "Description": "The estimated income range of the family.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_liquid_assets",
+        "Display Name": "Family: Estimated Liquid Assets",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "An estimate of a family's liquid assets.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_vacation_expenses",
+        "Display Name": "Family: Estimated Vacation Expenses",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The estimated expenses the family spends on vacations.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.estimated_wealth",
+        "Display Name": "Family: Estimated Wealth",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The estimated wealth of the family.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.grandparents_in_home",
+        "Display Name": "Family: Grandparents In Home",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "The family has a grandparent living in the home.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.home_owner",
+        "Display Name": "Family: Home Owner",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The family owns their home.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.mail_offer_frequency",
+        "Display Name": "Family: Mail Offer Frequency",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The number of years since the family responded to mail offers.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.mail_purchases",
+        "Display Name": "Family: Mail Purchases",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the family has made a mail order.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.primary",
+        "Display Name": "Family: Primary",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the family is the primary family at the residence.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.potential_investor",
+        "Display Name": "Family: Potential Investor",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the family is likely to make financial investments.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "family.veteran",
+        "Display Name": "Family: Veteran",
+        "Packages": "",
+        "Description": "Indicates that someone in the family is a veteran.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "parent",
+        "Display Name": "Parent",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the person is a parent, expecting parent, or potential parent.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "grandparent",
+        "Display Name": "Grandparent",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "Indicates the person is a grandparent.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "estimated_married",
+        "Display Name": "Estimated Married",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard, Standard",
+        "Description": "Estimates if the person is married.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "estimated_head_of_family",
+        "Display Name": "Estimated Head Of Family",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the person is the head of their family.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children.id",
+        "Display Name": "Children: Id",
+        "Packages": "Generations",
+        "Description": "The unique ID for the child.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children.created_at",
+        "Display Name": "Children: Created At",
+        "Packages": "Generations, Generations",
+        "Description": "The date and time when the child detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children.date_of_birth",
+        "Display Name": "Children: Date Of Birth",
+        "Packages": "Generations",
+        "Description": "The date of birth of the child.",
+        "Type": "date"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children.age",
+        "Display Name": "Children: Age",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "The age of the child.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children.gender",
+        "Display Name": "Children: Gender",
+        "Packages": "Generations, People Enhanced",
+        "Description": "The gender of the child.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Family",
+        "Attribute": "children_count",
+        "Display Name": "Children Count",
+        "Packages": "Generations, Generations, People Enhanced",
+        "Description": "The number of children details on the record.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Politics",
+        "Attribute": "registered_voter",
+        "Display Name": "Registered Voter",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates the person is a registered voter.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Politics",
+        "Attribute": "partisanship",
+        "Display Name": "Estimated Political Partisanship",
+        "Packages": "",
+        "Description": "Estimates the persons political partisanship.",
+        "Type": "string"
+    },
+    {
+        "Section": "Core Information",
+        "Group": "Politics",
+        "Attribute": "political_party_affiliation",
+        "Display Name": "Political Party Affiliation",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The person's political party affiliation.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Profile",
+        "Attribute": "multi_family",
+        "Display Name": "Multi Family",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The location is a Multi-Family Dwelling Unit.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Location",
+        "Group": "Profile",
+        "Attribute": "location_family_count",
+        "Display Name": "Location Family Count",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The actual number of deliverable families identified at the location.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Location",
+        "Group": "Profile",
+        "Attribute": "location_unit_count",
+        "Display Name": "Location Unit Count",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The actual number of deliverable units identified at the location.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Location",
+        "Group": "Profile",
+        "Attribute": "places_match_type",
+        "Display Name": "Places Match Type",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The type of match to the Places database.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "street",
+        "Display Name": "Street",
+        "Packages": "BU MyPlaces, Core, Core, Data Operations Research, Enhanced, Enhanced, LBG, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The location address of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "suite_description",
+        "Display Name": "Suite Description",
+        "Packages": "Core, Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The description for the suite number.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "suite",
+        "Display Name": "Suite",
+        "Packages": "BU MyPlaces, Core, Core, Data Operations Research, Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The unit or apartment number of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "mailing_street",
+        "Display Name": "Mailing Street",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The mailing address of the person or family.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "city",
+        "Display Name": "City",
+        "Packages": "BU MyPlaces, Core, Core, Data Operations Research, Enhanced, Enhanced, LBG, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The city name for the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "state",
+        "Display Name": "State",
+        "Packages": "BU MyPlaces, Core, Core, Data Operations Research, Enhanced, Enhanced, LBG, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The state of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "postal_code",
+        "Display Name": "Postal Code",
+        "Packages": "BU MyPlaces, Core, Core, Data Operations Research, Enhanced, Enhanced, LBG, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The postal code for the person's address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "zip",
+        "Display Name": "ZIP Code",
+        "Packages": "BU MyPlaces, Data Operations Research, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation",
+        "Description": "The 5-digit ZIP Code for the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "zip_four",
+        "Display Name": "Zip Four",
+        "Packages": "Data Operations Research, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation",
+        "Description": "The zip+4 code for the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "geocoordinate",
+        "Display Name": "Geocoordinate",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "Latitude and longitude for the person.",
+        "Type": "geo_point"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "geocode_method",
+        "Display Name": "Geocode Method",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The precision level of the geocoordinate.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "address_type",
+        "Display Name": "Address Type",
+        "Packages": "Direct Mail, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The type of address for the location.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "do_not_mail",
+        "Display Name": "Do Not Mail",
+        "Packages": "Direct Mail, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates mail should not be sent to the family.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "delivery_point_bar_code",
+        "Display Name": "Delivery Point Bar Code",
+        "Packages": "Direct Mail, Direct Mail, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Public Attributes",
+        "Description": "The bar code for the postal route, assigned to the physical address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Address",
+        "Attribute": "mailing_score_code",
+        "Display Name": "Mailing Score Code",
+        "Packages": "Direct Mail, Direct Mail, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Public Attributes",
+        "Description": "The deliverability score of the location address.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "time_zone",
+        "Display Name": "Time Zone",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The time zone associated with the location.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "cbsa_code",
+        "Display Name": "CBSA Code",
+        "Packages": "Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The core based statistical area where the person resides.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "cbsa_level",
+        "Display Name": "CBSA Level",
+        "Packages": "Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "Information on whether the CBSA is a micropolitan or metropolitan area.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "csa_code",
+        "Display Name": "CSA Code",
+        "Packages": "Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Standard, Standard",
+        "Description": "The combined statistical area code where the person resides.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "census_block_group",
+        "Display Name": "Census Block Group",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "The census block group of the location as defined by the US Census Bureau.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "census_tract",
+        "Display Name": "Census Tract",
+        "Packages": "Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Public Attributes, Search & Navigation, Standard, Standard",
+        "Description": "The census tract of the location as defined by the US Census Bureau.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "carrier_route_code",
+        "Display Name": "Carrier Route Code",
+        "Packages": "Direct Mail, Direct Mail, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Public Attributes",
+        "Description": "The carrier route for the location address as assigned by the USPS.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "fips_code",
+        "Display Name": "Fips Code",
+        "Packages": "Enhanced, Enhanced, Licensing Full, People Enhanced, People Public Attributes, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Standard, Standard",
+        "Description": "The unique identifier for counties based on the Federal Information Processing Standards (FIPS).",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "congressional_district",
+        "Display Name": "Congressional District",
+        "Packages": "Enhanced, People Enhanced, People Public Attributes, People Standard, Standard",
+        "Description": "Congressional district code associated with the location.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "dma_county_rank",
+        "Display Name": "DMA County Rank",
+        "Packages": "Marketing Location, Marketing Location",
+        "Description": "The rank of the county based on total number of families.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "dma_region",
+        "Display Name": "DMA Region",
+        "Packages": "Marketing Location, Marketing Location",
+        "Description": "The designated market area of the location.",
+        "Type": "string"
+    },
+    {
+        "Section": "Location",
+        "Group": "Region",
+        "Attribute": "dma_territory",
+        "Display Name": "DMA Territory",
+        "Packages": "Marketing Location, Marketing Location",
+        "Description": "A geographic area based on designated market areas.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.id",
+        "Display Name": "Real Estate: Id",
+        "Packages": "Property, Property",
+        "Description": "The unique ID for the real estate detail.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.created_at",
+        "Display Name": "Real Estate: Created At",
+        "Packages": "Property, Property",
+        "Description": "The date and time the real estate detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.ac_type",
+        "Display Name": "Real Estate: Air Conditioning Type",
+        "Packages": "",
+        "Description": "The type of air conditioning used to cool the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.acres",
+        "Display Name": "Real Estate: Acres",
+        "Packages": "Property, Property",
+        "Description": "The size of the property in acres.",
+        "Type": "float"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.assessor_parcel_number",
+        "Display Name": "Real Estate: Assessor Parcel Number",
+        "Packages": "Property, Property",
+        "Description": "A unique ID for the real estate property.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.basement_square_footage",
+        "Display Name": "Real Estate: Basement Square Footage",
+        "Packages": "",
+        "Description": "The  size of the basement in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.building_size_code",
+        "Display Name": "Real Estate: Building Size Code",
+        "Packages": "",
+        "Description": "The source used to populate building square footage.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.building_square_footage",
+        "Display Name": "Real Estate: Building Square Footage",
+        "Packages": "",
+        "Description": "The size of the building in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.construction_quality",
+        "Display Name": "Real Estate: Construction Quality",
+        "Packages": "",
+        "Description": "The type of costruction quality used on the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.construction_type",
+        "Display Name": "Real Estate: Construction Type",
+        "Packages": "",
+        "Description": "The type of construction used to build the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.construction_type_detail",
+        "Display Name": "Real Estate: Construction Type Detail",
+        "Packages": "",
+        "Description": "The detailed type of construction used to build the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.electric_wiring_type",
+        "Display Name": "Real Estate: Electric Wiring Type",
+        "Packages": "",
+        "Description": "The type of electrical wiring in the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.estimated_home_value",
+        "Display Name": "Real Estate: Estimated Home Value",
+        "Packages": "People Enhanced, People Standard, Property, Property",
+        "Description": "An estimate of the current home value.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.estimated_home_value_reported",
+        "Display Name": "Real Estate: Estimated Home Value Reported",
+        "Packages": "",
+        "Description": "Indicates the Home Value is reported",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.exterior_wall_type",
+        "Display Name": "Real Estate: Exterior Wall Type",
+        "Packages": "",
+        "Description": "The type or finish of the exterior walls of the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.fireplace",
+        "Display Name": "Real Estate: Fireplace",
+        "Packages": "",
+        "Description": "Indicates the presence of a fireplace in the home.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.fireplace_type",
+        "Display Name": "Real Estate: Fireplace Type",
+        "Packages": "",
+        "Description": "The type of fireplace in the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.foundation_type",
+        "Display Name": "Real Estate: Foundation Type",
+        "Packages": "",
+        "Description": "The type of foundation of the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.garage",
+        "Display Name": "Real Estate: Garage",
+        "Packages": "Property, Property",
+        "Description": "Indicates the presence of a garage on the property.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.garage_square_footage",
+        "Display Name": "Real Estate: Garage Square Footage",
+        "Packages": "",
+        "Description": "The size of the garage or parking area in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.gross_square_footage",
+        "Display Name": "Real Estate: Gross Square Footage",
+        "Packages": "",
+        "Description": "The size of the building in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.gross_square_footage_adjusted",
+        "Display Name": "Real Estate: Adjusted Gross Square Footage",
+        "Packages": "",
+        "Description": "The size of the living and non-living areas in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.ground_floor_square_footage",
+        "Display Name": "Real Estate: Ground Floor Square Footage",
+        "Packages": "",
+        "Description": "The size of the ground floor area in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.heating_type",
+        "Display Name": "Real Estate: Heating Type",
+        "Packages": "Property, Property",
+        "Description": "The type of system used to heat the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.heating_type_detail",
+        "Display Name": "Real Estate: Heating Type Detail",
+        "Packages": "",
+        "Description": "The detailed type of system used to heat the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.home_fuel_type",
+        "Display Name": "Real Estate: Home Fuel Type",
+        "Packages": "",
+        "Description": "The type of fuel used to heat the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.house_condition",
+        "Display Name": "Real Estate: House Condition Type",
+        "Packages": "",
+        "Description": "The physical condition of the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.living_square_footage",
+        "Display Name": "Real Estate: Living Square Footage",
+        "Packages": "",
+        "Description": "The size of the living area in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.lot_size_square_footage",
+        "Display Name": "Real Estate: Lot Size Square Footage",
+        "Packages": "",
+        "Description": "The size of the lot in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_bathrooms",
+        "Display Name": "Real Estate: Number Of Bathrooms",
+        "Packages": "Property, Property",
+        "Description": "The number of bathrooms in the home.",
+        "Type": "float"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_bedrooms",
+        "Display Name": "Real Estate: Number Of Bedrooms",
+        "Packages": "Property, Property",
+        "Description": "The number of bedrooms in the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_fireplaces",
+        "Display Name": "Real Estate: Number Of Fireplaces",
+        "Packages": "Property, Property",
+        "Description": "The total number of fireplaces in the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_full_bathrooms",
+        "Display Name": "Real Estate: Number Of Full Bathrooms",
+        "Packages": "",
+        "Description": "The number of full bathrooms in the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_half_bathrooms",
+        "Display Name": "Real Estate: Number Of Half Bathrooms",
+        "Packages": "",
+        "Description": "The number of half bathrooms in the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_rooms",
+        "Display Name": "Real Estate: Number Of Rooms",
+        "Packages": "Property, Property",
+        "Description": "The number of rooms in the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.number_of_stories",
+        "Display Name": "Real Estate: Number Of Stories",
+        "Packages": "",
+        "Description": "The number of stories associated with the home.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.pool",
+        "Display Name": "Real Estate: Pool",
+        "Packages": "Property, Property",
+        "Description": "Indicates the presence of a pool at the home.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.pool_type",
+        "Display Name": "Real Estate: Pool Type",
+        "Packages": "",
+        "Description": "The type of pool at the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.roof_cover",
+        "Display Name": "Real Estate: Roof Cover Type",
+        "Packages": "",
+        "Description": "The type of roof covering on the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.roof_shape",
+        "Display Name": "Real Estate: Roof Shape Type",
+        "Packages": "",
+        "Description": "The shape of the roof on the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.sewer_type",
+        "Display Name": "Real Estate: Sewer Type",
+        "Packages": "",
+        "Description": "The type of sewer system on the property.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.square_footage",
+        "Display Name": "Real Estate: Square Footage",
+        "Packages": "Property, Property",
+        "Description": "The size of the home in square feet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.style_type",
+        "Display Name": "Real Estate: Building Style Type",
+        "Packages": "",
+        "Description": "The type of style for the home.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.water_type",
+        "Display Name": "Real Estate: Water Type",
+        "Packages": "",
+        "Description": "The type of water service on the property.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.year_home_built",
+        "Display Name": "Real Estate: Year Home Built",
+        "Packages": "Property, Property",
+        "Description": "The year the home was built.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Real Estate",
+        "Attribute": "real_estate.year_home_built_reported",
+        "Display Name": "Real Estate: Year Home Built Reported",
+        "Packages": "",
+        "Description": "Indicates the Year Home Built is reported",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "credit_card_types",
+        "Display Name": "Credit Card Types",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Indicates types of credit cards the person has.",
+        "Type": "array"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "credit_card_types_count",
+        "Display Name": "Credit Card Types Count",
+        "Packages": "People Enhanced, People Standard",
+        "Description": "The total number of Credit Card Types associated with the person.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "credit_card_count",
+        "Display Name": "Credit Card Count",
+        "Packages": "Enhanced, Enhanced, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The number of credit cards associated with the person.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.id",
+        "Display Name": "Mortgage: Id",
+        "Packages": "People Enhanced, People Public Attributes, People Standard",
+        "Description": "The unique ID for the mortgage detail.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.created_at",
+        "Display Name": "Mortgage: Created At",
+        "Packages": "People Enhanced, People Public Attributes, People Standard",
+        "Description": "The date and time the mortgage detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.estimated_home_equity",
+        "Display Name": "Mortgage: Estimated Home Equity",
+        "Packages": "People Enhanced, People Public Attributes, People Standard, Property, Property",
+        "Description": "An estimate of the current home equity.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.estimated_interest_rate",
+        "Display Name": "Mortgage: Estimated Interest Rate",
+        "Packages": "Property, Property",
+        "Description": "The interest rate on the mortgage loan.",
+        "Type": "float"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.estimated_loan_to_value",
+        "Display Name": "Mortgage: Estimated Loan To Value",
+        "Packages": "Property, Property",
+        "Description": "The estimated loan to value ratio.",
+        "Type": "integer_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.estimated_monthly_payment",
+        "Display Name": "Mortgage: Estimated Monthly Payment",
+        "Packages": "Property, Property",
+        "Description": "The estimated monthly payment for the mortgage.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.finance_type",
+        "Display Name": "Mortgage: Finance Type",
+        "Packages": "Property, Property",
+        "Description": "The type of finance used on the mortgage loan.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.has_second_property",
+        "Display Name": "Mortgage: Has Second Property",
+        "Packages": "Property, Property",
+        "Description": "The family owns properties other than their residence.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.loan_amount",
+        "Display Name": "Mortgage: Loan Amount",
+        "Packages": "Property, Property",
+        "Description": "The amount of the mortgage loan.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.loan_type",
+        "Display Name": "Mortgage: Loan Type",
+        "Packages": "Property, Property",
+        "Description": "Identifies the type of mortgage loan on the property.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.owner",
+        "Display Name": "Mortgage: Owner",
+        "Packages": "Property, Property",
+        "Description": "The individual is directly associated with the property mortgage.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.sale_date",
+        "Display Name": "Mortgage: Sale Date",
+        "Packages": "Property, Property",
+        "Description": "The date of property sale.",
+        "Type": "date_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.sale_date_reported",
+        "Display Name": "Mortgage: Sale Date Reported",
+        "Packages": "",
+        "Description": "Indicates the Sale Date is reported",
+        "Type": "date_range"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.sale_month",
+        "Display Name": "Mortgage: Sale Month",
+        "Packages": "Property, Property",
+        "Description": "The month of the property sale.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.sale_price",
+        "Display Name": "Mortgage: Sale Price",
+        "Packages": "Property, Property",
+        "Description": "The price the home sold at.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.sale_price_reported",
+        "Display Name": "Mortgage: Sale Price Reported",
+        "Packages": "",
+        "Description": "Indicates the Sale Price is reported",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.second_property_value",
+        "Display Name": "Mortgage: Second Property Value",
+        "Packages": "Property, Property",
+        "Description": "A sum of the property values associated with second mortgages.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.second_mortgage_amount",
+        "Display Name": "Mortgage: Second Mortgage Loan Amount",
+        "Packages": "",
+        "Description": "The amount of the second mortgage loan on the property.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "mortgage.second_mortgage_type",
+        "Display Name": "Mortgage: Second Mortgage Loan Type",
+        "Packages": "",
+        "Description": "Identifies the loan type of the second mortgage loan.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "economic_stability_index",
+        "Display Name": "Economic Stability Index",
+        "Packages": "People Enhanced",
+        "Description": "Estimate of a person's economic stability",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "socioeconomic_status",
+        "Display Name": "Socioeconomic Status",
+        "Packages": "People Enhanced",
+        "Description": "Quality of a person's neighborhood on the socio-economic continuum",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Finances",
+        "Attribute": "lifestyle_segment",
+        "Display Name": "Lifestyle Segment",
+        "Packages": "Enhanced",
+        "Description": "The lifestyle segment of the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.id",
+        "Display Name": "Interests: Id",
+        "Packages": "People Public Attributes",
+        "Description": "The unique ID for the interests detail.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.created_at",
+        "Display Name": "Interests: Created At",
+        "Packages": "People Public Attributes",
+        "Description": "The date and time the family interests detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.accessories",
+        "Display Name": "Interests: Accessories",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "The person has purchased or expressed interest in shoes, purses, belts, jewelry, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.african_american_products",
+        "Display Name": "Interests: African American Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either African-American in descent, speaks an African language, or is interested in African-American or African products.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.american_history",
+        "Display Name": "Interests: American History",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "An American history buff, interested specifically in American history, patriotic themes, and/or veteran’s issues. Reads American history books and magazines and purchase history related products.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.asian_products",
+        "Display Name": "Interests: Asian Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either Asian in descent, speaks an Asian language, follows an Asian-based religion, or is interested in Asian products.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.auto_racing",
+        "Display Name": "Interests: Auto Racing",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in auto racing, shown through purchases of related products or materials.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.aviation",
+        "Display Name": "Interests: Aviation",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in airplanes and other things that fly and can transport things and people (does not include toy planes).",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.bargains",
+        "Display Name": "Interests: Bargains",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in saving money, including coupons, low-cost stores and discount clubs, money-saving sales, rewards programs, auction websites, free stuff, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.baseball",
+        "Display Name": "Interests: Baseball",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in baseball as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.basketball",
+        "Display Name": "Interests: Basketball",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in basketball as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.beaches",
+        "Display Name": "Interests: Beaches",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Shows an interest in coastal living. Interested in the ocean, beaches, surfing, scuba diving, snorkeling, etc. May read travel magazines that focus on the coasts or personalize their checks with things such as lighthouses or shell motifs.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.birds",
+        "Display Name": "Interests: Birds",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Bird watchers, bird feeders, or interested in anything to do with wild birds (versus pet birds).",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.boating_sailing",
+        "Display Name": "Interests: Boating Sailing",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in boating, sailing, canoeing, kayaking, water skiing, rafting, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.books",
+        "Display Name": "Interests: Books",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in books including fiction, nonfiction and science fiction.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.business",
+        "Display Name": "Interests: Business",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in business news, career, and/or products usually associated with running a business, such as office supplies, checks, office furniture, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.camping",
+        "Display Name": "Interests: Camping",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in camping, hiking, climbing, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.cars",
+        "Display Name": "Interests: Cars",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in anything automobile related, such as auto parts and tools, restoration, performance, general make/model specific enthusiast products, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.catalogs",
+        "Display Name": "Interests: Catalogs",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Purchased out of a catalog or requested a catalog to be delivered.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.cats",
+        "Display Name": "Interests: Cats",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Cat owner and/or person who purchases cat related products and reads cat related publications.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.charities",
+        "Display Name": "Interests: Charities",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Has a known history of donating to charitable causes.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.childrens_apparel",
+        "Display Name": "Interests: Childrens Apparel",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either purchased or has shown interest in children’s clothing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.collectibles",
+        "Display Name": "Interests: Collectibles",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in collectibles, including dolls, coins, stamps, stuffed animals, plates, memorabilia, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.college",
+        "Display Name": "Interests: College",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Loyal to or has an affinity towards a specific college. May order checks with school logos/mascots or purchase college-related items.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.comics",
+        "Display Name": "Interests: Comics",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in laughing, including comic books and strips, cartoons, comedies, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.computers",
+        "Display Name": "Interests: Computers",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in personal computers and products used with PCs.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.conservative_politics",
+        "Display Name": "Interests: Conservative Politics",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Expressed a preference for a conservative political point of view or party. Includes an indication of political donations or subscriptions to conservative publications.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.cooking",
+        "Display Name": "Interests: Cooking",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "nterested in cooking, baking, and all things culinary, including recipes and cooking equipment. Includes purchases of cooking related products, both general and gourmet.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.cosmetics",
+        "Display Name": "Interests: Cosmetics",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in beauty related products, including makeup, hair care products, treatments, or publications that provide grooming advice.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.crafts",
+        "Display Name": "Interests: Crafts",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in crafts, including crochet, sewing, knitting, needlepoint, quilting, jewelry, ceramics, painting, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.credit_cards",
+        "Display Name": "Interests: Credit Cards",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Used a credit card to make a direct marketing purchase.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.crocheting",
+        "Display Name": "Interests: Crocheting",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in crocheting, shown by reading related magazines or purchasing crocheting supplies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.cruises",
+        "Display Name": "Interests: Cruises",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in or has gone on cruises.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.culture_arts",
+        "Display Name": "Interests: Culture Arts",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in culture and the arts, including art, antiques, opera, museums, theatre, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.current_events",
+        "Display Name": "Interests: Current Events",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Purchases magazines that are published on a regular basis and contain stories about the most current news and events.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.dieting",
+        "Display Name": "Interests: Dieting",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in weight control or weight loss. May purchase weight loss products or publications.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.diy",
+        "Display Name": "Interests: Diy",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in “Do It Yourself” projects, including home improvements and construction, wood working, auto repair, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.dogs",
+        "Display Name": "Interests: Dogs",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Dog owner and/or person who purchases dog related products and reads dog related publications.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.domestic_travel",
+        "Display Name": "Interests: Domestic Travel",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Primarily travels within the borders of the United States.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.electronics",
+        "Display Name": "Interests: Electronics",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in electronics, such as home and auto stereos, video equipment, etc. Does not include computers.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.family",
+        "Display Name": "Interests: Family",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Lives in a household with children and/or purchases children’s products or family and child magazines.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.farming",
+        "Display Name": "Interests: Farming",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in rural America, country living, and/or farming.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.fiction",
+        "Display Name": "Interests: Fiction",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested primarily in fiction books.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.fishing",
+        "Display Name": "Interests: Fishing",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in fishing, saltwater and/or freshwater.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.fitness",
+        "Display Name": "Interests: Fitness",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in physical fitness and exercise, including running, biking, walking, weight lifting, aerobics, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.football",
+        "Display Name": "Interests: Football",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in football as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.gambling",
+        "Display Name": "Interests: Gambling",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in games of chance, including casino gambling and lotteries.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.games",
+        "Display Name": "Interests: Games",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in a variety of games, including computer games, traditional board games, puzzles, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.gardening",
+        "Display Name": "Interests: Gardening",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in gardening and plants, both indoors and outdoors, decorative and edible.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.gifts",
+        "Display Name": "Interests: Gifts",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Gives gifts to other people through gift catalogs, sending gift magazine subscriptions, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.golf",
+        "Display Name": "Interests: Golf",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in golf as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.gourmet_foods",
+        "Display Name": "Interests: Gourmet Foods",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in gourmet and upscale products such as fine foods, wines, and other expensive items.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.health",
+        "Display Name": "Interests: Health",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "nterested in health and/or self improvement. Includes dieting and fitness.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.hispanic_products",
+        "Display Name": "Interests: Hispanic Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either Hispanic in descent, speaks Spanish, or is interested in Hispanic products.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.history",
+        "Display Name": "Interests: History",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Generally interested in history. May read history books or purchase historical items. Includes american history.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.hobbies",
+        "Display Name": "Interests: Hobbies",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in hobbies such as model building, scrapbooking, numismatism, philately, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.hockey",
+        "Display Name": "Interests: Hockey",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in hockey as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.home_decor",
+        "Display Name": "Interests: Home Decor",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Subscribes to interior decorating magazines, receives home interior catalogs, or purchases home interior products such as furnishings, wall and window treatments, layouts, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.home_office_products",
+        "Display Name": "Interests: Home Office Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Purchases home office products such as paper, printers, fax machines, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.horses",
+        "Display Name": "Interests: Horses",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in horses and horse riding.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.hunting",
+        "Display Name": "Interests: Hunting",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in hunting and/or guns.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.inspirational_products",
+        "Display Name": "Interests: Inspirational Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Uses motivational and/or self-help products, seminars, magazines, etc. Includes non-religious inspiration such as new age products, astrology, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.internet",
+        "Display Name": "Interests: Internet",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Has internet access and/or makes purchases online.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.knitting",
+        "Display Name": "Interests: Knitting",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in knitting, shown by reading related magazines or purchasing knitting supplies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.liberal_politics",
+        "Display Name": "Interests: Liberal Politics",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Expressed a preference for a liberal political point of view or party. Includes an indication of political donations or subscriptions to liberal publications.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.magazines",
+        "Display Name": "Interests: Magazines",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Has one or more magazine subscriptions.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.mens_apparel",
+        "Display Name": "Interests: Mens Apparel",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either purchased or has shown interest in men’s clothing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.mens_fashion",
+        "Display Name": "Interests: Mens Fashion",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either purchased or has shown interest in more upscale, trendy, fashionable men’s clothing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.moneymaking_opportunities",
+        "Display Name": "Interests: Moneymaking Opportunities",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in get-rich-quick materials and opportunities.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.motorcycles",
+        "Display Name": "Interests: Motorcycles",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Reads motorcycle magazines and/or buys motorcycle parts and supplies. Includes ATVs.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.music",
+        "Display Name": "Interests: Music",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in music and/or music playing equipment.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.needlepoint",
+        "Display Name": "Interests: Needlepoint",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in needlepoint, shown by reading related magazines or purchasing needlepoint supplies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.nonfiction",
+        "Display Name": "Interests: Nonfiction",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested primarily in non-fiction books.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.outdoors",
+        "Display Name": "Interests: Outdoors",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in outdoor activities. Includes boating, camping, fishing and hunting.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.personal_finance",
+        "Display Name": "Interests: Personal Finance",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in personal finance, investments, retirement planning, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.personalized_products",
+        "Display Name": "Interests: Personalized Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in personalized products such as monograms, personalized checks, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.pets",
+        "Display Name": "Interests: Pets",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in or an owner of pets. Includes cats and dogs.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.photography",
+        "Display Name": "Interests: Photography",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in photography through the use of related publications, purchases of cameras, photographic equipment, supplies, or photo processing services.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.premium_mail_purchases",
+        "Display Name": "Interests: Premium Mail Purchases",
+        "Packages": "",
+        "Description": "Interested in Premium Mail Purchases",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.quilting",
+        "Display Name": "Interests: Quilting",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in quilting, shown by reading related magazines or purchasing quilting supplies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.religion",
+        "Display Name": "Interests: Religion",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in religion, going to church, and/or religious products.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.rvs",
+        "Display Name": "Interests: Rvs",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in or travels using recreational vehicles.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.science",
+        "Display Name": "Interests: Science",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in science such as physics, astronomy, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.science_fiction",
+        "Display Name": "Interests: Science Fiction",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested primarily in science fiction books.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.senior_products",
+        "Display Name": "Interests: Senior Products",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in senior citizen products. Does not indicate the person is actually a senior citizen.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.sewing",
+        "Display Name": "Interests: Sewing",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in sewing, shown by reading related magazines or purchasing sewing supplies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.skiing",
+        "Display Name": "Interests: Skiing",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in skiing as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.soccer",
+        "Display Name": "Interests: Soccer",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in soccer as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.sports",
+        "Display Name": "Interests: Sports",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in sports as a spectator, paraphernalia purchaser and/or participant. Includes baseball, basketball, football, golf, hockey, skiing, soccer and tennis.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.stationery",
+        "Display Name": "Interests: Stationery",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in stationery products such as letterheads, envelopes, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.sweepstakes",
+        "Display Name": "Interests: Sweepstakes",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in sweepstake offers or money making schemes.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.technology",
+        "Display Name": "Interests: Technology",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in new and high tech electronic products such as HDTVs, digital video cameras, digital video recorders, satellite radios, etc.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.tennis",
+        "Display Name": "Interests: Tennis",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in tennis as a spectator, paraphernalia purchaser and/or participant.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.tobacco",
+        "Display Name": "Interests: Tobacco",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Uses tobacco products such as cigarettes, cigars, and pipe tobacco.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.travel",
+        "Display Name": "Interests: Travel",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in traveling. Includes cruises, domestic travel, and recreational vehicles.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.trucks",
+        "Display Name": "Interests: Trucks",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in trucks, shown through purchasing custom truck parts and/or reading truck modification magazines.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.tv_movies",
+        "Display Name": "Interests: Tv Movies",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in watching and purchasing television and movies.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.wildlife",
+        "Display Name": "Interests: Wildlife",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Interested in the environment and/or wildlife.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.womens_apparel",
+        "Display Name": "Interests: Womens Apparel",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either purchased or has shown interest in women’s clothing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Interests",
+        "Attribute": "interests.womens_fashion",
+        "Display Name": "Interests: Womens Fashion",
+        "Packages": "Interests, Interests, People Enhanced, People Public Attributes, People Standard",
+        "Description": "Either purchased or has shown interest in more upscale, trendy, fashionable women’s clothing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_country_of_origin",
+        "Display Name": "Estimated Country Of Origin",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated country of origin of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_ethnicity",
+        "Display Name": "Estimated Ethnicity",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated ethnicity of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_ethnic_group",
+        "Display Name": "Estimated Ethnic Group",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated ethnic group of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_language",
+        "Display Name": "Estimated Language",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated spoken language of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_primary_language",
+        "Display Name": "Estimated Primary Language",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated primary language of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Culture",
+        "Attribute": "estimated_religious_affiliation",
+        "Display Name": "Estimated Religious Affiliation",
+        "Packages": "Culture, Culture, People Enhanced",
+        "Description": "Estimated religious affiliation of the person.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.id",
+        "Display Name": "Vehicles: Id",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The unique id for the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.created_at",
+        "Display Name": "Vehicles: Created At",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The date and time the vehicle detail was created.",
+        "Type": "time"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.acquired_on",
+        "Display Name": "Vehicles: Acquired On",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The date of the most recent recorded transaction",
+        "Type": "date"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.auto_type",
+        "Display Name": "Vehicles: Auto Type",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The automobile body type of the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.fuel_type",
+        "Display Name": "Vehicles: Fuel Type",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The fuel type of the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.import",
+        "Display Name": "Vehicles: Import",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The vehicle is an import.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.luxury",
+        "Display Name": "Vehicles: Luxury",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The vehicle is luxury class.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.make",
+        "Display Name": "Vehicles: Make",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The manufacturer of the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.model",
+        "Display Name": "Vehicles: Model",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The model of the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.model_year",
+        "Display Name": "Vehicles: Model Year",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The model year of the vehicle.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.odometer",
+        "Display Name": "Vehicles: Odometer",
+        "Packages": "Vehicles",
+        "Description": "Driven miles as recorded by the vehicle.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.owned",
+        "Display Name": "Vehicles: Owned",
+        "Packages": "Vehicles",
+        "Description": "Indicates that the person record to which this vehicle is attached is the primary owner of the vehicle.",
+        "Type": "boolean"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles.vin",
+        "Display Name": "Vehicles: Vin",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The unique Vehicle Identification Number of the vehicle.",
+        "Type": "string"
+    },
+    {
+        "Section": "Insights",
+        "Group": "Vehicles",
+        "Attribute": "vehicles_count",
+        "Display Name": "Vehicles Count",
+        "Packages": "Vehicles, Vehicles",
+        "Description": "The number of vehicles associated with the family.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Data Admin",
+        "Group": "Processing",
+        "Attribute": "segment_id",
+        "Display Name": "Segment",
+        "Packages": "",
+        "Description": "Segments help split up records for parallel processing.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Uncategorized",
+        "Group": "Uncategorized",
+        "Attribute": "county_code",
+        "Display Name": "County Code",
+        "Packages": "Enhanced, Licensing Full, People Enhanced, People Standard, Places Standard Full, Places Standard Marketing, Places Standard Search, Public Attributes, Search & Navigation, Standard",
+        "Description": "The 3-digit county code based on the person's location ZIP code.",
+        "Type": "string"
+    },
+    {
+        "Section": "Uncategorized",
+        "Group": "Uncategorized",
+        "Attribute": "digital_platforms",
+        "Display Name": "Digital Platforms",
+        "Packages": "People Enhanced",
+        "Description": "Person has been successfully on-boarded into LiveRamp, IdentityLink, or Oracle BlueKai.",
+        "Type": "array"
+    },
+    {
+        "Section": "Uncategorized",
+        "Group": "Uncategorized",
+        "Attribute": "digital_platforms_count",
+        "Display Name": "Digital Platforms Count",
+        "Packages": "Interests",
+        "Description": "The number of Digital Platforms that have the Person.",
+        "Type": "integer"
+    },
+    {
+        "Section": "Uncategorized",
+        "Group": "Uncategorized",
+        "Attribute": "preformatted_fields",
+        "Display Name": "Preformatted Fields",
+        "Packages": "",
+        "Description": "",
+        "Type": "array"
+    }
+]

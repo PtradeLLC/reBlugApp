@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import { CircularProgress } from "@nextui-org/react";
 import PropTypes from 'prop-types';
 import Comment from './Comment';
+import { account } from "../../app/appwrite";
+import Link from 'next/link';
 
 const CommentBox = ({ comments, showModal, setShowModal }) => {
-    const { data: session } = useSession();
     // eslint-disable-next-line no-unused-vars
     const router = useRouter();
     const [loading] = useState(false);
     const [value, setValue] = useState(0);
+    const [user, setUser] = useState(null);
+    const [name, setName] = useState("")
 
     // Handles setting value for the loader
     useEffect(() => {
@@ -21,11 +23,24 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
         return () => clearInterval(interval);
     }, []);
 
-    // const handleSignUp = () => {
-    //     if (!session) {
-    //         router.push('/login');
-    //     }
-    // };
+
+    useEffect(() => {
+        async function getUser() {
+            try {
+                const currentUser = await account.get();
+                setUser(currentUser);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getUser();
+    }, []);
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name);
+        }
+    }, [user]);
 
     return (
         <div>
@@ -41,39 +56,15 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                         <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                             <p className="text-sm font-normal text-gray-900 dark:text-white">
                                 Let the author know what you think about this article and perhaps what you&apos;ve learned.
-                                Please keep it clean and reader friendly. Please use &ldquo;Chat with this Article&ldquo; button on
-                                this page to ask questions about this article or conduct article related researches.
+                                Please keep it clean and reader friendly. Want to take a deep dive? Please use &ldquo;Chat with this Article&ldquo; button on
+                                this page to ask questions or conduct article related researches.
                             </p>
                         </div>
                         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">Posted</span>
                     </div>
                 </div>
             </div>
-            <div className="overflow-y-auto h-[320px]">
-                {!loading ? (
-                    <>
-                        {comments.length > 0 ? comments.map((comment) => (
-                            <Comment key={comment.id} comment={comment} />
-                        )) : (
-                            <p className='text-sm font-normal text-gray-900 dark:text-white'>
-                                There is no comment posted yet for this article
-                            </p>
-                        )}
-                    </>
-                ) : (
-                    <div className="flex justify-center">
-                        <CircularProgress
-                            aria-label="Loading..."
-                            size="sm"
-                            value={value}
-                            color="warning"
-                            className='mx-2'
-                            showValueLabel={true}
-                        />
-                    </div>
-                )}
-            </div>
-            {!session && showModal && (
+            {!user && showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -88,13 +79,8 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                                     </div>
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                            Please create an account or login to share your thoughts on this article
+                                            Please create a free account or login to share your thoughts on this article.
                                         </h3>
-                                        <div className="mt-2">
-                                            {/* <p className="text-sm text-gray-500">
-                                                If you don't have an account yet, you can <button onClick={handleSignUp} className="text-red-600 dark:text-red-500 hover:underline">sign up here</button>.
-                                            </p> */}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -106,6 +92,12 @@ const CommentBox = ({ comments, showModal, setShowModal }) => {
                                 >
                                     Close
                                 </button>
+                                <Link
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                    href='/login'
+                                >
+                                    Login
+                                </Link>
                             </div>
                         </div>
                     </div>

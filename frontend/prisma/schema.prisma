@@ -1,11 +1,12 @@
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "fullTextIndex", "fullTextSearch", "postgresqlExtensions"]
-}
+// schema.prisma
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model Account {
@@ -40,7 +41,7 @@ model User {
   id                 String              @unique @default(cuid())
   userId             Int?
   name               String?
-  externalId         String?
+  externalId         String?             @unique
   brandName          String?
   firstName          String?
   profileImage       String?
@@ -49,12 +50,12 @@ model User {
   password           String?
   image              String?
   lastName           String?
-  isVerified         Boolean?
+  isVerified         Boolean?            @default(false)
   provider           String?
   email              String              @unique
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
-  profileId          String?
+  profileId          String?             @unique
   role               Role                @default(MANAGER)
   emailVerified      DateTime?
   userType           String?
@@ -76,42 +77,250 @@ model User {
   recentUpdates      RecentUpdates[]
   sessions           Session[]
   social             Social[]
-  sponsors           Sponsors[]
+  sponsor            Sponsor[]
   team               Team[]
   verificationTokens VerificationToken[]
+  referralCode       String?             @unique
+  referrals          Referral[]          @relation("UserReferrals")
+  Restaurant         Restaurant[]
+  Order              Order[]
+  UserShadow         UserShadow[]
+  niches             Niche[]
+  Referral           Referral[]
+  drafts             Draft[]
+  Series             Series[]
+  Post               Post[]
+}
+
+model Niche {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  userId      String
+  userShadows UserShadow[]
+  user        User         @relation(fields: [userId], references: [id])
+  Post        Post?        @relation(fields: [postId], references: [id])
+  postId      String?
+}
+
+model UserShadow {
+  id      String @id @default(uuid())
+  userId  String
+  nicheId String
+  user    User   @relation(fields: [userId], references: [id])
+  niche   Niche  @relation(fields: [nicheId], references: [id])
+
+  @@unique([userId, nicheId])
+}
+
+model Referral {
+  id             Int      @id @default(autoincrement())
+  referrerId     String
+  referrer       User     @relation("UserReferrals", fields: [referrerId], references: [id])
+  referredUserId String?
+  referredUser   User?    @relation(fields: [referredUserId], references: [id])
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Post {
-  id               String         @unique @default(cuid())
-  title            String?
-  featureImage     String?
-  contentImage     String?
-  views            Int            @default(0)
-  createdAt        DateTime       @default(now())
-  description      String?
-  crossPromote     String?
-  slug             String?        @unique
-  selectedValue    String?
-  paramsId         String?
-  image            String?
-  updatedAt        DateTime       @updatedAt
-  selectedFeatures String[]
-  published        Boolean        @default(false)
-  content          String?
-  email            String?
-  author           String?
-  categorySlug     String?
-  blogger          String?
-  userId           String?
-  postSlug         String?
-  categoryId       String?
-  aiResponses      AiResponse[]
-  AvatarOnPost     AvatarOnPost[]
-  Chat             Chat[]
-  comments         Comment[]
-  images           ImageOnPost[]
-  category         Category?      @relation(fields: [categoryId], references: [id])
-  sponsors         Sponsors[]
+  id                String   @id @default(cuid())
+  title             String?
+  featureImage      String?
+  contentImage      String?
+  views             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  description       String?
+  crossPromote      Boolean  @default(false)
+  podcastSingleCast Boolean  @default(false)
+  podcastMultiCast  Boolean  @default(false)
+  slug              String   @unique
+  selectedValue     String?
+  paramsId          String?
+  image             String?
+  selectedFeatures  String[]
+  publishedChannels Boolean  @default(true)
+  published         Boolean  @default(false)
+  content           String?
+  email             String?
+  isDraft           Boolean  @default(true)
+  author            String?
+  categorySlug      String?
+  blogger           String?
+  status            Boolean  @default(false)
+  commentingSys     String?
+  userId            String?
+  postNiche         String?
+  postSlug          String?
+  categoryId        String? // Foreign key to Category model
+  seriesId          String? // Foreign key to Series model
+
+  // Relationships
+  aiResponses   AiResponse[]
+  avatarsOnPost AvatarOnPost[]
+  chats         Chat[]
+  comments      Comment[]
+  images        ImageOnPost[]
+  sponsors      Sponsor[]
+  messages      Message[]
+  niches        Niche[]
+  drafts        Draft[]
+
+  category Category? @relation(fields: [categoryId], references: [id])
+  series   Series?   @relation(fields: [seriesId], references: [id])
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id     String   @id @default(cuid())
+  title  String?
+  slug   String   @unique
+  userId String?
+  user   User?    @relation(fields: [userId], references: [id])
+  posts  Post[] // One category can have multiple posts
+  series Series[] // One category can have multiple Series
+}
+
+model FundraisingCampaign {
+  id              String      @id @default(cuid())
+  title           String
+  website         String?
+  selectedItem    String?
+  about           String?
+  objectives      String?
+  demographic     Demographic @relation(fields: [demographicId], references: [id])
+  demographicId   String      @unique
+  strategy        String[]
+  proHire         String?
+  timeline        String?
+  momentum        String?
+  employment      String?
+  engagementEval  String?
+  postCampaign    String?
+  wealthIndicator String?
+  fundingGoals    String?
+  donorRetention  String?
+  recurringGiving String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Demographic {
+  id                  String               @id @default(cuid())
+  campaignReason      String?
+  geographic          Geographic           @relation(fields: [geographicId], references: [id])
+  geographicId        String               @unique
+  targetDonor         String?
+  gender              String?
+  age                 String?
+  intention           String?
+  fundraisingCampaign FundraisingCampaign? @relation
+}
+
+model Geographic {
+  id          String       @id @default(cuid())
+  country     String?
+  state       String?
+  city        String?
+  demographic Demographic?
+}
+
+model Integration {
+  id            String   @id @default(cuid())
+  connectionId  String
+  integrationId String
+  userId        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, integrationId])
+}
+
+model Series {
+  id         String   @id @default(cuid())
+  title      String?  @unique
+  categoryId String // Foreign key to Category model
+  userId     String? // Foreign key to User model
+  category   Category @relation(fields: [categoryId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+  posts      Post[] // One Series can have multiple posts
+}
+
+model Draft {
+  id        String   @id @default(cuid())
+  title     String?
+  postId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model FacebookMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  reach       Int
+  impressions Int
+}
+
+model TwitterMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  likes       Int
+  retweets    Int
+  replies     Int
+  impressions Int
+}
+
+model MediumMetrics {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  month     String
+  readTime  Int
+  shares    Int
+  comments  Int
+  views     Int
+}
+
+model ReblugMetrics {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  month      String
+  upvotes    Int
+  shares     Int
+  comments   Int
+  engagement Int
+}
+
+model NewsletterMetrics {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  month       String
+  subscribers Int
+  opens       Int
+  clicks      Int
+}
+
+model EmailCampaignMetrics {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  month        String
+  opened       Int
+  clicked      Int
+  unsubscribed Int
 }
 
 model VerificationToken {
@@ -244,12 +453,12 @@ model Event {
 }
 
 model Submission {
-  id          String     @unique @default(cuid())
+  id          String    @unique @default(cuid())
   fullName    String
   website     String
   email       String
   description String
-  Sponsors    Sponsors[]
+  Sponsor     Sponsor[]
 }
 
 model Image {
@@ -286,15 +495,6 @@ model AvatarOnPost {
   post     Post   @relation(fields: [postId], references: [id])
 }
 
-model Category {
-  id     String  @unique @default(cuid())
-  title  String?
-  slug   String  @unique
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id])
-  posts  Post[]
-}
-
 model Comment {
   id         String      @unique @default(cuid())
   title      String?
@@ -325,15 +525,37 @@ model AiResponse {
   Chat               Chat[]
 }
 
-model Sponsors {
-  id           String      @unique @default(cuid())
-  title        String?
-  postId       String?
-  submissionId String?
-  userId       String?
-  Post         Post?       @relation(fields: [postId], references: [id])
-  submission   Submission? @relation(fields: [submissionId], references: [id])
-  User         User?       @relation(fields: [userId], references: [id])
+model Sponsor {
+  id              String      @unique @default(cuid())
+  firstName       String?
+  lastName        String?
+  product         String?
+  productDesc     String?
+  brandName       String?
+  website         String?
+  clientOnboarded Boolean?    @default(false)
+  postId          String?
+  submissionId    String?
+  userId          String?
+  Post            Post?       @relation(fields: [postId], references: [id])
+  submission      Submission? @relation(fields: [submissionId], references: [id])
+  User            User?       @relation(fields: [userId], references: [id])
+  message         Message?    @relation(fields: [messageId], references: [id])
+  messageId       String
+}
+
+model Message {
+  id             String    @unique @default(cuid())
+  brandName      String?
+  productName    String?
+  productImage   String?
+  website        String?
+  productMessage String?
+  notes          String?
+  postId         String?
+  post           Post?     @relation(fields: [postId], references: [id])
+  Sponsor        Sponsor[]
+  Chat           Chat[]
 }
 
 model EmailTool {
@@ -513,17 +735,18 @@ model Chat {
   AiResponse   AiResponse? @relation(fields: [aiResponseId], references: [id])
   Post         Post?       @relation(fields: [postId], references: [id])
   user         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Message      Message?    @relation(fields: [messageId], references: [id])
+  messageId    String?
 }
 
 model Contact {
-  id        String   @unique @default(cuid())
+  id        String @unique @default(cuid())
   firstName String
   lastName  String
   company   String
   email     String
   reason    String
   message   String
-  createdAt DateTime @default(now())
 }
 
 model MaaP {
@@ -560,10 +783,77 @@ model Marketing_Creatives_files {
   creatives   ForgedAI @relation(fields: [creativesId], references: [id])
 }
 
+model Restaurant {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  ownerId     String
+  user        User    @relation(fields: [ownerId], references: [id])
+  Menu        Menu[]
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  total     Float
+  status    OrderStatus
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  dishes    OrderDish[]
+  Dish      Dish?       @relation(fields: [dishId], references: [id])
+  dishId    Int?
+}
+
+model OrderDish {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  dishId    Int
+  dish      Dish     @relation(fields: [dishId], references: [id])
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dish {
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @unique
+  description String?
+  price       Float
+  menuId      Int?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  menu        Menu?       @relation(fields: [menuId], references: [id])
+  orders      Order[]
+  OrderDish   OrderDish[]
+}
+
+model Menu {
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String?
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  dishes       Dish[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
 enum Role {
   USER
   MANAGER
   MEMBER
   ADMIN
   BLOGGER
+  RESTAURANT
+  SOCIAL_MEDIA_PARTNER
+  BRAND_MARKETER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
 }
