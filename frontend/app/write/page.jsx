@@ -1039,9 +1039,9 @@ const ChatAIBob = () => {
                   >
                     Beginners Guide
                   </Button>
-                  <Button className="my-2 mx-2 bg-stone-700" type="button">
+                  {/* <Button className="my-2 mx-2 bg-stone-700" type="button">
                     Brainstorm Ideas
-                  </Button>
+                  </Button> */}
                 </div>
                 <div className="mt-5">
                   <BCommerceArray />
