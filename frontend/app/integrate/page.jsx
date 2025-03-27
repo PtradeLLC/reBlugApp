@@ -1,4 +1,4 @@
-import Integrations from "@/components/Integrations";
+import Integrations from "../../components/Integrations";
 import React from "react";
 
 const page = () => {

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { CircularProgress } from "@nextui-org/react";
 import WisdomNugget from "./WisdomNugget";
 import ChatUI from "./ChatBox/AIChatBox";

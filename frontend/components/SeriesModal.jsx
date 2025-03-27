@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { account } from "../app/appwrite";
-import SponsorsModalComponent from "@/components/SponsorsModalCompTwo";
+import SponsorsModalComponent from "./SponsorsModalCompTwo";
 import {
   Modal,
   ModalContent,

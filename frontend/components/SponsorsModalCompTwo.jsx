@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
-import BrandSponsorshipForm from "@/components/SponsorsMessage";
+import BrandSponsorshipForm from "./SponsorsMessage";
 
 const SponsorsModalComponent = ({ isOpen, onClose, formData, setFormData }) => {
   return (

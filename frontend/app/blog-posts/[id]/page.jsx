@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PostPage from "@/components/PreviewContent";
+import PostPage from "../../../components/PreviewContent";
 import { useParams } from "next/navigation";
 
 const UniquePage = () => {

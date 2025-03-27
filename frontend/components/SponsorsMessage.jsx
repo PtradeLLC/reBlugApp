@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import SampleCopy from "@/components/SampleAdCopy";
-import BrandCopyAd from "@/components/BrandCopyForProd";
+import SampleCopy from "./SampleAdCopy";
+import BrandCopyAd from "./BrandCopyForProd";
 
 const BrandSponsorshipForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({

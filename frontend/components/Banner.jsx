@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import SoftLaunch from "./SoftLaunch";
+import Link from "next/link";
 
 const Banner = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -47,7 +48,7 @@ const Banner = () => {
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <p className="text-sm leading-6 text-gray-900">
-          <strong className="font-semibold">News Update:</strong>
+          <strong className="font-semibold">Happening now:</strong>
           <svg
             viewBox="0 0 2 2"
             aria-hidden="true"
@@ -55,17 +56,15 @@ const Banner = () => {
           >
             <circle r={1} cx={1} cy={1} />
           </svg>
-          <span className="text-green-700 font-semibold text-sm">
-            Pay Per Task
-          </span>{" "}
-          is Live! Get compensated to perform Foodhini's easy tasks
+          <span className="text-green-700 font-semibold text-sm">Save $10</span>{" "}
+          When you Pick up Article Assistant for $24.99 instead of $34.99 today!
         </p>
-        <button
-          onClick={handleClick}
+        <Link
+          href="/products"
           className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         >
-          Download App <span aria-hidden="true">&rarr;</span>
-        </button>
+          Buy or Subscribe <span aria-hidden="true">&rarr;</span>
+        </Link>
       </div>
       <div className="flex flex-1 justify-end">
         <button

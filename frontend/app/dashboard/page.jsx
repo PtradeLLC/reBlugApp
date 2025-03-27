@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import SocialMedDashboard from "@/components/DashboardUI";
-import BloggerDashboard from "@/components/BloggerDashboardUI";
-import BrandModal from "@/components/BrandModal";
-import RestaurantDashboard from "@/components/RestaurantModal";
-import TogglePageModal from "@/components/SwitchPageModal";
+import SocialMedDashboard from "../../components/DashboardUI";
+import BloggerDashboard from "../../components/BloggerDashboardUI";
+import BrandModal from "../../components/BrandModal";
+import RestaurantDashboard from "../../components/RestaurantModal";
+import TogglePageModal from "../../components/SwitchPageModal";
 import { account } from "../appwrite";
 import { setCookie } from "nookies"; // Add this import
 

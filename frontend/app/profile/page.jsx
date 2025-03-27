@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import ProfilePg from "@/components/BlogrProfile";
+import ProfilePg from "../../components/BlogrProfile";
 import { account } from "../appwrite";
 
 const ProPage = () => {

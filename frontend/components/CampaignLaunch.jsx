@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { useState } from "react";
-import SeriesModalComponent from "@/components/EmailMarketingTool";
+import SeriesModalComponent from "./EmailMarketingTool";
 import { useDisclosure } from "@nextui-org/react";
 
 const CampaignLaunchBox = () => {

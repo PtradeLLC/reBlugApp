@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Plan from "@/components/Campaigns/ProposedPlan";
-import DonorsFormula from "@/components/DonorsFormula";
+import Plan from "./Campaigns/ProposedPlan";
+import DonorsFormula from "./DonorsFormula";
 import { Country, State, City } from "country-state-city";
-import SeriesModalComponent from "@/components/EmailMarketingTool";
-import { useNationBuild } from "@/app/api/partner/nationbuilderV1/nationHook";
+import SeriesModalComponent from "./EmailMarketingTool";
+import { useNationBuild } from "../app/api/partner/nationbuilderV1/nationHook";
 
 const RaiseFunds = ({ onProposedPlanClick }) => {
   const [selectedItem, setSelectedItem] = useState("Select Campaign Type");

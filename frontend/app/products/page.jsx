@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
-import Products from "@/components/AllProducts";
+import React, { useState, useEffect } from "react";
+import Products from "../../components/AllProducts";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { account } from "../appwrite";
 
 const tiers = [
   {
@@ -43,6 +44,25 @@ function classNames(...classes) {
 }
 
 const page = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [subscriptions, setSubscriptions] = useState(0);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+        setLoading(false); // Set loading to false after fetching user
+      } catch (error) {
+        console.log("Error fetching user:", error);
+        setLoading(false); // Set loading to false even if fetching fails
+      }
+    };
+
+    getUser();
+  }, [user]);
+
   return (
     <div>
       <Products />
@@ -87,18 +107,33 @@ const page = () => {
                 </li>
               ))}
             </ul>
-            <Link
-              href={tier.href}
-              aria-describedby={tier.id}
-              className={classNames(
-                tier.featured
-                  ? "bg-red-600 text-white shadow hover:bg-red-500"
-                  : "text-red-600 ring-1 ring-inset ring-red-200 hover:ring-red-300",
-                "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:mt-10"
-              )}
-            >
-              Login to get started
-            </Link>
+            {user ? (
+              <Link
+                href={"#"}
+                aria-describedby={tier.id}
+                className={classNames(
+                  tier.featured
+                    ? "bg-red-600 text-white shadow hover:bg-red-500"
+                    : "text-red-600 ring-1 ring-inset ring-red-200 hover:ring-red-300",
+                  "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:mt-10"
+                )}
+              >
+                Subscribe now
+              </Link>
+            ) : (
+              <Link
+                href={tier.href}
+                aria-describedby={tier.id}
+                className={classNames(
+                  tier.featured
+                    ? "bg-red-600 text-white shadow hover:bg-red-500"
+                    : "text-red-600 ring-1 ring-inset ring-red-200 hover:ring-red-300",
+                  "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:mt-10"
+                )}
+              >
+                Login to get started
+              </Link>
+            )}
           </div>
         ))}
       </div>

@@ -8,19 +8,19 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
-import SocialMedDashboard from "@/components/DashboardUI";
-import BloggerDashboard from "@/components/BloggerDashboardUI";
-import BrandModal from "@/components/BrandModal";
-import RestaurantDashboard from "@/components/RestaurantModal";
-import { Button } from "@/components/ui/button";
+} from "./ui/dialog";
+import SocialMedDashboard from "./DashboardUI";
+import BloggerDashboard from "./BloggerDashboardUI";
+import BrandModal from "./BrandModal";
+import RestaurantDashboard from "./RestaurantModal";
+import { Button } from "./ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "./ui/select";
 
 const TogglePageModal = ({
   open,

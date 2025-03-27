@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { Activity, CreditCard, Users } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 import CreditCartInput from "./VirtualCard";
 import {
   Card,
@@ -11,8 +11,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import ChatBubble from "@/components/chat/chatBubble";
+} from "./ui/card";
+import ChatBubble from "./chat/chatBubble";
 import TogglePageModal from "./SwitchPageModal";
 import PageHeader from "./HeaderComp";
 import { useRouter } from "next/navigation";
@@ -247,14 +247,21 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
 
               <div className="text-xs text-muted-foreground flex justify-end mt-3">
                 <span>
+                  <p>You are on a free tier</p>
                   <div className="flex flex-col gap-4">
-                    <Button
+                    <Link
+                      href={"/products"}
+                      className="text-xs text-white flex justify-center items-center rounded-md m-auto cursor-pointer p-3 bg-zinc-600"
+                    >
+                      Buy or Subscribe
+                    </Link>
+                    {/* <Button
                       type="button"
                       onClick={handleUserType}
                       className="text-xs ml-3 mr-1 cursor-pointer w-[115px] h-[30px] p-3"
                     >
                       Switch User Role
-                    </Button>
+                    </Button> */}
                   </div>
                 </span>
               </div>
@@ -273,7 +280,10 @@ const BloggerDashboard = ({ name, setModalOpen, userNiche, setUserNiche }) => {
                   <>
                     {publishedPosts.publishedPosts.length}
                     <span className="text-sm cursor-pointer">
-                      <Link href={"/profile#my-posts"}> posts published</Link>{" "}
+                      <Link href={"/profile#my-posts"}>
+                        {" "}
+                        posts published
+                      </Link>{" "}
                     </span>
                   </>
                 ) : (

@@ -1,5 +1,8 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { account } from "../app/appwrite";
+import Link from "next/link";
 
 const includedFeatures = [
   "One-click installation",
@@ -15,11 +18,30 @@ const includedFeatures = [
 ];
 
 export default function Products() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [subscriptions, setSubscriptions] = useState(0);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+        setLoading(false); // Set loading to false after fetching user
+      } catch (error) {
+        console.log("Error fetching user:", error);
+        setLoading(false); // Set loading to false even if fetching fails
+      }
+    };
+
+    getUser();
+  }, [user]);
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl sm:text-center">
-          <h2 className="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-balance sm:text-6xl mt-24">
+          <h2 className="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-balance sm:text-6xl mt-20">
             Products
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
@@ -75,16 +97,32 @@ export default function Products() {
                     USD
                   </span>
                 </p>
-                <a
-                  href="/login"
-                  className="mt-10 block w-full rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                >
-                  Begin with a free Access
-                </a>
-                <p className="mt-6 text-xs/5 text-gray-600">
-                  You may make a one-time payment or sign up for a subscription
-                  after login.
-                </p>
+                {user ? (
+                  <Link
+                    href="#"
+                    className="mt-10 block w-full rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  >
+                    Buy Now
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="mt-10 block w-full rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  >
+                    Begin with a free Access
+                  </Link>
+                )}
+
+                {!user ? (
+                  <p className="mt-6 text-xs/5 text-gray-600">
+                    You may make a one-time payment or sign up for a
+                    subscription after login.
+                  </p>
+                ) : (
+                  <p className="mt-6 text-xs/5 text-gray-600">
+                    Install and use this product on your own website or blog.
+                  </p>
+                )}
               </div>
             </div>
           </div>

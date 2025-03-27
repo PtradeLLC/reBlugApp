@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ChefFAQ from "@/components/ChefFaq";
+import ChefFAQ from "../../components/ChefFaq";
 
 const page = () => {
   return (

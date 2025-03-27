@@ -4,8 +4,8 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import AIBlog from "../components/BlogSection";
 import FoodiesComponent from "../components/Foodies";
-import ProfitNonProfit from "@/components/ProfitNonProfit";
-import Clouds from "@/components/Clouds";
+import ProfitNonProfit from "../components/ProfitNonProfit";
+import Clouds from "../components/Clouds";
 
 const Home = () => {
   return (

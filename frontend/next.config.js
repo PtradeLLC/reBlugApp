@@ -1,25 +1,30 @@
 const withPWA = require('next-pwa')({
     dest: 'public',
     register: true,
+    disable: process.env.NODE_ENV === 'development',
+    buildExcludes: [/middleware-manifest.json$/],
     skipWaiting: true,
-    // Optional: Adjust Workbox configuration if needed
-    // workboxOpts: {
-    //     swSrc: 'public/sw.js',
-    //     swDest: 'sw.js',
-    // },
+    runtimeCaching: [],
+    mode: 'production',
+    clientsClaim: true,
+    maximumFileSizeToCacheInBytes: 50 * 1024 * 1024
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
+    transpilePackages: ['article-assistant'],
+    experimental: {
+        externalDir: true
+    },
     webpack(config) {
         // No need to filter out GenerateSW manually
         return config;
     },
+    // Moved to workboxOpts
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = nextConfig;
 
 
 
@@ -35,8 +40,7 @@ module.exports = withPWA(nextConfig);
 // /** @type {import('next').NextConfig} */
 // const nextConfig = {
 //     reactStrictMode: true,
-//     swcMinify: true,
-//     // Add the bodyParser size limit configuration
+// //     // Add the bodyParser size limit configuration
 //     api: {
 //         bodyParser: {
 //             sizeLimit: '5mb',
@@ -48,7 +52,7 @@ module.exports = withPWA(nextConfig);
 //     },
 // };
 
-// module.exports = withPWA(nextConfig);
+// module.exports = nextConfig;
 
 
 
@@ -61,8 +65,7 @@ module.exports = withPWA(nextConfig);
 // /** @type {import('next').NextConfig} */
 // const nextConfig = {
 //     reactStrictMode: true,
-//     swcMinify: true,
-//     webpack(config) {
+// //     webpack(config) {
 //         config.plugins = config.plugins.filter(
 //             plugin => plugin.constructor.name !== 'GenerateSW'
 //         );

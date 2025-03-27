@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Nango from "@nangohq/frontend";
 import { account } from "../app/appwrite";
-import { integrationData } from "@/components/Campaigns/integrationData";
+import { integrationData } from "./Campaigns/integrationData";
 
 const IntegrationSection = ({
   title,

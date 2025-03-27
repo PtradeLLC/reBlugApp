@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import RestaurantsFaq from "@/components/RestaurantsQuestion";
+import RestaurantsFaq from "../../components/RestaurantsQuestion";
 
 const RestaurantPage = () => {
   return (

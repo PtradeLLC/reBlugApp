@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import SignInForm from "@/components/SignInForm";
+import SignInForm from "../../components/SignInForm";
 
 const SignIn = () => {
   const [showRegister, setShowRegister] = useState(false);

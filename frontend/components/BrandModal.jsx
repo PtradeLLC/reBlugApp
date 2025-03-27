@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { Activity, CreditCard, Users } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "./ui/table";
 import TogglePageModal from "./SwitchPageModal";
 import ChartModal from "./SubChartModal";
 import SubscriptionChartModal from "./SubChartModal";

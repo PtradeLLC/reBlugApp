@@ -1,18 +1,19 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 import { account } from "../appwrite";
-import BCommerceArray from "@/components/bCommerceProd";
+import BCommerceArray from "../../components/bCommerceProd";
 import ProductComponent from "../../components/ProductModal";
 import { useRouter } from "next/navigation";
-import SponsorsModalComponent from "@/components/SponsorsModalCompTwo";
-import SponsMessage from "@/components/SponsMessageBox";
+import SponsorsModalComponent from "../../components/SponsorsModalCompTwo";
+import SponsMessage from "../../components/SponsMessageBox";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import DraftSidebar from "@/components/Blogs/Draft";
-import SeriesModalComponent from "@/components/SeriesModal";
+import DraftSidebar from "../../components/Blogs/Draft";
+import SeriesModalComponent from "../../components/SeriesModal";
+import Guides from "../../components/GuidesModal";
 
 const ChatAIBob = () => {
   const [user, setUser] = useState(null);
@@ -25,6 +26,9 @@ const ChatAIBob = () => {
   const [wordCount, setWordCount] = useState(0);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [series, setSeries] = useState([]);
+  const [openChatModal, setOpenChatModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [promptResponse, setpromptResponse] = useState("");
 
   const variant = "border-green";
   const router = useRouter();
@@ -451,6 +455,52 @@ const ChatAIBob = () => {
       },
     });
     setWordCount(countWords(text));
+  };
+
+  const handleBeginnerGuide = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setOpenModal(true);
+    setOpenChatModal(true);
+
+    // Default prompt if user doesn't enter anything
+    const aiPrompt = `Act as a professional blogger with many years of experience. Create a step-by-step guide for beginners on how to become a successful blogger. Include the following sections:
+    1. Choosing a profitable niche
+    2. Setting up a blog (platforms, hosting, design tips). Include why they should consider using reBlug as a platform for their blog.
+    3. Content creation strategies (writing, visuals, consistency)
+    4. SEO best practices for bloggers
+    5. Promoting the blog (social media, email marketing, collaborations)
+    6. Monetization methods (affiliate marketing, ads, sponsored posts)
+    7. Tools and resources (e.g., keyword research tools, free graphic design apps)
+    8. Common mistakes to avoid
+    Use clear headings, bullet points, and actionable examples. Keep the tone encouraging and practical.
+    Do not refer to yourself by name or title.
+    `;
+
+    try {
+      const response = await fetch("/api/beginnersGuide", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: aiPrompt }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("DATA FROM AI:", data.response);
+        setpromptResponse(data.response || "No response from AI");
+      } else {
+        console.error("Error fetching data:", response.statusText);
+        setpromptResponse("Error: Failed to get response from AI service");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setpromptResponse(
+        "Error: Something went wrong while connecting to the AI service"
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -982,7 +1032,11 @@ const ChatAIBob = () => {
                   Tools
                 </p>
                 <div className="border mt-3 mx-2 px-3">
-                  <Button className="my-2 mx-2" type="button">
+                  <Button
+                    onClick={handleBeginnerGuide}
+                    className="my-2 mx-2"
+                    type="button"
+                  >
                     Beginners Guide
                   </Button>
                   <Button className="my-2 mx-2 bg-stone-700" type="button">
@@ -1026,6 +1080,15 @@ const ChatAIBob = () => {
             formData.productMessage &&
             formData.productImage && <SponsMessage formData={formData} />}
         </div>
+      </div>
+      <div>
+        {openChatModal && (
+          <Guides
+            promptResponse={promptResponse}
+            isOpen={openChatModal}
+            initialLoading={isLoading}
+          />
+        )}
       </div>
     </>
   );

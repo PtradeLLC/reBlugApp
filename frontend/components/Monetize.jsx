@@ -1,21 +1,32 @@
 "use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import Wait from "./Waitlist";
+import { Button } from "../components/ui/button";
 import ConnectedPayment from "./ConnectPayments";
 import Link from "next/link";
 
 const MonetizeBlog = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  //   const handleUserType = () => {
-  //     if (setModalOpen) {
-  //       setModalOpen(true);
-  //     } else {
-  //       console.error(
-  //         "setModalOpen function is not defined or passed correctly."
-  //       );
-  //     }
-  //   };
+  // const handleUserType = () => {
+  //   if (setModalOpen) {
+  //     setModalOpen(true);
+  //   } else {
+  //     console.error(
+  //       "setModalOpen function is not defined or passed correctly."
+  //     );
+  //   }
+  // };
+
+  const joinUs = () => {
+    try {
+      setOpenModal(true);
+    } catch (error) {
+      console.error(
+        "setModalOpen function is not defined or passed correctly."
+      );
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -219,14 +230,21 @@ const MonetizeBlog = () => {
             </div>
           </div>
           <div className="mt-9 flex justify-center items-center bg-stone-600 rounded-md text-white h-9 w-32">
-            <Link href={"/account"}>Get started now</Link>
+            {/* <Link href={"/account"}>Get started now</Link> */}
+            <button onClick={joinUs}>Get started now</button>
           </div>
         </div>
       </section>
       <div>
-        {/* {openModal && (
-          <ConnectedPayment openModal={openModal} setOpenModal={setOpenModal} />
-        )} */}
+        {openModal && (
+          <>
+            <Wait />
+            {/* <ConnectedPayment
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            /> */}
+          </>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,9 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler(req, res) {
+import { NextResponse } from 'next/server';
+
+export async function POST(req) {
     if (req.method === 'POST') {
         const { priceId } = req.body;
 
@@ -21,12 +23,11 @@ export default async function handler(req, res) {
                 cancel_url: `${req.headers.origin}/cancel`,
             });
 
-            res.status(200).json({ id: session.id });
+            return NextResponse.json({ id: session.id }, { status: 200 });
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            return NextResponse.json({ error: err.message }, { status: 500 });
         }
     } else {
-        res.setHeader('Allow', 'POST');
-        res.status(405).end('Method Not Allowed');
+        return new NextResponse('Method Not Allowed', { status: 405, headers: { 'Allow': 'POST' } });
     }
 }

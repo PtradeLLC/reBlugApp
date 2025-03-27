@@ -7,7 +7,7 @@ import {
   ModalFooter,
   Button,
 } from "@nextui-org/react";
-import { useNationBuild } from "@/app/api/partner/nationbuilderV1/nationHook";
+import { useNationBuild } from "../../app/api/partner/nationbuilderV1/nationHook";
 import { account } from "../../app/appwrite";
 
 const EmailChatbox = ({ isOpen, onClose, title, askQuestion, textData }) => {

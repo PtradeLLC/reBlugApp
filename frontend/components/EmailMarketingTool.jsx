@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import RaiseFunds from "@/components/FundRaise";
-import Saas from "@/components/Saas";
-import Awareness from "@/components/Awareness";
-import Ecommerce from "@/components/Ecommerce";
-import EmailNewsletter from "@/components/EmailNewsletter";
-import EmailChatbox from "@/components/ChatBox/EmailMarketingChatbox";
+import RaiseFunds from "./FundRaise";
+import Saas from "./Saas";
+import Awareness from "./Awareness";
+import Ecommerce from "./Ecommerce";
+import EmailNewsletter from "./EmailNewsletter";
+import EmailChatbox from "./ChatBox/EmailMarketingChatbox";
 import {
   Modal,
   ModalContent,
@@ -181,12 +181,12 @@ const SeriesModalComponent = ({
 export default SeriesModalComponent;
 
 // import React, { useEffect, useState } from "react";
-// import RaiseFunds from "@/components/FundRaise";
-// import Saas from "@/components/Saas";
-// import Awareness from "@/components/Awareness";
-// import Ecommerce from "@/components/Ecommerce";
-// import EmailNewsletter from "@/components/EmailNewsletter";
-// import EmailChatbox from "@/components/ChatBox/EmailMarketingChatbox";
+// import RaiseFunds from "./FundRaise";
+// import Saas from "./Saas";
+// import Awareness from "./Awareness";
+// import Ecommerce from "./Ecommerce";
+// import EmailNewsletter from "./EmailNewsletter";
+// import EmailChatbox from "./ChatBox/EmailMarketingChatbox";
 // import {
 //   Modal,
 //   ModalContent,

@@ -11,8 +11,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import parse from "html-react-parser";
-import HowItWorks12 from "@/components/HowItWorks";
-import ChatUI from "@/components/ChatBox/AIChatBox";
+import HowItWorks12 from "../../components/HowItWorks";
+import ChatUI from "../../components/ChatBox/AIChatBox";
 import useSWR from "swr";
 
 // Define your fetcher function

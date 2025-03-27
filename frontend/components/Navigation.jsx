@@ -4,7 +4,7 @@ import { account } from "../app/appwrite";
 import Banner from "./Banner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 
 // Profile Dropdown
 const ProfileDropDown = ({ className, logout, user }) => {
@@ -229,7 +229,9 @@ const Navigation = () => {
           </div>
         </div>
       </nav>
-      <div>{/* <Banner /> */}</div>
+      <div>
+        <Banner />
+      </div>
     </>
   );
 };

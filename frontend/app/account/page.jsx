@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { account } from "../appwrite";
 import { CircleUser } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,8 +11,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "../../components/ui/card";
+import { Checkbox } from "../../components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +20,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import Integrations from "@/components/Integrations";
-import PricingForBloggers from "@/components/BloggerPricing";
+} from "../../components/ui/dropdown-menu";
+import { Input } from "../../components/ui/input";
+import Integrations from "../../components/Integrations";
+import PricingForBloggers from "../../components/BloggerPricing";
 
 const MyAccountContent = () => {
   const searchParams = useSearchParams();

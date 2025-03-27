@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import BCommModal from "@/components/bCommerceModal";
-import WorksModal from "@/components/HowItWorksModal";
+import BCommModal from "./bCommerceModal";
+import WorksModal from "./HowItWorksModal";
 import Link from "next/link";
 import {
   File,
@@ -21,8 +21,8 @@ import {
   Users2,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
+import { Badge } from "./ui/badge";
+import { Label } from "./ui/label";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -30,8 +30,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+} from "./ui/breadcrumb";
+import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
@@ -39,7 +39,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -48,16 +48,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+} from "./ui/dropdown-menu";
+import { Input } from "./ui/input";
+import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
+import { Progress } from "./ui/progress";
+import { Separator } from "./ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import {
   Table,
   TableBody,
@@ -65,14 +61,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "./ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "./ui/tooltip";
 import BlogProducts from "./Products";
 import { button } from "@nextui-org/react";
 

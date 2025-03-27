@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import MonetizeBlog from "@/components/Monetize";
+import MonetizeBlog from "../../components/Monetize";
 
 const page = () => {
   return (

@@ -1,12 +1,14 @@
+const { heroui } = require("@heroui/theme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
-    "./node_modules/flowbite/**/*.js"
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/@heroui/theme/dist/components/modal.js",
   ],
   prefix: "",
   theme: {
@@ -74,5 +76,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('flowbite/plugin')],
-}
+  plugins: [
+    require("tailwindcss-animate"),
+    require("flowbite/plugin"),
+    heroui(),
+  ],
+};
